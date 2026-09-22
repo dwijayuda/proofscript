@@ -109,3 +109,10 @@ A run with no usable Lean installation, an unparsable version, or Lean older tha
 The report records the tactic actually selected by the request artifact. For the current public `Std.Do.Triple` stateful profile this is `mvcgen`.
 
 A failure inside Lean's experimental `vcgen` implementation is not accepted as evidence that a `Std.Do.Triple` target is invalid. Tactic selection is constrained by the Triple metatheory before execution.
+
+
+## Checked proof finisher
+
+The generated request may include a checked Lean finisher after VC generation. In the current bounded `Std.Do.Triple` profile this is `all_goals simp_all`.
+
+A successful finisher does not bypass the trust boundary: Lean typechecks the resulting theorem. If the request exits successfully with no residual goals, `semanticProofDischarge = true` applies only to that concrete generated theorem/evidence record.
