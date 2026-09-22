@@ -31,10 +31,16 @@ export function rewriteOldSnapshots(text, snapshots) {
 }
 export function parseAssertionsFromBody(bodyRaw) {
   const assertions = [];
+  const names = new Set();
   const bodyWithoutAssertions = String(bodyRaw).replace(/assert\s+([A-Za-z_][A-Za-z0-9_]*)\s*:\s*([^;]+);/g, (_all, name, proposition) => {
+    if (names.has(name)) throw new Error(`duplicate assert name '${name}'`);
+    names.add(name);
     assertions.push({ name, proposition: normalizeSpaces(proposition), kind: 'assert' });
     return '';
   });
+  if (/(^|[;\n])\s*assert\b/m.test(bodyWithoutAssertions)) {
+    throw new Error("unsupported assert syntax: expected 'assert <name>: <proposition>;'");
+  }
   return { assertions, bodyWithoutAssertions };
 }
 export function parseLoopSpecsFromBody(bodyRaw) {
