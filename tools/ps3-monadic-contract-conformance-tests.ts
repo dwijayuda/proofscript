@@ -90,6 +90,14 @@ for (const item of positive) {
   assert.equal(artifact.statefulPredicateAST.stateModelAdequacyChecked, false, item.id);
   assert.equal(artifact.statefulPredicateAST.verificationConditionsGenerated, false, item.id);
   assert.equal(artifact.statefulPredicateAST.semanticProofDischarge, false, item.id);
+  assert.equal(artifact.statefulOperationElaboration.schema, "proofscript.stateful-operation-elaboration/v1", item.id);
+  assert.equal(artifact.statefulOperationElaboration.hasTypeErrors, false, item.id);
+  assert.equal(artifact.statefulOperationElaboration.typingComplete, true, item.id);
+  assert.equal(artifact.statefulOperationElaboration.operations.length, contract.operations.length, item.id);
+  assert.ok(artifact.statefulOperationElaboration.operations.every((operation: any) =>
+    operation.typingStatus === "complete"
+    && operation.argumentsTyped.every((argument: any) => argument.typeMatches === true)
+  ), item.id);
   if (item.expected.final_state_observations !== undefined) {
     const clause = artifact.statefulPostconditionIR.clauses[0];
     assert.equal(clause.finalStateObservationReferences.length, item.expected.final_state_observations, item.id);
@@ -128,7 +136,16 @@ for (const item of positive) {
   assert.deepEqual(lowering.statefulPostconditionIR, artifact.statefulPostconditionIR, item.id);
   assert.deepEqual(lowering.statefulPredicateElaboration, artifact.statefulPredicateElaboration, item.id);
   assert.deepEqual(lowering.statefulPredicateAST, artifact.statefulPredicateAST, item.id);
+  assert.deepEqual(lowering.statefulOperationElaboration, artifact.statefulOperationElaboration, item.id);
+  assert.equal(lowering.statefulProgramLowering.schema, "proofscript.stateful-program-lowering/v1", item.id);
+  assert.equal(lowering.statefulProgramLowering.grammarProfile, "stateful-flat-operation-sequence0", item.id);
+  assert.equal(lowering.statefulProgramLowering.programLoweringReady, true, item.id);
+  assert.equal(lowering.statefulProgramLowering.leanProgramTypechecked, false, item.id);
+  assert.equal(lowering.statefulProgramLowering.sourceToLeanProgramEquivalenceChecked, false, item.id);
+  assert.match(lowering.statefulProgramLowering.leanDefinition, /:= do\n/u, item.id);
   assert.equal(lowering.summary.statefulReferenceTypingComplete, true, item.id);
+  assert.equal(lowering.summary.stateOperationTypingComplete, true, item.id);
+  assert.equal(lowering.summary.statefulProgramLoweringReady, true, item.id);
   assert.equal(lowering.summary.normalizedPredicateAstTypeCheckingComplete, true, item.id);
   assert.equal(lowering.statefulWpBinding.schema, "proofscript.stateful-wp-binding/v1", item.id);
   assert.equal(lowering.statefulWpBinding.wp.triple, "Std.Do.Triple", item.id);
@@ -156,8 +173,10 @@ for (const item of positive) {
   assert.equal(lowering.statefulVcPlan.planningReady, true, item.id);
   assert.equal(lowering.statefulVcPlan.summary.operationGoals, contract.operations.length, item.id);
   assert.equal(lowering.statefulVcPlan.summary.postconditionGoals, contract.ensures.length, item.id);
+  assert.equal(lowering.statefulVcPlan.summary.programLoweringReady, true, item.id);
   assert.equal(lowering.statefulVcPlan.summary.operationTheoremIdentitiesBound, true, item.id);
   assert.equal(lowering.statefulVcPlan.summary.typedGoalsReady, true, item.id);
+  assert.ok(typeof lowering.statefulVcPlan.provenance.programLeanDefinitionSha256 === "string", item.id);
   assert.equal(lowering.statefulVcPlan.summary.sourceObligationsBound, true, item.id);
   assert.ok(lowering.statefulVcPlan.operationGoals.every((goal: any) =>
     goal.theoremIdentityBound === true
@@ -219,14 +238,21 @@ for (const item of positive) {
   assert.deepEqual(preflight.statefulPostconditionIR, artifact.statefulPostconditionIR, item.id);
   assert.deepEqual(preflight.statefulPredicateElaboration, artifact.statefulPredicateElaboration, item.id);
   assert.deepEqual(preflight.statefulPredicateAST, artifact.statefulPredicateAST, item.id);
+  assert.deepEqual(preflight.statefulOperationElaboration, artifact.statefulOperationElaboration, item.id);
   assert.deepEqual(preflight.statefulWpBinding, lowering.statefulWpBinding, item.id);
+  assert.deepEqual(preflight.statefulProgramLowering, lowering.statefulProgramLowering, item.id);
   assert.deepEqual(preflight.statefulVcPlan, lowering.statefulVcPlan, item.id);
   assert.equal(preflight.staticChecks.hasStatefulPostconditionIR, true, item.id);
   assert.equal(preflight.staticChecks.hasStatefulPredicateElaboration, true, item.id);
   assert.equal(preflight.staticChecks.hasStatefulPredicateAST, true, item.id);
   assert.equal(preflight.staticChecks.statefulReferenceTypingComplete, true, item.id);
   assert.equal(preflight.staticChecks.normalizedPredicateAstTypeCheckingComplete, true, item.id);
+  assert.equal(preflight.staticChecks.hasStatefulOperationElaboration, true, item.id);
+  assert.equal(preflight.staticChecks.stateOperationTypingComplete, true, item.id);
   assert.equal(preflight.staticChecks.hasStatefulWpBinding, true, item.id);
+  assert.equal(preflight.staticChecks.hasStatefulProgramLowering, true, item.id);
+  assert.equal(preflight.staticChecks.statefulProgramLoweringReady, true, item.id);
+  assert.equal(preflight.staticChecks.leanProgramTypechecked, false, item.id);
   assert.equal(preflight.staticChecks.statefulWpIdentityBindingReady, true, item.id);
   assert.equal(preflight.staticChecks.hasStatefulVcPlan, true, item.id);
   assert.equal(preflight.staticChecks.statefulVcPlanningReady, true, item.id);
@@ -235,6 +261,10 @@ for (const item of positive) {
   assert.equal(preflight.staticChecks.wholePredicateTypeCheckingComplete, false, item.id);
   assert.equal(preflight.staticChecks.statefulPostconditionSemanticElaborationComplete, false, item.id);
   assert.equal(preflight.trustBoundary.specifiedStructuralProfile, true, item.id);
+  assert.equal(preflight.trustBoundary.stateOperationTypingComplete, true, item.id);
+  assert.equal(preflight.trustBoundary.statefulProgramLoweringReady, true, item.id);
+  assert.equal(preflight.trustBoundary.sourceToLeanProgramEquivalenceChecked, false, item.id);
+  assert.equal(preflight.trustBoundary.leanProgramTypechecked, false, item.id);
   assert.equal(preflight.trustBoundary.wpTripleIdentityBindingComplete, true, item.id);
   assert.equal(preflight.trustBoundary.statefulVcPlanningReady, true, item.id);
   assert.equal(preflight.trustBoundary.semanticVcDerivationComplete, false, item.id);
@@ -348,6 +378,27 @@ for (const item of negative) {
       packageVersion: "test",
     });
     assert.deepEqual(preflight.statefulPredicateElaboration, elaboration, item.id);
+  }
+  if (item.expected_operation_elaboration) {
+    const operationElaboration = artifact.statefulOperationElaboration;
+    assert.equal(operationElaboration.schema, "proofscript.stateful-operation-elaboration/v1", item.id);
+    assert.equal(operationElaboration.typingComplete, item.expected_operation_elaboration.typing_complete, item.id);
+    if (item.expected_operation_elaboration.error_code) {
+      assert.ok(
+        operationElaboration.diagnostics.some((diagnostic: any) =>
+          diagnostic.code === item.expected_operation_elaboration.error_code
+        ),
+        item.id,
+      );
+    }
+    const lowering = createMonadicLoweringArtifact({
+      contractArtifact: artifact,
+      contractArtifactPath: `<${item.id}.contracts.json>`,
+      contractArtifactSha256: "1".repeat(64),
+      packageVersion: "test",
+    });
+    assert.equal(lowering.statefulProgramLowering.programLoweringReady, false, item.id);
+    assert.equal(lowering.statefulVcPlan.planningReady, false, item.id);
   }
   if (item.expected_ast) {
     const ast = artifact.statefulPredicateAST;
