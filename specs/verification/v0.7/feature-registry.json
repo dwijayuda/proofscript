@@ -14,7 +14,9 @@
       "runtime": "erased",
       "diagnostics": [
         "requires must be named in ps3-pure-contracts0",
-        "result is not valid in requires"
+        "result is not valid in requires",
+        "requires names must be unique",
+        "requires names must not collide with function parameters"
       ]
     },
     {
@@ -27,7 +29,8 @@
       "obligations": "One stable ensures obligation per clause.",
       "runtime": "erased",
       "diagnostics": [
-        "malformed ensures clause is rejected"
+        "malformed ensures clause is rejected",
+        "ensures names must be unique so obligation IDs remain unambiguous"
       ]
     },
     {
