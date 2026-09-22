@@ -17,7 +17,7 @@ assert.equal(registry.profile, "ps3-pure-contracts0");
 assert.equal(registry.claim_ceiling, "specified-alpha");
 assert.deepEqual(
   registry.features.map((feature: any) => feature.id).sort(),
-  ["V-ASSERT", "V-ENSURES", "V-GHOST", "V-REQUIRES", "V-RESULT"],
+  ["V-ASSERT", "V-ENSURES", "V-GHOST", "V-OLD", "V-REQUIRES", "V-RESULT"],
 );
 
 for (const item of positive) {
@@ -26,6 +26,8 @@ for (const item of positive) {
   assert.equal(contract.ensures.length, item.expected.ensures, item.id);
   assert.equal(contract.assertions.length, item.expected.assertions ?? 0, item.id);
   assert.equal(contract.ghosts.length, item.expected.ghosts ?? 0, item.id);
+  assert.equal(contract.oldSnapshots.length, item.expected.oldSnapshots ?? 0, item.id);
+  if (item.expected.old_expression) assert.equal(contract.oldSnapshots[0]?.expression, item.expected.old_expression, item.id);
   assert.equal(contract.obligations.length, item.expected.obligations, item.id);
   if (item.expected.requires_proposition) assert.equal(contract.requirements[0]?.proposition, item.expected.requires_proposition, item.id);
 
@@ -87,10 +89,10 @@ const preconditionRegression = parsePureContractSource(
   "function f(x: Nat): Nat\n  requires hx: x >= 0\n  ensures post: result = x\n:= {\n  x\n}",
 );
 const regressionObligation = preconditionRegression.obligations[0]!;
-assert.equal(regressionObligation.proposition, "f x = x");
+assert.equal(regressionObligation.proposition, "(f x) = x");
 assert.match(
   regressionObligation.exactTheoremStatement,
-  /^theorem f_ensures_post \(x : Nat\) \(hx : x >= 0\) : f x = x$/u,
+  /^theorem f_ensures_post \(x : Nat\) \(hx : x >= 0\) : \(f x\) = x$/u,
 );
 assert.doesNotMatch(leanForContract(preconditionRegression), /^def f .*\(hx :/mu);
 
