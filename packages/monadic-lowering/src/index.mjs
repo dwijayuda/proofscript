@@ -18,6 +18,11 @@ import {
   compareLeanCompatibilityVersions,
   parseLeanCompatibilityVersion,
 } from './lean-compatibility.mjs';
+import {
+  leanGeneratedIdentifier,
+  leanIdentifier,
+  leanParameterBinders,
+} from './lean-syntax.mjs';
 
 export {
   createStatefulWpBinding,
@@ -42,12 +47,6 @@ export function sha256File(file) {
   return createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 }
 function normalizeSpaces(s) { return String(s ?? '').replace(/\s+/g, ' ').trim(); }
-function safeLeanName(name) {
-  return String(name ?? 'x').replace(/[^A-Za-z0-9_]+/g, '_').replace(/^([0-9])/, '_$1') || 'x';
-}
-function programParameterBinderText(params) {
-  return (params ?? []).map(x => `(${x.name} : ${x.type})`).join(' ');
-}
 function monadNameFromStateModel(stateModel) {
   return stateModel?.monad?.name ?? stateModel?.monad?.typeConstructor ?? 'State';
 }
@@ -104,18 +103,18 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
   if (contractArtifact.verification?.profile === 'ps3-monadic-contracts0' && statefulProgramLowering.programLoweringReady !== true) {
     throw new Error('strict monadic profile invariant violated: modeled operation sequence is not ready for Lean program lowering');
   }
-  const parameterBinders = programParameterBinderText(fn.params ?? []);
+  const parameterBinders = leanParameterBinders(fn.params ?? []);
   const entryStateBinder = `(__ps_entry : ${stateModel.stateType})`;
   const binders = [parameterBinders, entryStateBinder].filter(Boolean).join(' ');
-  const theoremName = `${safeLeanName(fn.name)}_triple`;
+  const theoremName = leanGeneratedIdentifier(fn.name, '_triple');
   const triple = tripleNameFromStateModel(stateModel);
   const preconditionBody = statefulWpBinding.precondition.body;
   const precondition = statefulWpBinding.precondition.functionSource;
   const postconditionBody = statefulWpBinding.postcondition.body;
   const postcondition = statefulWpBinding.postcondition.functionSource;
   const monad = monadNameFromStateModel(stateModel);
-  const programName = safeLeanName(fn.name);
-  const statement = `theorem ${theoremName}${binders ? ` ${binders}` : ''} : ${triple} (${programName}${(fn.params ?? []).map(p => ` ${p.name}`).join(' ')}) (${precondition}) (${postcondition})`;
+  const programName = leanIdentifier(fn.name);
+  const statement = `theorem ${theoremName}${binders ? ` ${binders}` : ''} : ${triple} (${programName}${(fn.params ?? []).map(p => ` ${leanIdentifier(p.name)}`).join(' ')}) (${precondition}) (${postcondition})`;
   const statefulVcPlan = createStatefulVcPlan({
     contractArtifact,
     wpBinding: statefulWpBinding,
@@ -251,7 +250,7 @@ export function leanForMonadicLoweringArtifact(artifact) {
   const stateModel = artifact.stateModel;
   const triple = artifact.tripleSkeleton;
   const programLowering = artifact.statefulProgramLowering;
-  const params = (fn.params ?? []).map(p => `(${p.name} : ${p.type})`).join(' ');
+  const params = leanParameterBinders(fn.params ?? []);
   const operations = (artifact.operations ?? []).map(op => `-- operation ${op.index}: ${op.text}\n--   model spec: ${op.stateModelOperation?.spec ?? 'not found in descriptor'}`).join('\n');
   const obligations = (artifact.obligations ?? []).map(o => `-- obligation ${o.name}\n--   kind: ${o.kind}\n--   statement: ${o.statement}`).join('\n');
   return `/-
@@ -277,7 +276,7 @@ namespace ProofScript.Generated
 -- Deterministic lowering of the bounded modeled operation sequence.
 -- This declaration is the semantic program target for future Lean VC derivation,
 -- but this KA-145 skeleton does not itself typecheck it in the selected Lean environment.
-${programLowering?.leanDefinition ?? `-- stateful program lowering unavailable for ${safeLeanName(fn.name)}`}
+${programLowering?.leanDefinition ?? `-- stateful program lowering unavailable for ${leanIdentifier(fn.name)}`}
 
 /-- Planned Hoare/Triple skeleton. Not checked as a completed proof in KA-145. -/
 ${triple.theoremStatement} := by
@@ -303,7 +302,6 @@ export function readMonadicLoweringInput(file) {
 }
 
 const LEAN_BUILTIN_TYPE_NAMES = new Set(['Nat', 'Int', 'Bool', 'String', 'Unit', 'Prop', 'Type', 'Sort', 'State']);
-function leanIdentifier(name) { return safeLeanName(name); }
 function collectTypeTokens(text) {
   return [...String(text ?? '').matchAll(/\b[A-Z][A-Za-z0-9_]*\b/g)].map(m => m[0]);
 }
