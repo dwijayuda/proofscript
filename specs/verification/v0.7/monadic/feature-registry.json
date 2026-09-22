@@ -37,12 +37,15 @@
         "stateful result pseudo-value semantics",
         "undeclared state operations",
         "loop invariants/frame conditions",
-        "vcgen/mvcgen semantic discharge"
+        "vcgen/mvcgen semantic discharge",
+        "semantic elaboration of proofscript.stateful-postcondition-ir/v1 into model-specific entry/result/final-state predicates"
       ],
       "artifact_representation": [
         "proofscript.contracts.v1 verification.profile=ps3-monadic-contracts0",
         "proofscript.monadic-lowering.v1 carries the same verification profile",
-        "proofscript.monadic-preflight.v1 carries the same verification profile"
+        "proofscript.monadic-preflight.v1 carries the same verification profile",
+        "proofscript.stateful-postcondition-ir/v1 records entry/result/final-state binder roles and preserves raw postcondition references",
+        "stateful postcondition IR is propagated contracts -> monadic-lowering -> monadic-preflight"
       ],
       "diagnostics": [
         "state model descriptor is mandatory",
