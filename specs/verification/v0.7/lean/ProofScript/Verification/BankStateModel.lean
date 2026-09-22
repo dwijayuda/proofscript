@@ -34,7 +34,7 @@ def credit (account : AccountId) (amount : Nat) : StateM Bank Unit :=
   MonadStateOf.modifyGet fun state => ((), creditState account amount state)
 
 def audit (_code : Nat) : StateM Bank Unit :=
-  MonadStateOf.modifyGet fun state => ((), state)
+  MonadStateOf.modifyGet fun state : Bank => ((), state)
 
 @[simp]
 theorem balanceOf_debitState_self (state : Bank) (account : AccountId) (amount : Nat) :
