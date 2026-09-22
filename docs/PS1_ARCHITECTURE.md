@@ -127,21 +127,16 @@ Require behavior inventory before removal:
 
 No deletion is allowed until their unique behavior has either been ported to the canonical path or explicitly rejected as obsolete.
 
-### Deferred/scaffold candidates
+### Retired empty scaffolds
 
-Packages with no active implementation should be removed from the active architecture or clearly marked deferred until a milestone requires them. Current candidates include:
+PS2 audited and removed four metadata-only workspaces with no code or consumers:
 
-- `contracts`
 - `diagnostics`
 - `formatter`
 - `macro`
-- `monadic-lowering`
-- `obligations`
-- `proof-status`
-- `state-models`
 - `tactics-core`
 
-Each must be audited before deletion because package names alone do not prove emptiness or lack of dependencies.
+Future implementations should be introduced only when their milestone has concrete APIs and tests.
 
 ## Canonical compiler API goal
 
