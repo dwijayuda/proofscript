@@ -194,23 +194,33 @@ Additional pure-profile gates:
 Current structural monadic profile: `ps3-monadic-contracts0`.
 
 - `V-MONADIC-CONTRACT` — specified structural alpha
-- monadic corpus — **2 positive / 5 negative-or-prototype-boundary PASS**
+- `V-OLD` — specified structural alpha when entry-state meaning is structurally modeled
+- `V-RESULT` — specified structural alpha when confined to the explicit postcondition result binder
+- monadic corpus — **6 positive / 7 negative-or-prototype-boundary PASS**
+- explicit entry-state / result / final-state binder roles — PASS
+- descriptor-bound state-observation normalization — PASS
+- modeled `old(...)` observations rewrite against entry state; ordinary modeled observations rewrite against final state — PASS
+- call-free `old(x)` structural admission — PASS
+- unclassified calls inside `old(...)` fail closed to prototype — PASS
+- `result` inside `old(...)`, `old`/ `result` in requires, and undeclared state operations fail closed — PASS
 - validated `proofscript.state-model.v1` binding — PASS
 - all strict-profile body operations must be declared by the state model — PASS
 - monadic preconditions do not alter program function arity — PASS
 - verification profile propagation contracts → lowering → preflight — PASS
+- fail-closed `psc contracts --verification-profile ...` public CLI gate — PASS
+- stateful postcondition semantic elaboration — **false by design**
+- state-model adequacy theorem checking — **false**
 - semantic proof discharge — **false by design**
 - vcgen/mvcgen connected — **false**
-- stateful `old` / `result` — prototype-only until entry/result/final-state semantics are explicitly modeled
-- fail-closed `psc contracts --verification-profile ...` — PASS
 - public CLI router — 1,927 lines (KA146 ceiling 1,950)
 
 ## Next engineering target
 
-1. Define an explicit normalized stateful postcondition IR with entry-state, result, and final-state binders before promoting monadic `old`/`result` semantics.
-2. Keep `ps3-monadic-contracts0` structural until that IR is connected to an adequate state model and real vcgen/mvcgen obligations.
-3. Keep recursive-definition termination in the Lean-compatible language layer; keep loop `decreases` with the later invariant/stateful milestone.
-4. Continue CLI convergence at the orchestration layer; both current check paths already share `@proofscript/compiler`.
-5. Continue extracting useful incremental/module-interface infrastructure from `frontend-next` behind canonical compiler/project APIs.
-6. Expand LSP capabilities only from compiler-backed semantic/source-map APIs.
-7. Treat C4 machine-checked reference theorems as assurance work; do not block usable compiler/editor releases on full Lean equivalence.
+1. Preserve the current structural admission boundary while adding a typed/model-specific elaboration layer for normalized entry/result/final-state predicates.
+2. Bind that elaboration explicitly to the selected state model's WP/Triple semantics and adequacy theorem before making any stronger semantic claim.
+3. Generate real inspectable verification conditions before connecting vcgen/mvcgen; keep semantic proof discharge false until checked proof artifacts exist.
+4. Keep recursive-definition termination in the Lean-compatible language layer; keep loop `decreases` with the later invariant/stateful milestone.
+5. Continue CLI convergence at the orchestration layer; both current check paths already share `@proofscript/compiler`.
+6. Continue extracting useful incremental/module-interface infrastructure from `frontend-next` behind canonical compiler/project APIs.
+7. Expand LSP capabilities only from compiler-backed semantic/source-map APIs.
+8. Treat C4 machine-checked reference theorems as assurance work; do not block usable compiler/editor releases on full Lean equivalence.

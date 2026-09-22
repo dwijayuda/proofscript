@@ -39,8 +39,8 @@
         "undeclared state operations",
         "loop invariants/frame conditions",
         "vcgen/mvcgen semantic discharge",
-        "semantic elaboration of proofscript.stateful-postcondition-ir/v1 into model-specific entry/result/final-state predicates",
-        "model-specific rewriting of observation calls into generated entry/final-state predicate terms"
+        "typed Lean/Core elaboration of proofscript.stateful-postcondition-ir/v1 into model-specific entry/result/final-state predicates",
+        "type-checked model-specific observation semantics beyond structural entry/final-state binder insertion"
       ],
       "artifact_representation": [
         "proofscript.contracts.v1 verification.profile=ps3-monadic-contracts0",
@@ -53,7 +53,7 @@
         "state model descriptor is mandatory",
         "return type must use State in this alpha",
         "duplicate contract labels are rejected",
-        "stateful old/result or undeclared operations cannot receive the specified profile"
+        "unmodeled stateful old/result, invalid stateful preconditions, or undeclared operations cannot receive the specified profile"
       ]
     },
     {

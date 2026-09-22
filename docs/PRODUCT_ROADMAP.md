@@ -206,6 +206,8 @@ Do not make monadic verification the foundation for pure contracts.
 
 Current specified `ps3-pure-contracts0` features are `V-REQUIRES`, `V-ENSURES`, `V-RESULT`, `V-ASSERT`, `V-GHOST`, and `V-OLD`. The verification profile is propagated through contract/obligation/proof-status artifacts. Loop invariant/decreases syntax is classified as `ka142-loop-prototype`, not as a v0.7 conformance claim.
 
+Current `ps3-monadic-contracts0` is a **specified structural alpha** profile for `V-MONADIC-CONTRACT`, `V-OLD`, and `V-RESULT`. Its normalized stateful postcondition IR records explicit entry-state, result, and final-state roles and rewrites descriptor-declared state observations against the appropriate structural binder. Structurally unmodeled reads, invalid `old`/`result` placement, and undeclared state operations fail closed. This profile does **not** claim state-model adequacy checking, vcgen/mvcgen connection, semantic proof discharge, or runtime correspondence.
+
 ---
 
 ## PS4 — Runtime correspondence and certification
