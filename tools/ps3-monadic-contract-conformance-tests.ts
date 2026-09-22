@@ -20,7 +20,7 @@ const negative = readJsonl(path.join(specDir, "cases", "negative.jsonl"));
 
 assert.equal(registry.profile, "ps3-monadic-contracts0");
 assert.equal(registry.claim_ceiling, "specified-structural-alpha");
-assert.deepEqual(registry.features.map((feature: any) => feature.id), ["V-MONADIC-CONTRACT"]);
+assert.deepEqual(registry.features.map((feature: any) => feature.id).sort(), ["V-MONADIC-CONTRACT", "V-OLD", "V-RESULT"].sort());
 
 for (const item of positive) {
   const stateModel = binding(item.state_model, item.id);
@@ -36,7 +36,7 @@ for (const item of positive) {
   assert.equal(artifact.verification.reference, registry.schema_version, item.id);
   assert.equal(artifact.verification.profile, item.expected.profile, item.id);
   assert.equal(artifact.verification.claim, item.expected.claim, item.id);
-  assert.deepEqual(artifact.verification.features, ["V-MONADIC-CONTRACT"], item.id);
+  assert.deepEqual(artifact.verification.features, item.expected.features ?? ["V-MONADIC-CONTRACT"], item.id);
   assert.deepEqual(artifact.verification.prototypeFeatures, [], item.id);
   assert.equal(artifact.trustBoundary.specifiedStructuralProfile, true, item.id);
   assert.equal(artifact.trustBoundary.semanticProofChecking, false, item.id);
@@ -59,7 +59,10 @@ for (const item of positive) {
       item.expected.entry_state_observations,
       item.id,
     );
+    if (item.expected.old_references !== undefined) assert.equal(clause.oldReferences.length, item.expected.old_references, item.id);
+    if (item.expected.result_references !== undefined) assert.equal(clause.resultReferences.length, item.expected.result_references, item.id);
     assert.ok(clause.finalStateObservationReferences.every((ref: any) => ref.stateRole === "final-state"), item.id);
+    assert.ok(clause.oldReferences.every((oldRef: any) => oldRef.observationCoverageComplete === true), item.id);
   }
   if (item.expected.normalized_predicate) {
     assert.equal(artifact.statefulPostconditionIR.clauses[0].normalizedPredicate, item.expected.normalized_predicate, item.id);
@@ -169,6 +172,10 @@ for (const item of negative) {
     }
     if (item.expected_ir.normalized_predicate) {
       assert.equal(clause.normalizedPredicate, item.expected_ir.normalized_predicate, item.id);
+    }
+    if (item.expected_ir.undeclared_call) {
+      assert.ok(clause.oldReferences[0]?.undeclaredCallHeads.includes(item.expected_ir.undeclared_call), item.id);
+      assert.equal(clause.oldReferences[0]?.observationCoverageComplete, false, item.id);
     }
     if (item.expected_ir.entry_state_observations !== undefined) {
       const entryRefs = clause.oldReferences.flatMap((oldRef: any) => oldRef.observationReferences ?? []);
