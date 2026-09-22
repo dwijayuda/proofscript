@@ -32,12 +32,12 @@ function jsonFromAny(r: ReturnType<typeof run>) {
 const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
 assert.equal(pkg.version, '1.0.0-pskernel.149');
 assert.equal(pkg.scripts?.['test:ka144'], 'node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ka144-state-model-descriptor-tests.ts');
-assert.ok(fs.existsSync(path.join(ROOT, 'packages', 'state-models', 'src', 'index.mjs')));
+assert.ok(fs.existsSync(path.join(ROOT, 'packages', 'state-models', 'src', 'index.ts')));
 const smPkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'packages', 'state-models', 'package.json'), 'utf8'));
 assert.equal(smPkg.name, '@proofscript/state-models');
 
 const cliText = fs.readFileSync(psc, 'utf8');
-assert.ok(cliText.includes('../packages/state-models/src/index.mjs'));
+assert.ok(cliText.includes('../packages/state-models/dist/index.js'));
 assert.ok(cliText.split('\n').length < 1900, 'psc should remain a router, not absorb all state-model logic');
 
 const version = runOk(node, [psc, '--version']);

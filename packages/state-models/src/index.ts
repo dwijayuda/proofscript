@@ -1,0 +1,126 @@
+import fs from "node:fs";
+import path from "node:path";
+import crypto from "node:crypto";
+
+export type AnyRecord = Record<string, any>;
+export interface StateModelValidationOptions {
+  descriptorPath?: string;
+  descriptorSha256?: string;
+  packageVersion?: string;
+  checkpoint?: string;
+}
+export interface StateModelBindingOptions { descriptorPath?: string; descriptorSha256?: string }
+
+export function sha256Text(text: unknown): string {
+  return crypto.createHash("sha256").update(String(text)).digest("hex");
+}
+export function sha256File(file: string): string {
+  return crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex");
+}
+function normalizeSpaces(value: unknown): string { return String(value ?? "").replace(/\s+/g, " ").trim(); }
+function nonEmptyString(value: unknown): value is string { return typeof value === "string" && value.trim().length > 0; }
+function asArray(value: unknown): AnyRecord[] { return Array.isArray(value) ? value as AnyRecord[] : []; }
+function requireField(errors: AnyRecord[], descriptor: AnyRecord, field: string, message: string): void {
+  if (!nonEmptyString(descriptor[field])) errors.push({ field, message });
+}
+function requireNested(errors: AnyRecord[], descriptor: AnyRecord, dotted: string, message: string): void {
+  let value: any = descriptor;
+  for (const part of dotted.split(".")) value = value?.[part];
+  if (!nonEmptyString(value)) errors.push({ field: dotted, message });
+}
+
+export function validateStateModelDescriptor(descriptor: AnyRecord, {
+  descriptorPath,
+  descriptorSha256,
+  packageVersion,
+  checkpoint = "KA-144 state-model descriptor workflow",
+}: StateModelValidationOptions = {}): AnyRecord {
+  const errors: AnyRecord[] = [];
+  if (!descriptor || typeof descriptor !== "object" || Array.isArray(descriptor)) {
+    throw new Error("state model descriptor must be a JSON object");
+  }
+  if (descriptor.schema !== "proofscript.state-model.v1") errors.push({ field: "schema", message: "expected proofscript.state-model.v1" });
+  requireField(errors, descriptor, "name", "model name is required");
+  requireField(errors, descriptor, "stateType", "stateType is required");
+  requireNested(errors, descriptor, "monad.name", "monad.name is required");
+  requireNested(errors, descriptor, "monad.typeConstructor", "monad.typeConstructor is required");
+  requireNested(errors, descriptor, "wp.triple", "wp.triple is required");
+  requireNested(errors, descriptor, "wp.precondition", "wp.precondition is required");
+  requireNested(errors, descriptor, "wp.postcondition", "wp.postcondition is required");
+  requireNested(errors, descriptor, "semantics.runner", "semantics.runner is required");
+  requireNested(errors, descriptor, "semantics.adequacyTheorem", "semantics.adequacyTheorem is required");
+
+  const laws = asArray(descriptor.laws);
+  if (laws.length === 0) errors.push({ field: "laws", message: "at least one law/theorem name is required" });
+  for (const [i, law] of laws.entries()) {
+    if (!nonEmptyString(law?.name)) errors.push({ field: `laws[${i}].name`, message: "law name is required" });
+    if (!nonEmptyString(law?.statement)) errors.push({ field: `laws[${i}].statement`, message: "law statement is required" });
+  }
+  const operations = asArray(descriptor.operations);
+  for (const [i, op] of operations.entries()) {
+    if (!nonEmptyString(op?.name)) errors.push({ field: `operations[${i}].name`, message: "operation name is required" });
+    if (!nonEmptyString(op?.type)) errors.push({ field: `operations[${i}].type`, message: "operation type is required" });
+    if (!nonEmptyString(op?.spec)) errors.push({ field: `operations[${i}].spec`, message: "operation spec is required" });
+  }
+  const vcgenStatus = descriptor.vcgen?.status ?? "not-connected";
+  if (!["not-connected", "planned", "connected"].includes(vcgenStatus)) errors.push({ field: "vcgen.status", message: "vcgen.status must be not-connected, planned, or connected" });
+
+  const accepted = errors.length === 0;
+  return {
+    schema: "proofscript.state-model-validation.v1",
+    checkpoint,
+    packageVersion,
+    status: accepted ? "accepted" : "rejected",
+    descriptor: { path: descriptorPath, sha256: descriptorSha256, name: descriptor.name, stateType: descriptor.stateType, monad: descriptor.monad?.name },
+    capabilities: { monadicContracts: accepted, statefulVerification: accepted, vcgenConnected: vcgenStatus === "connected", semanticProofChecking: false },
+    requirements: {
+      stateType: descriptor.stateType,
+      monad: descriptor.monad,
+      wp: descriptor.wp,
+      semantics: descriptor.semantics,
+      laws: laws.map(l => ({ name: l.name, statementSha256: nonEmptyString(l.statement) ? sha256Text(normalizeSpaces(l.statement)) : undefined })),
+      operations: operations.map(o => ({ name: o.name, type: o.type, specSha256: nonEmptyString(o.spec) ? sha256Text(normalizeSpaces(o.spec)) : undefined })),
+    },
+    errors,
+    trustBoundary: {
+      descriptorValidatedStructurally: accepted,
+      semanticProofChecking: false,
+      vcgenConnected: vcgenStatus === "connected",
+      adequacyTheoremTrustedOnlyAfterLeanCheck: true,
+      hiddenAxiomsIntroduced: false,
+      fullLean4Equivalence: false,
+    },
+  };
+}
+
+export function readStateModelDescriptor(file: string): AnyRecord {
+  const resolved = path.resolve(process.cwd(), file);
+  const descriptor = JSON.parse(fs.readFileSync(resolved, "utf8")) as AnyRecord;
+  const digest = sha256File(resolved);
+  const validation = validateStateModelDescriptor(descriptor, {
+    descriptorPath: path.relative(process.cwd(), resolved).replace(/\\/g, "/"),
+    descriptorSha256: digest,
+  });
+  return { descriptor, validation, resolved, sha256: digest };
+}
+
+export function buildStateModelBinding(descriptor: AnyRecord, { descriptorPath, descriptorSha256 }: StateModelBindingOptions = {}): AnyRecord {
+  const validation = validateStateModelDescriptor(descriptor, { descriptorPath, descriptorSha256 });
+  if (validation.status !== "accepted") {
+    throw Object.assign(new Error("state model descriptor rejected"), { validation });
+  }
+  return {
+    schema: descriptor.schema,
+    name: descriptor.name,
+    path: descriptorPath,
+    sha256: descriptorSha256,
+    stateType: descriptor.stateType,
+    monad: descriptor.monad,
+    wp: descriptor.wp,
+    semantics: descriptor.semantics,
+    laws: descriptor.laws ?? [],
+    operations: descriptor.operations ?? [],
+    vcgen: descriptor.vcgen ?? { status: "not-connected" },
+    validation,
+  };
+}

@@ -37,8 +37,8 @@ for (const packageName of ['contracts', 'obligations', 'proof-status']) {
 
 const cliText = fs.readFileSync(psc, 'utf8');
 assert.ok(cliText.includes("../packages/contracts/src/index.mjs"));
-assert.ok(cliText.includes("../packages/obligations/src/index.mjs"));
-assert.ok(cliText.includes("../packages/proof-status/src/index.mjs"));
+assert.ok(cliText.includes("../packages/obligations/dist/index.js"));
+assert.ok(cliText.includes("../packages/proof-status/dist/index.js"));
 assert.ok(cliText.split('\n').length < 1900, 'psc CLI should remain bounded after extraction plus monadic lowering router');
 assert.ok(!cliText.includes('function parseLoopSpecsFromBody'), 'loop parsing belongs in packages/contracts');
 assert.ok(!cliText.includes('function leanCheckTextFromProofs'), 'proof-status Lean check generation belongs in packages/proof-status');

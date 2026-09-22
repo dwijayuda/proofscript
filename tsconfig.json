@@ -84,6 +84,15 @@
     },
     {
       "path": "./packages/arena-checker"
+    },
+    {
+      "path": "./packages/obligations"
+    },
+    {
+      "path": "./packages/proof-status"
+    },
+    {
+      "path": "./packages/state-models"
     }
   ]
 }

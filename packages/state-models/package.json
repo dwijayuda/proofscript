@@ -1,9 +1,17 @@
 {
   "name": "@proofscript/state-models",
   "version": "1.0.0-pskernel.149",
-  "type": "module",
-  "main": "src/index.mjs",
+  "main": "dist/index.js",
   "exports": {
     ".": "./src/index.mjs"
+  },
+  "description": "ProofScript state-model descriptor validation and binding.",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
   }
 }
