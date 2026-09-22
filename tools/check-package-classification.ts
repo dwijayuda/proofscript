@@ -115,6 +115,7 @@ if (!Array.isArray(manifest.packages)) failures.push("manifest.packages must be 
 if (!Array.isArray(manifest.stablePsc1Path)) failures.push("manifest.stablePsc1Path must be an array");
 
 const entries = Array.isArray(manifest.packages) ? manifest.packages : [];
+const rootPackage = loadJson(path.join(root, "package.json"));
 const byPath = new Map();
 const byName = new Map();
 for (const entry of entries) {
@@ -145,6 +146,9 @@ for (const pkgPath of discovered) {
   const pkgJson = loadJson(path.join(root, pkgPath, "package.json"));
   if (pkgJson && pkgJson.name !== entry.npmName) {
     failures.push(`${pkgPath} package.json name ${pkgJson.name} does not match classification npmName ${entry.npmName}`);
+  }
+  if (pkgJson?.name && rootPackage?.name && pkgJson.name === rootPackage.name) {
+    failures.push(`${pkgPath} reuses root package name ${rootPackage.name}; the root package must be the sole public owner of that npm identity`);
   }
 }
 for (const pkgPath of byPath.keys()) {
