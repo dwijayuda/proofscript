@@ -784,7 +784,8 @@
     "test:reference:v061:production-surface": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/v061-production-surface-corpus-tests.ts --strict",
     "test:reference:v061:c1-c2": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/v061-reference-c1-c2-tests.ts",
     "test:reference:v061:production-reference-parity": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/v061-production-reference-differential-tests.ts",
-    "test:ps1:incremental": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps1-incremental-compiler-tests.ts"
+    "test:ps1:incremental": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps1-incremental-compiler-tests.ts",
+    "test:ps2:plugin-metadata": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps2-plugin-metadata-tests.ts"
   },
   "engines": {
     "node": ">=20"
