@@ -2,9 +2,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { createStatefulWpBinding } from './stateful-wp-binding.mjs';
+import { createStatefulProgramLowering } from './stateful-program-lowering.mjs';
 import { createStatefulVcPlan } from './stateful-vc-plan.mjs';
 
-export { createStatefulWpBinding, createStatefulVcPlan };
+export { createStatefulWpBinding, createStatefulProgramLowering, createStatefulVcPlan };
 
 export function sha256Text(text) {
   return createHash('sha256').update(String(text)).digest('hex');
@@ -71,6 +72,10 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
   if (contractArtifact.verification?.profile === 'ps3-monadic-contracts0' && statefulWpBinding.bindingReady !== true) {
     throw new Error('strict monadic profile invariant violated: typed predicate is not ready for WP/Triple identity binding');
   }
+  const statefulProgramLowering = createStatefulProgramLowering(contractArtifact);
+  if (contractArtifact.verification?.profile === 'ps3-monadic-contracts0' && statefulProgramLowering.programLoweringReady !== true) {
+    throw new Error('strict monadic profile invariant violated: modeled operation sequence is not ready for Lean program lowering');
+  }
   const parameterBinders = programParameterBinderText(fn.params ?? []);
   const entryStateBinder = `(__ps_entry : ${stateModel.stateType})`;
   const binders = [parameterBinders, entryStateBinder].filter(Boolean).join(' ');
@@ -86,6 +91,7 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
   const statefulVcPlan = createStatefulVcPlan({
     contractArtifact,
     wpBinding: statefulWpBinding,
+    programLowering: statefulProgramLowering,
     tripleTheoremName: theoremName,
     tripleTheoremStatement: statement,
   });
@@ -113,7 +119,9 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
     statefulPostconditionIR: contractArtifact.statefulPostconditionIR,
     statefulPredicateElaboration: contractArtifact.statefulPredicateElaboration,
     statefulPredicateAST: contractArtifact.statefulPredicateAST,
+    statefulOperationElaboration: contractArtifact.statefulOperationElaboration,
     statefulWpBinding,
+    statefulProgramLowering,
     statefulVcPlan,
     contractKind: 'monadic-stateful',
     function: { name: fn.name, params: fn.params ?? [], returnType: fn.returnType, body: fn.body },
@@ -157,7 +165,9 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
       hasStdDoTripleSkeleton: true,
       statefulReferenceTypingComplete: contractArtifact.statefulPredicateElaboration?.referenceTypingComplete === true,
       normalizedPredicateAstTypeCheckingComplete: contractArtifact.statefulPredicateAST?.typeCheckingComplete === true,
+      stateOperationTypingComplete: contractArtifact.statefulOperationElaboration?.typingComplete === true,
       statefulWpIdentityBindingReady: statefulWpBinding.bindingReady === true,
+      statefulProgramLoweringReady: statefulProgramLowering.programLoweringReady === true,
       statefulVcPlanningReady: statefulVcPlan.planningReady === true,
       semanticVcDerivationComplete: false,
       realVerificationConditionsGenerated: false,
@@ -174,6 +184,10 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
       stdDoTripleSkeletonGenerated: true,
       statefulReferenceTypingComplete: contractArtifact.statefulPredicateElaboration?.referenceTypingComplete === true,
       normalizedPredicateAstTypeCheckingComplete: contractArtifact.statefulPredicateAST?.typeCheckingComplete === true,
+      stateOperationTypingComplete: contractArtifact.statefulOperationElaboration?.typingComplete === true,
+      statefulProgramLoweringReady: statefulProgramLowering.programLoweringReady === true,
+      sourceToLeanProgramEquivalenceChecked: false,
+      leanProgramTypechecked: false,
       wpTripleIdentityBindingComplete: statefulWpBinding.wpTripleIdentityBindingComplete === true,
       statefulVcPlanningReady: statefulVcPlan.planningReady === true,
       semanticVcDerivationComplete: false,
@@ -356,7 +370,9 @@ export function createMonadicLeanPreflightArtifact({ loweringArtifact, loweringA
     statefulPostconditionIR: loweringArtifact.statefulPostconditionIR,
     statefulPredicateElaboration: loweringArtifact.statefulPredicateElaboration,
     statefulPredicateAST: loweringArtifact.statefulPredicateAST,
+    statefulOperationElaboration: loweringArtifact.statefulOperationElaboration,
     statefulWpBinding: loweringArtifact.statefulWpBinding,
+    statefulProgramLowering: loweringArtifact.statefulProgramLowering,
     statefulVcPlan: loweringArtifact.statefulVcPlan,
     function: loweringArtifact.function?.name,
     stateModel: loweringArtifact.stateModel?.name,
@@ -375,7 +391,12 @@ export function createMonadicLeanPreflightArtifact({ loweringArtifact, loweringA
       hasStatefulPredicateAST: Boolean(loweringArtifact.statefulPredicateAST),
       statefulReferenceTypingComplete: loweringArtifact.statefulPredicateElaboration?.referenceTypingComplete === true,
       normalizedPredicateAstTypeCheckingComplete: loweringArtifact.statefulPredicateAST?.typeCheckingComplete === true,
+      hasStatefulOperationElaboration: Boolean(loweringArtifact.statefulOperationElaboration),
+      stateOperationTypingComplete: loweringArtifact.statefulOperationElaboration?.typingComplete === true,
       hasStatefulWpBinding: Boolean(loweringArtifact.statefulWpBinding),
+      hasStatefulProgramLowering: Boolean(loweringArtifact.statefulProgramLowering),
+      statefulProgramLoweringReady: loweringArtifact.statefulProgramLowering?.programLoweringReady === true,
+      leanProgramTypechecked: loweringArtifact.statefulProgramLowering?.leanProgramTypechecked === true,
       statefulWpIdentityBindingReady: loweringArtifact.statefulWpBinding?.bindingReady === true,
       hasStatefulVcPlan: Boolean(loweringArtifact.statefulVcPlan),
       statefulVcPlanningReady: loweringArtifact.statefulVcPlan?.planningReady === true,
@@ -402,6 +423,10 @@ export function createMonadicLeanPreflightArtifact({ loweringArtifact, loweringA
       specifiedStructuralProfile: loweringArtifact.verification?.profile === 'ps3-monadic-contracts0',
       statefulReferenceTypingComplete: loweringArtifact.statefulPredicateElaboration?.referenceTypingComplete === true,
       normalizedPredicateAstTypeCheckingComplete: loweringArtifact.statefulPredicateAST?.typeCheckingComplete === true,
+      stateOperationTypingComplete: loweringArtifact.statefulOperationElaboration?.typingComplete === true,
+      statefulProgramLoweringReady: loweringArtifact.statefulProgramLowering?.programLoweringReady === true,
+      sourceToLeanProgramEquivalenceChecked: false,
+      leanProgramTypechecked: false,
       wpTripleIdentityBindingComplete: loweringArtifact.statefulWpBinding?.wpTripleIdentityBindingComplete === true,
       statefulVcPlanningReady: loweringArtifact.statefulVcPlan?.planningReady === true,
       semanticVcDerivationComplete: false,
