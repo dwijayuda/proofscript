@@ -13,3 +13,8 @@
 {"id":"ghost-parameter-collision","feature":"V-GHOST","source":"function f(x: Nat): Nat\n  ghost x: Nat := x\n  ensures post: result = x\n:= {\n  x\n}","error":"ghost name 'x' collides"}
 {"id":"ghost-result-expression","feature":"V-GHOST","source":"function f(x: Nat): Nat\n  ghost g: Nat := result\n  ensures post: result = x\n:= {\n  x\n}","error":"'result' is not valid in ghost expressions"}
 {"id":"ghost-depends-on-ghost","feature":"V-GHOST","source":"function f(x: Nat): Nat\n  ghost a: Nat := x\n  ghost b: Nat := a\n  ensures post: result = x\n:= {\n  x\n}","error":"ghost expression 'b' may not depend on ghost 'a'"}
+{"id":"old-in-requires","feature":"V-OLD","source":"function f(x: Nat): Nat\n  requires h: old(x) = x\n  ensures post: result = x\n:= {\n  x\n}","error":"'old' is only valid in pure ensures clauses"}
+{"id":"old-in-runtime-body","feature":"V-OLD","source":"function f(x: Nat): Nat\n  ensures post: result = x\n:= {\n  old(x)\n}","error":"'old' is only valid in pure ensures clauses"}
+{"id":"old-in-ghost-expression","feature":"V-OLD","source":"function f(x: Nat): Nat\n  ghost g: Nat := old(x)\n  ensures post: result = x\n:= {\n  x\n}","error":"'old' is not valid in ghost expressions"}
+{"id":"result-inside-old","feature":"V-OLD","source":"function f(x: Nat): Nat\n  ensures post: result = old(result)\n:= {\n  x\n}","error":"'result' is not valid inside old(...)"}
+{"id":"nested-old-deferred","feature":"V-OLD","source":"function f(x: Nat): Nat\n  ensures post: result = old(g(x))\n:= {\n  x\n}","error":"unsupported old syntax"}
