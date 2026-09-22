@@ -150,6 +150,25 @@ try {
   assert.match(typeMismatchJson.message, /verification profile mismatch/i);
   assert.match(typeMismatchJson.message, /stateful-predicate-type-mismatch/i);
 
+  const unsupportedPredicateSource = path.join(tmp, "UnsupportedPredicate.ps");
+  fs.writeFileSync(unsupportedPredicateSource, `function inspect(x: Nat): State Bank Unit
+  ensures unsupported: x % 2 = 0
+:= do {
+  audit(x);
+}
+`);
+  const unsupportedPredicate = run([
+    "contracts", unsupportedPredicateSource,
+    "--state-model", model,
+    "--verification-profile", "ps3-monadic-contracts0",
+    "--json",
+  ]);
+  assert.equal(unsupportedPredicate.status, 1, unsupportedPredicate.stderr + unsupportedPredicate.stdout);
+  const unsupportedPredicateJson = json(unsupportedPredicate);
+  assert.equal(unsupportedPredicateJson.status, "rejected");
+  assert.match(unsupportedPredicateJson.message, /verification profile mismatch/i);
+  assert.match(unsupportedPredicateJson.message, /stateful-predicate-ast-unsupported/i);
+
   console.log("PS3_VERIFICATION_PROFILE_CLI_TESTS=PASS");
 } finally {
   fs.rmSync(tmp, { recursive: true, force: true });
