@@ -20,6 +20,8 @@ leanprover/lean4:v4.34.0
 
 The evidence report records the exact Lean version selected by Lake.
 
+The runner's `--strict` flag is a **semantic-result flag**, not an exact-version pin: it fails when the run does not reach real Lean-generated verification conditions. It still accepts any compatible Lean version at or above 4.33.1.
+
 ## Windows / PowerShell: default toolchain
 
 From the repository root:
