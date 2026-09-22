@@ -23,6 +23,14 @@ Every surface feature must be registered before it is implemented in the Lean-ve
 
 ## A.2 X — Semantic Divergence / Rejected X-class families
 
+The v0.6.1 conformance corpus assigns stable IDs to the rejected X-class forms it tests directly:
+
+- `X-TYPESCRIPT-GENERICS` — TypeScript `<T>` generic parameter syntax;
+- `X-RETURN` — unrestricted JavaScript-style `return`;
+- `X-GLOBAL-BLOCK` — a universal JavaScript-style brace block term.
+
+These IDs are mirrored in `conformance/feature-registry.json`. Other rejected families listed below remain part of the X-class policy even when v0.6.1 has no dedicated corpus ID for them.
+
 The following are not admitted into the Lean-verified core:
 
 ```text
