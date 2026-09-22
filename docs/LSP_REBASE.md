@@ -1,6 +1,6 @@
 # LSP Rebase Plan
 
-Status: donor analysis completed against `proofscript-lsp-0.46.0-p5101-lsp-adapter-source`.
+Status: minimal compiler-backed rebase implemented; richer donor features remain staged.
 
 ## What is worth preserving
 
@@ -195,3 +195,21 @@ The rebased LSP is considered architecture-clean when:
 - invalid source never becomes accepted merely for editor continuity;
 - cancellation/cache logic cannot affect proof acceptance;
 - existing donor protocol tests are either passing or intentionally replaced with equivalent tests.
+
+## Current implementation status
+
+Completed on the PS1 cleanup branch:
+
+- L1 — minimal editor-independent contracts: complete;
+- L2 — compiler-backed document checking and stable diagnostics: complete;
+- L3 — unsaved project/source overlays: complete;
+- L5 — worker isolation, cancellation, crash/restart state replay: complete;
+- L6 — stdio LSP transport: complete for the current operation set;
+- L7.1 — push/pull diagnostics: complete.
+
+Still pending:
+
+- L4 — incremental compiler/module snapshots beyond generation-level result caching;
+- L7.2+ — hover, completion, definition/references, symbols, rename, semantic tokens, proof status.
+
+Current end-to-end product CI launches the built `pslsp` binary and exercises JSON-RPC framing, document open/change/close, invalid→valid diagnostic transitions, pull diagnostics, and clean shutdown.
