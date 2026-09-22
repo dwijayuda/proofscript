@@ -90,6 +90,7 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
     source: contractArtifact.source ? { path: contractArtifact.source, sha256: contractArtifact.sourceSha256 } : undefined,
     contractsArtifact: { path: contractArtifactPath, sha256: contractArtifactSha256 },
     verification: contractArtifact.verification,
+    statefulPostconditionIR: contractArtifact.statefulPostconditionIR,
     contractKind: 'monadic-stateful',
     function: { name: fn.name, params: fn.params ?? [], returnType: fn.returnType, body: fn.body },
     stateModel: {
@@ -304,6 +305,7 @@ export function createMonadicLeanPreflightArtifact({ loweringArtifact, loweringA
     command: 'monadic-preflight',
     loweringArtifact: { path: loweringArtifactPath, sha256: loweringArtifactSha256 },
     verification: loweringArtifact.verification,
+    statefulPostconditionIR: loweringArtifact.statefulPostconditionIR,
     function: loweringArtifact.function?.name,
     stateModel: loweringArtifact.stateModel?.name,
     originalTripleSkeleton: {
@@ -316,6 +318,8 @@ export function createMonadicLeanPreflightArtifact({ loweringArtifact, loweringA
       schemaAccepted: true,
       hasTripleSkeleton: Boolean(loweringArtifact.tripleSkeleton),
       hasStateModelBinding: Boolean(loweringArtifact.stateModel),
+      hasStatefulPostconditionIR: Boolean(loweringArtifact.statefulPostconditionIR),
+      statefulPostconditionSemanticElaborationComplete: loweringArtifact.statefulPostconditionIR?.semanticElaborationComplete === true,
       hasExplicitStubBoundary: true,
       originalTheoremPreservedAsComment: Boolean(originalStatement),
       preflightUsesTrueTripleStub: true,
