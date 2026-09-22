@@ -59,6 +59,9 @@
       "path": "./packages/language-worker"
     },
     {
+      "path": "./packages/lsp"
+    },
+    {
       "path": "./packages/lean-export"
     },
     {
