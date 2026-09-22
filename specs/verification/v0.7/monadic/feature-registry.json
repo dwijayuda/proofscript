@@ -44,6 +44,8 @@
         "checking the state-model adequacy theorem rather than binding its identity",
         "semantic derivation of real verification conditions from the VC plan",
         "resolution/checking of operation Triple theorem identities in a real Lean environment",
+        "typechecking the emitted StateM program and encoded Std.Do.Triple target in Lean",
+        "execution of proofscript.stateful-vc-request/v1 and capture of Lean-generated goals",
         "type-checked model-specific observation semantics beyond structural entry/final-state binder insertion"
       ],
       "artifact_representation": [
@@ -54,14 +56,18 @@
         "proofscript.stateful-predicate-elaboration/v1 binds state/result types and descriptor observation signatures/arguments without claiming whole-predicate typechecking",
         "proofscript.stateful-predicate-ast/v1 typechecks bounded monadic requires and normalized postconditions in stateful-predicate-expressions0 and fails closed outside it",
         "proofscript.stateful-wp-binding/v1 binds typed pre/post predicate shapes to the selected WP/Triple, runner, adequacy theorem, and operation Triple theorem identities without claiming theorem checking",
-        "proofscript.stateful-vc-plan/v1 binds stable source obligation IDs, operation theorem identities, typed postcondition goals, and the overall Triple target without claiming semantic VC derivation",
+        "proofscript.stateful-operation-elaboration/v1 typechecks modeled operation-call arity and directly knowable argument types",
+        "proofscript.stateful-program-lowering/v1 deterministically lowers the bounded flat operation sequence to Lean StateM source without claiming Lean typechecking",
+        "proofscript.stateful-vc-plan/v1 binds stable source obligation IDs, operation theorem identities, typed postcondition goals, concrete program provenance, and the overall Triple target without claiming semantic VC derivation",
+        "proofscript.stateful-lean-semantic-encoding/v1 encodes pure predicates into Std.Do StateM Assertion/PostCond syntax using ⌜...⌝ and ⇓ ... => ...",
+        "proofscript.stateful-vc-request/v1 emits a Lean vcgen/mvcgen request only when model import provenance is declared; execution remains a separate boundary",
         "stateful postcondition IR is propagated contracts -> monadic-lowering -> monadic-preflight"
       ],
       "diagnostics": [
         "state model descriptor is mandatory",
         "return type must use State in this alpha",
         "duplicate contract labels are rejected",
-        "unmodeled stateful old/result, definite state-observation or predicate-AST type mismatches, unsupported normalized predicate AST syntax, invalid stateful preconditions, or undeclared operations cannot receive the specified profile"
+        "unmodeled stateful old/result, definite state-observation/predicate/operation-call type mismatches, operation arity errors, unsupported normalized predicate AST syntax, invalid stateful preconditions, undeclared operations, or missing used-operation Triple theorem identities cannot receive the specified profile"
       ]
     },
     {
