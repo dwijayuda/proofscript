@@ -115,13 +115,15 @@ The LSP must not directly own parser/elaborator semantics.
 
 The v0.6.1 reference defines 12 registered surface features and a machine-readable conformance model. Import/retain the registry and corpus as first-class repository inputs.
 
-Conformance gates:
+Normative conformance gates (Appendix G):
 
-- **C0:** registry/schema/corpus well formed;
-- **C1:** reference/production acceptance and rejection cases match;
-- **C2:** canonical Lean lowering matches expected corpus;
-- **C3:** production frontend matches the declared reference relation;
-- **C4:** later machine-checked parser/lowering theorems.
+- **C0:** static registry/schema/corpus is well formed;
+- **C1:** the **reference frontend** accepts/rejects every corpus case as specified;
+- **C2:** the **reference frontend** emits canonical Lean matching the lowering corpus;
+- **C3:** the **production frontend** matches the reference frontend on the corpus;
+- **C4:** corpus properties are covered by machine-checked reference theorems.
+
+Production-only regression gates are tracked separately and do not borrow C-level names. Current prerequisites include production surface-corpus parity and, next, production canonical-lowering parity.
 
 PS2 must explicitly resolve current metadata drift:
 
@@ -305,7 +307,7 @@ A usable ProofScript release must not wait for full Lean 4 parity.
 ### v0.7.0-alpha.1 — architecture/conformance alpha
 
 - PS1 complete;
-- v0.6.1 C0–C2 conformance integrated;
+- v0.6.1 C0 plus reference C1/C2 and production C3 conformance integrated;
 - native `psc check` stable for supported profile;
 - canonical compiler API;
 - correct product metadata/version manifest;
@@ -344,7 +346,7 @@ Report executable gates:
 
 ```text
 PS1: 7/10 gates
-v0.6.1 conformance: C2
+v0.6.1 conformance: C0; production surface corpus: 20/20; reference C1/C2: pending
 pure verification cases: 42/42
 runtime correspondence corpus: 18/25
 LSP protocol tests: 63/70
