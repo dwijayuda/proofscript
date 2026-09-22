@@ -32,11 +32,12 @@ Incremental tooling consumes syntax/meta/elab/module through `@proofscript/langu
 ## J2. Trust classes
 
 - **TCB:** pskernel checking/admission semantics.
-- **Optional TCB extension:** native compiler-IR evaluation through `NativeEvaluator`.
 - **Untrusted support:** parser, elaborator, tactics, module transport, CLI, browser, compiler backend, runtime host, language service, LSP, project tooling.
 - **Test-only:** conformance/differential/oracle orchestration.
 
 An outer-layer bug MUST NOT make a declaration trusted without kernel admission.
+
+Final Lean 4.34 removed the deprecated in-kernel compiler-interpreter reduction hook. ProofScript therefore does not include a `NativeEvaluator` kernel extension in the Lean-4.34-compatible architecture. Native proof tactics or compiler execution live in outer meta/compiler layers with separately declared trust assumptions.
 
 ## J3. TypeScript-first package policy
 

@@ -7,3 +7,10 @@
 - Added portable checked-module/npm architecture and separate compatibility version axes.
 - Added TypeScript-first package source policy.
 - Preserved the admitted v0.6.1 D/E syntax surface; no syntax was added merely for the version bump.
+
+## Lean 4.34 stable delta alignment
+
+- Final Lean 4.34 native-reduction removal is now normative: no `Lean.reduceNat`/`Lean.reduceBool` kernel hook or NativeEvaluator compatibility layer.
+- Documented inherited `erased` do bindings, `monotonicity_by`, `recall`/`recall?`, and `lia`/`grobner` parameter-list syntax.
+- Added Appendix K with exact upstream commits and ProofScript consequences.
+- Corrected the v0.7 feature-registry JSON Schema to match the v0.7 semantic-baseline object.

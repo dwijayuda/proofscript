@@ -119,7 +119,9 @@ The theorem-level conservativity goal remains environment-relative:
 canonicalLowerEnv(ΓPS) ⊢Lean4.34 canonicalLower(P)
 ```
 
-A standalone implementation additionally owes refinement/compatibility evidence for the claimed profile. Axioms, `sorryAx`, optional native-evaluator extensions, and trusted runtime/compiler boundaries remain explicit trust assumptions.
+A standalone implementation additionally owes refinement/compatibility evidence for the claimed profile. Axioms, `sorryAx`, native proof-evaluation/tactic trust assumptions, and trusted runtime/compiler boundaries remain explicit trust assumptions.
+
+Final Lean 4.34 removed the deprecated `Lean.reduceBool`, `Lean.reduceNat`, `Lean.ofReduceBool`, `Lean.ofReduceNat`, and `Lean.trustCompiler` declarations together with the kernel/Meta native-reduction hooks. Therefore native compiler evaluation is **not** part of v0.7.0 definitional equality or kernel WHNF semantics. Native proof tactics, when used, belong to the meta/tactic trust boundary rather than the kernel reduction relation.
 
 ## 4. Surface classes: L, D, E, X
 
@@ -585,6 +587,8 @@ Constructor order, parameters, indices, result types, positivity, universe behav
 
 Constructor declaration parameter decoration does not imply TypeScript-like pattern syntax.
 
+Lean 4.34 also adds the native declaration suffix `monotonicity_by` for coinductive predicates and inductive declarations participating in mixed coinductive cliques. In the reference-Lean profile this is inherited L-class syntax. v0.7.0 introduces no alternate ProofScript spelling. A standalone frontend may claim this capability only when it preserves Lean 4.34's placement restrictions and tactic-elaboration meaning.
+
 ## 15. Pattern matching
 
 ProofScript accepts native Lean match syntax and admits a braced E-MATCH-BODY form:
@@ -656,6 +660,8 @@ Tactic syntax is inherited Lean unless a future tactic-specific ProofScript exte
 
 The tactic language constructs proof terms. The kernel checks the resulting proof artifacts. A tactic bug should not become a proof-system inconsistency if the kernel boundary is respected.
 
+Lean 4.34 extends inherited tactic syntax so `lia` and `grobner` may take Grind-style parameter lists such as `lia [h]` and `grobner [= lemma]`. These are L-class tactic forms. ProofScript does not reinterpret the bracket syntax; a standalone tactic package may support them only with the corresponding Lean 4.34 elaboration behavior.
+
 ## 18. Effects, monads, and `do`
 
 Lean effect semantics are inherited.
@@ -672,6 +678,27 @@ function greet(_ : Unit) : IO Unit := do {
 `return` is not a universal early return. It retains Lean's `do`-notation meaning and is valid only in Lean contexts where it is meaningful.
 
 Mutable locals, loops, `break`, `continue`, exceptions, and monadic sequencing retain Lean's meanings. ProofScript does not silently replace Lean effects with JavaScript `Promise` semantics.
+
+### 18.1 Lean 4.34 verification-only `erased` bindings
+
+Lean 4.34 adds inherited `do` elements for verification-only state:
+
+```lean
+do
+  erased x := e
+  erased mut y : Nat := 0
+  erased z ← action
+  ...
+```
+
+These bindings are backed by Lean's `Erased` mechanism: verification constructs such as loop invariants and assertions may use them while executable code does not carry their logical value as ordinary runtime state.
+
+For ProofScript:
+
+- the reference-Lean profile treats these forms as L-class syntax;
+- a standalone frontend MUST preserve verification-only scope and erasure if it accepts them;
+- future ProofScript `ghost` syntax MUST document whether it lowers to this Lean mechanism or has a distinct verified lowering;
+- the TypeScript backend MUST NOT accidentally reify erased proof-only values into observable JavaScript state.
 
 ## 19. Basic propositions and logic
 
@@ -735,6 +762,8 @@ end Math
 v0.7.0 does not admit `namespace Math { ... }` or `section { ... }` because command scopes interact with incremental environment state.
 
 Attributes, modifiers, options, and imports are inherited through the pinned Lean command grammar unless separately classified.
+
+Lean 4.34 also includes the built-in `recall` and `recall?` commands for checked restatements of existing declarations. In the reference-Lean profile they are inherited L-class commands. Their defining property is that the displayed type/value is checked for definitional equality with the existing declaration without introducing a new declaration. A standalone implementation claiming support MUST preserve that non-mutating environment behavior.
 
 ## 23. Notations, macros, and language extensions
 
@@ -810,7 +839,7 @@ runtime_profile_revision
 
 These fields MUST NOT be collapsed into one package semver.
 
-Tooling SHOULD expose theorem axiom dependencies and MUST distinguish ordinary axioms, project axioms, `sorryAx`, unsafe/trusted runtime assumptions, and optional native-evaluator TCB extensions.
+Tooling SHOULD expose theorem axiom dependencies and MUST distinguish ordinary axioms, project axioms, `sorryAx`, unsafe/trusted runtime assumptions, and native/meta proof-evaluation assumptions such as those used by native proof tactics. Final Lean 4.34 has no `NativeEvaluator`-style kernel reduction extension.
 
 High-assurance releases SHOULD use independent checking against the pinned Lean oracle and/or other compatible checkers in addition to pskernel.
 
@@ -962,7 +991,7 @@ Primary current inputs:
 - current ProofScript/pskernel implementation evidence for the standalone JavaScript ecosystem architecture;
 - Lean 4.35.0-rc2 at `11acb17ec6b07a8f9e9173e6845197929540936b` as a non-normative compatibility watch only.
 
-See Appendix B for the Lean coverage map, Appendix F for the version-manifest template, and Appendix J for implementation/package architecture.
+See Appendix B for the Lean coverage map, Appendix F for the version-manifest template, Appendix J for implementation/package architecture, and Appendix K for the stable Lean 4.34 delta audit.
 
 ## 33. Conformance artifacts and implementation readiness
 

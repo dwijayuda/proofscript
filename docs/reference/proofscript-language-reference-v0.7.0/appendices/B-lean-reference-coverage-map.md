@@ -33,8 +33,11 @@ This is a study/coverage map, not a claim that ProofScript exposes every Lean fe
 | simplifier/rewriting | theorem-prover frontend capability |
 | Grind/automation | future tactic capability, not current core syntax |
 | MVCGen/verification conditions | future verification-extension track |
-| do/effects/iterators | executable/software profile |
-| compiler IR/native reduction | compiler semantics and optional NativeEvaluator TCB |
+| do/effects/iterators | executable/software profile, including Lean 4.34 verification-only `erased` do bindings |
+| coinductive/inductive suffixes | Lean 4.34 `monotonicity_by` inherited declaration syntax |
+| built-in checked restatement commands | Lean 4.34 `recall` / `recall?` inherited commands |
+| tactic parameter syntax | Lean 4.34 `lia [...]` / `grobner [...]` inherited tactic forms |
+| compiler IR/native proof evaluation | executable compiler/meta-tactic concern; final Lean 4.34 removed in-kernel native reduction |
 | environment/modules | portable module/npm distribution |
 | proof validation/axioms | assurance/claim reporting |
 | language/server | incremental language service and LSP |

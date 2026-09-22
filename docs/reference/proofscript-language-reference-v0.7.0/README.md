@@ -11,3 +11,7 @@ Non-normative watch:
 - `11acb17ec6b07a8f9e9173e6845197929540936b`
 
 The initial v0.7.0 candidate preserves the admitted v0.6.1 D/E syntax surface. Its main changes are semantic-baseline accuracy, standalone-pkernel architecture, package/module architecture, and TypeScript-first implementation policy.
+
+## Lean 4.34 delta audit
+
+Appendix K records stable-4.34 changes with direct ProofScript consequences, including removal of in-kernel native reduction and new verification-oriented `erased` do bindings.

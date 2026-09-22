@@ -17,18 +17,26 @@
     "semantic_baseline": {
       "type": "object",
       "required": [
-        "lean_version",
-        "lean_commit"
+        "system",
+        "version",
+        "commit",
+        "normative"
       ],
       "properties": {
-        "lean_version": {
-          "const": "4.33.1"
+        "system": {
+          "const": "Lean"
         },
-        "lean_commit": {
-          "type": "string",
-          "minLength": 40
+        "version": {
+          "const": "4.34.0"
+        },
+        "commit": {
+          "const": "293d5d0c0c3f3dded4688b3ccd6a33939ac5102b"
+        },
+        "normative": {
+          "const": true
         }
-      }
+      },
+      "additionalProperties": false
     },
     "claim_ceiling": {
       "const": "S1-specified"
