@@ -1,0 +1,8 @@
+{"id": "const-with-params", "feature": "D-CONST-ALIAS", "source": "const add(x : Nat, y : Nat) : Nat := x + y;", "reason": "const is a parameterless declaration-head alias; explicit parameter groups require def or function"}
+{"id": "function-without-params", "feature": "D-FUNCTION-ALIAS", "source": "function answer : Nat := 42;", "reason": "function alias requires at least one explicit declaration parameter group"}
+{"id": "if-without-parens", "feature": "E-IF-BRACE", "source": "if x > y { x } else { y }", "reason": "the E-IF-BRACE form requires a parenthesized condition"}
+{"id": "if-statement-list", "feature": "E-IF-BRACE", "source": "if (c) { x; y } else { z }", "reason": "each E-IF-BRACE branch contains one term, not a JavaScript statement list"}
+{"id": "pattern-call-sugar", "feature": "E-MATCH-BODY", "source": "match value with { | .some(x) => x; }", "reason": "patterns remain native Lean in v0.6.1; .some(x) pattern sugar is not admitted"}
+{"id": "typescript-generics", "feature": "X-TYPESCRIPT-GENERICS", "source": "function id<T>(x : T) : T := x;", "reason": "TypeScript <T> does not replace Lean implicit/dependent binders"}
+{"id": "js-return", "feature": "X-RETURN", "source": "function f(x : Nat) : Nat { return x; }", "reason": "block-bodied declarations and unrestricted JavaScript return are not admitted in v0.6.1"}
+{"id": "global-brace-block", "feature": "X-GLOBAL-BLOCK", "source": "{ x; y; }", "reason": "braces are category-specific; there is no universal JavaScript block term"}
