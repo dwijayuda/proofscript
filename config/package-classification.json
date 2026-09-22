@@ -214,6 +214,15 @@
       ]
     },
     {
+      "path": "packages/product-profile",
+      "npmName": "@proofscript/product-profile",
+      "tier": "product",
+      "lifecycle": "supported",
+      "trustBoundary": "Product identity and compatibility metadata only; no parser, elaborator, checker, or kernel authority.",
+      "productionRole": "Centralizes current ProofScript reference/profile metadata for CLI project and certificate workflows.",
+      "allowedDependencies": []
+    },
+    {
       "path": "packages/cli",
       "npmName": "@proofscript/cli",
       "tier": "product",
