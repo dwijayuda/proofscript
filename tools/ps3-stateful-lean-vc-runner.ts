@@ -7,6 +7,7 @@ import os from "node:os";
 import path from "node:path";
 import { makeMonadicContractsArtifact } from "../packages/contracts/src/index.mjs";
 import { createMonadicLoweringArtifact } from "../packages/monadic-lowering/src/index.mjs";
+import { analyzeStatefulVcExecution } from "../packages/monadic-lowering/src/stateful-vc-execution.mjs";
 import { buildStateModelBinding } from "../packages/state-models/src/index.mjs";
 import { probeLean } from "./lib/lean-toolchain.ts";
 
@@ -51,91 +52,6 @@ function writeReport(report: any) {
     fs.writeFileSync(resolved, JSON.stringify(report, null, 2) + "\n");
   }
   console.log(JSON.stringify(report, null, 2));
-}
-
-function classifyResidualGoals(output: string) {
-  const text = String(output);
-  const unsolved = /unsolved goals?/iu.test(text);
-  const lines = text.split(/\r?\n/u);
-  const goalLines = lines
-    .map(line => line.trimEnd())
-    .filter(line => /(?:^|\s)⊢\s/u.test(line));
-  const traceBlocks: string[] = [];
-  let current: string[] = [];
-  let collecting = false;
-  for (const line of lines) {
-    if (/^case\s+\S+/u.test(line.trim()) || /(?:^|\s)⊢\s/u.test(line)) {
-      collecting = true;
-    }
-    if (collecting) current.push(line);
-    if (collecting && line.trim() === "") {
-      const block = current.join("\n").trim();
-      if (block) traceBlocks.push(block);
-      current = [];
-      collecting = false;
-    }
-  }
-  const tail = current.join("\n").trim();
-  if (tail) traceBlocks.push(tail);
-  return {
-    detected: unsolved || goalLines.length > 0 || traceBlocks.length > 0,
-    unsolvedMarker: unsolved,
-    goalLines,
-    traceBlocks,
-    rawOutputSha256: sha256(text),
-  };
-}
-
-function firstFailedStage(checks: Record<string, any>, residual: any) {
-  if (checks.modelBuild.exitCode !== 0) return "lean-model-build";
-  if (checks.programCheck.exitCode !== 0) return "lean-program-typecheck";
-  if (checks.tripleCheck.exitCode !== 0) return "lean-triple-target-typecheck";
-  if (checks.requestRun.exitCode === 0) return null;
-  if (residual.detected) return "vc-residual-goals";
-  return "vc-request-execution";
-}
-
-function createGoalArtifact({
-  functionName,
-  request,
-  residual,
-  tacticReached,
-  semanticProofDischarge,
-}: {
-  functionName: string;
-  request: any;
-  residual: any;
-  tacticReached: boolean;
-  semanticProofDischarge: boolean;
-}) {
-  const traceBlocks = residual.traceBlocks ?? [];
-  const goals = traceBlocks.map((trace: string, index: number) => {
-    const traceSha256 = sha256(trace);
-    return {
-      id: `${functionName}.stateful.vc.${String(index + 1).padStart(3, "0")}.${traceSha256.slice(0, 12)}`,
-      index,
-      trace,
-      traceSha256,
-      discharged: false,
-    };
-  });
-  return {
-    schema: "proofscript.stateful-vc-goals/v1",
-    function: functionName,
-    requestTheoremName: request.request.theoremName,
-    requestTarget: request.request.target,
-    tactic: request.tactic.name,
-    tacticReached,
-    sourceOutputSha256: residual.rawOutputSha256,
-    goals,
-    summary: {
-      goalCount: goals.length,
-      residualGoalsPresent: goals.length > 0,
-      semanticProofDischarge,
-    },
-    generatedFromLeanExecution: tacticReached,
-    semanticProofDischarge,
-  };
 }
 
 function leanPreamble(request: any) {
@@ -247,36 +163,23 @@ const requestRun = tripleCheck.exitCode === 0
   ? run(lakeCmd, ["env", "lean", path.relative(tmp, requestPath)], tmp)
   : { command: lakeCmd, args: [], exitCode: 1, stdout: "", stderr: "triple target check failed", error: null };
 
-const requestOutput = `${requestRun.stdout}\n${requestRun.stderr}`;
-const residual = classifyResidualGoals(requestOutput);
-const tacticReached = tripleCheck.exitCode === 0
-  && (requestRun.exitCode === 0 || residual.detected);
-const semanticVcDerivationComplete = tacticReached;
-const realVerificationConditionsGenerated = tacticReached;
-const semanticProofDischarge = requestRun.exitCode === 0;
-const goalArtifact = createGoalArtifact({
-  functionName: lowering.function.name,
-  request,
-  residual,
-  tacticReached,
-  semanticProofDischarge,
-});
-
 const checks = {
   modelBuild,
   programCheck,
   tripleCheck,
   requestRun,
 };
-const failedStage = firstFailedStage(checks, residual);
+const execution = analyzeStatefulVcExecution({
+  functionName: lowering.function.name,
+  request,
+  checks,
+});
 
 const report = {
   schema: "proofscript.stateful-vc-run/v1",
-  status: semanticProofDischarge
-    ? "proved"
-    : (realVerificationConditionsGenerated ? "vcs-generated" : "failed"),
+  status: execution.status,
   scope: "examples/software/07-bank-debit-stateful-vc.ps",
-  failedStage,
+  failedStage: execution.failedStage,
   lean: leanProbe,
   provenance: {
     sourceSha256: sha256(sourceText),
@@ -295,23 +198,11 @@ const report = {
     requestTheoremName: request.request.theoremName,
     requestTarget: request.request.target,
   },
-  residualGoals: residual,
-  goalArtifact,
-  claims: {
-    leanEnvironmentResolved: modelBuild.exitCode === 0,
-    leanModelTypechecked: modelBuild.exitCode === 0,
-    leanProgramTypechecked: programCheck.exitCode === 0,
-    tripleTargetTypechecked: tripleCheck.exitCode === 0,
-    tacticExecuted: tacticReached,
-    semanticVcDerivationComplete,
-    realVerificationConditionsGenerated,
-    stateModelAdequacyChecked: false,
-    sourceToLeanProgramEquivalenceChecked: false,
-    exceptionalPathsCovered: false,
-    semanticProofDischarge,
-  },
+  residualGoals: execution.residualGoals,
+  goalArtifact: execution.goalArtifact,
+  claims: execution.claims,
 };
 
 writeReport(report);
 
-if (strict && !realVerificationConditionsGenerated) process.exit(1);
+if (strict && !execution.claims.realVerificationConditionsGenerated) process.exit(1);
