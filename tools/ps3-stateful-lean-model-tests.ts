@@ -85,7 +85,8 @@ const built = makeMonadicContractsArtifact({
 });
 const { artifact } = built;
 
-assert.equal(artifact.status, "accepted");
+assert.equal(artifact.schema, "proofscript.contracts.v1");
+assert.equal(artifact.contractKind, "monadic-stateful");
 assert.equal(artifact.verification.profile, "ps3-monadic-contracts0");
 assert.equal(artifact.statefulPredicateAST.typeCheckingComplete, true);
 assert.equal(artifact.statefulOperationElaboration.typingComplete, true);
