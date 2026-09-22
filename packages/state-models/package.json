@@ -3,7 +3,10 @@
   "version": "1.0.0-pskernel.149",
   "main": "dist/index.js",
   "exports": {
-    ".": "./src/index.mjs"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
   },
   "description": "ProofScript state-model descriptor validation and binding.",
   "types": "dist/index.d.ts",
@@ -13,5 +16,6 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json"
-  }
+  },
+  "type": "module"
 }
