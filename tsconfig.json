@@ -20,6 +20,9 @@
       "path": "./packages/syntax"
     },
     {
+      "path": "./packages/reference-v061"
+    },
+    {
       "path": "./packages/parser"
     },
     {

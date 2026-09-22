@@ -1,76 +1,50 @@
-# ProofScript PS1 Closure Milestone
-
-PS1 is the cleanup-and-closure milestone for the current ProofScript implementation.
+# ProofScript PS2 — v0.6.1 Reference Conformance
 
 ## Goal
 
-Preserve the working KA146 language/toolchain behavior while reducing architectural drift and establishing one canonical multi-package dependency graph.
+Earn genuine normative v0.6.1 C1 and C2 evidence using an independent reference frontend.
 
-PS1 is complete when all of the following are true:
+PS2 deliberately does not reuse the production parser for C1/C2.
 
-- the canonical `.ps -> frontend -> checked Core -> kernel` path remains working;
-- valid representative ProofScript programs are accepted;
-- invalid representative programs are rejected;
-- JavaScript/TypeScript-targeted builds remain executable for the supported runtime subset;
-- theorem/proof declarations remain non-runtime artifacts;
-- the canonical compiler API is explicit and is the shared programmatic entry point for CLI and future editor tooling;
-- package ownership and dependency direction are documented and mechanically checked;
-- overlapping frontend implementations have an explicit disposition;
-- the LSP restoration plan targets a stable language-service boundary instead of compiler internals;
-- PS1 CI is green.
+## Completion criteria
 
-## Required PS1 gates
+PS2 is complete when:
 
-At minimum:
+- an independent v0.6.1 reference frontend exists;
+- the reference frontend has zero dependencies on production parser/elaborator/frontend/compiler/kernel packages;
+- C1: it accepts all positive and rejects all negative authoritative corpus cases;
+- C2: it emits canonical Lean exactly matching every authoritative lowering case;
+- feature ownership is surfaced through registered v0.6.1 feature IDs;
+- unknown/unregistered syntax fails closed;
+- product/PS1 regression gates remain green;
+- claims remain limited to implementation conformance; no S2/S3 or Lean-equivalence claim is added.
+
+## Required gates
 
 ```bash
 npm run build
+npm run test:architecture:package-classification
+npm run test:reference:v061:c0
+npm run test:reference:v061:c1-c2
+npm run test:reference:v061:production-surface
+npm run test:ps1:compiler-facade
+npm run test:ps1:language-service
+npm run test:ps1:language-worker
+npm run test:ps1:lsp
 npm run test:ka137
 npm run test:ka140
 npm run test:ka146
 ```
 
-Additional focused tests must be added before deleting or consolidating behavior.
+## Explicit non-goals
 
-## Architecture policy
+- C3 production-vs-reference proof;
+- C4 machine-checked parser/lowering theorems;
+- full Lean parser coverage;
+- new ProofScript language features;
+- v0.7 contracts semantics;
+- full Lean kernel equivalence.
 
-ProofScript remains an npm-workspaces monorepo. Separate packages are retained when they represent a real trust, compilation, runtime, assurance, or editor boundary.
+## After PS2
 
-PS1 does **not** flatten the repository into one npm package.
-
-The cleanup target is fewer overlapping responsibilities, not fewer files for their own sake.
-
-## In scope
-
-- package classification and dependency cleanup;
-- strengthening `@proofscript/compiler` as the canonical programmatic pipeline API;
-- selecting one canonical frontend path;
-- auditing and eventually eliminating duplicate frontend/bridge architecture after behavior is migrated;
-- separating product code from assurance/history scaffolding;
-- restoring editor tooling through a stable language-service API;
-- adding focused CI and acceptance gates;
-- deleting genuinely empty or obsolete package scaffolds only after dependency checks.
-
-## Out of scope until the canonical pipeline is stable
-
-- new language features;
-- new runtime backends;
-- WASM work;
-- Rust/Go/PHP/Python backends;
-- a new plugin architecture;
-- expanding Lean parity claims;
-- LSP feature expansion beyond restoration/adaptation;
-- broad rewrites of the kernel.
-
-## Anti-drift rule
-
-A PS1 change must do at least one of:
-
-1. reduce a demonstrated architectural overlap;
-2. make a package boundary explicit;
-3. remove proven-dead scaffolding;
-4. make an existing working behavior pass through the canonical API;
-5. add a regression/acceptance test for existing behavior;
-6. fix a demonstrated correctness or integration bug.
-
-Ideas outside those categories go to the backlog instead of the implementation.
+The next narrow milestone is C3: compare production frontend behavior and canonical lowering against this reference frontend on the frozen corpus.

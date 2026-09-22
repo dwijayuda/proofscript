@@ -781,7 +781,8 @@
     "test:ps1:language-worker": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps1-language-worker-tests.ts",
     "test:ps1:lsp": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps1-lsp-transport-tests.ts",
     "audit:reference:v061:production-surface": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/v061-production-surface-corpus-tests.ts",
-    "test:reference:v061:production-surface": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/v061-production-surface-corpus-tests.ts --strict"
+    "test:reference:v061:production-surface": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/v061-production-surface-corpus-tests.ts --strict",
+    "test:reference:v061:c1-c2": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/v061-reference-frontend-c1-c2-tests.ts"
   },
   "engines": {
     "node": ">=20"

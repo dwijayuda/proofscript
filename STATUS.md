@@ -131,10 +131,21 @@ Additional current gates include:
 
 The deeper frontend-next/unified-bridge migration is no longer allowed to keep PS1 open indefinitely. It continues under explicit follow-up milestones with replacement gates.
 
+## PS2 reference-conformance status
+
+Normative v0.6.1 conformance now has:
+
+- C0 — PASS: corpus integrity;
+- C1 — PASS: independent reference frontend accepts 12/12 positive and rejects 8/8 negative cases;
+- C2 — PASS: independent reference frontend emits 12/12 exact canonical Lean lowerings with SyntaxEq relation.
+
+The reference package has zero production ProofScript package dependencies. See `docs/PS2_CLOSEOUT.md`.
+
 ## Next engineering target
 
-1. Build the independent v0.6.1 reference frontend needed for genuine normative C1.
-2. Implement/reference-test canonical Lean lowering for normative C2.
-3. Differentially compare production vs reference for C3.
-4. Add compiler source-map + feature-ID APIs for richer LSP capabilities.
-5. Continue extracting useful incremental infrastructure from frontend-next behind canonical compiler/project APIs.
+PS3 is deliberately limited to normative C3 production-vs-reference differential conformance:
+
+1. compare production/reference accept-reject decisions;
+2. expose production canonical lowering for the registered corpus;
+3. compare production/reference Lean text exactly;
+4. keep C0/C1/C2 and all product/KA gates green.
