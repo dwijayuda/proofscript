@@ -1411,9 +1411,6 @@
 ./packages/compiler/src/index.ts
 ./packages/compiler/tsconfig.json
 ./packages/compiler/tsconfig.tsbuildinfo
-./packages/diagnostics
-./packages/diagnostics/README.md
-./packages/diagnostics/package.json
 ./packages/elaborator
 ./packages/elaborator/README.md
 ./packages/elaborator/dist
@@ -1443,9 +1440,6 @@
 ./packages/environment/src/index.ts
 ./packages/environment/tsconfig.json
 ./packages/environment/tsconfig.tsbuildinfo
-./packages/formatter
-./packages/formatter/README.md
-./packages/formatter/package.json
 ./packages/frontend
 ./packages/frontend-next
 ./packages/frontend-next/dist
@@ -2777,9 +2771,6 @@
 ./packages/lsp
 ./packages/lsp/README.md
 ./packages/lsp/package.json
-./packages/macro
-./packages/macro/README.md
-./packages/macro/package.json
 ./packages/oracle-lean
 ./packages/oracle-lean/README.md
 ./packages/oracle-lean/dist
@@ -2951,9 +2942,6 @@
 ./packages/syntax/src/index.ts
 ./packages/syntax/tsconfig.json
 ./packages/syntax/tsconfig.tsbuildinfo
-./packages/tactics-core
-./packages/tactics-core/README.md
-./packages/tactics-core/package.json
 ./packages/typeclass
 ./packages/typeclass/README.md
 ./packages/typeclass/dist
