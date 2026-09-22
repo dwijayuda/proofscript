@@ -23,6 +23,7 @@ jobs:
       - run: npm run test:ps2:plugin-metadata
       - run: npm run test:ps2:project-metadata
       - run: npm run test:ps2:cli-project-profile
+      - run: npm run test:ps2:feature-registry
       - run: npm run test:ps1:compiler-facade
       - run: npm run test:ps1:incremental
       - run: npm run test:ps1:language-service
