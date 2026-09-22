@@ -30,6 +30,7 @@ export type SurfaceTerm=
   |{tag:"intLit";value:number}
   |{tag:"stringLit";value:string}
   |{tag:"arrayLit";items:SurfaceTerm[]}
+  |{tag:"tuple";items:SurfaceTerm[]}
   |{tag:"do";binds:SurfaceDoBind[];body:SurfaceTerm}
   |{tag:"boolLit";value:boolean}
   |{tag:"bif";condition:SurfaceTerm;thenBranch:SurfaceTerm;elseBranch:SurfaceTerm}
