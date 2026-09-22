@@ -8,7 +8,22 @@ Schema:
 proofscript.stateful-vc-run/v1
 ```
 
-This artifact is emitted by `tools/ps3-stateful-lean-vc-runner.ts` for the promoted debit-only semantic target.
+This artifact is emitted by either:
+
+- `tools/ps3-stateful-lean-vc-runner.ts` for the pinned debit-only assurance target; or
+- the public `psc monadic-vc-run` command for a supplied monadic-lowering artifact plus Lean/Lake project.
+
+The public command form is:
+
+```text
+psc monadic-vc-run <monadic-lowering.json> \
+  --lean-project <dir> \
+  --out <run.json> \
+  [--lake-cmd <lake>] \
+  [--json]
+```
+
+Both surfaces use the same `analyzeStatefulVcExecution` claim-promotion logic from the canonical monadic-lowering package.
 
 ## Ordered execution stages
 
@@ -34,6 +49,14 @@ vc-request-execution
 ```
 
 A successful completed proof has `failedStage = null`.
+
+The public command reports:
+
+- CLI `status = accepted` with `verificationStatus = vcs-generated` when Lean reached the tactic and left residual goals;
+- CLI `status = accepted` with `verificationStatus = proved` when the generated request completed;
+- CLI `status = rejected` when the run did not reach a valid semantic VC result.
+
+The persisted `proofscript.stateful-vc-run/v1` artifact always retains the underlying semantic status.
 
 ## Evidence
 
