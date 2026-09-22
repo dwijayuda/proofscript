@@ -9,7 +9,7 @@ import { assertVerificationProfile, makeContractsArtifact, makeMonadicContractsA
 import { normalizeObligationsForWorkflow } from '../packages/obligations/src/index.mjs';
 import { readProofClaims, createProofStatusArtifact, verifyProofStatusArtifact } from '../packages/proof-status/src/index.mjs';
 import { readStateModelDescriptor, validateStateModelDescriptor, buildStateModelBinding } from '../packages/state-models/src/index.mjs';
-import { createMonadicLoweringBundle, createMonadicLeanPreflightBundle, readMonadicLoweringArtifact } from '../packages/monadic-lowering/src/index.mjs';
+import { monadicLoweringCommand, monadicVcRequestCommand, monadicPreflightCommand } from './monadic-commands.mjs';
 import {
   CURRENT_PRODUCT_PROFILE,
   CURRENT_PROOFSCRIPT_REFERENCE,
@@ -1740,179 +1740,6 @@ function softwareAlphaCommand(args) {
   jsonOut(result, json);
 }
 
-function monadicLoweringCommand(args) {
-  const json = has(args, '--json');
-  const pos = positional(args);
-  const input = pos[0] ? path.resolve(process.cwd(), pos[0]) : undefined;
-  const out = opt(args, '--out');
-  const emitLean = opt(args, '--emit-lean');
-  if (!input || !out) usage(2);
-  try {
-    const contractArtifact = readJsonPath(input);
-    const bundle = createMonadicLoweringBundle({
-      contractArtifact,
-      contractArtifactPath: path.relative(process.cwd(), input).replace(/\\/g, '/'),
-      contractArtifactSha256: sha256File(input),
-      packageVersion: VERSION,
-      checkpoint: 'KA-146 Lean-checkable monadic skeleton preflight',
-    });
-    const resolvedOut = path.resolve(process.cwd(), out);
-    writeJsonFile(resolvedOut, bundle.artifact);
-    let leanOut;
-    if (emitLean) {
-      leanOut = path.resolve(process.cwd(), emitLean);
-      fs.mkdirSync(path.dirname(leanOut), { recursive: true });
-      fs.writeFileSync(leanOut, bundle.leanText);
-      bundle.artifact.leanSkeleton = {
-        path: path.relative(path.dirname(resolvedOut), leanOut).replace(/\\/g, '/'),
-        sha256: sha256File(leanOut),
-        checkableAsCompleteProof: false,
-      };
-      writeJsonFile(resolvedOut, bundle.artifact);
-    }
-    jsonOut({
-      status: 'accepted',
-      command: 'monadic-lowering',
-      out: resolvedOut,
-      outSha256: sha256File(resolvedOut),
-      emitLean: leanOut,
-      emitLeanSha256: leanOut ? sha256File(leanOut) : undefined,
-      schema: bundle.artifact.schema,
-      function: bundle.artifact.function?.name,
-      stateModel: bundle.artifact.stateModel?.name,
-      tripleSkeleton: bundle.artifact.tripleSkeleton,
-      summary: bundle.artifact.summary,
-      trustBoundary: bundle.artifact.trustBoundary,
-    }, json);
-  } catch (error) {
-    jsonOut({ status: 'rejected', command: 'monadic-lowering', message: error instanceof Error ? error.message : String(error) }, json);
-    process.exit(1);
-  }
-}
-
-function monadicVcRequestCommand(args) {
-  const json = has(args, '--json');
-  const pos = positional(args);
-  const input = pos[0] ? path.resolve(process.cwd(), pos[0]) : undefined;
-  const out = opt(args, '--out');
-  const emitLean = opt(args, '--emit-lean');
-  if (!input || !out) usage(2);
-  try {
-    const { loweringArtifact } = readMonadicLoweringArtifact(input);
-    const request = loweringArtifact.statefulVcRequest;
-    if (!request || request.schema !== 'proofscript.stateful-vc-request/v1') {
-      throw new Error('monadic lowering artifact does not contain proofscript.stateful-vc-request/v1');
-    }
-    const resolvedOut = path.resolve(process.cwd(), out);
-    writeJsonFile(resolvedOut, request);
-    let resolvedLean;
-    if (emitLean) {
-      if (request.requestSourceReady !== true || !request.request?.source) {
-        const reasons = (request.diagnostics ?? []).map(item => item.code).join(', ') || 'request source not ready';
-        jsonOut({
-          status: 'unsupported',
-          command: 'monadic-vc-request',
-          out: resolvedOut,
-          outSha256: sha256File(resolvedOut),
-          schema: request.schema,
-          requestSourceReady: false,
-          diagnostics: request.diagnostics ?? [],
-          message: `Lean VC request source is not ready: ${reasons}`,
-        }, json);
-        process.exit(2);
-      }
-      resolvedLean = path.resolve(process.cwd(), emitLean);
-      fs.mkdirSync(path.dirname(resolvedLean), { recursive: true });
-      fs.writeFileSync(resolvedLean, request.request.source);
-    }
-    jsonOut({
-      status: 'accepted',
-      command: 'monadic-vc-request',
-      out: resolvedOut,
-      outSha256: sha256File(resolvedOut),
-      emitLean: resolvedLean,
-      emitLeanSha256: resolvedLean ? sha256File(resolvedLean) : undefined,
-      schema: request.schema,
-      function: request.function,
-      requestSourceReady: request.requestSourceReady,
-      environment: request.environment,
-      tactic: request.tactic,
-      executionStatus: request.executionStatus,
-      leanEnvironmentResolved: request.leanEnvironmentResolved,
-      tacticExecuted: request.tacticExecuted,
-      semanticVcDerivationComplete: request.semanticVcDerivationComplete,
-      realVerificationConditionsGenerated: request.realVerificationConditionsGenerated,
-      semanticProofDischarge: request.semanticProofDischarge,
-      diagnostics: request.diagnostics,
-    }, json);
-  } catch (error) {
-    jsonOut({ status: 'rejected', command: 'monadic-vc-request', message: error instanceof Error ? error.message : String(error) }, json);
-    process.exit(1);
-  }
-}
-
-function runLeanPreflightCommand(leanCmd, leanFile) {
-  if (!leanCmd) return { status: 'skipped', reason: 'no --lean-cmd provided' };
-  const result = spawnSync(leanCmd, [leanFile], { cwd: process.cwd(), encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
-  return {
-    status: (result.status ?? 1) === 0 ? 'passed' : 'failed',
-    command: leanCmd,
-    args: [leanFile],
-    exitCode: result.status ?? 1,
-    stdout: result.stdout,
-    stderr: result.stderr,
-  };
-}
-
-function monadicPreflightCommand(args) {
-  const json = has(args, '--json');
-  const pos = positional(args);
-  const input = pos[0] ? path.resolve(process.cwd(), pos[0]) : undefined;
-  const out = opt(args, '--out');
-  const emitLean = opt(args, '--emit-lean');
-  const leanCmd = opt(args, '--lean-cmd');
-  if (!input || !out || !emitLean) usage(2);
-  try {
-    const { loweringArtifact, loweringArtifactSha256 } = readMonadicLoweringArtifact(input);
-    const resolvedOut = path.resolve(process.cwd(), out);
-    const resolvedLean = path.resolve(process.cwd(), emitLean);
-    const leanText = createMonadicLeanPreflightBundle({ loweringArtifact, packageVersion: VERSION }).leanText;
-    fs.mkdirSync(path.dirname(resolvedLean), { recursive: true });
-    fs.writeFileSync(resolvedLean, leanText);
-    const leanRun = runLeanPreflightCommand(leanCmd, resolvedLean);
-    const bundle = createMonadicLeanPreflightBundle({
-      loweringArtifact,
-      loweringArtifactPath: path.relative(path.dirname(resolvedOut), input).replace(/\\/g, '/'),
-      loweringArtifactSha256,
-      preflightLeanPath: path.relative(path.dirname(resolvedOut), resolvedLean).replace(/\\/g, '/'),
-      preflightLeanSha256: sha256File(resolvedLean),
-      leanRun,
-      packageVersion: VERSION,
-      checkpoint: 'KA-146 Lean-checkable monadic skeleton preflight',
-    });
-    writeJsonFile(resolvedOut, bundle.report);
-    const result = {
-      status: leanRun.status === 'failed' ? 'rejected' : 'accepted',
-      command: 'monadic-preflight',
-      out: resolvedOut,
-      outSha256: sha256File(resolvedOut),
-      emitLean: resolvedLean,
-      emitLeanSha256: sha256File(resolvedLean),
-      schema: bundle.report.schema,
-      function: bundle.report.function,
-      stateModel: bundle.report.stateModel,
-      leanRun: bundle.report.leanRun,
-      summary: bundle.report.summary,
-      trustBoundary: bundle.report.trustBoundary,
-    };
-    jsonOut(result, json);
-    if (leanRun.status === 'failed') process.exit(1);
-  } catch (error) {
-    jsonOut({ status: 'rejected', command: 'monadic-preflight', message: error instanceof Error ? error.message : String(error) }, json);
-    process.exit(1);
-  }
-}
-
 function targetList() {
   console.log('ProofScript target registry');
   console.log('software-ts\timplemented\tPSC-1 software profile TypeScript output');
@@ -1968,9 +1795,9 @@ else if (cmd === 'emit-core') emitCoreCommand(args);
 else if (cmd === 'emit-lean') emitLeanCommand(args);
 else if (cmd === 'certify') certifyCommand(args);
 else if (cmd === 'state-model') stateModelCommand(args);
-else if (cmd === 'monadic-lowering') monadicLoweringCommand(args);
+else if (cmd === 'monadic-lowering') monadicLoweringCommand(args, { version: VERSION });
 else if (cmd === 'monadic-vc-request') monadicVcRequestCommand(args);
-else if (cmd === 'monadic-preflight') monadicPreflightCommand(args);
+else if (cmd === 'monadic-preflight') monadicPreflightCommand(args, { version: VERSION });
 else if (cmd === 'contracts') contractsCommand(args);
 else if (cmd === 'obligations') obligationsCommand(args);
 else if (cmd === 'proof-status') proofStatusCommand(args);
