@@ -10,7 +10,7 @@
       "status": "specified-structural-alpha",
       "surface": "function f(params): State ... with requires/ensures clauses and := do { declaredStateOperation(...); ... }",
       "scope": "descriptor-bound stateful/monadic contract",
-      "semantic_target": "proofscript.monadic-lowering.v1 Std.Do.Triple-style structural skeleton bound to proofscript.state-model.v1",
+      "semantic_target": "proofscript.monadic-lowering.v1 Std.Do.Triple-style structural skeleton: program parameters remain theorem binders, requires clauses form the Hoare precondition, and state-model adequacy identity is bound separately",
       "obligations": [
         "one structural operation-spec obligation per body operation",
         "one structural postcondition obligation per ensures clause"
@@ -30,7 +30,9 @@
         "state_model_adequacy_checked": false,
         "vcgen_connected": false,
         "semantic_proof_discharge": false,
-        "lean_preflight": "shape/plumbing only; explicit stubs are not semantic proof"
+        "lean_preflight": "shape/plumbing only; explicit stubs are not semantic proof",
+        "model_adequacy_checked": false,
+        "requires_lowering": "Hoare precondition, not theorem proof parameters"
       },
       "deferred_from_this_profile": [
         "stateful old(...) pre-state semantics",
