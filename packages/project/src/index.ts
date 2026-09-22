@@ -29,6 +29,24 @@ export interface ProjectModuleGraph {
   modules:ProjectModuleSource[];
 }
 
+
+/** Optional source overlay used by compiler/editor services for unsaved buffers.
+ * Returning undefined falls back to the filesystem. */
+export type ProjectSourceProvider=(filePath:string)=>string|undefined;
+
+export interface ProjectWorkspaceGraph {
+  root:string;
+  sourceRoots:string[];
+  /** All discovered project modules in deterministic dependency-first order. */
+  modules:ProjectModuleSource[];
+}
+
+export interface WorkspaceGraphOptions {
+  sourceProvider?:ProjectSourceProvider;
+  /** Unsaved/new files that may not exist on disk yet. */
+  additionalFiles?:readonly string[];
+}
+
 export class ProjectError extends Error {}
 
 export function findProjectRoot(start:string):string{
@@ -66,9 +84,9 @@ export function resolveSourceRoots(root:string,cfg:ProjectConfig=loadProjectConf
   return resolved;
 }
 
-export function buildModuleGraph(entryFile:string,projectRoot?:string):ProjectModuleGraph{
+export function buildModuleGraph(entryFile:string,projectRoot?:string,sourceProvider?:ProjectSourceProvider):ProjectModuleGraph{
   const entryPath=path.resolve(entryFile);
-  if(!fs.existsSync(entryPath)||!fs.statSync(entryPath).isFile())throw new ProjectError(`entry source file not found: ${entryPath}`);
+  if(!sourceExists(entryPath,sourceProvider))throw new ProjectError(`entry source file not found: ${entryPath}`);
   if(path.extname(entryPath)!==".ps")throw new ProjectError("ProofScript source files must use the .ps extension");
   const root=path.resolve(projectRoot??findProjectRoot(path.dirname(entryPath)));
   const cfg=loadProjectConfig(root);
@@ -98,12 +116,12 @@ export function buildModuleGraph(entryFile:string,projectRoot?:string):ProjectMo
     }
 
     state.set(name,"visiting");stack.push(name);
-    const source=fs.readFileSync(fileAbs,"utf8");
+    const source=readSource(fileAbs,sourceProvider);
     const parsed=parseSource(source);
     const node:ProjectModuleSource={name,filePath:fileAbs,source,sourceSha256:sha256Text(source),imports:[...parsed.imports]};
     nodes.set(name,node);
     for(const imported of node.imports){
-      const importedPath=resolveModuleFile(imported,sourceRoots);
+      const importedPath=resolveModuleFileWithProvider(imported,sourceRoots,sourceProvider);
       visit(imported,importedPath);
     }
     stack.pop();state.set(name,"done");order.push(node);
@@ -113,20 +131,117 @@ export function buildModuleGraph(entryFile:string,projectRoot?:string):ProjectMo
   return{root,entry,sourceRoots:[...sourceRoots],modules:order};
 }
 
+
+/** Build a complete project graph, including disconnected modules, for editor/workspace indexing.
+ * Language semantics still come from the compiler/frontend; this layer only resolves sources/imports. */
+export function buildWorkspaceGraph(projectRoot:string,options:WorkspaceGraphOptions={}):ProjectWorkspaceGraph{
+  const root=path.resolve(projectRoot);
+  const cfg=loadProjectConfig(root);
+  const sourceRoots=resolveSourceRoots(root,cfg);
+  const files=new Map<string,string>();
+
+  for(const sourceRoot of sourceRoots){
+    if(!fs.existsSync(sourceRoot))continue;
+    for(const file of walkPsFiles(sourceRoot)){
+      const name=moduleNameForEntry(file,sourceRoots);
+      if(name==="__entry__")continue;
+      const previous=files.get(name);
+      if(previous&&realPathKey(previous)!==realPathKey(file))throw new ProjectError(`module '${name}' resolves to more than one source file`);
+      files.set(name,path.resolve(file));
+    }
+  }
+
+  for(const extra of options.additionalFiles??[]){
+    const file=path.resolve(extra);
+    if(path.extname(file)!==".ps"||!isInsideAny(sourceRoots,file))continue;
+    const name=moduleNameForEntry(file,sourceRoots);
+    if(name==="__entry__")continue;
+    const previous=files.get(name);
+    if(previous&&normalizeFsKey(previous)!==normalizeFsKey(file))throw new ProjectError(`module '${name}' resolves to more than one source file`);
+    files.set(name,file);
+  }
+
+  const raw=new Map<string,ProjectModuleSource>();
+  for(const [name,filePath] of [...files.entries()].sort(([a],[b])=>a.localeCompare(b))){
+    const source=readSource(filePath,options.sourceProvider);
+    const parsed=parseSource(source);
+    raw.set(name,{name,filePath,source,sourceSha256:sha256Text(source),imports:[...parsed.imports]});
+  }
+
+  for(const module of [...raw.values()]){
+    for(const imported of module.imports)if(!raw.has(imported)){
+      const importedPath=resolveModuleFileWithProvider(imported,sourceRoots,options.sourceProvider);
+      const importedName=moduleNameForEntry(importedPath,sourceRoots);
+      if(!raw.has(importedName)){
+        const source=readSource(importedPath,options.sourceProvider);
+        const parsed=parseSource(source);
+        raw.set(importedName,{name:importedName,filePath:importedPath,source,sourceSha256:sha256Text(source),imports:[...parsed.imports]});
+      }
+    }
+  }
+
+  const state=new Map<string,"visiting"|"done">();
+  const stack:string[]=[];
+  const order:ProjectModuleSource[]=[];
+  const visit=(name:string):void=>{
+    const stateNow=state.get(name);if(stateNow==="done")return;
+    if(stateNow==="visiting"){const at=stack.indexOf(name);throw new ProjectError(`module import cycle: ${[...stack.slice(at>=0?at:0),name].join(" -> ")}`);}
+    const module=raw.get(name);if(!module)throw new ProjectError(`missing module '${name}'`);
+    state.set(name,"visiting");stack.push(name);
+    for(const imported of module.imports)visit(imported);
+    stack.pop();state.set(name,"done");order.push(module);
+  };
+  for(const name of [...raw.keys()].sort())visit(name);
+  return{root,sourceRoots:[...sourceRoots],modules:order};
+}
+
 export function resolveModuleFile(moduleName:string,sourceRoots:string[]):string{
+  return resolveModuleFileWithProvider(moduleName,sourceRoots);
+}
+
+function resolveModuleFileWithProvider(moduleName:string,sourceRoots:string[],sourceProvider?:ProjectSourceProvider):string{
   validateModuleName(moduleName);
   const rel=moduleName.split(".").join(path.sep)+".ps";
   const matches:string[]=[];
   for(const root of sourceRoots){
     const candidate=path.resolve(root,rel);
     if(!isInsideOrEqual(root,candidate))throw new ProjectError(`module '${moduleName}' escapes configured source root`);
-    if(fs.existsSync(candidate)&&fs.statSync(candidate).isFile())matches.push(candidate);
+    if(sourceExists(candidate,sourceProvider))matches.push(candidate);
   }
-  const unique=[...new Map(matches.map(p=>[realPathKey(p),p])).values()];
+  const unique=[...new Map(matches.map(p=>[normalizeFsKey(p),p])).values()];
   if(unique.length===0)throw new ProjectError(`missing module '${moduleName}' in configured source roots`);
   if(unique.length>1)throw new ProjectError(`ambiguous module '${moduleName}' resolves to: ${unique.join(", ")}`);
   return path.resolve(unique[0]);
 }
+
+function readSource(filePath:string,sourceProvider?:ProjectSourceProvider):string{
+  const abs=path.resolve(filePath);
+  const overlaid=sourceProvider?.(abs);
+  if(overlaid!==undefined)return overlaid;
+  return fs.readFileSync(abs,"utf8");
+}
+
+function sourceExists(filePath:string,sourceProvider?:ProjectSourceProvider):boolean{
+  const abs=path.resolve(filePath);
+  if(sourceProvider?.(abs)!==undefined)return true;
+  return fs.existsSync(abs)&&fs.statSync(abs).isFile();
+}
+
+function walkPsFiles(dir:string):string[]{
+  const out:string[]=[];
+  const stack=[path.resolve(dir)];
+  while(stack.length){
+    const current=stack.pop()!;
+    for(const entry of fs.readdirSync(current,{withFileTypes:true}).sort((a:any,b:any)=>a.name.localeCompare(b.name))){
+      const file=path.join(current,entry.name);
+      if(entry.isDirectory()){if(!entry.name.startsWith("."))stack.push(file);}
+      else if(entry.isFile()&&entry.name.endsWith(".ps"))out.push(file);
+    }
+  }
+  return out.sort();
+}
+
+function isInsideAny(roots:readonly string[],file:string):boolean{return roots.some(root=>isInsideOrEqual(root,file));}
 
 function moduleNameForEntry(filePath:string,sourceRoots:string[]):string{
   const matches:string[]=[];
@@ -148,7 +263,7 @@ function validateModuleName(name:string):void{
 }
 function sha256Text(text:string):string{return crypto.createHash("sha256").update(text).digest("hex");}
 function normalizeFsKey(p:string):string{return process.platform==="win32"?path.resolve(p).toLowerCase():path.resolve(p);}
-function realPathKey(p:string):string{return normalizeFsKey(fs.realpathSync(p));}
+function realPathKey(p:string):string{return normalizeFsKey(fs.existsSync(p)?fs.realpathSync(p):p);}
 function isInsideOrEqual(parent:string,child:string):boolean{
   const rel=path.relative(path.resolve(parent),path.resolve(child));
   return rel===""||(!rel.startsWith(`..${path.sep}`)&&rel!==".."&&!path.isAbsolute(rel));
