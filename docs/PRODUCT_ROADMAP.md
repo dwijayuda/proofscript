@@ -212,7 +212,9 @@ The bounded `proofscript.stateful-predicate-ast/v1` layer now typechecks the nor
 
 The `proofscript.stateful-wp-binding/v1` layer now makes typed pre/post predicate shapes, the selected WP/Triple identity, runner identity, and adequacy-theorem identity explicit and makes that artifact the source of the generated Triple skeleton's pre/post functions. Binding an adequacy theorem identity is not checking that theorem.
 
-The next stateful verification increment is explicit, inspectable verification-condition artifacts with stable obligation identities and provenance derived from the typed WP binding. Start with normal operation-spec and postcondition obligations; exceptional/abrupt paths remain explicitly uncovered until modeled. The current profile still does **not** claim arbitrary ProofScript/Lean predicate elaboration, WP/Triple semantic equivalence checking, state-model adequacy checking, generated semantic VCs as proved obligations, vcgen/mvcgen connection, semantic proof discharge, or runtime correspondence.
+The `proofscript.stateful-vc-plan/v1` layer now records the overall Triple target, stable source-obligation IDs, typed postcondition goals, and the bound Triple theorem identity for every used state operation. This is deliberately a plan/provenance artifact: `semanticVcDerivationComplete` and `realVerificationConditionsGenerated` remain false.
+
+The next stateful verification increment is a Lean-facing VC derivation request that resolves those identities in a real Lean environment and captures the goals Lean actually derives. Only checked Lean output may promote the project from planned goals to real semantic VCs. Exceptional/abrupt paths remain explicitly uncovered until modeled. The current profile still does **not** claim arbitrary ProofScript/Lean predicate elaboration, WP/Triple semantic equivalence checking, state-model adequacy checking, operation theorem checking, semantic VC generation, vcgen/mvcgen proof discharge, or runtime correspondence.
 
 ---
 
