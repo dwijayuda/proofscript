@@ -18,6 +18,7 @@ const args = process.argv.slice(2);
 const strict = args.includes("--strict");
 const outArg = option("--out");
 const leanCmd = option("--lean-cmd") ?? process.env.LEAN ?? "lean";
+const requestedLakeCmd = option("--lake-cmd") ?? process.env.LAKE;
 
 function option(name: string) {
   const eq = args.find(arg => arg.startsWith(`${name}=`));
@@ -63,43 +64,6 @@ function leanPreamble(request: any) {
     ...request.environment.openNamespaces.map((namespaceName: string) => `open ${namespaceName}`),
     "",
   ].join("\n");
-}
-
-const leanVersionRun = run(leanCmd, ["--version"], root);
-const leanCompatibility = leanVersionRun.exitCode === 0
-  ? classifyLeanCompatibilityOutput(`${leanVersionRun.stdout}\n${leanVersionRun.stderr}`)
-  : {
-      status: "unsupported",
-      minimumVersion: "4.33.1",
-      message: leanVersionRun.error ?? leanVersionRun.stderr ?? "unable to execute Lean",
-    };
-
-const leanProbe = {
-  binary: leanCmd,
-  run: leanVersionRun,
-  ...leanCompatibility,
-};
-
-if (leanCompatibility.status !== "accepted") {
-  const report = {
-    schema: "proofscript.stateful-vc-run/v1",
-    status: "unsupported",
-    scope: "examples/software/07-bank-debit-stateful-vc.ps",
-    lean: leanProbe,
-    claims: {
-      leanEnvironmentResolved: false,
-      leanModelTypechecked: false,
-      leanProgramTypechecked: false,
-      tripleTargetTypechecked: false,
-      tacticExecuted: false,
-      semanticVcDerivationComplete: false,
-      realVerificationConditionsGenerated: false,
-      semanticProofDischarge: false,
-    },
-  };
-  writeReport(report);
-  if (strict) process.exit(2);
-  process.exit(0);
 }
 
 const sourcePath = path.join(root, "examples", "software", "07-bank-debit-stateful-vc.ps");
@@ -166,7 +130,46 @@ end ProofScript.Generated.TripleCheck
 
 const leanBinDir = path.dirname(path.resolve(leanCmd));
 const localLake = path.join(leanBinDir, process.platform === "win32" ? "lake.exe" : "lake");
-const lakeCmd = fs.existsSync(localLake) ? localLake : "lake";
+const lakeCmd = requestedLakeCmd ?? (fs.existsSync(localLake) ? localLake : "lake");
+
+const leanVersionRun = run(lakeCmd, ["env", "lean", "--version"], tmp);
+const leanCompatibility = leanVersionRun.exitCode === 0
+  ? classifyLeanCompatibilityOutput(`${leanVersionRun.stdout}\n${leanVersionRun.stderr}`)
+  : {
+      status: "unsupported",
+      minimumVersion: "4.33.1",
+      message: leanVersionRun.error || leanVersionRun.stderr || "unable to execute Lean through Lake",
+    };
+
+const leanProbe = {
+  requestedLeanBinary: leanCmd,
+  lakeCommand: lakeCmd,
+  run: leanVersionRun,
+  ...leanCompatibility,
+};
+
+if (leanCompatibility.status !== "accepted") {
+  const report = {
+    schema: "proofscript.stateful-vc-run/v1",
+    status: "unsupported",
+    scope: "examples/software/07-bank-debit-stateful-vc.ps",
+    failedStage: "setup",
+    lean: leanProbe,
+    claims: {
+      leanEnvironmentResolved: false,
+      leanModelTypechecked: false,
+      leanProgramTypechecked: false,
+      tripleTargetTypechecked: false,
+      tacticExecuted: false,
+      semanticVcDerivationComplete: false,
+      realVerificationConditionsGenerated: false,
+      semanticProofDischarge: false,
+    },
+  };
+  writeReport(report);
+  if (strict) process.exit(2);
+  process.exit(0);
+}
 
 const modelBuild = run(lakeCmd, ["build", "ProofScript.Verification.BankStateModel"], tmp);
 const programCheck = modelBuild.exitCode === 0
