@@ -202,24 +202,6 @@
       ]
     },
     {
-      "path": "packages/diagnostics",
-      "npmName": "@proofscript/diagnostics",
-      "tier": "product",
-      "lifecycle": "supported",
-      "trustBoundary": "Human-facing diagnostics only; no proof authority.",
-      "productionRole": "Structured diagnostics and traces for product tooling.",
-      "allowedDependencies": []
-    },
-    {
-      "path": "packages/formatter",
-      "npmName": "@proofscript/formatter",
-      "tier": "product",
-      "lifecycle": "supported",
-      "trustBoundary": "Formatting only; no semantic authority.",
-      "productionRole": "Canonical formatting surface for source files.",
-      "allowedDependencies": []
-    },
-    {
       "path": "packages/project",
       "npmName": "@proofscript/project",
       "tier": "product",
@@ -376,24 +358,6 @@
       "lifecycle": "experimental",
       "trustBoundary": "Large future frontend/plugin architecture reservoir; not canonical PSC-1 path.",
       "productionRole": "Experimental broad-language architecture and plugin feature reservoir.",
-      "allowedDependencies": []
-    },
-    {
-      "path": "packages/macro",
-      "npmName": "@proofscript/macro",
-      "tier": "experimental",
-      "lifecycle": "experimental",
-      "trustBoundary": "Macro prototype only; macros are not in canonical PSC-1 yet.",
-      "productionRole": "Future macro expansion and quotation experiments.",
-      "allowedDependencies": []
-    },
-    {
-      "path": "packages/tactics-core",
-      "npmName": "@proofscript/tactics-core",
-      "tier": "experimental",
-      "lifecycle": "experimental",
-      "trustBoundary": "Tactic prototype only; canonical prover currently uses restricted proof terms.",
-      "productionRole": "Future proof-state and tactic elaboration experiments.",
       "allowedDependencies": []
     },
     {
