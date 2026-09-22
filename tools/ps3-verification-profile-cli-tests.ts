@@ -66,9 +66,33 @@ try {
   assert.equal(verified.status, 0, verified.stderr + verified.stdout);
   assert.equal(json(verified).verification.profile, "ps3-monadic-contracts0");
 
+  const callFreeOldSource = path.join(tmp, "CallFreeOld.ps");
+  fs.writeFileSync(callFreeOldSource, `function inspect(x: Nat): State Bank Unit
+  ensures old_value: old(x) = x
+:= do {
+  audit(x);
+}
+`);
+  const callFreeOld = run([
+    "contracts", callFreeOldSource,
+    "--state-model", model,
+    "--verification-profile", "ps3-monadic-contracts0",
+    "--json",
+  ]);
+  assert.equal(callFreeOld.status, 0, callFreeOld.stderr + callFreeOld.stdout);
+  const callFreeOldJson = json(callFreeOld);
+  assert.equal(callFreeOldJson.verification.profile, "ps3-monadic-contracts0");
+  assert.equal(callFreeOldJson.verification.claim, "specified-structural-alpha");
+  assert.deepEqual(callFreeOldJson.verification.features, ["V-MONADIC-CONTRACT", "V-OLD"]);
+  assert.equal(callFreeOldJson.statefulPostconditionIR.binders.entryState.role, "entry-state");
+  assert.equal(callFreeOldJson.statefulPostconditionIR.binders.result.role, "result");
+  assert.equal(callFreeOldJson.statefulPostconditionIR.binders.finalState.role, "final-state");
+  assert.equal(callFreeOldJson.statefulPostconditionIR.clauses[0].oldReferences[0].observationCoverageComplete, true);
+  assert.equal(callFreeOldJson.statefulPostconditionIR.semanticElaborationComplete, false);
+
   const prototypeSource = path.join(tmp, "Prototype.ps");
   fs.writeFileSync(prototypeSource, `function inspect(x: Nat): State Bank Unit
-  ensures old_value: old(x) = x
+  ensures old_value: old(hiddenRead(x)) = x
 := do {
   audit(x);
 }
@@ -83,7 +107,7 @@ try {
   const rejectedJson = json(rejected);
   assert.equal(rejectedJson.status, "rejected");
   assert.match(rejectedJson.message, /verification profile mismatch/i);
-  assert.match(rejectedJson.message, /stateful-old-not-modeled/i);
+  assert.match(rejectedJson.message, /stateful-old-unclassified-call/i);
 
   const prototype = run([
     "contracts", prototypeSource,
@@ -94,7 +118,9 @@ try {
   const prototypeJson = json(prototype);
   assert.equal(prototypeJson.verification.profile, "ka144-monadic-prototype");
   assert.equal(prototypeJson.verification.claim, "prototype-only");
-  assert.ok(prototypeJson.verification.prototypeFeatures.includes("stateful-old-not-modeled"));
+  assert.ok(prototypeJson.verification.prototypeFeatures.includes("stateful-old-unclassified-call"));
+  assert.equal(prototypeJson.statefulPostconditionIR.clauses[0].oldReferences[0].observationCoverageComplete, false);
+  assert.ok(prototypeJson.statefulPostconditionIR.clauses[0].oldReferences[0].undeclaredCallHeads.includes("hiddenRead"));
 
   console.log("PS3_VERIFICATION_PROFILE_CLI_TESTS=PASS");
 } finally {
