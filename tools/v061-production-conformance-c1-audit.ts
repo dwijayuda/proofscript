@@ -61,9 +61,10 @@ const negativeResults = negative.map((item) => {
 const all = [...positiveResults, ...negativeResults];
 const passed = all.filter((item) => item.pass).length;
 const failed = all.length - passed;
+const strict = process.argv.includes("--strict");
 const report = {
   status: failed === 0 ? "C1-surface-ready" : "C1-surface-gap",
-  claim: "audit-only",
+  claim: strict ? "C1-surface-conformance" : "audit-only",
   reference: "ProofScript v0.6.1",
   layer: "production parser acceptance/rejection",
   passed,
@@ -81,7 +82,7 @@ const report = {
 
 console.log(JSON.stringify(report, null, 2));
 
-if (process.argv.includes("--strict") && failed !== 0) process.exit(1);
+if (strict && failed !== 0) process.exit(1);
 
 function readJsonl(file) {
   return fs.readFileSync(file, "utf8")
