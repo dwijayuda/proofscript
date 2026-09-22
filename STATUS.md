@@ -212,6 +212,9 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - provable debit-only end-to-end example (`07-bank-debit-stateful-vc.ps`) — added as the first semantic execution target
 - Lean VC derivation request blueprint (`proofscript.stateful-vc-request/v1`) — implemented; canonical bank model now has request-source provenance
 - pinned Lean 4.33.1 VC execution runner (`proofscript.stateful-vc-run/v1`) + dedicated `stateful-lean-ci` workflow — implemented; execution evidence pending hosted runner availability
+- public `psc monadic-vc-run` command — implemented; emits the same evidence schema and treats residual Lean VCs as an accepted `vcs-generated` run, not as a proof
+- stable Lean-derived residual-goal artifact (`proofscript.stateful-vc-goals/v1`) — implemented with deterministic IDs/hashes
+- evidence-based claim promotion is centralized in `@proofscript/monadic-lowering` and covered by synthetic fail-closed stage tests
 - Triple skeleton pre/post functions sourced from the WP binding artifact — implemented
 - state observation descriptor state-input type validation — PASS
 - definite state-observation argument type mismatches downgrade to prototype/fail closed — PASS
@@ -237,16 +240,16 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - state-model adequacy theorem checking — **false**
 - semantic proof discharge — **false by design**
 - vcgen/mvcgen connected — **false**
-- public CLI router — 1,816 lines (below the 1,900-line KA145 architecture guard and 1,950-line KA146 ceiling)
+- public CLI router — 1,835 lines after public VC execution routing (below the 1,900-line KA145 architecture guard and 1,950-line KA146 ceiling)
 
 ## Next engineering target
 
 1. Run the new `stateful-lean-ci` lane on pinned Lean 4.33.1 and fix any real Lean elaboration/spec/tactic errors exposed by `ProofScript.Verification.BankStateModel` or the generated debit request.
-2. Capture the strict runner's `proofscript.stateful-vc-run/v1` evidence; only actual Lean execution may set environment/program/Triple/vcgen claims true.
-3. If residual VCs remain, promote them into stable inspectable goal artifacts and discharge the debit-only example before widening to transfer semantics.
+2. Capture `proofscript.stateful-vc-run/v1` evidence through either the strict runner or public `psc monadic-vc-run`; only actual Lean execution may set environment/program/Triple/vcgen claims true.
+3. If residual VCs remain, use their stable `proofscript.stateful-vc-goals/v1` IDs/hashes and discharge the debit-only example before widening to transfer semantics.
 4. Keep exceptional/abrupt-path coverage, state-model adequacy use, source-to-Lean program equivalence, and project-wide semantic proof discharge false until separately modeled and checked.
-4. Keep recursive-definition termination in the Lean-compatible language layer; keep loop `decreases` with the later invariant/stateful milestone.
-5. Continue CLI convergence at the orchestration layer; both current check paths already share `@proofscript/compiler`.
-6. Continue extracting useful incremental/module-interface infrastructure from `frontend-next` behind canonical compiler/project APIs.
-7. Expand LSP capabilities only from compiler-backed semantic/source-map APIs.
-8. Treat C4 machine-checked reference theorems as assurance work; do not block usable compiler/editor releases on full Lean equivalence.
+5. Keep recursive-definition termination in the Lean-compatible language layer; keep loop `decreases` with the later invariant/stateful milestone.
+6. Continue CLI convergence at the orchestration layer; both current check paths already share `@proofscript/compiler`.
+7. Continue extracting useful incremental/module-interface infrastructure from `frontend-next` behind canonical compiler/project APIs.
+8. Expand LSP capabilities only from compiler-backed semantic/source-map APIs.
+9. Treat C4 machine-checked reference theorems as assurance work; do not block usable compiler/editor releases on full Lean equivalence.
