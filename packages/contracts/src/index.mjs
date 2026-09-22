@@ -30,6 +30,30 @@ export function rewriteOldSnapshots(text, snapshots) {
   });
 }
 
+export function rewritePureOldSnapshots(text, snapshots) {
+  const seen = new Map(snapshots.map(s => [s.expression, s.name]));
+  const rewritten = String(text).replace(/old\(([^()]+)\)/g, (_all, exprRaw) => {
+    const expression = normalizeSpaces(exprRaw);
+    if (/\bresult\b/.test(expression)) throw new Error("'result' is not valid inside old(...)");
+    let name = seen.get(expression);
+    if (!name) {
+      name = snapshotName(expression, snapshots.length);
+      snapshots.push({
+        name,
+        expression,
+        kind: 'old',
+        meaning: 'pure-function entry value; proposition lowering inlines the entry expression',
+      });
+      seen.set(expression, name);
+    }
+    return `(${expression})`;
+  });
+  if (/\bold\s*\(/.test(rewritten)) {
+    throw new Error("unsupported old syntax in ps3-pure-contracts0: nested parentheses are not admitted");
+  }
+  return normalizeSpaces(rewritten);
+}
+
 export function rewriteGhostReferences(text, ghosts) {
   let out = String(text);
   for (const ghost of ghosts) {
@@ -52,6 +76,7 @@ export function assertValidGhostDefinitions(params, requirements, ghosts) {
   }
   for (const ghost of ghosts) {
     if (/\bresult\b/.test(ghost.expression)) throw new Error("'result' is not valid in ghost expressions");
+    if (/\bold\s*\(/.test(ghost.expression)) throw new Error("'old' is not valid in ghost expressions in ps3-pure-contracts0");
     for (const name of names) {
       if (new RegExp(`\\b${name}\\b`).test(ghost.expression)) {
         throw new Error(`ghost expression '${ghost.name}' may not depend on ghost '${name}' in ps3-pure-contracts0`);
@@ -258,13 +283,14 @@ export function parsePureContractSource(text, sourcePath = '<memory>') {
     if (m) {
       const proposition = normalizeSpaces(m[2]);
       if (/\bresult\b/.test(proposition)) throw new Error("'result' is only valid in ensures clauses");
+      if (/\bold\s*\(/.test(proposition)) throw new Error("'old' is only valid in pure ensures clauses");
       requirements.push({ name: m[1], proposition, kind: 'requires' });
       continue;
     }
     m = line.match(/^ensures\s+([A-Za-z_][A-Za-z0-9_]*)\s*:\s*(.+)$/);
-    if (m) { ensures.push({ name: m[1], proposition: rewriteOldSnapshots(normalizeSpaces(m[2]), oldSnapshots), rawProposition: normalizeSpaces(m[2]), kind: 'ensures' }); continue; }
+    if (m) { ensures.push({ name: m[1], proposition: rewritePureOldSnapshots(normalizeSpaces(m[2]), oldSnapshots), rawProposition: normalizeSpaces(m[2]), kind: 'ensures' }); continue; }
     m = line.match(/^ensures\s+(.+)$/);
-    if (m) { const idx = ensures.length; ensures.push({ name: `ensures${idx}`, proposition: rewriteOldSnapshots(normalizeSpaces(m[1]), oldSnapshots), rawProposition: normalizeSpaces(m[1]), kind: 'ensures' }); continue; }
+    if (m) { const idx = ensures.length; ensures.push({ name: `ensures${idx}`, proposition: rewritePureOldSnapshots(normalizeSpaces(m[1]), oldSnapshots), rawProposition: normalizeSpaces(m[1]), kind: 'ensures' }); continue; }
     m = line.match(/^ghost\s+([A-Za-z_][A-Za-z0-9_]*)\s*:\s*([^:=]+)\s*:=\s*(.+)$/);
     if (m) { ghosts.push({ name: m[1], type: normalizeSpaces(m[2]), expression: normalizeSpaces(m[3]), erasedFromRuntime: true }); continue; }
     throw new Error(`unsupported contract clause: ${line}`);
@@ -272,6 +298,7 @@ export function parsePureContractSource(text, sourcePath = '<memory>') {
   assertUniqueContractNames(params, requirements, ensures);
   assertValidGhostDefinitions(params, requirements, ghosts);
   if (/\bresult\b/.test(body)) throw new Error("'result' is only valid in ensures clauses");
+  if (/\bold\s*\(/.test(body)) throw new Error("'old' is only valid in pure ensures clauses");
   const { assertions, bodyWithoutAssertions } = parseAssertionsFromBody(body);
 
   for (const requirement of requirements) {
@@ -303,7 +330,7 @@ export function parsePureContractSource(text, sourcePath = '<memory>') {
   }));
   const ensuresObligations = ensures.map(e => {
     const resultExpr = `${name} ${params.map(p => p.name).join(' ')}`.trim();
-    const proposition = e.proposition.replace(/\bresult\b/g, resultExpr);
+    const proposition = e.proposition.replace(/\bresult\b/g, `(${resultExpr})`);
     return {
       name: `${name}_ensures_${e.name}`,
       kind: 'ensures',
