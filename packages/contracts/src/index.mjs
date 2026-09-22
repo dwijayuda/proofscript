@@ -1,8 +1,9 @@
 import { createHash } from 'node:crypto';
 import { statefulPredicateElaborationForContract } from './stateful-predicate-elaboration.mjs';
 import { createStatefulPredicateAstForContract } from './stateful-predicate-ast.mjs';
+import { statefulOperationElaborationForContract } from './stateful-operation-elaboration.mjs';
 
-export { statefulPredicateElaborationForContract, createStatefulPredicateAstForContract };
+export { statefulPredicateElaborationForContract, createStatefulPredicateAstForContract, statefulOperationElaborationForContract };
 
 export const PURE_VERIFICATION_REFERENCE = '0.7.0-alpha.2-draft';
 export const PURE_VERIFICATION_PROFILE = 'ps3-pure-contracts0';
@@ -726,6 +727,7 @@ export function monadicVerificationProfile(
   postconditionIR = statefulPostconditionIRForContract(contract, stateModel),
   predicateElaboration = statefulPredicateElaborationForContract(contract, stateModel, postconditionIR),
   predicateAst = createStatefulPredicateAstForContract(contract, predicateElaboration),
+  operationElaboration = statefulOperationElaborationForContract(contract, stateModel),
 ) {
   const stateModelOperations = stateModel.operations ?? [];
   const declaredOperations = new Set(stateModelOperations.map(op => op.name));
@@ -752,6 +754,11 @@ export function monadicVerificationProfile(
   if (predicateElaboration.hasTypeErrors === true) unsupported.push('stateful-predicate-type-mismatch');
   if (predicateAst.unsupportedSyntax === true) unsupported.push('stateful-predicate-ast-unsupported');
   if (predicateAst.hasTypeErrors === true) unsupported.push('stateful-predicate-ast-type-mismatch');
+  for (const diagnostic of operationElaboration.diagnostics ?? []) {
+    if (diagnostic.code === 'state-operation-arity-mismatch') unsupported.push('state-operation-arity-mismatch');
+    else if (diagnostic.code === 'state-operation-argument-type-mismatch') unsupported.push('state-operation-argument-type-mismatch');
+    else if (diagnostic.code === 'state-operation-signature-invalid') unsupported.push('state-operation-signature-invalid');
+  }
   if ((contract.requirements ?? []).some(r => /\bold\s*\(/.test(r.proposition ?? ''))) unsupported.push('old-in-requires');
   if ((contract.requirements ?? []).some(r => /\bresult\b/.test(r.proposition ?? ''))) unsupported.push('result-in-requires');
   if (requirementsUseStateObservation) unsupported.push('stateful-requires-observation-not-modeled');
@@ -802,7 +809,15 @@ export function makeMonadicContractsArtifact({ sourceText, sourcePath, sourceSha
   const statefulPostconditionIR = statefulPostconditionIRForContract(contract, stateModel);
   const statefulPredicateElaboration = statefulPredicateElaborationForContract(contract, stateModel, statefulPostconditionIR);
   const statefulPredicateAST = createStatefulPredicateAstForContract(contract, statefulPredicateElaboration);
-  const verification = monadicVerificationProfile(contract, stateModel, statefulPostconditionIR, statefulPredicateElaboration, statefulPredicateAST);
+  const statefulOperationElaboration = statefulOperationElaborationForContract(contract, stateModel);
+  const verification = monadicVerificationProfile(
+    contract,
+    stateModel,
+    statefulPostconditionIR,
+    statefulPredicateElaboration,
+    statefulPredicateAST,
+    statefulOperationElaboration,
+  );
   return {
     artifact: {
       schema: 'proofscript.contracts.v1',
@@ -815,12 +830,13 @@ export function makeMonadicContractsArtifact({ sourceText, sourcePath, sourceSha
       statefulPostconditionIR,
       statefulPredicateElaboration,
       statefulPredicateAST,
+      statefulOperationElaboration,
       stateModel: { name: stateModel.name, path: stateModel.path, sha256: stateModel.sha256, stateType: stateModel.stateType, monad: stateModel.monad, wp: stateModel.wp, semantics: stateModel.semantics, operations: stateModel.operations, observations: stateModel.observations ?? [], laws: stateModel.laws, vcgen: stateModel.vcgen },
       functions: [{ name: contract.name, contractKind: contract.contractKind, params: contract.params, returnType: contract.returnType, requirements: contract.requirements, modelRequirements: contract.modelRequirements, ensures: contract.ensures, oldSnapshots: contract.oldSnapshots, operations: contract.operations, body: contract.body, stateModel: { name: stateModel.name, stateType: stateModel.stateType, monad: stateModel.monad } }],
       operations: contract.operations,
       oldSnapshots: contract.oldSnapshots,
       obligations: contract.obligations,
-      trustBoundary: { semanticProofChecking: false, hiddenAxioms: false, monadicContracts: 'state-model-descriptor-bound', verificationProfile: verification.profile, specifiedStructuralProfile: verification.profile === MONADIC_VERIFICATION_PROFILE, stateModelDescriptorValidated: true, statefulReferenceTypingComplete: statefulPredicateElaboration.referenceTypingComplete, normalizedPredicateAstTypeCheckingComplete: statefulPredicateAST.typeCheckingComplete, wholePredicateTypeCheckingComplete: false, stateModelAdequacyChecked: false, vcgenConnected: false, monadicProofDischarge: false, fullLean4Equivalence: false },
+      trustBoundary: { semanticProofChecking: false, hiddenAxioms: false, monadicContracts: 'state-model-descriptor-bound', verificationProfile: verification.profile, specifiedStructuralProfile: verification.profile === MONADIC_VERIFICATION_PROFILE, stateModelDescriptorValidated: true, statefulReferenceTypingComplete: statefulPredicateElaboration.referenceTypingComplete, normalizedPredicateAstTypeCheckingComplete: statefulPredicateAST.typeCheckingComplete, stateOperationTypingComplete: statefulOperationElaboration.typingComplete, wholePredicateTypeCheckingComplete: false, stateModelAdequacyChecked: false, vcgenConnected: false, monadicProofDischarge: false, fullLean4Equivalence: false },
     },
     contract,
     leanText: leanForMonadicContract(contract),
