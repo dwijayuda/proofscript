@@ -20,6 +20,7 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm run build
       - run: npm run test:ps1:compiler-facade
+      - run: npm run test:ps1:language-service
       - run: npm run test:reference:v061:c0
       - run: npm run test:ka137
       - run: npm run test:ka140
