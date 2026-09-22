@@ -1,0 +1,117 @@
+import Std.Tactic.Do
+
+open Std.Do
+
+namespace BankStateModel
+
+/-- Account identifiers in the promoted verification example. -/
+abbrev AccountId := Nat
+
+/-- A deliberately small bank state: balances are total maps from account IDs to naturals. -/
+abbrev Bank := AccountId → Nat
+
+def balanceOf (account : AccountId) (state : Bank) : Nat :=
+  state account
+
+def debitState (account : AccountId) (amount : Nat) (state : Bank) : Bank :=
+  fun current =>
+    if current = account then
+      state current - amount
+    else
+      state current
+
+def creditState (account : AccountId) (amount : Nat) (state : Bank) : Bank :=
+  fun current =>
+    if current = account then
+      state current + amount
+    else
+      state current
+
+def debit (account : AccountId) (amount : Nat) : StateM Bank Unit :=
+  fun state => ((), debitState account amount state)
+
+def credit (account : AccountId) (amount : Nat) : StateM Bank Unit :=
+  fun state => ((), creditState account amount state)
+
+def audit (_code : Nat) : StateM Bank Unit :=
+  fun state => ((), state)
+
+@[simp]
+theorem balanceOf_debitState_self (state : Bank) (account : AccountId) (amount : Nat) :
+    balanceOf account (debitState account amount state) =
+      balanceOf account state - amount := by
+  simp [balanceOf, debitState]
+
+@[simp]
+theorem balanceOf_creditState_self (state : Bank) (account : AccountId) (amount : Nat) :
+    balanceOf account (creditState account amount state) =
+      balanceOf account state + amount := by
+  simp [balanceOf, creditState]
+
+theorem balanceOf_debitState_other
+    (state : Bank) (account other : AccountId) (amount : Nat)
+    (h : other ≠ account) :
+    balanceOf other (debitState account amount state) =
+      balanceOf other state := by
+  simp [balanceOf, debitState, h]
+
+theorem balanceOf_creditState_other
+    (state : Bank) (account other : AccountId) (amount : Nat)
+    (h : other ≠ account) :
+    balanceOf other (creditState account amount state) =
+      balanceOf other state := by
+  simp [balanceOf, creditState, h]
+
+/--
+A precise schematic specification for debit. Keeping the postcondition abstract lets
+`vcgen` instantiate it with the precondition required by the following statement.
+-/
+@[spec]
+theorem debit_triple
+    {account : AccountId} {amount : Nat}
+    {Q : PostCond Unit (.arg Bank .pure)} :
+    ⦃ fun state => Q.1 () (debitState account amount state) ⦄
+      debit account amount
+    ⦃ Q ⦄ := by
+  simp [debit, Triple, wp]
+
+/-- Precise schematic specification for credit. -/
+@[spec]
+theorem credit_triple
+    {account : AccountId} {amount : Nat}
+    {Q : PostCond Unit (.arg Bank .pure)} :
+    ⦃ fun state => Q.1 () (creditState account amount state) ⦄
+      credit account amount
+    ⦃ Q ⦄ := by
+  simp [credit, Triple, wp]
+
+/-- Audit leaves the modeled bank state unchanged. -/
+@[spec]
+theorem audit_triple
+    {code : Nat}
+    {Q : PostCond Unit (.arg Bank .pure)} :
+    ⦃ fun state => Q.1 () state ⦄
+      audit code
+    ⦃ Q ⦄ := by
+  simp [audit, Triple, wp]
+
+def runBankState (program : StateM Bank α) (initial : Bank) : α × Bank :=
+  program initial
+
+/--
+Adequacy bridge for the concrete StateM runner: a weakest-precondition fact at the
+chosen initial state is sufficient for the corresponding proposition about the
+actual runner result.
+-/
+theorem runBankState_adequate
+    {result : α × Bank} {program : StateM Bank α} {initial : Bank}
+    (hRun : runBankState program initial = result)
+    (P : α × Bank → Prop) :
+    (⊢ₛ wp⟦program⟧ (⇓ value final => ⌜P (value, final)⌝) initial) →
+      P result := by
+  rw [← hRun]
+  intro hwp
+  simp [runBankState, wp] at hwp
+  exact hwp
+
+end BankStateModel
