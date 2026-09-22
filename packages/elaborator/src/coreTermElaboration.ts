@@ -157,15 +157,47 @@ export function elabLambdaTerm(
   available: Set<string>,
   kernelEnv: Environment,
   elab: ElabFn,
+  expectedType?: Term,
 ): Term {
-  const go = (i: number, names: string[], types: Term[]): Term => {
-    if (i === term.binders.length) return elab(term.body, names, types, globals, available, kernelEnv);
+  const go = (i: number, names: string[], types: Term[], expected?: Term): Term => {
+    if (i === term.binders.length) return elab(term.body, names, types, globals, available, kernelEnv, expected);
     const b = term.binders[i];
-    const domain = elab(b.type, names, types, globals, available, kernelEnv);
-    validateInstanceBinderDomain(b, domain, globals, kernelEnv, contextFromTypes(types));
-    return { tag: "lam", domain, body: go(i + 1, [...names, b.name], [...types, domain]), binderInfo: b.binderInfo };
+    const ctx = contextFromTypes(types);
+    const expectedWhnf = expected ? kernelWhnf(kernelEnv, expected) : undefined;
+    if (expectedWhnf && expectedWhnf.tag !== "pi") {
+      throw new ElaborationError("lambda expression is used where the expected type is not a function");
+    }
+
+    const sourceBinderInfo = b.binderInfo ?? "explicit";
+    if (expectedWhnf && (expectedWhnf.binderInfo ?? "explicit") !== sourceBinderInfo) {
+      throw new ElaborationError("lambda binder kind does not match the expected Pi binder kind");
+    }
+
+    let domain: Term;
+    if (b.type) {
+      domain = elab(b.type, names, types, globals, available, kernelEnv);
+      if (expectedWhnf && !defEq(kernelEnv, ctx, kernelWhnf(kernelEnv, domain), kernelWhnf(kernelEnv, expectedWhnf.domain))) {
+        throw new ElaborationError(`lambda binder '${b.name}' type does not match the expected Pi domain`);
+      }
+    } else {
+      if (!expectedWhnf || expectedWhnf.tag !== "pi") {
+        throw new UnsupportedFeature(`untyped lambda binder '${b.name}' requires an expected function type`);
+      }
+      if (sourceBinderInfo !== "explicit") {
+        throw new UnsupportedFeature("untyped lambda binders are currently supported only for explicit binders");
+      }
+      domain = expectedWhnf.domain;
+    }
+
+    validateInstanceBinderDomain(b, domain, globals, kernelEnv, ctx);
+    return {
+      tag: "lam",
+      domain,
+      body: go(i + 1, [...names, b.name], [...types, domain], expectedWhnf?.body),
+      binderInfo: b.binderInfo,
+    };
   };
-  return go(0, locals, localTypes);
+  return go(0, locals, localTypes, expectedType);
 }
 
 export function elabPiTerm(
