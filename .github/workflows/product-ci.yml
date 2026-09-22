@@ -35,6 +35,7 @@ jobs:
       - run: npm run test:reference:v061:production-reference-parity
       - run: npm run test:ps3:pure-contracts
       - run: npm run test:ps3:monadic-contracts
+      - run: npm run test:ps3:verification-profile-cli
       - run: npm run test:ka137
       - run: npm run test:ka140
       - run: npm run test:ka146
