@@ -17,6 +17,9 @@ const root = path.resolve(import.meta.dirname, "..");
 const args = process.argv.slice(2);
 const strict = args.includes("--strict");
 const outArg = option("--out");
+const sourceArg = option("--source");
+const modelArg = option("--model");
+const leanProjectArg = option("--lean-project");
 const leanCmd = option("--lean-cmd") ?? process.env.LEAN ?? "lean";
 const requestedLakeCmd = option("--lake-cmd") ?? process.env.LAKE;
 
@@ -66,19 +69,27 @@ function leanPreamble(request: any) {
   ].join("\n");
 }
 
-const sourcePath = path.join(root, "examples", "software", "07-bank-debit-stateful-vc.ps");
-const modelPath = path.join(root, "examples", "software", "06-bank-state.model.json");
-const leanProjectRoot = path.join(root, "specs", "verification", "v0.7", "lean");
+const sourcePath = sourceArg
+  ? path.resolve(process.cwd(), sourceArg)
+  : path.join(root, "examples", "software", "07-bank-debit-stateful-vc.ps");
+const modelPath = modelArg
+  ? path.resolve(process.cwd(), modelArg)
+  : path.join(root, "examples", "software", "06-bank-state.model.json");
+const leanProjectRoot = leanProjectArg
+  ? path.resolve(process.cwd(), leanProjectArg)
+  : path.join(root, "specs", "verification", "v0.7", "lean");
 const sourceText = fs.readFileSync(sourcePath, "utf8");
 const descriptorText = fs.readFileSync(modelPath, "utf8");
+const sourceScope = path.relative(root, sourcePath).replace(/\\/g, "/");
+const modelScope = path.relative(root, modelPath).replace(/\\/g, "/");
 const descriptor = JSON.parse(descriptorText);
 const stateModel = buildStateModelBinding(descriptor, {
-  descriptorPath: "examples/software/06-bank-state.model.json",
+  descriptorPath: modelScope,
   descriptorSha256: sha256(descriptorText),
 });
 const built = makeMonadicContractsArtifact({
   sourceText,
-  sourcePath: "examples/software/07-bank-debit-stateful-vc.ps",
+  sourcePath: sourceScope,
   sourceSha256: sha256(sourceText),
   packageVersion: "test",
   stateModel,
@@ -87,7 +98,7 @@ assert.equal(built.artifact.verification.profile, "ps3-monadic-contracts0");
 
 const lowering = createMonadicLoweringArtifact({
   contractArtifact: built.artifact,
-  contractArtifactPath: "generated/07-bank-debit.contracts.json",
+  contractArtifactPath: `generated/${path.basename(sourcePath, path.extname(sourcePath))}.contracts.json`,
   contractArtifactSha256: "b".repeat(64),
   packageVersion: "test",
 });
@@ -99,9 +110,10 @@ const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "proofscript-stateful-vc-"));
 fs.cpSync(leanProjectRoot, tmp, { recursive: true });
 
 const generatedDir = path.join(tmp, "ProofScript", "Verification");
-const requestPath = path.join(generatedDir, "GeneratedBankDebitRequest.lean");
-const programCheckPath = path.join(generatedDir, "GeneratedBankDebitProgramCheck.lean");
-const tripleCheckPath = path.join(generatedDir, "GeneratedBankDebitTripleCheck.lean");
+const generatedStem = lowering.function.name.replace(/[^A-Za-z0-9_]+/g, "_");
+const requestPath = path.join(generatedDir, `Generated_${generatedStem}_Request.lean`);
+const programCheckPath = path.join(generatedDir, `Generated_${generatedStem}_ProgramCheck.lean`);
+const tripleCheckPath = path.join(generatedDir, `Generated_${generatedStem}_TripleCheck.lean`);
 
 fs.writeFileSync(requestPath, request.request.source);
 
@@ -111,7 +123,7 @@ namespace ProofScript.Generated.ProgramCheck
 
 ${lowering.statefulProgramLowering.leanDefinition}
 
-#check withdraw
+#check ${lowering.function.name}
 
 end ProofScript.Generated.ProgramCheck
 `);
@@ -152,7 +164,7 @@ if (leanCompatibility.status !== "accepted") {
   const report = {
     schema: "proofscript.stateful-vc-run/v1",
     status: "unsupported",
-    scope: "examples/software/07-bank-debit-stateful-vc.ps",
+    scope: sourceScope,
     failedStage: "setup",
     lean: leanProbe,
     claims: {
@@ -197,7 +209,7 @@ const execution = analyzeStatefulVcExecution({
 const report = {
   schema: "proofscript.stateful-vc-run/v1",
   status: execution.status,
-  scope: "examples/software/07-bank-debit-stateful-vc.ps",
+  scope: sourceScope,
   failedStage: execution.failedStage,
   lean: leanProbe,
   provenance: {
