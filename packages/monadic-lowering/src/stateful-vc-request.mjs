@@ -1,10 +1,4 @@
-function safeLeanName(name) {
-  return String(name ?? 'x').replace(/[^A-Za-z0-9_]+/g, '_').replace(/^([0-9])/, '_$1') || 'x';
-}
-
-function parameterBinders(params) {
-  return (params ?? []).map(param => `(${safeLeanName(param.name)} : ${param.type})`).join(' ');
-}
+import { leanGeneratedIdentifier, leanParameterBinders } from './lean-syntax.mjs';
 
 function uniqueStrings(values) {
   return [...new Set((values ?? []).filter(value => typeof value === 'string' && value.trim().length > 0).map(value => value.trim()))];
@@ -74,9 +68,9 @@ export function createStatefulVcRequest(loweringArtifact) {
   }
 
   const fn = loweringArtifact.function ?? {};
-  const requestName = `${safeLeanName(fn.name ?? 'program')}_vc_request`;
+  const requestName = leanGeneratedIdentifier(fn.name ?? 'program', '_vc_request');
   const binders = [
-    parameterBinders(fn.params ?? []),
+    leanParameterBinders(fn.params ?? []),
     `(__ps_entry : ${stateModel.stateType ?? 'σ'})`,
   ].filter(Boolean).join(' ');
   const target = semanticEncoding.tripleTarget ?? null;
