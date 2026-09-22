@@ -38,6 +38,7 @@ jobs:
       - run: npm run test:ps3:verification-profile-cli
       - run: npm run test:ps3:stateful-lean-model
       - run: npm run test:ps3:stateful-vc-evidence
+      - run: npm run test:ps3:stateful-vc-run-cli
       - run: npm run test:ka137
       - run: npm run test:ka140
       - run: npm run test:ka146
