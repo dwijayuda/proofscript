@@ -71,6 +71,17 @@ for (const item of positive) {
   assert.equal(lowering.trustBoundary.specifiedStructuralProfile, true, item.id);
   assert.equal(lowering.summary.semanticProofDischarge, false, item.id);
   assert.equal(lowering.tripleSkeleton.leanCheckable, false, item.id);
+  assert.equal(lowering.tripleSkeleton.precondition, item.expected.precondition, item.id);
+  assert.equal(lowering.tripleSkeleton.modelAdequacyTheorem, item.expected.model_adequacy_theorem, item.id);
+  assert.equal(lowering.tripleSkeleton.modelAdequacyChecked, false, item.id);
+  assert.equal(lowering.trustBoundary.modelAdequacyTheoremBound, true, item.id);
+  assert.equal(lowering.trustBoundary.modelAdequacyChecked, false, item.id);
+  for (const requirement of contract.requirements) {
+    assert.ok(
+      !lowering.tripleSkeleton.theoremStatement.includes(`(${requirement.name} : ${requirement.proposition})`),
+      `${item.id}: requires belongs in the Hoare precondition, not theorem binders`,
+    );
+  }
   assert.ok(lowering.operations.every((op: any) => op.stateModelOperation !== null), item.id);
 
   const preflight = createMonadicLeanPreflightArtifact({
