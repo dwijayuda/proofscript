@@ -426,63 +426,95 @@ class Parser {
   }
 }
 
+function parsePredicateRecord({ kind, name, source, normalizedPredicate }, contract, predicateElaboration, diagnostics) {
+  try {
+    const parser = new Parser(normalizedPredicate, contract, predicateElaboration);
+    const root = parser.parse();
+    const scopedDiagnostics = parser.diagnostics.map(item => ({ ...item, scope: kind, name }));
+    diagnostics.push(...scopedDiagnostics);
+    return {
+      kind,
+      name,
+      source,
+      normalizedPredicate,
+      root,
+      inferredType: root.type,
+      diagnostics: scopedDiagnostics,
+      typeCheckingComplete: scopedDiagnostics.length === 0 && root.type === 'Prop',
+    };
+  } catch (error) {
+    if (!(error instanceof PredicateAstError)) throw error;
+    const item = {
+      code: error.code,
+      severity: 'error',
+      scope: kind,
+      name,
+      message: error.message,
+      startOffset: error.offset,
+      endOffset: error.offset,
+    };
+    diagnostics.push(item);
+    return {
+      kind,
+      name,
+      source,
+      normalizedPredicate,
+      root: null,
+      inferredType: null,
+      diagnostics: [item],
+      typeCheckingComplete: false,
+    };
+  }
+}
+
 export function createStatefulPredicateAstForContract(contract, predicateElaboration) {
   if (!predicateElaboration || predicateElaboration.schema !== 'proofscript.stateful-predicate-elaboration/v1') {
     throw new Error('typed predicate AST requires proofscript.stateful-predicate-elaboration/v1');
   }
 
-  const clauses = [];
   const diagnostics = [];
+  const requirements = (contract.requirements ?? []).map(requirement =>
+    parsePredicateRecord({
+      kind: 'requires',
+      name: requirement.name,
+      source: requirement.proposition,
+      normalizedPredicate: requirement.proposition,
+    }, contract, predicateElaboration, diagnostics)
+  );
+  const clauses = (predicateElaboration.clauses ?? []).map(clause =>
+    parsePredicateRecord({
+      kind: 'ensures',
+      name: clause.name,
+      source: clause.source,
+      normalizedPredicate: clause.normalizedPredicate,
+    }, contract, predicateElaboration, diagnostics)
+  );
 
-  for (const clause of predicateElaboration.clauses ?? []) {
-    try {
-      const parser = new Parser(clause.normalizedPredicate, contract, predicateElaboration);
-      const root = parser.parse();
-      diagnostics.push(...parser.diagnostics.map(item => ({ ...item, clause: clause.name })));
-      clauses.push({
-        name: clause.name,
-        source: clause.source,
-        normalizedPredicate: clause.normalizedPredicate,
-        root,
-        inferredType: root.type,
-        diagnostics: parser.diagnostics,
-        typeCheckingComplete: parser.diagnostics.length === 0 && root.type === 'Prop',
-      });
-    } catch (error) {
-      if (!(error instanceof PredicateAstError)) throw error;
-      const item = {
-        code: error.code,
-        severity: 'error',
-        clause: clause.name,
-        message: error.message,
-        startOffset: error.offset,
-        endOffset: error.offset,
-      };
-      diagnostics.push(item);
-      clauses.push({
-        name: clause.name,
-        source: clause.source,
-        normalizedPredicate: clause.normalizedPredicate,
-        root: null,
-        inferredType: null,
-        diagnostics: [item],
-        typeCheckingComplete: false,
-      });
-    }
-  }
-
-  const unsupportedSyntax = diagnostics.some(item => item.code === 'stateful-predicate-ast-unsupported-syntax' || item.code === 'stateful-predicate-ast-syntax-error');
-  const hasTypeErrors = diagnostics.some(item => item.severity === 'error' && !['stateful-predicate-ast-unsupported-syntax', 'stateful-predicate-ast-syntax-error'].includes(item.code));
-  const typeCheckingComplete = clauses.every(clause => clause.typeCheckingComplete) && diagnostics.length === 0;
+  const unsupportedSyntax = diagnostics.some(item =>
+    item.code === 'stateful-predicate-ast-unsupported-syntax'
+    || item.code === 'stateful-predicate-ast-syntax-error'
+  );
+  const hasTypeErrors = diagnostics.some(item =>
+    item.severity === 'error'
+    && !['stateful-predicate-ast-unsupported-syntax', 'stateful-predicate-ast-syntax-error'].includes(item.code)
+  );
+  const requirementsTypeCheckingComplete = requirements.every(item => item.typeCheckingComplete);
+  const postconditionsTypeCheckingComplete = clauses.every(item => item.typeCheckingComplete);
+  const typeCheckingComplete = requirementsTypeCheckingComplete
+    && postconditionsTypeCheckingComplete
+    && diagnostics.length === 0;
 
   return {
     schema: 'proofscript.stateful-predicate-ast/v1',
     sourceElaborationSchema: predicateElaboration.schema,
     grammarProfile: 'stateful-predicate-expressions0',
+    requirements,
     clauses,
     diagnostics,
     unsupportedSyntax,
     hasTypeErrors,
+    requirementsTypeCheckingComplete,
+    postconditionsTypeCheckingComplete,
     typeCheckingComplete,
     wpTripleSemanticBindingComplete: false,
     stateModelAdequacyChecked: false,
