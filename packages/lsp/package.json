@@ -2,9 +2,19 @@
   "name": "@proofscript/lsp",
   "version": "0.1.0-dev.0",
   "private": false,
-  "description": "Language Server Protocol integration.",
+  "type": "module",
+  "description": "Thin Language Server Protocol transport for the ProofScript language worker",
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "pslsp": "dist/bin.js"
+  },
   "files": [
+    "dist",
     "README.md"
-  ]
+  ],
+  "dependencies": {
+    "@proofscript/language-worker": "0.1.0-dev.0"
+  }
 }
