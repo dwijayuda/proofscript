@@ -109,9 +109,7 @@ theorem runBankState_adequate
     (P : α × Bank → Prop) :
     (⊢ₛ wp⟦program⟧ (⇓ value final => ⌜P (value, final)⌝) initial) →
       P result := by
-  rw [← hRun]
-  intro hwp
-  simp [runBankState, wp] at hwp
-  exact hwp
+  simpa [runBankState] using
+    (Std.Do.StateM.of_wp_run_eq (prog := program) (s := initial) hRun P)
 
 end BankStateModel
