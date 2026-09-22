@@ -10,6 +10,45 @@ function programApplication(fn) {
   return [safeLeanName(fn?.name ?? 'program'), ...(fn?.params ?? []).map(param => safeLeanName(param.name))].join(' ');
 }
 
+function safeLeanPath(name) {
+  return String(name ?? '')
+    .split('.')
+    .filter(Boolean)
+    .map(segment => safeLeanName(segment))
+    .join('.');
+}
+
+function renderLeanPredicateNode(node) {
+  if (!node || typeof node !== 'object') {
+    throw new Error('typed predicate AST node is missing');
+  }
+
+  switch (node.kind) {
+    case 'literal':
+      return String(node.value);
+    case 'identifier':
+      return safeLeanPath(node.name);
+    case 'group':
+      return `(${renderLeanPredicateNode(node.expression)})`;
+    case 'call': {
+      const callee = safeLeanPath(node.callee);
+      const args = (node.args ?? []).map(renderLeanPredicateNode);
+      return args.length > 0 ? `${callee} ${args.map(arg => `(${arg})`).join(' ')}` : callee;
+    }
+    case 'binary':
+      return `(${renderLeanPredicateNode(node.left)} ${node.operator} ${renderLeanPredicateNode(node.right)})`;
+    case 'relation':
+      return `(${renderLeanPredicateNode(node.left)} ${node.operator} ${renderLeanPredicateNode(node.right)})`;
+    default:
+      throw new Error(`unsupported typed predicate AST node kind '${node.kind ?? '<missing>'}'`);
+  }
+}
+
+function renderLeanPredicateList(items) {
+  const rendered = (items ?? []).map(item => renderLeanPredicateNode(item.root));
+  return rendered.length > 0 ? rendered.join(' ∧ ') : 'True';
+}
+
 export function createStatefulLeanSemanticEncoding(loweringArtifact) {
   if (!loweringArtifact || loweringArtifact.schema !== 'proofscript.monadic-lowering.v1') {
     throw new Error('stateful Lean semantic encoding requires proofscript.monadic-lowering.v1');
@@ -17,6 +56,7 @@ export function createStatefulLeanSemanticEncoding(loweringArtifact) {
 
   const wpBinding = loweringArtifact.statefulWpBinding;
   const programLowering = loweringArtifact.statefulProgramLowering;
+  const predicateAst = loweringArtifact.statefulPredicateAST;
   const stateModel = loweringArtifact.stateModel ?? {};
   const fn = loweringArtifact.function ?? {};
   if (!wpBinding || wpBinding.schema !== 'proofscript.stateful-wp-binding/v1') {
@@ -24,6 +64,9 @@ export function createStatefulLeanSemanticEncoding(loweringArtifact) {
   }
   if (!programLowering || programLowering.schema !== 'proofscript.stateful-program-lowering/v1') {
     throw new Error('stateful Lean semantic encoding requires proofscript.stateful-program-lowering/v1');
+  }
+  if (!predicateAst || predicateAst.schema !== 'proofscript.stateful-predicate-ast/v1') {
+    throw new Error('stateful Lean semantic encoding requires proofscript.stateful-predicate-ast/v1');
   }
 
   const stateType = normalizeSpaces(stateModel.stateType);
@@ -67,10 +110,23 @@ export function createStatefulLeanSemanticEncoding(loweringArtifact) {
     });
   }
 
-  const logicalPrecondition = wpBinding.precondition?.body === 'True'
+  let renderedRequires = 'True';
+  let renderedEnsures = 'True';
+  try {
+    renderedRequires = renderLeanPredicateList(predicateAst.requirements);
+    renderedEnsures = renderLeanPredicateList(predicateAst.clauses);
+  } catch (error) {
+    diagnostics.push({
+      code: 'stateful-lean-encoding-predicate-render-failed',
+      severity: 'error',
+      message: error instanceof Error ? error.message : String(error),
+    });
+  }
+
+  const logicalPrecondition = renderedRequires === 'True'
     ? '__ps_initial = __ps_entry'
-    : `__ps_initial = __ps_entry ∧ (${wpBinding.precondition?.body ?? 'True'})`;
-  const logicalPostcondition = wpBinding.postcondition?.body ?? 'True';
+    : `__ps_initial = __ps_entry ∧ (${renderedRequires})`;
+  const logicalPostcondition = renderedEnsures;
 
   const leanPrecondition = stateType
     ? `fun __ps_initial : ${stateType} => ⌜${logicalPrecondition}⌝`
@@ -94,6 +150,7 @@ export function createStatefulLeanSemanticEncoding(loweringArtifact) {
       lowering: loweringArtifact.schema,
       wpBinding: wpBinding.schema,
       programLowering: programLowering.schema,
+      predicateAST: predicateAst.schema,
     },
     monad: {
       proofScript: sourceMonad || null,
@@ -113,13 +170,17 @@ export function createStatefulLeanSemanticEncoding(loweringArtifact) {
       leanProgramTypechecked: false,
     },
     precondition: {
+      sourceLogicalBody: wpBinding.precondition?.body ?? 'True',
       logicalBody: logicalPrecondition,
       leanSource: leanPrecondition,
+      renderedFromTypedAst: true,
       pureEmbedding: '⌜...⌝',
     },
     postcondition: {
+      sourceLogicalBody: wpBinding.postcondition?.body ?? 'True',
       logicalBody: logicalPostcondition,
       leanSource: leanPostcondition,
+      renderedFromTypedAst: true,
       returnNotation: '⇓ result state => ...',
       pureEmbedding: '⌜...⌝',
     },
