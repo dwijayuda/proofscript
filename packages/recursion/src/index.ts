@@ -52,7 +52,7 @@ export function containsSurfaceName(term: SurfaceTerm, name: string, bound: Read
     case "lam": {
       let next = new Set(bound);
       for (const binder of term.binders) {
-        if (containsSurfaceName(binder.type, name, next)) return true;
+        if (binder.type && containsSurfaceName(binder.type, name, next)) return true;
         next = new Set(next); next.add(binder.name);
       }
       return containsSurfaceName(term.body, name, next);
@@ -241,7 +241,7 @@ function rewriteBranchTerm(
     case "lam": {
       let next = new Set(shadowed);
       const binders = term.binders.map(b => {
-        const type = rewriteBranchTerm(b.type, declarationName, recursiveNames, patternBinders, next);
+        const type = b.type ? rewriteBranchTerm(b.type, declarationName, recursiveNames, patternBinders, next) : undefined;
         next = new Set(next); next.add(b.name);
         return { ...b, type };
       });
