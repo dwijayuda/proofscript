@@ -99,6 +99,9 @@ export function validateStateModelDescriptor(descriptor, { descriptorPath, descr
       for (const [i, namespaceName] of asArray(descriptor.lean.openNamespaces).entries()) {
         if (!nonEmptyString(namespaceName)) errors.push({ field: `lean.openNamespaces[${i}]`, message: 'Lean namespace must be a non-empty string' });
       }
+      if (descriptor.lean.monadTypeConstructor !== undefined && !nonEmptyString(descriptor.lean.monadTypeConstructor)) {
+        errors.push({ field: 'lean.monadTypeConstructor', message: 'lean.monadTypeConstructor must be a non-empty string when provided' });
+      }
     }
   }
   const laws = asArray(descriptor.laws);
@@ -140,6 +143,10 @@ export function validateStateModelDescriptor(descriptor, { descriptorPath, descr
   }
   const vcgenStatus = descriptor.vcgen?.status ?? 'not-connected';
   if (!['not-connected', 'planned', 'connected'].includes(vcgenStatus)) errors.push({ field: 'vcgen.status', message: 'vcgen.status must be not-connected, planned, or connected' });
+  const vcgenTactic = descriptor.vcgen?.tactic;
+  if (vcgenTactic !== undefined && !['vcgen', 'mvcgen'].includes(vcgenTactic)) {
+    errors.push({ field: 'vcgen.tactic', message: 'vcgen.tactic must be vcgen or mvcgen when provided' });
+  }
   const accepted = errors.length === 0;
   return {
     schema: 'proofscript.state-model-validation.v1',
@@ -169,6 +176,7 @@ export function validateStateModelDescriptor(descriptor, { descriptorPath, descr
       lean: descriptor.lean ? {
         imports: asArray(descriptor.lean.imports),
         openNamespaces: asArray(descriptor.lean.openNamespaces),
+        monadTypeConstructor: descriptor.lean.monadTypeConstructor,
       } : undefined,
       laws: laws.map(l => ({ name: l.name, statementSha256: nonEmptyString(l.statement) ? sha256Text(normalizeSpaces(l.statement)) : undefined })),
       operations: operations.map(o => ({
@@ -220,6 +228,7 @@ export function buildStateModelBinding(descriptor, { descriptorPath, descriptorS
     lean: descriptor.lean ? {
       imports: descriptor.lean.imports ?? [],
       openNamespaces: descriptor.lean.openNamespaces ?? [],
+      monadTypeConstructor: descriptor.lean.monadTypeConstructor,
     } : undefined,
     laws: descriptor.laws ?? [],
     operations: descriptor.operations ?? [],
