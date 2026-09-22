@@ -87,4 +87,16 @@ assert.match(
   "CLI must consume checkProjectFile from @proofscript/compiler",
 );
 
+const packagedCliCore = fs.readFileSync(path.join(root, "tools", "pslive-core.ts"), "utf8");
+assert.doesNotMatch(
+  packagedCliCore,
+  /packages\/frontend\/dist\/index\.js|@proofscript\/frontend/,
+  "packaged psc check/build path must not bypass @proofscript/compiler",
+);
+assert.match(
+  packagedCliCore,
+  /packages\/compiler\/dist\/index\.js|@proofscript\/compiler/,
+  "packaged psc check/build path must consume the compiler facade",
+);
+
 console.log("PS1_COMPILER_FACADE_TESTS=PASS");
