@@ -55,6 +55,13 @@ export interface DiagnosticBundle {
   readonly resultId: string;
 }
 
+export interface SurfaceFeatureOccurrence {
+  readonly feature: string;
+  readonly startOffset: number;
+  readonly endOffset: number;
+  readonly range: Range;
+}
+
 export interface Analysis {
   readonly uri: string;
   readonly version: number;
@@ -68,6 +75,7 @@ export interface Analysis {
     readonly type: string;
   }[];
   readonly assumptions: readonly string[];
+  readonly surfaceFeatures: readonly SurfaceFeatureOccurrence[];
   readonly diagnostics: readonly Diagnostic[];
   readonly resultId: string;
 }
@@ -158,24 +166,41 @@ export class ProofScriptLanguageService {
     let status: AnalysisStatus = "accepted";
     let declarations: Analysis["declarations"] = [];
     let assumptions: readonly string[] = [];
+    let surfaceFeatures: readonly SurfaceFeatureOccurrence[] = [];
     let diagnostics: readonly Diagnostic[] = [];
 
     try {
-      const checked = document.filePath
-        ? checkProjectFile(document.filePath, { sourceProvider: this.sourceProvider() })
-        : checkSource(document.text);
+      let summary;
+      let rawFeatures: readonly { readonly feature: string; readonly startOffset: number; readonly endOffset: number }[] = [];
+      if (document.filePath) {
+        const checked = checkProjectFile(document.filePath, { sourceProvider: this.sourceProvider() });
+        summary = checked.summary;
+        const currentModule = checked.modules.find((module) =>
+          normalizePath(module.source.filePath) === normalizePath(document.filePath!));
+        rawFeatures = currentModule?.ownedFeatures ?? [];
+      } else {
+        const checked = checkSource(document.text);
+        summary = checked.summary;
+        rawFeatures = checked.ownedFeatures;
+      }
       cancellation?.throwIfCancellationRequested();
 
-      status = checked.summary.status;
-      declarations = checked.summary.declarations.map((declaration) => ({
+      status = summary.status;
+      declarations = summary.declarations.map((declaration) => ({
         name: declaration.name,
         kind: declaration.kind,
         type: declaration.type,
       }));
-      assumptions = [...checked.summary.assumptions];
+      assumptions = [...summary.assumptions];
+      surfaceFeatures = rawFeatures.map((use) => ({
+        feature: use.feature,
+        startOffset: use.startOffset,
+        endOffset: use.endOffset,
+        range: rangeFromOffsets(document.text, use.startOffset, use.endOffset),
+      }));
 
       if (status !== "accepted") {
-        const message = checked.summary.message ?? `compiler status: ${status}`;
+        const message = summary.message ?? `compiler status: ${status}`;
         diagnostics = [diagnosticFromFailure(message, document.text, status)];
       }
     } catch (error) {
@@ -184,7 +209,7 @@ export class ProofScriptLanguageService {
       diagnostics = [diagnosticFromError(error, document.text, status)];
     }
 
-    const resultId = analysisResultId(document.version, diagnostics, status, declarations);
+    const resultId = analysisResultId(document.version, diagnostics, status, declarations, surfaceFeatures);
     const analysis: Analysis = {
       uri: document.uri,
       version: document.version,
@@ -194,6 +219,7 @@ export class ProofScriptLanguageService {
       status,
       declarations,
       assumptions,
+      surfaceFeatures,
       diagnostics,
       resultId,
     };
@@ -304,12 +330,14 @@ function analysisResultId(
   diagnostics: readonly Diagnostic[],
   status: AnalysisStatus,
   declarations: Analysis["declarations"],
+  surfaceFeatures: readonly SurfaceFeatureOccurrence[],
 ): string {
   return sha256(JSON.stringify({
     version,
     status,
     diagnostics: diagnostics.map((diagnostic) => diagnostic.data.identity.fingerprint),
     declarations: declarations.map((declaration) => [declaration.name, declaration.kind, declaration.type]),
+    surfaceFeatures: surfaceFeatures.map((feature) => [feature.feature, feature.startOffset, feature.endOffset]),
   })).slice(0, 24);
 }
 
@@ -330,6 +358,12 @@ function rangeAtOffset(text: string, offset: number): Range {
   const start = positionAt(text, offset);
   const end = positionAt(text, Math.min(text.length, offset + (offset < text.length ? 1 : 0)));
   return { start, end };
+}
+
+function rangeFromOffsets(text: string, startOffset: number, endOffset: number): Range {
+  const start = Math.max(0, Math.min(text.length, startOffset));
+  const end = Math.max(start, Math.min(text.length, endOffset));
+  return { start: positionAt(text, start), end: positionAt(text, end) };
 }
 
 function positionAt(text: string, offset: number): Position {
