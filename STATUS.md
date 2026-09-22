@@ -196,14 +196,18 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - `V-MONADIC-CONTRACT` — specified structural alpha
 - `V-OLD` — specified structural alpha when entry-state meaning is structurally modeled
 - `V-RESULT` — specified structural alpha when confined to the explicit postcondition result binder
-- monadic corpus — **6 positive / 10 negative-or-prototype-boundary cases**
+- monadic corpus — **6 positive / 13 negative-or-prototype-boundary cases**
 - explicit entry-state / result / final-state binder roles — PASS
 - descriptor-bound state-observation normalization — PASS
 - typed binder + state-observation reference elaboration (`proofscript.stateful-predicate-elaboration/v1`) — PASS
 - bounded typed normalized predicate AST (`proofscript.stateful-predicate-ast/v1`, `stateful-predicate-expressions0`) for monadic requires + postconditions — implemented with executable gates
 - typed WP/Triple identity binding (`proofscript.stateful-wp-binding/v1`) — implemented with executable internal + KA145 public gates
 - used-operation Triple theorem identities required for strict-profile admission — implemented/fail closed
-- inspectable stateful VC planning (`proofscript.stateful-vc-plan/v1`) with stable source-obligation binding — implemented
+- typed operation-call elaboration (`proofscript.stateful-operation-elaboration/v1`) — implemented/fail closed
+- deterministic bounded stateful program lowering (`proofscript.stateful-program-lowering/v1`) — implemented; emitted semantic program uses Lean `StateM`
+- inspectable stateful VC planning (`proofscript.stateful-vc-plan/v1`) with stable source-obligation + program provenance — implemented
+- concrete `Std.Do` / `StateM` assertion encoding (`proofscript.stateful-lean-semantic-encoding/v1`) — implemented structurally
+- Lean VC derivation request blueprint (`proofscript.stateful-vc-request/v1`) — implemented; blocked unless model Lean imports are declared
 - Triple skeleton pre/post functions sourced from the WP binding artifact — implemented
 - state observation descriptor state-input type validation — PASS
 - definite state-observation argument type mismatches downgrade to prototype/fail closed — PASS
@@ -213,6 +217,9 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - state-model adequacy theorem checking — **false by design**
 - semantic VC derivation / real verification-condition generation — **false by design**
 - operation Triple theorem resolution/checking — **false by design**
+- emitted `StateM` program typechecking in the selected Lean environment — **false by design**
+- concrete `Std.Do.Triple` target typechecking — **false by design**
+- VC request tactic execution / captured Lean goals — **false by design**
 - modeled `old(...)` observations rewrite against entry state; ordinary modeled observations rewrite against final state — PASS
 - call-free `old(x)` structural admission — PASS
 - unclassified calls inside `old(...)` fail closed to prototype — PASS
@@ -230,9 +237,9 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 
 ## Next engineering target
 
-1. Generate a Lean-facing VC derivation request from `proofscript.stateful-vc-plan/v1`, resolving the selected Triple and operation theorem identities in a real Lean environment.
-2. Capture the goals produced by Lean as a separate inspectable artifact; only then may `realVerificationConditionsGenerated` become true.
-3. Keep exceptional/abrupt-path coverage, state-model adequacy checking, and semantic proof discharge false until those are separately modeled and checked.
+1. Add a real Lean state-model module/import binding for the promoted bank example so `proofscript.stateful-vc-request/v1` can resolve its types, operations, specs, and Triple target.
+2. Execute the request with pinned Lean 4.33.1, capture the goals produced by `vcgen` as a separate inspectable artifact, and only then set `realVerificationConditionsGenerated = true`.
+3. Keep exceptional/abrupt-path coverage, state-model adequacy checking, source-to-Lean program equivalence, and semantic proof discharge false until separately modeled and checked.
 4. Keep recursive-definition termination in the Lean-compatible language layer; keep loop `decreases` with the later invariant/stateful milestone.
 5. Continue CLI convergence at the orchestration layer; both current check paths already share `@proofscript/compiler`.
 6. Continue extracting useful incremental/module-interface infrastructure from `frontend-next` behind canonical compiler/project APIs.
