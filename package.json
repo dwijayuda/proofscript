@@ -780,7 +780,9 @@
     "node": ">=20"
   },
   "packageManager": "npm@10",
-  "devDependencies": {},
+  "devDependencies": {
+    "typescript": "5.9.3"
+  },
   "bin": {
     "psc": "./bin/psc.mjs",
     "proofscript": "./bin/psc.mjs"
