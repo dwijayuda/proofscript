@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {
   analyzeStatefulVcExecution,
   classifyLeanResidualGoals,
-} from "../packages/monadic-lowering/src/stateful-vc-execution.mjs";
+} from "../packages/monadic-lowering/src/index.mjs";
 
 const request = {
   schema: "proofscript.stateful-vc-request/v1",
