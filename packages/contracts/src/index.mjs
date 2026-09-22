@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 
-export const PURE_VERIFICATION_REFERENCE = 'v0.7.0-alpha.2-draft';
+export const PURE_VERIFICATION_REFERENCE = '0.7.0-alpha.2-draft';
 export const PURE_VERIFICATION_PROFILE = 'ps3-pure-contracts0';
 export const PURE_VERIFICATION_FEATURE_ORDER = Object.freeze([
   'V-REQUIRES',
