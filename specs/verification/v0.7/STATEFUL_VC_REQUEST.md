@@ -40,7 +40,7 @@ theorem transfer_vc_request ... :
       (transfer ...)
       (fun s => ⌜...⌝)
       (⇓ result s => ⌜...⌝) := by
-  vcgen [BankStateModel.debit_triple, BankStateModel.credit_triple]
+  mvcgen
   all_goals trace_state
 ```
 
@@ -58,3 +58,20 @@ semanticProofDischarge = false
 ```
 
 If no model import provenance is declared, the request fails closed with `stateful-vc-request-model-imports-unbound` instead of emitting a misleading run-ready source.
+
+
+## Tactic / Triple compatibility
+
+ProofScript does not treat `vcgen` and `mvcgen` as interchangeable strings.
+
+For the current public stateful profile:
+
+```text
+Std.Do.Triple  -> mvcgen
+```
+
+Lean 4.34's own regression suite exercises `mvcgen` on `Std.Do.Triple`. The newer experimental `vcgen` implementation targets the newer `Std.Internal.Do.Triple` metatheory and must not be selected for a `Std.Do.Triple` descriptor.
+
+If `vcgen.tactic` is omitted for a `Std.Do.Triple` model, ProofScript selects `mvcgen` automatically. If a descriptor explicitly pairs `Std.Do.Triple` with `vcgen`, state-model validation fails closed.
+
+For `mvcgen`, imported `@[spec]` theorems are discovered through Lean's registered specification database; ProofScript therefore records the bound theorem identities as provenance but does not mechanically pass them in a `mvcgen [...]` list.
