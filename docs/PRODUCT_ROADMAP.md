@@ -210,7 +210,9 @@ Current `ps3-monadic-contracts0` is a **specified structural alpha** profile for
 
 The bounded `proofscript.stateful-predicate-ast/v1` layer now typechecks the normalized `stateful-predicate-expressions0` subset used by the promoted corpus. Unsupported normalized syntax and definite AST type mismatches fail closed rather than being treated as typed predicates. This AST is deliberately scoped to verification IR and is not a second general-purpose ProofScript parser.
 
-The next stateful verification increment is explicit binding of that typed predicate AST to the selected WP/Triple semantics and model adequacy theorem identity, followed by inspectable semantic pre/post artifacts and verification conditions. The current profile still does **not** claim arbitrary ProofScript/Lean predicate elaboration, state-model adequacy checking, generated semantic verification conditions, vcgen/mvcgen connection, semantic proof discharge, or runtime correspondence.
+The `proofscript.stateful-wp-binding/v1` layer now makes typed pre/post predicate shapes, the selected WP/Triple identity, runner identity, and adequacy-theorem identity explicit and makes that artifact the source of the generated Triple skeleton's pre/post functions. Binding an adequacy theorem identity is not checking that theorem.
+
+The next stateful verification increment is explicit, inspectable verification-condition artifacts with stable obligation identities and provenance derived from the typed WP binding. Start with normal operation-spec and postcondition obligations; exceptional/abrupt paths remain explicitly uncovered until modeled. The current profile still does **not** claim arbitrary ProofScript/Lean predicate elaboration, WP/Triple semantic equivalence checking, state-model adequacy checking, generated semantic VCs as proved obligations, vcgen/mvcgen connection, semantic proof discharge, or runtime correspondence.
 
 ---
 
