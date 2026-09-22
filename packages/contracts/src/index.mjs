@@ -727,9 +727,17 @@ export function monadicVerificationProfile(
   predicateElaboration = statefulPredicateElaborationForContract(contract, stateModel, postconditionIR),
   predicateAst = createStatefulPredicateAstForContract(contract, predicateElaboration),
 ) {
-  const declaredOperations = new Set((stateModel.operations ?? []).map(op => op.name));
+  const stateModelOperations = stateModel.operations ?? [];
+  const declaredOperations = new Set(stateModelOperations.map(op => op.name));
+  const stateModelOperationByName = new Map(stateModelOperations.map(op => [op.name, op]));
   const unknownOperations = (contract.operations ?? [])
     .filter(op => !declaredOperations.has(op.operation))
+    .map(op => op.operation);
+  const operationsMissingTripleTheorem = (contract.operations ?? [])
+    .filter(op => {
+      const theorem = stateModelOperationByName.get(op.operation)?.verification?.tripleTheorem;
+      return declaredOperations.has(op.operation) && !(typeof theorem === 'string' && theorem.trim().length > 0);
+    })
     .map(op => op.operation);
   const unsupported = [];
   const oldReferences = postconditionIR.clauses.flatMap(clause => clause.oldReferences ?? []);
@@ -748,6 +756,7 @@ export function monadicVerificationProfile(
   if ((contract.requirements ?? []).some(r => /\bresult\b/.test(r.proposition ?? ''))) unsupported.push('result-in-requires');
   if (requirementsUseStateObservation) unsupported.push('stateful-requires-observation-not-modeled');
   if (unknownOperations.length > 0) unsupported.push('undeclared-state-operation');
+  if (operationsMissingTripleTheorem.length > 0) unsupported.push('state-operation-triple-theorem-unbound');
 
   if (unsupported.length === 0) {
     const features = ['V-MONADIC-CONTRACT'];
@@ -761,6 +770,7 @@ export function monadicVerificationProfile(
       prototypeFeatures: [],
       claim: 'specified-structural-alpha',
       unknownOperations: [],
+      operationsMissingTripleTheorem: [],
     };
   }
 
@@ -772,6 +782,7 @@ export function monadicVerificationProfile(
     prototypeFeatures: unsupported,
     claim: 'prototype-only',
     unknownOperations,
+    operationsMissingTripleTheorem,
   };
 }
 
