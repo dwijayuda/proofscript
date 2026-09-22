@@ -1,0 +1,61 @@
+RUN[19] tools/kernel-nested-parameters-tests.ts
+✓ kernel v30 parameterized/dependent nested preprocessing, linked recursors/iota, fixed-parameter rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[19] tools/kernel-nested-parameters-tests.ts
+RUN[20] tools/kernel-nested-indices-tests.ts
+✓ kernel v31 indexed nested preprocessing: captured/fixed index modes, dependent captured telescopes, linked indexed iota, rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[20] tools/kernel-nested-indices-tests.ts
+RUN[21] tools/kernel-nested-index-expressions-tests.ts
+✓ kernel v32 nested index expressions: parameter-only fixed indices, expression instantiation, linked indexed iota, rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[21] tools/kernel-nested-index-expressions-tests.ts
+RUN[22] tools/kernel-nested-multiple-specializations-tests.ts
+✓ kernel v33 nested multiple specializations: multiple fixed/container helpers, captured multi-container mode, second-helper iota, mixed-mode rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[22] tools/kernel-nested-multiple-specializations-tests.ts
+RUN[23] tools/kernel-nested-polymorphic-tests.ts
+✓ kernel v34 bounded polymorphic nested preprocessing, explicit universe instantiation, linked helper iota, mismatch rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[23] tools/kernel-nested-polymorphic-tests.ts
+RUN[24] tools/kernel-nested-indexed-containers-tests.ts
+✓ kernel v35 indexed nested-container preprocessing, indexed helper motive/iota, parameter/local indices, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[24] tools/kernel-nested-indexed-containers-tests.ts
+RUN[25] tools/kernel-recursor-minor-order-tests.ts
+✓ kernel v36 Lean fields-first recursive minor ordering across simple/parameterized/indexed/mutual/nested recursors, iota, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[25] tools/kernel-recursor-minor-order-tests.ts
+RUN[26] tools/kernel-nested-deeper-tests.ts
+✓ kernel v37 two-layer deeper nested preprocessing, three-way fields-first linked recursors/iota, recursive and indexed containers, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[26] tools/kernel-nested-deeper-tests.ts
+RUN[27] tools/kernel-nested-deeper-generalization-tests.ts
+✓ kernel v38 arbitrary closed linear-depth nested preprocessing, dynamic helper recursors, depth3/depth4 recursive and indexed chains, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[27] tools/kernel-nested-deeper-generalization-tests.ts
+RUN[28] tools/kernel-nested-deeper-parameters-tests.ts
+✓ kernel v39 arbitrary-depth parameterized/dependent nested preprocessing, parameter-derived container indices, linked iota, fixed-parameter rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[28] tools/kernel-nested-deeper-parameters-tests.ts
+RUN[29] tools/kernel-nested-deeper-indices-tests.ts
+✓ kernel v40 arbitrary-depth indexed-outer nested preprocessing: closed/fixed and captured/promoted modes, dependent indices, indexed containers, linked iota, rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[29] tools/kernel-nested-deeper-indices-tests.ts
+RUN[30] tools/kernel-nested-deeper-polymorphic-tests.ts
+✓ kernel v41 arbitrary-depth explicit-universe polymorphic nested preprocessing, indexed fixed/captured modes, linked iota, mismatch rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[30] tools/kernel-nested-deeper-polymorphic-tests.ts
+RUN[31] tools/kernel-nested-deeper-multiple-fields-tests.ts
+✓ kernel v42 multiple compatible nested fields, helper reuse/shared-prefix graph, indexed fixed/captured modes, polymorphism, linked iota, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[31] tools/kernel-nested-deeper-multiple-fields-tests.ts
+RUN[32] tools/kernel-nested-deeper-prop-tests.ts
+✓ kernel v43 nested Prop graph, Prop-only recursors, linked proof iota, parameters/indices/multiple fields, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[32] tools/kernel-nested-deeper-prop-tests.ts
+RUN[33] tools/kernel-nested-deeper-multi-parameter-tests.ts
+✓ kernel v44 bounded multi-parameter nested-container graph, multi-position IHs, deep specialization, linked iota, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[33] tools/kernel-nested-deeper-multi-parameter-tests.ts
+RUN[34] tools/kernel-nested-deeper-multi-parameter-generalization-tests.ts
+✓ kernel v45 generalized multi-parameter nested graphs across parameters/fixed indices/universes/Prop/indexed containers, linked iota, captured-index rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[34] tools/kernel-nested-deeper-multi-parameter-generalization-tests.ts
+RUN[35] tools/kernel-nested-deeper-dependent-container-parameters-tests.ts
+✓ kernel v46 dependent nested-container parameter telescopes, dependent IH placement, nested-under-lambda helper discovery, linked iota, positivity rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[35] tools/kernel-nested-deeper-dependent-container-parameters-tests.ts
+RUN[36] tools/kernel-uniform-parameter-defeq-tests.ts
+✓ kernel v47 uniform-parameter definitional equality, indexed/higher-order iota, historical isolation, and exact Lean observations passed
+PASS[36] tools/kernel-uniform-parameter-defeq-tests.ts
+RUN[37] tools/kernel-recursor-family-binder-info-tests.ts
+✓ kernel v48 recursor family BinderInfo policy, indexed motive/final indices, empty/mutual/nested recursors, iota, replay, historical shape isolation, and exact Lean observations passed with exact Lean differential
+PASS[37] tools/kernel-recursor-family-binder-info-tests.ts
+RUN[38] tools/kernel-dependent-indexed-recursor-completion-tests.ts
+✓ kernel v49 final non-mutual dependent/indexed recursor audit, linked iota, Prop exposure boundary, replay, v48 semantic preservation and exact Lean 4.33.1 differential
+PASS[38] tools/kernel-dependent-indexed-recursor-completion-tests.ts
+BOUNDED_KERNEL_PART2=20/20 PASS

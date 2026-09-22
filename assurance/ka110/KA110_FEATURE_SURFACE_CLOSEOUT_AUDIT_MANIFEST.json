@@ -1,0 +1,40 @@
+{
+  "phaseCloseoutStatus": "closed-for-ka-series-feature-surface-dashboard",
+  "scope": "KA-series feature-surface dashboard closeout; not a full Lean 4 kernel equivalence theorem",
+  "baselineFeatureSurfaceProgressPercent": 99,
+  "closedFeatureSurfaceProgressPercent": 100,
+  "canonicalBridgeSpecCount": 39,
+  "rawBridgeSpecCount": 40,
+  "duplicateBridgeSpecGroups": [
+    {
+      "checkpoint": "proofscript-v1-ka105-primitive-defeq-application-helper-refinement0",
+      "paths": [
+        "assurance/ka105/KA105_PRIMITIVE_DEFEQ_APPLICATION_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+        "assurance/ka105/KA105_PRIMITIVE_TELESCOPE_TYPING_HELPER_REFINEMENT_BRIDGE_SPEC.json"
+      ],
+      "identicalPayload": true,
+      "canonicalPath": "assurance/ka105/KA105_PRIMITIVE_DEFEQ_APPLICATION_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "ignoredDuplicatePaths": [
+        "assurance/ka105/KA105_PRIMITIVE_TELESCOPE_TYPING_HELPER_REFINEMENT_BRIDGE_SPEC.json"
+      ]
+    }
+  ],
+  "canonicalCountedObligationNames": 154,
+  "duplicateCanonicalObligations": [],
+  "bridgeLeanFileCount": 98,
+  "bridgeLeanFilesWithSorry": [],
+  "progressFileCount": 61,
+  "notApplicableAuditReleaseGates": [
+    "assurance/ka71/KA71_FEATURE_EQUIVALENCE_COVERAGE_AUDIT_RELEASE_GATE.json",
+    "assurance/ka73/KA73_DEFEQ_SORRY_BOUNDARY_AUDIT_RELEASE_GATE.json",
+    "assurance/ka78/KA78_RECURSOR_PROJECTION_SORRY_BOUNDARY_AUDIT_RELEASE_GATE.json",
+    "assurance/ka80/KA80_INFERTYPE_TOP_LEVEL_PROJECTION_BOUNDARY_AUDIT_RELEASE_GATE.json"
+  ],
+  "latestFormalLean4LeanBridgeObligations": 366,
+  "closeoutChecks": {
+    "latestObligationTotalMatches": true,
+    "noBridgeLeanSorry": true,
+    "noCanonicalDuplicateObligations": true,
+    "duplicateBridgeSpecsAreQuarantined": true
+  }
+}

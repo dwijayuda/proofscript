@@ -1,0 +1,11 @@
+Lean geq A B = false
+Lean geq (A+1) (B+1) = false
+/mnt/data/ka-work/kernel-assurance-v68-ka1/generated/UniverseAdmissionUnsoundnessExact.lean:15:0: warning: `T`: universes `u`, `v` only occur together. This usually means there is a `max` expression in the type where none of these universes appear on their own.
+
+Note: This linter can be disabled with `set_option linter.checkUnivs false`
+/mnt/data/ka-work/kernel-assurance-v68-ka1/generated/UniverseAdmissionUnsoundnessExact.lean:17:2: error: Invalid universe level in constructor `I.mk`: Parameter has type
+  T
+at universe level
+  (imax u v u) + 1
+which is not less than or equal to the inductive type's resulting universe level
+  (imax v u) + 1

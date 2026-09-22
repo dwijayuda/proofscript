@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka25-nondef-env-defeq-preservation-bridge0",
+  "publicVersion": "1.0.0-pskernel.28",
+  "baseline": "proofscript-v1-ka24-nondef-env-no-overwrite-bridge0",
+  "referenceKind": "direct-imported-lean4lean-nondef-env-defeq-preservation-bridge",
+  "imports": ["Lean4Lean.Theory.Typing.Env"],
+  "bridgedRelations": ["Lean4Lean.VEnv.addConst", "Lean4Lean.VEnv.addDefEq", "Lean4Lean.VEnv.defeqs"],
+  "coveredPSDeclKinds": ["theorem", "opaque"],
+  "nonAddingPSDeclKinds": ["example"],
+  "alreadyCoveredPSDeclKinds": ["axiom", "definition"],
+  "conditionalBridgeLemmas": [
+    "PSKernelKA25.translated_theorem_preserves_existing_defeq",
+    "PSKernelKA25.translated_theorem_preserves_existing_and_adds_new_defeq",
+    "PSKernelKA25.translated_opaque_preserves_existing_defeq"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "formalLean4EquivalenceProvenObligations": 35
+  }
+}

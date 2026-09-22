@@ -1,0 +1,152 @@
+{
+  "checkpoint": "proofscript-v1-ka66-executable-defeq-core-refinement0",
+  "publicVersion": "1.0.0-pskernel.69",
+  "baseline": "proofscript-v1-ka65-executable-whnf-refinement0",
+  "releaseKind": "strict-lean4lean-bridge-known-baseline-regression",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanUnblocked": true,
+  "baselineObligations": 196,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA66",
+        "source": "assurance/ka66/executable-defeq-core-refinement-bridge.lean",
+        "destination": "PSKernelKA66ExecutableDefEqCoreRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "dependencyBuildStatus": "passed",
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka66-executable-defeq-core-refinement0",
+    "publicVersion": "1.0.0-pskernel.69",
+    "featureSurfaceBridgeProgressPercent": 87,
+    "executableKernelEquivalenceProofProgressPercent": 53,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 200,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 196,
+      "newFormalLean4LeanBridgeObligations": 4,
+      "countedNewObligations": [
+        "translated_isDefEqCore_wf",
+        "translated_isDefEqCore_prime_wf",
+        "translated_quickIsDefEq_wf",
+        "translated_isDefEqArgs_wf"
+      ]
+    },
+    "metricPolicy": "KA66 advances the exact formal obligation counter only; percentage estimates are held at the latest audited KA65 values pending a separate coverage audit.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka66Files": [
+      {
+        "path": "tools/pskernel-ka66-executable-defeq-core-refinement-tests.ts",
+        "lines": 34,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka66-executable-defeq-core-refinement.ts",
+        "lines": 107,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka66/KA66_EXECUTABLE_DEFEQ_CORE_REFINEMENT_RELEASE_GATE.json",
+        "lines": 148,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka66/KA66_EXECUTABLE_DEFEQ_CORE_REFINEMENT_REPORT.md",
+        "lines": 37,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka66/KA66_EXECUTABLE_DEFEQ_CORE_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 42,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka66/KA66_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 21,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka66/KA66_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka66/executable-defeq-core-refinement-bridge-spec.json",
+        "lines": 30,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka66/executable-defeq-core-refinement-bridge.lean",
+        "lines": 44,
+        "ext": ".lean"
+      }
+    ],
+    "ka66ToolFiles": [
+      {
+        "path": "tools/pskernel-ka66-executable-defeq-core-refinement-tests.ts",
+        "lines": 34,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka66-executable-defeq-core-refinement.ts",
+        "lines": 107,
+        "ext": ".ts"
+      }
+    ],
+    "newKA66OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWHNFDefEqRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false,
+  "fullSuiteGreen": false,
+  "knownBaselineRegression": {
+    "test": "tools/kernel-indexed-recursors-tests.ts",
+    "assertion": "multi-index/multi-recursive iota mismatch",
+    "baselineKA65Reproduced": true,
+    "ka66Reproduced": true,
+    "introducedByKA66": false
+  },
+  "releaseToolingFix": {
+    "test": "tools/test-runner-child-runtime-tests.ts",
+    "issue": "test-runner child .ts processes omitted parent Node strip-types flags",
+    "fixed": true
+  },
+  "boundedReleaseVerificationPassed": true,
+  "fullRepositoryTestPassed": false,
+  "fullRepositoryTestFailureIsBaselineReproduced": true,
+  "workspacePackageTarballs": 36,
+  "workspacePackageSha256Verified": 36
+}

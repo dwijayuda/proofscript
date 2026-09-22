@@ -1,0 +1,21 @@
+
+> proofscript-monorepo@0.1.0-production-p5.94-arena-nested-helper-target-validation0 verify:k3tb
+> export NODE_OPTIONS="--experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON"; node tools/kernel-v71-k3tb-one-command-verify.ts
+
+K3TB_VERIFY_PHASE_START=lean-env-doctor
+K3TB_VERIFY_PHASE_PASS=lean-env-doctor
+K3TB_VERIFY_PHASE_START=lean-version
+K3TB_VERIFY_PHASE_PASS=lean-version
+K3TB_VERIFY_PHASE_START=build
+K3TB_VERIFY_PHASE_PASS=build
+K3TB_VERIFY_PHASE_START=local-merged
+K3TB_VERIFY_PHASE_PASS=local-merged
+K3TB_VERIFY_PHASE_START=lean-gate-finalize
+K3TB_VERIFY_PHASE_PASS=lean-gate-finalize
+K3TB_VERIFY_PHASE_START=k3tb-release-candidate
+K3TB_VERIFY_PHASE_PASS=k3tb-release-candidate
+K3TB_VERIFY_PHASE_START=k3tb-verification-bundle
+K3TB_VERIFY_PHASE_PASS=k3tb-verification-bundle
+K3TB_ONE_COMMAND_VERIFY_PROGRESS_OVERALL=99.5%
+K3TB_ONE_COMMAND_VERIFY_STATUS=PASS
+K3TB_ONE_COMMAND_VERIFY_BOUNDARY=TRUSTED_BOUNDARY_RC_NOT_FULLY_FORMAL_K3

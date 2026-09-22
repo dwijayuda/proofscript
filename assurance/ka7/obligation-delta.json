@@ -1,0 +1,25 @@
+{
+  "schema": "proofscript.assurance.ka7.obligation-delta/v1",
+  "checkpoint": "proofscript-v1-ka7-real-lean4lean-import0",
+  "publicVersion": "1.0.0-pskernel.9",
+  "closedByKA7": [
+    "ka7.source-discovery-contract",
+    "ka7.strict-actual-import-gate",
+    "ka7.toolchain-version-policy",
+    "ka7.no-trusted-kernel-change",
+    "ka7.no-fake-Lean4Lean-import-claim"
+  ],
+  "stillOpen": [
+    "soundness.imported-Lean4Lean-binding",
+    "soundness.checkDecl-against-Lean4Lean",
+    "soundness.defEq",
+    "soundness.whnf",
+    "soundness.environment-extension",
+    "soundness.quotient-primitives",
+    "soundness.inductive-admission",
+    "soundness.recursor-iota",
+    "soundness.supported-core-completeness"
+  ],
+  "blockedBy": "No pinned Lean4Lean source tree is mounted in this environment.",
+  "formalLean4EquivalenceProvenObligations": 0
+}

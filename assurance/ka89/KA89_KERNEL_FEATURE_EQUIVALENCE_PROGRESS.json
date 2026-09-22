@@ -1,0 +1,20 @@
+{
+  "checkpoint": "proofscript-v1-ka89-primitive-comparison-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.92",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 67,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 276,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 273,
+    "newFormalLean4LeanBridgeObligations": 3,
+    "correctedFormalLean4LeanBridgeObligations": 276,
+    "countedNewObligations": [
+      "translated_checkNatBoolCases_wf",
+      "translated_checkNatBEq_wf",
+      "translated_checkNatBLE_wf"
+    ]
+  },
+  "metricPolicy": "KA89 adds direct non-sorry-backed primitive Nat comparison recognizer bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

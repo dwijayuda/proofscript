@@ -1,0 +1,90 @@
+{
+  "checkpoint": "proofscript-v1-ka124-executable-refinement-proof-boundary-gate0",
+  "publicVersion": "1.0.0-pskernel.127",
+  "baseline": "proofscript-v1-ka123-executable-refinement-final-audit-harness0",
+  "metrics": {
+    "featureSurfaceBridgeProgressPercent": 100,
+    "executableKernelEquivalenceProofProgressPercent": 99,
+    "executableKernelEquivalencePreviousPercent": 99,
+    "executableKernelEquivalenceDeltaPercent": 0,
+    "arenaCorpusRegressionPercent": 100,
+    "releasePackagingVerificationPercent": 100,
+    "executableRefinementProofBoundaryGatePercent": 100,
+    "formalLean4LeanBridgeObligations": 366,
+    "newFormalLean4LeanBridgeObligations": 0,
+    "fullLean4EquivalencePercent": 0,
+    "fullyFormalK3Percent": 0,
+    "overallConservativeProjectProgressPercent": 84.7,
+    "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+  },
+  "phaseStatus": {
+    "featureSurfaceBridge": "closed",
+    "executableEquivalence": "blocked-at-proof-boundary",
+    "fullLean4Equivalence": "not-proven",
+    "fullyFormalK3": "not-proven",
+    "claimBoundary": "enforced"
+  },
+  "proofBoundaryGate": {
+    "gatePercent": 100,
+    "rows": [
+      {
+        "id": "no-100-percent-without-theorem",
+        "status": "ready",
+        "evidence": "KA124 holds executable equivalence at 99% because no executable PSKernel refinement theorem has been discharged",
+        "ready": true
+      },
+      {
+        "id": "theorem-artifact-absence-recorded",
+        "status": "ready",
+        "evidence": "no new proof-bearing source theorem is counted by this checkpoint",
+        "ready": true
+      },
+      {
+        "id": "formal-obligation-total-stable",
+        "status": "ready",
+        "evidence": "formal Lean4Lean bridge obligation total remains 366 and new obligations remain 0",
+        "ready": true
+      },
+      {
+        "id": "claim-boundary-lock",
+        "status": "ready",
+        "evidence": "full Lean4 equivalence, fully formal K3, and executable refinement proof remain explicitly false",
+        "ready": true
+      },
+      {
+        "id": "release-evidence-lock",
+        "status": "ready",
+        "evidence": "focused gate, Lean marker, package SHA, fresh extract, ZIP integrity, and ZIP SHA remain required evidence",
+        "ready": true
+      },
+      {
+        "id": "future-discharge-requirements",
+        "status": "ready",
+        "evidence": "next progress beyond 99% requires an audited theorem module or a verified proof-carrying artifact, not another dashboard-only wrapper",
+        "ready": true
+      }
+    ],
+    "counts": {
+      "total": 6,
+      "ready": 6,
+      "notReady": 0
+    },
+    "evidenceMeaning": "KA124 is a proof-boundary gate: it prevents inflating executable-equivalence progress from 99% to 100% without an actual theorem discharge."
+  },
+  "percentBoundaries": {
+    "ka124DoesNotIncreaseExecutableProgressTo100": true,
+    "executableProgressIsDashboardEvidenceNotRefinementProof": true,
+    "proofBoundaryGateDoesNotProvePSKernelEquivalence": true,
+    "overallProgressIsDashboardEstimate": true
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

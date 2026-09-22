@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka107-primitive-telescope-shape-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.110",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 85,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 356,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 351,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "correctedFormalLean4LeanBridgeObligations": 356,
+    "countedNewObligations": [
+      "translated_mlctx_dropN_toCtx_length_wf",
+      "translated_mlctx_head_vlam_wf",
+      "translated_mlctx_mkLambda_eq_lams_wf",
+      "translated_expr_natBinderTypes_of_abstract1_wf",
+      "translated_mlctx_mkLambda_natBinderTypes_wf"
+    ]
+  },
+  "metricPolicy": "KA107 adds direct non-sorry-backed primitive telescope-shape helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

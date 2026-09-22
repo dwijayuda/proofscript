@@ -1,0 +1,101 @@
+{
+  "checkpoint": "proofscript-v1-ka121-executable-refinement-proof-contract0",
+  "publicVersion": "1.0.0-pskernel.124",
+  "baseline": "proofscript-v1-ka120-executable-refinement-discharge-agenda0",
+  "metrics": {
+    "featureSurfaceBridgeProgressPercent": 100,
+    "executableKernelEquivalenceProofProgressPercent": 97,
+    "executableKernelEquivalencePreviousPercent": 96,
+    "executableKernelEquivalenceDeltaPercent": 1,
+    "arenaCorpusRegressionPercent": 100,
+    "releasePackagingVerificationPercent": 100,
+    "executableRefinementProofContractPercent": 100,
+    "formalLean4LeanBridgeObligations": 366,
+    "newFormalLean4LeanBridgeObligations": 0,
+    "fullLean4EquivalencePercent": 0,
+    "fullyFormalK3Percent": 0,
+    "overallConservativeProjectProgressPercent": 84.1,
+    "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+  },
+  "phaseStatus": {
+    "featureSurfaceBridge": "closed",
+    "executableEquivalence": "active-proof-contract-mapped",
+    "fullLean4Equivalence": "not-proven",
+    "fullyFormalK3": "not-proven",
+    "claimBoundary": "enforced"
+  },
+  "proofContract": {
+    "contractPercent": 100,
+    "rows": [
+      {
+        "id": "theorem-name",
+        "status": "ready",
+        "evidence": "the final executable refinement theorem has a stable contract identity",
+        "ready": true
+      },
+      {
+        "id": "source-domain-contract",
+        "status": "ready",
+        "evidence": "source artifacts are restricted to the KA117 indexed executable proof modules",
+        "ready": true
+      },
+      {
+        "id": "target-domain-contract",
+        "status": "ready",
+        "evidence": "target artifacts are restricted to the KA118 refinement coverage map",
+        "ready": true
+      },
+      {
+        "id": "precondition-contract",
+        "status": "ready",
+        "evidence": "preconditions are closed by KA116 dependency closure and KA120 discharge agenda",
+        "ready": true
+      },
+      {
+        "id": "obligation-accounting-contract",
+        "status": "ready",
+        "evidence": "formal Lean4Lean bridge accounting remains pinned at 366 with zero new counted obligations",
+        "ready": true
+      },
+      {
+        "id": "evidence-contract",
+        "status": "ready",
+        "evidence": "the release must include focused gate, Lean marker, arena target, package SHA, fresh extract, ZIP, and SHA evidence",
+        "ready": true
+      },
+      {
+        "id": "negative-claim-contract",
+        "status": "ready",
+        "evidence": "full Lean4 equivalence, fully formal K3, and executable refinement proof are still explicitly unclaimed",
+        "ready": true
+      },
+      {
+        "id": "remaining-gap-contract",
+        "status": "ready",
+        "evidence": "the remaining 3% is reserved for actual theorem discharge, theorem audit, and final release claim review",
+        "ready": true
+      }
+    ],
+    "counts": {
+      "total": 8,
+      "ready": 8,
+      "notReady": 0
+    },
+    "evidenceMeaning": "the proof contract records the theorem boundary and release evidence requirements; it is not the discharged executable refinement theorem"
+  },
+  "percentBoundaries": {
+    "executableProgressIsDashboardEvidenceNotRefinementProof": true,
+    "proofContractDoesNotProvePSKernelEquivalence": true,
+    "overallProgressIsDashboardEstimate": true
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

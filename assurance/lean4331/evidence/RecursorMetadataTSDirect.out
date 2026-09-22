@@ -1,0 +1,8 @@
+REC_META KARec.U.rec p=0 i=0 mot=1 min=1 firstMinor=1 firstIndex=2 major=2 k=false rules=[KARec.U.mk:0]
+REC_META KARec.B.rec p=0 i=0 mot=1 min=1 firstMinor=1 firstIndex=2 major=2 k=false rules=[KARec.B.mk:1]
+REC_META KARec.L.rec p=0 i=0 mot=1 min=2 firstMinor=1 firstIndex=3 major=3 k=false rules=[KARec.L.nil:0,KARec.L.cons:2]
+REC_META KARec.W.rec p=1 i=0 mot=1 min=1 firstMinor=2 firstIndex=3 major=3 k=false rules=[KARec.W.mk:1]
+REC_META KARec.Ix.rec p=0 i=1 mot=1 min=1 firstMinor=1 firstIndex=2 major=3 k=false rules=[KARec.Ix.mk:1]
+REC_META KARec.Eqish.rec p=2 i=1 mot=1 min=1 firstMinor=3 firstIndex=4 major=5 k=true rules=[KARec.Eqish.refl:0]
+REC_META KARec.Has.rec p=0 i=0 mot=1 min=1 firstMinor=1 firstIndex=2 major=2 k=false rules=[KARec.Has.mk:1]
+RECURSOR_METADATA_TS_CASES=7 FAILURES=0

@@ -1,0 +1,27 @@
+{
+  "checkpoint": "proofscript-v1-ka127-executable-refinement-proof-carrying-artifact0",
+  "publicVersion": "1.0.0-pskernel.130",
+  "baseline": "proofscript-v1-ka126-executable-refinement-proof-carrying-artifact-gate0",
+  "referenceKind": "executable-refinement-proof-carrying-artifact",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 0,
+  "countedObligations": [],
+  "sourceTheorems": [
+    "Lean4Lean.PSKernelKA127.executable_refinement_proof_carrying_artifact_certificate_valid"
+  ],
+  "proofCarryingArtifactVerified": true,
+  "closesExecutableEquivalenceDashboardTo100": true,
+  "formalLean4LeanBridgeObligations": 366,
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "theoremDischargeClaim": false,
+    "proofCarryingArtifactVerified": true,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

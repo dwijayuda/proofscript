@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka93-primitive-basic-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.96",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 71,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 288,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 283,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "correctedFormalLean4LeanBridgeObligations": 288,
+    "countedNewObligations": [
+      "translated_contains_primitive_wf",
+      "translated_natBinLit_wf",
+      "translated_natBinLitBool_wf",
+      "translated_withNatProbe_wf",
+      "translated_withBoolProbe_wf"
+    ]
+  },
+  "metricPolicy": "KA93 adds direct non-sorry-backed primitive basic helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

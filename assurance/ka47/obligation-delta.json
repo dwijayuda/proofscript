@@ -1,0 +1,17 @@
+{
+  "checkpoint": "proofscript-v1-ka47-executable-expression-translator-refinement-preflight0",
+  "baseline": "proofscript-v1-ka46-projection-reduction-refinement-preflight0",
+  "formalLean4LeanBridgeObligationsBefore": 132,
+  "newFormalLean4LeanBridgeObligations": 0,
+  "formalLean4LeanBridgeObligationsAfter": 132,
+  "closedSinceKA46": [
+    "source-bound executable expression translator refinement scaffold",
+    "explicit Lean4Lean surface inventory for VExpr / TrExprS / translation preconditions"
+  ],
+  "stillOpen": [
+    "strict Lean4Lean KA-47 checking pending offline Batteries v4.33.0-rc2",
+    "executable PSKernel expression translator refinement theorem remains unproven",
+    "translator totality over unsupported raw Lean.Expr mvar remains intentionally excluded",
+    "full Lean4 equivalence remains unproven"
+  ]
+}

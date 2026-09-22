@@ -1,0 +1,23 @@
+{
+  "checkpoint": "KA-141",
+  "status": "accepted",
+  "requiredGates": {
+    "npmRunBuild": "pass",
+    "testKa141": "pass",
+    "testKa140": "pass",
+    "testKa139": "pass",
+    "testKa138": "pass",
+    "testKa137": "pass",
+    "testKa136": "pass",
+    "npmPack": "pass",
+    "npmPublishDryRun": "pass",
+    "freshNpmInstall": "pass",
+    "freshPscLeanBackedObligationWorkflow": "pass"
+  },
+  "overclaimGuard": {
+    "fullLean4Equivalence": false,
+    "fullyFormalK3": false,
+    "semanticProofCheckingRequiresExternalLean": true,
+    "unprovedObligationsRemainUnproved": true
+  }
+}

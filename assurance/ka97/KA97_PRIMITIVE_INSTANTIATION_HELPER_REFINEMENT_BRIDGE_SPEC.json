@@ -1,0 +1,35 @@
+{
+  "checkpoint": "proofscript-v1-ka97-primitive-instantiation-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.100",
+  "baseline": "proofscript-v1-ka96-primitive-application-helper-refinement0",
+  "referenceKind": "primitive-instantiation-helper-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 5,
+  "countedObligations": [
+    "translated_vexpr_liftN_lams_indexed_wf",
+    "translated_list_mapIdx_replicate_nat_wf",
+    "translated_vexpr_closedN_subst_eq_wf",
+    "translated_onctx_nat_telescope_wf",
+    "translated_ctx_liftN_nat_telescope_wf"
+  ],
+  "sourceTheorems": [
+    "VExpr.liftN_lams'",
+    "List.mapIdx_replicate_nat",
+    "VExpr.ClosedN.subst_eq'",
+    "OnCtx.natTelescope",
+    "Ctx.LiftN.natTelescope"
+  ],
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveInstantiationHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

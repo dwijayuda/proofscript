@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka105-primitive-defeq-application-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.108",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 83,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 346,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 341,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "correctedFormalLean4LeanBridgeObligations": 346,
+    "countedNewObligations": [
+      "translated_isDefEqU_appN_prime_wf",
+      "translated_trExprS_appN_wf",
+      "translated_isDefEqU_app_arg_wf",
+      "translated_vexpr_lams_ctx_wf",
+      "translated_vexpr_lams_appN_wf"
+    ]
+  },
+  "metricPolicy": "KA105 adds direct non-sorry-backed primitive defeq/application helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

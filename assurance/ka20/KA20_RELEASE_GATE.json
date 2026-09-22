@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka20-nondef-vdecl-wf-bridge0",
+  "publicVersion": "1.0.0-pskernel.23",
+  "createdAtUtc": "2026-09-18T14:13:00Z",
+  "baseline": "proofscript-v1-ka19-env-defeq-preservation-bridge0",
+  "kernel": {
+    "name": "PSKernel",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "directLean4LeanNonDefVDeclWFBridge": {
+    "referenceKind": "direct-imported-lean4lean-nondef-vdecl-wf-bridge",
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanNonDefVDeclWFBridgeChecked": true,
+    "strictBridgeCheckPassed": true,
+    "blockedReasons": [],
+    "targetRelation": "Lean4Lean.VDecl.WF",
+    "coveredPSDeclKinds": ["theorem", "example", "opaque"],
+    "alreadyCoveredPSDeclKinds": ["axiom", "definition"],
+    "excludedPSDeclKinds": ["quot", "inductive", "mutualInductive"],
+    "theoryBuildStatus": 0,
+    "bridgeCheckStatus": 0
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 19,
+    "formalObligationMeaning": "KA-13 through KA-20 conditional Lean4Lean bridge lemmas only; not executable PSKernel refinement or full Lean equivalence"
+  },
+  "verificationSummary": {
+    "npm install --offline --no-audit --no-fund": "passed",
+    "npm run build -- --pretty false": "passed",
+    "npm run test:pskernel:ka1..ka10": "passed before bounded-loop timeout at expensive KA-11 materialization",
+    "npm run test:pskernel:ka20": "passed",
+    "npm run assurance:ka20": "passed",
+    "npm run lean:ka20:check": "passed",
+    "npm run test:kernel:smoke": "passed",
+    "npm run test:standalone-small": "passed",
+    "npm run test:psc:kernel-status": "passed",
+    "npm run test:psc:conformance-bounded": "passed",
+    "npm run arena:corpus-preflight": "passed: 190 NDJSON fixtures",
+    "npm run test:arena:static-nonperf": "passed: 26/26 decisive",
+    "npm run test:arena:tutorial": "passed: 140/140 decisive",
+    "npm run verify:arena": "passed"
+  },
+  "aggregateLoopNotes": [
+    "A broad all-KA loop timed out while entering expensive KA-11 Lean4Lean materialization; that aggregate loop is not counted as a pass.",
+    "KA-20 strict gates were rerun directly and passed.",
+    "KA-20 uses the already-materialized KA-11 offline Lean4Lean build when available, with fallback to KA-11 strict intake if the cache is absent."
+  ],
+  "arenaSummary": {
+    "corpusPath": "/mnt/data/arena-corpus-20260915",
+    "ndjsonFixtures": 190,
+    "staticNonperf": { "total": 26, "decisive": 26, "acceptedGood": 4, "rejectedBad": 22, "wrong": 0, "notRun": 0 },
+    "tutorial": { "total": 140, "decisive": 140, "acceptedGood": 93, "rejectedBad": 47, "wrong": 0, "notRun": 0 }
+  }
+}

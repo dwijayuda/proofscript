@@ -1,0 +1,76 @@
+{
+  "checkpoint": "proofscript-v1-ka50-feature-equivalence-audit-refresh0",
+  "publicVersion": "1.0.0-pskernel.53",
+  "featureSurfaceBridgeProgressPercent": 72,
+  "executableKernelEquivalenceProofProgressPercent": 37,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 136,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 132,
+    "newFormalLean4LeanBridgeObligations": 4,
+    "countedNewObligations": [
+      "KA46 translated_reduceProjCore_wf",
+      "KA46 translated_reduceProj_wf",
+      "KA46 translated_whnfCore_projection_path_wf",
+      "KA46 translated_inferProj_wf"
+    ],
+    "strictCheckedButNotCountedAsExecutableRefinement": [
+      "KA47 source-bound translator markers",
+      "KA48 WHNF/DefEq surface markers",
+      "KA49 checker-pipeline skeleton markers"
+    ]
+  },
+  "groups": [
+    {
+      "id": "ordinary-declarations",
+      "progressPercent": 84,
+      "status": "checker pipeline skeleton strict-checked; executable refinement incomplete"
+    },
+    {
+      "id": "quotients",
+      "progressPercent": 74,
+      "status": "environment bridge complete; semantic soundness incomplete"
+    },
+    {
+      "id": "inductives",
+      "progressPercent": 46,
+      "status": "recursor and projection proof-surface bridges strict-checked; generated rule/RHS refinement still open"
+    },
+    {
+      "id": "mutual-definitions",
+      "progressPercent": 43,
+      "status": "initial environment bridge; executable refinement incomplete"
+    },
+    {
+      "id": "expression-tags",
+      "progressPercent": 65,
+      "status": "executable translator surface strict-checked; executable translator not fully refined"
+    },
+    {
+      "id": "typechecker-whnf-defeq",
+      "progressPercent": 53,
+      "status": "WHNF/DefEq surface strict-checked; executable checker refinement incomplete"
+    },
+    {
+      "id": "codec-replay",
+      "progressPercent": 36,
+      "status": "Replay surface and PS codec stability gates exist"
+    },
+    {
+      "id": "resource-errors",
+      "progressPercent": 39,
+      "status": "fuel/error conservativity surface bridge only"
+    },
+    {
+      "id": "architecture-health",
+      "progressPercent": 84,
+      "status": "no-spaghetti ratchet plus KA50 semantic-package touch guard"
+    },
+    {
+      "id": "end-to-end-refinement-spine",
+      "progressPercent": 35,
+      "status": "checker pipeline skeleton strict-checked; no end-to-end theorem yet"
+    }
+  ],
+  "notAFormalEquivalenceClaim": true
+}

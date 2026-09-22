@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka29-quot-env-aggregate-bridge0",
+  "publicVersion": "1.0.0-pskernel.32",
+  "passed": [
+    "npm install --offline --no-audit --no-fund",
+    "npm run build -- --pretty false",
+    "npm run test:pskernel:ka29",
+    "npm run assurance:ka29",
+    "npm run lean:ka29:check",
+    "npm run test:kernel:smoke",
+    "npm run test:standalone-small",
+    "npm run test:psc:kernel-status",
+    "npm run test:psc:conformance-bounded",
+    "npm run arena:corpus-preflight",
+    "npm run test:arena:static-nonperf",
+    "npm run test:arena:tutorial",
+    "fresh extract npm install --offline --no-audit --no-fund",
+    "fresh extract npm run build -- --pretty false",
+    "fresh extract npm run test:pskernel:ka29",
+    "fresh extract npm run lean:ka29:check",
+    "unzip -t final ZIP",
+    "sha256sum -c final SHA file"
+  ],
+  "notCounted": [
+    "combined release loop timed out at test:kernel:smoke; test:kernel:smoke and remaining tail were rerun individually",
+    "npm run verify:arena timed out while entering test:arena:tutorial-harness and is not counted for KA-29",
+    "npm run test:arena:tutorial-harness timed out when run individually and is not counted for KA-29"
+  ],
+  "verificationSummary": {
+    "passed": [
+      "npm install --offline --no-audit --no-fund",
+      "npm run build -- --pretty false",
+      "npm run test:pskernel:ka29",
+      "npm run assurance:ka29",
+      "npm run lean:ka29:check",
+      "npm run test:kernel:smoke",
+      "npm run test:standalone-small",
+      "npm run test:psc:kernel-status",
+      "npm run test:psc:conformance-bounded",
+      "npm run arena:corpus-preflight",
+      "npm run test:arena:static-nonperf",
+      "npm run test:arena:tutorial",
+      "fresh extract npm install --offline --no-audit --no-fund",
+      "fresh extract npm run build -- --pretty false",
+      "fresh extract npm run test:pskernel:ka29",
+      "fresh extract npm run lean:ka29:check",
+      "unzip -t final ZIP",
+      "sha256sum -c final SHA file"
+    ],
+    "notCounted": [
+      "combined release loop timed out at test:kernel:smoke; test:kernel:smoke and remaining tail were rerun individually",
+      "npm run verify:arena timed out while entering test:arena:tutorial-harness and is not counted for KA-29",
+      "npm run test:arena:tutorial-harness timed out when run individually and is not counted for KA-29"
+    ],
+    "arenaEvidence": {
+      "corpusNdjsonFixtures": 190,
+      "staticNonPerf": {
+        "total": 26,
+        "acceptedGood": 4,
+        "rejectedBad": 22,
+        "wrong": 0,
+        "notRun": 0
+      },
+      "tutorial": {
+        "total": 140,
+        "acceptedGood": 93,
+        "rejectedBad": 47,
+        "wrong": 0,
+        "notRun": 0
+      }
+    }
+  },
+  "arenaEvidence": {
+    "corpusNdjsonFixtures": 190,
+    "staticNonPerf": {
+      "total": 26,
+      "acceptedGood": 4,
+      "rejectedBad": 22,
+      "wrong": 0,
+      "notRun": 0
+    },
+    "tutorial": {
+      "total": 140,
+      "acceptedGood": 93,
+      "rejectedBad": 47,
+      "wrong": 0,
+      "notRun": 0
+    }
+  }
+}

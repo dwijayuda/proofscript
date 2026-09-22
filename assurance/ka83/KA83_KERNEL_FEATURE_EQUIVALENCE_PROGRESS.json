@@ -1,0 +1,24 @@
+{
+  "checkpoint": "proofscript-v1-ka83-primitive-type-translation-refinement0",
+  "publicVersion": "1.0.0-pskernel.86",
+  "featureSurfaceBridgeProgressPercent": 94,
+  "executableKernelEquivalenceProofProgressPercent": 61,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 255,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 249,
+    "newFormalLean4LeanBridgeObligations": 6,
+    "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+    "correctedFormalLean4LeanBridgeObligations": 255,
+    "countedNewObligations": [
+      "translated_natLitClosed_wf",
+      "translated_natFstLamApp_wf",
+      "translated_natIsType_wf",
+      "translated_trNat_wf",
+      "translated_boolIsType_wf",
+      "translated_trBool_wf"
+    ]
+  },
+  "metricPolicy": "KA83 adds direct non-sorry-backed primitive Nat/Bool type-translation and literal-closure bridge wrappers. Percentages remain conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

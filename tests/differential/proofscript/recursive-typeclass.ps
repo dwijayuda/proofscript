@@ -1,0 +1,26 @@
+inductive Box(A: Type): Type {
+  | mk(x: A);
+}
+
+class Marker(A: Type) {
+  tag: Nat;
+}
+
+instance natMarker: Marker(Nat) := {
+  tag := 3
+};
+
+instance (priority := 2000) {A: Type} [m: Marker(A)] boxMarker: Marker(Box(A)) := {
+  tag := Marker.tag(A, m)
+};
+
+def getBoxNat[m: Marker(Box(Nat))](n: Nat): Nat := {
+  Marker.tag(Box(Nat), m)
+}
+
+def automaticBoxTag: Nat := {
+  getBoxNat(0)
+}
+
+theorem automaticBoxTagIsThree: automaticBoxTag = 3 :=
+  Eq.refl.{1}(Nat, 3);

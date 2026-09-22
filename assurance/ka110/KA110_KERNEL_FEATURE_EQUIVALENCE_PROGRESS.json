@@ -1,0 +1,17 @@
+{
+  "checkpoint": "proofscript-v1-ka110-feature-surface-closeout-audit0",
+  "publicVersion": "1.0.0-pskernel.113",
+  "featureSurfaceBridgeProgressPercent": 100,
+  "executableKernelEquivalenceProofProgressPercent": 87,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 366,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 366,
+    "newFormalLean4LeanBridgeObligations": 0,
+    "correctedFormalLean4LeanBridgeObligations": 366,
+    "countedNewObligations": []
+  },
+  "metricPolicy": "KA110 closes the KA-series feature-surface dashboard via audit/manifest checks. This is not a full Lean 4 equivalence theorem and does not add new formal bridge obligations.",
+  "notAFullLean4EquivalenceClaim": true,
+  "notAFormalEquivalenceClaim": true
+}

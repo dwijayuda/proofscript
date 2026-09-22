@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "P5.100-windows-simple-setup1",
+  "status": "PROFILE_CLI_WINDOWS_SIMPLE_SETUP_CHECKPOINT_FROZEN",
+  "baseline": {
+    "release": "P5.99",
+    "checkpoint": "simple-commands0",
+    "sha256": "c429443ebadcea0b3874559bb967f10e73a1561d4774aea9a448b9342bc3831f"
+  },
+  "feature": {
+    "summary": "Harden Windows-friendly setup by adding deterministic symlink-failure fallback tests, post-build copy refresh, and doctor JSON setup diagnostics.",
+    "details": [
+      "Adds tools/setup-local-workspaces.cts wrapper.",
+      "Adds npm run test:psc:windows-simple-setup.",
+      "Adds deterministic forced-copy and simulated-EPERM test modes.",
+      "Refreshes workspace copy fallback after TypeScript build so copied @proofscript packages contain dist/.",
+      "Adds psc doctor --json setup status."
+    ]
+  },
+  "simpleCommands": [
+    "npm install --offline --no-audit --no-fund",
+    "npm run setup",
+    "npm link",
+    "psc doctor",
+    "psc init my-proofscript-app",
+    "cd my-proofscript-app",
+    "psc check",
+    "psc build",
+    "psc compile src --out-dir generated"
+  ],
+  "gates": {
+    "workingTreeOfflineInstall": "PASS",
+    "workingTreeSetup": "PASS",
+    "workingTreeBuild": "PASS",
+    "workingTreePscAdapter": "PASS",
+    "workingTreePscInit": "PASS",
+    "workingTreeWindowsSimpleSetup": "PASS",
+    "workingTreeVerifyProfileSoftware": "PASS",
+    "workingTreeConformance": "PASS",
+    "workingTreeStandaloneSmall": "PASS",
+    "workingTreeTypescriptMigration": "PASS",
+    "workingTreeKernelSmoke": "PASS_BOUNDED_RERUN",
+    "cleanSourceResidue": "PASS",
+    "cleanExtractInstall": "PASS",
+    "cleanExtractSetup": "PASS",
+    "cleanExtractBuild": "PASS",
+    "cleanExtractNpmLink": "PASS",
+    "cleanExtractDoctor": "PASS",
+    "cleanExtractPscInitCheckBuildCompile": "PASS",
+    "zipIntegrity": "PASS",
+    "zipSha256": "PASS"
+  },
+  "changed": {
+    "kernelSourceChanged": false,
+    "arenaImporterChanged": false,
+    "kernelCodecChanged": false,
+    "newTrustedComputationRule": false,
+    "cliChanged": true,
+    "windowsWorkspaceLinkFallbackChanged": true,
+    "doctorJsonChanged": true
+  },
+  "trustBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "backendExecutionCorrespondenceProof": false
+  },
+  "cleanSourceVerification": {
+    "initialNodeModules": 0,
+    "initialDist": 0,
+    "initialTsbuildinfo": 0,
+    "initialNestedZip": 0,
+    "intentionalVendorNpmTarballs": 3,
+    "commands": [
+      "npm install --offline --no-audit --no-fund",
+      "npm run setup",
+      "npm run build -- --pretty false",
+      "npm link",
+      "psc doctor",
+      "psc doctor --json",
+      "psc init smoke-app",
+      "cd smoke-app",
+      "psc check",
+      "psc build",
+      "psc compile src --out-dir generated"
+    ],
+    "status": "PASS"
+  }
+}

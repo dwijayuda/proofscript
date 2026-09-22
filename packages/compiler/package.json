@@ -1,0 +1,18 @@
+{
+  "name": "@proofscript/compiler",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "ProofScript backend dispatch",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "@proofscript/plugin-api": "0.1.0-dev.0",
+    "@proofscript/semantic-ir": "0.1.0-dev.0",
+    "@proofscript/kernel": "0.1.0-dev.0"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "status": "accepted",
+  "commands": [
+    "npm run build",
+    "npm run test:ka137",
+    "npm run test:ka136",
+    "npm pack --ignore-scripts",
+    "npm publish --dry-run --ignore-scripts --access public",
+    "fresh npm install tarball",
+    "fresh npx psc workflow"
+  ],
+  "freshWorkflowOutputs": [
+    "/mnt/data/ka137-fresh-language-status3.json",
+    "/mnt/data/ka137-fresh-check3.json",
+    "/mnt/data/ka137-fresh-emit-core3.json",
+    "/mnt/data/ka137-fresh-emit-lean3.json",
+    "/mnt/data/ka137-fresh-certify3.json",
+    "/mnt/data/ka137-fresh-verify-cert3.json",
+    "/mnt/data/ka137-fresh-contracts3.json",
+    "/mnt/data/ka137-fresh-obligations3.json",
+    "/mnt/data/ka137-fresh-build-ts3.json"
+  ]
+}

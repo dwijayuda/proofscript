@@ -1,0 +1,17 @@
+{
+  "checkpoint": "proofscript-v1-ka113-executable-obligation-ledger0",
+  "publicVersion": "1.0.0-pskernel.116",
+  "featureSurfaceBridgeProgressPercent": 100,
+  "executableKernelEquivalenceProofProgressPercent": 89,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 366,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 366,
+    "newFormalLean4LeanBridgeObligations": 0,
+    "correctedFormalLean4LeanBridgeObligations": 366,
+    "countedNewObligations": []
+  },
+  "metricPolicy": "KA113 increments executable-equivalence dashboard progress through a closed-or-tracked executable obligation ledger; it is not a full executable refinement proof or full Lean4 equivalence theorem.",
+  "notAFullLean4EquivalenceClaim": true,
+  "notAFormalEquivalenceClaim": true
+}

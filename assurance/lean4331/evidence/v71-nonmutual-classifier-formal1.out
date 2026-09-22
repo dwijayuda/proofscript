@@ -1,0 +1,14 @@
+FORMAL_NONMUTUAL_CLASSIFIER_BEGIN inheritedModules=29 newModules=1 target=Statement lean=Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+'ProofScriptKernelEquivalence.InductiveNonMutualClassifierCorrespondence.ctorWitness_to_genericAdmission' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.InductiveNonMutualClassifierCorrespondence.ctorClassifier_sound' depends on axioms: [propext,
+ Quot.sound]
+'ProofScriptKernelEquivalence.InductiveNonMutualClassifierCorrespondence.familyWitness_to_genericAdmission' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.InductiveNonMutualClassifierCorrespondence.familyClassifier_sound' depends on axioms: [propext,
+ Quot.sound]
+'ProofScriptKernelEquivalence.InductiveNonMutualClassifierCorrespondence.classifier_rawAdmission_sound' depends on axioms: [propext,
+ Quot.sound]
+'ProofScriptKernelEquivalence.InductiveNonMutualClassifierCorrespondence.classifierPackage_install_preserves' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.InductiveNonMutualClassifierCorrespondence.classifierPackages_wholeEnvironment_sound' depends on axioms: [propext,
+ Quot.sound]
+NONMUTUAL_CLASSIFIER_MODULES=1 INHERITED_FORMAL_STACK=29 TARGET_STATEMENT=1 SORRYAX=0
+FORMAL_NONMUTUAL_CLASSIFIER_END

@@ -1,0 +1,23 @@
+{
+  "schema": "proofscript.assurance.ka11.offline-dependency-plan/v1",
+  "checkpoint": "proofscript-v1-ka11-offline-lean4lean-deps0",
+  "publicVersion": "1.0.0-pskernel.13",
+  "targetPolicy": "leanprover/lean4:v4.33.x-or-later",
+  "lean4leanArchiveCandidates": [
+    "/mnt/data/lean4lean-master.zip",
+    "/mnt/data/lean4lean-master(8).zip"
+  ],
+  "batteriesArchiveCandidates": [
+    "/mnt/data/batteries-4.33.0-rc2.zip",
+    "vendor/batteries-4.33.0-rc2.zip",
+    "external/batteries-4.33.0-rc2.zip"
+  ],
+  "requiredBatteriesRev": "v4.33.0-rc2",
+  "offlinePatch": "rewrite Lean4Lean lakefile require batteries from git/rev to path ../batteries-4.33.0-rc2 inside an isolated build directory",
+  "strictGate": "lake build Lean4Lean and lake env lean import-check file must pass",
+  "trustedKernelSemanticChange": false,
+  "kernelCodecChange": false,
+  "newTrustedComputationRule": false,
+  "fullLean4Equivalence": false,
+  "formalLean4EquivalenceProvenObligations": 0
+}

@@ -1,0 +1,8 @@
+{
+  "checkpoint": "proofscript-v1-ka104-primitive-telescope-typing-helper-refinement0",
+  "status": "passed",
+  "strictLean4LeanStatus": "passed",
+  "newFormalLean4LeanBridgeObligations": 5,
+  "formalLean4LeanBridgeObligations": 341,
+  "architectureHealth": true
+}

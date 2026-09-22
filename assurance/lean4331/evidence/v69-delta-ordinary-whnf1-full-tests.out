@@ -1,0 +1,93 @@
+
+> proofscript-monorepo@0.1.0-wave-b.1 test
+> node tools/test-runner.ts
+
+✓ architecture dependency boundaries hold
+✓ exact Lean 4.33.1 universe-equivalence kernel tests passed
+○ exact Lean quotient oracle unavailable (standalone quotient tests still passed)
+✓ trusted kernel quotient tests passed
+✓ kernel v14 empty inductives, exact empty elimination, recursor BinderInfo/universe order, historical artifact gating, replay, and adversarial checks passed
+✓ kernel v15 raw projections, iota reduction, nonrecursive structure eta, profile gating, replay, adversarial checks, and exact Lean observations passed
+✓ kernel v16 higher-order strict positivity, pointwise recursor IH/iota, profile gating, replay, negative checks, and exact Lean observations passed
+✓ kernel v17 direct+higher-order indexed recursors, dependent local indices/motive/minors, recursive index iota, historical gating, and exact Lean observations passed
+✓ kernel v18 indexed projections, dependent fields, Prop safety, eta recursion hardening, malformed terms, replay, and historical gating passed
+✓ kernel v19 Lean-shaped Prop elimination classification, recursor universes, iota, replay, and historical gating passed (exact Lean binary unavailable: differential pending)
+✓ kernel v20 Lean 4.33.1 RecursorVal.k classification, K-major reconstruction, context-sensitive reduction, replay, and historical gating passed (exact Lean binary unavailable: differential pending)
+✓ kernel v21 Lean 4.33.1 constructor-field universe ceilings, Prop exception, uniform-parameter exemption, polymorphic/max cases, indexed admission, replay, and historical isolation passed (exact Lean binary unavailable: differential pending)
+✓ kernel v22 dependent simple constructor fields, dependent higher-order recursion, recursor/iota, indexed regression, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v23 recursor telescope lambda/let terms, binder capture, recursive/indexed paths, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v24 bounded direct mutual inductives, mutual recursors/iota, atomic rejection, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v25 shared/dependent mutual parameters, parameter-aware recursors/iota, atomic rejection, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v26 mutual indices, per-family motives, cross-family indexed iota, mixed index counts, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v27 higher-order positive mutual recursion, pointwise cross-family IH/iota, indexed target indices, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v28 mutual Prop admission, shared Prop-only recursor universes, empty/data-field cases, mutual-K disablement, potential-Prop universe hardening, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v29 nested preprocessing, linked helper recursors/iota, recursive-container traversal, variance rejection, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v30 parameterized/dependent nested preprocessing, linked recursors/iota, fixed-parameter rejection, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v31 indexed nested preprocessing: captured/fixed index modes, dependent captured telescopes, linked indexed iota, rejection, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v32 nested index expressions: parameter-only fixed indices, expression instantiation, linked indexed iota, rejection, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v33 nested multiple specializations: multiple fixed/container helpers, captured multi-container mode, second-helper iota, mixed-mode rejection, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v34 bounded polymorphic nested preprocessing, explicit universe instantiation, linked helper iota, mismatch rejection, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v35 indexed nested-container preprocessing, indexed helper motive/iota, parameter/local indices, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v36 Lean fields-first recursive minor ordering across simple/parameterized/indexed/mutual/nested recursors, iota, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v37 two-layer deeper nested preprocessing, three-way fields-first linked recursors/iota, recursive and indexed containers, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v38 arbitrary closed linear-depth nested preprocessing, dynamic helper recursors, depth3/depth4 recursive and indexed chains, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v39 arbitrary-depth parameterized/dependent nested preprocessing, parameter-derived container indices, linked iota, fixed-parameter rejection, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v40 arbitrary-depth indexed-outer nested preprocessing: closed/fixed and captured/promoted modes, dependent indices, indexed containers, linked iota, rejection, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v41 arbitrary-depth explicit-universe polymorphic nested preprocessing, indexed fixed/captured modes, linked iota, mismatch rejection, replay, historical isolation, and exact Lean observations passed (exact Lean unavailable)
+✓ kernel v42 multiple compatible nested fields, helper reuse/shared-prefix graph, indexed fixed/captured modes, polymorphism, linked iota, replay, historical isolation, and exact Lean observations passed (exact Lean unavailable)
+✓ kernel v43 nested Prop graph, Prop-only recursors, linked proof iota, parameters/indices/multiple fields, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v44 bounded multi-parameter nested-container graph, multi-position IHs, deep specialization, linked iota, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v45 generalized multi-parameter nested graphs across parameters/fixed indices/universes/Prop/indexed containers, linked iota, captured-index rejection, replay, historical isolation, and exact Lean observations passed (exact Lean unavailable)
+✓ kernel v46 dependent nested-container parameter telescopes, dependent IH placement, nested-under-lambda helper discovery, linked iota, positivity rejection, replay, historical isolation, and exact Lean observations passed (exact Lean unavailable)
+✓ kernel v47 uniform-parameter definitional equality, indexed/higher-order iota, historical isolation, and exact Lean observations passed
+✓ kernel v48 recursor family BinderInfo policy, indexed motive/final indices, empty/mutual/nested recursors, iota, replay, historical shape isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v49 final non-mutual dependent/indexed recursor audit, linked iota, Prop exposure boundary, replay, v48 semantic preservation (exact Lean unavailable)
+✓ kernel v50 bounded mutual+nested preprocessing, linked helper recursors/iota, recursive-container traversal, variance rejection, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v51 shared/dependent-parameter mutual+nested graph, helper recursors/iota, uniformity rejection, replay, v50 isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v52 indexed mutual+nested fixed/parameter-derived target indices, helper graph, replay, v51 isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v53 universe-polymorphic mutual+nested preprocessing, explicit container instantiation, linked iota, outer-index composition, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v54 bounded mutual+nested Prop preprocessing, shared Prop-only motives, linked proof iota, parameters/fixed indices, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v55 indexed nested containers inside Type/Prop mutual graphs, helper index telescopes, linked indexed iota, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v56 bounded arbitrary-depth mutual+nested helper chains, exact helper order, linked iota, Prop composition, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v57 parameterized arbitrary-depth mutual+nested helper chains, dependent shared parameters, linked iota, uniformity/locality rejection, replay, v56 isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v58 arbitrary-depth indexed mutual+nested helper chains, fixed/parameter-derived deep target indices, linked iota, locality rejection, replay, v57 isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v59 polymorphic deeper indexed mutual+nested preprocessing, explicit deep container levels, linked iota, locality, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v60 deep polymorphic/indexed mutual+nested Prop composition, Prop-only motives, linked proof iota, locality rejection, replay, v59 isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v61 deep indexed Prop containers, live helper indices, locality boundary, linked iota, replay, v60 isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v62 deep multi-parameter indexed Prop containers, arbitrary recursive parameter slot, linked iota, locality, replay, v61 isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v63 dependent container parameter telescopes, live helper indices, linked iota, locality, replay, v62 isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v64 multiple deep fields, helper dedup/order, linked iota, dependent locality, replay, v63 isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v65 multiple recursive parameter slots, helper sharing, linked iota, locality, replay, v64 isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+✓ kernel v66 final mutual/nested Sort/monomorphic/higher-order/container-closure generalization audit, Type+Prop nonlinear helper graphs, linked Type iota, universe hardening, locality, replay, v65 isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+○ exact Lean v67 conversion oracle unavailable (standalone tests passed; differential pending)
+✓ kernel v68 deterministic typed resource bounds, direct-Core preflight, stack-safe codec, verifier taxonomy, CLI exit code, and historical v67 isolation passed
+✓ K1 universe kernel tests passed
+✓ K1 restricted recursor typing and computation rules passed
+✓ K1c indexed admission, singleton recursor, and Eq bootstrap tests passed
+✓ K1d Eq/Nat/Bool bootstrap, transparent def, delta reduction, and addZero theorem passed
+✓ standard bootstrap prelude loads without redeclaration and isolated replay succeeds
+✓ K2a let/have core bindings, zeta reduction, def-body sequencing, inference, and artifact gating passed
+✓ K2b abbrev/opaque/example declaration transparency slice passed
+✓ K2c structure lowering, recursor-backed projections, exhaustive match lowering, computation, and replay passed
+✓ K2d structural recursion lowers to recursors, generates equation theorems, rejects non-structural recursion, and independently replays
+✓ K2e equation-clause definitions lower to match/recursors, generate reusable equations, reject malformed coverage/arity, and independently replay
+✓ K2f wildcard/Nat-zero patterns lower to recursors, generate equations, reject unsupported overlaps, and independently replay
+✓ K2g structure construction/punning lower to generated constructors, reject invalid fields, and independently replay
+✓ K2h structure update lowers to constructor + projections, computes definitionally, rejects invalid updates, and independently replays
+✓ K2i Nat/Bool literals lower to checked constructors, Pi-domain expected types drive application arguments, mismatched/oversized literals are unsupported, and isolated replay succeeds
+✓ K2j propositional '=' lowers to checked Eq with inferred universe/type, binds tighter than implication, preserves '==' separation, and independently replays
+✓ K2k implicit/strict/instance BinderInfo survives source→Core→artifact→Lean; @ supplies hidden args explicitly while direct type-parameter synthesis is now supported and instance/default binders remain unsupported
+✓ K2l infers direct implicit/strict-implicit type parameters from later explicit arguments; instance/noninferable/value-hidden synthesis remains unsupported
+✓ K2m scoped metas solve first-order structured hidden type parameters (including multiple metas), reject unsolved/higher-order cases, pass occurs check, and leave no metas in Core
+✓ K2n class/instance registration, priority/declaration ordering, binder-class validation, v9 replay, metadata tamper rejection, and Lean reconstruction passed
+✓ K2o exact-goal global instance synthesis honors priority/declaration order, emits explicit Core, rejects missing candidates, and independently replays
+✓ K2p parameterized class metadata, recursor-backed projection, concrete instance registration/search, parameter-sensitive candidate matching, v10 replay, tamper rejection, and Lean reconstruction passed
+✓ K2q polymorphic global candidates, first-order parameter solving, ranking after goal matching, unsolved-meta rejection, recursive-prerequisite compatibility, strict replay, and Lean emission passed
+✓ K2r bounded recursive global instance prerequisites, cycle guard, depth resource limit, explicit Core insertion, strict replay, and Lean emission passed
+✓ core artifacts v1-v7, v8/K2k/K2l/K2m, and v9/K2n/K2o and v10/K2p/K2q replay into current v12 K3c core; BinderInfo and K2n typeclass metadata are preserved
+✓ K3b module-interface fingerprints, deterministic cache identities, semantic-change propagation, v12 replay validation, K3a/v11 compatibility, certificate-v2 source binding, plugin-free replay, and module isolation passed
+✓ K3c names: nested namespaces, relative/qualified/root resolution, namespace-scoped universes, recursive names, module ownership, exact Lean emission, and monotonic section/open extension passed
+✓ K3c sections/open: section scope, ordinary open precedence/restoration, relative/imported opens, constructor resolution, and fail-closed richer forms passed
+✓ K3c section vars: auto-generalization, theorem include/omit, dependency closure, BinderInfo, lexical restoration, shadowing, and fail-closed deferred forms passed
+✓ pinned Lean toolchain parser requires exact 4.33.1 release version + commit and rejects substitutions
+✓ Lean exporter regressions: universe precedence, equation-name hygiene, and selective recursor noncomputability

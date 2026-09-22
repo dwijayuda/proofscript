@@ -1,0 +1,645 @@
+{
+  "schemaVersion": 1,
+  "project": "ProofScript Project A",
+  "proofscriptReference": "v0.1",
+  "leanSemanticBaseline": "4.33.1",
+  "leanReleaseCommit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "auditBaseline": {
+    "implementationProfile": "KERNEL-level-instantiation-conformance1",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "fullKernelComplete": false,
+  "allowedStatuses": [
+    "implemented",
+    "partially_implemented",
+    "unsupported",
+    "blocked",
+    "needs_validation"
+  ],
+  "formalCoreExclusions": [
+    {
+      "feature": "unresolved expression/universe metavariables",
+      "status": "implemented",
+      "justification": "Elaboration metavariables must be solved before trusted Core; the serialized Core schema has no metavariable constructor."
+    },
+    {
+      "feature": "free-variable expression nodes",
+      "status": "implemented",
+      "justification": "Canonical serialized local binders use de Bruijn bound variables; free-variable nodes are an implementation convenience rather than required trusted syntax."
+    },
+    {
+      "feature": "metadata expression nodes",
+      "status": "implemented",
+      "justification": "Semantically inert metadata is erased before trusted replay."
+    },
+    {
+      "feature": "literal expression nodes",
+      "status": "implemented",
+      "justification": "Current ProofScript literals lower to ordinary constructors/definitions before trusted Core; native literal nodes are not required for logical meaning."
+    },
+    {
+      "feature": "unsafe/partial executable declarations",
+      "status": "implemented",
+      "justification": "They are intentionally excluded from the proof-validating trusted Core and cannot extend logical proof validity."
+    }
+  ],
+  "features": [
+    {
+      "id": "levels.syntax",
+      "status": "implemented",
+      "tests": [
+        "tools/k1-universe-tests.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "levels.parameter-validation",
+      "status": "implemented",
+      "tests": [
+        "tools/k1-universe-tests.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "levels.normalization-defeq",
+      "status": "implemented",
+      "tests": [
+        "tools/kernel-universe-completeness-tests.ts",
+        "tools/k1-universe-tests.ts",
+        "tools/lean-differential.ts",
+        "tools/kernel-universe-conformance1-tests.ts"
+      ],
+      "nextAction": null,
+      "assurance": "v69 repairs old-v68 Lean 4.33.1 isEquiv/geq divergences; 30,000 generated pairs / 60,000 exact predicate comparisons are clean."
+    },
+    {
+      "id": "terms.sort-prop-type",
+      "status": "implemented",
+      "tests": [
+        "tools/k1-universe-tests.ts",
+        "tools/k1d-foundation-tests.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "terms.bvar-substitution",
+      "status": "implemented",
+      "tests": [
+        "tools/k1-universe-tests.ts",
+        "tools/k2a-let-tests.ts"
+      ],
+      "nextAction": "Expand malformed-index adversarial coverage."
+    },
+    {
+      "id": "terms.const-universe-instantiation",
+      "status": "implemented",
+      "tests": [
+        "tools/k1-universe-tests.ts"
+      ],
+      "nextAction": null,
+      "assurance": "v71 exact Lean 4.33.1 cheap level-substitution rebuilding; formal level/expression structural bridge has no sorryAx; 1,000 level + 1,000 expression exact-binary comparisons are clean."
+    },
+    {
+      "id": "terms.app",
+      "status": "implemented",
+      "tests": [
+        "tools/k1-universe-tests.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "terms.lambda",
+      "status": "implemented",
+      "tests": [
+        "tools/k1-universe-tests.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "terms.pi",
+      "status": "implemented",
+      "tests": [
+        "tools/kernel-universe-completeness-tests.ts",
+        "tools/k1-universe-tests.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "terms.let",
+      "status": "implemented",
+      "tests": [
+        "tools/k2a-let-tests.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "terms.projection",
+      "status": "implemented",
+      "tests": [
+        "tools/kernel-indexed-projections-tests.ts",
+        "tools/kernel-structure-eta-tests.ts"
+      ],
+      "leanDifferentialEvidence": "Exact Lean 4.33.1 raw Expr.proj/type/isDefEq probes cover zero-index and indexed one-constructor families, dependent later fields, recursive indexed majors, projection iota, no indexed eta, and Prop projection safety.",
+      "knownDeviation": null,
+      "securityCoverage": "v15 introduces raw Proj; v18 enables indexed projection semantics only for KERNEL-indexed-projections0 and later. Historical v1-v17 semantic smuggling is rejected; malformed targets/indices/majors and Prop-to-data exposure fail closed.",
+      "nextAction": null,
+      "knownProgress": "v18 completed raw projection checking/reduction for the admitted one-constructor environment, including indexed majors, dependent later fields, recursive indexed families, Prop safety, and iota; v20 preserves this semantics unchanged.",
+      "assurance": "v70 exact Lean 4.33.1 projection-conformance candidate: dependency-aware field reconstruction and Prop-major projection gating; targeted raw-kernel differential/formal evidence required by release gate."
+    },
+    {
+      "id": "conversion.beta",
+      "status": "implemented",
+      "tests": [
+        "tools/k1-universe-tests.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "conversion.zeta",
+      "status": "implemented",
+      "tests": [
+        "tools/k2a-let-tests.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "conversion.delta-transparency",
+      "status": "implemented",
+      "tests": [
+        "tools/k2b-transparency-tests.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "conversion.function-eta",
+      "status": "implemented",
+      "tests": [
+        "tools/k1-universe-tests.ts"
+      ],
+      "nextAction": "Add dedicated exact-Lean stress fixtures."
+    },
+    {
+      "id": "conversion.structure-eta",
+      "status": "implemented",
+      "tests": [
+        "tools/kernel-structure-eta-tests.ts"
+      ],
+      "nextAction": null,
+      "leanDifferentialEvidence": "Exact Lean 4.33.1 raw Expr.proj/isDefEq probe: eta holds for nonrecursive one-constructor zero-index types and does not hold for recursive one-constructor types.",
+      "securityCoverage": "Eta is profile-gated to v15 and eligibility requires exactly one constructor, zero indices, and no recursive field occurrence."
+    },
+    {
+      "id": "conversion.proof-irrelevance",
+      "status": "implemented",
+      "tests": [
+        "tools/k1d-foundation-tests.ts",
+        "tools/lean-differential.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "conversion.overall",
+      "status": "implemented",
+      "tests": [
+        "tools/k1-recursor-tests.ts",
+        "tools/k1-universe-tests.ts",
+        "tools/k2a-let-tests.ts",
+        "tools/k2b-transparency-tests.ts",
+        "tools/kernel-conversion-final-audit-tests.ts",
+        "tools/kernel-dependent-indexed-recursor-completion-tests.ts",
+        "tools/kernel-mutual-nested-deeper-dependent-container-parameters-tests.ts",
+        "tools/kernel-mutual-nested-deeper-multiple-fields-tests.ts",
+        "tools/kernel-mutual-nested-deeper-multiple-recursive-parameter-slots-tests.ts",
+        "tools/kernel-mutual-nested-deeper-polymorphic-tests.ts",
+        "tools/kernel-mutual-nested-final-generalization-audit-tests.ts",
+        "tools/kernel-mutual-nested-generalization-tests.ts"
+      ],
+      "nextAction": null,
+      "knownProgress": "v67 completes the explicit admitted-space conversion/WHNF audit. It fixes transparent-head application spine re-flattening so a definition containing a partial recursor/Quot.lift continues reducing after caller arguments complete the redex. Existing beta/zeta/delta, eta, proof irrelevance, projection, quotient, K, ordinary/indexed/mutual/nested recursor families remain regression-covered.",
+      "leanDifferentialEvidence": "Exact Lean 4.33.1 validates transparent partial recursor and Quot.lift computation, dependent-type conversion through the completed reduction, and the opaque-head non-reduction boundary. All historical conversion/kernel families through v66 remain green.",
+      "securityCoverage": "v67 changes only transparent-head WHNF continuation under its explicit Core/profile gate. Opaque/theorem transparency remains unchanged; strict Core 67 replay passes; Core v1-v66 cannot acquire the behavior by relabeling."
+    },
+    {
+      "id": "declarations.axiom",
+      "status": "implemented",
+      "tests": [
+        "tools/k1-universe-tests.ts",
+        "tools/lean-differential.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "declarations.definition-abbrev",
+      "status": "implemented",
+      "tests": [
+        "tools/k2b-transparency-tests.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "declarations.theorem",
+      "status": "implemented",
+      "tests": [
+        "tools/k2b-transparency-tests.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "declarations.opaque",
+      "status": "implemented",
+      "tests": [
+        "tools/k2b-transparency-tests.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "declarations.quotient",
+      "status": "implemented",
+      "tests": [
+        "tools/kernel-quotient-tests.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "conversion.quotient-computation",
+      "status": "implemented",
+      "tests": [
+        "tools/kernel-quotient-tests.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "inductives.basic",
+      "status": "implemented",
+      "tests": [
+        "tools/k1-recursor-tests.ts",
+        "tools/k1c-indexed-tests.ts",
+        "tools/kernel-dependent-fields-tests.ts",
+        "tools/kernel-telescope-terms-tests.ts",
+        "tools/kernel-nested-inductives-tests.ts",
+        "tools/kernel-nested-parameters-tests.ts",
+        "tools/kernel-nested-index-expressions-tests.ts",
+        "tools/kernel-nested-multiple-specializations-tests.ts",
+        "tools/kernel-nested-polymorphic-tests.ts",
+        "tools/kernel-nested-indexed-containers-tests.ts",
+        "tools/kernel-nested-deeper-tests.ts",
+        "tools/kernel-nested-deeper-parameters-tests.ts",
+        "tools/kernel-nested-deeper-indices-tests.ts",
+        "tools/kernel-nested-deeper-polymorphic-tests.ts",
+        "tools/kernel-nested-deeper-multiple-fields-tests.ts",
+        "tools/kernel-nested-deeper-prop-tests.ts",
+        "tools/kernel-nested-deeper-multi-parameter-tests.ts",
+        "tools/kernel-nested-deeper-dependent-container-parameters-tests.ts",
+        "tools/kernel-dependent-indexed-recursor-completion-tests.ts"
+      ],
+      "nextAction": null,
+      "knownProgress": "v49 completes the final exact-oracle audit of the admitted non-mutual inductive space. Dependent index telescopes, higher-order indexed recursive fields, constructor-local dependencies, uniform-parameter defEq, BinderInfo, Prop elimination boundaries, replay, and linked computation all agree with exact Lean 4.33.1 for the audited target.",
+      "leanDifferentialEvidence": "Exact Lean 4.33.1 v49 probes add dependent second-index domains and higher-order dependent indexed recursors; all earlier admission, universe, positivity, Prop, mutual, and nested milestone evidence remains green."
+    },
+    {
+      "id": "inductives.empty",
+      "status": "implemented",
+      "tests": [
+        "tools/kernel-empty-inductive-tests.ts"
+      ],
+      "nextAction": "No further empty-inductive work except regressions discovered by broader inductive completion.",
+      "leanDifferentialEvidence": "Exact Lean 4.33.1 recursor observations for parameterless Type/Prop, parameterized, and indexed empty families; v14 standalone replay matches motive-first universe order and BinderInfo.",
+      "securityCoverage": "v14-only codec gate; v12/v13 smuggling rejected; generated recursor collision is atomic; malformed empty telescopes rejected."
+    },
+    {
+      "id": "inductives.parameters-indices",
+      "status": "implemented",
+      "tests": [
+        "tools/k1c-indexed-tests.ts",
+        "tools/kernel-indexed-recursors-tests.ts",
+        "tools/kernel-telescope-terms-tests.ts",
+        "tools/kernel-nested-parameters-tests.ts",
+        "tools/kernel-nested-index-expressions-tests.ts",
+        "tools/kernel-nested-multiple-specializations-tests.ts",
+        "tools/kernel-nested-polymorphic-tests.ts",
+        "tools/kernel-nested-indexed-containers-tests.ts",
+        "tools/kernel-nested-deeper-tests.ts",
+        "tools/kernel-nested-deeper-parameters-tests.ts",
+        "tools/kernel-nested-deeper-indices-tests.ts",
+        "tools/kernel-nested-deeper-polymorphic-tests.ts",
+        "tools/kernel-nested-deeper-multiple-fields-tests.ts",
+        "tools/kernel-nested-deeper-prop-tests.ts",
+        "tools/kernel-nested-deeper-multi-parameter-tests.ts",
+        "tools/kernel-nested-deeper-dependent-container-parameters-tests.ts",
+        "tools/kernel-dependent-indexed-recursor-completion-tests.ts"
+      ],
+      "nextAction": null,
+      "knownProgress": "v49 closes the audited parameter/index row: uniform parameters use contextual definitional equality; dependent/multiple index telescopes, constructor-local result indices, recursive-index propagation, source BinderInfo, and dependent later index domains are covered by exact Lean 4.33.1 evidence.",
+      "leanDifferentialEvidence": "Exact Lean 4.33.1 observations cover dependent/multiple indices, second-index domains depending on earlier indices, direct and higher-order recursive fields, constructor-local result indices, multiple recursive fields, definitionally-equal uniform recursive/result parameters, and recursor BinderInfo."
+    },
+    {
+      "id": "inductives.positivity",
+      "status": "implemented",
+      "tests": [
+        "tools/kernel-inductive-positivity-tests.ts",
+        "tools/k1-recursor-tests.ts",
+        "tools/k1c-indexed-tests.ts"
+      ],
+      "nextAction": null,
+      "leanDifferentialEvidence": "Exact Lean 4.33.1 accepts higher-order positive Pi-codomain recursion and uniform-parameter List-shaped recursion, rejects negative Pi-domain and recursive-index occurrences, and exposes the pointwise recursive recursor induction hypothesis.",
+      "securityCoverage": "v16-only semantic profile; v15 replay cannot acquire higher-order positivity semantics; failed inductive admission remains atomic; non-uniform parameters, negative domains, recursive indices, and unsupported nested wrappers reject.",
+      "knownDeviation": "Lean-valid recursive indexed fields pass positivity classification but remain blocked by the separate indexed-recursive-recursor capability gap. Mutual/nested inductive preprocessing remains unsupported."
+    },
+    {
+      "id": "inductives.universe-constraints",
+      "status": "implemented",
+      "tests": [
+        "tools/kernel-universe-completeness-tests.ts",
+        "tools/kernel-inductive-universe-tests.ts"
+      ],
+      "nextAction": null,
+      "knownProgress": "v21 enforces Lean 4.33.1 check_constructors universe admission for every non-parameter field: field sort <= inductive result sort, with Prop impredicativity and uniform-parameter exemption. Mutual shared-result-universe checks are outside this non-mutual Core and remain tracked by mutual/nested support.",
+      "leanDifferentialEvidence": "Exact Lean 4.33.1 accepts same-level fields, raised result universes, Prop fields from high universes, uniform high-universe parameters, polymorphic same-level storage, and max-universe dominance; it rejects Type-as-field in Type, stored high-universe parameters, and u+1 fields in Type u.",
+      "securityCoverage": "v21-only admission tightening is derived from checked constructor telescopes; no serialized universe-permission flag is trusted. Historical v1-v20 profiles retain their frozen pre-v21 admission semantics."
+    },
+    {
+      "id": "inductives.recursors",
+      "status": "implemented",
+      "tests": [
+        "tools/k1-recursor-tests.ts",
+        "tools/k1c-indexed-tests.ts",
+        "tools/kernel-empty-inductive-tests.ts",
+        "tools/kernel-indexed-recursors-tests.ts",
+        "tools/kernel-recursor-k-tests.ts",
+        "tools/lean-differential.ts",
+        "tools/kernel-dependent-fields-tests.ts",
+        "tools/kernel-telescope-terms-tests.ts",
+        "tools/kernel-mutual-inductives-tests.ts",
+        "tools/kernel-mutual-parameters-tests.ts",
+        "tools/kernel-mutual-indices-tests.ts",
+        "tools/kernel-mutual-higher-order-tests.ts",
+        "tools/kernel-mutual-prop-tests.ts",
+        "tools/kernel-nested-inductives-tests.ts",
+        "tools/kernel-nested-parameters-tests.ts",
+        "tools/kernel-nested-index-expressions-tests.ts",
+        "tools/kernel-nested-multiple-specializations-tests.ts",
+        "tools/kernel-nested-polymorphic-tests.ts",
+        "tools/kernel-nested-indexed-containers-tests.ts",
+        "tools/kernel-recursor-minor-order-tests.ts",
+        "tools/kernel-nested-deeper-tests.ts",
+        "tools/kernel-nested-deeper-generalization-tests.ts",
+        "tools/kernel-nested-deeper-parameters-tests.ts",
+        "tools/kernel-nested-deeper-indices-tests.ts",
+        "tools/kernel-nested-deeper-polymorphic-tests.ts",
+        "tools/kernel-nested-deeper-multiple-fields-tests.ts",
+        "tools/kernel-nested-deeper-prop-tests.ts",
+        "tools/kernel-nested-deeper-multi-parameter-tests.ts",
+        "tools/kernel-nested-deeper-dependent-container-parameters-tests.ts",
+        "tools/kernel-dependent-indexed-recursor-completion-tests.ts"
+      ],
+      "nextAction": null,
+      "knownProgress": "v49 closes the audited recursor-generation/type row for the current trusted target: simple, parameterized, empty, indexed/dependent, higher-order, Prop, K-like, mutual, and nested-generated recursors have Lean-shaped universe ordering, fields-first minors, family/index BinderInfo, motives/IHs, and strict replay evidence.",
+      "leanDifferentialEvidence": "Exact Lean 4.33.1 milestone evidence through v49 includes dependent index telescopes and higher-order pointwise IHs on top of all earlier simple/parameterized/indexed/mutual/nested recursor-shape probes."
+    },
+    {
+      "id": "inductives.recursor-computation",
+      "status": "implemented",
+      "tests": [
+        "tools/k1-recursor-tests.ts",
+        "tools/kernel-indexed-recursors-tests.ts",
+        "tools/kernel-recursor-k-tests.ts",
+        "tools/lean-differential.ts",
+        "tools/kernel-dependent-fields-tests.ts",
+        "tools/kernel-telescope-terms-tests.ts",
+        "tools/kernel-mutual-inductives-tests.ts",
+        "tools/kernel-mutual-parameters-tests.ts",
+        "tools/kernel-mutual-indices-tests.ts",
+        "tools/kernel-mutual-higher-order-tests.ts",
+        "tools/kernel-mutual-prop-tests.ts",
+        "tools/kernel-nested-inductives-tests.ts",
+        "tools/kernel-nested-parameters-tests.ts",
+        "tools/kernel-nested-index-expressions-tests.ts",
+        "tools/kernel-nested-multiple-specializations-tests.ts",
+        "tools/kernel-nested-polymorphic-tests.ts",
+        "tools/kernel-nested-indexed-containers-tests.ts",
+        "tools/kernel-recursor-minor-order-tests.ts",
+        "tools/kernel-nested-deeper-tests.ts",
+        "tools/kernel-nested-deeper-generalization-tests.ts",
+        "tools/kernel-nested-deeper-parameters-tests.ts",
+        "tools/kernel-nested-deeper-indices-tests.ts",
+        "tools/kernel-nested-deeper-polymorphic-tests.ts",
+        "tools/kernel-nested-deeper-multiple-fields-tests.ts",
+        "tools/kernel-nested-deeper-prop-tests.ts",
+        "tools/kernel-nested-deeper-multi-parameter-tests.ts",
+        "tools/kernel-nested-deeper-dependent-container-parameters-tests.ts",
+        "tools/kernel-dependent-indexed-recursor-completion-tests.ts"
+      ],
+      "nextAction": null,
+      "knownProgress": "v49 closes the audited recursor-computation row for the current trusted target. Linked iota is exercised across simple, indexed/dependent, higher-order, K-like, mutual, and nested helper recursors; the v49 dependent-index test observes exact recursive index reconstruction.",
+      "leanDifferentialEvidence": "Exact Lean 4.33.1 recursor observations and ProofScript linked-iota tests cover the admitted recursor families through v49; dependent second-index iota and higher-order indexed IH application are explicitly included."
+    },
+    {
+      "id": "inductives.prop-elimination",
+      "status": "implemented",
+      "tests": [
+        "tools/kernel-empty-inductive-tests.ts",
+        "tools/kernel-prop-elimination-tests.ts",
+        "tools/kernel-dependent-indexed-recursor-completion-tests.ts"
+      ],
+      "nextAction": null,
+      "leanDifferentialEvidence": "Exact Lean 4.33.1 confirms direct constructor-result index exposure permits singleton-Prop large elimination, while beta/zeta-wrapped field occurrences remain Prop-only when index auto-promotion is disabled. v49 records this negative boundary and does not broaden v19 semantics.",
+      "knownDeviation": "RecursorVal.k is separately implemented in v20; mutual/nested inductive preprocessing remains outside this checklist item.",
+      "securityCoverage": "v19 derives elimination permission from the admitted inductive declaration; no serialized/frontend-controlled allow flag is trusted. Historical v1-v18 artifacts cannot acquire v19 large-elimination semantics by relabeling.",
+      "knownProgress": "v19 derives Lean 4.33.1 elimination permission from the admitted declaration shape: empty Prop large elimination; multi-constructor Prop-only; singleton large elimination iff every data-valued non-parameter field is directly exposed by constructor result indices. v20 preserves this rule."
+    },
+    {
+      "id": "inductives.mutual-nested",
+      "status": "implemented",
+      "tests": [
+        "tools/kernel-mutual-higher-order-tests.ts",
+        "tools/kernel-mutual-indices-tests.ts",
+        "tools/kernel-mutual-inductives-tests.ts",
+        "tools/kernel-mutual-nested-deeper-dependent-container-parameters-tests.ts",
+        "tools/kernel-mutual-nested-deeper-indexed-containers-tests.ts",
+        "tools/kernel-mutual-nested-deeper-indices-tests.ts",
+        "tools/kernel-mutual-nested-deeper-multi-parameter-containers-tests.ts",
+        "tools/kernel-mutual-nested-deeper-multiple-fields-tests.ts",
+        "tools/kernel-mutual-nested-deeper-multiple-recursive-parameter-slots-tests.ts",
+        "tools/kernel-mutual-nested-deeper-parameters-tests.ts",
+        "tools/kernel-mutual-nested-deeper-polymorphic-tests.ts",
+        "tools/kernel-mutual-nested-deeper-prop-tests.ts",
+        "tools/kernel-mutual-nested-deeper-tests.ts",
+        "tools/kernel-mutual-nested-final-generalization-audit-tests.ts",
+        "tools/kernel-mutual-nested-generalization-tests.ts",
+        "tools/kernel-mutual-nested-indexed-containers-tests.ts",
+        "tools/kernel-mutual-nested-indices-tests.ts",
+        "tools/kernel-mutual-nested-parameters-tests.ts",
+        "tools/kernel-mutual-nested-prop-tests.ts",
+        "tools/kernel-mutual-parameters-tests.ts",
+        "tools/kernel-mutual-prop-tests.ts",
+        "tools/kernel-nested-deeper-dependent-container-parameters-tests.ts",
+        "tools/kernel-nested-deeper-generalization-tests.ts",
+        "tools/kernel-nested-deeper-indices-tests.ts",
+        "tools/kernel-nested-deeper-multi-parameter-tests.ts",
+        "tools/kernel-nested-deeper-multiple-fields-tests.ts",
+        "tools/kernel-nested-deeper-parameters-tests.ts",
+        "tools/kernel-nested-deeper-polymorphic-tests.ts",
+        "tools/kernel-nested-deeper-tests.ts",
+        "tools/kernel-nested-index-expressions-tests.ts",
+        "tools/kernel-nested-indexed-containers-tests.ts",
+        "tools/kernel-nested-inductives-tests.ts",
+        "tools/kernel-nested-multiple-specializations-tests.ts",
+        "tools/kernel-nested-parameters-tests.ts",
+        "tools/kernel-nested-polymorphic-tests.ts"
+      ],
+      "nextAction": null,
+      "knownProgress": "v66 closes the audited mutual/nested target by generalizing the v65 nonlinear helper graph across Prop and shared provably-nonzero Type result universes, including monomorphic/polymorphic, indexed/non-indexed, higher-order positive codomain/recursive-parameter composition, multiple recursive slots, and transitive closure through previously admitted mutually recursive container families.",
+      "leanDifferentialEvidence": "Exact Lean 4.33.1 v66 probes validate Type+Prop nonlinear helper graphs, monomorphic Type 0 indexed/non-indexed cases, higher-order nested codomains, function-valued recursive container parameters, mutually recursive container-family closure, linked Type iota, mixed-result-universe rejection, potential bare Sort-u rejection, and constructor/index-local capture rejection. Strict Core 66 replay and historical v65 isolation pass.",
+      "securityCoverage": "v66 derives every helper node/edge from checked declarations and contextual definitional equality, recursively rewrites only trusted positive Pi codomains/recursive parameter slots, closes over admitted container-family dependencies, rechecks the entire enlarged graph atomically with the existing mutual checker, and keeps v1-v65 semantics profile-isolated."
+    },
+    {
+      "id": "bootstrap.eq",
+      "status": "implemented",
+      "tests": [
+        "tools/k1d-foundation-tests.ts",
+        "tools/k2j-equality-tests.ts",
+        "tools/kernel-empty-inductive-tests.ts",
+        "tools/kernel-quotient-tests.ts"
+      ],
+      "nextAction": "Keep the historical K3c source-bootstrap spelling as a frontend compatibility issue; kernel canonical Eq remains regression-covered.",
+      "knownDeviation": "The historical K3c source/bootstrap file still spells Eq's type parameter explicitly. That is a frontend/bootstrap-source compatibility issue, not a v14 trusted-kernel capability gap.",
+      "leanDifferentialEvidence": "Canonical Lean-shaped Eq/Eq.refl is admitted by the trusted kernel; v14 generated Eq.rec has exact motive-first universe order and outer BinderInfo observed against Lean 4.33.1."
+    },
+    {
+      "id": "environment.declaration-order",
+      "status": "implemented",
+      "tests": [
+        "tools/artifact-compat-tests.ts",
+        "tools/pskernel-context-conformance.ts"
+      ],
+      "nextAction": "Expand adversarial declaration-order tests.",
+      "assurance": "P4.65 preserves EnvironmentCore.fork() cacheRevision across shallow immutable-data admission forks, then lets the fork diverge on its own mutations; regression-covered by pskernel-context-conformance."
+    },
+    {
+      "id": "environment.axiom-dependency-closure",
+      "status": "implemented",
+      "tests": [
+        "tools/lean-differential.ts",
+        "tools/kernel-quotient-tests.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "artifact.strict-codec-replay",
+      "status": "implemented",
+      "tests": [
+        "tools/artifact-compat-tests.ts",
+        "tools/kernel-quotient-tests.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "verifier.independent-replay",
+      "status": "implemented",
+      "tests": [
+        "tools/test-runner.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "verifier.result-taxonomy",
+      "status": "implemented",
+      "tests": [
+        "tools/test-runner.ts"
+      ],
+      "nextAction": null
+    },
+    {
+      "id": "security.resource-bounds",
+      "status": "implemented",
+      "tests": [
+        "tools/kernel-resource-bounds-tests.ts",
+        "tools/artifact-compat-tests.ts",
+        "packages/verifier/src/index.ts"
+      ],
+      "nextAction": null,
+      "leanDifferentialEvidence": "Resource ceilings are ProofScript implementation-security policy, not claimed to equal Lean operational limits. Exact Lean 4.33.1 semantic regression remains 25/25 source cases plus 55/55 semantic kernel milestone families through v67; v68 adds a non-equivalence resource-security report.",
+      "knownDeviation": "Resource ceilings are intentionally implementation-specific and may differ from Lean 4.33.1 operational limits without changing accepted logical semantics below the ceilings.",
+      "securityCoverage": "v68 uses typed KernelResourceError/ArtifactResourceError/CertificateResourceError; stack-safe codec/direct-Core depth and node limits; declaration/member/constructor limits; typed defEq/WHNF/positivity exhaustion; 512-helper mutual/nested graph ceiling; 64 MiB verifier input ceiling; stable resource_exhausted status and psverify exit code 3; malformed Core remains rejected; historical v67 decoding semantics remain isolated."
+    },
+    {
+      "id": "oracle.exact-lean-4.33.1",
+      "status": "implemented",
+      "tests": [
+        "tools/lean-differential.ts"
+      ],
+      "currentCases": 25,
+      "currentPassed": 23,
+      "nextAction": "Extend for every completed kernel slice.",
+      "kernelOnlyCases": 55,
+      "kernelOnlyPassed": 55,
+      "currentRejected": 2,
+      "currentStatus": "source-level report rejected only by two known generated-Lean exporter cases; do not use this aggregate as kernel-equivalence evidence"
+    }
+  ],
+  "blockingItemsBeforeFullKernel": [],
+  "nextSmallestKernelMilestone": null,
+  "summary": {
+    "total": 41,
+    "implemented": 41,
+    "unsupported": 0,
+    "partially_implemented": 0,
+    "blocked": 0,
+    "needs_validation": 0,
+    "profile": "KERNEL-level-instantiation-conformance1"
+  },
+  "assuranceStatus": {
+    "formalLeanEquivalence": "IN_PROGRESS",
+    "universeConformance": "REPAIRED_AND_EXACT_DIFFERENTIAL_CLEAN",
+    "universeExactComparisons": 60000,
+    "universeExactMismatches": 0,
+    "historicalV68TrustedSemanticDefectConfirmed": true,
+    "historicalV68Disposition": "immutable historical evidence; not Lean-equivalent",
+    "sourceDifferential": {
+      "total": 25,
+      "accepted": 23,
+      "rejected": 2,
+      "rejectionsAreFrontendExporterCases": [
+        "reduction-recursion",
+        "equation-patterns"
+      ]
+    },
+    "currentCandidate": {
+      "profile": "KERNEL-level-instantiation-conformance1",
+      "coreFormat": 71
+    },
+    "levelInstantiationConformance": "FORMAL_STRUCTURAL_BRIDGE_PLUS_EXACT_DIFFERENTIAL_CLEAN",
+    "levelInstantiationExactCases": 2000,
+    "levelInstantiationExactMismatches": 0
+  },
+  "projectionConformance": {
+    "profile": "KERNEL-projection-conformance1",
+    "coreFormat": 70,
+    "historicalV69": "superseded-for-trusted-use-due-projection-conformance-defect",
+    "target": "exact Lean 4.33.1 raw projection typing/reduction on shared representable domain",
+    "formalStatus": "dependency-classifier-field-walk-iota-proved-no-sorryAx",
+    "typescriptDifferential": "1000/1000",
+    "exactLeanRawDifferential": "1000/1000"
+  },
+  "levelInstantiationConformance": {
+    "profile": "KERNEL-level-instantiation-conformance1",
+    "coreFormat": 71,
+    "historicalV70": "superseded-for-exact-trusted-use-due-level-instantiation-structural-conformance-gap",
+    "target": "exact Lean 4.33.1 no-mvar level/expression universe instantiation on the shared representable domain",
+    "formalStatus": "cheap-max-imax-level-and-expression-translation-proved-no-sorryAx",
+    "typescriptVsExactLean": "1000-level/1000-expression; zero mismatch"
+  },
+  "fullLean4Equivalence": false,
+  "fullyFormalK3": false,
+  "formalLean4EquivalenceProvenObligations": 0,
+  "k3tbTrustedBoundary": true,
+  "fullKernelCompleteMeaning": "DEPRECATED compatibility field only. Must remain false; do not use it for K3-TB checklist completion or Lean 4 equivalence claims.",
+  "auditedK3TBChecklistComplete": true,
+  "fullLean4KernelComplete": false,
+  "sameTheoryAsLean4": false,
+  "auditedK3TBChecklistCompleteMeaning": "The explicit K3-TB audited checklist for the current trusted-boundary profile is complete. This is not full Lean 4 kernel completion, not Lean 4 equivalence, not same theory as Lean 4, and not fully formal K3.",
+  "claimSeparationRelease": "P5.75 metadata-claim-separation0",
+  "release": "P5.87",
+  "checkpoint": "arena-static-malformed-reject0"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@proofscript/formatter",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "Canonical ProofScript formatter.",
+  "license": "MIT",
+  "files": [
+    "README.md"
+  ]
+}

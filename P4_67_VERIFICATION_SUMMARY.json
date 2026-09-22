@@ -1,0 +1,38 @@
+{
+  "release": "P4.67",
+  "baseline": "P4.66 standalone TypeScript emitter",
+  "trustLabel": "K3-TB trusted-boundary; not fully formal K3; not proven equal to full Lean 4 kernel",
+  "mainChange": "JavaScript emitter now rejects sanitized binding-name collisions before writing output, matching TypeScript emitter fail-closed behavior.",
+  "changedFiles": [
+    "packages/backend-typescript/src/index.ts",
+    "packages/backend-typescript/dist/index.js",
+    "packages/backend-typescript/dist/index.d.ts",
+    "tools/pslive-js-name-collision-tests.ts",
+    "tools/pslive.ts",
+    "package.json",
+    "package-lock.json",
+    "PRODUCTION_P4_67_JS_EMITTER_NAME_COLLISION_GUARD_REPORT.md"
+  ],
+  "verifiedCommands": [
+    { "command": "npm run build -- --pretty false", "status": "passed" },
+    { "command": "npm run test:pslive:js-name-collision", "status": "passed", "evidence": "PSLIVE_JS_NAME_COLLISION=PASS" },
+    { "command": "npm run test:pslive:build-ts", "status": "passed", "evidence": "PSLIVE_BUILD_TS=PASS" },
+    { "command": "npm run test:standalone-small", "status": "passed" },
+    { "command": "npm run test:kernel:typechecker", "status": "passed", "evidence": "43/43 pass" },
+    { "command": "npm run test:kernel:smoke", "status": "passed", "evidence": "PSKERNEL_TS_KERNEL_SMOKE=PASS" },
+    { "command": "npm run test:governance", "status": "passed", "evidence": "checks=27 warnings=0 failures=0" },
+    { "command": "node tools/pskernel.ts status --json", "status": "passed", "evidence": "trusted-boundary / not-proven" }
+  ],
+  "blockedCommands": [
+    {
+      "command": "npm run verify:k3tb:publish",
+      "status": "blocked",
+      "reason": "missing PROOFSCRIPT_LEAN_BIN for expected Lean 4.33.1 commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+    }
+  ],
+  "progressEstimate": {
+    "practicalStandaloneMvp": "88%",
+    "k3tbReleaseHonestyAuditGuard": "99%",
+    "fullyFormalK3Lean4Equivalence": "not achieved"
+  }
+}

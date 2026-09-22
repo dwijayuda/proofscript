@@ -1,0 +1,18 @@
+inductive TrueP: Prop {
+  | intro;
+}
+
+theorem trueP: TrueP := TrueP.intro;
+
+inductive NatK1: Type {
+  | zero;
+  | succ(n: NatK1);
+}
+
+theorem natRecProof(P: Prop, h: P, n: NatK1): P :=
+  @NatK1.rec.{0}(
+    fun (_: NatK1) => P,
+    h,
+    fun (k: NatK1, ih: P) => ih,
+    n
+  );

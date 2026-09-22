@@ -1,0 +1,11 @@
+{
+  "checkpoint": "proofscript-v1-ka113-executable-obligation-ledger0",
+  "status": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 366,
+  "newFormalLean4LeanBridgeObligations": 0,
+  "featureSurfaceBridgeProgressPercent": 100,
+  "executableKernelEquivalenceProofProgressPercent": 89,
+  "overallConservativeProjectProgressPercent": 81.7,
+  "architectureHealth": true
+}

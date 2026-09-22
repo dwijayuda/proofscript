@@ -1,0 +1,11 @@
+inductive Nat: Type {
+  | zero;
+  | succ(n: Nat);
+}
+inductive Bool: Type {
+  | false;
+  | true;
+}
+def bad: Nat := {
+  Bool.true
+}

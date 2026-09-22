@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka40-primitive-literal-policy-bridge0",
+  "baseline": "proofscript-v1-ka39-defeq-whnf-refinement-bridge0",
+  "formalLean4EquivalenceProvenObligationsBefore": 103,
+  "formalLean4EquivalenceProvenObligationsAdded": 11,
+  "formalLean4EquivalenceProvenObligationsAfter": 114,
+  "closedSinceKA39": [
+    "literal policy requirements for Nat and String literals over VEnv.ContainsLits",
+    "Nat.zero and Nat.succ primitive typing wrappers",
+    "Nat literal typing and closedness wrappers",
+    "Nat type recognition and Nat constant translation wrappers",
+    "Bool literal typing, Bool type recognition, and Bool constant translation wrappers"
+  ],
+  "stillOpen": [
+    "end-to-end executable primitive checker refinement",
+    "full string literal constructor expansion/refinement beyond policy prerequisites",
+    "primitive arithmetic reflection completeness for Nat.pred/add/sub/mul/div/mod/bitwise families",
+    "primitive Bool/Nat conditional/reflection executable soundness",
+    "codec/replay proof that primitive/literal declarations are faithfully imported",
+    "resource/error conservativity for primitive/literal checking"
+  ]
+}

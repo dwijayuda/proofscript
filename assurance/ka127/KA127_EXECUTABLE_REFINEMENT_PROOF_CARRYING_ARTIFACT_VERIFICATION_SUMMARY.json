@@ -1,0 +1,7 @@
+{
+  "checkpoint": "proofscript-v1-ka127-executable-refinement-proof-carrying-artifact0",
+  "publicVersion": "1.0.0-pskernel.130",
+  "status": "passed",
+  "redFirstEvidence": "npm run test:pskernel:ka127 failed before the KA-127 tool existed",
+  "generatedReports": true
+}

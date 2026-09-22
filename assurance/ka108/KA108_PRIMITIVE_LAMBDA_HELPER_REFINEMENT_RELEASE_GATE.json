@@ -1,0 +1,130 @@
+{
+  "checkpoint": "proofscript-v1-ka108-primitive-lambda-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.111",
+  "baseline": "proofscript-v1-ka107-primitive-telescope-shape-helper-refinement0",
+  "releaseKind": "strict-lean4lean-primitive-lambda-helper-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA108",
+      "source": "assurance/ka108/primitive-lambda-helper-refinement-bridge.lean",
+      "destination": "KA108PrimitiveLambdaHelperBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 5,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka108-primitive-lambda-helper-refinement0",
+    "publicVersion": "1.0.0-pskernel.111",
+    "featureSurfaceBridgeProgressPercent": 99,
+    "executableKernelEquivalenceProofProgressPercent": 86,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 361,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 356,
+      "newFormalLean4LeanBridgeObligations": 5,
+      "correctedFormalLean4LeanBridgeObligations": 361,
+      "countedNewObligations": [
+        "translated_vexpr_lams_appN_prime_wf",
+        "translated_lambdaTelescope_wf",
+        "translated_vexpr_wf_app_inv_prime_wf",
+        "translated_vexpr_wf_lam_inv_prime_wf",
+        "translated_vexpr_wf_betaU_wf"
+      ]
+    },
+    "metricPolicy": "KA108 adds direct non-sorry-backed primitive lambda helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka108Files": [
+      {
+        "path": "tools/pskernel-ka108-primitive-lambda-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka108-primitive-lambda-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka108/KA108_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 23,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka108/KA108_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka108/KA108_PRIMITIVE_LAMBDA_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 36,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka108/KA108_PRIMITIVE_LAMBDA_HELPER_REFINEMENT_RELEASE_GATE.json",
+        "lines": 131,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka108/KA108_PRIMITIVE_LAMBDA_HELPER_REFINEMENT_REPORT.md",
+        "lines": 22,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka108/KA108_PRIMITIVE_LAMBDA_HELPER_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 9,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka108/primitive-lambda-helper-refinement-bridge.lean",
+        "lines": 54,
+        "ext": ".lean"
+      }
+    ],
+    "ka108ToolFiles": [
+      {
+        "path": "tools/pskernel-ka108-primitive-lambda-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka108-primitive-lambda-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      }
+    ],
+    "newKA108OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveLambdaHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

@@ -1,0 +1,22 @@
+def choose(P: Prop)[d: Decidable(P)](x: Nat, y: Nat): Nat := {
+  if h: (P) {
+    let proofCopy := h;
+    x
+  } else {
+    let proofCopy := h;
+    y
+  }
+}
+
+def forward(P: Prop)[d: Decidable(P)](x: Nat, y: Nat): Nat := {
+  choose(P, x, y)
+}
+
+def eqTrue: Nat := { choose((2 = 2), 11, 22) }
+def eqFalse: Nat := { choose((2 = 3), 11, 22) }
+def leTrue: Nat := { choose((2 <= 3), 11, 22) }
+def leFalse: Nat := { choose((3 <= 2), 11, 22) }
+def ltTrue: Nat := { choose((2 < 3), 11, 22) }
+def ltFalse: Nat := { choose((3 < 3), 11, 22) }
+def forwardEqTrue: Nat := { forward((2 = 2), 31, 32) }
+def forwardLeFalse: Nat := { forward((3 <= 2), 31, 32) }

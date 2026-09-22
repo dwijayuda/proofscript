@@ -1,0 +1,9 @@
+inductive Box: Type {
+  | mk(n: Nat);
+}
+
+def bad(b: Box): Nat := {
+  match (b) {
+    | .mk(n) => bad(n)
+  }
+}

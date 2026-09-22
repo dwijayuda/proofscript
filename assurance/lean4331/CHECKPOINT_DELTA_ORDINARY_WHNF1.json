@@ -1,0 +1,47 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "v69-delta-ordinary-whnf1",
+  "profile": "KERNEL-universe-conformance1",
+  "coreFormat": 69,
+  "certificateFormat": 2,
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "formal": {
+    "typingSlice": "PS\u2192Lean conversion-free typing refinement for Sort/BVar/Const/App/Lam/Pi/Let",
+    "deltaSlice": "bidirectional translated-constant delta transparency plus stuck/opacity equivalence",
+    "ordinaryWhnfSlice": "beta/zeta/delta/application-head finite-chain PS\u2192Lean preservation",
+    "theorems": [
+      "ProofScriptKernelEquivalence.DeltaTransparency.step_sound",
+      "ProofScriptKernelEquivalence.DeltaTransparency.step_complete_const",
+      "ProofScriptKernelEquivalence.DeltaTransparency.stuck_iff",
+      "ProofScriptKernelEquivalence.OrdinaryReduction.step_sound",
+      "ProofScriptKernelEquivalence.OrdinaryReduction.steps_sound"
+    ],
+    "noSorryAx": true,
+    "wholeKernelEquivalence": "IN_PROGRESS_NOT_K3"
+  },
+  "differential": {
+    "typescriptDeltaTransparencyCases": 1000,
+    "typescriptDeltaTransparencyFailures": 0,
+    "exactLeanDeltaTransparencyCases": 1000,
+    "exactLeanDeltaTransparencyFailures": 0,
+    "deltaKernelChecks": 1000,
+    "typescriptOrdinaryWhnfCases": 1000,
+    "typescriptOrdinaryWhnfFailures": 0,
+    "exactLeanOrdinaryWhnfCases": 1000,
+    "exactLeanOrdinaryWhnfFailures": 0,
+    "ordinaryWhnfKernelChecks": 1000,
+    "previousUniversePredicateComparisons": 60000,
+    "previousUniverseMismatches": 0,
+    "previousTypingCasesPerImplementation": 1000,
+    "previousBetaZetaCasesPerImplementation": 1000
+  },
+  "nextFormalPriority": [
+    "function eta correspondence",
+    "proof-irrelevance correspondence",
+    "close conversion-dependent basic typing",
+    "projection typing/reduction correspondence"
+  ]
+}

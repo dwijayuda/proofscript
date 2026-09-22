@@ -1,0 +1,114 @@
+{
+  "checkpoint": "proofscript-v1-ka18-env-no-overwrite-bridge0",
+  "publicVersion": "1.0.0-pskernel.21",
+  "createdAtUtc": "2026-09-18T13:05:00Z",
+  "baseline": "proofscript-v1-ka17-env-lookup-bridge0",
+  "kernel": {
+    "name": "PSKernel",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "directLean4LeanEnvNoOverwriteBridge": {
+    "referenceKind": "direct-imported-lean4lean-env-no-overwrite-bridge",
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanEnvNoOverwriteBridgeChecked": true,
+    "strictBridgeCheckPassed": true,
+    "blockedReasons": [],
+    "targets": {
+      "relations": [
+        "Lean4Lean.VEnv.addConst",
+        "Lean4Lean.VEnv.constants"
+      ],
+      "dependencies": [
+        "Lean4Lean.VEnv.constants",
+        "Lean4Lean.VEnv.defeqs",
+        "Lean4Lean.VEnv.LE",
+        "Lean4Lean.VEnv.WF",
+        "Lean4Lean.VDecl.WF"
+      ]
+    },
+    "coveredPSDeclKinds": [
+      "axiom",
+      "definition"
+    ],
+    "excludedPSDeclKinds": [
+      "theorem",
+      "example",
+      "opaque",
+      "quot",
+      "inductive",
+      "mutualInductive"
+    ],
+    "theoryBuildStatus": 0,
+    "bridgeCheckStatus": 0
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 13,
+    "formalObligationMeaning": "KA-13 through KA-18 conditional Lean4Lean bridge lemmas only; not full Lean equivalence"
+  },
+  "verificationSummary": {
+    "npm install --offline --no-audit --no-fund": "passed",
+    "npm run build -- --pretty false": "passed",
+    "npm run test:pskernel:ka1..ka10": "passed in bounded loop",
+    "npm run test:pskernel:ka11": "passed individually after aggregate timeout",
+    "npm run test:pskernel:ka12": "passed individually",
+    "npm run test:pskernel:ka13": "passed individually",
+    "npm run test:pskernel:ka14": "passed individually",
+    "npm run test:pskernel:ka15": "passed individually",
+    "npm run test:pskernel:ka16": "passed individually",
+    "npm run test:pskernel:ka17": "passed individually",
+    "npm run test:pskernel:ka18": "passed individually",
+    "npm run assurance:ka1..ka10": "passed in bounded loop",
+    "npm run assurance:ka11": "passed; aggregate loop later timed out and was not counted",
+    "npm run assurance:ka12": "passed individually",
+    "npm run assurance:ka13": "passed individually",
+    "npm run assurance:ka14": "passed individually",
+    "npm run assurance:ka15": "passed individually",
+    "npm run assurance:ka16": "passed individually",
+    "npm run assurance:ka17": "passed individually",
+    "npm run assurance:ka18": "passed individually",
+    "npm run lean:ka16:check": "passed",
+    "npm run lean:ka17:check": "passed individually after loop timeout",
+    "npm run lean:ka18:check": "passed individually",
+    "npm run test:kernel:smoke": "passed",
+    "npm run test:standalone-small": "passed",
+    "npm run test:psc:kernel-status": "passed",
+    "npm run test:psc:conformance-bounded": "passed",
+    "npm run arena:corpus-preflight": "passed: 190 NDJSON fixtures",
+    "npm run test:arena:static-nonperf": "passed: 26/26 decisive",
+    "npm run test:arena:tutorial": "passed: 140/140 decisive",
+    "npm run verify:arena": "passed",
+    "fresh extract install/build/test:pskernel:ka18/lean:ka18:check": "passed"
+  },
+  "aggregateLoopNotes": [
+    "Aggregate all-KA loops timed out around expensive Lean4Lean gates; timed-out aggregate loops are not counted as pass evidence.",
+    "The timed-out tail commands were rerun individually and passed.",
+    "Arena corpus was re-extracted from /mnt/data/lean-arena-tests.tar(5).gz to /mnt/data/arena-corpus-20260915 with the expected good/bad layout."
+  ],
+  "arenaSummary": {
+    "corpusPath": "/mnt/data/arena-corpus-20260915",
+    "ndjsonFixtures": 190,
+    "staticNonperf": {
+      "total": 26,
+      "decisive": 26,
+      "acceptedGood": 4,
+      "rejectedBad": 22,
+      "wrong": 0,
+      "notRun": 0
+    },
+    "tutorial": {
+      "total": 140,
+      "decisive": 140,
+      "acceptedGood": 93,
+      "rejectedBad": 47,
+      "wrong": 0,
+      "notRun": 0
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "checkpoint": "proofscript-v1-ka115-executable-refinement-theorem-skeleton0",
+  "status": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 366,
+  "newFormalLean4LeanBridgeObligations": 0,
+  "featureSurfaceBridgeProgressPercent": 100,
+  "executableKernelEquivalenceProofProgressPercent": 91,
+  "overallConservativeProjectProgressPercent": 82.3,
+  "architectureHealth": true
+}

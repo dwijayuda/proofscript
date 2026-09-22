@@ -1,0 +1,72 @@
+{
+  "checkpoint": "proofscript-v1-ka52-executable-expression-translator-binder-refinement0",
+  "publicVersion": "1.0.0-pskernel.55",
+  "baseline": "proofscript-v1-ka51-executable-expression-translator-constructor-refinement0",
+  "commands": {
+    "focusedTest": "passed",
+    "assuranceKA52": "passed",
+    "leanKA52Check": "passed"
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA52",
+        "source": "assurance/ka52/executable-expression-translator-binder-refinement-bridge.lean",
+        "destination": "PSKernelKA52ExecutableExpressionTranslatorBinderRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 3,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA52 gate tool absent before implementation",
+  "commandsDetailed": {
+    "redTestFirst": "failed-as-expected-before-implementation",
+    "npm install --offline --no-audit --no-fund": "passed",
+    "npm run build -- --pretty false": "passed",
+    "npm run test:pskernel:ka52": "passed",
+    "npm run assurance:ka52": "passed",
+    "npm run lean:ka52:check": "passed",
+    "npm run test:kernel:smoke": "passed",
+    "npm run test:standalone-small": "passed",
+    "npm run test:psc:kernel-status": "passed",
+    "npm run test:psc:conformance-bounded": "passed",
+    "npm run arena:corpus-preflight": "passed",
+    "npm run test:arena:static-nonperf": "passed",
+    "npm run test:arena:tutorial": "passed",
+    "TERM=xterm npm run verify:arena": "timed-out-not-counted",
+    "verifyArenaTailIndividualRerun": "passed",
+    "npm pack --workspaces --ignore-scripts": "passed",
+    "sha256sum -c package SHA manifest": "passed"
+  },
+  "wrapperTimeouts": [
+    "TERM=xterm npm run verify:arena timed out at tutorial-harness; not counted as passed; remaining tail commands rerun individually and passed"
+  ],
+  "arenaTailCommandsRerunIndividuallyAndPassed": [
+    "npm run test:arena:tutorial-harness",
+    "npm run test:arena:inductive-importer",
+    "npm run test:arena:dependent-field-recursor",
+    "npm run test:arena:prop-projection-conformance",
+    "npm run test:arena:prop-index-large-elim",
+    "npm run test:arena:transparent-recursive-field",
+    "npm run test:arena:type-singleton-eta",
+    "npm run test:arena:known-recursor-stuck-reject",
+    "npm run test:arena:rbtree-recursive-ih-order",
+    "npm run test:arena:tutorial",
+    "npm run test:arena:recursor-rule-arity-validation",
+    "npm run test:arena:transparent-result-sort-reject",
+    "npm run test:arena:mutual-imax-prop-reject"
+  ],
+  "npmPackages": {
+    "packed": 36,
+    "sha256Entries": 36,
+    "verification": "passed"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "checkpoint": "proofscript-v1-ka81-primitive-reflection-typing-refinement0",
+  "publicVersion": "1.0.0-pskernel.84",
+  "baseline": "proofscript-v1-ka80-infertype-top-level-projection-boundary-audit0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 242,
+  "newFormalLean4LeanBridgeObligations": 5,
+  "baselineObligations": 237,
+  "countedObligations": [
+    "translated_natZeroT_wf",
+    "translated_natSuccT_wf",
+    "translated_natPredT_wf",
+    "translated_natLitT_wf",
+    "translated_boolLitT_wf"
+  ],
+  "redTestObserved": true,
+  "redTestReason": "KA81 test failed first on missing KA81 gate tool",
+  "noWrapperTimeoutCountedAsPassed": true,
+  "boundedReleaseVerification": {
+    "passed": [
+      "npm install --offline --no-audit --no-fund",
+      "npm run build -- --pretty false",
+      "npm run test:pskernel:ka81",
+      "npm run assurance:ka81",
+      "npm run lean:ka81:check",
+      "npm run test:kernel:smoke",
+      "npm run test:standalone-small",
+      "npm run test:psc:kernel-status",
+      "npm run test:psc:conformance-bounded",
+      "npm run arena:corpus-preflight",
+      "npm run test:arena:static-nonperf",
+      "npm pack --workspaces --ignore-scripts",
+      "sha256sum -c package SHA manifest"
+    ],
+    "notCountedAsPassed": [
+      {
+        "command": "npm run test:arena:tutorial",
+        "status": "timed-out-not-counted"
+      },
+      {
+        "command": "full legacy repository-wide npm test",
+        "status": "not-run"
+      },
+      {
+        "command": "aggregate verify:arena wrapper",
+        "status": "not-run"
+      }
+    ]
+  }
+}

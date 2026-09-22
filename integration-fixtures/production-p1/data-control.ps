@@ -1,0 +1,123 @@
+inductive NatResult {
+  | ok(value: Nat);
+  | err(code: Nat);
+}
+
+def makeOk(x: Nat): NatResult := { NatResult.ok(x) }
+
+def unwrapOrZero(x: NatResult): Nat := {
+  match (x) {
+    | .ok(value) => value
+    | .err(code) => 0
+  }
+}
+
+inductive Box(A: Type): Type {
+  | mk(value: A);
+}
+
+def boxOne: Box(Nat) := { Box.mk(1) }
+def unbox{A: Type}(x: Box(A)): A := {
+  match (x) { | .mk(value) => value }
+}
+
+structure Point {
+  x: Nat;
+  y: Nat;
+}
+
+def origin: Point := { { x := 3, y := 4 } }
+def getX(p: Point): Nat := { Point.x(p) }
+
+inductive NatList {
+  | nil;
+  | cons(head: Nat, tail: NatList);
+}
+
+def sum(xs: NatList): Nat := {
+  match (xs) {
+    | .nil => 0
+    | .cons(head, tail) => head + sum(tail)
+  }
+}
+
+def list123: NatList := { NatList.cons(1, NatList.cons(2, NatList.cons(3, NatList.nil))) }
+def resultOk: Nat := { unwrapOrZero(makeOk(9)) }
+def resultBox: Nat := { unbox(boxOne) }
+def resultPoint: Nat := { getX(origin) }
+def resultSum: Nat := { sum(list123) }
+
+def moved: Point := { { origin with x := 8 } }
+def resultMoved: Nat := { getX(moved) }
+
+def firstOrZero: NatList -> Nat
+| .nil => 0
+| .cons(head, tail) => head
+
+def sumEq: NatList -> Nat
+| .nil => 0
+| .cons(head, tail) => head + sumEq(tail)
+
+def resultFirst: Nat := { firstOrZero(list123) }
+def resultSumEq: Nat := { sumEq(list123) }
+
+structure Cell(A: Type) {
+  value: A;
+}
+
+def cellOne: Cell(Nat) := { { value := 5 } }
+def readCell{A: Type}(c: Cell(A)): A := { Cell.value(c) }
+def resultCell: Nat := { readCell(cellOne) }
+
+inductive PList(A: Type): Type {
+  | nil;
+  | cons(head: A, tail: PList(A));
+}
+
+def length{A: Type}(xs: PList(A)): Nat := {
+  match (xs) {
+    | .nil => 0
+    | .cons(head, tail) => 1 + length(tail)
+  }
+}
+
+def nums: PList(Nat) := { PList.cons(10, PList.cons(20, PList.cons(30, PList.nil))) }
+def resultLength: Nat := { length(nums) }
+
+structure Pair(A: Type) {
+  first: A;
+  second: A;
+}
+
+def pair45: Pair(Nat) := { { first := 4, second := 5 } }
+def pair49: Pair(Nat) := { { pair45 with second := 9 } }
+def resultPairFirst: Nat := { Pair.first(pair49) }
+def resultPairSecond: Nat := { Pair.second(pair49) }
+
+def appendP{A: Type}(xs: PList(A), ys: PList(A)): PList(A) := {
+  match (xs) {
+    | .nil => ys
+    | .cons(head, tail) => PList.cons(head, appendP(tail, ys))
+  }
+}
+
+def mapP{A: Type, B: Type}(f: A -> B, xs: PList(A)): PList(B) := {
+  match (xs) {
+    | .nil => PList.nil
+    | .cons(head, tail) => PList.cons(f(head), mapP(f, tail))
+  }
+}
+
+def moreNums: PList(Nat) := { PList.cons(40, PList.cons(50, PList.nil)) }
+def appendedNums: PList(Nat) := { appendP(nums, moreNums) }
+def mappedNums: PList(Nat) := { mapP(fun (x: Nat) => x + 1, nums) }
+
+def headOr{A: Type}(xs: PList(A), fallback: A): A := {
+  match (xs) {
+    | .nil => fallback
+    | .cons(head, tail) => head
+  }
+}
+
+def resultAppendLength: Nat := { length(appendedNums) }
+def resultMappedHead: Nat := { headOr(mappedNums, 0) }

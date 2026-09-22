@@ -1,0 +1,56 @@
+{
+  "checkpoint": "proofscript-v1-ka17-env-lookup-bridge0",
+  "publicVersion": "1.0.0-pskernel.20",
+  "baseline": "proofscript-v1-ka16-env-extension-bridge0",
+  "referenceKind": "direct-imported-lean4lean-env-lookup-bridge",
+  "imports": [
+    "Lean4Lean.Theory.Typing.Env",
+    "PSKernelKA16EnvExtensionBridge"
+  ],
+  "bridgedRelations": [
+    "Lean4Lean.VEnv.constants",
+    "Lean4Lean.VEnv.defeqs"
+  ],
+  "dependsOn": [
+    "PSKernelKA13.translated_axiom_vdecl_wf",
+    "PSKernelKA13.translated_definition_vdecl_wf",
+    "PSKernelKA15.translated_axiom_env_wf",
+    "PSKernelKA15.translated_definition_env_wf",
+    "PSKernelKA16.translated_axiom_env_extends",
+    "PSKernelKA16.translated_definition_env_extends"
+  ],
+  "conditionalBridgeLemmas": [
+    "PSKernelKA17.translated_axiom_env_lookup",
+    "PSKernelKA17.translated_definition_env_lookup",
+    "PSKernelKA17.translated_definition_env_defeq_member"
+  ],
+  "helperLemmas": [
+    "PSKernelKA17.addConst_lookup_self",
+    "PSKernelKA17.addDefEq_preserves_constant_lookup",
+    "PSKernelKA17.addDefEq_contains_self"
+  ],
+  "coveredPSDeclKinds": ["axiom", "definition"],
+  "stillExcludedDeclKinds": ["theorem", "example", "opaque", "quot", "inductive", "mutualInductive"],
+  "closedByKA17": [
+    "direct-import-lean4lean-env-constants-map-lookup",
+    "direct-import-lean4lean-env-defeq-membership",
+    "conditional-constant-lookup-bridge-for-translated-axiom",
+    "conditional-constant-lookup-bridge-for-translated-definition",
+    "conditional-defeq-membership-bridge-for-translated-definition",
+    "preserve-ka12-ka13-ka15-ka16-inductive-blocking",
+    "strict-lean4lean-env-lookup-bridge-check"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "coreFormatChanged": false,
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanEnvLookupBridgeChecked": true,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 9,
+    "formalObligationMeaning": "KA-13's two conditional VDecl.WF lemmas, KA-15's two conditional VEnv.WF lemmas, KA-16's two conditional VEnv.LE lemmas, and KA-17's three conditional VEnv.constants/VEnv.defeqs lookup-membership lemmas; not executable PSKernel refinement or full Lean equivalence"
+  }
+}

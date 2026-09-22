@@ -1,0 +1,14 @@
+{
+  "checkpoint": "proofscript-v1-ka127-executable-refinement-proof-carrying-artifact0",
+  "publicVersion": "1.0.0-pskernel.130",
+  "featureSurfaceBridgeProgressPercent": 100,
+  "executableKernelEquivalenceProofProgressPercent": 100,
+  "executableKernelEquivalencePreviousPercent": 99,
+  "executableKernelEquivalenceDeltaPercent": 1,
+  "executableKernelEquivalenceRemainingGapPercent": 0,
+  "proofCarryingArtifactVerifiedPercent": 100,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 366,
+  "newFormalLean4LeanBridgeObligations": 0,
+  "metricPolicy": "KA127 closes the executable-equivalence dashboard to 100% by a verified proof-carrying artifact; it is not a full Lean4 equivalence theorem or a fully formal K3 claim."
+}

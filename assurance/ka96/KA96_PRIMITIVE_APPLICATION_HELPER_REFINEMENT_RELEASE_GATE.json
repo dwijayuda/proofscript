@@ -1,0 +1,130 @@
+{
+  "checkpoint": "proofscript-v1-ka96-primitive-application-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.99",
+  "baseline": "proofscript-v1-ka95-primitive-typeeq-helper-refinement0",
+  "releaseKind": "strict-lean4lean-primitive-application-helper-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA96",
+      "source": "assurance/ka96/primitive-application-helper-refinement-bridge.lean",
+      "destination": "KA96PrimitiveApplicationHelperBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 5,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka96-primitive-application-helper-refinement0",
+    "publicVersion": "1.0.0-pskernel.99",
+    "featureSurfaceBridgeProgressPercent": 99,
+    "executableKernelEquivalenceProofProgressPercent": 74,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 301,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 296,
+      "newFormalLean4LeanBridgeObligations": 5,
+      "correctedFormalLean4LeanBridgeObligations": 301,
+      "countedNewObligations": [
+        "translated_vexpr_insts_appN_wf",
+        "translated_vexpr_subst_appN_wf",
+        "translated_vexpr_lams_append_wf",
+        "translated_expr_appN_eq_mkAppList_wf",
+        "translated_expr_mkAppN_eq_wf"
+      ]
+    },
+    "metricPolicy": "KA96 adds direct non-sorry-backed primitive application/telescope helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka96Files": [
+      {
+        "path": "tools/pskernel-ka96-primitive-application-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka96-primitive-application-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka96/KA96_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 23,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka96/KA96_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka96/KA96_PRIMITIVE_APPLICATION_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 36,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka96/KA96_PRIMITIVE_APPLICATION_HELPER_REFINEMENT_RELEASE_GATE.json",
+        "lines": 131,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka96/KA96_PRIMITIVE_APPLICATION_HELPER_REFINEMENT_REPORT.md",
+        "lines": 22,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka96/KA96_PRIMITIVE_APPLICATION_HELPER_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 21,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka96/primitive-application-helper-refinement-bridge.lean",
+        "lines": 36,
+        "ext": ".lean"
+      }
+    ],
+    "ka96ToolFiles": [
+      {
+        "path": "tools/pskernel-ka96-primitive-application-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka96-primitive-application-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      }
+    ],
+    "newKA96OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveApplicationHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

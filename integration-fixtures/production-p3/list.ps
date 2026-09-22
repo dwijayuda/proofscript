@@ -1,0 +1,29 @@
+def listLength{A: Type}(xs: List(A)): Nat := {
+  match (xs) {
+    | .nil => 0
+    | .cons(head, tail) => 1 + listLength(tail)
+  }
+}
+
+def listMap{A: Type, B: Type}(f: A -> B, xs: List(A)): List(B) := {
+  match (xs) {
+    | .nil => .nil
+    | .cons(head, tail) => .cons(f(head), listMap(f, tail))
+  }
+}
+
+def listAppend{A: Type}(xs: List(A), ys: List(A)): List(A) := {
+  match (xs) {
+    | .nil => ys
+    | .cons(head, tail) => .cons(head, listAppend(tail, ys))
+  }
+}
+
+def plusOneL(x: Nat): Nat := { x + 1 }
+
+def sample: List(Nat) := { .cons(1, .cons(2, .cons(3, .nil))) }
+def mapped: List(Nat) := { listMap(plusOneL, sample) }
+def appended: List(Nat) := { listAppend(sample, mapped) }
+def lenSample: Nat := { listLength(sample) }
+def lenMapped: Nat := { listLength(mapped) }
+def lenAppended: Nat := { listLength(appended) }

@@ -1,0 +1,59 @@
+{
+  "checkpoint": "NONMUTUAL_CLASSIFIER1",
+  "mandatoryGates": [
+    {
+      "part": 1,
+      "exit": 0,
+      "seconds": 1.44,
+      "pass": true,
+      "last": "KERNEL v71 ASSURANCE GATE PART 1/6: PASS"
+    },
+    {
+      "part": 2,
+      "exit": 0,
+      "seconds": 1.28,
+      "pass": true,
+      "last": "KERNEL v71 ASSURANCE GATE PART 2/6: PASS"
+    },
+    {
+      "part": 3,
+      "exit": 0,
+      "seconds": 4.27,
+      "pass": true,
+      "last": "KERNEL v71 ASSURANCE GATE PART 3/6: PASS"
+    },
+    {
+      "part": 4,
+      "exit": 0,
+      "seconds": 4.12,
+      "pass": true,
+      "last": "KERNEL v71 ASSURANCE GATE PART 4/6: PASS"
+    },
+    {
+      "part": 5,
+      "exit": 0,
+      "seconds": 11.24,
+      "pass": true,
+      "last": "KERNEL v71 ASSURANCE GATE PART 5/6: PASS"
+    },
+    {
+      "part": 6,
+      "exit": 0,
+      "seconds": 26.99,
+      "pass": true,
+      "last": "KERNEL v71 ASSURANCE GATE PART 6/6: PASS"
+    }
+  ],
+  "allGatesPass": true,
+  "build": "PASS",
+  "conformance": "PASS",
+  "sourceDifferential": {
+    "status": "23/25",
+    "knownNonKernelFailures": [
+      "reduction-recursion",
+      "equation-patterns"
+    ],
+    "output": "assurance/lean4331/evidence/v71-nonmutual-classifier-final-source-differential.out"
+  },
+  "claimBoundary": "classifier witness boundary; not K3 whole-kernel equivalence; not proof of every shipped TypeScript branch"
+}

@@ -1,0 +1,170 @@
+{
+  "checkpoint": "proofscript-v1-ka110-feature-surface-closeout-audit0",
+  "publicVersion": "1.0.0-pskernel.113",
+  "baseline": "proofscript-v1-ka109-primitive-condition-structural-helper-refinement0",
+  "releaseKind": "feature-surface-closeout-audit",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA110",
+      "source": "assurance/ka110/feature-surface-closeout-audit-bridge.lean",
+      "destination": "KA110FeatureSurfaceCloseoutAuditBridge.lean",
+      "status": "passed",
+      "proofBearing": false,
+      "obligations": 0,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka110-feature-surface-closeout-audit0",
+    "publicVersion": "1.0.0-pskernel.113",
+    "featureSurfaceBridgeProgressPercent": 100,
+    "executableKernelEquivalenceProofProgressPercent": 87,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 366,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 366,
+      "newFormalLean4LeanBridgeObligations": 0,
+      "correctedFormalLean4LeanBridgeObligations": 366,
+      "countedNewObligations": []
+    },
+    "metricPolicy": "KA110 closes the KA-series feature-surface dashboard via audit/manifest checks. This is not a full Lean 4 equivalence theorem and does not add new formal bridge obligations.",
+    "notAFullLean4EquivalenceClaim": true,
+    "notAFormalEquivalenceClaim": true
+  },
+  "closeoutAudit": {
+    "phaseCloseoutStatus": "closed-for-ka-series-feature-surface-dashboard",
+    "scope": "KA-series feature-surface dashboard closeout; not a full Lean 4 kernel equivalence theorem",
+    "baselineFeatureSurfaceProgressPercent": 99,
+    "closedFeatureSurfaceProgressPercent": 100,
+    "canonicalBridgeSpecCount": 39,
+    "rawBridgeSpecCount": 40,
+    "duplicateBridgeSpecGroups": [
+      {
+        "checkpoint": "proofscript-v1-ka105-primitive-defeq-application-helper-refinement0",
+        "paths": [
+          "assurance/ka105/KA105_PRIMITIVE_DEFEQ_APPLICATION_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+          "assurance/ka105/KA105_PRIMITIVE_TELESCOPE_TYPING_HELPER_REFINEMENT_BRIDGE_SPEC.json"
+        ],
+        "identicalPayload": true,
+        "canonicalPath": "assurance/ka105/KA105_PRIMITIVE_DEFEQ_APPLICATION_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+        "ignoredDuplicatePaths": [
+          "assurance/ka105/KA105_PRIMITIVE_TELESCOPE_TYPING_HELPER_REFINEMENT_BRIDGE_SPEC.json"
+        ]
+      }
+    ],
+    "canonicalCountedObligationNames": 154,
+    "duplicateCanonicalObligations": [],
+    "bridgeLeanFileCount": 98,
+    "bridgeLeanFilesWithSorry": [],
+    "progressFileCount": 61,
+    "notApplicableAuditReleaseGates": [
+      "assurance/ka71/KA71_FEATURE_EQUIVALENCE_COVERAGE_AUDIT_RELEASE_GATE.json",
+      "assurance/ka73/KA73_DEFEQ_SORRY_BOUNDARY_AUDIT_RELEASE_GATE.json",
+      "assurance/ka78/KA78_RECURSOR_PROJECTION_SORRY_BOUNDARY_AUDIT_RELEASE_GATE.json",
+      "assurance/ka80/KA80_INFERTYPE_TOP_LEVEL_PROJECTION_BOUNDARY_AUDIT_RELEASE_GATE.json"
+    ],
+    "latestFormalLean4LeanBridgeObligations": 366,
+    "closeoutChecks": {
+      "latestObligationTotalMatches": true,
+      "noBridgeLeanSorry": true,
+      "noCanonicalDuplicateObligations": true,
+      "duplicateBridgeSpecsAreQuarantined": true
+    }
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka110Files": [
+      {
+        "path": "tools/pskernel-ka110-feature-surface-closeout-audit-tests.ts",
+        "lines": 44,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka110-feature-surface-closeout-audit.ts",
+        "lines": 16,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka110/KA110_FEATURE_SURFACE_CLOSEOUT_AUDIT_BRIDGE_SPEC.json",
+        "lines": 23,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka110/KA110_FEATURE_SURFACE_CLOSEOUT_AUDIT_MANIFEST.json",
+        "lines": 41,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka110/KA110_FEATURE_SURFACE_CLOSEOUT_AUDIT_RELEASE_GATE.json",
+        "lines": 171,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka110/KA110_FEATURE_SURFACE_CLOSEOUT_AUDIT_REPORT.md",
+        "lines": 14,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka110/KA110_FEATURE_SURFACE_CLOSEOUT_AUDIT_VERIFICATION_SUMMARY.json",
+        "lines": 10,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka110/KA110_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 18,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka110/KA110_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka110/feature-surface-closeout-audit-bridge.lean",
+        "lines": 11,
+        "ext": ".lean"
+      }
+    ],
+    "ka110ToolFiles": [
+      {
+        "path": "tools/pskernel-ka110-feature-surface-closeout-audit-tests.ts",
+        "lines": 44,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka110-feature-surface-closeout-audit.ts",
+        "lines": 16,
+        "ext": ".ts"
+      }
+    ],
+    "newKA110OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveSurfaceRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

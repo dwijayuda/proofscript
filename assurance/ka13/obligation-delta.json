@@ -1,0 +1,23 @@
+{
+  "checkpoint": "proofscript-v1-ka13-vdecl-wf-bridge0",
+  "baseline": "proofscript-v1-ka12-direct-lean4lean-reference0",
+  "closedSinceKA12": [
+    "Import Lean4Lean.Theory.Typing.Env directly, not through a compatibility shim.",
+    "Machine-check that a translated PSKernel axiom value satisfying Lean4Lean's VConstant.WF/addConst premises yields Lean4Lean.VDecl.WF.",
+    "Machine-check that a translated PSKernel definition value satisfying Lean4Lean's VDefVal.WF/addConst premises yields Lean4Lean.VDecl.WF with a defining equation.",
+    "Preserve KA-12 inductive/mutual-inductive blocking in the KA-13 bridge file."
+  ],
+  "provenLeanTheoremObligations": [
+    "PSKernelKA13.translated_axiom_vdecl_wf",
+    "PSKernelKA13.translated_definition_vdecl_wf"
+  ],
+  "stillOpen": [
+    "The executable TypeScript PSKernel checker is not yet refined to these Lean4Lean premises.",
+    "The theorem/example/opaque/quot cases are not yet bridged to VDecl.WF in KA-13.",
+    "Definitional equality soundness against Lean4Lean.TypeChecker remains open.",
+    "Inductive/mutual/nested inductive soundness remains outside KA-13.",
+    "Full Lean 4 equivalence and same-theory claims remain false."
+  ],
+  "formalLean4EquivalenceProvenObligations": 2,
+  "formalObligationBoundary": "These are conditional VDecl.WF bridge lemmas for the direct Lean4Lean reference model only; they are not a full PSKernel executable refinement proof."
+}

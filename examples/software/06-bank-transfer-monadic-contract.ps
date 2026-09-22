@@ -1,0 +1,8 @@
+function transfer(from: AccountId, to: AccountId, amount: Nat): State Bank Unit
+  requires positive: amount > 0
+  ensures debit: balanceOf(from) = old(balanceOf(from)) - amount
+  ensures credit: balanceOf(to) = old(balanceOf(to)) + amount
+:= do {
+  debit(from, amount);
+  credit(to, amount);
+}

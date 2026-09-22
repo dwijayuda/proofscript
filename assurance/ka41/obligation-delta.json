@@ -1,0 +1,25 @@
+{
+  "checkpoint": "proofscript-v1-ka41-codec-replay-refinement-bridge0",
+  "baseline": "proofscript-v1-ka40-primitive-literal-policy-bridge0",
+  "formalLean4EquivalenceProvenObligationsBefore": 114,
+  "formalLean4EquivalenceProvenObligationsAdded": 6,
+  "formalLean4EquivalenceProvenObligationsAfter": 120,
+  "closedSinceKA40": [
+    "direct Lean4Lean Replay.Context newConstants lookup wrapper bridge",
+    "direct Lean4Lean Replay.State env wrapper bridge",
+    "direct Lean4Lean Replay.State numAdded wrapper bridge",
+    "direct Lean4Lean Replay.Context flag wrapper bridge",
+    "direct Lean4Lean replay result count projection wrapper bridge",
+    "direct Lean4Lean replay result environment projection wrapper bridge",
+    "PSKernel codec canonical JSON stability gate",
+    "PSKernel Core artifact v71 decode/round-trip gate"
+  ],
+  "stillOpen": [
+    "full PSKernel JSON codec to Lean4Lean olean/NDJSON replay refinement is not proven",
+    "per-declaration dependency replay order correctness is not proven end-to-end",
+    "constructor/recursor replay equality checks are only imported/wrapped, not connected to PSKernel executable replay",
+    "certificate bundle verification is not yet tied to Lean4Lean Replay.replay",
+    "resource/error conservativity for codec/replay is not proven",
+    "full Lean 4 equivalence and same-theory claims remain false"
+  ]
+}

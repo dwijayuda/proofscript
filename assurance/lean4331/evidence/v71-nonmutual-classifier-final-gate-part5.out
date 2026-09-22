@@ -1,0 +1,9 @@
+PASS: Core v71 / KERNEL-level-instantiation-conformance1 / Lean 4.33.1 identity
+PASS: 288 assurance/trusted source fingerprints
+PASS: exact Lean executable 4.33.1/819816b2e0a3
+PASS: 7 recursor metadata shapes agree exactly
+PASS: recursor K/minor-order/indexed regressions
+PASS: non-mutual generated recursors: 37 structural records + 6 extensional WHNF/iota checks
+PASS: indexed iota: 6 exact WHNF comparisons including dependent/higher-order/multi-index/K
+PASS: quotient structural + 1,000 computation cases + fresh .quotDecl admission/atomicity
+KERNEL v71 ASSURANCE GATE PART 5/6: PASS

@@ -1,0 +1,27 @@
+{
+  "checkpoint": "proofscript-v1-ka54-executable-expression-translator-determinism-refinement0",
+  "publicVersion": "1.0.0-pskernel.57",
+  "baseline": "proofscript-v1-ka53-executable-expression-translator-residual-refinement0",
+  "referenceKind": "strict-lean4lean-expression-translator-determinism-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "leanModule": "assurance/ka54/executable-expression-translator-determinism-refinement-bridge.lean",
+  "countedNewFormalObligations": 4,
+  "countedNewObligationNames": [
+    "translated_trExprS_unique_wf",
+    "translated_trExprS_unique_context_wf",
+    "translated_trExprS_eqv_transport_wf",
+    "translated_trExpr_eqv_transport_wf"
+  ],
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableExpressionTranslatorRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

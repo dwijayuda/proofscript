@@ -1,0 +1,20 @@
+{
+  "checkpoint": "proofscript-v1-ka44-end-to-end-checker-refinement-plan0",
+  "featureSurfaceBridgeProgressPercent": 66,
+  "executableKernelEquivalenceProofProgressPercent": 33,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 128,
+  "groups": [
+    { "id": "ordinary-declarations", "progressPercent": 82, "status": "bridged proof-surface; executable refinement incomplete" },
+    { "id": "quotients", "progressPercent": 74, "status": "environment bridge complete; semantic soundness incomplete" },
+    { "id": "inductives", "progressPercent": 36, "status": "initial environment bridge; recursor/projection refinement still planned" },
+    { "id": "mutual-definitions", "progressPercent": 43, "status": "initial environment bridge; executable refinement incomplete" },
+    { "id": "expression-tags", "progressPercent": 63, "status": "TrExprS constructor surface covered; executable translator not fully refined" },
+    { "id": "typechecker-whnf-defeq", "progressPercent": 46, "status": "proof-surface bridges exist; executable checker refinement incomplete" },
+    { "id": "primitive-literals", "progressPercent": 40, "status": "Nat/Bool/literal proof-surface bridge only" },
+    { "id": "codec-replay", "progressPercent": 36, "status": "Replay surface and PS codec stability gates exist" },
+    { "id": "resource-errors", "progressPercent": 39, "status": "fuel/error conservativity surface bridge only" },
+    { "id": "architecture-health", "progressPercent": 76, "status": "no-spaghetti ratchet plus module boundary plan" },
+    { "id": "end-to-end-refinement-spine", "progressPercent": 25, "status": "explicit staged checker refinement plan; no end-to-end theorem yet" }
+  ]
+}

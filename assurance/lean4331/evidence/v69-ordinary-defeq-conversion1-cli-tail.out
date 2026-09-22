@@ -1,0 +1,29 @@
+accepted 5/5 declaration(s); assumptions=0; modules=1
+PASS exit=0 :: check examples/basic/src/Main.ps
+rejected: type mismatch
+  expected: ((x0: Prop) → (x0 → x0))
+  actual:   ((x0: Prop) → (x0 → Prop))
+PASS exit=1 :: check examples/basic/src/Invalid.ps
+unsupported: K3c-section-vars0 does not implement tactic syntax ('by'); use a direct proof term
+PASS exit=2 :: check examples/basic/src/Unsupported.ps
+accepted 5/5 declaration(s); assumptions=0; modules=1
+PASS exit=0 :: check examples/basic/src/Main.ps --emit-core examples/basic/proof/Main.pscore.json
+✓ built manifest: /mnt/data/psv69-work/proofscript-kernel-v69-universe-conformance1/examples/basic/dist/manifest.json (execution correspondence: not-claimed)
+PASS exit=0 :: build examples/basic/src/Main.ps --target manifest --out examples/basic/dist/manifest.json
+✓ built names: /mnt/data/psv69-work/proofscript-kernel-v69-universe-conformance1/examples/basic/dist/names.txt (execution correspondence: not-claimed)
+PASS exit=0 :: build examples/basic/src/Main.ps --target names --out examples/basic/dist/names.txt
+✓ certified 5 declaration(s) from 1 module source(s): examples/basic/proof/Main.pscert.json
+PASS exit=0 :: certify examples/basic/src/Main.ps --core examples/basic/proof/Main.pscore.json --out examples/basic/proof/Main.pscert.json
+✓ independently replayed 5 declaration(s); project plugins loaded: no
+PASS exit=0 :: verify examples/basic/proof/Main.pscert.json
+accepted 3/3 declaration(s); assumptions=2; modules=1
+PASS exit=0 :: check examples/basic/src/WithAxiom.ps --emit-core examples/basic/proof/WithAxiom.pscore.json
+rejected: unapproved axiom/assumption(s): P, h
+PASS exit=1 :: verify examples/basic/proof/WithAxiom.pscore.json
+✓ independently replayed 3 declaration(s); project plugins loaded: no
+PASS exit=0 :: verify examples/basic/proof/WithAxiom.pscore.json --allow-axioms P,h
+✓ emitted Lean artifact: examples/basic/proof/Generated.lean
+PASS exit=0 :: emit-lean examples/basic/proof/Main.pscore.json --out examples/basic/proof/Generated.lean
+rejected: declarations[0].value.level must be a level object
+PASS exit=1 :: verify examples/basic/proof/Tampered.pscore.json
+CLI_TAIL=PASS

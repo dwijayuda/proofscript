@@ -1,0 +1,45 @@
+{
+  "checkpoint": "proofscript-v1-ka47-executable-expression-translator-refinement-preflight0",
+  "publicVersion": "1.0.0-pskernel.50",
+  "baseline": "proofscript-v1-ka46-projection-reduction-refinement-preflight0",
+  "referenceKind": "source-bound-lean4lean-executable-expression-translator-refinement-preflight",
+  "imports": [
+    "Lean4Lean.Verify.Typing.Expr",
+    "Lean4Lean.Theory.VExpr",
+    "Lean4Lean.Verify.Expr"
+  ],
+  "coveredLean4LeanExecutableExpressionTranslatorSurface": [
+    "Lean4Lean.VExpr constructor surface",
+    "Lean4Lean.TrExprS executable translation relation",
+    "Lean.Expr.Closed / Lean.Expr.FVarsIn executable preconditions",
+    "VExpr.liftN / VExpr.instL / VExpr.instVar substitution surfaces",
+    "TrExpr defeq closure surface"
+  ],
+  "intendedFormalBridgeLemmas": [
+    "Lean4Lean.PSKernelKA47.translated_vexpr_constructor_surface_available",
+    "Lean4Lean.PSKernelKA47.translated_trExprS_constructor_surface_available",
+    "Lean4Lean.PSKernelKA47.translated_mvar_exclusion_surface_available",
+    "Lean4Lean.PSKernelKA47.translated_vexpr_substitution_surface_available"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableExpressionTranslatorRefinement": false,
+    "formalLean4LeanBridgeObligations": 132
+  },
+  "antiSpaghettiPolicy": {
+    "maxNewKA47SourceLines": 360,
+    "maxNewKA47ToolFiles": 2,
+    "forbiddenGeneratedSemanticPackagePrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "label": "K3-TB",
+  "status": "INDEPENDENT_AUDIT_PACK_NOT_FULLY_FORMAL_K3",
+  "progress": {
+    "percent": 99.5,
+    "basisPoints": 9950,
+    "kind": "engineering-track"
+  },
+  "lean": {
+    "semanticBaseline": "4.33.1",
+    "releaseCommit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "oneCommandAudit": "PROOFSCRIPT_LEAN_BIN=/path/to/lean npm run verify:k3tb:audit",
+  "formalTarget": "ProofScriptKernelEquivalence.KernelV71K3TBIndependentAuditPack",
+  "requiredDocuments": [
+    "AUDIT_K3TB.md",
+    "AUDIT_TRUST_BOUNDARY_MATRIX_K3TB.md",
+    "AUDIT_OVERCLAIM_GUARD_K3TB.json",
+    "REVIEWER_CHECKLIST_K3TB.md"
+  ],
+  "inheritedCheckpointsExpected": 21,
+  "fullLeanGatePartsExpected": 6,
+  "allowedClaims": [
+    "K3-TB trusted-boundary release candidate",
+    "Lean 4.33.1-backed assurance release candidate",
+    "conditional K3 scaffold with explicit trusted infrastructure assumptions"
+  ],
+  "forbiddenClaims": [
+    "fully formal K3",
+    "complete Lean kernel equivalence",
+    "verified Node/TypeScript runtime semantics"
+  ],
+  "remainingFullFormalK3Obligations": [
+    "verified TypeScript compiler or Lean extraction path",
+    "full ECMAScript/Node runtime semantics",
+    "arbitrary Lean acceptance completeness iff ProofScript acceptance",
+    "exhaustive all-Lean reduction-path completeness",
+    "unconditional final K3 theorem instantiation"
+  ]
+}

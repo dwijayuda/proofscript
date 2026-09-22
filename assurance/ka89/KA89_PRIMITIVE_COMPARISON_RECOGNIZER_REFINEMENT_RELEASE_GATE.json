@@ -1,0 +1,165 @@
+{
+  "checkpoint": "proofscript-v1-ka89-primitive-comparison-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.92",
+  "baseline": "proofscript-v1-ka88-primitive-gcd-recognizer-refinement0",
+  "releaseKind": "strict-lean4lean-primitive-comparison-recognizer-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA89",
+      "source": "assurance/ka89/primitive-comparison-recognizer-refinement-bridge.lean",
+      "destination": "PSKernelKA89PrimitiveComparisonRecognizerRefinementBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 3,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka89-primitive-comparison-recognizer-refinement0",
+    "publicVersion": "1.0.0-pskernel.92",
+    "featureSurfaceBridgeProgressPercent": 99,
+    "executableKernelEquivalenceProofProgressPercent": 67,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 276,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 273,
+      "newFormalLean4LeanBridgeObligations": 3,
+      "correctedFormalLean4LeanBridgeObligations": 276,
+      "countedNewObligations": [
+        "translated_checkNatBoolCases_wf",
+        "translated_checkNatBEq_wf",
+        "translated_checkNatBLE_wf"
+      ]
+    },
+    "metricPolicy": "KA89 adds direct non-sorry-backed primitive Nat comparison recognizer bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka89Files": [
+      {
+        "path": "tools/pskernel-ka89-primitive-comparison-recognizer-refinement-tests.ts",
+        "lines": 30,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka89-primitive-comparison-recognizer-refinement.ts",
+        "lines": 33,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka89/KA89_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 21,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka89/KA89_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka89/KA89_PRIMITIVE_COMPARISON_RECOGNIZER_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 32,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka89/KA89_PRIMITIVE_COMPARISON_RECOGNIZER_REFINEMENT_RELEASE_GATE.json",
+        "lines": 129,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka89/KA89_PRIMITIVE_COMPARISON_RECOGNIZER_REFINEMENT_REPORT.md",
+        "lines": 20,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka89/KA89_PRIMITIVE_COMPARISON_RECOGNIZER_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 19,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka89/primitive-comparison-recognizer-refinement-bridge.lean",
+        "lines": 44,
+        "ext": ".lean"
+      }
+    ],
+    "ka89ToolFiles": [
+      {
+        "path": "tools/pskernel-ka89-primitive-comparison-recognizer-refinement-tests.ts",
+        "lines": 30,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka89-primitive-comparison-recognizer-refinement.ts",
+        "lines": 33,
+        "ext": ".ts"
+      }
+    ],
+    "newKA89OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveComparisonRecognizerRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false,
+  "verificationCommandsPassed": [
+    "RED test first: failed as expected on missing KA-89 gate tool",
+    "npm install --offline --no-audit --no-fund",
+    "npm run build -- --pretty false",
+    "npm run test:pskernel:ka89",
+    "npm run assurance:ka89",
+    "npm run lean:ka89:check",
+    "npm run test:kernel:smoke",
+    "npm run test:standalone-small",
+    "npm run test:psc:kernel-status",
+    "npm run test:psc:conformance-bounded",
+    "npm run arena:corpus-preflight",
+    "npm run test:arena:static-nonperf",
+    "npm run test:arena:tutorial",
+    "TERM=xterm npm run verify:arena",
+    "npm pack --workspaces --ignore-scripts",
+    "sha256sum -c package SHA manifest"
+  ],
+  "npmPackages": {
+    "packed": 36,
+    "sha256Entries": 36,
+    "verification": "passed"
+  },
+  "wrapperTimeoutsCountedAsPassed": false,
+  "freshExtract": {
+    "initialResidue": {
+      "node_modules": 0,
+      "dist": 0,
+      "tsbuildinfo": 0,
+      "tgz": 0,
+      "zip": 0
+    },
+    "install": "passed",
+    "build": "passed",
+    "focusedTest": "passed",
+    "strictLeanCheck": "passed"
+  }
+}

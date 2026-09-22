@@ -1,0 +1,23 @@
+class Flag {
+  enabled: Bool;
+}
+
+instance (priority := 2000) flagHigh: Flag := {
+  enabled := true
+};
+
+instance flagDefault: Flag := {
+  enabled := false
+};
+
+instance (priority := 2000) flagHighLater: Flag := {
+  enabled := true
+};
+
+def readFlag[f: Flag](n: Nat): Bool := {
+  Flag.enabled(f)
+}
+
+theorem explicitInstanceComputes:
+  @readFlag(flagHigh, 0) = true :=
+  Eq.refl.{1}(Bool, true);

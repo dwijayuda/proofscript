@@ -1,0 +1,32 @@
+def choose(flag: Bool): Nat := {
+  bif(flag) {
+    let x: Nat := 41;
+    x + 1
+  } else {
+    0
+  }
+}
+
+def resultTrue: Nat := {
+  choose(true)
+}
+
+def resultFalse: Nat := {
+  choose(false)
+}
+
+def identityBool(flag: Bool): Bool := {
+  bif(flag) { true } else { false }
+}
+
+theorem result_true_eq_42: resultTrue = 42 := by {
+  rfl
+}
+
+theorem result_false_eq_0: resultFalse = 0 := by {
+  rfl
+}
+
+theorem bool_rfl: identityBool(true) = true := by {
+  rfl
+}

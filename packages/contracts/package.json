@@ -1,0 +1,7 @@
+{
+  "name": "@proofscript/contracts-workflow",
+  "version": "1.0.0-pskernel.149",
+  "type": "module",
+  "main": "src/index.mjs",
+  "private": false
+}

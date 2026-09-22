@@ -1,0 +1,20 @@
+{
+  "checkpoint": "proofscript-v1-ka43-theory-wide-refinement-map0",
+  "baseline": "proofscript-v1-ka42-resource-error-conservativity-bridge0",
+  "formalLean4EquivalenceProvenObligationsBefore": 128,
+  "formalLean4EquivalenceProvenObligationsAdded": 0,
+  "formalLean4EquivalenceProvenObligationsAfter": 128,
+  "closedByKA43": [
+    "theory-wide refinement roadmap made explicit",
+    "anti-spaghetti architecture gate added",
+    "preexisting oversized modules inventoried"
+  ],
+  "stillOpen": [
+    "full Lean4 equivalence",
+    "same theory as full Lean4",
+    "executable PSKernel refinement proof",
+    "complete inductive/mutual/nested recursor semantics",
+    "complete codec/replay refinement",
+    "full resource/error conservativity"
+  ]
+}

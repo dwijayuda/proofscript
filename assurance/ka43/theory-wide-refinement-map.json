@@ -1,0 +1,33 @@
+{
+  "checkpoint": "proofscript-v1-ka43-theory-wide-refinement-map0",
+  "publicVersion": "1.0.0-pskernel.46",
+  "baseline": "proofscript-v1-ka42-resource-error-conservativity-bridge0",
+  "purpose": "theory-wide feature-equivalence map plus anti-spaghetti architecture gate",
+  "closedSinceKA32": [
+    "inductive-environment-bridge",
+    "mutual-definition-environment-bridge",
+    "typechecker-proof-surface-bridge",
+    "expression-tag-coverage-bridge",
+    "whnf-head-reduction-bridge",
+    "whnf-preservation-bridge",
+    "defeq-whnf-theory-bridge",
+    "primitive-literal-policy-bridge",
+    "codec-replay-proof-surface-bridge",
+    "resource-error-conservativity-proof-surface-bridge"
+  ],
+  "notYetEquivalent": [
+    "end-to-end executable PSKernel checker refinement",
+    "complete inductive recursor/projection/iota refinement",
+    "complete mutual/nested inductive parity",
+    "complete primitive evaluator/reflection parity",
+    "complete codec replay refinement for all arena NDJSON/Lean exports",
+    "full theorem stating PSKernel accepts only what Lean4Lean accepts"
+  ],
+  "nextMilestones": [
+    "KA44-end-to-end-checker-refinement-plan",
+    "KA45-inductive-recursor-refinement-bridge",
+    "KA46-projection-reduction-refinement-bridge",
+    "KA47-executable-expression-translator-refinement"
+  ],
+  "formalLean4EquivalenceProvenObligations": 128
+}

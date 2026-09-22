@@ -1,0 +1,24 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+import {spawnSync} from "node:child_process";
+import {fileURLToPath} from "node:url";
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
+const cli=path.join(root,"packages/cli/dist/cli.js");
+const out=path.join(root,"artifacts/test/k2q-polymorphic-instances.pscore.json");
+const lean=path.join(root,"artifacts/test/k2q-polymorphic-instances.lean");
+function run(args,expect=0){const r=spawnSync(process.execPath,[cli,...args],{cwd:root,encoding:"utf8"});if(r.status!==expect){console.error(r.stdout,r.stderr);throw new Error(`${args.join(" ")} expected ${expect}, got ${r.status}`);}return r;}
+run(["check","tests/conformance/positive/k2q-polymorphic-instances.ps","--std","--emit-core",out]);
+const artifact=JSON.parse(fs.readFileSync(out,"utf8"));
+assert.equal(artifact.formatVersion,12);
+const boxLater=artifact.declarations.find(d=>d.name==="boxMarkerLater");assert(boxLater&&boxLater.kind==="definition");
+assert.equal(boxLater.type.tag,"pi");assert.equal(boxLater.type.binderInfo,"implicit");
+const automatic=artifact.declarations.find(d=>d.name==="automaticBoxTag");assert(automatic&&automatic.kind==="definition");
+const automaticJson=JSON.stringify(automatic.value);assert.match(automaticJson,/boxMarkerLater/);assert.match(automaticJson,/Nat/);assert.doesNotMatch(automaticJson,/boolMarker/);
+run(["verify",out]);
+run(["emit-lean",out,"--std","--out",lean]);
+const lt=fs.readFileSync(lean,"utf8");assert.match(lt,/instance \(priority := 2000\) boxMarkerLater/);assert.match(lt,/@_root_\.boxMarkerLater _root_\.Nat/);assert.match(lt,/@_root_\.getBoxNat \(@_root_\.boxMarkerLater _root_\.Nat\)/);
+const unsolved=run(["check","tests/conformance/negative/k2q-unsolved-polymorphic-instance.ps","--std"],1);assert.match(unsolved.stderr,/failed to synthesize instance/);
+const recursive=run(["check","tests/conformance/negative/k2q-recursive-instance-prerequisite-deferred.ps","--std"],0);assert.match(recursive.stdout,/accepted/);
+const tampered=structuredClone(artifact);const d=tampered.declarations.find(x=>x.name==="boxMarkerLater");d.type.binderInfo="instImplicit";const bad=path.join(root,"artifacts/test/k2q-polymorphic-instance-tampered.pscore.json");fs.writeFileSync(bad,JSON.stringify(tampered,null,2));run(["verify",bad],1);
+console.log("✓ K2q polymorphic global candidates, first-order parameter solving, ranking after goal matching, unsolved-meta rejection, recursive-prerequisite compatibility, strict replay, and Lean emission passed");

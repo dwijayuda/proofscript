@@ -1,0 +1,32 @@
+def zeroLit: Nat := {
+  0
+}
+
+def threeLit: Nat := {
+  3
+}
+
+def yesLit: Bool := {
+  true
+}
+
+def noLit: Bool := {
+  false
+}
+
+def succZeroLit: Nat := {
+  Nat.succ(0)
+}
+
+def localLiteral: Nat := {
+  let x := 2;
+  Nat.succ(x)
+}
+
+theorem threeLiteralComputes:
+  Eq.{1}(Nat, threeLit, Nat.succ(Nat.succ(Nat.succ(0)))) :=
+  Eq.refl.{1}(Nat, Nat.succ(Nat.succ(Nat.succ(0))));
+
+theorem boolLiteralComputes:
+  Eq.{1}(Bool, yesLit, Bool.true) :=
+  Eq.refl.{1}(Bool, Bool.true);

@@ -1,0 +1,64 @@
+{
+  "checkpoint": "proofscript-v1-ka13-vdecl-wf-bridge0",
+  "publicVersion": "1.0.0-pskernel.16",
+  "createdAtUtc": "2026-09-18T10:24:00Z",
+  "baseline": "proofscript-v1-ka12-direct-lean4lean-reference0",
+  "kernel": {
+    "name": "PSKernel",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "directLean4LeanVDeclWFBridge": {
+    "referenceKind": "direct-imported-lean4lean-vdecl-wf-bridge",
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanBridgeChecked": true,
+    "strictBridgeCheckPassed": true,
+    "blockedReasons": [],
+    "targets": {
+      "relation": "Lean4Lean.VDecl.WF",
+      "environment": "Lean4Lean.VEnv",
+      "axiom": "Lean4Lean.VDecl.axiom",
+      "definition": "Lean4Lean.VDecl.def"
+    },
+    "coveredPSDeclKinds": [
+      "axiom",
+      "definition"
+    ],
+    "excludedPSDeclKinds": [
+      "theorem",
+      "example",
+      "opaque",
+      "quot",
+      "inductive",
+      "mutualInductive"
+    ],
+    "theoryBuildStatus": 0,
+    "bridgeCheckStatus": 0
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 2,
+    "formalObligationMeaning": "two conditional VDecl.WF bridge lemmas, not full Lean equivalence"
+  },
+  "verificationSummary": {
+    "install": "passed",
+    "build": "passed",
+    "kaTests": "ka1-ka13 passed",
+    "kaAssurance": "ka1-ka13 passed",
+    "leanKA11Import": "passed",
+    "leanKA12Check": "passed",
+    "leanKA13Check": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "pscConformanceBounded": "passed",
+    "arenaStaticNonperf": "command passed, corpus not run because /mnt/data/arena-corpus-20260915 missing",
+    "arenaTutorial": "command passed, corpus not run because /mnt/data/arena-corpus-20260915 missing",
+    "verifyArena": "blocked: arena_corpus_missing"
+  }
+}

@@ -1,0 +1,6 @@
+'ProofScriptKernelEquivalence.TypeScriptClassifierImplementationContract.sourceAudit_noMissing' does not depend on any axioms
+'ProofScriptKernelEquivalence.TypeScriptClassifierImplementationContract.runtimeTrace_noFailures' does not depend on any axioms
+'ProofScriptKernelEquivalence.TypeScriptClassifierImplementationContract.runtimeTrace_rejectionsAtomic' does not depend on any axioms
+'ProofScriptKernelEquivalence.TypeScriptClassifierImplementationContract.acceptedOutcome_hasWitness' does not depend on any axioms
+'ProofScriptKernelEquivalence.TypeScriptClassifierImplementationContract.rejectedOutcome_notAccepted' does not depend on any axioms
+TS_CLASSIFIER_IMPLEMENTATION_CONTRACT_MODULES=1 INHERITED_FORMAL_STACK=30 TARGET_STATEMENT=1 SORRYAX=0

@@ -1,0 +1,43 @@
+{
+  "release": "P4.68",
+  "title": "Reserved output binding guard for PSC-1 JavaScript/TypeScript emission",
+  "trust_boundary": "K3-TB trusted-boundary; not fully formal K3; not formally equivalent to Lean 4",
+  "formal_lean4_equivalence": {
+    "proven_obligations": 0,
+    "status": "not_proven"
+  },
+  "progress_estimates": {
+    "standalone_psc1_without_lean4": "~96.4%",
+    "psc1_small_complete_programming_language": "~69.0%",
+    "psc1_small_theorem_prover": "~61.4%",
+    "full_proofscript_compiler": "~58.6%",
+    "full_lean_like_proofscript_without_lean4": "~13.4%",
+    "formal_lean4_equivalence": "0 proven obligations"
+  },
+  "commands": [
+    { "command": "npm run build -- --pretty false", "status": "PASS" },
+    { "command": "npm run test:pslive:reserved-identifiers", "status": "PASS" },
+    { "command": "npm run test:pslive:js-name-collision", "status": "PASS" },
+    { "command": "npm run test:pslive:build-ts", "status": "PASS" },
+    { "command": "npm run test:standalone-small", "status": "PASS" },
+    { "command": "npm run test:kernel:typechecker", "status": "PASS", "tests": "43/43" },
+    { "command": "npm run test:kernel:smoke", "status": "PASS" },
+    { "command": "npm run test:governance", "status": "PASS", "checks": 27, "warnings": 0, "failures": 0 },
+    { "command": "node tools/pskernel.ts status --json", "status": "PASS", "proofStatus": "not-proven" },
+    { "command": "npm run verify:k3tb:publish", "status": "BLOCKED", "reason": "missing PROOFSCRIPT_LEAN_BIN for Lean 4.33.1" }
+  ],
+  "changed_files": [
+    "packages/backend-typescript/src/index.ts",
+    "packages/backend-typescript/dist/index.js",
+    "packages/backend-typescript/dist/index.d.ts",
+    "packages/runtime/src/index.ts",
+    "packages/runtime/dist/index.js",
+    "packages/runtime/dist/index.d.ts",
+    "tools/pslive.ts",
+    "tools/pslive-reserved-identifier-tests.ts",
+    "package.json",
+    "package-lock.json",
+    "PRODUCTION_P4_68_RESERVED_OUTPUT_BINDINGS_REPORT.md",
+    "P4_68_VERIFICATION_SUMMARY.json"
+  ]
+}

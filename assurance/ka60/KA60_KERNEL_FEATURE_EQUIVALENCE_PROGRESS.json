@@ -1,0 +1,41 @@
+{
+  "checkpoint": "proofscript-v1-ka60-executable-expression-translator-beta-refinement0",
+  "publicVersion": "1.0.0-pskernel.63",
+  "featureSurfaceBridgeProgressPercent": 82,
+  "executableKernelEquivalenceProofProgressPercent": 47,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 175,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 171,
+    "newFormalLean4LeanBridgeObligations": 4,
+    "countedNewObligations": [
+      "translated_fvarsBelow_betaReduce_wf",
+      "translated_betaReduce_cheapBetaReduce_wf",
+      "translated_fvarsBelow_cheapBetaReduce_wf",
+      "translated_trExpr_cheapBetaReduce_wf"
+    ]
+  },
+  "groups": [
+    {
+      "id": "expression-tags",
+      "progressPercent": 94,
+      "status": "TrExprS constructors/determinism/substitution/source conditions/source transforms/source invariants/application-list/beta facts strict-checked; full executable translator refinement incomplete"
+    },
+    {
+      "id": "typechecker-whnf-defeq",
+      "progressPercent": 53,
+      "status": "WHNF/DefEq surface strict-checked; executable checker refinement incomplete"
+    },
+    {
+      "id": "end-to-end-refinement-spine",
+      "progressPercent": 35,
+      "status": "checker pipeline skeleton strict-checked; no end-to-end theorem yet"
+    },
+    {
+      "id": "architecture-health",
+      "progressPercent": 95,
+      "status": "no-spaghetti ratchet plus KA60 semantic-package touch guard"
+    }
+  ],
+  "notAFormalEquivalenceClaim": true
+}

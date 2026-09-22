@@ -1,0 +1,249 @@
+{
+  "checkpoint": "proofscript-v1-ka78-recursor-projection-sorry-boundary-audit0",
+  "publicVersion": "1.0.0-pskernel.81",
+  "baseline": "proofscript-v1-ka77-executable-infer-structural-refinement0",
+  "releaseKind": "sorry-boundary-audit-no-new-proof-obligations",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "not-applicable-audit-only",
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka78-recursor-projection-sorry-boundary-audit0",
+    "publicVersion": "1.0.0-pskernel.81",
+    "featureSurfaceBridgeProgressPercent": 90,
+    "executableKernelEquivalenceProofProgressPercent": 57,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 232,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 235,
+      "newFormalLean4LeanBridgeObligations": 0,
+      "ledgerCorrectionFormalLean4LeanBridgeObligations": -3,
+      "correctedFormalLean4LeanBridgeObligations": 232,
+      "demotedDirectSorryBackedObligations": [
+        {
+          "ka": 45,
+          "name": "translated_reduceRecursor_wf",
+          "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.reduceRecursor.WF",
+          "sourceFile": "Lean4Lean/Verify/TypeChecker/WHNF.lean",
+          "reason": "upstream_theorem_body_contains_sorry",
+          "previousStatus": "counted",
+          "correctedStatus": "demoted-not-counted"
+        },
+        {
+          "ka": 50,
+          "originalPreparedAt": 46,
+          "name": "translated_reduceProjCore_wf",
+          "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.reduceProjCore.WF",
+          "sourceFile": "Lean4Lean/Verify/TypeChecker/Reduce.lean",
+          "reason": "upstream_theorem_body_contains_sorry",
+          "previousStatus": "counted",
+          "correctedStatus": "demoted-not-counted"
+        },
+        {
+          "ka": 50,
+          "originalPreparedAt": 46,
+          "name": "translated_inferProj_wf",
+          "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.inferProj.WF",
+          "sourceFile": "Lean4Lean/Verify/TypeChecker/InferType.lean",
+          "reason": "upstream_theorem_body_contains_sorry",
+          "previousStatus": "counted",
+          "correctedStatus": "demoted-not-counted"
+        }
+      ],
+      "dependencyRiskObligations": [
+        {
+          "ka": 45,
+          "name": "translated_whnfCore_recursor_path_wf",
+          "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.whnfCore'.WF",
+          "dependencyRisk": "calls_or_depends_on_reduceRecursor.WF",
+          "status": "flagged-for-transitive-dependency-audit"
+        },
+        {
+          "ka": 45,
+          "name": "translated_whnf_recursor_path_wf",
+          "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.whnf.WF",
+          "dependencyRisk": "may_depend_on_reduceRecursor.WF_path",
+          "status": "flagged-for-transitive-dependency-audit"
+        },
+        {
+          "ka": 50,
+          "originalPreparedAt": 46,
+          "name": "translated_reduceProj_wf",
+          "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.reduceProj.WF",
+          "dependencyRisk": "uses_reduceProjCore.WF_which_is_sorry_backed",
+          "status": "flagged-for-transitive-dependency-audit"
+        },
+        {
+          "ka": 50,
+          "originalPreparedAt": 46,
+          "name": "translated_whnfCore_projection_path_wf",
+          "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.whnfCore'.WF",
+          "dependencyRisk": "projection_path_may_reach_reduceProjCore.WF",
+          "status": "flagged-for-transitive-dependency-audit"
+        },
+        {
+          "ka": "future",
+          "name": "inferType'.WF",
+          "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.inferType'.WF",
+          "dependencyRisk": "uses_inferProj.WF_which_is_sorry_backed",
+          "status": "do-not-count-until-projection-boundary-is-repaired"
+        }
+      ]
+    },
+    "metricPolicy": "KA78 corrects the formal obligation ledger by demoting direct upstream-sorry-backed recursor/projection obligations. Dependency-risk obligations are flagged but not demoted until a dedicated transitive-dependency audit.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "auditFindings": {
+    "demotedDirectSorryBackedObligations": [
+      {
+        "ka": 45,
+        "name": "translated_reduceRecursor_wf",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.reduceRecursor.WF",
+        "sourceFile": "Lean4Lean/Verify/TypeChecker/WHNF.lean",
+        "reason": "upstream_theorem_body_contains_sorry",
+        "previousStatus": "counted",
+        "correctedStatus": "demoted-not-counted"
+      },
+      {
+        "ka": 50,
+        "originalPreparedAt": 46,
+        "name": "translated_reduceProjCore_wf",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.reduceProjCore.WF",
+        "sourceFile": "Lean4Lean/Verify/TypeChecker/Reduce.lean",
+        "reason": "upstream_theorem_body_contains_sorry",
+        "previousStatus": "counted",
+        "correctedStatus": "demoted-not-counted"
+      },
+      {
+        "ka": 50,
+        "originalPreparedAt": 46,
+        "name": "translated_inferProj_wf",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.inferProj.WF",
+        "sourceFile": "Lean4Lean/Verify/TypeChecker/InferType.lean",
+        "reason": "upstream_theorem_body_contains_sorry",
+        "previousStatus": "counted",
+        "correctedStatus": "demoted-not-counted"
+      }
+    ],
+    "dependencyRiskObligations": [
+      {
+        "ka": 45,
+        "name": "translated_whnfCore_recursor_path_wf",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.whnfCore'.WF",
+        "dependencyRisk": "calls_or_depends_on_reduceRecursor.WF",
+        "status": "flagged-for-transitive-dependency-audit"
+      },
+      {
+        "ka": 45,
+        "name": "translated_whnf_recursor_path_wf",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.whnf.WF",
+        "dependencyRisk": "may_depend_on_reduceRecursor.WF_path",
+        "status": "flagged-for-transitive-dependency-audit"
+      },
+      {
+        "ka": 50,
+        "originalPreparedAt": 46,
+        "name": "translated_reduceProj_wf",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.reduceProj.WF",
+        "dependencyRisk": "uses_reduceProjCore.WF_which_is_sorry_backed",
+        "status": "flagged-for-transitive-dependency-audit"
+      },
+      {
+        "ka": 50,
+        "originalPreparedAt": 46,
+        "name": "translated_whnfCore_projection_path_wf",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.whnfCore'.WF",
+        "dependencyRisk": "projection_path_may_reach_reduceProjCore.WF",
+        "status": "flagged-for-transitive-dependency-audit"
+      },
+      {
+        "ka": "future",
+        "name": "inferType'.WF",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.inferType'.WF",
+        "dependencyRisk": "uses_inferProj.WF_which_is_sorry_backed",
+        "status": "do-not-count-until-projection-boundary-is-repaired"
+      }
+    ]
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka78Files": [
+      {
+        "path": "tools/pskernel-ka78-recursor-projection-sorry-boundary-audit-tests.ts",
+        "lines": 43,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka78-recursor-projection-sorry-boundary-audit.ts",
+        "lines": 200,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka78/KA78_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 87,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka78/KA78_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka78/KA78_RECURSOR_PROJECTION_SORRY_BOUNDARY_AUDIT_RELEASE_GATE.json",
+        "lines": 250,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka78/KA78_RECURSOR_PROJECTION_SORRY_BOUNDARY_AUDIT_REPORT.md",
+        "lines": 38,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka78/KA78_RECURSOR_PROJECTION_SORRY_BOUNDARY_AUDIT_SPEC.json",
+        "lines": 97,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka78/KA78_RECURSOR_PROJECTION_SORRY_BOUNDARY_AUDIT_VERIFICATION_SUMMARY.json",
+        "lines": 86,
+        "ext": ".json"
+      }
+    ],
+    "ka78ToolFiles": [
+      {
+        "path": "tools/pskernel-ka78-recursor-projection-sorry-boundary-audit-tests.ts",
+        "lines": 43,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka78-recursor-projection-sorry-boundary-audit.ts",
+        "lines": 200,
+        "ext": ".ts"
+      }
+    ],
+    "newKA78OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWHNFDefEqInferRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

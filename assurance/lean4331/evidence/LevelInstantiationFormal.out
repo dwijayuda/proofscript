@@ -1,0 +1,23 @@
+assurance/lean4331/formal/ProofScriptKernelEquivalence/LevelInstantiation.lean:71:21: warning: This simp argument is unused:
+  h
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Option.map, Option.getD]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+assurance/lean4331/formal/ProofScriptKernelEquivalence/LevelInstantiation.lean:75:16: warning: This simp argument is unused:
+  h
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [PSLevel.toLean]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+assurance/lean4331/formal/ProofScriptKernelEquivalence/LevelInstantiation.lean:75:19: warning: This simp argument is unused:
+  PSLevel.toLean
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [h]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'ProofScriptKernelEquivalence.PSLevel.getParamSubst_toLean' depends on axioms: [propext, Quot.sound]
+'ProofScriptKernelEquivalence.PSLevel.instantiateParams_toLeanSpec' depends on axioms: [propext, Quot.sound]

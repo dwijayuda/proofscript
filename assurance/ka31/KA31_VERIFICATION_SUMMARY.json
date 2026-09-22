@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka31-example-env-aggregate-bridge0",
+  "publicVersion": "1.0.0-pskernel.34",
+  "baseline": "proofscript-v1-ka30-ordinary-env-aggregate-bridge0",
+  "createdAtUtc": "2026-09-18T19:00:00Z",
+  "coreArtifactFormat": 71,
+  "certificateFormat": 2,
+  "formalLean4EquivalenceProvenObligations": 56,
+  "commands": [
+    {
+      "command": "npm install --offline --no-audit --no-fund",
+      "status": "passed"
+    },
+    {
+      "command": "npm run build -- --pretty false",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:pskernel:ka30",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:pskernel:ka31",
+      "status": "passed"
+    },
+    {
+      "command": "npm run assurance:ka30",
+      "status": "passed"
+    },
+    {
+      "command": "npm run assurance:ka31",
+      "status": "passed"
+    },
+    {
+      "command": "npm run lean:ka31:check",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:psc:kernel-status",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:psc:conformance-bounded",
+      "status": "passed"
+    },
+    {
+      "command": "npm run arena:corpus-preflight",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:arena:static-nonperf",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:arena:tutorial",
+      "status": "timed_out_not_counted"
+    },
+    {
+      "command": "npm run verify:arena",
+      "status": "not_counted",
+      "reason": "full wrapper not rerun after tutorial timeout"
+    },
+    {
+      "command": "fresh extract install",
+      "status": "passed"
+    },
+    {
+      "command": "fresh extract build",
+      "status": "passed"
+    },
+    {
+      "command": "fresh extract test:pskernel:ka31",
+      "status": "passed"
+    },
+    {
+      "command": "fresh extract lean:ka31:check",
+      "status": "passed"
+    },
+    {
+      "command": "unzip -t final ZIP",
+      "status": "passed"
+    },
+    {
+      "command": "sha256sum final ZIP",
+      "status": "passed"
+    }
+  ],
+  "arenaEvidence": {
+    "corpusFixtures": 190,
+    "staticNonPerf": {
+      "total": 26,
+      "acceptedGood": 4,
+      "rejectedBad": 22,
+      "wrong": 0,
+      "notRun": 0
+    },
+    "tutorial": {
+      "retainedFromEarlierCheckpoints": true,
+      "total": 140,
+      "acceptedGood": 93,
+      "rejectedBad": 47,
+      "wrong": 0,
+      "notRun": 0,
+      "rerunInKA31": "timed_out_not_counted"
+    }
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "quotientSemanticSoundness": false
+  },
+  "freshExtract": {
+    "residueCount": 0,
+    "install": "passed",
+    "build": "passed",
+    "testPskernelKa31": "passed",
+    "leanKa31Check": "passed"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "checkpoint": "proofscript-v1-ka50-feature-equivalence-audit-refresh0",
+  "publicVersion": "1.0.0-pskernel.53",
+  "baseline": "proofscript-v1-ka49-checker-pipeline-end-to-end-theorem-skeleton-preflight0",
+  "referenceKind": "strict-lean4lean-feature-equivalence-audit-refresh",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA46",
+      "rel": "assurance/ka46/projection-reduction-refinement-bridge.lean",
+      "dest": "PSKernelKA46ProjectionReductionRefinementBridge.lean",
+      "proofBearing": true,
+      "obligations": 4
+    },
+    {
+      "ka": "KA47",
+      "rel": "assurance/ka47/executable-expression-translator-refinement-bridge.lean",
+      "dest": "PSKernelKA47ExecutableExpressionTranslatorRefinementBridge.lean",
+      "proofBearing": false,
+      "obligations": 0
+    },
+    {
+      "ka": "KA48",
+      "rel": "assurance/ka48/executable-whnf-defeq-refinement-bridge.lean",
+      "dest": "PSKernelKA48ExecutableWhnfDefEqRefinementBridge.lean",
+      "proofBearing": false,
+      "obligations": 0
+    },
+    {
+      "ka": "KA49",
+      "rel": "assurance/ka49/checker-pipeline-end-to-end-theorem-skeleton.lean",
+      "dest": "PSKernelKA49CheckerPipelineEndToEndTheoremSkeleton.lean",
+      "proofBearing": false,
+      "obligations": 0
+    }
+  ],
+  "countedNewFormalObligations": 4,
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "endToEndCheckerPipelineTheorem": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

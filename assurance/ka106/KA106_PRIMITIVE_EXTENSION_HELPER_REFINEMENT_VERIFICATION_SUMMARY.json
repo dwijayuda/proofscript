@@ -1,0 +1,8 @@
+{
+  "checkpoint": "proofscript-v1-ka106-primitive-extension-helper-refinement0",
+  "status": "passed",
+  "strictLean4LeanStatus": "passed",
+  "newFormalLean4LeanBridgeObligations": 5,
+  "formalLean4LeanBridgeObligations": 351,
+  "architectureHealth": true
+}

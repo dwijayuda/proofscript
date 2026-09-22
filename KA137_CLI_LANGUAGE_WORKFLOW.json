@@ -1,0 +1,96 @@
+{
+  "checkpoint": "proofscript-v1-ka137-cli-language-workflow0",
+  "version": "1.0.0-pskernel.140",
+  "base": "proofscript-v1-ka136-npm-toolchain-rebase0",
+  "package": "proofscript",
+  "cli": "psc",
+  "languageImplementationProgress": {
+    "programmingLanguage": {
+      "progressPercent": 54,
+      "status": "implemented-alpha",
+      "features": [
+        "def",
+        "function",
+        "const",
+        "structures",
+        "inductives",
+        "match",
+        "if",
+        "where",
+        "Nat",
+        "Int",
+        "Bool",
+        "String",
+        "Unit",
+        "Option",
+        "List"
+      ]
+    },
+    "theoremProver": {
+      "progressPercent": 24,
+      "status": "partial-lean-export",
+      "features": [
+        "theorem",
+        "rfl/simp passthrough where supported",
+        "Core artifact checking",
+        "Lean export"
+      ]
+    },
+    "formalVerification": {
+      "progressPercent": 28,
+      "status": "structural-obligations",
+      "features": [
+        "requires",
+        "ensures",
+        "result",
+        "proof obligation listing",
+        "structural certificates"
+      ]
+    },
+    "runtimeCorrespondence": {
+      "progressPercent": 22,
+      "status": "structural-certificate-boundary"
+    },
+    "typescriptRuntimeAlpha": {
+      "progressPercent": 35,
+      "status": "build-ts installable via npm tarball"
+    },
+    "overallConservativeDashboard": 87.1
+  },
+  "newCommands": [
+    "psc emit-core",
+    "psc emit-lean",
+    "psc certify",
+    "psc language status --json"
+  ],
+  "verifiedCommandsFromInstalledTarball": [
+    "psc --version",
+    "psc language status --json",
+    "psc init",
+    "psc check",
+    "psc emit-core",
+    "psc emit-lean",
+    "psc certify",
+    "psc verify",
+    "psc contracts",
+    "psc obligations",
+    "psc build --target ts"
+  ],
+  "trustBoundary": {
+    "fullLean4Equivalence": false,
+    "fullyFormalK3": false,
+    "semanticContractProofChecking": false,
+    "npmInstallableToolchain": true
+  },
+  "notYetImplemented": [
+    "old",
+    "assert",
+    "ghost",
+    "invariant",
+    "decreases",
+    "monadic vcgen/mvcgen contracts",
+    "full macros",
+    "full tactic engine",
+    "full Lean4 equivalence"
+  ]
+}

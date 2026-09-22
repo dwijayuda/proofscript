@@ -1,0 +1,81 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "V71_MUTUAL_FORMED_ENV_CERT1",
+  "coreFormat": 71,
+  "profile": "KERNEL-level-instantiation-conformance1",
+  "semanticChange": false,
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+    "executable": "/mnt/data/lean-install/lean-4.33.1-linux/bin/lean",
+    "versionOutput": "Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)"
+  },
+  "formal": {
+    "newTarget": "ProofScriptKernelEquivalence.InductiveMutualFormedEnvironment",
+    "targetSource": "assurance/lean4331/formal/ProofScriptKernelEquivalence/InductiveMutualFormedEnvironment.lean",
+    "targetSourceSha256": "32af7006e84f97f9e049c427d1789f64688c4bc3a72b138ec59e55681d5bd421",
+    "targetTheorems": 8,
+    "reportedSorryAx": 0,
+    "log": "assurance/lean4331/evidence/v71-mutual-formed-env-formal1.out",
+    "totalFormalLeanFiles": 35,
+    "theoremBoundary": "formed mutual package installation preserves Core→Lean environment translation, direct-typing lookup, and ordinary-delta lookup"
+  },
+  "executable": {
+    "sourceAudit": {
+      "path": "packages/kernel/src/kernel.ts#checkDirectMutualInductive",
+      "sha256": "1d858bd5b6e30052282e8671a7bb7013b076658724e1e53ec2fc02f87906c4a6",
+      "obligations": 39,
+      "missing": 0
+    },
+    "exactLeanMutualSuites": [
+      {
+        "label": "direct",
+        "script": "tools/kernel-mutual-inductives-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-mutual-direct-exact-lean1.out",
+        "sha256": "6bf853a2967bd5b0b56c56151d8db4d3376f9748b2c43b44b67438f803abb10a"
+      },
+      {
+        "label": "parameters",
+        "script": "tools/kernel-mutual-parameters-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-mutual-parameters-exact-lean1.out",
+        "sha256": "3e2025f1819d6885646f82041428a36f5bf4767c241c87cd7de7d012883ec845"
+      },
+      {
+        "label": "indices",
+        "script": "tools/kernel-mutual-indices-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-mutual-indices-exact-lean1.out",
+        "sha256": "c495a42ad21cc1eca80c95332669aecac5f3f80fcce0b8031c344def5b52373c"
+      },
+      {
+        "label": "higher-order",
+        "script": "tools/kernel-mutual-higher-order-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-mutual-higher-order-exact-lean1.out",
+        "sha256": "49db1c1ea1415907a80fe6f5946ee148bcc697d5dc9dddeb87264de5b0e3a82e"
+      },
+      {
+        "label": "prop",
+        "script": "tools/kernel-mutual-prop-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-mutual-prop-exact-lean1.out",
+        "sha256": "2921738844772ac73a5b99cc0cfb9952c2a3bbf09a636150eb048294bd3bbb67"
+      }
+    ],
+    "suiteCount": 5,
+    "failures": 0
+  },
+  "inherited": {
+    "tsClassifierImplementationTrace": "PASS",
+    "tsClassifierEffectiveStack": 32,
+    "fullLeanGateParts": 6
+  },
+  "scope": {
+    "claim": "formed mutual O-DECL environment preservation plus exact Lean-backed executable mutual coverage",
+    "notClaimed": {
+      "fullMutualPositivityTheorem": true,
+      "fullMutualAdmissionBidirectionalCompleteness": true,
+      "formalMutualRecursorRhsCorrespondence": true,
+      "nestedInductivePreprocessingCertificate": true,
+      "fullK3WholeKernelEquivalence": true
+    }
+  },
+  "status": "PASS"
+}

@@ -1,0 +1,20 @@
+{
+  "checkpoint": "proofscript-v1-ka67-executable-defeq-binder-app-eta-refinement0",
+  "publicVersion": "1.0.0-pskernel.70",
+  "featureSurfaceBridgeProgressPercent": 87,
+  "executableKernelEquivalenceProofProgressPercent": 53,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 204,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 200,
+    "newFormalLean4LeanBridgeObligations": 4,
+    "countedNewObligations": [
+      "translated_isDefEqLambda_wf",
+      "translated_isDefEqForall_wf",
+      "translated_isDefEqApp_wf",
+      "translated_tryEtaExpansion_wf"
+    ]
+  },
+  "metricPolicy": "KA67 advances the exact formal obligation counter only; percentage estimates remain held at the latest audited KA65/KA66 values pending a separate coverage audit.",
+  "notAFormalEquivalenceClaim": true
+}

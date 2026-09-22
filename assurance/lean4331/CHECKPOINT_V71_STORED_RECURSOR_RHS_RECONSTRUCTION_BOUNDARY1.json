@@ -1,0 +1,200 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "V71_STORED_RECURSOR_RHS_RECONSTRUCTION_BOUNDARY1",
+  "coreFormat": 71,
+  "status": "PASS",
+  "leanSemanticBaseline": "4.33.1",
+  "leanReleaseCommit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "progress": {
+    "percent": 90,
+    "previousPercent": 85,
+    "label": "v71 K3-track conservative engineering progress",
+    "note": "Progress is a project ledger, not a probability and not a formal K3 theorem."
+  },
+  "formal": {
+    "target": "ProofScriptKernelEquivalence.KernelV71StoredRecursorRHSReconstructionBoundary",
+    "source": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71StoredRecursorRHSReconstructionBoundary.lean",
+    "targetSourceSha256": "046f02bda263ec726a761ec10cda864ba2e2df9b6f81b1e7052637ca4378e0df",
+    "log": "assurance/lean4331/evidence/v71-stored-recursor-rhs-reconstruction-boundary-formal1.out",
+    "logSha256": "b2bcd1a952ae1cfb1b86c43bf967631a0fc9fd3e795acc5694d64a89c19795ff",
+    "targetTheorems": 9,
+    "reportedSorryAx": 0,
+    "effectiveFormalStackFiles": 43
+  },
+  "executable": {
+    "sourceAudit": {
+      "schema": {
+        "path": "packages/kernel/src/inductive.ts#SimpleCtorRule+SimpleRecursorMetadata",
+        "sha256": "8caff27d96182bf292aadfad87b24321f8b73aa5ee80e07716db4912d08de421",
+        "obligations": 7,
+        "lineCount": 37
+      },
+      "reduction": {
+        "path": "packages/kernel/src/kernel.ts#buildPointwise*RecursiveIH+reduceSimpleRecursor",
+        "sha256": "8fed19dee06fe13f99af604731b9ba61c6010db40589766ab7329d250d79f9c0",
+        "obligations": 13,
+        "lineCount": 278
+      },
+      "metadata": {
+        "path": "packages/kernel/src/kernel.ts#recursiveRecursors+recursiveFieldTypes emission",
+        "sha256": "44c6fd4af2cd821976130c551f4769442de054496a6aa4a125fdbf820c221c6c",
+        "obligations": 4,
+        "lineCount": 7117
+      },
+      "totalObligations": 24,
+      "missing": 0
+    },
+    "freshSuiteCount": 1,
+    "inheritedSuiteCount": 11,
+    "failures": 0,
+    "exactLeanSuites": [
+      {
+        "label": "recursor-metadata",
+        "script": "tools/kernel-recursor-metadata-differential-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-stored-rhs-boundary-recursor-metadata-exact-lean1.out",
+        "sha256": "e1bb0a47d8e7053bff0209d9d75d8b8e67ee5cd87eb07e51d5ecf014ba6d4ffd"
+      }
+    ],
+    "inheritedExactLeanSuites": [
+      {
+        "label": "minor-order",
+        "script": "tools/kernel-recursor-minor-order-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-mutual-nested-recursor-rhs-minor-order-exact-lean1.out",
+        "sha256": "a625430190284891a99616e9279b7bf291e6a7477ac42824128b5ce09dc3f6f3",
+        "inheritedFrom": "V71_MUTUAL_NESTED_RECURSOR_RHS_CERT1"
+      },
+      {
+        "label": "mutual-nested-generalization",
+        "script": "tools/kernel-mutual-nested-generalization-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-mutual-nested-recursor-rhs-mutual-nested-generalization-exact-lean1.out",
+        "sha256": "efc7e4f767a3ff70c4b8e337927465a1d40aa46d41e21a79869e220df43825ad",
+        "inheritedFrom": "V71_MUTUAL_NESTED_RECURSOR_RHS_CERT1"
+      },
+      {
+        "label": "mutual-nested-deeper",
+        "script": "tools/kernel-mutual-nested-deeper-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-mutual-nested-recursor-rhs-mutual-nested-deeper-exact-lean1.out",
+        "sha256": "1cee5736e49d7b19afd075a4fbd9d489164c69f67f8a26f289d7553a383c0901",
+        "inheritedFrom": "V71_MUTUAL_NESTED_RECURSOR_RHS_CERT1"
+      },
+      {
+        "label": "mutual-nested-deeper-indexed-containers",
+        "script": "tools/kernel-mutual-nested-deeper-indexed-containers-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-mutual-nested-recursor-rhs-mutual-nested-deeper-indexed-containers-exact-lean1.out",
+        "sha256": "9dd70a0af8422a8a0641c381ae80cae1cb131f23458493d7aa390e02a15d7fb1",
+        "inheritedFrom": "V71_MUTUAL_NESTED_RECURSOR_RHS_CERT1"
+      },
+      {
+        "label": "mutual-nested-final-generalization-audit",
+        "script": "tools/kernel-mutual-nested-final-generalization-audit-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-mutual-nested-recursor-rhs-mutual-nested-final-generalization-audit-exact-lean1.out",
+        "sha256": "62292ca8db95fefc842c26903b6e4e4912c2a76781005d2ecc8c76ee914d65ff",
+        "inheritedFrom": "V71_MUTUAL_NESTED_RECURSOR_RHS_CERT1"
+      },
+      {
+        "label": "direct",
+        "script": "tools/kernel-inductive-positivity-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-positivity-boundary-direct-exact-lean1.out",
+        "sha256": "7fc3d316c732ecfeaa9fa369565522f1e4fb8b0217b991fc3cbc8f77e6c637a8",
+        "inheritedFrom": "V71_POSITIVITY_COMPLETENESS_BOUNDARY1"
+      },
+      {
+        "label": "indexed",
+        "script": "tools/kernel-inductive-indexed-admission-differential-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-positivity-boundary-indexed-exact-lean1.out",
+        "sha256": "8d8f9a43e8e7b52ad25145d7ee77e6ef9cf568685127de50a834f6d00afef049",
+        "inheritedFrom": "V71_POSITIVITY_COMPLETENESS_BOUNDARY1"
+      },
+      {
+        "label": "mutual-direct",
+        "script": "tools/kernel-mutual-inductives-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-positivity-boundary-mutual-direct-exact-lean1.out",
+        "sha256": "f36fe9ef97d7fb1ed2176e02416ab611cfb31fe0cfa87f0df58d7d9a773ce53e",
+        "inheritedFrom": "V71_POSITIVITY_COMPLETENESS_BOUNDARY1"
+      },
+      {
+        "label": "mutual-higher-order",
+        "script": "tools/kernel-mutual-higher-order-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-positivity-boundary-mutual-higher-order-exact-lean1.out",
+        "sha256": "5704d3b34d5e83fb6a1e9e7716ee7bea994317e843bbee37515ad4ed41541ee0",
+        "inheritedFrom": "V71_POSITIVITY_COMPLETENESS_BOUNDARY1"
+      },
+      {
+        "label": "nested-direct",
+        "script": "tools/kernel-nested-inductives-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-positivity-boundary-nested-direct-exact-lean1.out",
+        "sha256": "46bb77afe443ca7907e43ebe504d9c7fd1ff98cfcbf5402ecab3e0ebf271d992",
+        "inheritedFrom": "V71_POSITIVITY_COMPLETENESS_BOUNDARY1"
+      },
+      {
+        "label": "nested-indexed-containers",
+        "script": "tools/kernel-nested-indexed-containers-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-positivity-boundary-nested-indexed-containers-exact-lean1.out",
+        "sha256": "484ea35cfbdc6431f92521f148c9e28c215ba09570335f7c9a16cda6f2202a52",
+        "inheritedFrom": "V71_POSITIVITY_COMPLETENESS_BOUNDARY1"
+      }
+    ]
+  },
+  "inherited": {
+    "fullLeanGate": {
+      "status": "PASS",
+      "partCount": 6,
+      "logs": [
+        {
+          "path": "assurance/lean4331/evidence/v71-gate-part1.out",
+          "sha256": "ec8220bca5a9453257661d3c65a80111fa1be08ac9f95fd11b68617bd7ac02f4",
+          "bytes": 1011
+        },
+        {
+          "path": "assurance/lean4331/evidence/v71-gate-part2.out",
+          "sha256": "0e2d86c285d2ccce19e94111810df807b45736ba3b7d57346ac923788f14f7e7",
+          "bytes": 643
+        },
+        {
+          "path": "assurance/lean4331/evidence/v71-gate-part3.out",
+          "sha256": "237ddf58459558e7d352e9af0d497c5adda3ed29d611df228fddc59a9244ccd3",
+          "bytes": 710
+        },
+        {
+          "path": "assurance/lean4331/evidence/v71-gate-part4.out",
+          "sha256": "6cd4f9661ffa48fc18dfff4458b2eef2b62e76b2d089cb79b0d34802f6787f01",
+          "bytes": 713
+        },
+        {
+          "path": "assurance/lean4331/evidence/v71-gate-part5.out",
+          "sha256": "e9e2a9af2e74f58ec22784dbc47d93fb57deaad532ca42436f6b49f0ac5989fb",
+          "bytes": 884
+        },
+        {
+          "path": "assurance/lean4331/evidence/v71-gate-part6.out",
+          "sha256": "c0b48520655e88066ab1face2d2f97f9a1491dd09d4429f4281da25d690c5783",
+          "bytes": 1390
+        }
+      ]
+    },
+    "positivityBoundary": {
+      "status": "PASS",
+      "progress": 85
+    },
+    "mutualNestedRHSBoundary": {
+      "status": "PASS",
+      "suiteCount": 5
+    }
+  },
+  "completedSlices": [
+    "explicit ProofScript recursor-rule metadata maps into pinned Lean.RecursorRule",
+    "stored RecursorRule.rhs image equals the linked RHS trace endpoint for supported rules",
+    "linked mutual/nested RHS trace boundary inherited",
+    "non-mutual/generated recursor exact-Lean evidence inherited and hash-checked",
+    "recursor metadata exact-Lean evidence freshly rerun",
+    "mutual/nested linked iota exact-Lean evidence inherited and hash-checked",
+    "positivity completeness-boundary certificate inherited"
+  ],
+  "outstandingK3Obligations": [
+    "mechanized KernelTS semantics for line-by-line TypeScript execution",
+    "arbitrary Lean stored RecursorRule.rhs round-trip iff ProofScript reconstruction",
+    "arbitrary Lean admission completeness iff ProofScript acceptance",
+    "exhaustive reduction-path completeness for every Lean expression form",
+    "final whole-kernel K3 equivalence theorem"
+  ]
+}

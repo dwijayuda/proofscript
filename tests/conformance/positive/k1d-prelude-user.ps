@@ -1,0 +1,3 @@
+theorem addZeroFromPrelude(n: Nat):
+  Eq.{1}(Nat, Nat.add(n, Nat.zero), n) :=
+  Eq.refl.{1}(Nat, n);

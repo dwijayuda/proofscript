@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "P5.97-psc-software-cli-adapter0",
+  "status": "PROFILE_CLI_ADAPTER_CHECKPOINT_FROZEN",
+  "baseline": {
+    "release": "P5.96",
+    "checkpoint": "software-executable-examples0",
+    "zip": "proofscript-software-profile-v0-p5-96-executable-examples0.zip"
+  },
+  "studiedExternalArtifact": {
+    "name": "proofscript-compiler-alpha-v0.1.0-alpha.153-source",
+    "role": "CLI UX/reference behavior only; compiler semantics not imported as trusted kernel semantics"
+  },
+  "adaptedBehavior": [
+    "package-level bin.psc and bin.proofscript entrypoints",
+    "psc help",
+    "psc status --json",
+    "psc check <file.ps>",
+    "psc build-ts <file.ps> --out <out.ts>",
+    "psc build-js <file.ps> --out <out.js>",
+    "psc build <file.ps> --target ts|js --out <out>",
+    "psc compile <file.ps|dir> --out-dir <dir>",
+    "psc run <file.ps> --call <name>",
+    "psc target list",
+    "psc language status",
+    "psc doctor"
+  ],
+  "notAdapted": [
+    "alpha GP1 compiler semantics as trusted kernel semantics",
+    "unsafe public output mode",
+    "full Lean-gated project scaffolding",
+    "web framework templates",
+    "incremental cache/source-map/module graph UX"
+  ],
+  "changed": {
+    "kernelSourceChanged": false,
+    "arenaImporterChanged": false,
+    "kernelCodecChanged": false,
+    "newTrustedComputationRule": false,
+    "cliAdapterChanged": true,
+    "rootScriptsPowerShellCompatible": true
+  },
+  "gates": {
+    "offlineInstall": "PASS",
+    "build": "PASS",
+    "pscAdapter": "PASS",
+    "verifyProfileSoftware": "PASS",
+    "conformance": "PASS",
+    "standaloneSmall": "PASS",
+    "typescriptMigration": "PASS",
+    "kernelSmoke": "PASS",
+    "cleanSourceResidue": "PASS",
+    "zipIntegrity": "PASS",
+    "zipSha256": "PASS",
+    "cleanExtractInstall": "PASS",
+    "cleanExtractBuild": "PASS",
+    "cleanExtractVerifyProfileSoftware": "PASS",
+    "cleanExtractPscCompileExamples": "PASS"
+  },
+  "trustBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "backendExecutionCorrespondenceProof": false,
+    "arenaAgreementIsFormalEquivalence": false
+  },
+  "finalZip": "/mnt/data/proofscript-software-profile-v0-p5-97-psc-cli-adapter0.zip",
+  "finalZipSha256Sidecar": "/mnt/data/proofscript-software-profile-v0-p5-97-psc-cli-adapter0.zip.sha256",
+  "note": "The archive SHA-256 is stored in the sidecar file to avoid a self-referential archive hash."
+}

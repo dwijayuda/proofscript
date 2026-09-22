@@ -1,0 +1,228 @@
+{
+  "schema": "proofscript.kernel-assurance.proof-obligations/v2",
+  "target": "K3 logical equivalence: ProofScript Core v71 / KERNEL-level-instantiation-conformance1 vs Lean 4.33.1 shared safe domain",
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "completionRule": "No OPEN_FORMAL or BLOCKED_SHARED_DOMAIN obligations remain; exact native bridges are either machine-proved from explicit specs or carried as named assumptions with independent exact-binary differential evidence; implementation correspondence is closed.",
+  "obligations": [
+    {
+      "id": "O-LVL-EMBED",
+      "group": "universes",
+      "status": "PROVED_FORMAL",
+      "statement": "Core level constructor embedding preserves denotation, is injective, and excludes universe metavariables.",
+      "evidence": [
+        "LevelSemantics.lean",
+        "LevelLeanCorrespondence.lean"
+      ]
+    },
+    {
+      "id": "O-LVL-NORM",
+      "group": "universes",
+      "status": "OPEN_FORMAL_NATIVE_BRIDGE",
+      "statement": "PS normalize/isEquiv/geq correspond to exact Lean 4.33.1 native Level behavior on the no-mvar shared domain.",
+      "evidence": [
+        "30,000 pairs / 60,000 exact predicate comparisons, zero mismatch",
+        "historical v68 counterexample rejected by v69 and exact Lean"
+      ]
+    },
+    {
+      "id": "O-LVL-INST",
+      "group": "universes",
+      "status": "PROVED_FORMAL_PLUS_NATIVE_DIFFERENTIAL",
+      "statement": "v71 no-mvar universe-parameter substitution, including Lean-compatible cheap max/imax rebuilding, commutes with Core\u2192Lean translation at both level and shared-expression layers.",
+      "evidence": [
+        "LevelInstantiationV71.lean: instantiateParams_toLeanSpec (no sorryAx)",
+        "ExprLevelInstantiationV71.lean: instantiateLevelParams_toLeanSpec (no sorryAx)",
+        "1,000 level cases / 0 mismatches against exact Lean 4.33.1",
+        "1,000 shared-expression cases / 0 mismatches against exact Lean 4.33.1"
+      ]
+    },
+    {
+      "id": "O-EXPR-EMBED",
+      "group": "expressions",
+      "status": "PROVED_FORMAL",
+      "statement": "Shared Core expression constructors translate structurally to Lean expressions and remain in the declared shared domain.",
+      "evidence": [
+        "ExprTranslation.lean"
+      ]
+    },
+    {
+      "id": "O-EXPR-LIFT-INST1",
+      "group": "expressions",
+      "status": "PROVED_FORMAL_PLUS_NATIVE_DIFFERENTIAL",
+      "statement": "Positive de Bruijn lift and outer-binder instantiation commute with Core\u2192Lean structural translation; structural reference matches exact native Lean on pinned generated corpus.",
+      "evidence": [
+        "ExprOperations.lean",
+        "500 lift cases / 0 failures",
+        "500 instantiate1 cases / 0 failures"
+      ]
+    },
+    {
+      "id": "O-TYP",
+      "group": "typing",
+      "status": "PARTIAL_PROVED_ORDINARY_CONVERSION_PLUS_PROJECTION_FIELD_RULE",
+      "statement": "PS\u2192Lean typing refinement is machine-proved for Sort/BVar/Const/App/Lam/Pi/Let with ordinary conversion. Projection field reconstruction/Prop gating is separately proved Core\u2192Lean; integration with installed declaration metadata and the final native typing algorithm remains open.",
+      "evidence": [
+        "TypingDirect.lean: DirectTyping.typing_sound (no sorryAx)",
+        "TypingConversion.lean: ConversionTyping.typing_sound (no sorryAx)",
+        "1,000 TypeScript direct typing cases / 0 failures",
+        "1,000 exact Lean direct typing cases / 0 failures",
+        "1,000 TypeScript ordinary conversion-typing cases / 0 failures",
+        "1,000 exact Lean ordinary conversion-typing cases / 0 failures / 2,000 kernel checks",
+        "Projection.lean: fieldWalk_sound (no sorryAx)",
+        "1,000 TypeScript projection cases / 0 failures",
+        "1,000 exact raw-Lean projection cases / 0 failures / kernel checked"
+      ]
+    },
+    {
+      "id": "O-DEF",
+      "group": "defeq",
+      "status": "PARTIAL_PROVED_ORDINARY_EQ_PLUS_PROJECTION_RECURSOR_AND_QUOTIENT_IOTA",
+      "statement": "PS\u2192Lean refinement is machine-proved for the modeled ordinary equality fragment (beta/zeta/transparent-delta/application-head reduction, selected congruence, function eta, proof irrelevance, symmetry/transitivity). Projection iota, the direct non-indexed fields-first recursor iota/IH assembly, and Quot.lift/Quot.ind iota are separately proved structurally. Full indexed/mutual/nested recursor RHS correspondence, complete contextual closure, and the final exact native-defeq/implementation bridge remain open.",
+      "evidence": [
+        "ReductionBetaZeta.lean: beta/zeta correspondence (no sorryAx)",
+        "DeltaTransparency.lean: delta soundness/completeness/stuck equivalence (no sorryAx)",
+        "ReductionOrdinary.lean: finite ordinary reduction preservation (no sorryAx)",
+        "DefEqOrdinary.lean: etaExpansion_toLean + OrdinaryDefEq.sound (no sorryAx)",
+        "1,000 TypeScript eta/proof-irrelevance decisions / 0 failures",
+        "1,000 exact Lean eta/proof-irrelevance decisions / 0 failures / 2,000 kernel checks",
+        "prior beta/zeta/delta/ordinary-WHNF differential corpora remain clean",
+        "Projection.lean: iota_sound (no sorryAx)",
+        "RecursorDirect.lean: directIH_sound + iota_sound + kMajor_sound (no sorryAx)",
+        "exact recursor-K, fields-first minor-order/iota, and indexed-recursor regressions pass against Lean 4.33.1",
+        "Quotient.lean: iota_sound (no sorryAx)",
+        "500 TypeScript Quot.lift + 500 Quot.ind cases / 0 failures",
+        "500 exact Lean Quot.lift + 500 Quot.ind cases / 0 failures / 1,000 kernel checks"
+      ]
+    },
+    {
+      "id": "O-PROJ",
+      "group": "projections",
+      "status": "PARTIAL_PROVED_FIELD_WALK_IOTA_PLUS_NATIVE_DIFFERENTIAL",
+      "statement": "Dependency-aware raw projection field traversal, Prop-safety gating, and constructor iota preserve Core\u2192Lean translation. Remaining work is to prove installed declaration/constructor metadata lookup and native proposition classification satisfy the formal premises and to integrate projection into the whole typing/defeq relation.",
+      "evidence": [
+        "Projection.lean: hasLooseBVarAt_toLean, fieldWalk_sound, iota_sound (no sorryAx)",
+        "ProjectionConformanceExact.lean exact raw-kernel regression",
+        "1,000 TypeScript cases / 0 failures",
+        "1,000 exact Lean raw-kernel cases / 0 failures",
+        "historical v69 dependent-proof projection counterexample recorded"
+      ]
+    },
+    {
+      "id": "O-QUOT",
+      "group": "quotients",
+      "status": "PARTIAL_PROVED_METADATA_IOTA_READY_BATCH_PLUS_FRESH_NATIVE_ADMISSION",
+      "statement": "Quotient primitive metadata and Quot.lift/Quot.ind iota correspond structurally; canonical Eq/Eq.refl quotient readiness is preserved by the Core\u2192Lean environment translation; formed four-entry quotient installation commutes with translation; and actual fresh Lean .quotDecl matches shipped v71 on one positive plus four representative negative atomic-admission cases. Remaining formal work is a complete bidirectional admission theorem for all malformed/non-ready environments if full operational .quotDecl equivalence is required.",
+      "evidence": [
+        "Quotient.lean: name_eq, levelParams_eq, type_eq, kind_eq, iota_sound (no sorryAx)",
+        "DeclarationEnvironment.lean: quotReady_toLean and quotientBatch_preserves (no sorryAx)",
+        "DeclarationInductiveMetadata.lean: canonical Eq/Eq.refl metadata mapped to actual Lean.InductiveVal/ConstructorVal (no sorryAx)",
+        "fresh exact Lean .quotDecl: 1 positive / 4 negative / 0 failures / 4 atomic failures",
+        "fresh v71 quotient admission: same 1 positive / 4 negative / 0 failures / 4 atomic failures",
+        "4/4 fresh quotient primitive structural lines identical between shipped v71 and exact Lean 4.33.1",
+        "500 TypeScript Quot.lift + 500 Quot.ind computation cases / 0 failures",
+        "500 exact Lean Quot.lift + 500 Quot.ind computation cases / 0 failures / 1,000 kernel checks"
+      ]
+    },
+    {
+      "id": "O-DECL",
+      "group": "declarations",
+      "status": "PARTIAL_PROVED_ALL_FORMED_SAFE_ENVIRONMENT_PLUS_GENERIC_NONMUTUAL_CLASSIFIER_BOUNDARY",
+      "statement": "All already-formed safe ConstantInfo kinds used by the shared ProofScript core have an explicit Core\u2192actual-Lean environment image preserving installation, lookup, universe-instantiated constant types, and ordinary delta transparency where applicable. Fresh quotient admission, direct non-mutual inductive admission, parameterized/indexed direct inductive admission, generated recursor structure/iota, ordered non-mutual whole-environment installation, and the new generic raw-constructor admission boundary are cross-checked or proved against exact Lean 4.33.1. Remaining work is a complete generic non-mutual declaration admission theorem including the full normalizer/classifier implementation, then mutual/nested families and implementation correspondence.",
+      "evidence": [
+        "DeclarationOrdinary.lean: find_toLean, typeLookup_exact, directEnvSound, unfoldLookup_exact, deltaEnvExact (no sorryAx)",
+        "DeclarationInductiveMetadata.lean: formed Lean.InductiveVal/ConstructorVal correspondence + canonical Eq/Eq.refl model (no sorryAx)",
+        "DeclarationEnvironment.lean: ordinary/quotient/inductive/constructor entry translation, installMany_preserves, typeLookup_exact, directEnvSound, unfoldLookup_exact, deltaEnvExact, quotReady_toLean, quotientBatch_preserves (no sorryAx)",
+        "7 ordinary ConstantInfo structures line-for-line equal between shipped v71 and raw Lean.addDecl fixtures",
+        "1,000 ordinary universe-instantiated constant types expression-for-expression equal to exact Lean 4.33.1 / 1,000 kernel checks",
+        "duplicate ordinary declaration rejected by both implementations without replacing the existing entry",
+        "fresh exact Lean .quotDecl and v71 agree on 4 generated entries and 1 positive + 4 negative atomic admission cases",
+        "O-LVL-INST supplies the exact v71 universe-substitution theorem used by lookup",
+        "DeclarationRecursorMetadata.lean: formed Lean.RecursorVal correspondence + reduction-metadata correspondence (no sorryAx)",
+        "DeclarationEnvironment.lean: ordinary/quotient/inductive/constructor/recursor entry translation and exact lookup/type/delta environment relation (no sorryAx)",
+        "direct inductive native differential: 6 positive + 4 negative exact Lean.addDecl cases, 18 generated metadata structural lines, 0 mismatches, 4/4 atomic rejections",
+        "DeclarationRecursorMetadata.lean: formed Lean.RecursorVal/RecursorRule correspondence and connection to recursor metadata positions (no sorryAx)",
+        "DeclarationEnvironment.lean: ordinary/quotient/inductive/constructor/recursor entry translation with exact lookup/type/delta environment relation (no sorryAx)",
+        "InductiveDirectAdmissionNativeDifferential: 6 positive + 4 negative direct admission cases agree with exact Lean 4.33.1; all negative cases atomic; 18 generated metadata records match modulo generated recursor universe alpha-renaming",
+        "parameterized/indexed direct native differential: 6 positive + 6 negative exact Lean.addDecl cases, 19 generated metadata structural lines, 0 mismatches, 6/6 atomic rejections",
+        "RecursorIndexed.lean + indexed iota differential supply structural indexed-IH/iota correspondence and 6 exact extensional WHNF checks",
+        "InductiveNonMutualIntegration.lean discharges the integrated field and recursor extensional premises used before whole-environment induction",
+        "non-mutual integration differential composes the exact direct/indexed admission, field-universe, uniform-defeq and indexed-iota bridges with zero failures",
+        "generated non-mutual recursor packages have formal Core\u2192Lean type/minor/rule/iota image and are exact-differential clean on direct and indexed corpora",
+        "EnvironmentNonMutualInduction.lean: ordered package installation commutes with Core\u2192Lean environment translation; directEnvSound/deltaEnvExact/typeLookup/unfoldLookup survive installed non-mutual package sequences (no sorryAx)",
+        "kernel-nonmutual-environment-induction-tests.ts: ordinary + quotient + direct/indexed admission + non-mutual integration + generated recursor bridge components all pass against exact Lean 4.33.1",
+        "EnvironmentNonMutualInduction.lean: ordered package installation and lookup preservation (no sorryAx)",
+        "InductiveNonMutualGenericAdmission.lean: checker-produced generic packages preserve environment relation via the existing ordered package theorem (no sorryAx)",
+        "generic non-mutual admission bridge: inherited direct/indexed/generated-recursor/environment components, 0 failures",
+        "InductiveNonMutualClassifierCorrespondence.lean connects classifier-produced normalized packages to the existing whole-environment preservation theorem (no sorryAx)"
+      ]
+    },
+    {
+      "id": "O-IND",
+      "group": "inductives",
+      "status": "PARTIAL_PROVED_GENERIC_NONMUTUAL_ADMISSION_PLUS_DIRECT_TS_CLASSIFIER_IMPL_BRIDGE",
+      "statement": "The non-mutual generic admission theorem is connected to a classifier witness boundary, and the actual shipped TypeScript non-mutual classifier path is now source-slice audited and runtime-vector checked against that boundary. The bridge covers WHNF/defEq uniform-parameter matching, field-universe/Prop exemption, strict positivity including higher-order pointwise IH, indexed result/recursive occurrence rejection, generated recursor metadata/iota, and atomic rejection on the bounded non-mutual corpus. Remaining work is full formal semantics for every TypeScript implementation branch, complete non-mutual normalization/classifier totality over the declared domain, generic recursor construction beyond corpus witnesses, and mutual/nested inductives.",
+      "evidence": [
+        "DeclarationInductiveMetadata.lean: toLean_corresponds for formed Lean.InductiveVal/ConstructorVal and canonical Eq/Eq.refl (no sorryAx)",
+        "DeclarationEnvironment.lean: formed inductive/constructor entries participate in exact translated lookup/type/delta environment relation (no sorryAx)",
+        "RecursorMetadata.lean: firstMinorIdx_eq, firstIndexIdx_eq, majorIdx_eq, ruleKeys_eq, k_eq (no sorryAx)",
+        "RecursorDirect.lean: directIH_sound, iota_sound, kMajor_sound (no sorryAx)",
+        "7 direct raw-kernel recursor metadata shapes: exact Lean 4.33.1 and TypeScript normalized lines identical",
+        "kernel-recursor-k-tests.ts, kernel-recursor-minor-order-tests.ts, and kernel-indexed-recursors-tests.ts exact regressions pass",
+        "InductiveDirectAdmission.lean: containsConst_toLean, positiveField_sound, ctorShape_sound, nonrecursiveField_sound (no sorryAx)",
+        "DeclarationRecursorMetadata.lean: toLean_corresponds + metadata_corresponds for formed Lean.RecursorVal (no sorryAx)",
+        "exact Lean.addDecl direct-inductive differential: 6 positive + 4 negative / 0 failures / 4 atomic failures; 18 generated IND/CTOR/REC structural lines identical modulo recursor universe-parameter alpha-renaming",
+        "InductiveDirectAdmissionNativeDifferential: 6 positive + 4 negative direct raw-kernel admission cases, 4 atomic failures, 18 structural records, zero mismatches after positional alpha-normalization of generated recursor universe binders",
+        "DeclarationRecursorMetadata.lean + DeclarationEnvironment.lean: formed recursor ConstantInfo/RecursorRule environment image (no sorryAx)",
+        "InductiveIndexedAdmission.lean: mkApps_toLean, uniformParams_toLean, indexedResult_sound, indexedPositiveField_sound, indexedCtorBody_sound, parameterizedIndexedCtor_sound (no sorryAx)",
+        "exact Lean.addDecl parameterized/indexed direct differential: 6 positive + 6 negative / 0 failures / 6 atomic failures; 19 generated IND/CTOR/REC structural lines identical modulo generated recursor universe-parameter alpha-renaming",
+        "RecursorIndexed.lean: indexedIH_sound, indexedIota_sound, recursiveOccurrence_index_arity (no sorryAx)",
+        "indexed recursor computation differential: 6 exact v71 vs Lean 4.33.1 WHNF comparisons / 0 mismatches / 6 kernel checks",
+        "all six accepted indexed families have generated recursor type/metadata structural agreement; ProofScript procedural iota is compared extensionally rather than claiming identical stored Lean RecursorRule.rhs representation",
+        "InductiveNonMutualIntegration.lean: fieldUniverseOK_sound, uniformParamDefEq_sound, integratedField_sound, PSRecursorExtensionalSpec.toLean, PSNonMutualAdmissionSlice.toLean (no sorryAx)",
+        "kernel-inductive-nonmutual-integration-tests.ts: field-universe exact test, uniform-parameter defEq exact test, direct admission, indexed admission, and indexed iota all pass under Lean 4.33.1",
+        "constructor-field universe ceiling with Prop exception and exact Lean differential remains green",
+        "uniform-parameter definitional equality, indexed/higher-order iota, and exact Lean observations remain green",
+        "RecursorNonMutualGenerated.lean: recursor result, major-family application, type-spine, minor-type, rule-key/count, and generated package Core\u2192Lean theorems (no sorryAx)",
+        "kernel-recursor-nonmutual-generated-tests.ts: 37 direct+indexed generated structural records, 12 positive + 10 negative non-mutual admission cases, 10 atomic rejections, 6 indexed WHNF/iota checks, zero failures",
+        "v71-recursor-generated-formal27.out: 27 formal modules plus target statement, SORRYAX=0",
+        "EnvironmentNonMutualInduction.lean: generated recursor package obligations are preserved through ordered normalized non-mutual environment construction (no sorryAx)",
+        "InductiveNonMutualGenericAdmission.lean: raw constructor type -> checked generic constructor-body admission, genericCtorBody_sound, genericCtorAdmission_sound, genericNonMutualAdmission_sound (no sorryAx)",
+        "InductiveNonMutualGenericAdmission.lean: genericPackage_install_preserves and genericPackages_wholeEnvironment_sound connect checker-produced raw admission to the existing whole-environment theorem (no sorryAx)",
+        "kernel-inductive-nonmutual-generic-admission-tests.ts composes integrated admission, generated recursor, and whole-environment bridges; GENERIC_NONMUTUAL_ADMISSION_FAILURES=0",
+        "effective formal stack: inherited 28 modules plus the generic raw-admission module, target statement present, no reported sorryAx",
+        "InductiveNonMutualClassifierCorrespondence.lean: ctorWitness_to_genericAdmission, ctorClassifier_sound, familyClassifier_sound, classifier_rawAdmission_sound, classifierPackage_install_preserves, classifierPackages_wholeEnvironment_sound (no sorryAx)",
+        "classifier vector test: 5 accepted classifier-boundary families, 4 rejected malformed families, 1 Prop-exemption case, 3 WHNF/defEq uniform-parameter cases, 1 higher-order pointwise-IH case, 4/4 atomic rejections",
+        "classifier correspondence bridge composes generic admission, non-mutual integration, generated recursors, and whole-environment induction with exact Lean 4.33.1 evidence",
+        "TypeScriptClassifierImplementationContract.lean: implementation evidence contract for source audit + runtime trace + atomic rejection (no sorryAx)",
+        "kernel-inductive-nonmutual-ts-implementation-correspondence-tests.ts: audits 6 shipped TypeScript classifier/source functions and 46 source obligations with 0 missing obligations",
+        "TS classifier runtime sentinels: 5 accepted, 4 rejected, 4/4 atomic, 4 option sentinels, 0 failures",
+        "The direct TypeScript implementation bridge composes with the exact Lean-backed non-mutual classifier correspondence evidence (NONMUTUAL_CLASSIFIER_COMPONENTS=5 FAILURES=0)"
+      ]
+    },
+    {
+      "id": "O-RES",
+      "group": "resources",
+      "status": "OPEN_FORMAL",
+      "statement": "PS accept implies Lean accept; resource_exhausted is semantically neutral; Lean acceptance implies sufficient PS budget exists.",
+      "evidence": [
+        "v68 resource policy inherited through v69/v70 into v71"
+      ]
+    },
+    {
+      "id": "O-IMPL",
+      "group": "implementation",
+      "status": "PARTIAL_SOURCE_AUDITED_TS_NONMUTUAL_CLASSIFIER_IMPL_BRIDGE",
+      "statement": "The shipped TypeScript trusted checker is not fully proved equivalent to the formal checker model. However, the non-mutual inductive classifier path now has a direct implementation-correspondence bridge: source slices for checkAndAddDeclaration, checkSimpleInductive, checkIndexedInductive0, positiveRecursiveFieldType, checkConstructorFieldUniverse, and propEliminationMotivePolicy are fingerprinted and audited for the obligations that produce the formal classifier witness, and the exported checkAndAddDeclaration path is exercised by accepted/rejected/option-sentinel runtime vectors composed with exact Lean 4.33.1 evidence. Full O-IMPL still requires semantics for the restricted TypeScript TCB or extraction to a proof-oriented model.",
+      "evidence": [
+        "TypeScriptClassifierImplementationContract.lean: source/runtime implementation evidence contract compiles with no axioms beyond Lean defaults and no sorryAx",
+        "v71-ts-classifier-implementation-correspondence1.out: 6 source functions, 46 source obligations, 0 missing; source-slice hashes recorded",
+        "runtime vector evidence: 5 accepted, 4 rejected, 4/4 atomic rejections, 4 option sentinels, 0 failures",
+        "bridge result: TS_CLASSIFIER_IMPL_CORRESPONDENCE_FAILURES=0",
+        "claim boundary: this is a source-audited bounded implementation bridge, not full proof of every TypeScript branch or runtime semantics"
+      ]
+    }
+  ]
+}

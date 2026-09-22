@@ -1,0 +1,57 @@
+{
+  "checkpoint": "proofscript-v1-ka88-primitive-gcd-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.91",
+  "baseline": "proofscript-v1-ka87-primitive-arithmetic-recognizer-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 273,
+  "newFormalLean4LeanBridgeObligations": 1,
+  "baselineObligations": 272,
+  "countedObligations": [
+    "translated_checkNatGcd_wf"
+  ],
+  "redTestObserved": true,
+  "redTestReason": "KA88 test failed first on missing KA88 gate tool",
+  "noWrapperTimeoutCountedAsPassed": true,
+  "verificationCommandsPassed": [
+    "RED test first failed as expected on missing KA88 gate tool",
+    "npm install --offline --no-audit --no-fund",
+    "npm run build -- --pretty false",
+    "npm run test:pskernel:ka88",
+    "npm run assurance:ka88",
+    "npm run lean:ka88:check",
+    "npm run test:kernel:smoke",
+    "npm run test:standalone-small",
+    "npm run test:psc:kernel-status",
+    "npm run test:psc:conformance-bounded",
+    "npm run arena:corpus-preflight",
+    "npm run test:arena:static-nonperf",
+    "npm run test:arena:tutorial",
+    "TERM=xterm npm run verify:arena",
+    "npm pack --workspaces --ignore-scripts",
+    "sha256sum -c package SHA manifest"
+  ],
+  "npmPackages": {
+    "packed": 36,
+    "sha256Entries": 36,
+    "verification": "passed"
+  },
+  "freshExtract": {
+    "initialResidue": {
+      "node_modules": 0,
+      "dist": 0,
+      "tsbuildinfo": 0,
+      "tgz": 0,
+      "zip": 0
+    },
+    "install": "passed",
+    "build": "passed",
+    "focusedTest": "passed",
+    "softLeanCheck": "passed"
+  },
+  "finalZip": {
+    "integrity": "passed",
+    "sha256Verification": "passed",
+    "residue": 0
+  }
+}

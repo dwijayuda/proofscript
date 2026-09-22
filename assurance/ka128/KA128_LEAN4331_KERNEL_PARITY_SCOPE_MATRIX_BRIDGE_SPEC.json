@@ -1,0 +1,24 @@
+{
+  "checkpoint": "proofscript-v1-ka128-lean4331-kernel-parity-scope-matrix0",
+  "publicVersion": "1.0.0-pskernel.131",
+  "baseline": "proofscript-v1-ka127-executable-refinement-proof-carrying-artifact0",
+  "referenceKind": "lean4331-kernel-parity-scope-matrix",
+  "countedFormalObligations": 0,
+  "countedObligations": [],
+  "sourceTheorems": [
+    "Lean4Lean.PSKernelKA128.lean4331_kernel_parity_scope_matrix_marker"
+  ],
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "theoremDischargeClaim": false,
+    "executableDashboardStillClosed": true,
+    "proofCarryingArtifactStillVerifiedFromKA127": true,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

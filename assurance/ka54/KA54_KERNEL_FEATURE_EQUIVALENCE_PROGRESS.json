@@ -1,0 +1,41 @@
+{
+  "checkpoint": "proofscript-v1-ka54-executable-expression-translator-determinism-refinement0",
+  "publicVersion": "1.0.0-pskernel.57",
+  "featureSurfaceBridgeProgressPercent": 76,
+  "executableKernelEquivalenceProofProgressPercent": 41,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 151,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 147,
+    "newFormalLean4LeanBridgeObligations": 4,
+    "countedNewObligations": [
+      "translated_trExprS_unique_wf",
+      "translated_trExprS_unique_context_wf",
+      "translated_trExprS_eqv_transport_wf",
+      "translated_trExpr_eqv_transport_wf"
+    ]
+  },
+  "groups": [
+    {
+      "id": "expression-tags",
+      "progressPercent": 79,
+      "status": "TrExprS direct constructor surface plus determinism/eqv-transport bridge strict-checked; full executable translator refinement incomplete"
+    },
+    {
+      "id": "typechecker-whnf-defeq",
+      "progressPercent": 53,
+      "status": "WHNF/DefEq surface strict-checked; executable checker refinement incomplete"
+    },
+    {
+      "id": "end-to-end-refinement-spine",
+      "progressPercent": 35,
+      "status": "checker pipeline skeleton strict-checked; no end-to-end theorem yet"
+    },
+    {
+      "id": "architecture-health",
+      "progressPercent": 88,
+      "status": "no-spaghetti ratchet plus KA54 semantic-package touch guard"
+    }
+  ],
+  "notAFormalEquivalenceClaim": true
+}

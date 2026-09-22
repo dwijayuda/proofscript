@@ -1,0 +1,14 @@
+{
+  "checkpoint": "assurance/lean4331/CHECKPOINT_V71_K3TB_PUBLISH_PREFLIGHT1.json",
+  "checkpointSha256": "a7bfe1fe28d197703324ca6dbdf68ab558d89665206a0d1de6520ec645baad09",
+  "markdown": "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_K3TB_PUBLISH_PREFLIGHT1.md",
+  "markdownSha256": "5020a059db947b3cb66ca332735290e298b3dac624a3ea46ddae5fb98eab33c2",
+  "formal": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71K3TBPublishPreflight.lean",
+  "formalSha256": "6e7cf0065a94473565a72cd8a664440ba8c8efbf6007990ca0e411af490b150c",
+  "provenance": "RELEASE_PROVENANCE_K3TB.json",
+  "provenanceSha256": "f536073d7331942648bd19fbd117702d9ed3dd6867287eaf676a1c79398c619f",
+  "sbom": "SBOM_K3TB.json",
+  "sbomSha256": "2d6b88732d7b8151ded7d2f45637c5220b62ad891e8ddb59b63ca571904fc8ac",
+  "overclaimGuard": "PUBLISH_OVERCLAIM_GUARD_K3TB.json",
+  "overclaimGuardSha256": "4da334f5e69e7bd049de8a1ca5c27b7109c579bc6915ab45fde852387bd125d0"
+}

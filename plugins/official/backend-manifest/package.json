@@ -1,0 +1,15 @@
+{
+  "name": "@proofscript/backend-manifest",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "@proofscript/plugin-api": "0.1.0-dev.0"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}

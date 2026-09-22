@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka25-nondef-env-defeq-preservation-bridge0",
+  "baseline": "proofscript-v1-ka24-nondef-env-no-overwrite-bridge0",
+  "newFormalLean4LeanBridgeObligations": 3,
+  "formalLean4EquivalenceProvenObligations": 35,
+  "provenLeanTheoremObligations": [
+    "PSKernelKA25.translated_theorem_preserves_existing_defeq",
+    "PSKernelKA25.translated_theorem_preserves_existing_and_adds_new_defeq",
+    "PSKernelKA25.translated_opaque_preserves_existing_defeq"
+  ],
+  "stillOpen": [
+    "Executable PSKernel refinement proof against Lean4Lean declaration checking",
+    "Definitional-equality soundness for PSKernel computation rules",
+    "Inductive and mutual-inductive translation soundness",
+    "Quotient semantic soundness",
+    "Full Lean 4 equivalence",
+    "Same-theory proof with full Lean 4"
+  ]
+}

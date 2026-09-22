@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 1,
+  "release": "P5.94",
+  "trustClaim": {
+    "label": "K3-TB trusted-boundary",
+    "fullyFormalK3": false,
+    "lean4Equivalent": false,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "summary": "K3-TB trusted-boundary only; not fully formal K3 and not proven equivalent to Lean 4."
+  },
+  "purpose": "Make the formal proof roadmap explicit, auditable, and impossible to silently overclaim while the project remains K3-TB trusted-boundary.",
+  "requiredDocs": [
+    "docs/PRODUCTION_PROOF_OBLIGATION_LEDGER.md",
+    "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+    "docs/PROOF_OBLIGATIONS.md",
+    "VERIFY_K3TB.md"
+  ],
+  "states": {
+    "open": "No formal proof artifact exists yet. Engineering tests may exist, but the obligation is not proven.",
+    "evidence-only": "Regression or audit evidence exists, but no accepted formal proof artifact exists.",
+    "blocked-external-lean": "The obligation needs a pinned Lean executable or exported Lean artifact to check.",
+    "proved": "A formal proof artifact exists and is checked by a required command. No P5.6 formal Lean-equivalence obligations are in this state."
+  },
+  "rules": {
+    "formalLean4EquivalenceRequiresAllRequiredObligationsProved": true,
+    "provedObligationsNeedProofArtifacts": true,
+    "provedObligationsNeedVerificationCommands": true,
+    "engineeringEvidenceDoesNotCountAsFormalProof": true,
+    "allowedCurrentClaims": [
+      "not-proven",
+      "engineering-evidence-only",
+      "trusted-boundary",
+      "blocked-on-lean-oracle"
+    ]
+  },
+  "canonicalFormalObligations": [
+    "kernel-lean4-equivalence",
+    "core-type-soundness",
+    "elaborator-elaboration-soundness",
+    "stdlib-bootstrap-soundness",
+    "backend-semantic-preservation",
+    "runtime-observable-semantics",
+    "artifact-replay-soundness",
+    "feature-proof-obligation-coverage"
+  ],
+  "obligations": [
+    {
+      "id": "kernel-lean4-equivalence",
+      "title": "TS K3-TB kernel accepts exactly the intended Lean-compatible Core fragment",
+      "area": "kernel",
+      "requiredForFormalLean4Equivalence": true,
+      "state": "open",
+      "currentClaim": "not-proven",
+      "evidenceFiles": [
+        "packages/kernel/src/index.ts",
+        "docs/KERNEL_COVERAGE.md",
+        "docs/PSKERNEL_TS_PROOF_OBLIGATIONS.json",
+        "AUDIT_K3TB.md"
+      ],
+      "verificationCommands": [
+        "test:kernel:smoke",
+        "test:v71:trusted-boundary-k3-decision"
+      ],
+      "nextProofWork": [
+        "Define the Core fragment semantics formally.",
+        "Map every K3-TB kernel rule to the pinned Lean kernel/reference rule.",
+        "Replace evidence-only classifier/certificate checks with checked formal proofs."
+      ]
+    },
+    {
+      "id": "core-type-soundness",
+      "title": "Checked Core typing rules preserve type soundness for the supported fragment",
+      "area": "core",
+      "requiredForFormalLean4Equivalence": true,
+      "state": "open",
+      "currentClaim": "not-proven",
+      "evidenceFiles": [
+        "packages/kernel/src/index.ts",
+        "docs/PROOF_OBLIGATIONS.md"
+      ],
+      "verificationCommands": [
+        "test:kernel:smoke"
+      ],
+      "nextProofWork": [
+        "Prove state preservation/progress or equivalent kernel consistency theorem for the explicit Core fragment.",
+        "Prove substitution, weakening, and reduction lemmas for Core."
+      ]
+    },
+    {
+      "id": "elaborator-elaboration-soundness",
+      "title": "Parser/elaborator output has the same meaning as the accepted surface program",
+      "area": "elaborator",
+      "requiredForFormalLean4Equivalence": true,
+      "state": "evidence-only",
+      "currentClaim": "engineering-evidence-only",
+      "evidenceFiles": [
+        "packages/elaborator/src/index.ts",
+        "packages/elaborator/src/proofElaborator.ts",
+        "packages/elaborator/src/matchElaborator.ts",
+        "packages/elaborator/src/inductiveElaborator.ts",
+        "packages/elaborator/src/globalEnvironment.ts",
+        "tools/elaborator-proof-extraction-tests.ts",
+        "tools/elaborator-match-extraction-tests.ts",
+        "tools/elaborator-environment-extraction-tests.ts"
+      ],
+      "verificationCommands": [
+        "test:elaborator:proof-extraction",
+        "test:elaborator:match-extraction",
+        "test:elaborator:environment-extraction"
+      ],
+      "nextProofWork": [
+        "Specify each elaborator lowering rule from syntax to Core.",
+        "Prove generated Core has the intended type and denotation for each supported source construct."
+      ]
+    },
+    {
+      "id": "stdlib-bootstrap-soundness",
+      "title": "Checked bootstrap declarations faithfully implement PSC-1 primitive library semantics",
+      "area": "stdlib",
+      "requiredForFormalLean4Equivalence": true,
+      "state": "evidence-only",
+      "currentClaim": "engineering-evidence-only",
+      "evidenceFiles": [
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/std/bootstrap-manifest.json",
+        "tools/k1d-foundation-tests.ts",
+        "tools/pslive-option-flatten-tests.ts",
+        "docs/reports/p5/PRODUCTION_P5_51_OPTION_FLATTEN_FEATURE_REPORT.md"
+      ],
+      "verificationCommands": [
+        "test:standalone-small",
+        "test:pslive:option-flatten"
+      ],
+      "nextProofWork": [
+        "Formalize Nat/Bool/Eq bootstrap semantics.",
+        "Prove bootstrap artifact regeneration is deterministic and corresponds to the source."
+      ]
+    },
+    {
+      "id": "backend-semantic-preservation",
+      "title": "TypeScript/JavaScript emission preserves observable executable Core semantics",
+      "area": "backend",
+      "requiredForFormalLean4Equivalence": true,
+      "state": "evidence-only",
+      "currentClaim": "engineering-evidence-only",
+      "evidenceFiles": [
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/backend-typescript/src/moduleEmitter.ts",
+        "tools/backend-typescript-extraction-tests.ts",
+        "tools/pslive-build-ts-tests.ts",
+        "tools/pslive-option-flatten-tests.ts"
+      ],
+      "verificationCommands": [
+        "test:backend-typescript:extraction",
+        "test:pslive:build-ts",
+        "test:pslive:option-flatten"
+      ],
+      "nextProofWork": [
+        "Define observable semantics for executable Core.",
+        "Prove each emitted JS/TS expression refines the Core evaluator semantics under the stated runtime assumptions."
+      ]
+    },
+    {
+      "id": "runtime-observable-semantics",
+      "title": "Runtime helpers implement the declared executable semantics for Nat, Bool, structures, and inductives",
+      "area": "runtime",
+      "requiredForFormalLean4Equivalence": true,
+      "state": "evidence-only",
+      "currentClaim": "engineering-evidence-only",
+      "evidenceFiles": [
+        "packages/runtime/src/nat.ts",
+        "packages/runtime/src/bool.ts",
+        "packages/runtime/src/structures.ts",
+        "tools/runtime-extraction-tests.ts",
+        "tools/pslive-option-flatten-tests.ts"
+      ],
+      "verificationCommands": [
+        "test:runtime:extraction",
+        "test:pslive:language-fast",
+        "test:pslive:option-flatten"
+      ],
+      "nextProofWork": [
+        "Write a formal runtime model for JavaScript/TypeScript observable values used by PSC-1.",
+        "Prove runtime helper equations match checked bootstrap equations."
+      ]
+    },
+    {
+      "id": "artifact-replay-soundness",
+      "title": ".pscore artifacts and certificates replay to the same checked declarations",
+      "area": "artifacts",
+      "requiredForFormalLean4Equivalence": true,
+      "state": "evidence-only",
+      "currentClaim": "trusted-boundary",
+      "evidenceFiles": [
+        "packages/kernel-codec/src/index.ts",
+        "packages/certificates/src/index.ts",
+        "packages/verifier/src/index.ts",
+        "docs/PSKERNEL_TS_DELIVERY_VERIFICATION.json"
+      ],
+      "verificationCommands": [
+        "test:standalone-small",
+        "test:kernel:smoke"
+      ],
+      "nextProofWork": [
+        "Specify artifact encoding as an injective representation of Core.",
+        "Prove verifier replay is independent of parser/elaborator behavior."
+      ]
+    },
+    {
+      "id": "feature-proof-obligation-coverage",
+      "title": "Every supported feature records its proof/kernel/backend/runtime obligation story",
+      "area": "governance",
+      "requiredForFormalLean4Equivalence": true,
+      "state": "evidence-only",
+      "currentClaim": "trusted-boundary",
+      "evidenceFiles": [
+        "config/feature-promotion-gate.json",
+        "tools/check-feature-promotion.ts",
+        "docs/PRODUCTION_FEATURE_PROMOTION_GATE.md",
+        "tools/feature-proof-obligation-linkage-tests.ts",
+        "docs/reports/p5/PRODUCTION_P5_51_OPTION_FLATTEN_FEATURE_REPORT.md"
+      ],
+      "verificationCommands": [
+        "test:feature-promotion",
+        "test:architecture:feature-promotion",
+        "test:feature-proof-obligation-linkage",
+        "test:pslive:option-flatten"
+      ],
+      "nextProofWork": [
+        "Require every supported feature to list proofObligationIds linked to this ledger.",
+        "Require each new kernel-impacting feature to link to a concrete formal theorem or open proof obligation.",
+        "Promote engineering evidence to formal artifacts feature by feature."
+      ]
+    },
+    {
+      "id": "lean-oracle-correspondence-corpus",
+      "title": "Supported examples are cross-checked against pinned Lean when available",
+      "area": "lean-oracle",
+      "requiredForFormalLean4Equivalence": false,
+      "state": "evidence-only",
+      "currentClaim": "engineering-evidence-only",
+      "evidenceFiles": [
+        "docs/LEAN_4_33_1_DIFFERENTIAL_PROTOCOL.md",
+        "tools/lean-differential.ts",
+        "tools/kernel-nonmutual-recursor-defeq0-tests.ts",
+        "tools/kernel-inductive-nonmutual-ts-implementation-correspondence-tests.ts",
+        "assurance/lean4331/evidence/v71-k3tb-one-command-local-merged.out"
+      ],
+      "verificationCommands": [
+        "test:differential:if-available",
+        "test:kernel:reference:if-available",
+        "verify:k3tb:publish"
+      ],
+      "nextProofWork": [
+        "Pin Lean executable path and version in CI.",
+        "Expand paired ProofScript/Lean corpus for all supported PSC-1 features."
+      ]
+    },
+    {
+      "id": "toolchain-tcb-minimization",
+      "title": "The trusted computing base remains small and independent of product/runtime/plugin layers",
+      "area": "architecture",
+      "requiredForFormalLean4Equivalence": false,
+      "state": "evidence-only",
+      "currentClaim": "trusted-boundary",
+      "evidenceFiles": [
+        "config/package-classification.json",
+        "tools/check-boundaries.ts",
+        "tools/check-package-classification.ts",
+        "docs/PRODUCTION_PACKAGE_CLASSIFICATION.md"
+      ],
+      "verificationCommands": [
+        "test:architecture",
+        "test:package-classification"
+      ],
+      "nextProofWork": [
+        "Separate an independently auditable kernel/verifier release artifact.",
+        "Document exactly what must be trusted to verify a .pscore file without the compiler frontend."
+      ]
+    }
+  ]
+}

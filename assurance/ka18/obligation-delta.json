@@ -1,0 +1,41 @@
+{
+  "checkpoint": "proofscript-v1-ka18-env-no-overwrite-bridge0",
+  "baseline": "proofscript-v1-ka17-env-lookup-bridge0",
+  "closedSinceKA17": [
+    "Import Lean4Lean.Theory.Typing.Env and use the real Lean4Lean VEnv.addConst definition directly.",
+    "Machine-check that successful addConst implies the added name was fresh in the input environment.",
+    "Machine-check that successful addConst preserves all pre-existing lookups at names other than the added name.",
+    "Lift those facts to translated PSKernel axiom and definition declarations.",
+    "Preserve the inherited inductive/mutual-inductive blocking theorem."
+  ],
+  "provenLeanTheoremObligations": [
+    "PSKernelKA13.translated_axiom_vdecl_wf",
+    "PSKernelKA13.translated_definition_vdecl_wf",
+    "PSKernelKA15.translated_axiom_env_wf",
+    "PSKernelKA15.translated_definition_env_wf",
+    "PSKernelKA16.translated_axiom_env_extends",
+    "PSKernelKA16.translated_definition_env_extends",
+    "PSKernelKA17.translated_axiom_env_lookup",
+    "PSKernelKA17.translated_definition_env_lookup",
+    "PSKernelKA17.translated_definition_env_defeq_member",
+    "PSKernelKA18.translated_axiom_fresh_before_add",
+    "PSKernelKA18.translated_definition_fresh_before_add",
+    "PSKernelKA18.translated_axiom_preserves_other_lookup",
+    "PSKernelKA18.translated_definition_preserves_other_lookup"
+  ],
+  "newInKA18": [
+    "PSKernelKA18.translated_axiom_fresh_before_add",
+    "PSKernelKA18.translated_definition_fresh_before_add",
+    "PSKernelKA18.translated_axiom_preserves_other_lookup",
+    "PSKernelKA18.translated_definition_preserves_other_lookup"
+  ],
+  "stillOpen": [
+    "The executable TypeScript PSKernel checker is not yet refined to these Lean4Lean premises.",
+    "The theorem/example/opaque/quot cases are not yet bridged to VDecl.WF/VEnv.WF/VEnv.LE/VEnv lookup/no-overwrite facts in KA-18.",
+    "Definitional equality soundness against Lean4Lean.TypeChecker remains open.",
+    "Inductive/mutual/nested inductive soundness remains outside KA-18.",
+    "Full Lean 4 equivalence and same-theory claims remain false."
+  ],
+  "formalLean4EquivalenceProvenObligations": 13,
+  "formalObligationBoundary": "These are conditional VDecl.WF, VEnv.WF, VEnv.LE, VEnv lookup-membership, and VEnv addConst no-overwrite bridge lemmas for the direct Lean4Lean reference model only; they are not a full PSKernel executable refinement proof."
+}

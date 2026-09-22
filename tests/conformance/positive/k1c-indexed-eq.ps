@@ -1,0 +1,15 @@
+universe u;
+
+inductive Eq(A: Sort u, a: A): A → Prop {
+  | refl: Eq(A, a, a);
+}
+
+theorem eqRefl(A: Type, a: A): Eq.{1}(A, a, a) := Eq.refl.{1}(A, a);
+
+theorem eqRecRefl(
+  A: Type,
+  a: A,
+  P: ∀ (b: A), Eq.{1}(A, a, b) → Prop,
+  h: P(a, Eq.refl.{1}(A, a))
+): P(a, Eq.refl.{1}(A, a)) :=
+  @Eq.rec.{0, 1}(A, a, P, h, a, Eq.refl.{1}(A, a));

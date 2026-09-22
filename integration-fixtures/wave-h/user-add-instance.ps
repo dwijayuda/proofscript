@@ -1,0 +1,15 @@
+instance weirdAdd: Add(Nat) := {
+  add := fun (x: Nat) (y: Nat) => x
+};
+
+def result: Nat := {
+  2 + 3
+}
+
+def useAgain(x: Nat, y: Nat): Nat := {
+  x + y
+}
+
+def resultAgain: Nat := {
+  useAgain(7, 9)
+}

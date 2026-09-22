@@ -1,0 +1,99 @@
+{
+  "schema": "proofscript-pskernel-ts-kernel-tarball-smoke/v1",
+  "status": "accepted",
+  "proofStatus": "not-proven",
+  "trustLabel": "trusted-boundary standalone kernel; not fully formally equivalent to Lean 4 yet",
+  "semanticBaseline": "Lean 4.33.1",
+  "pinnedLeanRevision": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "checkCount": 8,
+  "requiredFailureCount": 0,
+  "checks": [
+    {
+      "id": "local.dist.index-js",
+      "status": "accepted",
+      "message": "Built JS entrypoint exists before packing",
+      "details": {}
+    },
+    {
+      "id": "local.dist.index-dts",
+      "status": "accepted",
+      "message": "Built declaration entrypoint exists before packing",
+      "details": {}
+    },
+    {
+      "id": "pack.tarball.exists",
+      "status": "accepted",
+      "message": "npm pack produced an installable tarball",
+      "details": {
+        "filename": "proofscript-kernel-0.1.0-dev.0.tgz",
+        "bytes": 182980
+      }
+    },
+    {
+      "id": "pack.entrypoints",
+      "status": "accepted",
+      "message": "Tarball manifest includes dist entrypoints",
+      "details": {}
+    },
+    {
+      "id": "pack.evidence-docs",
+      "status": "accepted",
+      "message": "Tarball manifest includes trust-boundary, proof-obligation, release-archive, delivery-bootstrap, and delivery-archive evidence",
+      "details": {}
+    },
+    {
+      "id": "install.entrypoint.exists",
+      "status": "accepted",
+      "message": "Fresh install exposes dist/index.js",
+      "details": {}
+    },
+    {
+      "id": "install.docs.exists",
+      "status": "accepted",
+      "message": "Fresh install exposes package trust-boundary docs",
+      "details": {}
+    },
+    {
+      "id": "runtime.api-smoke",
+      "status": "accepted",
+      "message": "Installed tarball runtime API smoke accepted",
+      "details": {
+        "status": "accepted",
+        "proofStatus": "not-proven",
+        "semanticSha256": "8ac3f5f2643415b4e4bfa0344fe0ee065b330f04e584ca390aca512c28c55ac4",
+        "certificateSemanticSha256": "8ac3f5f2643415b4e4bfa0344fe0ee065b330f04e584ca390aca512c28c55ac4",
+        "obligations": 56,
+        "exportedKeys": 174
+      }
+    }
+  ],
+  "packed": {
+    "status": "accepted",
+    "id": "@proofscript/kernel@0.1.0-dev.0",
+    "filename": "proofscript-kernel-0.1.0-dev.0.tgz",
+    "tarballPath": "../../../tmp/p50tar-docs2/proofscript-kernel-0.1.0-dev.0.tgz",
+    "tarballFilename": "proofscript-kernel-0.1.0-dev.0.tgz",
+    "tarballSha256": "62a7f54ba9650da86e22d2b793fec368fb77cc78098d8db919cf9190bd61068c",
+    "fileCount": 479,
+    "filesSha256": "1b7b3f6bfc763048694fc37549a8aad61ce37e59689bfb462f46c214fa98f245",
+    "size": 182980,
+    "unpackedSize": 1038957
+  },
+  "install": {
+    "status": "accepted",
+    "path": "<temporary-install-root>",
+    "nodeModulesEntrypoint": "node_modules/@proofscript/kernel/dist/index.js",
+    "installCommand": "npm install --ignore-scripts --no-audit --no-fund proofscript-kernel-0.1.0-dev.0.tgz",
+    "installOutput": "redacted-for-determinism"
+  },
+  "runtime": {
+    "status": "accepted",
+    "proofStatus": "not-proven",
+    "semanticSha256": "8ac3f5f2643415b4e4bfa0344fe0ee065b330f04e584ca390aca512c28c55ac4",
+    "certificateSemanticSha256": "8ac3f5f2643415b4e4bfa0344fe0ee065b330f04e584ca390aca512c28c55ac4",
+    "obligations": 56,
+    "exportedKeys": 174
+  },
+  "tarballSmokeSha256": "5ee396e4a581d2a2949bb41a5518527ea79c08a843db7dfa7dbe96c48e9e1424"
+}

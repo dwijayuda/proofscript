@@ -1,0 +1,90 @@
+{
+  "checkpoint": "proofscript-v1-ka34-mutual-def-env-bridge0",
+  "publicVersion": "1.0.0-pskernel.37",
+  "baseline": "proofscript-v1-ka33-inductive-env-bridge0",
+  "requiredCommands": [
+    {
+      "command": "npm install --offline --no-audit --no-fund",
+      "status": "passed"
+    },
+    {
+      "command": "npm run build -- --pretty false",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:pskernel:ka34",
+      "status": "passed"
+    },
+    {
+      "command": "npm run assurance:ka34",
+      "status": "passed"
+    },
+    {
+      "command": "npm run lean:ka34:check",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:psc:kernel-status",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:psc:conformance-bounded",
+      "status": "passed"
+    },
+    {
+      "command": "npm run arena:corpus-preflight",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:arena:static-nonperf",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:arena:tutorial",
+      "status": "passed"
+    },
+    {
+      "command": "npm run verify:arena",
+      "status": "passed"
+    },
+    {
+      "command": "fresh extract install/build/test:pskernel:ka34/lean:ka34:check",
+      "status": "passed"
+    },
+    {
+      "command": "unzip -t final ZIP",
+      "status": "passed"
+    },
+    {
+      "command": "sha256sum -c final SHA file",
+      "status": "passed_after_packaging"
+    }
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "mutualDefinitionSemanticSoundness": false,
+    "formalLean4EquivalenceProvenObligations": 66
+  },
+  "note": "KA-34 is a conditional direct Lean4Lean mutual-definition environment bridge only. It does not prove executable mutual recursion checking, WHNF/defeq behavior, or full Lean equivalence.",
+  "arena": {
+    "corpusNdjsonCount": 190,
+    "staticNonPerf": "26/26 decisive, 4 good accepted, 22 bad rejected",
+    "tutorial": "140/140 decisive, 93 good accepted, 47 bad rejected",
+    "verifyArena": "passed"
+  },
+  "freshExtract": "passed"
+}

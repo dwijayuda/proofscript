@@ -1,0 +1,8 @@
+structure PairNat {
+  left: Nat;
+  right: Nat;
+}
+def bad: PairNat := {
+  let x := { left := Nat.zero, right := Nat.zero };
+  x
+}

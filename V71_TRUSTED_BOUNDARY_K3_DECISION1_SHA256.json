@@ -1,0 +1,13 @@
+{
+  "artifact": "V71_TRUSTED_BOUNDARY_K3_DECISION1",
+  "checkpoint": "assurance/lean4331/CHECKPOINT_V71_TRUSTED_BOUNDARY_K3_DECISION1.json",
+  "checkpointSha256": "48b72544ac83cc6746925a32e118076c015f28567865d39690e037e14f0fec0a",
+  "markdown": "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_TRUSTED_BOUNDARY_K3_DECISION1.md",
+  "markdownSha256": "5471a1f306aec235feaf54d649f1c378557c5abfcd655bcb1ea25e407026558e",
+  "formalSource": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71TrustedBoundaryK3Decision.lean",
+  "formalSourceSha256": "d9a6a020d31d031345d894f311468d8b34db28f357c07ef3127bc6ab07c8596e",
+  "formalLog": "assurance/lean4331/evidence/v71-trusted-boundary-k3-decision-formal1.out",
+  "formalLogSha256": "bf07c78488ddd1f25df0f3d93a37598986c5f394917521570b9c70737f8f1c1c",
+  "formalStackHash": "d1221ca3d5323ae554a8224282238d75a1fe447a305b0fe2a744579872d0be24",
+  "checkpointLedgerHash": "33bb9aa7740d5f9f6d00425c524b051f7dcc66412a7f05ba367939a07297c17a"
+}

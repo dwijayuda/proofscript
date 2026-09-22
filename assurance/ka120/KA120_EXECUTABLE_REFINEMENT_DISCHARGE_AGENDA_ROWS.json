@@ -1,0 +1,59 @@
+{
+  "agendaPercent": 100,
+  "rows": [
+    {
+      "id": "statement-shape",
+      "status": "ready",
+      "evidence": "final executable-refinement theorem statement shape is identified from KA115 skeleton",
+      "ready": true
+    },
+    {
+      "id": "source-artifact-domain",
+      "status": "ready",
+      "evidence": "source artifact families are indexed by KA117 module map",
+      "ready": true
+    },
+    {
+      "id": "target-artifact-domain",
+      "status": "ready",
+      "evidence": "target executable artifact families are coverage-mapped by KA118",
+      "ready": true
+    },
+    {
+      "id": "proof-precondition-set",
+      "status": "ready",
+      "evidence": "preconditions are closed by KA116 dependency closure and KA119 readiness",
+      "ready": true
+    },
+    {
+      "id": "bridge-obligation-total",
+      "status": "ready",
+      "evidence": "formal Lean4Lean bridge total remains audited at 366",
+      "ready": true
+    },
+    {
+      "id": "claim-boundary",
+      "status": "ready",
+      "evidence": "full Lean4 equivalence, fully formal K3, and executable refinement proof remain explicitly unclaimed",
+      "ready": true
+    },
+    {
+      "id": "discharge-order",
+      "status": "ready",
+      "evidence": "remaining theorem discharge order is specified without touching trusted semantics",
+      "ready": true
+    },
+    {
+      "id": "release-evidence",
+      "status": "ready",
+      "evidence": "build, focused gate, Lean marker, Arena evidence, package SHAs, fresh extract, ZIP, and SHA are required by the release process",
+      "ready": true
+    }
+  ],
+  "counts": {
+    "total": 8,
+    "ready": 8,
+    "notReady": 0
+  },
+  "evidenceMeaning": "the discharge agenda records the next proof-discharge map; it is not the discharged executable refinement theorem"
+}

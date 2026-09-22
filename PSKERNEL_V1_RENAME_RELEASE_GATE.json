@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-pskernel-rename0",
+  "status": "FROZEN",
+  "publicVersion": "1.0.0-pskernel.0",
+  "baseline": "proofscript-software-profile-v0-p5-104-kernel-status-truth0.zip",
+  "kernelSemanticsChanged": false,
+  "kernelCodecChanged": false,
+  "verifierCertificatesSemanticChange": false,
+  "newTrustedComputationRule": false,
+  "coreArtifactFormatCompatibility": 71,
+  "oldKernelLabelRemaining": {
+    "pathHits": 0,
+    "textHits": 0
+  },
+  "tests": {
+    "installOffline": "passed",
+    "build": "passed",
+    "renameTest": "passed",
+    "kernelStatus": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "crudTemplate": "passed",
+    "runtimeImportCrud": "passed",
+    "conformanceBounded": "passed",
+    "arenaSmoke": "passed",
+    "arenaTutorialHarness": "passed"
+  },
+  "arena": {
+    "freshFullArenaCorpusRun": "not_run_missing_/mnt/data/arena-corpus-20260915",
+    "staticRunnerExit": "passed_but_not_real_corpus_pass",
+    "staticNotRun": 26,
+    "tutorialRunnerExit": "passed_but_not_real_corpus_pass",
+    "tutorialNotRun": 140,
+    "verifyArena": "failed_missing_external_fixture_corpus",
+    "historicalArenaEvidencePreservedInBundledReports": true
+  },
+  "notClaimed": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "freshExactLeanDifferential": false,
+    "freshFullArenaPass": false
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "checkpoint": "proofscript-v1-ka144-state-model-descriptor0",
+  "version": "1.0.0-pskernel.147",
+  "base": "proofscript-v1-ka143-architecture-extraction0",
+  "progress": {
+    "smallProgrammingLanguage": 0.58,
+    "theoremProverSurface": 0.31,
+    "formalVerificationContracts": 0.68,
+    "runtimeCertificateCorrespondence": 0.43,
+    "typescriptRuntimeAlpha": 0.42,
+    "overallConservativeDashboard": 0.891
+  },
+  "implementedInKa144": [
+    "@proofscript/state-models package",
+    "proofscript.state-model.v1 descriptor validation",
+    "psc state-model validate command",
+    "monadic/stateful contract detection",
+    "required --state-model fail-closed gate",
+    "state-model-bound monadic contract artifacts",
+    "monadic.operation.spec and monadic.ensures structural obligations",
+    "software-alpha monadic contract example"
+  ],
+  "boundaries": {
+    "vcgenConnected": false,
+    "monadicProofDischarge": false,
+    "semanticLoopProofDischarge": false,
+    "fullLean4Equivalence": false,
+    "fullyFormalK3": false
+  }
+}

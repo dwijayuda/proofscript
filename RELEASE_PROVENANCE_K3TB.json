@@ -1,0 +1,44 @@
+{
+  "release": "ProofScript Kernel v71 K3-TB Practical Release Candidate 1",
+  "releaseId": "proofscript-kernel-v71-k3tb-publish-preflight1",
+  "parentReleaseId": "proofscript-kernel-v71-k3tb-practical-release1",
+  "label": "K3-TB",
+  "status": "PUBLISH_PREFLIGHT_NOT_FULLY_FORMAL_K3",
+  "progress": {
+    "percent": 99.5,
+    "basisPoints": 9950,
+    "kind": "engineering-track"
+  },
+  "createdAtUtc": "2026-09-10T07:30:00Z",
+  "lean": {
+    "semanticBaseline": "4.33.1",
+    "releaseCommit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "node": {
+    "engine": ">=20",
+    "packageManager": "npm@10"
+  },
+  "package": {
+    "name": "proofscript-monorepo",
+    "private": true,
+    "version": "0.1.0-production-p6.19-k3tb-one-command-doctor-guard"
+  },
+  "verification": {
+    "oneCommand": "PROOFSCRIPT_LEAN_BIN=/path/to/lean npm run verify:k3tb:publish",
+    "requiresOfflineInstall": "npm install --offline --ignore-scripts",
+    "expectedStatus": "K3TB_PUBLISH_PREFLIGHT_VERIFY_STATUS=PASS",
+    "expectedBoundary": "K3TB_PUBLISH_PREFLIGHT_VERIFY_BOUNDARY=PUBLISH_PREFLIGHT_NOT_FULLY_FORMAL_K3",
+    "defaultConsistencyGuard": "npm run test:v71:k3tb-default-consistency"
+  },
+  "sourceArtifacts": {
+    "practicalReleaseCheckpoint": "assurance/lean4331/CHECKPOINT_V71_K3TB_PRACTICAL_RELEASE1.json",
+    "independentAuditPackCheckpoint": "assurance/lean4331/CHECKPOINT_V71_K3TB_INDEPENDENT_AUDIT_PACK1.json",
+    "fullLeanGate": "assurance/lean4331/FINAL_VALIDATION_V71_FULL_LEAN_GATE.json"
+  },
+  "forbiddenPublicationClaims": [
+    "fully formal K3",
+    "complete Lean kernel equivalence",
+    "verified TypeScript/Node runtime semantics",
+    "arbitrary Lean acceptance completeness"
+  ]
+}

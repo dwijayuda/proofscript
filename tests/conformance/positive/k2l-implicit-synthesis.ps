@@ -1,0 +1,7 @@
+def iid{A: Type}(x: A): A := { x }
+def sid⦃A: Type⦄(x: A): A := { x }
+def useNat(n: Nat): Nat := { iid(n) }
+def useStrictNat(n: Nat): Nat := { sid(n) }
+def useBool(b: Bool): Bool := { iid(b) }
+theorem useNatComputes(n: Nat): useNat(n) = n := Eq.refl.{1}(Nat, n);
+theorem useStrictComputes(n: Nat): useStrictNat(n) = n := Eq.refl.{1}(Nat, n);

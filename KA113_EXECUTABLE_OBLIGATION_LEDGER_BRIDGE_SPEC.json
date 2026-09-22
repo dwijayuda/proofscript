@@ -1,0 +1,21 @@
+{
+  "checkpoint": "proofscript-v1-ka113-executable-obligation-ledger0",
+  "publicVersion": "1.0.0-pskernel.116",
+  "baseline": "proofscript-v1-ka112-executable-equivalence-progress0",
+  "referenceKind": "executable-obligation-ledger-audit",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 0,
+  "countedObligations": [],
+  "sourceTheorems": [],
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

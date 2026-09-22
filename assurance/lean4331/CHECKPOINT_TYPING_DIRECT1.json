@@ -1,0 +1,36 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "v69-typing-direct1",
+  "profile": "KERNEL-universe-conformance1",
+  "coreFormat": 69,
+  "certificateFormat": 2,
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "formal": {
+    "newlyClosedSlice": "PS→Lean conversion-free typing refinement for Sort/BVar/Const/App/Lam/Pi/Let",
+    "theorem": "ProofScriptKernelEquivalence.DirectTyping.typing_sound",
+    "noSorryAx": true,
+    "fullTypingEquivalence": false,
+    "wholeKernelEquivalence": "IN_PROGRESS_NOT_K3"
+  },
+  "differential": {
+    "typescriptDirectTypingCases": 1000,
+    "typescriptDirectTypingFailures": 0,
+    "exactLeanNativeTypingCases": 1000,
+    "exactLeanNativeTypingFailures": 0,
+    "exactLeanKernelChecks": 1000
+  },
+  "dependencyBoundary": {
+    "conversionDependentTyping": "OPEN_AND_DEPENDS_ON_O_DEF",
+    "projectionTyping": "OPEN"
+  },
+  "nextFormalPriority": [
+    "beta definitional-equality correspondence",
+    "zeta/let definitional-equality correspondence",
+    "delta transparency correspondence",
+    "eta and proof-irrelevance correspondence",
+    "then close conversion-dependent typing"
+  ]
+}

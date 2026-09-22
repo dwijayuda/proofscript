@@ -1,0 +1,15 @@
+TARGET=ProofScriptKernelEquivalence.KernelV71ConditionalK3TheoremScaffold
+LEAN=Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+SOURCE=assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71ConditionalK3TheoremScaffold.lean
+SOURCE_SHA256=fc04becbe0af49e571ca63894f73bf8c7ae47762c3218e55cf4ee54b918c2f6e
+
+ℹ [2/2] Built ProofScriptKernelEquivalence.KernelV71ConditionalK3TheoremScaffold (518ms)
+info: ProofScriptKernelEquivalence/KernelV71ConditionalK3TheoremScaffold.lean:178:0: 'ProofScriptKernelEquivalence.KernelV71ConditionalK3TheoremScaffold.completedConditionalK3Slices_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71ConditionalK3TheoremScaffold.lean:179:0: 'ProofScriptKernelEquivalence.KernelV71ConditionalK3TheoremScaffold.outstandingConditionalK3Obligations_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71ConditionalK3TheoremScaffold.lean:180:0: 'ProofScriptKernelEquivalence.KernelV71ConditionalK3TheoremScaffold.k3OverallProgress_percent' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71ConditionalK3TheoremScaffold.lean:181:0: 'ProofScriptKernelEquivalence.KernelV71ConditionalK3TheoremScaffold.inheritedWholeK3ReadinessProgress_prior' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71ConditionalK3TheoremScaffold.lean:182:0: 'ProofScriptKernelEquivalence.KernelV71ConditionalK3TheoremScaffold.v71ConditionalFinalK3Theorem_scaffold' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71ConditionalK3TheoremScaffold.lean:183:0: 'ProofScriptKernelEquivalence.KernelV71ConditionalK3TheoremScaffold.v71ConditionalK3Scaffold_notFinalK3' does not depend on any axioms
+Build completed successfully (2 jobs).
+info: proofScriptKernelEquivalence: no previous manifest, creating one from scratch
+info: toolchain not updated; no toolchain information found

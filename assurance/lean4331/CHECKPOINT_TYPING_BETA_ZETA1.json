@@ -1,0 +1,50 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "v69-typing-beta-zeta1",
+  "profile": "KERNEL-universe-conformance1",
+  "coreFormat": 69,
+  "certificateFormat": 2,
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "formal": {
+    "typingSlice": "PS\u2192Lean conversion-free typing refinement for Sort/BVar/Const/App/Lam/Pi/Let",
+    "typingTheorem": "ProofScriptKernelEquivalence.DirectTyping.typing_sound",
+    "defEqSlice": "primitive beta/zeta head reduction plus finite-chain preservation",
+    "defEqTheorems": [
+      "ProofScriptKernelEquivalence.BetaZeta.step_sound",
+      "ProofScriptKernelEquivalence.BetaZeta.steps_sound"
+    ],
+    "noSorryAx": true,
+    "wholeKernelEquivalence": "IN_PROGRESS_NOT_K3"
+  },
+  "differential": {
+    "typescriptDirectTypingCases": 1000,
+    "typescriptDirectTypingFailures": 0,
+    "exactLeanNativeTypingCases": 1000,
+    "exactLeanNativeTypingFailures": 0,
+    "typingKernelChecks": 1000,
+    "typescriptBetaCases": 500,
+    "typescriptZetaCases": 500,
+    "typescriptBetaZetaFailures": 0,
+    "exactLeanBetaCases": 500,
+    "exactLeanZetaCases": 500,
+    "exactLeanBetaZetaFailures": 0,
+    "betaZetaKernelChecks": 1000
+  },
+  "regression": {
+    "typescriptBuild": "passed",
+    "conformanceSmoke": "passed",
+    "assuranceGate": "passed",
+    "aggregateSourceDifferential": "23/25 exact Lean; two known frontend/exporter cases remain",
+    "aggregateSourceDifferentialNotKernelEvidence": true
+  },
+  "nextFormalPriority": [
+    "delta/transparency correspondence",
+    "ordinary beta+zeta+delta WHNF bridge",
+    "eta correspondence",
+    "proof-irrelevance correspondence",
+    "close conversion-dependent typing"
+  ]
+}

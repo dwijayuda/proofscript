@@ -1,0 +1,19 @@
+{
+  "name": "@proofscript/arena-checker",
+  "version": "0.1.0-production-p5.78-arena-tutorial-harness0",
+  "private": false,
+  "description": "Small Lean Kernel Arena NDJSON adapter for the trusted-boundary ProofScript TypeScript kernel",
+  "license": "MIT",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "bin": {
+    "ps-arena-check": "dist/main.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "@proofscript/kernel": "0.1.0-dev.0"
+  }
+}

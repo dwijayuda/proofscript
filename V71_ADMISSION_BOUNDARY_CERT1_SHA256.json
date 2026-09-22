@@ -1,0 +1,25 @@
+{
+  "checkpoint": "V71_ADMISSION_BOUNDARY_CERT1",
+  "files": [
+    {
+      "file": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71AdmissionBoundary.lean",
+      "sha256": "fda25193a149038b13ad7a0e003c5de62738d7706045714a0b9482f55a2595bb"
+    },
+    {
+      "file": "assurance/lean4331/CHECKPOINT_V71_ADMISSION_BOUNDARY_CERT1.json",
+      "sha256": "28c1aabada8bb802aefd7e31a61d7015a310de4684903c3a193812b1a3212f94"
+    },
+    {
+      "file": "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_ADMISSION_BOUNDARY_CERT1.md",
+      "sha256": "566ce752eeb9967fd216aa9c60964094460edef27cc38ea09fe152e12bd58997"
+    },
+    {
+      "file": "assurance/lean4331/evidence/v71-admission-boundary-formal1.out",
+      "sha256": "2ea57f221367f0d2ca9d8dcd6eba3bfd818ada4fc24bae4da1f3c9294bcdfd48"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-09-10-v71-admission-boundary-certificate.md",
+      "sha256": "db5c3654b5b00abc89fd2092c2bd39421644a7cc48add892733e489965190fb8"
+    }
+  ]
+}

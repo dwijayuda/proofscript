@@ -1,0 +1,35 @@
+{
+  "checkpoint": "proofscript-v1-ka75-executable-infer-atomic-refinement0",
+  "publicVersion": "1.0.0-pskernel.78",
+  "baseline": "proofscript-v1-ka74-executable-defeq-nat-offset-boundary-refinement0",
+  "referenceKind": "strict-lean4lean-executable-infer-atomic-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "leanModule": "assurance/ka75/executable-infer-atomic-refinement-bridge.lean",
+  "baselineFormalObligations": 221,
+  "countedNewFormalObligations": 4,
+  "countedObligations": [
+    "translated_checkLevel_wf",
+    "translated_inferFVar_wf",
+    "translated_envGet_wf",
+    "translated_infer_sort_wf"
+  ],
+  "sourceTheorems": [
+    "checkLevel.WF",
+    "inferFVar.WF",
+    "envGet.WF",
+    "infer_sort"
+  ],
+  "sorryBoundaryPolicy": "do-not-count-upstream-sorry-backed-theorems",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableInferTypeRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

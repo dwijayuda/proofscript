@@ -1,0 +1,73 @@
+{
+  "checkpoint": "proofscript-v1-ka83-primitive-type-translation-refinement0",
+  "publicVersion": "1.0.0-pskernel.86",
+  "baseline": "proofscript-v1-ka82-primitive-dependency-reflection-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 255,
+  "newFormalLean4LeanBridgeObligations": 6,
+  "baselineObligations": 249,
+  "countedObligations": [
+    "translated_natLitClosed_wf",
+    "translated_natFstLamApp_wf",
+    "translated_natIsType_wf",
+    "translated_trNat_wf",
+    "translated_boolIsType_wf",
+    "translated_trBool_wf"
+  ],
+  "redTestObserved": true,
+  "redTestReason": "KA83 test failed first on missing KA83 gate tool",
+  "noWrapperTimeoutCountedAsPassed": true,
+  "boundedReleaseVerification": {
+    "passed": [
+      "npm install --offline --no-audit --no-fund",
+      "npm run build -- --pretty false",
+      "npm run test:pskernel:ka83",
+      "npm run assurance:ka83",
+      "npm run lean:ka83:check",
+      "npm run test:kernel:smoke",
+      "npm run test:standalone-small",
+      "npm run test:psc:kernel-status",
+      "npm run test:psc:conformance-bounded",
+      "npm run arena:corpus-preflight",
+      "npm run test:arena:static-nonperf",
+      "npm run test:arena:tutorial",
+      "npm run test:arena:recursor-rule-arity-validation",
+      "npm run test:arena:transparent-result-sort-reject",
+      "npm run test:arena:mutual-imax-prop-reject",
+      "npm pack --workspaces --ignore-scripts",
+      "sha256sum -c package SHA manifest"
+    ],
+    "notCountedAsPassed": [
+      "npm run verify:arena timed out at internal tutorial step; tail commands rerun individually and passed"
+    ]
+  },
+  "npmPackages": {
+    "packed": 36,
+    "sha256Entries": 36,
+    "verification": "passed"
+  },
+  "arenaEvidence": {
+    "corpusPreflight": "passed",
+    "ndjsonFixtures": 190,
+    "staticNonPerf": "26/26 decisive",
+    "tutorial": "140/140 decisive",
+    "verifyArenaWrapper": "timed-out-not-counted",
+    "tailCommands": "passed-individually"
+  },
+  "freshExtract": {
+    "initialResidue": {
+      "node_modules": 0,
+      "dist": 0,
+      "tsbuildinfo": 0,
+      "tgz": 0,
+      "zip": 0
+    },
+    "install": "passed",
+    "build": "passed",
+    "focusedKA83Test": "passed",
+    "strictLeanCheck": "passed"
+  },
+  "zipIntegrity": "passed",
+  "zipSha256Check": "passed"
+}

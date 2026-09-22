@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka29-quot-env-aggregate-bridge0",
+  "baseline": "proofscript-v1-ka28-quot-env-defeq-preservation-bridge0",
+  "closedSinceKA28": [
+    "aggregate quotient environment bridge package over real Lean4Lean VDecl.WF, VEnv.WF, VEnv.LE, addQuot, constants, and defeqs"
+  ],
+  "provenLeanTheoremObligations": [
+    "PSKernelKA29.translated_quot_env_aggregate_bridge"
+  ],
+  "stillOpen": [
+    "quotient semantic soundness",
+    "executable PSKernel refinement proof",
+    "definitional equality soundness",
+    "inductive and mutual-inductive translation/soundness",
+    "full Lean 4 equivalence",
+    "same theory as full Lean 4"
+  ],
+  "formalLean4EquivalenceProvenObligations": 51,
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "quotientSemanticSoundness": false,
+    "formalLean4EquivalenceProvenObligations": 51
+  }
+}

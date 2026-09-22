@@ -1,0 +1,195 @@
+def hello: String := { "hello" }
+
+def yes: String := { "yes" }
+
+def no: String := { "no" }
+
+def choose(b: Bool): String := {
+  bif (b) { "yes" } else { "no" }
+}
+
+def idString(s: String): String := { s }
+
+def pass: String := { idString("hello") }
+
+def captured(suffix: String): String -> String := {
+  fun (x: String) => suffix
+}
+
+def capturedResult: String := {
+  let f := captured("yes");
+  f("no")
+}
+
+def sameYes(s: String): Bool := { s == "yes" }
+
+def eqTrue: Bool := { sameYes("yes") }
+
+def eqFalse: Bool := { sameYes("hello") }
+
+def branchOnEq(s: String): String := {
+  bif (s == "yes") { "yes" } else { "no" }
+}
+
+def branchEqTrue: String := { branchOnEq("yes") }
+
+def branchEqFalse: String := { branchOnEq("hello") }
+
+def letterA1: String := { "A" }
+
+def letterA2: String := { "\x41" }
+
+def letterA3: String := { "\u0041" }
+
+def escapedLiteralSame1: Bool := { letterA1 == letterA2 }
+
+def escapedLiteralSame2: Bool := { letterA1 == letterA3 }
+
+def literalConcat: String := { "he" ++ "llo" }
+
+def literalConcatSame: Bool := { literalConcat == "hello" }
+
+def literalConcatExisting: String := { "y" ++ "es" }
+
+def literalConcatExistingSame: Bool := { literalConcatExisting == yes }
+
+def literalConcatEscaped: String := { "\x41" ++ "\u0042" }
+
+def literalConcatEscapedSame: Bool := { literalConcatEscaped == "AB" }
+
+def literalLength: Nat := { String.length("hello") }
+
+def escapedLength: Nat := { String.length("\x41") }
+
+def concatLength: Nat := { String.length("he" ++ "llo") }
+
+def asciiUtf8ByteSize: Nat := { String.utf8ByteSize("hello") }
+
+def unicodeUtf8ByteSize: Nat := { String.utf8ByteSize("\u2200") }
+
+def concatUtf8ByteSize: Nat := { String.utf8ByteSize("\x41" ++ "\u2200") }
+
+def empty: String := { "" }
+
+def isEmptyTrue: Bool := { String.isEmpty("") }
+
+def isEmptyFalse: Bool := { String.isEmpty("hello") }
+
+def isEmptyConcatFalse: Bool := { String.isEmpty("a" ++ "b") }
+
+def isEmptyConcatTrue: Bool := { String.isEmpty("" ++ "") }
+
+def startsWithTrue: Bool := { String.startsWith("hello", "he") }
+
+def startsWithFalse: Bool := { String.startsWith("hello", "lo") }
+
+def startsWithConcatTrue: Bool := { String.startsWith("he" ++ "llo", "hell") }
+
+def startsWithEmptyPrefix: Bool := { String.startsWith("hello", "") }
+
+def endsWithTrue: Bool := { String.endsWith("hello", "lo") }
+
+def endsWithFalse: Bool := { String.endsWith("hello", "he") }
+
+def endsWithConcatTrue: Bool := { String.endsWith("he" ++ "llo", "llo") }
+
+def endsWithEmptySuffix: Bool := { String.endsWith("hello", "") }
+
+def containsTrue: Bool := { String.contains("hello", "ell") }
+
+def containsFalse: Bool := { String.contains("hello", "xyz") }
+
+def containsConcatTrue: Bool := { String.contains("he" ++ "llo", "ell") }
+
+def containsEmptyNeedle: Bool := { String.contains("hello", "") }
+
+def containsEscapedTrue: Bool := { String.contains("\x41\u0042", "AB") }
+
+def stringBeqTrue: Bool := { String.beq("hello", "hello") }
+
+def stringBeqFalse: Bool := { String.beq("hello", "world") }
+
+def stringBeqConcatTrue: Bool := { String.beq("he" ++ "llo", String.append("he", "llo")) }
+
+def stringBeqSliceTrue: Bool := { String.beq(String.take("hello", 2), String.dropRight("hello", 3)) }
+
+
+
+def literalAppendFunction: String := { String.append("he", "llo") }
+
+def literalAppendFunctionSame: Bool := { literalAppendFunction == "hello" }
+
+def nestedAppendLength: Nat := { String.length(String.append("A", "BC")) }
+
+def nestedAppendContains: Bool := { String.contains(String.append("he", "llo"), "ell") }
+
+def literalTake: String := { String.take("hello", 2) }
+
+def literalDrop: String := { String.drop("hello", 2) }
+
+def takeOversize: String := { String.take("hello", 99) }
+
+def dropOversize: String := { String.drop("hello", 99) }
+
+def takeUnicode: String := { String.take("\u2200bc", 1) }
+
+def dropUnicode: String := { String.drop("\u2200bc", 1) }
+
+def nestedTakeFromAppend: String := { String.take(String.append("he", "llo"), String.length("he")) }
+
+def nestedDropFromConcat: String := { String.drop("he" ++ "llo", String.length("he")) }
+
+
+def literalTakeRight: String := { String.takeRight("hello", 2) }
+
+def literalDropRight: String := { String.dropRight("hello", 2) }
+
+def takeRightOversize: String := { String.takeRight("hello", 99) }
+
+def dropRightOversize: String := { String.dropRight("hello", 99) }
+
+def takeRightUnicode: String := { String.takeRight("ab\u2200", 1) }
+
+def dropRightUnicode: String := { String.dropRight("ab\u2200", 1) }
+
+def nestedTakeRightFromAppend: String := { String.takeRight(String.append("he", "llo"), String.length("lo")) }
+
+def nestedDropRightFromConcat: String := { String.dropRight("he" ++ "llo", String.length("lo")) }
+
+def isPrefixOfTrue: Bool := { String.isPrefixOf("he", "hello") }
+
+def isPrefixOfFalse: Bool := { String.isPrefixOf("lo", "hello") }
+
+def isPrefixOfConcatTrue: Bool := { String.isPrefixOf("hell", "he" ++ "llo") }
+
+def isPrefixOfEmptyPrefix: Bool := { String.isPrefixOf("", "hello") }
+
+def stripPrefixHit: String := { String.stripPrefix("hello", "he") }
+
+def stripPrefixMiss: String := { String.stripPrefix("hello", "no") }
+
+def stripPrefixConcatHit: String := { String.stripPrefix("he" ++ "llo", "he") }
+
+def stripSuffixHit: String := { String.stripSuffix("hello", "lo") }
+
+def stripSuffixMiss: String := { String.stripSuffix("hello", "no") }
+
+def stripSuffixConcatHit: String := { String.stripSuffix("he" ++ "llo", "lo") }
+
+
+
+def isNatEmpty: Bool := { String.isNat("") }
+
+def isNatZero: Bool := { String.isNat("0") }
+
+def isNatLeadingZero: Bool := { String.isNat("05") }
+
+def isNatDigits: Bool := { String.isNat("587") }
+
+def isNatNegative: Bool := { String.isNat("-587") }
+
+def isNatSpace: Bool := { String.isNat(" 5") }
+
+def isNatHex: Bool := { String.isNat("0xff") }
+
+def isNatConcat: Bool := { String.isNat("58" ++ "7") }

@@ -1,0 +1,49 @@
+{
+  "checkpoint": "proofscript-v1-ka64-executable-expression-translator-eqv-refinement0",
+  "publicVersion": "1.0.0-pskernel.67",
+  "baseline": "proofscript-v1-ka63-executable-expression-translator-bool-literal-refinement0",
+  "commands": {
+    "redTest": "failed-first-on-missing-ka64-gate-tool",
+    "npmInstall": "passed",
+    "build": "passed",
+    "testPskernelKa64": "passed",
+    "assuranceKa64": "passed",
+    "leanKa64Check": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "pscConformanceBounded": "passed",
+    "arenaCorpusPreflight": "passed",
+    "arenaStaticNonperf": "passed",
+    "arenaTutorial": "passed",
+    "verifyArenaAggregate": "timed-out-not-counted-at-test-arena-tutorial-harness",
+    "arenaTailRerunIndividually": "passed"
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA64",
+        "source": "assurance/ka64/executable-expression-translator-eqv-refinement-bridge.lean",
+        "destination": "PSKernelKA64ExecutableExpressionTranslatorEqvRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA64 gate tool absent before implementation",
+  "aggregateWrappersNotCounted": [
+    {
+      "command": "TERM=xterm timeout 900s npm run verify:arena",
+      "status": "timed-out-not-counted",
+      "lastObservedStage": "test:arena:tutorial-harness"
+    }
+  ]
+}

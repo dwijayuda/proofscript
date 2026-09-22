@@ -1,0 +1,23 @@
+{
+  "checkpoint": "proofscript-v1-ka81-primitive-reflection-typing-refinement0",
+  "publicVersion": "1.0.0-pskernel.84",
+  "featureSurfaceBridgeProgressPercent": 92,
+  "executableKernelEquivalenceProofProgressPercent": 59,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 242,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 237,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+    "correctedFormalLean4LeanBridgeObligations": 242,
+    "countedNewObligations": [
+      "translated_natZeroT_wf",
+      "translated_natSuccT_wf",
+      "translated_natPredT_wf",
+      "translated_natLitT_wf",
+      "translated_boolLitT_wf"
+    ]
+  },
+  "metricPolicy": "KA81 adds direct non-sorry-backed primitive reflection typing bridge wrappers. Percentages remain conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

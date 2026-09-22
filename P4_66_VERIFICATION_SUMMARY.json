@@ -1,0 +1,56 @@
+{
+  "release": "P4.66",
+  "title": "Standalone TypeScript emitter MVP",
+  "createdAtUtc": "2026-09-11T13:42:42Z",
+  "trustLabel": "trusted-boundary K3-TB; not fully formal K3; not proven equal to full Lean 4 kernel",
+  "changes": [
+    "Added pslive build-ts <file.ps> --out <out.ts> [--json]",
+    "Added emitTypeScriptModule to @proofscript/backend-typescript",
+    "Added psc1RuntimeTypeScriptSource to @proofscript/runtime",
+    "Added strict TypeScript generation regression test that compiles generated .ts and runs compiled CommonJS output",
+    "Generated runtime manifests now include requiresLean4: false"
+  ],
+  "verified": [
+    {
+      "command": "npm run build -- --pretty false",
+      "status": "pass"
+    },
+    {
+      "command": "npm run test:pslive:build-ts",
+      "status": "pass"
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "status": "pass"
+    },
+    {
+      "command": "npm run test:kernel:typechecker",
+      "status": "pass",
+      "tests": "43/43"
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "status": "pass"
+    },
+    {
+      "command": "npm run test:governance",
+      "status": "pass",
+      "checks": 27,
+      "warnings": 0,
+      "failures": 0
+    },
+    {
+      "command": "node tools/pskernel.ts status --json",
+      "status": "pass",
+      "kernelStatus": "trusted-boundary",
+      "proofStatus": "not-proven"
+    }
+  ],
+  "blocked": [
+    {
+      "command": "npm run verify:k3tb:publish",
+      "status": "blocked",
+      "reason": "missing PROOFSCRIPT_LEAN_BIN for Lean 4.33.1 commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+    }
+  ]
+}

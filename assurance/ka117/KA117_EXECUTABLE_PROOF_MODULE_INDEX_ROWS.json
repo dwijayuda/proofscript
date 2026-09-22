@@ -1,0 +1,53 @@
+{
+  "indexPercent": 100,
+  "rows": [
+    {
+      "id": "kernel-expression-module-indexed",
+      "status": "done",
+      "evidence": "expression/reflection proof-family module slot recorded",
+      "indexed": true
+    },
+    {
+      "id": "checker-soundness-module-indexed",
+      "status": "done",
+      "evidence": "checking/admission proof-family module slot recorded",
+      "indexed": true
+    },
+    {
+      "id": "evaluator-whnf-defeq-module-indexed",
+      "status": "done",
+      "evidence": "WHNF/defeq executable refinement module slot recorded",
+      "indexed": true
+    },
+    {
+      "id": "primitive-recognizer-module-indexed",
+      "status": "done",
+      "evidence": "primitive recognizer helper module slot recorded",
+      "indexed": true
+    },
+    {
+      "id": "certificate-replay-module-indexed",
+      "status": "done",
+      "evidence": "certificate/replay module slot recorded",
+      "indexed": true
+    },
+    {
+      "id": "arena-regression-link-indexed",
+      "status": "done",
+      "evidence": "arena evidence remains separate from proof theorem modules",
+      "indexed": true
+    },
+    {
+      "id": "negative-claim-module-indexed",
+      "status": "done",
+      "evidence": "full Lean4 equivalence and fully formal K3 remain 0%",
+      "indexed": true
+    }
+  ],
+  "counts": {
+    "total": 7,
+    "indexed": 7,
+    "missing": 0
+  },
+  "evidenceMeaning": "proof module index records executable proof-module destinations; it is not an executable PSKernel refinement proof"
+}

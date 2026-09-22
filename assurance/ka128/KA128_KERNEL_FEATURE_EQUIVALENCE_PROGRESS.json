@@ -1,0 +1,10 @@
+{
+  "checkpoint": "proofscript-v1-ka128-lean4331-kernel-parity-scope-matrix0",
+  "publicVersion": "1.0.0-pskernel.131",
+  "featureSurfaceBridgeProgressPercent": 100,
+  "executableKernelEquivalenceProofProgressPercent": 100,
+  "fullLean4EquivalencePercent": 0,
+  "fullyFormalK3Percent": 0,
+  "overallConservativeProjectProgressPercent": 85,
+  "metricPolicy": "KA128 starts the Lean4-kernel parity track; it does not increase dashboard percentage or claim semantic equivalence."
+}

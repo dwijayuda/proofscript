@@ -1,0 +1,20 @@
+{
+  "checkpoint": "proofscript-v1-ka101-primitive-substitution-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.104",
+  "baseline": "proofscript-v1-ka100-primitive-sequence-helper-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 326,
+  "newFormalLean4LeanBridgeObligations": 5,
+  "baselineObligations": 321,
+  "countedObligations": [
+    "translated_forall2_rev_wf",
+    "translated_trExpr_fvar_uniq_wf",
+    "translated_forall2_fvars_uniq_wf",
+    "translated_subst_consN_add_wf",
+    "translated_liftN_subst_consN_wf"
+  ],
+  "redTestObserved": true,
+  "redTestReason": "KA101 test failed first on missing KA101 gate tool",
+  "noWrapperTimeoutCountedAsPassed": true
+}

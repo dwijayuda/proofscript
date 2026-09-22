@@ -1,0 +1,20 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
+const cli=path.join(root,"packages/cli/dist/cli.js");
+const tmp=path.join(root,"artifacts","k2c-test");fs.rmSync(tmp,{recursive:true,force:true});fs.mkdirSync(tmp,{recursive:true});
+function run(args,expect=0){const r=spawnSync(process.execPath,[cli,...args],{cwd:root,encoding:"utf8"});if(r.status!==expect){console.error(r.stdout,r.stderr);throw new Error(`${args.join(" ")} expected ${expect}, got ${r.status}`);}return r;}
+const core=path.join(tmp,"main.pscore.json");
+const check=run(["check","tests/conformance/positive/k2c-structures-match.ps","--std","--emit-core",core,"--json"]);
+const summary=JSON.parse(check.stdout);assert.equal(summary.status,"accepted");
+const names=summary.declarations.map(d=>d.name);for(const n of ["PairNat","PairNat.fst","PairNat.snd","isZeroNat","fstProjection","zeroMatch","succMatch"])assert(names.includes(n),`missing ${n}`);
+const pair=summary.declarations.find(d=>d.name==="PairNat");assert.deepEqual(pair.generated,["PairNat.mk","PairNat.rec"]);
+run(["verify",core]);
+const lean=path.join(tmp,"Generated.lean");run(["emit-lean",core,"--std","--out",lean]);
+const text=fs.readFileSync(lean,"utf8");assert.match(text,/inductive PairNat/);assert.match(text,/def PairNat\.fst/);assert.match(text,/Nat\.rec/);
+run(["check","tests/conformance/negative/k2c-match-nonexhaustive.ps","--std"],1);
+run(["check","tests/conformance/negative/k2c-structure-large-field.ps"],1);
+console.log("✓ K2c structure lowering, recursor-backed projections, exhaustive match lowering, computation, and replay passed");

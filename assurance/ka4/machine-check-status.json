@@ -1,0 +1,16 @@
+{
+  "schema": "proofscript.assurance.ka4.machine-check-status/v1",
+  "checkpoint": "proofscript-v1-ka4-lean-toolchain-gate0",
+  "publicVersion": "1.0.0-pskernel.6",
+  "leanCheckedHere": false,
+  "strictLeanCheckPassed": false,
+  "reason": "No lean executable was available on PATH during checkpoint creation. The strict gate is present and must pass before any machine-checked theorem claim.",
+  "checkedFiles": [
+    "assurance/ka4/noninductive-soundness-machine-check.lean"
+  ],
+  "proofClaims": {
+    "machineCheckedLeanProofInThisCheckpoint": false,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "fullLean4Equivalence": false
+  }
+}

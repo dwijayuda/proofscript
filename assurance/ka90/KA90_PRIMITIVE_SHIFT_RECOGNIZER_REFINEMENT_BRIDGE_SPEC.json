@@ -1,0 +1,29 @@
+{
+  "checkpoint": "proofscript-v1-ka90-primitive-shift-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.93",
+  "baseline": "proofscript-v1-ka89-primitive-comparison-recognizer-refinement0",
+  "referenceKind": "primitive-shift-recognizer-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 2,
+  "countedObligations": [
+    "translated_checkNatShiftLeft_wf",
+    "translated_checkNatShiftRight_wf"
+  ],
+  "sourceTheorems": [
+    "checkNatShiftLeft.WF",
+    "checkNatShiftRight.WF"
+  ],
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveShiftRecognizerRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

@@ -1,0 +1,37 @@
+class Default(A: Type) {
+  value: A;
+}
+
+instance (priority := 5000) boolDefault: Default(Bool) := {
+  value := true
+};
+
+instance (priority := 2000) natDefaultHigh: Default(Nat) := {
+  value := 0
+};
+
+instance (priority := 2000) natDefaultLater: Default(Nat) := {
+  value := 1
+};
+
+def getNatDefault[d: Default(Nat)](n: Nat): Nat := {
+  Default.value(Nat, d)
+}
+
+def getBoolDefault[d: Default(Bool)](n: Nat): Bool := {
+  Default.value(Bool, d)
+}
+
+def automaticNatDefault: Nat := {
+  getNatDefault(0)
+}
+
+def automaticBoolDefault: Bool := {
+  getBoolDefault(0)
+}
+
+theorem automaticNatDefaultIsOne: automaticNatDefault = 1 :=
+  Eq.refl.{1}(Nat, 1);
+
+theorem automaticBoolDefaultIsTrue: automaticBoolDefault = true :=
+  Eq.refl.{1}(Bool, true);

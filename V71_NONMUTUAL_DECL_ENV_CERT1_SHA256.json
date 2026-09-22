@@ -1,0 +1,26 @@
+{
+  "archiveProfile": "proofscript-kernel-v71-nonmutual-decl-env-cert1",
+  "semanticChange": false,
+  "createdAtUtc": "2026-09-10T03:21:28.640Z",
+  "leanSemanticBaseline": "4.33.1",
+  "leanReleaseCommit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "assuranceBoundary": "generic non-mutual O-DECL/O-IND K3-progress certificate; not full whole-kernel K3",
+  "importantArtifacts": {
+    "package.json": "8f9d50777936b3ae0033b0213b22b02a14e66efb20bc0826b3a6b0c4ca9b53f6",
+    "tools/kernel-v71-nonmutual-decl-env-certificate-tests.ts": "02c6f2fcbb0feb8725514ea37bdee4bf6f004a110a7f1637580bcf1110a64f33",
+    "assurance/lean4331/CHECKPOINT_V71_NONMUTUAL_DECL_ENV_CERT1.json": "69eb922c23e9a49c06f31ba0fbf175271994b0b4fc405ce2d430d9b446e3239a",
+    "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_NONMUTUAL_DECL_ENV_CERT1.md": "50e30093e1b0c1f989cc176dce1cef9e8a76ad79749f7574b63decf986569f96",
+    "assurance/lean4331/FINAL_VALIDATION_V71_FULL_LEAN_GATE.json": "b9462aa47c20e4a5f5272dd26bfce0bf5a3543f6637b85df188a3179df6064c8",
+    "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_FULL_LEAN_GATE1.md": "cf3146910097e9ca462190ce8425cd167ef3a641a2ce0cd0a2dca12ffb148eab",
+    "assurance/lean4331/evidence/v71-env-induction-formal28.out": "db370841f2b8b62a9d932352ce2bcee39a2e92fb238d5cd30c33e741c1fa80aa",
+    "assurance/lean4331/evidence/v71-generic-nonmutual-formal1.out": "456dbfbefc7cba7cc240f4f6a9ef67cefa2493bea845d11866797518a923cff6",
+    "assurance/lean4331/evidence/v71-nonmutual-classifier-formal1.out": "0e6b5420e1bd609455495f5223ae0092b07121665c91dceefcf899bb62305103",
+    "assurance/lean4331/evidence/v71-ts-classifier-implementation-contract-formal1.out": "5268a978120a85154d44d7f708f5936f8ed9f9c1ab7eb8147b2100af90f55dd2",
+    "assurance/lean4331/evidence/v71-gate-part1.out": "ec8220bca5a9453257661d3c65a80111fa1be08ac9f95fd11b68617bd7ac02f4",
+    "assurance/lean4331/evidence/v71-gate-part2.out": "0e2d86c285d2ccce19e94111810df807b45736ba3b7d57346ac923788f14f7e7",
+    "assurance/lean4331/evidence/v71-gate-part3.out": "237ddf58459558e7d352e9af0d497c5adda3ed29d611df228fddc59a9244ccd3",
+    "assurance/lean4331/evidence/v71-gate-part4.out": "6cd4f9661ffa48fc18dfff4458b2eef2b62e76b2d089cb79b0d34802f6787f01",
+    "assurance/lean4331/evidence/v71-gate-part5.out": "e9e2a9af2e74f58ec22784dbc47d93fb57deaad532ca42436f6b49f0ac5989fb",
+    "assurance/lean4331/evidence/v71-gate-part6.out": "c0b48520655e88066ab1face2d2f97f9a1491dd09d4429f4281da25d690c5783"
+  }
+}

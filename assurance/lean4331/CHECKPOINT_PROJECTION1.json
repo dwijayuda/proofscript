@@ -1,0 +1,63 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint-projection1/v1",
+  "date": "2026-09-10",
+  "proofscript": {
+    "coreFormat": 70,
+    "profile": "KERNEL-projection-conformance1",
+    "certificateFormat": 2
+  },
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "supersedes": {
+    "coreFormat": 69,
+    "profile": "KERNEL-universe-conformance1",
+    "reason": "raw projection dependency/Prop-gating semantic discrepancy"
+  },
+  "formal": {
+    "projectionFieldWalk": "proved-no-sorryAx",
+    "projectionIota": "proved-no-sorryAx",
+    "wholeKernelK3": false
+  },
+  "differential": {
+    "typescript": {
+      "cases": 1000,
+      "failures": 0
+    },
+    "exactLeanRaw": {
+      "cases": 1000,
+      "failures": 0
+    },
+    "sourceLevel": {
+      "accepted": 23,
+      "total": 25,
+      "classification": "known-frontend-exporter-boundary"
+    }
+  },
+  "regressions": {
+    "build": "passed",
+    "projection": "passed",
+    "structureEta": "passed",
+    "propEliminationExact": "passed",
+    "dependentFieldsExact": "passed",
+    "indexedRecursors": "passed",
+    "recursorKExact": "passed",
+    "conversionFinalExact": "passed",
+    "resourceBounds": "passed",
+    "conformance": "passed"
+  },
+  "keySha256": {
+    "packages/kernel/src/kernel.ts": "44c6fd4af2cd821976130c551f4769442de054496a6aa4a125fdbf820c221c6c",
+    "packages/kernel/src/core.ts": "f00273fbf0f33d705441dd6829d2adb9ed0c55f45547173ff7603e0fc9c94bbf",
+    "packages/kernel/src/runner.ts": "e3ed01292b73e3766954522441acc7157124590650e7ae7becc4f0494958027b",
+    "packages/kernel-codec/src/index.ts": "a62b301d45d841fedc6176301752a5c31e38286ff557ddff44becdc0a29e63e8",
+    "assurance/lean4331/formal/ProofScriptKernelEquivalence/Projection.lean": "5bafb27efcc9df81634aed93825cc60a700d06326b56f5f03b007af097174daa",
+    "assurance/lean4331/evidence/ProjectionConformanceExact.lean": "86124bd99e1ea2434161a353329585bf61e69b37865fb754017d88ddc8892a7c",
+    "assurance/lean4331/evidence/ProjectionNativeDifferential.lean": "65ebd60d5227e74c0655f3b3d5717dd1a5cfe9995181deb078a2c2c34ac26a2e",
+    "tools/kernel-projection-conformance1-tests.ts": "3f693befba393c49e258753879c6e2c0569f5812e1d3268de6c29876dd4c9321",
+    "tools/kernel-projection-differential-tests.ts": "34581d9664d8f274c8b19ac0d88e1fa01a0449c3f4c1fd5d671922b6fe06cba8",
+    "tools/kernel-projection-v70-identity-tests.ts": "e2ddb908bccfa654f973de2287b2bf412935acc4f5632ad719841d9d63c869ad"
+  },
+  "next": "inductive/recursor metadata correspondence + recursor/iota/K; projection environment bridge folds into O-DECL"
+}

@@ -1,0 +1,33 @@
+{
+  "checkpoint": "proofscript-v1-ka38-whnf-preservation-bridge0",
+  "publicVersion": "1.0.0-pskernel.41",
+  "baseline": "proofscript-v1-ka37-whnf-head-reduction-bridge0",
+  "referenceKind": "direct-imported-lean4lean-whnf-preservation-bridge",
+  "coveredLean4LeanWHNFPreservationSurface": [
+    "WHRed.determ",
+    "WHRed.defeq",
+    "WHRed.hasType",
+    "WHRedS.defeq",
+    "WHRedS.hasType",
+    "WHNF.whRedS"
+  ],
+  "formalBridgeLemmas": [
+    "PSKernelKA38.translated_whred_single_step_deterministic",
+    "PSKernelKA38.translated_whred_defeq_preservation",
+    "PSKernelKA38.translated_whred_type_preservation",
+    "PSKernelKA38.translated_whreds_defeq_preservation",
+    "PSKernelKA38.translated_whreds_type_preservation",
+    "PSKernelKA38.translated_whnf_whreds_fixed_point"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullWHNFRecursorRefinement": false,
+    "formalLean4EquivalenceProvenObligations": 96
+  }
+}

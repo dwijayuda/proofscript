@@ -1,0 +1,32 @@
+{
+  "schema": "proofscript.artifact.sha256/v1",
+  "artifact": "V71_FORMED_ENV_GENERALIZATION_CERT1",
+  "generatedAtUtc": "2026-09-10T04:21:21.141Z",
+  "files": {
+    "assurance/lean4331/formal/ProofScriptKernelEquivalence/InductiveFormedEnvironmentGeneralization.lean": "d728581bb8d72f59d50d2bf907806101319737ffe8919460f6b26e2adcc97641",
+    "assurance/lean4331/evidence/v71-formed-env-generalization-formal1.out": "257f7dd23f7f625caeb5b38d1d16f8245f0ac23695d63e2e4fd04544e9726423",
+    "assurance/lean4331/CHECKPOINT_V71_FORMED_ENV_GENERALIZATION_CERT1.json": "ef076a9a38c93b65d4cd5808f704fe499819a7ffad0cdbfcd4828cfd131294c8",
+    "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_FORMED_ENV_GENERALIZATION_CERT1.md": "f9cc550282ecddfffb7f43835a926dd3b6f6f1a6987371688cd8b7ea5d1587d9",
+    "docs/superpowers/plans/2026-09-10-formed-inductive-environment-generalization.md": "04b15e9276cce0920eff32af3ebb93c7fa40bfc28a122e21102bde5a15cf0e60",
+    "assurance/lean4331/evidence/v71-gate-part1.out": "ec8220bca5a9453257661d3c65a80111fa1be08ac9f95fd11b68617bd7ac02f4",
+    "assurance/lean4331/evidence/v71-gate-part2.out": "0e2d86c285d2ccce19e94111810df807b45736ba3b7d57346ac923788f14f7e7",
+    "assurance/lean4331/evidence/v71-gate-part3.out": "237ddf58459558e7d352e9af0d497c5adda3ed29d611df228fddc59a9244ccd3",
+    "assurance/lean4331/evidence/v71-gate-part4.out": "6cd4f9661ffa48fc18dfff4458b2eef2b62e76b2d089cb79b0d34802f6787f01",
+    "assurance/lean4331/evidence/v71-gate-part5.out": "e9e2a9af2e74f58ec22784dbc47d93fb57deaad532ca42436f6b49f0ac5989fb",
+    "assurance/lean4331/evidence/v71-gate-part6.out": "c0b48520655e88066ab1face2d2f97f9a1491dd09d4429f4281da25d690c5783",
+    "assurance/lean4331/evidence/v71-mutual-direct-exact-lean1.out": "6bf853a2967bd5b0b56c56151d8db4d3376f9748b2c43b44b67438f803abb10a",
+    "assurance/lean4331/evidence/v71-mutual-parameters-exact-lean1.out": "3e2025f1819d6885646f82041428a36f5bf4767c241c87cd7de7d012883ec845",
+    "assurance/lean4331/evidence/v71-mutual-indices-exact-lean1.out": "c495a42ad21cc1eca80c95332669aecac5f3f80fcce0b8031c344def5b52373c",
+    "assurance/lean4331/evidence/v71-mutual-higher-order-exact-lean1.out": "49db1c1ea1415907a80fe6f5946ee148bcc697d5dc9dddeb87264de5b0e3a82e",
+    "assurance/lean4331/evidence/v71-mutual-prop-exact-lean1.out": "2921738844772ac73a5b99cc0cfb9952c2a3bbf09a636150eb048294bd3bbb67",
+    "assurance/lean4331/evidence/v71-nested-base-exact-lean1.out": "d4427c00d29aad268209a90fbd62532785fa3fb43a723c9b3c92f9ac86a394bf",
+    "assurance/lean4331/evidence/v71-nested-parameters-exact-lean1.out": "38b4d77219b800122ed12d4c692ea753935fa5fd9760a3402c818231d1de4f60",
+    "assurance/lean4331/evidence/v71-nested-indices-exact-lean1.out": "2f899cbed4bfc702a3218f316e4b51823bc6a016372b563bb2939457299ebe95",
+    "assurance/lean4331/evidence/v71-nested-index-expressions-exact-lean1.out": "b87be9ece0a689c9587d5a9313b0e4c995dd9bdd6768d26de272318dcded0bcf",
+    "assurance/lean4331/evidence/v71-nested-multiple-specializations-exact-lean1.out": "b44d46979e16c8a1abe620953ce0f21ec31fede3718f36425e7a60222e10e536",
+    "assurance/lean4331/evidence/v71-nested-polymorphic-exact-lean1.out": "fe948a5b360e49e181014df03a47fee4279639c615db21b842ce8c510c1de8b3",
+    "assurance/lean4331/evidence/v71-nested-indexed-containers-exact-lean1.out": "0a7d49f8e04be5d15af119903757126338bd93963014e30dead6342a49cfbc74",
+    "assurance/lean4331/evidence/v71-nested-deeper-generalization-exact-lean1.out": "8a1c7c2f8432f5fc5174c4ea5f9642a6f90d30781da1dbc6ab21a26d255e03f8",
+    "assurance/lean4331/evidence/v71-nested-deep-multiparam-generalization-exact-lean1.out": "ca46b7d647e939391d848e99bcc255af991e15f118d91dedb4c92ec76be1ec57"
+  }
+}

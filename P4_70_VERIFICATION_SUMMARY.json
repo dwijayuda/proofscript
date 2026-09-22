@@ -1,0 +1,36 @@
+{
+  "release": "P4.70",
+  "title": "Lean-style whitespace application sugar",
+  "trustLabel": "K3-TB trusted-boundary; not fully formal K3; not proven equivalent to Lean 4",
+  "formalLean4EquivalenceProvenObligations": 0,
+  "implemented": [
+    "Lean-style whitespace application syntax such as `Nat.add x 2`, `Nat.succ x`, and `f x`",
+    "Left-associative parser lowering to existing checked Core applications",
+    "JS/TS emission regression for whitespace application",
+    "Negative regression for non-function application rejection before emission",
+    "PSC-1 runtime status/profile update to p4.70"
+  ],
+  "freshVerification": [
+    { "command": "npm run build -- --pretty false", "status": "PASS" },
+    { "command": "npm run test:pslive:lean-application", "status": "PASS" },
+    { "command": "npm run test:pslive:nat-plus", "status": "PASS" },
+    { "command": "npm run test:pslive:build-ts", "status": "PASS" },
+    { "command": "npm run test:pslive:js-name-collision", "status": "PASS" },
+    { "command": "npm run test:pslive:reserved-identifiers", "status": "PASS" },
+    { "command": "npm run test:standalone-small", "status": "PASS" },
+    { "command": "npm run test:kernel:typechecker", "status": "PASS", "tests": "43/43" },
+    { "command": "npm run test:kernel:smoke", "status": "PASS" },
+    { "command": "npm run test:governance", "status": "PASS", "checks": 27, "warnings": 0, "failures": 0 },
+    { "command": "node tools/pskernel.ts status --json", "status": "PASS", "proofStatus": "not-proven" },
+    { "command": "npm run verify:k3tb:publish", "status": "BLOCKED", "reason": "missing PROOFSCRIPT_LEAN_BIN for Lean 4.33.1" },
+    { "command": "npm run test:reference-governance:json", "status": "NOT_VERIFIED", "reason": "reference-governance smoke still hangs/timeouts in this container after printing/child process work; retained as tooling maturity issue" }
+  ],
+  "progressEstimate": {
+    "standalonePSC1WithoutLean4": "~96.8%",
+    "psc1SmallCompleteProgrammingLanguage": "~70.4%",
+    "psc1SmallTheoremProver": "~61.6%",
+    "fullProofScriptCompiler": "~59.4%",
+    "fullLeanLikeProofScriptWithoutLean4": "~13.6%",
+    "formalLean4Equivalence": "0 proven obligations"
+  }
+}

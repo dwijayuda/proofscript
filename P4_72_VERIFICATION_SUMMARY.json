@@ -1,0 +1,27 @@
+{
+  "release": "P4.72",
+  "title": "Nat multiplication sugar and runtime",
+  "trustLabel": "K3-TB trusted-boundary; not fully formally equivalent to Lean 4 yet",
+  "commands": [
+    { "command": "npm run build -- --pretty false", "status": "PASS" },
+    { "command": "npm run test:pslive:nat-mul", "status": "PASS" },
+    { "command": "node tools/k1d-foundation-tests.ts", "status": "PASS" },
+    { "command": "npm run test:pslive:nat-plus", "status": "PASS" },
+    { "command": "npm run test:standalone-small", "status": "PASS" },
+    { "command": "npm run test:kernel:smoke", "status": "PASS" },
+    { "command": "node tools/pskernel.ts status --json", "status": "PASS", "proofStatus": "not-proven" },
+    { "command": "unzip -tq proofscript-standalone-kernel-maturity-replacement-p4-72.zip", "status": "PASS" }
+  ],
+  "notRun": [
+    { "command": "npm run verify:k3tb:publish", "reason": "fast slice; still requires PROOFSCRIPT_LEAN_BIN for Lean 4.33.1" },
+    { "command": "full long matrix", "reason": "user requested faster / less test" }
+  ],
+  "progressEstimate": {
+    "Standalone PSC-1 without Lean4": "~97.0%",
+    "PSC-1 small complete programming language": "~71.0%",
+    "PSC-1 small theorem prover": "~62.0%",
+    "Full ProofScript compiler": "~59.8%",
+    "Full Lean-like ProofScript without Lean4": "~13.7%",
+    "Formal Lean 4 equivalence": "0 proven obligations"
+  }
+}

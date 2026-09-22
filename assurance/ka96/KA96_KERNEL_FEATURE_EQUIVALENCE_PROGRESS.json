@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka96-primitive-application-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.99",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 74,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 301,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 296,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "correctedFormalLean4LeanBridgeObligations": 301,
+    "countedNewObligations": [
+      "translated_vexpr_insts_appN_wf",
+      "translated_vexpr_subst_appN_wf",
+      "translated_vexpr_lams_append_wf",
+      "translated_expr_appN_eq_mkAppList_wf",
+      "translated_expr_mkAppN_eq_wf"
+    ]
+  },
+  "metricPolicy": "KA96 adds direct non-sorry-backed primitive application/telescope helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

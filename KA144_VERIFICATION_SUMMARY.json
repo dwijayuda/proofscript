@@ -1,0 +1,32 @@
+{
+  "checkpoint": "proofscript-v1-ka144-state-model-descriptor0",
+  "version": "1.0.0-pskernel.147",
+  "commands": [
+    "npm install --offline --no-audit --no-fund",
+    "npm run build",
+    "npm run test:ka144",
+    "npm run test:ka143",
+    "npm run test:ka142",
+    "npm run test:ka141",
+    "npm run test:ka140",
+    "npm run test:ka139",
+    "npm run test:ka138",
+    "npm run test:ka137",
+    "npm run test:ka136",
+    "npm pack --ignore-scripts",
+    "npm publish --dry-run --ignore-scripts --access public",
+    "fresh npm install from tarball",
+    "fresh npx psc state-model validate",
+    "fresh npx psc contracts --state-model",
+    "fresh npx psc obligations --state-model",
+    "fresh npx psc proof-status",
+    "fresh npx psc verify proof-status",
+    "fresh npx psc software-alpha"
+  ],
+  "result": "passed",
+  "notes": [
+    "Monadic/stateful contract proofs are not discharged semantically.",
+    "State model descriptors are structurally validated and hash-bound.",
+    "Missing state model descriptors fail closed for monadic contracts."
+  ]
+}

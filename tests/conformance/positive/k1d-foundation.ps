@@ -1,0 +1,28 @@
+-- Standalone ProofScript K1d bootstrap foundation.
+-- Each declaration is kernel-checked; no host-language primitive is trusted.
+universe u;
+
+inductive Eq(A: Sort u, a: A): A → Prop {
+  | refl: Eq(A, a, a);
+}
+
+inductive Nat: Type {
+  | zero;
+  | succ(n: Nat);
+}
+
+inductive Bool: Type {
+  | false;
+  | true;
+}
+
+def Nat.add(a: Nat, b: Nat): Nat := {
+  @Nat.rec.{1}(
+    fun (x: Nat) => Nat,
+    a,
+    fun (k: Nat, ih: Nat) => Nat.succ(ih),
+    b
+  )
+}
+
+theorem addZero(n: Nat): Eq.{1}(Nat, Nat.add(n, Nat.zero), n) := Eq.refl.{1}(Nat, n);

@@ -1,0 +1,117 @@
+{
+  "checkpoint": "proofscript-v1-ka37-whnf-head-reduction-bridge0",
+  "publicVersion": "1.0.0-pskernel.40",
+  "baseline": "proofscript-v1-ka36-expression-tag-coverage-bridge0",
+  "verificationStatus": "passed",
+  "commands": [
+    {
+      "command": "npm install --offline --no-audit --no-fund",
+      "status": 0
+    },
+    {
+      "command": "npm run build -- --pretty false",
+      "status": 0
+    },
+    {
+      "command": "npm run test:pskernel:ka37",
+      "status": 0
+    },
+    {
+      "command": "npm run assurance:ka37",
+      "status": 0
+    },
+    {
+      "command": "npm run lean:ka37:check",
+      "status": 0
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "status": 0
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "status": 0
+    },
+    {
+      "command": "npm run test:psc:kernel-status",
+      "status": 0
+    },
+    {
+      "command": "npm run test:psc:conformance-bounded",
+      "status": 0
+    },
+    {
+      "command": "npm run arena:corpus-preflight",
+      "status": 0
+    },
+    {
+      "command": "npm run test:arena:static-nonperf",
+      "status": 0
+    },
+    {
+      "command": "npm run test:arena:tutorial",
+      "status": 0
+    },
+    {
+      "command": "npm run verify:arena",
+      "status": 0
+    },
+    {
+      "command": "fresh extract npm install --offline --no-audit --no-fund",
+      "status": 0
+    },
+    {
+      "command": "fresh extract npm run build -- --pretty false",
+      "status": 0
+    },
+    {
+      "command": "fresh extract npm run test:pskernel:ka37",
+      "status": 0
+    },
+    {
+      "command": "fresh extract npm run lean:ka37:check",
+      "status": 0
+    },
+    {
+      "command": "unzip -t final ZIP",
+      "status": 0
+    },
+    {
+      "command": "sha256sum -c final SHA file",
+      "status": 0
+    }
+  ],
+  "arenaEvidence": {
+    "corpusNdjsonCount": 190,
+    "staticNonPerformance": {
+      "total": 26,
+      "acceptedGood": 4,
+      "rejectedBad": 22,
+      "wrongAccepts": 0,
+      "wrongRejects": 0,
+      "notRun": 0
+    },
+    "tutorial": {
+      "total": 140,
+      "acceptedGood": 93,
+      "rejectedBad": 47,
+      "wrongAccepts": 0,
+      "wrongRejects": 0,
+      "notRun": 0
+    },
+    "verifyArena": "passed"
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullWHNFRecursorRefinement": false,
+    "formalLean4EquivalenceProvenObligations": 90
+  },
+  "freshExtract": "passed",
+  "zipIntegrity": "passed"
+}

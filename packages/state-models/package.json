@@ -1,0 +1,9 @@
+{
+  "name": "@proofscript/state-models",
+  "version": "1.0.0-pskernel.149",
+  "type": "module",
+  "main": "src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs"
+  }
+}

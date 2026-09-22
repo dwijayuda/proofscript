@@ -1,0 +1,50 @@
+{
+  "release": "ProofScript Kernel v71 K3-TB Practical Release Candidate 1",
+  "releaseId": "proofscript-kernel-v71-k3tb-practical-release1",
+  "label": "K3-TB",
+  "status": "PRACTICAL_RELEASE_NOT_FULLY_FORMAL_K3",
+  "progress": {
+    "percent": 99.5,
+    "basisPoints": 9950,
+    "kind": "engineering-track",
+    "note": "Practical release readiness under explicit trusted-boundary assumptions; not fully formal K3."
+  },
+  "lean": {
+    "semanticBaseline": "4.33.1",
+    "releaseCommit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "verification": {
+    "oneCommand": "PROOFSCRIPT_LEAN_BIN=/path/to/lean npm run verify:k3tb:release",
+    "requiresOfflineInstall": "npm install --offline --ignore-scripts",
+    "expectedFinalStatus": "K3TB_RELEASE_VERIFY_STATUS=PASS",
+    "expectedBoundary": "K3TB_RELEASE_VERIFY_BOUNDARY=PRACTICAL_RELEASE_NOT_FULLY_FORMAL_K3"
+  },
+  "inheritedCheckpointsExpected": 22,
+  "fullLeanGatePartsExpected": 6,
+  "trustedInfrastructure": [
+    "Lean 4.33.1 reference binary",
+    "Node.js runtime",
+    "ECMAScript semantics",
+    "TypeScript compiler",
+    "npm offline install path",
+    "host OS/filesystem/process environment"
+  ],
+  "allowedClaims": [
+    "K3-TB practical release candidate",
+    "Lean 4.33.1-backed trusted-boundary assurance release",
+    "reproducibly verifiable under explicit trusted infrastructure assumptions"
+  ],
+  "forbiddenClaims": [
+    "fully formal K3",
+    "complete Lean kernel equivalence",
+    "verified TypeScript/Node runtime semantics",
+    "arbitrary Lean acceptance completeness"
+  ],
+  "remainingFullFormalK3Obligations": [
+    "verified TypeScript compiler or Lean extraction path",
+    "full ECMAScript/Node runtime semantics or removal of Node from the trusted checker path",
+    "arbitrary Lean acceptance completeness iff ProofScript acceptance",
+    "exhaustive all-Lean reduction-path completeness",
+    "unconditional final K3 theorem instantiation"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "checkpoint": "proofscript-v1-ka34-mutual-def-env-bridge0",
+  "publicVersion": "1.0.0-pskernel.37",
+  "baseline": "proofscript-v1-ka33-inductive-env-bridge0",
+  "referenceKind": "direct-imported-lean4lean-mutual-def-env-bridge",
+  "coveredLean4LeanDeclConstructors": ["VDecl.mutualDef"],
+  "coveredLean4LeanEnvOperations": ["VEnv.addConsts", "VEnv.addDefEqs", "VEnv.constants", "VEnv.defeqs"],
+  "coveredPSFeatureGroups": ["mutual-definitions-bridge-surface"],
+  "formalBridgeLemmas": [
+    "PSKernelKA34.translated_mutual_def_is_real_vdecl",
+    "PSKernelKA34.translated_mutual_def_vdecl_wf",
+    "PSKernelKA34.translated_mutual_def_env_wf",
+    "PSKernelKA34.translated_mutual_def_env_ordered",
+    "PSKernelKA34.translated_mutual_def_constants_member",
+    "PSKernelKA34.translated_mutual_def_defeq_member"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "mutualDefinitionSemanticSoundness": false,
+    "formalLean4EquivalenceProvenObligations": 66
+  }
+}

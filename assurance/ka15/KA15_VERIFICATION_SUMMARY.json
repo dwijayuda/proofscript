@@ -1,0 +1,45 @@
+{
+  "checkpoint": "proofscript-v1-ka15-env-wf-bridge0",
+  "publicVersion": "1.0.0-pskernel.18",
+  "coreArtifactFormat": 71,
+  "certificateFormat": 2,
+  "commands": {
+    "npmInstallOffline": "passed: npm install --offline --no-audit --no-fund",
+    "build": "passed: npm run build -- --pretty false",
+    "kaTests": "ka1-ka11 passed before wrapper timeout; ka12-ka15 rerun individually and passed",
+    "kaAssurance": "ka1-ka11 passed; ka12-ka15 rerun individually and passed",
+    "leanKA11Import": "passed individually",
+    "leanKA12Check": "passed individually",
+    "leanKA13Check": "passed individually",
+    "leanKA15Check": "passed individually",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "pscConformanceBounded": "passed",
+    "arenaCorpusPreflight": "passed: 190 NDJSON fixtures",
+    "arenaStaticNonperf": "passed: 26/26 decisive",
+    "arenaTutorial": "passed: 140/140 decisive",
+    "verifyArena": "wrapper timed out near the end after passing all preceding verify:arena components through tutorial; remaining tail components were rerun individually and passed"
+  },
+  "arena": {
+    "ndjsonCount": 190,
+    "staticNonperf": { "total": 26, "acceptedGood": 4, "rejectedBad": 22, "wrongAccepts": 0, "wrongRejects": 0, "checkerCrashes": 0, "notRun": 0 },
+    "tutorial": { "total": 140, "acceptedGood": 93, "rejectedBad": 47, "wrongAccepts": 0, "wrongRejects": 0, "checkerCrashes": 0, "notRun": 0 }
+  },
+  "lean4lean": {
+    "ka15Relation": "Lean4Lean.VEnv.WF",
+    "ka15Theorems": [
+      "PSKernelKA15.translated_axiom_env_wf",
+      "PSKernelKA15.translated_definition_env_wf"
+    ],
+    "formalLean4EquivalenceProvenObligations": 4
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false
+  }
+}

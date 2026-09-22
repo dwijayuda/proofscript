@@ -1,0 +1,38 @@
+{
+  "checkpoint": "proofscript-v1-ka37-whnf-head-reduction-bridge0",
+  "publicVersion": "1.0.0-pskernel.40",
+  "baseline": "proofscript-v1-ka36-expression-tag-coverage-bridge0",
+  "referenceKind": "direct-imported-lean4lean-whnf-head-reduction-bridge",
+  "imports": ["Lean4Lean.Theory.Typing.HeadReduction"],
+  "coveredLean4LeanWHNFHeadReductionSurface": [
+    "WHNF.bvar",
+    "WHNF.lam",
+    "WHNF.sort",
+    "WHNF.forallE",
+    "WHRed.beta",
+    "WHRed.app",
+    "WHRedS.app",
+    "WHRedS.determ"
+  ],
+  "formalBridgeLemmas": [
+    "PSKernelKA37.translated_whnf_bvar_head_normal",
+    "PSKernelKA37.translated_whnf_lam_head_normal",
+    "PSKernelKA37.translated_whnf_sort_head_normal",
+    "PSKernelKA37.translated_whnf_forall_head_normal",
+    "PSKernelKA37.translated_whred_beta_step",
+    "PSKernelKA37.translated_whred_app_congruence",
+    "PSKernelKA37.translated_whreds_app_congruence",
+    "PSKernelKA37.translated_whreds_deterministic"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullWHNFRecursorRefinement": false,
+    "formalLean4EquivalenceProvenObligations": 90
+  }
+}

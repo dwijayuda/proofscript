@@ -1,0 +1,38 @@
+{
+  "checkpoint": "proofscript-v1-ka140-usable-software-verification-alpha0",
+  "version": "1.0.0-pskernel.143",
+  "base": "proofscript-v1-ka139-proof-obligation-workflow0",
+  "languageProgress": {
+    "smallProgrammingLanguagePercent": 58,
+    "theoremProverSurfacePercent": 28,
+    "formalVerificationContractsPercent": 50,
+    "runtimeCertificateCorrespondencePercent": 35,
+    "typescriptRuntimeAlphaPercent": 42,
+    "overallConservativeDashboardPercent": 88.0
+  },
+  "implementedNow": [
+    "examples/software real-development alpha corpus",
+    "psc software-alpha workflow command",
+    "source -> check -> core -> lean -> TypeScript -> certificate workflow for executable examples",
+    "source -> contracts -> obligations -> proof-status workflow for contract examples",
+    "software-alpha manifest with source/proof/runtime artifact hashes",
+    "installed npm tarball software-alpha smoke test"
+  ],
+  "notYetImplemented": [
+    "semantic proof discharge",
+    "Lean-checked generated obligations",
+    "loop invariants",
+    "decreases / termination_by",
+    "monadic vcgen/mvcgen contracts",
+    "full tactic engine",
+    "full Lean4 equivalence",
+    "fully formal K3"
+  ],
+  "trustBoundary": {
+    "semanticProofChecking": false,
+    "fullLean4Equivalence": false,
+    "executionCorrespondenceProof": false,
+    "npmInstallableToolchain": true,
+    "certifiableArtifacts": true
+  }
+}

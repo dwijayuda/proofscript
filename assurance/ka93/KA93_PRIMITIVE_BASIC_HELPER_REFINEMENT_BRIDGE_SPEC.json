@@ -1,0 +1,36 @@
+{
+  "checkpoint": "proofscript-v1-ka93-primitive-basic-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.96",
+  "baseline": "proofscript-v1-ka92-primitive-char-string-recognizer-refinement0",
+  "referenceKind": "primitive-basic-helper-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 5,
+  "countedObligations": [
+    "translated_contains_primitive_wf",
+    "translated_natBinLit_wf",
+    "translated_natBinLitBool_wf",
+    "translated_withNatProbe_wf",
+    "translated_withBoolProbe_wf"
+  ],
+  "sourceTheorems": [
+    "TypeChecker.VContext.contains_primitive",
+    "_root_.Lean4Lean.VEnv.ReflectsNatNatNat.applyLit",
+    "TypeChecker.VContext.natBinLit",
+    "TypeChecker.VContext.natBinLitBool",
+    "TypeChecker.M.WF.withNatProbe",
+    "TypeChecker.M.WF.withBoolProbe"
+  ],
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveBasicHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

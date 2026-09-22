@@ -1,0 +1,34 @@
+{
+  "checkpoint": "proofscript-v1-ka67-executable-defeq-binder-app-eta-refinement0",
+  "publicVersion": "1.0.0-pskernel.70",
+  "baseline": "proofscript-v1-ka66-executable-defeq-core-refinement0",
+  "referenceKind": "strict-lean4lean-executable-defeq-binder-app-eta-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "leanModule": "assurance/ka67/executable-defeq-binder-app-eta-refinement-bridge.lean",
+  "baselineFormalObligations": 200,
+  "countedNewFormalObligations": 4,
+  "countedNewObligationNames": [
+    "translated_isDefEqLambda_wf",
+    "translated_isDefEqForall_wf",
+    "translated_isDefEqApp_wf",
+    "translated_tryEtaExpansion_wf"
+  ],
+  "metricPolicy": "KA67 advances the exact formal obligation counter only; percentage estimates remain held at the latest audited KA65/KA66 values pending a separate coverage audit.",
+  "oldCodebasePolicy": {
+    "oldCodebaseRegressionIgnoredByUser": true,
+    "fullNpmTestRequiredForThisCheckpoint": false,
+    "reason": "User explicitly requested continuing with KA66 and ignoring old codebase; KA67 changes only strict Lean4Lean bridge wrappers and release metadata."
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWHNFDefEqRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

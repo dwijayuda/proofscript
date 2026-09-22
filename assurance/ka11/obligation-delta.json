@@ -1,0 +1,22 @@
+{
+  "schema": "proofscript.assurance.ka11.obligation-delta/v1",
+  "checkpoint": "proofscript-v1-ka11-offline-lean4lean-deps0",
+  "closedByKA11": [
+    "exact_batteries_v4_33_0_rc2_archive_materialized",
+    "lean4lean_git_batteries_dependency_rewritten_to_offline_path",
+    "lean4lean_source_builds_against_offline_batteries",
+    "lean4lean_import_check_runs_under_lake_env",
+    "strict_actual_import_gate_passes_without_network"
+  ],
+  "stillOpen": [
+    "bind PSKernel translation to actual Lean4Lean declarations instead of Lean4LeanCompat names only",
+    "prove declaration checking soundness against Lean4Lean.TypeChecker",
+    "prove definitional equality soundness against Lean4Lean conversion relation",
+    "prove environment extension preservation",
+    "prove recursor/inductive soundness",
+    "prove quotient/proof-irrelevance/propext coverage",
+    "prove completeness for supported Core v71 fragment",
+    "submit PSKernel as an official Lean Kernel Arena checker if desired"
+  ],
+  "formalLean4EquivalenceProvenObligations": 0
+}

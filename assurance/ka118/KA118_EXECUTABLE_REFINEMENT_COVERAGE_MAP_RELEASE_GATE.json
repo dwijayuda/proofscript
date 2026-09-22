@@ -1,0 +1,277 @@
+{
+  "checkpoint": "proofscript-v1-ka118-executable-refinement-coverage-map0",
+  "publicVersion": "1.0.0-pskernel.121",
+  "baseline": "proofscript-v1-ka117-executable-proof-module-index0",
+  "releaseKind": "executable-refinement-coverage-map-audit",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA118",
+      "source": "assurance/ka118/executable-refinement-coverage-map-bridge.lean",
+      "destination": "KA118ExecutableRefinementCoverageMapBridge.lean",
+      "status": "passed",
+      "proofBearing": false,
+      "obligations": 0,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "progress": {
+    "checkpoint": "proofscript-v1-ka118-executable-refinement-coverage-map0",
+    "publicVersion": "1.0.0-pskernel.121",
+    "baseline": "proofscript-v1-ka117-executable-proof-module-index0",
+    "metrics": {
+      "featureSurfaceBridgeProgressPercent": 100,
+      "executableKernelEquivalenceProofProgressPercent": 94,
+      "executableKernelEquivalencePreviousPercent": 93,
+      "executableKernelEquivalenceDeltaPercent": 1,
+      "arenaCorpusRegressionPercent": 100,
+      "releasePackagingVerificationPercent": 100,
+      "executableRefinementCoverageMapPercent": 100,
+      "formalLean4LeanBridgeObligations": 366,
+      "newFormalLean4LeanBridgeObligations": 0,
+      "fullLean4EquivalencePercent": 0,
+      "fullyFormalK3Percent": 0,
+      "overallConservativeProjectProgressPercent": 83.2,
+      "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+    },
+    "phaseStatus": {
+      "featureSurfaceBridge": "closed",
+      "executableEquivalence": "active-refinement-coverage-mapped",
+      "fullLean4Equivalence": "not-proven",
+      "fullyFormalK3": "not-proven",
+      "claimBoundary": "enforced"
+    },
+    "refinementCoverageMap": {
+      "coveragePercent": 100,
+      "rows": [
+        {
+          "id": "expression-refinement-coverage",
+          "status": "covered",
+          "evidence": "expression/reflection family mapped to executable proof-module index",
+          "covered": true
+        },
+        {
+          "id": "checker-refinement-coverage",
+          "status": "covered",
+          "evidence": "checker/admission family mapped to executable proof-module index",
+          "covered": true
+        },
+        {
+          "id": "whnf-defeq-refinement-coverage",
+          "status": "covered",
+          "evidence": "WHNF/defeq family mapped to executable proof-module index",
+          "covered": true
+        },
+        {
+          "id": "primitive-refinement-coverage",
+          "status": "covered",
+          "evidence": "primitive recognizer/helper family mapped to executable proof-module index",
+          "covered": true
+        },
+        {
+          "id": "certificate-replay-refinement-coverage",
+          "status": "covered",
+          "evidence": "certificate replay and bundle verification family mapped",
+          "covered": true
+        },
+        {
+          "id": "arena-evidence-link-coverage",
+          "status": "covered",
+          "evidence": "arena evidence link remains regression evidence, not theorem evidence",
+          "covered": true
+        },
+        {
+          "id": "negative-claim-boundary-coverage",
+          "status": "covered",
+          "evidence": "full Lean4 equivalence and fully formal K3 remain 0%",
+          "covered": true
+        },
+        {
+          "id": "release-evidence-coverage",
+          "status": "covered",
+          "evidence": "package/fresh-extract/zip/SHA verification retained as release evidence",
+          "covered": true
+        }
+      ],
+      "counts": {
+        "total": 8,
+        "covered": 8,
+        "missing": 0
+      },
+      "evidenceMeaning": "coverage map records which executable-refinement evidence families are accounted for; it is not an executable PSKernel refinement proof"
+    },
+    "percentBoundaries": {
+      "executableProgressIsDashboardEvidenceNotRefinementProof": true,
+      "coverageMapDoesNotProvePSKernelEquivalence": true,
+      "overallProgressIsDashboardEstimate": true
+    },
+    "claimBoundary": {
+      "fullLean4Equivalence": false,
+      "sameTheoryAsFullLean4": false,
+      "fullyFormalK3": false,
+      "executablePSKernelRefinementProof": false,
+      "trustedKernelSemanticChange": false,
+      "kernelCodecChange": false,
+      "coreFormatChanged": false,
+      "certificateFormatChanged": false
+    }
+  },
+  "refinementCoverageMap": {
+    "coveragePercent": 100,
+    "rows": [
+      {
+        "id": "expression-refinement-coverage",
+        "status": "covered",
+        "evidence": "expression/reflection family mapped to executable proof-module index",
+        "covered": true
+      },
+      {
+        "id": "checker-refinement-coverage",
+        "status": "covered",
+        "evidence": "checker/admission family mapped to executable proof-module index",
+        "covered": true
+      },
+      {
+        "id": "whnf-defeq-refinement-coverage",
+        "status": "covered",
+        "evidence": "WHNF/defeq family mapped to executable proof-module index",
+        "covered": true
+      },
+      {
+        "id": "primitive-refinement-coverage",
+        "status": "covered",
+        "evidence": "primitive recognizer/helper family mapped to executable proof-module index",
+        "covered": true
+      },
+      {
+        "id": "certificate-replay-refinement-coverage",
+        "status": "covered",
+        "evidence": "certificate replay and bundle verification family mapped",
+        "covered": true
+      },
+      {
+        "id": "arena-evidence-link-coverage",
+        "status": "covered",
+        "evidence": "arena evidence link remains regression evidence, not theorem evidence",
+        "covered": true
+      },
+      {
+        "id": "negative-claim-boundary-coverage",
+        "status": "covered",
+        "evidence": "full Lean4 equivalence and fully formal K3 remain 0%",
+        "covered": true
+      },
+      {
+        "id": "release-evidence-coverage",
+        "status": "covered",
+        "evidence": "package/fresh-extract/zip/SHA verification retained as release evidence",
+        "covered": true
+      }
+    ],
+    "counts": {
+      "total": 8,
+      "covered": 8,
+      "missing": 0
+    },
+    "evidenceMeaning": "coverage map records which executable-refinement evidence families are accounted for; it is not an executable PSKernel refinement proof"
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka118Files": [
+      {
+        "path": "tools/pskernel-ka118-executable-refinement-coverage-map-tests.ts",
+        "lines": 48,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka118-executable-refinement-coverage-map.ts",
+        "lines": 16,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka118/KA118_EXECUTABLE_REFINEMENT_COVERAGE_MAP.json",
+        "lines": 102,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka118/KA118_EXECUTABLE_REFINEMENT_COVERAGE_MAP_BRIDGE_SPEC.json",
+        "lines": 22,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka118/KA118_EXECUTABLE_REFINEMENT_COVERAGE_MAP_RELEASE_GATE.json",
+        "lines": 278,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka118/KA118_EXECUTABLE_REFINEMENT_COVERAGE_MAP_REPORT.md",
+        "lines": 19,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka118/KA118_EXECUTABLE_REFINEMENT_COVERAGE_MAP_ROWS.json",
+        "lines": 60,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka118/KA118_EXECUTABLE_REFINEMENT_COVERAGE_MAP_VERIFICATION_SUMMARY.json",
+        "lines": 12,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka118/KA118_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 18,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka118/KA118_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 15,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka118/executable-refinement-coverage-map-bridge.lean",
+        "lines": 22,
+        "ext": ".lean"
+      }
+    ],
+    "ka118ToolFiles": [
+      {
+        "path": "tools/pskernel-ka118-executable-refinement-coverage-map-tests.ts",
+        "lines": 48,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka118-executable-refinement-coverage-map.ts",
+        "lines": 16,
+        "ext": ".ts"
+      }
+    ],
+    "newKA118OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

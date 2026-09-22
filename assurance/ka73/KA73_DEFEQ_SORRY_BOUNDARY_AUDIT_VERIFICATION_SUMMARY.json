@@ -1,0 +1,34 @@
+{
+  "checkpoint": "proofscript-v1-ka73-defeq-sorry-boundary-audit0",
+  "publicVersion": "1.0.0-pskernel.76",
+  "baseline": "proofscript-v1-ka72-executable-defeq-eta-cache-status-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "not-applicable-audit-only",
+  "formalLean4LeanBridgeObligations": 219,
+  "newFormalLean4LeanBridgeObligations": 0,
+  "ledgerCorrectionFormalLean4LeanBridgeObligations": -1,
+  "auditFindings": {
+    "demotedCountedObligations": [
+      {
+        "ka": 70,
+        "name": "translated_isDefEqUnitLike_wf",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.isDefEqUnitLike.WF",
+        "reason": "upstream_theorem_body_contains_sorry",
+        "previousStatus": "counted",
+        "correctedStatus": "demoted-not-counted"
+      }
+    ],
+    "alreadyExcludedSorryBacked": [
+      {
+        "ka": 72,
+        "name": "tryEtaStructCore.WF",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.tryEtaStructCore.WF",
+        "reason": "upstream_theorem_body_contains_sorry",
+        "status": "already-excluded-by-KA72"
+      }
+    ]
+  },
+  "redTestObserved": true,
+  "redTestReason": "KA73 sorry-boundary audit test failed first on missing KA73 gate tool",
+  "noWrapperTimeoutCountedAsPassed": true
+}

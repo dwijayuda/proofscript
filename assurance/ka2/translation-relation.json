@@ -1,0 +1,61 @@
+{
+  "schema": "proofscript.assurance.ka2.translation-relation/v1",
+  "checkpoint": "proofscript-v1-ka2-translation-relation0",
+  "publicVersion": "1.0.0-pskernel.4",
+  "status": "executable-translation-scaffold-not-equivalence-proof",
+  "baseline": "proofscript-v1-ka1-lean4331-inventory0",
+  "targetLean": {
+    "version": "4.33.1",
+    "referenceRelation": "Lean4Lean-compatible core model, not bound to an imported Lean module yet"
+  },
+  "pscore": {
+    "kernelName": "PSKernel",
+    "formatVersion": 71,
+    "implementationProfile": "KERNEL-level-instantiation-conformance1",
+    "certificateFormat": 2
+  },
+  "mapping": {
+    "levelTags": [
+      { "ps": "zero", "leanReference": "Level.zero", "status": "translated" },
+      { "ps": "succ", "leanReference": "Level.succ", "status": "translated" },
+      { "ps": "max", "leanReference": "Level.max", "status": "translated" },
+      { "ps": "imax", "leanReference": "Level.imax", "status": "translated" },
+      { "ps": "param", "leanReference": "Level.param", "status": "translated" },
+      { "ps": "mvar", "leanReference": "unresolved level metavariable", "status": "blocked-before-trusted-core" }
+    ],
+    "termTags": [
+      { "ps": "sort", "leanReference": "Expr.sort", "status": "translated" },
+      { "ps": "bvar", "leanReference": "Expr.bvar", "status": "translated" },
+      { "ps": "const", "leanReference": "Expr.const", "status": "translated" },
+      { "ps": "app", "leanReference": "Expr.app", "status": "translated" },
+      { "ps": "lam", "leanReference": "Expr.lam", "status": "translated" },
+      { "ps": "pi", "leanReference": "Expr.forallE", "status": "translated" },
+      { "ps": "let", "leanReference": "Expr.letE", "status": "translated" },
+      { "ps": "lit", "leanReference": "Expr.lit or constructor-lowered literal", "status": "adapter-normalized" },
+      { "ps": "proj", "leanReference": "Expr.proj", "status": "translated" },
+      { "ps": "mdata", "leanReference": "metadata-erased expression", "status": "adapter-erased" },
+      { "ps": "fvar", "leanReference": "free-variable implementation node", "status": "blocked-before-trusted-core" },
+      { "ps": "mvar", "leanReference": "expression metavariable", "status": "blocked-before-trusted-core" }
+    ],
+    "declarationKinds": [
+      { "ps": "quot", "leanReference": "quotient primitive cluster", "status": "translated" },
+      { "ps": "axiom", "leanReference": "Declaration.axiom", "status": "translated" },
+      { "ps": "definition", "leanReference": "Declaration.defn", "status": "translated" },
+      { "ps": "theorem", "leanReference": "Declaration.thm", "status": "translated" },
+      { "ps": "example", "leanReference": "Declaration.thm", "status": "translated" },
+      { "ps": "opaque", "leanReference": "Declaration.opaque", "status": "translated" },
+      { "ps": "inductive", "leanReference": "Declaration.induct", "status": "translated" },
+      { "ps": "mutualInductive", "leanReference": "mutual inductive block expanded into reference inductive entries", "status": "translated-with-block-obligation" }
+    ]
+  },
+  "trustBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "executableTranslationIsTrustedChecker": false
+  },
+  "fullLean4Equivalence": false,
+  "sameTheoryAsFullLean4": false,
+  "fullyFormalK3": false,
+  "formalLean4EquivalenceProvenObligations": 0
+}

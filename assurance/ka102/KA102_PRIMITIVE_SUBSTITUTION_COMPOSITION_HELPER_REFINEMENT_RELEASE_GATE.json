@@ -1,0 +1,130 @@
+{
+  "checkpoint": "proofscript-v1-ka102-primitive-substitution-composition-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.105",
+  "baseline": "proofscript-v1-ka101-primitive-substitution-helper-refinement0",
+  "releaseKind": "strict-lean4lean-primitive-substitution-composition-helper-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA102",
+      "source": "assurance/ka102/primitive-substitution-composition-helper-refinement-bridge.lean",
+      "destination": "KA102PrimitiveSubstitutionCompositionHelperBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 5,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka102-primitive-substitution-composition-helper-refinement0",
+    "publicVersion": "1.0.0-pskernel.105",
+    "featureSurfaceBridgeProgressPercent": 99,
+    "executableKernelEquivalenceProofProgressPercent": 80,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 331,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 326,
+      "newFormalLean4LeanBridgeObligations": 5,
+      "correctedFormalLean4LeanBridgeObligations": 331,
+      "countedNewObligations": [
+        "translated_subst_consN_bvars_wf",
+        "translated_subst_lift_tail_inst_wf",
+        "translated_subst_consN_append_wf",
+        "translated_subst_consN_append_singleton_wf",
+        "translated_subst_lift_comp_one_wf"
+      ]
+    },
+    "metricPolicy": "KA102 adds direct non-sorry-backed primitive substitution-composition helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka102Files": [
+      {
+        "path": "tools/pskernel-ka102-primitive-substitution-composition-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka102-primitive-substitution-composition-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka102/KA102_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 23,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka102/KA102_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka102/KA102_PRIMITIVE_SUBSTITUTION_COMPOSITION_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 36,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka102/KA102_PRIMITIVE_SUBSTITUTION_COMPOSITION_HELPER_REFINEMENT_RELEASE_GATE.json",
+        "lines": 131,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka102/KA102_PRIMITIVE_SUBSTITUTION_COMPOSITION_HELPER_REFINEMENT_REPORT.md",
+        "lines": 22,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka102/KA102_PRIMITIVE_SUBSTITUTION_COMPOSITION_HELPER_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 21,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka102/primitive-substitution-composition-helper-refinement-bridge.lean",
+        "lines": 36,
+        "ext": ".lean"
+      }
+    ],
+    "ka102ToolFiles": [
+      {
+        "path": "tools/pskernel-ka102-primitive-substitution-composition-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka102-primitive-substitution-composition-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      }
+    ],
+    "newKA102OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveSubstitutionCompositionHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

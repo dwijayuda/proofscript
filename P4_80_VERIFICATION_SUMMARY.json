@@ -1,0 +1,72 @@
+{
+  "release": "P4.80",
+  "title": "pslive test harness consolidation",
+  "timestamp": "2026-09-12T00:00:00+07:00",
+  "trust_boundary": "K3-TB trusted-boundary; not fully formal K3; not proven equivalent to Lean 4",
+  "formal_lean4_equivalence_proven_obligations": 0,
+  "changed_files": [
+    "tools/pslive-test-harness.ts",
+    "tools/pslive-test-harness-tests.ts",
+    "tools/pslive-build-ts-tests.ts",
+    "tools/pslive-nat-plus-tests.ts",
+    "tools/pslive-bool-operators-tests.ts",
+    "packages/runtime/src/index.ts",
+    "packages/runtime/dist/index.js",
+    "packages/runtime/dist/index.d.ts",
+    "package.json",
+    "README.md",
+    "PRODUCTION_P4_80_PSLIVE_TEST_HARNESS_REPORT.md",
+    "TREE.txt"
+  ],
+  "verification": [
+    {
+      "command": "node tools/pslive-test-harness-tests.ts before implementation",
+      "status": "FAIL_EXPECTED",
+      "evidence": "ERR_MODULE_NOT_FOUND: pslive-test-harness.ts"
+    },
+    {
+      "command": "npm run build -- --pretty false",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:pslive:harness",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:pslive:cleanup-harness",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "status": "PASS"
+    },
+    {
+      "command": "node tools/pskernel.ts status --json",
+      "status": "PASS",
+      "evidence": "trusted-boundary / not-proven"
+    }
+  ],
+  "not_rerun": [
+    {
+      "command": "npm run verify:k3tb:publish",
+      "reason": "still needs PROOFSCRIPT_LEAN_BIN"
+    },
+    {
+      "command": "full long matrix",
+      "reason": "skipped for fast cleanup iteration"
+    }
+  ],
+  "progress_after_p4_80": {
+    "Standalone PSC-1 without Lean4": "~97.3%",
+    "PSC-1 small complete programming language": "~72.0%",
+    "PSC-1 small theorem prover": "~62.1%",
+    "Full ProofScript compiler": "~61.3%",
+    "Full Lean-like ProofScript without Lean4": "~13.8%",
+    "Formal Lean 4 equivalence": "0 proven obligations",
+    "Maintainability / anti-spaghetti score": "~70%"
+  }
+}

@@ -1,0 +1,22 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+import {spawnSync} from "node:child_process";
+import {fileURLToPath} from "node:url";
+import {TypeclassEnvironment} from "../packages/typeclass/dist/index.js";
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
+const cli=path.join(root,"packages/cli/dist/cli.js");
+const out=path.join(root,"artifacts/test/k2o-instance-search.pscore.json");
+const lean=path.join(root,"artifacts/test/k2o-instance-search.lean");
+function run(args,expect=0){const r=spawnSync(process.execPath,[cli,...args],{cwd:root,encoding:"utf8"});if(r.status!==expect){console.error(r.stdout,r.stderr);throw new Error(`${args.join(" ")} expected ${expect}, got ${r.status}`);}return r;}
+run(["check","tests/conformance/positive/k2o-instance-search.ps","--std","--emit-core",out]);
+const artifact=JSON.parse(fs.readFileSync(out,"utf8"));
+assert.equal(artifact.formatVersion,12);assert.equal(artifact.implementationProfile,"K3c-section-vars0");
+const env=new TypeclassEnvironment(artifact.typeclasses);
+assert.deepEqual(env.candidates("Flag").map(x=>x.name),["flagLater","flagHigh","flagDefault"]);
+const auto=artifact.declarations.find(d=>d.name==="automaticRead");assert(auto&&auto.kind==="definition");
+const text=JSON.stringify(auto.value);assert.match(text,/flagLater/);assert.doesNotMatch(text,/flagHigh/);assert.doesNotMatch(text,/flagDefault/);
+run(["verify",out]);run(["emit-lean",out,"--std","--out",lean]);
+assert.match(fs.readFileSync(lean,"utf8"),/def automaticRead : _root_\.Bool := \(@_root_\.readFlag _root_\.flagLater _root_\.Nat\.zero\)/);
+const missing=run(["check","tests/conformance/negative/k2o-instance-missing.ps","--std"],1);assert.match(missing.stderr,/failed to synthesize instance for Flag/);
+console.log("✓ K2o exact-goal global instance synthesis honors priority/declaration order, emits explicit Core, rejects missing candidates, and independently replays");

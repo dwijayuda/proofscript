@@ -1,0 +1,232 @@
+{
+  "checkpoint": "proofscript-v1-ka38-whnf-preservation-bridge0",
+  "publicVersion": "1.0.0-pskernel.41",
+  "baseline": "proofscript-v1-ka37-whnf-head-reduction-bridge0",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "directLean4LeanWHNFPreservationBridge": {
+    "referenceKind": "direct-imported-lean4lean-whnf-preservation-bridge",
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanWHNFPreservationBridgeChecked": true,
+    "strictWHNFPreservationBridgePassed": true,
+    "headReductionBuildStatus": 0,
+    "directBridgeCheckStatus": 0,
+    "coveredLean4LeanWHNFPreservationSurface": [
+      "WHRed.determ",
+      "WHRed.defeq",
+      "WHRed.hasType",
+      "WHRedS.defeq",
+      "WHRedS.hasType",
+      "WHNF.whRedS"
+    ],
+    "formalBridgeLemmas": [
+      "PSKernelKA38.translated_whred_single_step_deterministic",
+      "PSKernelKA38.translated_whred_defeq_preservation",
+      "PSKernelKA38.translated_whred_type_preservation",
+      "PSKernelKA38.translated_whreds_defeq_preservation",
+      "PSKernelKA38.translated_whreds_type_preservation",
+      "PSKernelKA38.translated_whnf_whreds_fixed_point"
+    ],
+    "stillOpen": [
+      "end-to-end executable PSKernel WHNF refinement against Lean4Lean TypeChecker.whnf",
+      "recursor/iota/projection/structure reduction refinement",
+      "quotient computation semantic soundness",
+      "definitional equality algorithm completeness/refinement",
+      "full Lean4 equivalence remains unproven"
+    ]
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka38-whnf-preservation-bridge0",
+    "publicVersion": "1.0.0-pskernel.41",
+    "baseline": "proofscript-v1-ka37-whnf-head-reduction-bridge0",
+    "measurementKind": "conservative checkpoint progress estimate, not a formal theorem",
+    "featureSurfaceBridgeProgressPercent": 54,
+    "executableKernelEquivalenceProofProgressPercent": 24,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 96,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "groups": [
+      {
+        "id": "levels-universe-normalization",
+        "progressPercent": 65,
+        "status": "source-present plus earlier gates; executable refinement open"
+      },
+      {
+        "id": "core-vexpr-six-constructor-theory",
+        "progressPercent": 80,
+        "status": "bridged for current formal VExpr slice"
+      },
+      {
+        "id": "full-lean-expression-tags",
+        "progressPercent": 70,
+        "status": "TrExprS constructor surface covered; mvar/executable translator refinement open"
+      },
+      {
+        "id": "ordinary-declarations",
+        "progressPercent": 85,
+        "status": "strong conditional environment bridge; executable addDecl refinement open"
+      },
+      {
+        "id": "quot-declaration",
+        "progressPercent": 75,
+        "status": "environment bridge complete; semantic quotient computation open"
+      },
+      {
+        "id": "mutual-definitions",
+        "progressPercent": 45,
+        "status": "conditional environment bridge present; executable checking open"
+      },
+      {
+        "id": "inductive-declarations",
+        "progressPercent": 35,
+        "status": "first conditional environment bridge; positivity/recursors/nested open"
+      },
+      {
+        "id": "recursor-reduction-iota-eta-k",
+        "progressPercent": 30,
+        "status": "WHNF/head-reduction preservation started; recursor/projection/iota open"
+      },
+      {
+        "id": "type-inference-checking",
+        "progressPercent": 45,
+        "status": "TypeChecker proof-surface bridge; end-to-end executable refinement open"
+      },
+      {
+        "id": "defeq-conversion-whnf",
+        "progressPercent": 40,
+        "status": "WHNF preservation bridge added; conversion completeness open"
+      },
+      {
+        "id": "environment-extension-ordering",
+        "progressPercent": 75,
+        "status": "ordinary/quotient/mutual/inductive slices bridged conditionally"
+      },
+      {
+        "id": "primitive-axioms-literals",
+        "progressPercent": 25,
+        "status": "source present; formal primitive/literal policy bridge open"
+      },
+      {
+        "id": "kernel-codec-export-arena",
+        "progressPercent": 45,
+        "status": "arena evidence strong; codec/replay proof open"
+      },
+      {
+        "id": "resource-fuel-error-semantics",
+        "progressPercent": 35,
+        "status": "source present; conservativity proof open"
+      },
+      {
+        "id": "metatheory-typing-relations",
+        "progressPercent": 55,
+        "status": "multiple imported theory slices bridged; global refinement map open"
+      }
+    ],
+    "nextHighestImpactMilestones": [
+      "KA39-defeq-whnf-refinement",
+      "KA40-primitive-literal-policy-bridge",
+      "KA41-codec-replay-refinement",
+      "KA42-resource-error-conservativity",
+      "KA43-theory-wide-refinement-map"
+    ]
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullWHNFRecursorRefinement": false,
+    "formalLean4EquivalenceProvenObligations": 96
+  },
+  "blockedReasons": [],
+  "verificationSummary": [
+    {
+      "command": "npm install --offline --no-audit --no-fund",
+      "status": 0
+    },
+    {
+      "command": "npm run build -- --pretty false",
+      "status": 0
+    },
+    {
+      "command": "npm run test:pskernel:ka38",
+      "status": 0
+    },
+    {
+      "command": "npm run assurance:ka38",
+      "status": 0
+    },
+    {
+      "command": "npm run lean:ka38:check",
+      "status": 0
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "status": 0
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "status": 0
+    },
+    {
+      "command": "npm run test:psc:kernel-status",
+      "status": 0
+    },
+    {
+      "command": "npm run test:psc:conformance-bounded",
+      "status": 0
+    },
+    {
+      "command": "npm run arena:corpus-preflight",
+      "status": 0,
+      "note": "190 NDJSON fixtures available"
+    },
+    {
+      "command": "npm run test:arena:static-nonperf",
+      "status": 0,
+      "note": "26/26 decisive; 4 good accepted; 22 bad rejected; 0 wrong"
+    },
+    {
+      "command": "npm run test:arena:tutorial",
+      "status": 0,
+      "note": "140/140 decisive; 93 good accepted; 47 bad rejected; 0 wrong"
+    },
+    {
+      "command": "npm run verify:arena",
+      "status": "timeout",
+      "countedAsPass": false,
+      "note": "timed out while entering test:arena:tutorial-harness; direct arena preflight/static/tutorial passed"
+    },
+    {
+      "command": "fresh extract npm install --offline --no-audit --no-fund",
+      "status": 0
+    },
+    {
+      "command": "fresh extract npm run build -- --pretty false",
+      "status": 0
+    },
+    {
+      "command": "fresh extract npm run test:pskernel:ka38",
+      "status": 0
+    },
+    {
+      "command": "fresh extract npm run lean:ka38:check",
+      "status": 0
+    },
+    {
+      "command": "unzip -t final ZIP",
+      "status": 0
+    },
+    {
+      "command": "sha256sum -c final SHA file",
+      "status": 0
+    }
+  ]
+}

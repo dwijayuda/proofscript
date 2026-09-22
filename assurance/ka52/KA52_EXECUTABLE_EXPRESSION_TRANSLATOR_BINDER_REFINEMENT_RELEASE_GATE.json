@@ -1,0 +1,219 @@
+{
+  "checkpoint": "proofscript-v1-ka52-executable-expression-translator-binder-refinement0",
+  "publicVersion": "1.0.0-pskernel.55",
+  "baseline": "proofscript-v1-ka51-executable-expression-translator-constructor-refinement0",
+  "releaseKind": "strict-lean4lean-bridge",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA52",
+        "source": "assurance/ka52/executable-expression-translator-binder-refinement-bridge.lean",
+        "destination": "PSKernelKA52ExecutableExpressionTranslatorBinderRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 3,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka52-executable-expression-translator-binder-refinement0",
+    "publicVersion": "1.0.0-pskernel.55",
+    "featureSurfaceBridgeProgressPercent": 74,
+    "executableKernelEquivalenceProofProgressPercent": 39,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 143,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 140,
+      "newFormalLean4LeanBridgeObligations": 3,
+      "countedNewObligations": [
+        "translated_trExprS_lam_binder_constructor_wf",
+        "translated_trExprS_forall_binder_constructor_wf",
+        "translated_trExprS_let_binder_constructor_wf"
+      ]
+    },
+    "groups": [
+      {
+        "id": "expression-tags",
+        "progressPercent": 72,
+        "status": "TrExprS constructor and binder bridge strict-checked for bvar/sort/const/app/lam/forallE/letE; full executable translator incomplete"
+      },
+      {
+        "id": "typechecker-whnf-defeq",
+        "progressPercent": 53,
+        "status": "WHNF/DefEq surface strict-checked; executable checker refinement incomplete"
+      },
+      {
+        "id": "end-to-end-refinement-spine",
+        "progressPercent": 35,
+        "status": "checker pipeline skeleton strict-checked; no end-to-end theorem yet"
+      },
+      {
+        "id": "architecture-health",
+        "progressPercent": 86,
+        "status": "no-spaghetti ratchet plus KA52 semantic-package touch guard"
+      }
+    ],
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka52Files": [
+      {
+        "path": "tools/pskernel-ka52-executable-expression-translator-binder-refinement-tests.ts",
+        "lines": 30,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka52-executable-expression-translator-binder-refinement.ts",
+        "lines": 84,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka52/KA52_EXECUTABLE_EXPRESSION_TRANSLATOR_BINDER_REFINEMENT_RELEASE_GATE.json",
+        "lines": 153,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka52/KA52_EXECUTABLE_EXPRESSION_TRANSLATOR_BINDER_REFINEMENT_REPORT.md",
+        "lines": 36,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka52/KA52_EXECUTABLE_EXPRESSION_TRANSLATOR_BINDER_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 31,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka52/KA52_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 41,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka52/KA52_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka52/executable-expression-translator-binder-refinement-bridge-spec.json",
+        "lines": 27,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka52/executable-expression-translator-binder-refinement-bridge.lean",
+        "lines": 42,
+        "ext": ".lean"
+      }
+    ],
+    "ka52ToolFiles": [
+      {
+        "path": "tools/pskernel-ka52-executable-expression-translator-binder-refinement-tests.ts",
+        "lines": 30,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka52-executable-expression-translator-binder-refinement.ts",
+        "lines": 84,
+        "ext": ".ts"
+      }
+    ],
+    "newKA52OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableExpressionTranslatorRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false,
+  "verificationCommands": {
+    "redTestFirst": "failed-as-expected-before-implementation",
+    "npm install --offline --no-audit --no-fund": "passed",
+    "npm run build -- --pretty false": "passed",
+    "npm run test:pskernel:ka52": "passed",
+    "npm run assurance:ka52": "passed",
+    "npm run lean:ka52:check": "passed",
+    "npm run test:kernel:smoke": "passed",
+    "npm run test:standalone-small": "passed",
+    "npm run test:psc:kernel-status": "passed",
+    "npm run test:psc:conformance-bounded": "passed",
+    "npm run arena:corpus-preflight": "passed",
+    "npm run test:arena:static-nonperf": "passed",
+    "npm run test:arena:tutorial": "passed",
+    "TERM=xterm npm run verify:arena": "timed-out-not-counted",
+    "verifyArenaTailIndividualRerun": "passed",
+    "npm pack --workspaces --ignore-scripts": "passed",
+    "sha256sum -c package SHA manifest": "passed"
+  },
+  "wrapperTimeouts": [
+    "TERM=xterm npm run verify:arena timed out at tutorial-harness; not counted as passed; remaining tail commands rerun individually and passed"
+  ],
+  "npmPackages": {
+    "packed": 36,
+    "sha256Entries": 36,
+    "verification": "passed"
+  },
+  "verificationTail": {
+    "passedCommands": [
+      "npm install --offline --no-audit --no-fund",
+      "npm run build -- --pretty false",
+      "npm run test:pskernel:ka52",
+      "npm run assurance:ka52",
+      "npm run lean:ka52:check",
+      "npm run test:kernel:smoke",
+      "npm run test:standalone-small",
+      "npm run test:psc:kernel-status",
+      "npm run test:psc:conformance-bounded",
+      "npm run arena:corpus-preflight",
+      "npm run test:arena:static-nonperf",
+      "npm run test:arena:tutorial",
+      "verifyArenaTailIndividualRerun",
+      "npm pack --workspaces --ignore-scripts",
+      "sha256sum -c package SHA manifest"
+    ],
+    "timedOutNotCounted": [
+      "TERM=xterm npm run verify:arena"
+    ],
+    "notCountedAsPassed": [
+      "TERM=xterm npm run verify:arena"
+    ],
+    "arenaTailCommandsRerunIndividuallyAndPassed": [
+      "npm run test:arena:tutorial-harness",
+      "npm run test:arena:inductive-importer",
+      "npm run test:arena:dependent-field-recursor",
+      "npm run test:arena:prop-projection-conformance",
+      "npm run test:arena:prop-index-large-elim",
+      "npm run test:arena:transparent-recursive-field",
+      "npm run test:arena:type-singleton-eta",
+      "npm run test:arena:known-recursor-stuck-reject",
+      "npm run test:arena:rbtree-recursive-ih-order",
+      "npm run test:arena:tutorial",
+      "npm run test:arena:recursor-rule-arity-validation",
+      "npm run test:arena:transparent-result-sort-reject",
+      "npm run test:arena:mutual-imax-prop-reject"
+    ]
+  }
+}

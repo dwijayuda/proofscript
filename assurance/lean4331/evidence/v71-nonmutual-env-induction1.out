@@ -1,0 +1,8 @@
+ENV_INDUCTION_COMPONENT PASS ordinary declaration/environment
+ENV_INDUCTION_COMPONENT PASS fresh quotient admission
+ENV_INDUCTION_COMPONENT PASS direct inductive admission
+ENV_INDUCTION_COMPONENT PASS parameterized/indexed inductive admission
+ENV_INDUCTION_COMPONENT PASS non-mutual integrated admission predicates
+ENV_INDUCTION_COMPONENT PASS generated recursor structural/extensional bridge
+NONMUTUAL_ENV_INDUCTION_COMPONENTS=6 FAILURES=0
+PASS KERNEL-nonmutual-environment-induction exact Lean 4.33.1

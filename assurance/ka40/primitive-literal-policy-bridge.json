@@ -1,0 +1,44 @@
+{
+  "checkpoint": "proofscript-v1-ka40-primitive-literal-policy-bridge0",
+  "publicVersion": "1.0.0-pskernel.43",
+  "baseline": "proofscript-v1-ka39-defeq-whnf-refinement-bridge0",
+  "referenceKind": "direct-imported-lean4lean-primitive-literal-policy-bridge",
+  "imports": ["Lean4Lean.Verify.Primitive"],
+  "coveredLean4LeanPrimitiveLiteralSurface": [
+    "VEnv.ContainsLits natVal",
+    "VEnv.ContainsLits strVal",
+    "VEnv.HasPrimitives.natZeroT",
+    "VEnv.HasPrimitives.natSuccT",
+    "VEnv.HasPrimitives.natLitT",
+    "VExpr.closedN_natLit",
+    "VEnv.HasPrimitives.natIsType",
+    "VEnv.HasPrimitives.trNat",
+    "VEnv.HasPrimitives.boolLitT",
+    "VEnv.HasPrimitives.boolIsType",
+    "VEnv.HasPrimitives.trBool"
+  ],
+  "formalBridgeLemmas": [
+    "PSKernelKA40.translated_literal_policy_nat_requires_nat",
+    "PSKernelKA40.translated_literal_policy_string_requires_primitives",
+    "PSKernelKA40.translated_nat_zero_has_type",
+    "PSKernelKA40.translated_nat_succ_has_type",
+    "PSKernelKA40.translated_nat_literal_has_type",
+    "PSKernelKA40.translated_nat_literal_closed",
+    "PSKernelKA40.translated_nat_is_type",
+    "PSKernelKA40.translated_nat_const_translates",
+    "PSKernelKA40.translated_bool_literal_has_type",
+    "PSKernelKA40.translated_bool_is_type",
+    "PSKernelKA40.translated_bool_const_translates"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullPrimitiveLiteralPolicyRefinement": false,
+    "formalLean4EquivalenceProvenObligations": 114
+  }
+}

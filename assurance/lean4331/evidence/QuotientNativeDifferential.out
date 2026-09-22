@@ -1,0 +1,5 @@
+Q|Quot|u|type|(pi I (sort (p u)) (pi E (pi E (b 0) (pi E (b 1) (sort 0))) (sort (p u))))
+Q|Quot.mk|u|ctor|(pi I (sort (p u)) (pi E (pi E (b 0) (pi E (b 1) (sort 0))) (pi E (b 1) (a (a (c Quot [(p u)]) (b 2)) (b 1)))))
+Q|Quot.lift|u,v|lift|(pi I (sort (p u)) (pi I (pi E (b 0) (pi E (b 1) (sort 0))) (pi I (sort (p v)) (pi E (pi E (b 2) (b 1)) (pi E (pi E (b 3) (pi E (b 4) (pi E (a (a (b 4) (b 1)) (b 0)) (a (a (a (c Eq [(p v)]) (b 4)) (a (b 3) (b 2))) (a (b 3) (b 1)))))) (pi E (a (a (c Quot [(p u)]) (b 4)) (b 3)) (b 3)))))))
+Q|Quot.ind|u|ind|(pi I (sort (p u)) (pi I (pi E (b 0) (pi E (b 1) (sort 0))) (pi I (pi E (a (a (c Quot [(p u)]) (b 1)) (b 0)) (sort 0)) (pi E (pi E (b 2) (a (b 1) (a (a (a (c Quot.mk [(p u)]) (b 3)) (b 2)) (b 0)))) (pi E (a (a (c Quot [(p u)]) (b 3)) (b 2)) (a (b 2) (b 0)))))))
+QUOT_NATIVE_LIFT=500 IND=500 LIFT_FAILURES=0 IND_FAILURES=0 KERNEL_CHECKS=1000

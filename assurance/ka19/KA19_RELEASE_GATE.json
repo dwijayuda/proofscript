@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka19-env-defeq-preservation-bridge0",
+  "publicVersion": "1.0.0-pskernel.22",
+  "createdAtUtc": "2026-09-18T12:48:00Z",
+  "baseline": "proofscript-v1-ka18-env-no-overwrite-bridge0",
+  "kernel": {
+    "name": "PSKernel",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "directLean4LeanEnvDefEqPreservationBridge": {
+    "referenceKind": "direct-imported-lean4lean-env-defeq-preservation-bridge",
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanEnvDefEqPreservationBridgeChecked": true,
+    "strictBridgeCheckPassed": true,
+    "blockedReasons": [],
+    "targets": {
+      "relations": [
+        "Lean4Lean.VEnv.addConst",
+        "Lean4Lean.VEnv.addDefEq",
+        "Lean4Lean.VEnv.defeqs"
+      ],
+      "dependencies": [
+        "Lean4Lean.VEnv.constants",
+        "Lean4Lean.VEnv.defeqs",
+        "Lean4Lean.VEnv.LE",
+        "Lean4Lean.VEnv.WF",
+        "Lean4Lean.VDecl.WF"
+      ]
+    },
+    "coveredPSDeclKinds": [
+      "axiom",
+      "definition"
+    ],
+    "excludedPSDeclKinds": [
+      "theorem",
+      "example",
+      "opaque",
+      "quot",
+      "inductive",
+      "mutualInductive"
+    ],
+    "theoryBuildStatus": 0,
+    "bridgeCheckStatus": 0
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 16,
+    "formalObligationMeaning": "KA-13 through KA-19 conditional Lean4Lean bridge lemmas only; not full Lean equivalence"
+  },
+  "verificationSummary": {
+    "npm install --offline --no-audit --no-fund": "passed",
+    "npm run build -- --pretty false": "passed",
+    "npm run test:pskernel:ka1..ka10": "passed in bounded loop",
+    "npm run assurance:ka1..ka10": "passed in bounded loop",
+    "npm run test:pskernel:ka11": "passed before aggregate timeout",
+    "npm run test:pskernel:ka12": "passed individually after aggregate timeout",
+    "npm run test:pskernel:ka13": "passed individually",
+    "npm run test:pskernel:ka14": "passed individually",
+    "npm run test:pskernel:ka15": "passed individually",
+    "npm run test:pskernel:ka16": "passed individually after aggregate timeout",
+    "npm run test:pskernel:ka17": "passed individually after forward-version compatibility update",
+    "npm run test:pskernel:ka18": "passed individually after aggregate timeout",
+    "npm run test:pskernel:ka19": "passed individually",
+    "npm run assurance:ka11": "passed individually",
+    "npm run assurance:ka12": "passed individually after aggregate timeout",
+    "npm run assurance:ka13": "passed individually",
+    "npm run assurance:ka14": "passed individually",
+    "npm run assurance:ka15": "passed individually",
+    "npm run assurance:ka16": "passed individually",
+    "npm run assurance:ka17": "passed individually after aggregate timeout",
+    "npm run assurance:ka18": "passed individually",
+    "npm run assurance:ka19": "passed individually after aggregate timeout",
+    "npm run lean:ka16:check": "passed",
+    "npm run lean:ka17:check": "passed",
+    "npm run lean:ka18:check": "passed individually after aggregate timeout",
+    "npm run lean:ka19:check": "passed individually after aggregate timeout",
+    "npm run test:kernel:smoke": "passed",
+    "npm run test:standalone-small": "passed",
+    "npm run test:psc:kernel-status": "passed",
+    "npm run test:psc:conformance-bounded": "passed",
+    "npm run arena:corpus-preflight": "passed: 190 NDJSON fixtures",
+    "npm run test:arena:static-nonperf": "passed: 26/26 decisive",
+    "npm run test:arena:tutorial": "passed: 140/140 decisive",
+    "npm run verify:arena": "passed",
+    "fresh extract install/build/test:pskernel:ka19/lean:ka19:check": "passed; aggregate fresh smoke command timed out during expensive Lean gate and tail commands rerun individually"
+  },
+  "aggregateLoopNotes": [
+    "Aggregate KA loops timed out around expensive Lean4Lean gates; timed-out aggregate loops are not counted as pass evidence.",
+    "The timed-out tail commands were rerun individually and passed.",
+    "Inherited KA-17/KA-18 gate tests were updated for forward version compatibility with 1.0.0-pskernel.22 while preserving their original checkpoint assertions."
+  ],
+  "arenaSummary": {
+    "corpusPath": "/mnt/data/arena-corpus-20260915",
+    "ndjsonFixtures": 190,
+    "staticNonperf": {
+      "total": 26,
+      "decisive": 26,
+      "acceptedGood": 4,
+      "rejectedBad": 22,
+      "wrong": 0,
+      "notRun": 0
+    },
+    "tutorial": {
+      "total": 140,
+      "decisive": 140,
+      "acceptedGood": 93,
+      "rejectedBad": 47,
+      "wrong": 0,
+      "notRun": 0
+    }
+  }
+}

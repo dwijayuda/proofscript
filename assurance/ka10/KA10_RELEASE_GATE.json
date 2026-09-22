@@ -1,0 +1,101 @@
+{
+  "checkpoint": "proofscript-v1-ka10-lean-target-policy0",
+  "publicVersion": "1.0.0-pskernel.12",
+  "baseline": "proofscript-v1-ka9-lean4lean-compat0",
+  "kernel": {
+    "name": "PSKernel",
+    "coreArtifactFormat": 71,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "targetPolicy": {
+    "previousExactTarget": "leanprover/lean4:v4.33.1",
+    "newStrictSourcePolicy": "leanprover/lean4:v4.33.x-or-later",
+    "sourceLeanToolchain": "leanprover/lean4:v4.33.0-rc2",
+    "sourceToolchainAcceptedByPolicy": true,
+    "sourceToolchainWouldHaveFailedOldExactPolicy": true,
+    "localProofToolchain": "Lean 4.33.1 remains materialized for KA-4/KA-6 proof skeleton checks"
+  },
+  "lean4lean": {
+    "sourcePresent": true,
+    "sourceRequiredFilesPresent": true,
+    "selectedArchive": {
+      "name": "lean4lean-master.zip",
+      "resolved": "/mnt/data/lean4lean-master.zip",
+      "sizeBytes": 650114,
+      "mtimeMs": 1789715196113.2756,
+      "sha256": "295a1f4b23f39be73a27a7617c3fe1c6787892ff799607213b913419819f7383"
+    },
+    "lakeRequires": [
+      {
+        "name": "batteries",
+        "git": "https://github.com/leanprover-community/batteries",
+        "rev": "v4.33.0-rc2",
+        "path": null
+      }
+    ]
+  },
+  "offlineDependencies": {
+    "batteriesRequire": {
+      "name": "batteries",
+      "git": "https://github.com/leanprover-community/batteries",
+      "rev": "v4.33.0-rc2",
+      "path": null
+    },
+    "selectedBatteriesArchive": {
+      "name": "batteries-main.zip",
+      "resolved": "/mnt/data/batteries-main.zip",
+      "sizeBytes": 484543,
+      "mtimeMs": 1789715197521.306,
+      "sha256": "af9ba371d1580f6ed5f04c773c9fa4539c68e812d0ab385e6bfe9e401f785f81"
+    },
+    "uploadedBatteriesToolchain": "leanprover/lean4:v4.35.0-rc2",
+    "acceptedByLeanPolicy": true,
+    "exactRequiredRevMaterialized": false
+  },
+  "strictImport": {
+    "strictActualImportPassed": false,
+    "actualLean4LeanImportBound": false,
+    "blockedReasons": [
+      "lean4lean_dependency_batteries_required_rev_unavailable",
+      "external_dependency_fetch_failed_or_dependency_unavailable"
+    ],
+    "buildAttempt": {
+      "attempted": true,
+      "status": 1,
+      "blockedReason": "external_dependency_fetch_failed_or_dependency_unavailable"
+    }
+  },
+  "claimBoundary": {
+    "actualLean4LeanImportBound": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0
+  },
+  "createdAtUtc": "2026-09-18T07:30:00Z",
+  "verification": {
+    "npmInstallOffline": "passed",
+    "build": "passed",
+    "ka1": "passed",
+    "ka2": "passed",
+    "ka3": "passed",
+    "ka4": "passed",
+    "ka5": "passed",
+    "ka6": "passed",
+    "ka7": "passed",
+    "ka8": "passed",
+    "ka9": "passed",
+    "ka10": "passed",
+    "leanKa6Check": "passed",
+    "leanKa10ImportSoft": "passed",
+    "leanKa10ImportStrict": "expected_fail_exit_2",
+    "verifyArena": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "conformanceBounded": "passed",
+    "arenaStaticNonperf": "passed"
+  }
+}

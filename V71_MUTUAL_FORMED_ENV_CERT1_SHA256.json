@@ -1,0 +1,17 @@
+{
+  "schema": "proofscript.artifact.sha256/v1",
+  "artifact": "V71_MUTUAL_FORMED_ENV_CERT1",
+  "generatedAtUtc": "2026-09-10T03:56:55.895Z",
+  "files": {
+    "assurance/lean4331/formal/ProofScriptKernelEquivalence/InductiveMutualFormedEnvironment.lean": "32af7006e84f97f9e049c427d1789f64688c4bc3a72b138ec59e55681d5bd421",
+    "assurance/lean4331/evidence/v71-mutual-formed-env-formal1.out": "6bfffb6296ceae447132f44d7e285f111150aed67887e5d3089228fd7e48c912",
+    "assurance/lean4331/CHECKPOINT_V71_MUTUAL_FORMED_ENV_CERT1.json": "a7a47f7b83d255bb067986209db6335d78af7654dc17676c8fabe831b6b85f48",
+    "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_MUTUAL_FORMED_ENV_CERT1.md": "b838254251703d9ff0089be5c47cc296f078625edf6f170fe63ae48e16542fed",
+    "assurance/lean4331/evidence/v71-mutual-direct-exact-lean1.out": "6bf853a2967bd5b0b56c56151d8db4d3376f9748b2c43b44b67438f803abb10a",
+    "assurance/lean4331/evidence/v71-mutual-parameters-exact-lean1.out": "3e2025f1819d6885646f82041428a36f5bf4767c241c87cd7de7d012883ec845",
+    "assurance/lean4331/evidence/v71-mutual-indices-exact-lean1.out": "c495a42ad21cc1eca80c95332669aecac5f3f80fcce0b8031c344def5b52373c",
+    "assurance/lean4331/evidence/v71-mutual-higher-order-exact-lean1.out": "49db1c1ea1415907a80fe6f5946ee148bcc697d5dc9dddeb87264de5b0e3a82e",
+    "assurance/lean4331/evidence/v71-mutual-prop-exact-lean1.out": "2921738844772ac73a5b99cc0cfb9952c2a3bbf09a636150eb048294bd3bbb67"
+  },
+  "aggregate": "d621e30401dbe6c206f799e113dbe323dc6882255070b8468289c3cb58e70e0c"
+}

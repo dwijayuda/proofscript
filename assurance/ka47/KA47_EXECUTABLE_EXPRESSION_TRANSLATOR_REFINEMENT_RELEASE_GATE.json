@@ -1,0 +1,152 @@
+{
+  "checkpoint": "proofscript-v1-ka47-executable-expression-translator-refinement-preflight0",
+  "publicVersion": "1.0.0-pskernel.50",
+  "baseline": "proofscript-v1-ka46-projection-reduction-refinement-preflight0",
+  "releaseKind": "blocked-preflight-not-formal-bridge",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "referenceKind": "source-bound-lean4lean-executable-expression-translator-refinement-preflight",
+  "actualLean4LeanImportBound": false,
+  "strictExecutableExpressionTranslatorBridgePassed": false,
+  "formalLeanCheckStatus": "blocked",
+  "blockedReasons": [
+    "external_dependency_fetch_failed_or_dependency_unavailable"
+  ],
+  "coveredLean4LeanExecutableExpressionTranslatorSurface": [
+    "Lean4Lean.VExpr constructor surface",
+    "Lean4Lean.TrExprS executable translation relation",
+    "Lean.Expr.Closed / Lean.Expr.FVarsIn executable preconditions",
+    "VExpr.liftN / VExpr.instL / VExpr.instVar substitution surfaces",
+    "TrExpr defeq closure surface"
+  ],
+  "intendedFormalBridgeLemmas": [
+    "Lean4Lean.PSKernelKA47.translated_vexpr_constructor_surface_available",
+    "Lean4Lean.PSKernelKA47.translated_trExprS_constructor_surface_available",
+    "Lean4Lean.PSKernelKA47.translated_mvar_exclusion_surface_available",
+    "Lean4Lean.PSKernelKA47.translated_vexpr_substitution_surface_available"
+  ],
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "sourceFileCount": 1695,
+    "ka47ToolFiles": [
+      {
+        "path": "tools/pskernel-ka47-executable-expression-translator-refinement.ts",
+        "lines": 133,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka47-executable-expression-translator-refinement-tests.ts",
+        "lines": 46,
+        "ext": ".ts"
+      }
+    ],
+    "newKA47OversizedFiles": [],
+    "semanticPackageTouched": false
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka47-executable-expression-translator-refinement-preflight0",
+    "publicVersion": "1.0.0-pskernel.50",
+    "featureSurfaceBridgeProgressPercent": 69,
+    "executableKernelEquivalenceProofProgressPercent": 34,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 132,
+    "groups": [
+      {
+        "id": "ordinary-declarations",
+        "progressPercent": 82,
+        "status": "bridged proof-surface; executable refinement incomplete"
+      },
+      {
+        "id": "quotients",
+        "progressPercent": 74,
+        "status": "environment bridge complete; semantic soundness incomplete"
+      },
+      {
+        "id": "inductives",
+        "progressPercent": 44,
+        "status": "environment bridge plus recursor proof-surface bridge; generated rule/RHS refinement still open"
+      },
+      {
+        "id": "mutual-definitions",
+        "progressPercent": 43,
+        "status": "initial environment bridge; executable refinement incomplete"
+      },
+      {
+        "id": "expression-tags",
+        "progressPercent": 64,
+        "status": "TrExprS constructor surface plus KA47 executable translator preflight surface; executable translator theorem still unproven"
+      },
+      {
+        "id": "typechecker-whnf-defeq",
+        "progressPercent": 50,
+        "status": "WHNF/defeq proof-surface bridges exist; executable checker refinement incomplete"
+      },
+      {
+        "id": "primitive-literals",
+        "progressPercent": 40,
+        "status": "Nat/Bool/literal proof-surface bridge only"
+      },
+      {
+        "id": "codec-replay",
+        "progressPercent": 36,
+        "status": "Replay surface and PS codec stability gates exist"
+      },
+      {
+        "id": "resource-errors",
+        "progressPercent": 39,
+        "status": "fuel/error conservativity surface bridge only"
+      },
+      {
+        "id": "architecture-health",
+        "progressPercent": 81,
+        "status": "no-spaghetti ratchet plus KA47 semantic-package touch guard"
+      },
+      {
+        "id": "end-to-end-refinement-spine",
+        "progressPercent": 30,
+        "status": "explicit staged checker refinement plan; no end-to-end theorem yet"
+      }
+    ],
+    "notAFormalEquivalenceClaim": true
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableExpressionTranslatorRefinement": false,
+    "formalLean4LeanBridgeObligations": 132
+  },
+  "fullLean4Equivalence": false,
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false,
+  "packageHashes": {
+    "packageCount": 36,
+    "sha256Entries": 36,
+    "status": "passed"
+  },
+  "verification": {
+    "install": "passed",
+    "build": "passed",
+    "focusedTest": "passed",
+    "softAssurance": "passed",
+    "softLeanCheck": "passed",
+    "strictLeanCheck": "blocked-not-counted",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "pscConformanceBounded": "passed",
+    "arenaCorpusPreflight": "passed",
+    "arenaStaticNonperf": "passed",
+    "arenaTutorial": "passed",
+    "verifyArena": "passed"
+  },
+  "strictBlockedReason": "GitHub DNS unavailable while fetching batteries; offline Batteries v4.33.0-rc2 archive not present"
+}

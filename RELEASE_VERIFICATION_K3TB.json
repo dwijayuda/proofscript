@@ -1,0 +1,25 @@
+{
+  "schema": "proofscript.release-verification/k3tb/v1",
+  "release": "proofscript-kernel-v71-k3tb-verification-bundle1",
+  "inherits": "proofscript-kernel-v71-k3tb-release-candidate1",
+  "label": "K3-TB",
+  "status": "REPRODUCIBLE_VERIFICATION_BUNDLE_NOT_FULLY_FORMAL_K3",
+  "progress": {
+    "percent": 99.5,
+    "basisPoints": 9950,
+    "note": "Reproducibility packaging improved; mathematical K3 progress intentionally unchanged."
+  },
+  "requiredCommands": [
+    "npm install --offline --ignore-scripts",
+    "PROOFSCRIPT_LEAN_BIN=/path/to/lean npm run verify:k3tb"
+  ],
+  "verificationPhases": [
+    "buildTypeScript",
+    "localMergedRegression",
+    "leanGateFinalize",
+    "k3TBReleaseCandidateGate",
+    "verificationBundleGate"
+  ],
+  "trustedBoundaryPreserved": true,
+  "notFullyFormalK3": true
+}

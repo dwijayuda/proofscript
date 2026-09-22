@@ -1,0 +1,115 @@
+{
+  "checkpoint": "proofscript-v1-ka72-executable-defeq-eta-cache-status-refinement0",
+  "publicVersion": "1.0.0-pskernel.75",
+  "baseline": "proofscript-v1-ka71-feature-equivalence-coverage-audit0",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka72-executable-defeq-eta-cache-status-refinement0",
+    "publicVersion": "1.0.0-pskernel.75",
+    "featureSurfaceBridgeProgressPercent": 88,
+    "executableKernelEquivalenceProofProgressPercent": 55,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 220,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 216,
+      "newFormalLean4LeanBridgeObligations": 4,
+      "countedNewObligations": [
+        "translated_tryEtaExpansionCore_wf",
+        "translated_cacheFailure_wf",
+        "translated_reductionStatus_bool_wf",
+        "translated_reductionStatus_defeq_wf"
+      ]
+    },
+    "metricPolicy": "Post-KA71 audited conservative dashboard estimate; KA72 increments executable DefEq support, not full equivalence.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka72Files": [
+      {
+        "path": "tools/pskernel-ka72-executable-defeq-eta-cache-status-refinement-tests.ts",
+        "lines": 36,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka72-executable-defeq-eta-cache-status-refinement.ts",
+        "lines": 99,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka72/KA72_EXECUTABLE_DEFEQ_ETA_CACHE_STATUS_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 33,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka72/KA72_EXECUTABLE_DEFEQ_ETA_CACHE_STATUS_REFINEMENT_RELEASE_GATE.json",
+        "lines": 116,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka72/KA72_EXECUTABLE_DEFEQ_ETA_CACHE_STATUS_REFINEMENT_REPORT.md",
+        "lines": 33,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka72/KA72_EXECUTABLE_DEFEQ_ETA_CACHE_STATUS_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 32,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka72/KA72_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 21,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka72/KA72_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka72/executable-defeq-eta-cache-status-refinement-bridge.lean",
+        "lines": 41,
+        "ext": ".lean"
+      }
+    ],
+    "ka72ToolFiles": [
+      {
+        "path": "tools/pskernel-ka72-executable-defeq-eta-cache-status-refinement-tests.ts",
+        "lines": 36,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka72-executable-defeq-eta-cache-status-refinement.ts",
+        "lines": 99,
+        "ext": ".ts"
+      }
+    ],
+    "newKA72OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWHNFDefEqRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

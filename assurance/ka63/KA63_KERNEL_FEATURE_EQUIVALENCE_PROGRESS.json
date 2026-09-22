@@ -1,0 +1,41 @@
+{
+  "checkpoint": "proofscript-v1-ka63-executable-expression-translator-bool-literal-refinement0",
+  "publicVersion": "1.0.0-pskernel.66",
+  "featureSurfaceBridgeProgressPercent": 85,
+  "executableKernelEquivalenceProofProgressPercent": 50,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 188,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 184,
+    "newFormalLean4LeanBridgeObligations": 4,
+    "countedNewObligations": [
+      "translated_trExprS_boolFalse_wf",
+      "translated_trExprS_boolTrue_wf",
+      "translated_trExprS_boolLit_wf",
+      "translated_fvarsIn_boolLit_wf"
+    ]
+  },
+  "groups": [
+    {
+      "id": "expression-tags",
+      "progressPercent": 96,
+      "status": "TrExprS constructors/determinism/substitution/source conditions/source transforms/source invariants/application-list/beta/AppStack/uninstantiate/bool-literal facts strict-checked; full executable translator refinement incomplete"
+    },
+    {
+      "id": "typechecker-whnf-defeq",
+      "progressPercent": 53,
+      "status": "WHNF/DefEq surface strict-checked; executable checker refinement incomplete"
+    },
+    {
+      "id": "end-to-end-refinement-spine",
+      "progressPercent": 35,
+      "status": "checker pipeline skeleton strict-checked; no end-to-end theorem yet"
+    },
+    {
+      "id": "architecture-health",
+      "progressPercent": 95,
+      "status": "no-spaghetti ratchet plus KA63 semantic-package touch guard"
+    }
+  ],
+  "notAFormalEquivalenceClaim": true
+}

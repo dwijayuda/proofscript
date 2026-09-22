@@ -1,0 +1,95 @@
+{
+  "checkpoint": "proofscript-v1-ka32-feature-equivalence-audit0",
+  "publicVersion": "1.0.0-pskernel.35",
+  "baseline": "proofscript-v1-ka31-example-env-aggregate-bridge0",
+  "requiredCommands": {
+    "npm install --offline --no-audit --no-fund": "passed",
+    "npm run build -- --pretty false": "passed",
+    "npm run test:pskernel:ka32": "passed",
+    "npm run assurance:ka32": "passed",
+    "npm run lean:ka32:check": "passed",
+    "npm run test:kernel:smoke": "passed",
+    "npm run test:standalone-small": "passed",
+    "npm run test:psc:kernel-status": "passed",
+    "npm run test:psc:conformance-bounded": "passed",
+    "npm run arena:corpus-preflight": "passed",
+    "npm run test:arena:static-nonperf": "passed",
+    "npm run test:arena:tutorial": "timed_out_not_counted",
+    "npm run verify:arena": "not_run_not_counted",
+    "fresh extract install/build/test:pskernel:ka32/assurance:ka32": "passed",
+    "unzip -t final ZIP": "passed",
+    "sha256sum -c final SHA file": "passed"
+  },
+  "sourceAudit": {
+    "lean4leanRoot": "/mnt/data/ka32-lean4lean-upload/lean4lean-master",
+    "leanToolchain": "leanprover/lean4:v4.33.0-rc2",
+    "lean4leanFileCount": 110,
+    "pskernelFileCount": 113,
+    "lean4leanKeySymbols": {
+      "vdeclConstructors": [
+        "axiom",
+        "def",
+        "example",
+        "induct",
+        "mutualDef",
+        "opaque",
+        "quot"
+      ],
+      "venvOps": [
+        "addConst",
+        "addConsts",
+        "addDefEq",
+        "addDefEqs",
+        "addInduct",
+        "addQuot"
+      ],
+      "typecheckerOps": [
+        "ensureForallCore",
+        "ensureSortCore",
+        "inferConstant",
+        "inferType",
+        "isDefEq",
+        "whnf"
+      ]
+    },
+    "pskernelKeySymbols": {
+      "hasInductiveSource": true,
+      "hasTheorySource": true,
+      "hasRuntimeCheckerSource": true
+    }
+  },
+  "matrixSummary": {
+    "total": 15,
+    "bridged": 4,
+    "implementedSource": 3,
+    "partial": 6,
+    "missingFormalBridge": 1,
+    "missing": 1,
+    "greenOrBridged": 7,
+    "gaps": 11
+  },
+  "requiredNextMilestones": [
+    "KA33-inductive-env-bridge",
+    "KA33-level-executable-refinement",
+    "KA34-mutual-def-env-bridge",
+    "KA35-executable-typechecker-refinement",
+    "KA36-full-expression-tag-coverage",
+    "KA38-recursor-whnf-refinement",
+    "KA39-defeq-whnf-refinement",
+    "KA40-primitive-literal-policy-bridge",
+    "KA41-codec-replay-refinement",
+    "KA42-resource-error-conservativity",
+    "KA43-theory-wide-refinement-map"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "quotientSemanticSoundness": false,
+    "formalLean4EquivalenceProvenObligations": 56
+  }
+}

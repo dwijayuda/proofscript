@@ -1,0 +1,43 @@
+{
+  "mandatoryGates": [
+    {
+      "part": 1,
+      "exit": 0,
+      "seconds": 33.1,
+      "pass": true
+    },
+    {
+      "part": 2,
+      "exit": 0,
+      "seconds": 0.97,
+      "pass": true
+    },
+    {
+      "part": 3,
+      "exit": 0,
+      "seconds": 4.03,
+      "pass": true
+    },
+    {
+      "part": 4,
+      "exit": 0,
+      "seconds": 4.18,
+      "pass": true
+    },
+    {
+      "part": 5,
+      "exit": 0,
+      "seconds": 6.44,
+      "pass": true
+    },
+    {
+      "part": 6,
+      "exit": 0,
+      "seconds": 3.4,
+      "pass": true
+    }
+  ],
+  "build": "PASS",
+  "conformance": "PASS",
+  "manifestSha256": "0efbe2a57561216a108c89b14b7f7c2c012226ff770b62fbdfcad8bb3e0df67d"
+}

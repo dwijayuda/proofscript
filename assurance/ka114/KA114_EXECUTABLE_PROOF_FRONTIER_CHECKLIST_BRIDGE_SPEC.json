@@ -1,0 +1,21 @@
+{
+  "checkpoint": "proofscript-v1-ka114-executable-proof-frontier-checklist0",
+  "publicVersion": "1.0.0-pskernel.117",
+  "baseline": "proofscript-v1-ka113-executable-obligation-ledger0",
+  "referenceKind": "executable-proof-frontier-checklist-audit",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 0,
+  "countedObligations": [],
+  "sourceTheorems": [],
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

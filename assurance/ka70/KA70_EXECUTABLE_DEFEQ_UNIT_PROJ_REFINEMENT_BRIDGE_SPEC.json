@@ -1,0 +1,45 @@
+{
+  "checkpoint": "proofscript-v1-ka70-executable-defeq-unit-proj-refinement0",
+  "publicVersion": "1.0.0-pskernel.73",
+  "baseline": "proofscript-v1-ka69-executable-defeq-delta-string-refinement0",
+  "referenceKind": "strict-lean4lean-executable-defeq-unit-proj-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "leanModule": "assurance/ka70/executable-defeq-unit-proj-refinement-bridge.lean",
+  "baselineFormalObligations": 212,
+  "countedNewFormalObligations": 4,
+  "countedNewObligationNames": [
+    "translated_tryStringLitExpansionCore_wf",
+    "translated_isDefEqUnitLike_wf",
+    "translated_lazyDeltaProjReduction_finish_wf",
+    "translated_lazyDeltaProjReduction_loop_wf"
+  ],
+  "metricPolicy": "KA70 advances the exact formal obligation counter only; percentage estimates remain held pending a separate coverage audit.",
+  "oldCodebasePolicy": {
+    "oldCodebaseRegressionIgnoredByUser": true,
+    "fullNpmTestRequiredForThisCheckpoint": false,
+    "reason": "User requested continuation on the strict Lean4Lean KA lineage. KA70 changes only Lean4Lean bridge wrappers and release metadata; it does not touch trusted PSKernel semantics."
+  },
+  "baselineArtifactAudit": {
+    "baselineZip": "/mnt/data/proofscript-v1-ka69-executable-defeq-delta-string-refinement0.zip",
+    "baselineShaFile": "/mnt/data/proofscript-v1-ka69-executable-defeq-delta-string-refinement0.zip.sha256",
+    "actualBaselineZipSha256": "b14644fecf44ba8a1199c89358530fc6b0b954cc5576c9116627c9533b6a5e3f",
+    "externalShaFileSha256": "b14644fecf44ba8a1199c89358530fc6b0b954cc5576c9116627c9533b6a5e3f",
+    "externalShaMatchesActual": true,
+    "internalKA68ReleaseGateSha256": null,
+    "internalKA68VerificationSummarySha256": null,
+    "internalSelfHashFieldsKnownStale": false,
+    "policy": "External .sha256 file is authoritative for ZIP integrity; KA70 avoids embedding a self ZIP hash inside the ZIP because that creates stale self-reference risk."
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWHNFDefEqRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

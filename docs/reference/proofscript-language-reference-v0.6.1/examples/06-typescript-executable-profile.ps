@@ -1,0 +1,10 @@
+inductive MaybeUser where {
+  | none;
+  | some(name : String);
+}
+
+function displayName(user : MaybeUser) : String :=
+  match user with {
+    | .none => "Guest";
+    | .some name => name;
+  };

@@ -1,0 +1,13 @@
+def pos: Int := { 5 }
+def neg: Int := { Int.negSucc(2) }
+def posNat: Nat := { Int.toNat(pos) }
+def negNat: Nat := { Int.toNat(neg) }
+def absNeg: Nat := { Int.natAbs(neg) }
+def flipped: Nat := { Int.natAbs(Int.neg(pos)) }
+
+def p7: Int := { 7 }
+def n2: Int := { Int.negSucc(1) }
+def sumPP: Nat := { Int.toNat(pos + p7) }
+def sumPN: Nat := { Int.toNat(pos + neg) }
+def sumNP: Nat := { Int.toNat(neg + pos) }
+def sumNNAbs: Nat := { Int.natAbs(neg + n2) }

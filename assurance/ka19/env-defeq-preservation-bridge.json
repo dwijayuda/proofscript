@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka19-env-defeq-preservation-bridge0",
+  "publicVersion": "1.0.0-pskernel.22",
+  "referenceKind": "direct-imported-lean4lean-env-defeq-preservation-bridge",
+  "baseline": "proofscript-v1-ka18-env-no-overwrite-bridge0",
+  "coreArtifactFormat": 71,
+  "certificateFormat": 2,
+  "bridgedRelations": [
+    "Lean4Lean.VEnv.addConst",
+    "Lean4Lean.VEnv.addDefEq",
+    "Lean4Lean.VEnv.defeqs"
+  ],
+  "dependsOn": [
+    "Lean4Lean.VEnv.constants",
+    "Lean4Lean.VEnv.defeqs",
+    "Lean4Lean.VEnv.LE",
+    "Lean4Lean.VEnv.WF",
+    "Lean4Lean.VDecl.WF",
+    "PSKernelKA18"
+  ],
+  "coveredPSDeclKinds": ["axiom", "definition"],
+  "excludedPSDeclKinds": ["theorem", "example", "opaque", "quot", "inductive", "mutualInductive"],
+  "conditionalBridgeLemmas": [
+    "PSKernelKA19.translated_axiom_preserves_existing_defeq",
+    "PSKernelKA19.translated_definition_preserves_existing_defeq",
+    "PSKernelKA19.translated_definition_preserves_existing_and_adds_new_defeq"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 16,
+    "formalObligationMeaning": "KA-13 through KA-19 conditional Lean4Lean bridge lemmas only; not full Lean equivalence"
+  }
+}

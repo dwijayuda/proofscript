@@ -1,0 +1,2 @@
+INDUCTIVE_INDEXED_IOTA_CASES=6 MISMATCHES=0 KERNEL_CHECKS=6
+PASS KERNEL-inductive-indexed-iota-differential exact Lean 4.33.1

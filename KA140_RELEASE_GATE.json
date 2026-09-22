@@ -1,0 +1,29 @@
+{
+  "checkpoint": "proofscript-v1-ka140-usable-software-verification-alpha0",
+  "version": "1.0.0-pskernel.143",
+  "status": "passed",
+  "gates": {
+    "build": "passed",
+    "test_ka140": "passed",
+    "regression_ka139": "passed",
+    "regression_ka138": "passed",
+    "regression_ka137": "passed",
+    "regression_ka136": "passed",
+    "npm_pack": "passed",
+    "npm_install_from_tarball": "passed",
+    "software_alpha_installed_cli": "passed",
+    "certificate_verify": "passed",
+    "proof_status_verify": "passed",
+    "npm_publish_dry_run": "passed",
+    "fresh_full_zip_extract": "passed",
+    "fresh_full_zip_build": "passed",
+    "fresh_full_zip_test_ka140": "passed"
+  },
+  "claims": {
+    "npmInstallableToolchain": true,
+    "usableSoftwareVerificationAlpha": true,
+    "semanticProofDischarge": false,
+    "fullLean4Equivalence": false,
+    "fullyFormalK3": false
+  }
+}

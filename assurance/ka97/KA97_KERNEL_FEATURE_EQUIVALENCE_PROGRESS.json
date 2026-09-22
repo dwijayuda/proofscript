@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka97-primitive-instantiation-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.100",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 75,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 306,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 301,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "correctedFormalLean4LeanBridgeObligations": 306,
+    "countedNewObligations": [
+      "translated_vexpr_liftN_lams_indexed_wf",
+      "translated_list_mapIdx_replicate_nat_wf",
+      "translated_vexpr_closedN_subst_eq_wf",
+      "translated_onctx_nat_telescope_wf",
+      "translated_ctx_liftN_nat_telescope_wf"
+    ]
+  },
+  "metricPolicy": "KA97 adds direct non-sorry-backed primitive instantiation/telescope helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

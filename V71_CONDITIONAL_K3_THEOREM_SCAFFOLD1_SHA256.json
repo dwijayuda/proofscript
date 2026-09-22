@@ -1,0 +1,12 @@
+{
+  "artifact": "V71_CONDITIONAL_K3_THEOREM_SCAFFOLD1",
+  "checkpoint": "assurance/lean4331/CHECKPOINT_V71_CONDITIONAL_K3_THEOREM_SCAFFOLD1.json",
+  "checkpointSha256": "15c8233da93b9c4baaf868fd8d7be61a95185d16fac0c84dd7f079a08e15bd1f",
+  "markdown": "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_CONDITIONAL_K3_THEOREM_SCAFFOLD1.md",
+  "markdownSha256": "304d527d3f159eab16037ae2e6899775ddf57028d9589d26dd8f75a585260841",
+  "formalSource": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71ConditionalK3TheoremScaffold.lean",
+  "formalSourceSha256": "fc04becbe0af49e571ca63894f73bf8c7ae47762c3218e55cf4ee54b918c2f6e",
+  "formalEvidence": "assurance/lean4331/evidence/v71-conditional-k3-theorem-scaffold-formal1.out",
+  "formalEvidenceSha256": "ae4c50e0ee494d3935c92057829293f5a2ec3a885f8f61efcaa41dbaedcaae76",
+  "inheritedCheckpointLedgerHash": "f8dc0056fbb1fc5554a7331d508699b5b4df20af36c0ba3bb85680c77a63fd0c"
+}

@@ -1,0 +1,42 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "v69-ordinary-defeq-conversion1",
+  "profile": "KERNEL-universe-conformance1",
+  "coreFormat": 69,
+  "certificateFormat": 2,
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "formal": {
+    "defEqSlice": "PS→Lean refinement for ordinary beta/zeta/delta reduction, selected congruence, function eta, proof irrelevance, symmetry and transitivity",
+    "typingSlice": "PS→Lean basic conversion-dependent typing refinement for Sort/BVar/Const/App/Lam/Pi/Let relative to the ordinary equality fragment",
+    "theorems": [
+      "ProofScriptKernelEquivalence.OrdinaryDefEq.etaExpansion_toLean",
+      "ProofScriptKernelEquivalence.OrdinaryDefEq.sound",
+      "ProofScriptKernelEquivalence.ConversionTyping.typing_sound"
+    ],
+    "noSorryAx": true,
+    "wholeKernelEquivalence": "IN_PROGRESS_NOT_K3"
+  },
+  "differential": {
+    "typescriptEtaProofCases": 1000,
+    "typescriptEtaProofFailures": 0,
+    "exactLeanEtaProofCases": 1000,
+    "exactLeanEtaProofFailures": 0,
+    "etaProofExactLeanKernelChecks": 2000,
+    "typescriptConversionTypingCases": 1000,
+    "typescriptConversionTypingFailures": 0,
+    "exactLeanConversionTypingCases": 1000,
+    "exactLeanConversionTypingFailures": 0,
+    "conversionTypingExactLeanKernelChecks": 2000,
+    "previousUniversePredicateComparisons": 60000,
+    "previousUniverseMismatches": 0
+  },
+  "nextFormalPriority": [
+    "projection typing correspondence",
+    "projection iota/reduction correspondence",
+    "recursor/iota/K correspondence",
+    "quotient correspondence"
+  ]
+}

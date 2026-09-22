@@ -1,0 +1,43 @@
+def depEq(a: Nat, b: Nat): Nat := {
+  if h: (a = b) {
+    let proofCopy := h;
+    11
+  } else {
+    let proofCopy := h;
+    22
+  }
+}
+
+def depLe(a: Nat, b: Nat): Nat := {
+  if h: (a <= b) {
+    let proofCopy := h;
+    31
+  } else {
+    let proofCopy := h;
+    32
+  }
+}
+
+def depLt(a: Nat, b: Nat): Nat := {
+  if h: (a < b) {
+    let proofCopy := h;
+    41
+  } else {
+    let proofCopy := h;
+    42
+  }
+}
+
+def eqTrue: Nat := { depEq(2, 2) }
+def eqFalse: Nat := { depEq(2, 3) }
+def leTrue: Nat := { depLe(2, 3) }
+def leFalse: Nat := { depLe(5, 3) }
+def ltTrue: Nat := { depLt(2, 3) }
+def ltFalse: Nat := { depLt(3, 3) }
+
+theorem eqTrue_ok: eqTrue = 11 := by { rfl }
+theorem eqFalse_ok: eqFalse = 22 := by { rfl }
+theorem leTrue_ok: leTrue = 31 := by { rfl }
+theorem leFalse_ok: leFalse = 32 := by { rfl }
+theorem ltTrue_ok: ltTrue = 41 := by { rfl }
+theorem ltFalse_ok: ltFalse = 42 := by { rfl }

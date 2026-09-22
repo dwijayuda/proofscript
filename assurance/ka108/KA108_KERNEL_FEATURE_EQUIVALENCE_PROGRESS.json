@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka108-primitive-lambda-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.111",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 86,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 361,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 356,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "correctedFormalLean4LeanBridgeObligations": 361,
+    "countedNewObligations": [
+      "translated_vexpr_lams_appN_prime_wf",
+      "translated_lambdaTelescope_wf",
+      "translated_vexpr_wf_app_inv_prime_wf",
+      "translated_vexpr_wf_lam_inv_prime_wf",
+      "translated_vexpr_wf_betaU_wf"
+    ]
+  },
+  "metricPolicy": "KA108 adds direct non-sorry-backed primitive lambda helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

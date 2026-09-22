@@ -1,0 +1,16 @@
+def rootX: Nat := { 0 }
+namespace A { def x: Bool := { true } }
+namespace B { def x: Nat := { 0 } }
+open A B;
+def openedFirst: Bool := { x }
+namespace Outer {
+  def x: Nat := { 0 }
+  namespace N { def x: Bool := { true } }
+  namespace Inner { open N; def parentWins: Nat := { x } }
+}
+section Scoped {
+  namespace Local { def y: Nat := { 0 } }
+  open Local;
+  def inside: Nat := { y }
+}
+def after: Nat := { Local.y }

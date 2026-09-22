@@ -1,0 +1,47 @@
+{
+  "checkpoint": "TS_CLASSIFIER_IMPL1",
+  "mandatoryGates": [
+    {
+      "part": 1,
+      "exit": 0,
+      "pass": true
+    },
+    {
+      "part": 2,
+      "exit": 0,
+      "pass": true
+    },
+    {
+      "part": 3,
+      "exit": 0,
+      "pass": true
+    },
+    {
+      "part": 4,
+      "exit": 0,
+      "pass": true
+    },
+    {
+      "part": 5,
+      "exit": 0,
+      "pass": true
+    },
+    {
+      "part": 6,
+      "exit": 0,
+      "pass": true
+    }
+  ],
+  "allGatesPass": true,
+  "build": "PASS",
+  "conformance": "PASS",
+  "sourceDifferential": {
+    "status": "23/25",
+    "knownNonKernelFailures": [
+      "reduction-recursion",
+      "equation-patterns"
+    ],
+    "output": "assurance/lean4331/evidence/v71-ts-classifier-impl1-source-differential.out"
+  },
+  "noTimeoutCountedAsSuccess": true
+}

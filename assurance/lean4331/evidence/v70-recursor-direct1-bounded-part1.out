@@ -1,0 +1,63 @@
+RUN check-boundaries.ts ... PASS
+✓ architecture dependency boundaries hold
+RUN kernel-universe-completeness-tests.ts ... PASS
+✓ exact Lean 4.33.1 universe-equivalence kernel tests passed
+RUN kernel-quotient-tests.ts ... PASS
+✓ trusted kernel quotient tests passed
+RUN kernel-empty-inductive-tests.ts ... PASS
+✓ kernel v14 empty inductives, exact empty elimination, recursor BinderInfo/universe order, historical artifact gating, replay, and adversarial checks passed
+RUN kernel-structure-eta-tests.ts ... PASS
+✓ kernel v15 raw projections, iota reduction, nonrecursive structure eta, profile gating, replay, adversarial checks, and exact Lean observations passed
+RUN kernel-inductive-positivity-tests.ts ... PASS
+✓ kernel v16 higher-order strict positivity, pointwise recursor IH/iota, profile gating, replay, negative checks, and exact Lean observations passed
+RUN kernel-indexed-recursors-tests.ts ... PASS
+✓ kernel v17 direct+higher-order indexed recursors, dependent local indices/motive/minors, recursive index iota, historical gating, and exact Lean observations passed
+RUN kernel-indexed-projections-tests.ts ... PASS
+✓ kernel v18 indexed projections, dependent fields, Prop safety, eta recursion hardening, malformed terms, replay, and historical gating passed
+RUN kernel-prop-elimination-tests.ts ... PASS
+✓ kernel v19 Lean-shaped Prop elimination classification, recursor universes, iota, replay, and historical gating passed with exact Lean 4.33.1 differential
+RUN kernel-recursor-k-tests.ts ... PASS
+✓ kernel v20 Lean 4.33.1 RecursorVal.k classification, K-major reconstruction, context-sensitive reduction, replay, and historical gating passed with exact Lean differential
+RUN kernel-inductive-universe-tests.ts ... PASS
+✓ kernel v21 Lean 4.33.1 constructor-field universe ceilings, Prop exception, uniform-parameter exemption, polymorphic/max cases, indexed admission, replay, and historical isolation passed with exact Lean differential
+RUN kernel-dependent-fields-tests.ts ... PASS
+✓ kernel v22 dependent simple constructor fields, dependent higher-order recursion, recursor/iota, indexed regression, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-telescope-terms-tests.ts ... PASS
+✓ kernel v23 recursor telescope lambda/let terms, binder capture, recursive/indexed paths, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-mutual-inductives-tests.ts ... PASS
+✓ kernel v24 bounded direct mutual inductives, mutual recursors/iota, atomic rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-mutual-parameters-tests.ts ... PASS
+✓ kernel v25 shared/dependent mutual parameters, parameter-aware recursors/iota, atomic rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-mutual-indices-tests.ts ... PASS
+✓ kernel v26 mutual indices, per-family motives, cross-family indexed iota, mixed index counts, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-mutual-higher-order-tests.ts ... PASS
+✓ kernel v27 higher-order positive mutual recursion, pointwise cross-family IH/iota, indexed target indices, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-mutual-prop-tests.ts ... PASS
+✓ kernel v28 mutual Prop admission, shared Prop-only recursor universes, empty/data-field cases, mutual-K disablement, potential-Prop universe hardening, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-nested-inductives-tests.ts ... PASS
+✓ kernel v29 nested preprocessing, linked helper recursors/iota, recursive-container traversal, variance rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-nested-parameters-tests.ts ... PASS
+✓ kernel v30 parameterized/dependent nested preprocessing, linked recursors/iota, fixed-parameter rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-nested-indices-tests.ts ... PASS
+✓ kernel v31 indexed nested preprocessing: captured/fixed index modes, dependent captured telescopes, linked indexed iota, rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-nested-index-expressions-tests.ts ... PASS
+✓ kernel v32 nested index expressions: parameter-only fixed indices, expression instantiation, linked indexed iota, rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-nested-multiple-specializations-tests.ts ... PASS
+✓ kernel v33 nested multiple specializations: multiple fixed/container helpers, captured multi-container mode, second-helper iota, mixed-mode rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-nested-polymorphic-tests.ts ... PASS
+✓ kernel v34 bounded polymorphic nested preprocessing, explicit universe instantiation, linked helper iota, mismatch rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-nested-indexed-containers-tests.ts ... PASS
+✓ kernel v35 indexed nested-container preprocessing, indexed helper motive/iota, parameter/local indices, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-recursor-minor-order-tests.ts ... PASS
+✓ kernel v36 Lean fields-first recursive minor ordering across simple/parameterized/indexed/mutual/nested recursors, iota, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-nested-deeper-tests.ts ... PASS
+✓ kernel v37 two-layer deeper nested preprocessing, three-way fields-first linked recursors/iota, recursive and indexed containers, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-nested-deeper-generalization-tests.ts ... PASS
+✓ kernel v38 arbitrary closed linear-depth nested preprocessing, dynamic helper recursors, depth3/depth4 recursive and indexed chains, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-nested-deeper-parameters-tests.ts ... PASS
+✓ kernel v39 arbitrary-depth parameterized/dependent nested preprocessing, parameter-derived container indices, linked iota, fixed-parameter rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-nested-deeper-indices-tests.ts ... PASS
+✓ kernel v40 arbitrary-depth indexed-outer nested preprocessing: closed/fixed and captured/promoted modes, dependent indices, indexed containers, linked iota, rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+RUN kernel-nested-deeper-polymorphic-tests.ts ... PASS
+✓ kernel v41 arbitrary-depth explicit-universe polymorphic nested preprocessing, indexed fixed/captured modes, linked iota, mismatch rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+BOUNDED_PART1_CASES=31 FAILURES=0 TIMEOUTS=0

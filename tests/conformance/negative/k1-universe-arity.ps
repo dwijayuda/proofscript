@@ -1,0 +1,6 @@
+universe u;
+
+theorem polymorphicProof(A: Type u, P: A → Prop, x: A, h: P(x)): P(x) := h;
+
+theorem badUniverseArity(A: Type u, P: A → Prop, x: A, h: P(x)): P(x) :=
+  polymorphicProof.{u, u}(A, P, x, h);

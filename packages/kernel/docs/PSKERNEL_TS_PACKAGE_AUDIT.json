@@ -1,0 +1,259 @@
+{
+  "schema": "proofscript-pskernel-ts-kernel-package-audit/v1",
+  "status": "accepted",
+  "proofStatus": "not-proven",
+  "trustLabel": "trusted-boundary standalone kernel; not fully formally equivalent to Lean 4 yet",
+  "semanticBaseline": "Lean 4.33.1",
+  "pinnedLeanRevision": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "checkCount": 32,
+  "requiredFailureCount": 0,
+  "checks": [
+    {
+      "id": "package.name",
+      "status": "accepted",
+      "message": "Active package name is @proofscript/kernel",
+      "details": {}
+    },
+    {
+      "id": "package.entrypoints",
+      "status": "accepted",
+      "message": "Package entrypoints point at built dist output",
+      "details": {}
+    },
+    {
+      "id": "package.files.allowlist",
+      "status": "accepted",
+      "message": "Package files allowlist includes dist, README.md, and docs",
+      "details": {}
+    },
+    {
+      "id": "local.packages/kernel/dist/index.js",
+      "status": "accepted",
+      "message": "packages/kernel/dist/index.js exists",
+      "details": {
+        "sha256": "d78b79ae0cc6dbe19ec9f8105d59091dc5737e567b41bbbe46ec818eb254db1d",
+        "bytes": 1170
+      }
+    },
+    {
+      "id": "local.packages/kernel/dist/index.d.ts",
+      "status": "accepted",
+      "message": "packages/kernel/dist/index.d.ts exists",
+      "details": {
+        "sha256": "1be9971d89c2a169fddbb32e8d010c6bcc9db2efd106c7243c955cf12cc5b6b2",
+        "bytes": 379
+      }
+    },
+    {
+      "id": "local.packages/kernel/README.md",
+      "status": "accepted",
+      "message": "packages/kernel/README.md exists",
+      "details": {
+        "sha256": "ee134462f5314c0408b49ce716b144845e4769c103c80883af56ebd018c48a2b",
+        "bytes": 854
+      }
+    },
+    {
+      "id": "package-doc.TRUST_BOUNDARY.md",
+      "status": "accepted",
+      "message": "packages/kernel/docs/TRUST_BOUNDARY.md exists",
+      "details": {
+        "sha256": "c0d22ecd768a76df4d7f840ef57193cb07f413f805fa8a3b40c295eb4d47189d",
+        "bytes": 341
+      }
+    },
+    {
+      "id": "package-doc.PROOF_OBLIGATIONS.md",
+      "status": "accepted",
+      "message": "packages/kernel/docs/PROOF_OBLIGATIONS.md exists",
+      "details": {
+        "sha256": "1278b44dc760ff48f11c667264791c68764bbcab929240a4f499a96b06c1de22",
+        "bytes": 34742
+      }
+    },
+    {
+      "id": "package-doc.PSKERNEL_TS_PORTING_MAP.md",
+      "status": "accepted",
+      "message": "packages/kernel/docs/PSKERNEL_TS_PORTING_MAP.md exists",
+      "details": {
+        "sha256": "257f825f5533bed74d3b06720ac3339dbe03099a83e1de1526cfc69b1a6d5d6f",
+        "bytes": 12317
+      }
+    },
+    {
+      "id": "package-doc.PSKERNEL_TS_PHASE_PLAN.md",
+      "status": "accepted",
+      "message": "packages/kernel/docs/PSKERNEL_TS_PHASE_PLAN.md exists",
+      "details": {
+        "sha256": "68a7b4664f78d58063a8df5b19ac1ffd44bc3842b0b0bf1fad7a3dcfc5f10579",
+        "bytes": 1822
+      }
+    },
+    {
+      "id": "package-doc.PSKERNEL_TS_RELEASE_PREFLIGHT.json",
+      "status": "accepted",
+      "message": "packages/kernel/docs/PSKERNEL_TS_RELEASE_PREFLIGHT.json exists",
+      "details": {
+        "sha256": "76ed39be10e17e4d6bad8bb7f5031f4fb124a4d622761f17ed8855c30c0762c1",
+        "bytes": 53519
+      }
+    },
+    {
+      "id": "package-doc.PSKERNEL_TS_PROOF_OBLIGATIONS.json",
+      "status": "accepted",
+      "message": "packages/kernel/docs/PSKERNEL_TS_PROOF_OBLIGATIONS.json exists",
+      "details": {
+        "sha256": "403687f60a1690458e9edec0b9ed3a48b86cd07346e45384fbf4c8e88ae35e2a",
+        "bytes": 50787
+      }
+    },
+    {
+      "id": "package-doc.PSKERNEL_TS_PACKAGE_AUDIT.json",
+      "status": "accepted",
+      "message": "packages/kernel/docs/PSKERNEL_TS_PACKAGE_AUDIT.json exists",
+      "details": {
+        "sha256": "fb841c56a6aa2a1a6793081c1bc30c1ebbb1d10a8c4921724db3915d551273e8",
+        "bytes": 6988
+      }
+    },
+    {
+      "id": "package-doc.PSKERNEL_TS_TARBALL_SMOKE.json",
+      "status": "accepted",
+      "message": "packages/kernel/docs/PSKERNEL_TS_TARBALL_SMOKE.json exists",
+      "details": {
+        "sha256": "c90301230819a8767d4c78a7f19f20d32e56aca29de4e60f759f232e64d1bd6b",
+        "bytes": 3425
+      }
+    },
+    {
+      "id": "package-doc.PSKERNEL_TS_RELEASE_ARCHIVE.json",
+      "status": "accepted",
+      "message": "packages/kernel/docs/PSKERNEL_TS_RELEASE_ARCHIVE.json exists",
+      "details": {
+        "sha256": "bd5a5518b9707185ca4228a3b73d1b87732b8a7b6bea38c7065983f3d02d538e",
+        "bytes": 1208
+      }
+    },
+    {
+      "id": "package-doc.PSKERNEL_TS_DELIVERY_BOOTSTRAP.json",
+      "status": "accepted",
+      "message": "packages/kernel/docs/PSKERNEL_TS_DELIVERY_BOOTSTRAP.json exists",
+      "details": {
+        "sha256": "79e7ae588f8fcf5a301734311730e0d64b122c13c230f02026755cd0290aba6f",
+        "bytes": 2465
+      }
+    },
+    {
+      "id": "package-doc.PSKERNEL_TS_DELIVERY_ARCHIVE_VERIFICATION.json",
+      "status": "accepted",
+      "message": "packages/kernel/docs/PSKERNEL_TS_DELIVERY_ARCHIVE_VERIFICATION.json exists",
+      "details": {
+        "sha256": "696c029282669c5da2ac0176a00b2f13040e55413a70c46edf1e7abd6c993962",
+        "bytes": 5316
+      }
+    },
+    {
+      "id": "pack.entrypoints",
+      "status": "accepted",
+      "message": "Packed package includes JS and declaration entrypoints",
+      "details": {}
+    },
+    {
+      "id": "pack.pskernel-dist",
+      "status": "accepted",
+      "message": "Packed package includes pskernel-derived dist tree",
+      "details": {}
+    },
+    {
+      "id": "pack.readme",
+      "status": "accepted",
+      "message": "Packed package includes README.md",
+      "details": {}
+    },
+    {
+      "id": "pack.doc.TRUST_BOUNDARY.md",
+      "status": "accepted",
+      "message": "Packed package includes docs/TRUST_BOUNDARY.md",
+      "details": {}
+    },
+    {
+      "id": "pack.doc.PROOF_OBLIGATIONS.md",
+      "status": "accepted",
+      "message": "Packed package includes docs/PROOF_OBLIGATIONS.md",
+      "details": {}
+    },
+    {
+      "id": "pack.doc.PSKERNEL_TS_PORTING_MAP.md",
+      "status": "accepted",
+      "message": "Packed package includes docs/PSKERNEL_TS_PORTING_MAP.md",
+      "details": {}
+    },
+    {
+      "id": "pack.doc.PSKERNEL_TS_PHASE_PLAN.md",
+      "status": "accepted",
+      "message": "Packed package includes docs/PSKERNEL_TS_PHASE_PLAN.md",
+      "details": {}
+    },
+    {
+      "id": "pack.doc.PSKERNEL_TS_RELEASE_PREFLIGHT.json",
+      "status": "accepted",
+      "message": "Packed package includes docs/PSKERNEL_TS_RELEASE_PREFLIGHT.json",
+      "details": {}
+    },
+    {
+      "id": "pack.doc.PSKERNEL_TS_PROOF_OBLIGATIONS.json",
+      "status": "accepted",
+      "message": "Packed package includes docs/PSKERNEL_TS_PROOF_OBLIGATIONS.json",
+      "details": {}
+    },
+    {
+      "id": "pack.doc.PSKERNEL_TS_PACKAGE_AUDIT.json",
+      "status": "accepted",
+      "message": "Packed package includes docs/PSKERNEL_TS_PACKAGE_AUDIT.json",
+      "details": {}
+    },
+    {
+      "id": "pack.doc.PSKERNEL_TS_TARBALL_SMOKE.json",
+      "status": "accepted",
+      "message": "Packed package includes docs/PSKERNEL_TS_TARBALL_SMOKE.json",
+      "details": {}
+    },
+    {
+      "id": "pack.doc.PSKERNEL_TS_RELEASE_ARCHIVE.json",
+      "status": "accepted",
+      "message": "Packed package includes docs/PSKERNEL_TS_RELEASE_ARCHIVE.json",
+      "details": {}
+    },
+    {
+      "id": "pack.doc.PSKERNEL_TS_DELIVERY_BOOTSTRAP.json",
+      "status": "accepted",
+      "message": "Packed package includes docs/PSKERNEL_TS_DELIVERY_BOOTSTRAP.json",
+      "details": {}
+    },
+    {
+      "id": "pack.doc.PSKERNEL_TS_DELIVERY_ARCHIVE_VERIFICATION.json",
+      "status": "accepted",
+      "message": "Packed package includes docs/PSKERNEL_TS_DELIVERY_ARCHIVE_VERIFICATION.json",
+      "details": {}
+    },
+    {
+      "id": "pack.no-legacy",
+      "status": "accepted",
+      "message": "Packed package excludes legacy compact-kernel files",
+      "details": {}
+    }
+  ],
+  "packed": {
+    "status": "accepted",
+    "id": "@proofscript/kernel@0.1.0-dev.0",
+    "filename": "proofscript-kernel-0.1.0-dev.0.tgz",
+    "size": 182980,
+    "unpackedSize": 1038957,
+    "fileCount": 479,
+    "shasum": "9ad291cabd13ea648025d404632f611f626a14da",
+    "integrity": "sha512-wyYX+rVbnUkYwjzTPc+T4y//Ma/sNRpYAoMSnv9VbPKXMmGn16s36fdAZ/4iIe0wDDKjHZzZN6/BKJUEoMZqhg==",
+    "filesSha256": "8c06eb25a74c714044492b0d1c09d9594e65530cc3d6ec11075fc6690d491f36"
+  },
+  "packageAuditSha256": "ac2c2adeb73fb9b5759df47dbf55429229c7b0a0cfb9e5fbaf257192f8c254bc"
+}

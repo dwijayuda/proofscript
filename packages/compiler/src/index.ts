@@ -1,0 +1,2 @@
+import { BackendPlugin, BackendResult } from "@proofscript/plugin-api"; import { CheckSummary } from "@proofscript/kernel"; import { toCheckedModuleSnapshot } from "@proofscript/semantic-ir";
+export async function runBackend(backend:BackendPlugin,summary:CheckSummary,sourcePath:string,outPath:string):Promise<BackendResult>{return backend.build({module:toCheckedModuleSnapshot(summary,sourcePath),outPath});}

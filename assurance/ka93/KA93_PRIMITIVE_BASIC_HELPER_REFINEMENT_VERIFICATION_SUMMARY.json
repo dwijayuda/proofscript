@@ -1,0 +1,66 @@
+{
+  "checkpoint": "proofscript-v1-ka93-primitive-basic-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.96",
+  "baseline": "proofscript-v1-ka92-primitive-char-string-recognizer-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 288,
+  "newFormalLean4LeanBridgeObligations": 5,
+  "baselineObligations": 283,
+  "countedObligations": [
+    "translated_contains_primitive_wf",
+    "translated_natBinLit_wf",
+    "translated_natBinLitBool_wf",
+    "translated_withNatProbe_wf",
+    "translated_withBoolProbe_wf"
+  ],
+  "redTestObserved": true,
+  "redTestReason": "KA93 test failed first on missing KA93 gate tool",
+  "noWrapperTimeoutCountedAsPassed": true,
+  "verificationCommandsPassed": [
+    "RED test first: failed as expected on missing KA-93 gate tool",
+    "npm install --offline --no-audit --no-fund",
+    "npm run build -- --pretty false",
+    "npm run test:pskernel:ka93",
+    "npm run assurance:ka93",
+    "npm run lean:ka93:check",
+    "npm run test:kernel:smoke",
+    "npm run test:standalone-small",
+    "npm run test:psc:kernel-status",
+    "npm run test:psc:conformance-bounded",
+    "npm run arena:corpus-preflight",
+    "npm run test:arena:static-nonperf",
+    "npm run test:arena:tutorial",
+    "npm run test:arena:mutual-imax-prop-reject",
+    "npm pack --workspaces --ignore-scripts",
+    "sha256sum -c package SHA manifest"
+  ],
+  "verifyArenaWrapper": "timed-out-not-counted",
+  "verifyArenaTailCommands": "rerun-individually-passed",
+  "npmPackages": {
+    "workspaceTarballs": 36,
+    "sha256Entries": 36,
+    "sha256Verification": "passed"
+  },
+  "arenaEvidence": {
+    "corpusPreflight": "passed",
+    "ndjsonFixtures": 190,
+    "staticNonPerfDecisive": "26/26",
+    "tutorialDecisive": "140/140",
+    "verifyArenaWrapper": "timed-out-not-counted",
+    "tailCommandsPassedIndividually": true
+  },
+  "freshExtract": {
+    "initialResidue": {
+      "node_modules": 0,
+      "dist": 0,
+      "tsbuildinfo": 0,
+      "tgz": 0,
+      "zip": 0
+    },
+    "install": "passed",
+    "build": "passed",
+    "focusedTest": "passed",
+    "leanCheck": "passed"
+  }
+}

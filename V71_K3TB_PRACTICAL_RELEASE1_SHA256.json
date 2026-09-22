@@ -1,0 +1,11 @@
+{
+  "checkpoint": "V71_K3TB_PRACTICAL_RELEASE1",
+  "status": "PASS",
+  "label": "K3-TB",
+  "checkpointSha256": "a5b807be654fcad9e6ca8783fb2f1cf3585978d17f3d576cc20eecf992306bea",
+  "checkpointMarkdownSha256": "d1690789b5ef96a2ce2723d8b57f0a9090d7de53a475db47ab1ce2f494de4622",
+  "formalTargetSha256": "c5429414072599d6e7df6dee3f21caf5e015aebfa74514bd930457bc2e808c21",
+  "formalEvidenceSha256": "7b500caa0b0ede18803c2bc72a80861e7913088f14fd6d6da09b10c398bfb9de",
+  "releaseDocsSha256": "ef802d8fc6e4495b6990cadf6004931f27bf1d9ebe538e54730a7e4c98563fca",
+  "inheritedCheckpointLedgerSha256": "b1d3f46f21d0a9a810eaa1fa16210394b34ae2d79e68db2ba93d02464bdb51b9"
+}

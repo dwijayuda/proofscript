@@ -1,0 +1,169 @@
+{
+  "checkpoint": "proofscript-v1-ka91-primitive-logical-bitwise-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.94",
+  "baseline": "proofscript-v1-ka90-primitive-shift-recognizer-refinement0",
+  "releaseKind": "strict-lean4lean-primitive-logical-bitwise-recognizer-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA91",
+      "source": "assurance/ka91/primitive-logical-bitwise-recognizer-refinement-bridge.lean",
+      "destination": "PSKernelKA91PrimitiveLogicalBitwiseRecognizerRefinementBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 3,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka91-primitive-logical-bitwise-recognizer-refinement0",
+    "publicVersion": "1.0.0-pskernel.94",
+    "featureSurfaceBridgeProgressPercent": 99,
+    "executableKernelEquivalenceProofProgressPercent": 69,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 281,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 278,
+      "newFormalLean4LeanBridgeObligations": 3,
+      "correctedFormalLean4LeanBridgeObligations": 281,
+      "countedNewObligations": [
+        "translated_checkNatLAnd_wf",
+        "translated_checkNatLOr_wf",
+        "translated_checkNatXor_wf"
+      ]
+    },
+    "metricPolicy": "KA91 adds direct non-sorry-backed primitive Nat logical-bitwise recognizer bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka91Files": [
+      {
+        "path": "tools/pskernel-ka91-primitive-logical-bitwise-recognizer-refinement-tests.ts",
+        "lines": 30,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka91-primitive-logical-bitwise-recognizer-refinement.ts",
+        "lines": 33,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka91/KA91_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 21,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka91/KA91_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka91/KA91_PRIMITIVE_LOGICAL_BITWISE_RECOGNIZER_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 32,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka91/KA91_PRIMITIVE_LOGICAL_BITWISE_RECOGNIZER_REFINEMENT_RELEASE_GATE.json",
+        "lines": 129,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka91/KA91_PRIMITIVE_LOGICAL_BITWISE_RECOGNIZER_REFINEMENT_REPORT.md",
+        "lines": 20,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka91/KA91_PRIMITIVE_LOGICAL_BITWISE_RECOGNIZER_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 19,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka91/primitive-logical-bitwise-recognizer-refinement-bridge.lean",
+        "lines": 41,
+        "ext": ".lean"
+      }
+    ],
+    "ka91ToolFiles": [
+      {
+        "path": "tools/pskernel-ka91-primitive-logical-bitwise-recognizer-refinement-tests.ts",
+        "lines": 30,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka91-primitive-logical-bitwise-recognizer-refinement.ts",
+        "lines": 33,
+        "ext": ".ts"
+      }
+    ],
+    "newKA91OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveLogicalBitwiseRecognizerRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false,
+  "verificationCommandsPassed": [
+    "RED test first failed as expected on missing KA91 gate tool",
+    "npm install --offline --no-audit --no-fund",
+    "npm run build -- --pretty false",
+    "npm run test:pskernel:ka91",
+    "npm run assurance:ka91",
+    "npm run lean:ka91:check",
+    "npm run test:kernel:smoke",
+    "npm run test:standalone-small",
+    "npm run test:psc:kernel-status",
+    "npm run test:psc:conformance-bounded",
+    "npm run arena:corpus-preflight",
+    "npm run test:arena:static-nonperf",
+    "npm run test:arena:tutorial",
+    "verify:arena tail commands rerun individually after wrapper timeout",
+    "npm pack --workspaces --ignore-scripts",
+    "sha256sum -c package SHA manifest"
+  ],
+  "wrapperTimeoutsCountedAsPassed": false,
+  "wrapperTimeoutsNotCounted": [
+    "TERM=xterm npm run verify:arena timed out during internal tutorial-harness step"
+  ],
+  "arenaTailCommandsPassedIndividually": [
+    "npm run test:arena:tutorial-harness",
+    "npm run test:arena:inductive-importer",
+    "npm run test:arena:dependent-field-recursor",
+    "npm run test:arena:prop-projection-conformance",
+    "npm run test:arena:prop-index-large-elim",
+    "npm run test:arena:transparent-recursive-field",
+    "npm run test:arena:type-singleton-eta",
+    "npm run test:arena:known-recursor-stuck-reject",
+    "npm run test:arena:rbtree-recursive-ih-order",
+    "npm run test:arena:recursor-rule-arity-validation",
+    "npm run test:arena:transparent-result-sort-reject",
+    "npm run test:arena:mutual-imax-prop-reject"
+  ],
+  "npmPackages": {
+    "packed": 36,
+    "sha256Entries": 36,
+    "verification": "passed"
+  }
+}

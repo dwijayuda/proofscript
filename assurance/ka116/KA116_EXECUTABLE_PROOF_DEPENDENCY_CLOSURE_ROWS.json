@@ -1,0 +1,53 @@
+{
+  "closurePercent": 100,
+  "rows": [
+    {
+      "id": "dependency-ledger-inputs-linked",
+      "status": "done",
+      "evidence": "KA113 ledger, KA114 frontier checklist, and KA115 theorem-family skeleton are required inputs",
+      "done": true
+    },
+    {
+      "id": "theorem-family-dependencies-enumerated",
+      "status": "done",
+      "evidence": "future executable refinement proof families are grouped by dependency buckets",
+      "done": true
+    },
+    {
+      "id": "bridge-vs-dashboard-boundary-pinned",
+      "status": "done",
+      "evidence": "proof dependencies are separated from dashboard evidence and release evidence",
+      "done": true
+    },
+    {
+      "id": "unchecked-theorem-claims-blocked",
+      "status": "done",
+      "evidence": "no full executable PSKernel refinement theorem is claimed by the closure",
+      "done": true
+    },
+    {
+      "id": "negative-claims-pinned",
+      "status": "done",
+      "evidence": "full Lean4 equivalence and fully formal K3 remain 0%",
+      "done": true
+    },
+    {
+      "id": "next-mechanization-order-recorded",
+      "status": "done",
+      "evidence": "next work should convert dependency-closed rows into proof-bearing theorem modules",
+      "done": true
+    },
+    {
+      "id": "release-invariants-retained",
+      "status": "done",
+      "evidence": "Core 71/cert 2 and trusted semantic packages remain unchanged",
+      "done": true
+    }
+  ],
+  "counts": {
+    "total": 7,
+    "done": 7,
+    "missing": 0
+  },
+  "evidenceMeaning": "proof dependency closure records proof-family shape and boundaries; it is not an executable PSKernel refinement proof"
+}

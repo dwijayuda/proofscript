@@ -1,0 +1,161 @@
+{
+  "checkpoint": "proofscript-v1-ka48-executable-whnf-defeq-refinement-preflight0",
+  "publicVersion": "1.0.0-pskernel.51",
+  "baseline": "proofscript-v1-ka47-executable-expression-translator-refinement-preflight0",
+  "releaseKind": "blocked-preflight-not-formal-bridge",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "referenceKind": "source-bound-lean4lean-executable-whnf-defeq-refinement-preflight",
+  "actualLean4LeanImportBound": false,
+  "strictExecutableWhnfDefEqBridgePassed": false,
+  "formalLeanCheckStatus": "blocked",
+  "blockedReasons": [
+    "external_dependency_fetch_failed_or_dependency_unavailable"
+  ],
+  "coveredLean4LeanWhnfDefEqSurface": [
+    "TypeChecker.Inner.whnf.WF",
+    "TypeChecker.Inner.whnfCore.WF",
+    "TypeChecker.Inner.whnf'.WF",
+    "TypeChecker.Inner.isDefEqCore.WF",
+    "TypeChecker.Inner.isDefEqCore'.WF",
+    "TypeChecker.Inner.quickIsDefEq.WF",
+    "TypeChecker.Inner.isDefEqLambda.WF",
+    "TypeChecker.Inner.isDefEqForall.WF"
+  ],
+  "intendedFormalBridgeLemmas": [
+    "Lean4Lean.PSKernelKA48.translated_whnf_surface_available",
+    "Lean4Lean.PSKernelKA48.translated_whnfCore_surface_available",
+    "Lean4Lean.PSKernelKA48.translated_isDefEqCore_surface_available",
+    "Lean4Lean.PSKernelKA48.translated_whnf_defeq_trExprS_surface_available"
+  ],
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "sourceFileCount": 1706,
+    "ka48ToolFiles": [
+      {
+        "path": "tools/pskernel-ka48-executable-whnf-defeq-refinement-tests.ts",
+        "lines": 46,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka48-executable-whnf-defeq-refinement.ts",
+        "lines": 43,
+        "ext": ".ts"
+      }
+    ],
+    "newKA48OversizedFiles": [],
+    "semanticPackageTouched": false
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka48-executable-whnf-defeq-refinement-preflight0",
+    "publicVersion": "1.0.0-pskernel.51",
+    "featureSurfaceBridgeProgressPercent": 70,
+    "executableKernelEquivalenceProofProgressPercent": 35,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 132,
+    "groups": [
+      {
+        "id": "ordinary-declarations",
+        "progressPercent": 82,
+        "status": "bridged proof-surface; executable refinement incomplete"
+      },
+      {
+        "id": "quotients",
+        "progressPercent": 74,
+        "status": "environment bridge complete; semantic soundness incomplete"
+      },
+      {
+        "id": "inductives",
+        "progressPercent": 44,
+        "status": "environment bridge plus recursor/projection proof-surface scaffolds; generated rule/RHS refinement still open"
+      },
+      {
+        "id": "mutual-definitions",
+        "progressPercent": 43,
+        "status": "initial environment bridge; executable refinement incomplete"
+      },
+      {
+        "id": "expression-tags",
+        "progressPercent": 64,
+        "status": "TrExprS constructor surface plus executable translator preflight; executable translator not fully refined"
+      },
+      {
+        "id": "typechecker-whnf-defeq",
+        "progressPercent": 52,
+        "status": "WHNF/DefEq proof-surface bridges plus executable WHNF/DefEq preflight; executable checker refinement incomplete"
+      },
+      {
+        "id": "primitive-literals",
+        "progressPercent": 40,
+        "status": "Nat/Bool/literal proof-surface bridge only"
+      },
+      {
+        "id": "codec-replay",
+        "progressPercent": 36,
+        "status": "Replay surface and PS codec stability gates exist"
+      },
+      {
+        "id": "resource-errors",
+        "progressPercent": 39,
+        "status": "fuel/error conservativity surface bridge only"
+      },
+      {
+        "id": "architecture-health",
+        "progressPercent": 82,
+        "status": "no-spaghetti ratchet plus KA48 semantic-package touch guard"
+      },
+      {
+        "id": "end-to-end-refinement-spine",
+        "progressPercent": 31,
+        "status": "explicit staged checker refinement plan; no end-to-end theorem yet"
+      }
+    ],
+    "notAFormalEquivalenceClaim": true
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWhnfDefEqRefinement": false,
+    "formalLean4LeanBridgeObligations": 132
+  },
+  "fullLean4Equivalence": false,
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false,
+  "packageVerification": {
+    "workspaceTarballs": 36,
+    "sha256Entries": 36,
+    "sha256Verification": "passed"
+  },
+  "arenaEvidence": {
+    "corpusPreflight": "passed",
+    "ndjsonFixtures": 190,
+    "staticNonPerfDecisive": "26/26",
+    "tutorialDecisive": "140/140",
+    "verifyArena": "passed"
+  },
+  "commandVerification": {
+    "install": "passed",
+    "build": "passed",
+    "focusedTest": "passed",
+    "softAssurance": "passed",
+    "softLeanCheck": "passed",
+    "strictLeanCheck": "blocked-not-counted",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "pscConformanceBounded": "passed",
+    "arenaCorpusPreflight": "passed",
+    "arenaStaticNonPerf": "passed",
+    "arenaTutorial": "passed",
+    "verifyArena": "passed"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka19-env-defeq-preservation-bridge0",
+  "baseline": "proofscript-v1-ka18-env-no-overwrite-bridge0",
+  "previousFormalLean4EquivalenceProvenObligations": 13,
+  "newFormalLean4EquivalenceProvenObligations": 3,
+  "formalLean4EquivalenceProvenObligations": 16,
+  "provenLeanTheoremObligations": [
+    "PSKernelKA19.translated_axiom_preserves_existing_defeq",
+    "PSKernelKA19.translated_definition_preserves_existing_defeq",
+    "PSKernelKA19.translated_definition_preserves_existing_and_adds_new_defeq"
+  ],
+  "newObligationMeaning": "Conditional preservation of existing Lean4Lean VEnv.defeqs membership across translated axiom/definition environment additions, plus translated definition insertion of its own defeq.",
+  "stillOpen": [
+    "Executable PSKernel checker refinement to Lean4Lean typing",
+    "Definition-body soundness beyond conditional VDefVal.WF premises",
+    "Theorem/example/opaque/quotient/inductive/mutual-inductive translation bridges",
+    "Full Lean 4 equivalence",
+    "Same-theory claim with full Lean 4"
+  ]
+}

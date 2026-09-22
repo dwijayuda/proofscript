@@ -1,0 +1,59 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint-quotient1/v1",
+  "date": "2026-09-10",
+  "proofscript": {
+    "coreFormat": 70,
+    "profile": "KERNEL-projection-conformance1",
+    "certificateFormat": 2
+  },
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "semanticChange": false,
+  "formal": {
+    "quotientMetadata": "proved-under-explicit-Lean.QuotVal-correspondence-no-sorryAx",
+    "quotientIota": "proved-Core-to-Lean-including-post-major-applications-no-sorryAx",
+    "wholeKernelK3": false
+  },
+  "differential": {
+    "primitiveStructuralLines": 4,
+    "primitiveStructuralMismatches": 0,
+    "typescriptLiftCases": 500,
+    "typescriptIndCases": 500,
+    "typescriptFailures": 0,
+    "exactLeanLiftCases": 500,
+    "exactLeanIndCases": 500,
+    "exactLeanFailures": 0,
+    "exactLeanKernelChecks": 1000
+  },
+  "remainingBoundary": "formal Eq precondition + quotient declaration installation/environment preservation is O-DECL",
+  "keySha256": {
+    "packages/kernel/src/kernel.ts": "44c6fd4af2cd821976130c551f4769442de054496a6aa4a125fdbf820c221c6c",
+    "packages/kernel/src/quotient.ts": "b411b823c95ab220fa7e624e9e0020833f4b361b3836a532a430acfbe8203a47",
+    "assurance/lean4331/formal/ProofScriptKernelEquivalence/Quotient.lean": "ea5354523dd519e5d4207d72b9742aa5e451726cd126b23c529f231528f9785c",
+    "assurance/lean4331/evidence/QuotientNativeDifferential.lean": "d93a90ecef82f0593832f815bb1064801a9255804f547ee1cf1eb9ec6c627943",
+    "assurance/lean4331/evidence/QuotientNativeDifferential.out": "2f6b3889d237aae18cc8601e7686136d89f9533e64a922808c70f876845cc885",
+    "assurance/lean4331/evidence/QuotientTSDirect.out": "a74f11548799cac0ddc454ce85eed846595db018f56034ea7ed4b1bfcc068fab",
+    "assurance/lean4331/evidence/QuotientFormal.out": "ae1e7eb0a4aee2568e703665f868dcc8e3e8c505485b60073522072453e0c252",
+    "tools/kernel-quotient-differential-tests.ts": "092e958c5dc47c4dd66504f899102b8618f19384d1fd0349bdc5b29e9284c4cc",
+    "tools/kernel-v70-assurance-gate.ts": "2431cf653d0dc9f1c1c24e88b50839d5ce18a76123ebf66804ba7feb285ac1ec",
+    "assurance/lean4331/PROOF_OBLIGATIONS.json": "94a6264c3a023865a683c27ece0404c720691acdeb9c124936711be5bbe63ed1",
+    "assurance/lean4331/FORMAL_STATUS.md": "75636b040de35deeefb2204ba1afb617f899d33855521ed1296726cc7cb306b2"
+  },
+  "regressions": {
+    "typescriptBuild": "passed",
+    "conformance": "passed",
+    "sourceLevelDifferential": {
+      "accepted": 23,
+      "total": 25,
+      "classification": "known-frontend-exporter-boundary"
+    },
+    "assuranceGate": {
+      "monolithic": "not-counted-timeout-after-projection",
+      "boundedContinuation": "passed",
+      "timeoutsCountedAsSuccess": false
+    }
+  },
+  "next": "O-DECL declaration/environment preservation, starting with quotient installation and exact universe instantiation"
+}

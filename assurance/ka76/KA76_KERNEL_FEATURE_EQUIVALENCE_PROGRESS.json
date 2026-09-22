@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka76-executable-infer-constant-literal-refinement0",
+  "publicVersion": "1.0.0-pskernel.79",
+  "featureSurfaceBridgeProgressPercent": 90,
+  "executableKernelEquivalenceProofProgressPercent": 57,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 230,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 225,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+    "countedNewObligations": [
+      "translated_inferConstant_wf",
+      "translated_literal_is_primitive_nat_wf",
+      "translated_literal_is_primitive_char_wf",
+      "translated_literal_is_primitive_string_wf",
+      "translated_infer_literal_wf"
+    ]
+  },
+  "metricPolicy": "KA76 extends the InferType proof-bearing surface to strict constant and literal inference facts; percentages are conservative dashboard estimates and not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

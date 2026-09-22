@@ -1,0 +1,35 @@
+{
+  "release": "P4.76",
+  "title": "Parser tokenizer extraction cleanup",
+  "trustLabel": "K3-TB trusted-boundary; not fully formal K3; not Lean 4 equivalent",
+  "formalLean4EquivalenceObligationsProven": 0,
+  "changes": [
+    "Added P4.75 cleanup/refactor roadmap docs and verification tiers.",
+    "Extracted parser tokenizer from packages/parser/src/index.ts to packages/parser/src/tokenize.ts.",
+    "Preserved public tokenize export from packages/parser/src/index.ts.",
+    "Added tokenizer characterization test and package script."
+  ],
+  "verification": [
+    {"command": "node tools/p4-cleanup-roadmap-baseline-tests.ts before docs", "status": "FAIL_EXPECTED", "evidence": "missing docs listed before roadmap docs were created"},
+    {"command": "npm run test:p4:cleanup-roadmap", "status": "PASS"},
+    {"command": "npm run build -- --pretty false", "status": "PASS"},
+    {"command": "node tools/parser-tokenize-characterization-tests.ts", "status": "PASS"},
+    {"command": "npm run test:parser:tokenize", "status": "PASS"},
+    {"command": "npm run test:standalone-small", "status": "PASS"},
+    {"command": "npm run test:kernel:smoke", "status": "PASS"},
+    {"command": "node tools/pskernel.ts status --json", "status": "PASS", "evidence": "trusted-boundary / not-proven"}
+  ],
+  "notRun": [
+    {"command": "npm run verify:k3tb:publish", "reason": "still needs PROOFSCRIPT_LEAN_BIN for Lean 4.33.1"},
+    {"command": "full long matrix", "reason": "skipped for faster cleanup iteration"}
+  ],
+  "progressAfterP476": {
+    "Standalone PSC-1 without Lean4": "~97.3%",
+    "PSC-1 small complete programming language": "~72.0%",
+    "PSC-1 small theorem prover": "~62.1%",
+    "Full ProofScript compiler": "~60.5%",
+    "Full Lean-like ProofScript without Lean4": "~13.8%",
+    "Formal Lean 4 equivalence": "0 proven obligations",
+    "Maintainability / anti-spaghetti score": "~61%"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@proofscript/contracts",
+  "version": "0.1.0-dev.0",
+  "private": true,
+  "description": "Future verification-extension plugin lowering contracts to ordinary ProofScript/Lean-compatible propositions.",
+  "license": "MIT",
+  "files": [
+    "README.md"
+  ]
+}

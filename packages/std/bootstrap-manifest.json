@@ -1,0 +1,803 @@
+{
+  "schema": 1,
+  "proofscriptReference": "v0.6.1",
+  "semanticBaseline": "lean-4.33.1",
+  "implementationProfile": "p5.60-reference-v061",
+  "coreFormat": 12,
+  "coreSha256": "74069b62423d7df94e5ce9ef6f216fe9a77b96bad2cedf59d22bc4f2c7ec0a58",
+  "source": "src/Bootstrap/Foundation.ps",
+  "core": "core/bootstrap.pscore.json",
+  "leanBuiltinCorrespondence": {
+    "status": "intended-pending-pinned-oracle-validation",
+    "declarations": [
+      {
+        "proofscript": "Eq",
+        "lean": "Eq"
+      },
+      {
+        "proofscript": "Eq.refl",
+        "lean": "Eq.refl"
+      },
+      {
+        "proofscript": "Eq.rec",
+        "lean": "Eq.rec"
+      },
+      {
+        "proofscript": "Nat",
+        "lean": "Nat"
+      },
+      {
+        "proofscript": "Nat.zero",
+        "lean": "Nat.zero"
+      },
+      {
+        "proofscript": "Nat.succ",
+        "lean": "Nat.succ"
+      },
+      {
+        "proofscript": "Nat.rec",
+        "lean": "Nat.rec"
+      },
+      {
+        "proofscript": "Bool",
+        "lean": "Bool"
+      },
+      {
+        "proofscript": "Bool.false",
+        "lean": "Bool.false"
+      },
+      {
+        "proofscript": "Bool.true",
+        "lean": "Bool.true"
+      },
+      {
+        "proofscript": "Bool.rec",
+        "lean": "Bool.rec"
+      },
+      {
+        "proofscript": "Int.rec",
+        "lean": "<PSC-1 checked Int literal bootstrap placeholder>"
+      },
+      {
+        "proofscript": "Int.token",
+        "lean": "<PSC-1 checked Int literal bootstrap placeholder>"
+      },
+      {
+        "proofscript": "Int",
+        "lean": "<PSC-1 checked Int literal bootstrap placeholder>"
+      },
+      {
+        "proofscript": "Int.neg",
+        "lean": "<PSC-1 bounded Int primitive: Int.neg>"
+      },
+      {
+        "proofscript": "Int.add",
+        "lean": "<PSC-1 bounded Int primitive: Int.add>"
+      },
+      {
+        "proofscript": "Int.sub",
+        "lean": "<PSC-1 bounded Int primitive: Int.sub>"
+      },
+      {
+        "proofscript": "Int.beq",
+        "lean": "<PSC-1 bounded Int primitive: Int.beq>"
+      },
+      {
+        "proofscript": "String.rec",
+        "lean": "<PSC-1 checked String bootstrap placeholder>"
+      },
+      {
+        "proofscript": "String.token",
+        "lean": "<PSC-1 checked String bootstrap placeholder>"
+      },
+      {
+        "proofscript": "String",
+        "lean": "String"
+      },
+      {
+        "proofscript": "Nat.add",
+        "lean": "Nat.add"
+      },
+      {
+        "proofscript": "Nat.pred",
+        "lean": "Nat.pred"
+      },
+      {
+        "proofscript": "Nat.sub",
+        "lean": "Nat.sub"
+      },
+      {
+        "proofscript": "Nat.mul",
+        "lean": "Nat.mul"
+      },
+      {
+        "proofscript": "Nat.leb",
+        "lean": "Nat.leb"
+      },
+      {
+        "proofscript": "Nat.beq",
+        "lean": "Nat.beq"
+      },
+      {
+        "proofscript": "Nat.ltb",
+        "lean": "Nat.ltb"
+      },
+      {
+        "proofscript": "Bool.not",
+        "lean": "Bool.not"
+      },
+      {
+        "proofscript": "Bool.xor",
+        "lean": "Bool.xor"
+      },
+      {
+        "proofscript": "Option",
+        "lean": "Option"
+      },
+      {
+        "proofscript": "Option.none",
+        "lean": "Option.none"
+      },
+      {
+        "proofscript": "Option.some",
+        "lean": "Option.some"
+      },
+      {
+        "proofscript": "Option.rec",
+        "lean": "Option.rec"
+      },
+      {
+        "proofscript": "List",
+        "lean": "List"
+      },
+      {
+        "proofscript": "List.nil",
+        "lean": "List.nil"
+      },
+      {
+        "proofscript": "List.cons",
+        "lean": "List.cons"
+      },
+      {
+        "proofscript": "List.rec",
+        "lean": "List.rec"
+      },
+      {
+        "proofscript": "Array",
+        "lean": "Array"
+      },
+      {
+        "proofscript": "Array.mk",
+        "lean": "<PSC-1 checked Array bootstrap over List(A)>"
+      },
+      {
+        "proofscript": "Array.rec",
+        "lean": "<PSC-1 checked Array bootstrap recursor>"
+      },
+      {
+        "proofscript": "Except",
+        "lean": "Except"
+      },
+      {
+        "proofscript": "Except.error",
+        "lean": "Except.error"
+      },
+      {
+        "proofscript": "Except.ok",
+        "lean": "Except.ok"
+      },
+      {
+        "proofscript": "Except.rec",
+        "lean": "Except.rec"
+      },
+      {
+        "proofscript": "Array.size",
+        "lean": "<PSC-1 bounded Array primitive: size over checked Array.mk/List payload>"
+      },
+      {
+        "proofscript": "Array.get?",
+        "lean": "<PSC-1 bounded Array primitive: get? over checked Array.mk/List payload>"
+      },
+      {
+        "proofscript": "Option.map",
+        "lean": "<PSC-1 bounded Option primitive: map over checked Option constructors>"
+      },
+      {
+        "proofscript": "Except.map",
+        "lean": "<PSC-1 bounded Except primitive: map over checked Except constructors>"
+      },
+      {
+        "proofscript": "Option.bind",
+        "lean": "<PSC-1 bounded Option primitive: Option.bind>"
+      },
+      {
+        "proofscript": "Except.bind",
+        "lean": "<PSC-1 bounded Except primitive: Except.bind>"
+      },
+      {
+        "proofscript": "Array.map",
+        "lean": "<PSC-1 bounded Array primitive: Array.map>"
+      },
+      {
+        "proofscript": "List.map",
+        "lean": "<PSC-1 bounded List primitive: List.map>"
+      },
+      {
+        "proofscript": "List.filter",
+        "lean": "<PSC-1 bounded List primitive: List.filter>"
+      },
+      {
+        "proofscript": "Array.filter",
+        "lean": "<PSC-1 bounded Array primitive: Array.filter>"
+      },
+      {
+        "proofscript": "List.append",
+        "lean": "<PSC-1 bounded List.append primitive>"
+      },
+      {
+        "proofscript": "Array.append",
+        "lean": "<PSC-1 bounded Array.append primitive>"
+      },
+      {
+        "proofscript": "List.length",
+        "lean": "<PSC-1 bounded List.length primitive>"
+      },
+      {
+        "proofscript": "Array.isEmpty",
+        "lean": "<PSC-1 bounded Array.isEmpty primitive>"
+      },
+      {
+        "proofscript": "List.any",
+        "lean": "<PSC-1 bounded List.any primitive>"
+      },
+      {
+        "proofscript": "List.all",
+        "lean": "<PSC-1 bounded List.all primitive>"
+      },
+      {
+        "proofscript": "Array.any",
+        "lean": "<PSC-1 bounded Array.any primitive>"
+      },
+      {
+        "proofscript": "Array.all",
+        "lean": "<PSC-1 bounded Array.all primitive>"
+      },
+      {
+        "proofscript": "List.find?",
+        "lean": "<PSC-1 bounded List.find? primitive>"
+      },
+      {
+        "proofscript": "Array.find?",
+        "lean": "<PSC-1 bounded Array.find? primitive>"
+      },
+      {
+        "proofscript": "List.head?",
+        "lean": "<PSC-1 bounded List primitive: List.head?>"
+      },
+      {
+        "proofscript": "Array.head?",
+        "lean": "<PSC-1 bounded Array primitive: Array.head?>"
+      },
+      {
+        "proofscript": "List.isEmpty",
+        "lean": "<PSC-1 bounded List.isEmpty primitive>"
+      },
+      {
+        "proofscript": "List.last?",
+        "lean": "<PSC-1 bounded List primitive: List.last?>"
+      },
+      {
+        "proofscript": "Array.last?",
+        "lean": "<PSC-1 bounded Array primitive: Array.last?>"
+      },
+      {
+        "proofscript": "List.get?",
+        "lean": "<PSC-1 bounded List primitive: List.get?>"
+      },
+      {
+        "proofscript": "List.take",
+        "lean": "<PSC-1 bounded List.take primitive>"
+      },
+      {
+        "proofscript": "Array.take",
+        "lean": "<PSC-1 bounded Array.take primitive>"
+      },
+      {
+        "proofscript": "List.toArray",
+        "lean": "<PSC-1 bounded List.toArray primitive>"
+      },
+      {
+        "proofscript": "Array.toList",
+        "lean": "<PSC-1 bounded Array.toList primitive>"
+      },
+      {
+        "proofscript": "List.takeWhile",
+        "lean": "<PSC-1 bounded List.takeWhile primitive>"
+      },
+      {
+        "proofscript": "Array.takeWhile",
+        "lean": "<PSC-1 bounded Array.takeWhile primitive>"
+      },
+      {
+        "proofscript": "List.dropWhile",
+        "lean": "<PSC-1 bounded List.dropWhile primitive>"
+      },
+      {
+        "proofscript": "Array.dropWhile",
+        "lean": "<PSC-1 bounded Array.dropWhile primitive>"
+      },
+      {
+        "proofscript": "List.countP",
+        "lean": "<PSC-1 bounded List.countP primitive>"
+      },
+      {
+        "proofscript": "Array.countP",
+        "lean": "<PSC-1 bounded Array.countP primitive>"
+      },
+      {
+        "proofscript": "List.singleton",
+        "lean": "List.singleton"
+      },
+      {
+        "proofscript": "Array.singleton",
+        "lean": "<PSC-1 checked Array.singleton bootstrap definition>"
+      },
+      {
+        "proofscript": "Option.isSome",
+        "lean": "Option.isSome"
+      },
+      {
+        "proofscript": "Option.isNone",
+        "lean": "Option.isNone"
+      },
+      {
+        "proofscript": "Except.isOk",
+        "lean": "Except.isOk"
+      },
+      {
+        "proofscript": "Except.isError",
+        "lean": "Except.isError"
+      },
+      {
+        "proofscript": "Option.getD",
+        "lean": "Option.getD"
+      },
+      {
+        "proofscript": "Except.getD",
+        "lean": "<PSC-1 checked Except.getD bootstrap definition>"
+      },
+      {
+        "proofscript": "Option.orElse",
+        "lean": "<PSC-1 checked Option.orElse bootstrap definition>"
+      },
+      {
+        "proofscript": "Option.fold",
+        "lean": "<PSC-1 checked-bootstrap helper: Option.fold>"
+      },
+      {
+        "proofscript": "Option.any",
+        "lean": "<PSC-1 checked-bootstrap helper: Option.any>"
+      },
+      {
+        "proofscript": "Except.orElse",
+        "lean": "<PSC-1 checked Except.orElse bootstrap definition>"
+      },
+      {
+        "proofscript": "Option.toList",
+        "lean": "<PSC-1 checked-bootstrap helper: Option.toList>"
+      },
+      {
+        "proofscript": "Except.toOption",
+        "lean": "<PSC-1 checked-bootstrap helper: Except.toOption>"
+      },
+      {
+        "proofscript": "Option.toExcept",
+        "lean": "<PSC-1 checked bootstrap definition over Option.rec>"
+      },
+      {
+        "proofscript": "Except.toArray",
+        "lean": "<PSC-1 checked bootstrap definition over Except.toOption and Option.toArray>"
+      },
+      {
+        "proofscript": "Except.mapError",
+        "lean": "Except.mapError"
+      },
+      {
+        "proofscript": "Option.filter",
+        "lean": "Option.filter"
+      },
+      {
+        "proofscript": "Except.swap",
+        "lean": "Except.swap"
+      }
+    ],
+    "boundedPrimitives": [
+      {
+        "proofscript": "List.replicate",
+        "lean": "<PSC-1 bounded List.replicate primitive>"
+      },
+      {
+        "proofscript": "Array.replicate",
+        "lean": "<PSC-1 bounded Array.replicate primitive>"
+      },
+      {
+        "proofscript": "List.toArray",
+        "lean": "<PSC-1 bounded List.toArray primitive>"
+      },
+      {
+        "proofscript": "Array.toList",
+        "lean": "<PSC-1 bounded Array.toList primitive>"
+      },
+      {
+        "proofscript": "List.takeWhile",
+        "lean": "<PSC-1 bounded List.takeWhile primitive>"
+      },
+      {
+        "proofscript": "Array.takeWhile",
+        "lean": "<PSC-1 bounded Array.takeWhile primitive>"
+      },
+      {
+        "proofscript": "List.dropWhile",
+        "lean": "<PSC-1 bounded List.dropWhile primitive>"
+      },
+      {
+        "proofscript": "Array.dropWhile",
+        "lean": "<PSC-1 bounded Array.dropWhile primitive>"
+      },
+      {
+        "proofscript": "List.countP",
+        "lean": "<PSC-1 bounded List.countP primitive>"
+      },
+      {
+        "proofscript": "Array.countP",
+        "lean": "<PSC-1 bounded Array.countP primitive>"
+      }
+    ]
+  },
+  "release": "P5.61",
+  "feature": "P5.60 reference v0.6.1 adoption; std unchanged from P5.59",
+  "sourceSha256": "12036b58c0d5aa2f46d1eab4b27c46a4a63fb20eca290f51b0f7003433b91687",
+  "declarations": [
+    "Eq",
+    "Nat",
+    "Bool",
+    "Int",
+    "Int.neg",
+    "Int.add",
+    "Int.sub",
+    "Int.beq",
+    "String",
+    "Option",
+    "Option.isSome",
+    "Option.isNone",
+    "Option.getD",
+    "Option.orElse",
+    "Option.fold",
+    "List",
+    "List.map",
+    "List.foldl",
+    "List.filter",
+    "List.append",
+    "List.length",
+    "List.range",
+    "List.replicate",
+    "List.isEmpty",
+    "List.head?",
+    "List.get?",
+    "List.take",
+    "List.takeWhile",
+    "List.dropWhile",
+    "List.drop",
+    "List.last?",
+    "List.tail?",
+    "List.reverse",
+    "List.any",
+    "List.all",
+    "List.find?",
+    "List.countP",
+    "List.singleton",
+    "Option.toList",
+    "Array",
+    "Array.size",
+    "Array.range",
+    "Array.replicate",
+    "Array.toList",
+    "List.toArray",
+    "Array.get?",
+    "Array.take",
+    "Array.takeWhile",
+    "Array.dropWhile",
+    "Array.drop",
+    "Array.head?",
+    "Array.last?",
+    "Array.tail?",
+    "Array.map",
+    "Array.foldl",
+    "Array.filter",
+    "Array.append",
+    "Array.isEmpty",
+    "Array.reverse",
+    "Array.any",
+    "Array.all",
+    "Array.find?",
+    "Array.countP",
+    "Array.singleton",
+    "Option.toArray",
+    "Option.filter",
+    "Option.flatten",
+    "Except",
+    "Except.isOk",
+    "Except.isError",
+    "Except.getD",
+    "Except.orElse",
+    "Except.toOption",
+    "Except.toError",
+    "Except.getErrorD",
+    "Except.swap",
+    "Except.fold",
+    "Except.bimap",
+    "Except.toList",
+    "Option.toExcept",
+    "Except.toArray",
+    "Except.mapError",
+    "Except.flatten",
+    "Option.map",
+    "Except.map",
+    "Option.bind",
+    "Except.bind",
+    "Nat.add",
+    "Nat.pred",
+    "Nat.sub",
+    "Nat.mul",
+    "Nat.leb",
+    "Nat.beq",
+    "Nat.ltb",
+    "Bool.not",
+    "Bool.xor"
+  ],
+  "assumptions": [
+    "Array.all",
+    "Array.any",
+    "Array.append",
+    "Array.countP",
+    "Array.drop",
+    "Array.dropWhile",
+    "Array.filter",
+    "Array.find?",
+    "Array.foldl",
+    "Array.get?",
+    "Array.head?",
+    "Array.isEmpty",
+    "Array.last?",
+    "Array.map",
+    "Array.range",
+    "Array.replicate",
+    "Array.reverse",
+    "Array.size",
+    "Array.tail?",
+    "Array.take",
+    "Array.takeWhile",
+    "Array.toList",
+    "Except.bind",
+    "Except.map",
+    "Int.add",
+    "Int.beq",
+    "Int.neg",
+    "Int.sub",
+    "List.all",
+    "List.any",
+    "List.append",
+    "List.countP",
+    "List.drop",
+    "List.dropWhile",
+    "List.filter",
+    "List.find?",
+    "List.foldl",
+    "List.get?",
+    "List.head?",
+    "List.isEmpty",
+    "List.last?",
+    "List.length",
+    "List.map",
+    "List.range",
+    "List.replicate",
+    "List.reverse",
+    "List.tail?",
+    "List.take",
+    "List.takeWhile",
+    "List.toArray",
+    "Option.bind",
+    "Option.map"
+  ],
+  "supportedBuiltins": [
+    "List.filter",
+    "Array.filter",
+    "List.any",
+    "List.all",
+    "Array.any",
+    "Array.all",
+    "List.tail?",
+    "Array.tail?",
+    "List.isEmpty",
+    "List.last?",
+    "Array.last?",
+    "List.get?",
+    "List.take",
+    "Array.take",
+    "List.range",
+    "Array.range",
+    "List.drop",
+    "Array.drop",
+    "List.replicate",
+    "Array.replicate",
+    "List.toArray",
+    "Array.toList",
+    "List.takeWhile",
+    "Array.takeWhile",
+    "List.dropWhile",
+    "Array.dropWhile",
+    "List.countP",
+    "Array.countP",
+    "Option.isSome",
+    "Option.isNone",
+    "Except.isOk",
+    "Except.isError",
+    "Option.getD",
+    "Except.getD",
+    "Option.orElse",
+    "Option.fold",
+    "Except.orElse",
+    "Option.toList",
+    "Except.toOption",
+    "Option.toArray",
+    "Except.toList",
+    "Option.filter",
+    "Option.flatten",
+    "Except.mapError",
+    "Except.flatten",
+    "Except.getErrorD",
+    "Except.swap",
+    "Except.fold",
+    "Except.bimap"
+  ],
+  "promotedP5Features": [
+    "psc1-list-array-length-empty",
+    "psc1-list-array-reverse",
+    "psc1-list-array-any-all",
+    "psc1-list-array-tail",
+    "psc1-list-isempty",
+    "psc1-list-array-last",
+    "psc1-list-get",
+    "psc1-list-array-take",
+    "psc1-list-array-range",
+    "psc1-list-array-drop",
+    "psc1-list-array-replicate",
+    "psc1-list-array-convert",
+    "psc1-list-array-takewhile",
+    "psc1-list-array-dropwhile",
+    "psc1-list-array-countp",
+    "psc1-option-except-predicates",
+    "psc1-option-except-getd",
+    "psc1-option-except-orelse",
+    "psc1-option-except-convert",
+    "P5.47 Option.toArray / Except.toList",
+    "P5.50 Option.filter",
+    "P5.51 Option.flatten",
+    "P5.52 Except.flatten",
+    "P5.53 Except.toError",
+    "P5.54 Except.getErrorD",
+    "P5.55 Option.fold",
+    "P5.56 Except.swap",
+    "P5.57 Except.fold",
+    "P5.58 Except.bimap"
+  ],
+  "bootstrapSha256": "25c5230ad04cae39248349445a7d5b7c3e3671ea9b3fb3287a1fafb160740ee4",
+  "generatedAt": "reproducible-local-p5.58",
+  "boundedPrimitives": [
+    {
+      "proofscript": "List.reverse",
+      "lean": "<PSC-1 bounded List.reverse primitive>"
+    },
+    {
+      "proofscript": "Array.reverse",
+      "lean": "<PSC-1 bounded Array.reverse primitive>"
+    },
+    {
+      "proofscript": "List.any",
+      "lean": "<PSC-1 bounded List.any primitive>"
+    },
+    {
+      "proofscript": "List.all",
+      "lean": "<PSC-1 bounded List.all primitive>"
+    },
+    {
+      "proofscript": "Array.any",
+      "lean": "<PSC-1 bounded Array.any primitive>"
+    },
+    {
+      "proofscript": "Array.all",
+      "lean": "<PSC-1 bounded Array.all primitive>"
+    },
+    {
+      "proofscript": "List.tail?",
+      "lean": "<PSC-1 bounded List primitive: List.tail?>"
+    },
+    {
+      "proofscript": "Array.tail?",
+      "lean": "<PSC-1 bounded Array primitive: Array.tail?>"
+    },
+    {
+      "proofscript": "List.isEmpty",
+      "lean": "<PSC-1 bounded List.isEmpty primitive>"
+    },
+    {
+      "proofscript": "List.last?",
+      "lean": "<PSC-1 bounded List primitive: List.last?>"
+    },
+    {
+      "proofscript": "Array.last?",
+      "lean": "<PSC-1 bounded Array primitive: Array.last?>"
+    },
+    {
+      "proofscript": "List.get?",
+      "lean": "<PSC-1 bounded List.get? primitive>"
+    },
+    {
+      "proofscript": "List.take",
+      "lean": "<PSC-1 bounded List.take primitive>"
+    },
+    {
+      "proofscript": "Array.take",
+      "lean": "<PSC-1 bounded Array.take primitive>"
+    },
+    {
+      "proofscript": "List.range",
+      "lean": "<PSC-1 bounded List.range primitive>"
+    },
+    {
+      "proofscript": "Array.range",
+      "lean": "<PSC-1 bounded Array.range primitive>"
+    },
+    {
+      "proofscript": "List.replicate",
+      "lean": "<PSC-1 bounded List.replicate primitive>"
+    },
+    {
+      "proofscript": "Array.replicate",
+      "lean": "<PSC-1 bounded Array.replicate primitive>"
+    },
+    {
+      "proofscript": "List.toArray",
+      "lean": "<PSC-1 bounded List.toArray primitive>"
+    },
+    {
+      "proofscript": "Array.toList",
+      "lean": "<PSC-1 bounded Array.toList primitive>"
+    },
+    {
+      "proofscript": "List.takeWhile",
+      "lean": "<PSC-1 bounded List.takeWhile primitive>"
+    },
+    {
+      "proofscript": "Array.takeWhile",
+      "lean": "<PSC-1 bounded Array.takeWhile primitive>"
+    },
+    {
+      "proofscript": "List.dropWhile",
+      "lean": "<PSC-1 bounded List.dropWhile primitive>"
+    },
+    {
+      "proofscript": "Array.dropWhile",
+      "lean": "<PSC-1 bounded Array.dropWhile primitive>"
+    },
+    {
+      "proofscript": "List.countP",
+      "lean": "<PSC-1 bounded List.countP primitive>"
+    },
+    {
+      "proofscript": "Array.countP",
+      "lean": "<PSC-1 bounded Array.countP primitive>"
+    }
+  ],
+  "declarationCount": 97
+}

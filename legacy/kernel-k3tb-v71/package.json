@@ -1,0 +1,13 @@
+{
+  "name": "@proofscript/kernel",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "Trusted standalone ProofScript K1-inductives0 kernel",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}

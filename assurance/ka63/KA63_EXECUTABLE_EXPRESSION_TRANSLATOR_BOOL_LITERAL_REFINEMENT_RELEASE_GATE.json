@@ -1,0 +1,172 @@
+{
+  "checkpoint": "proofscript-v1-ka63-executable-expression-translator-bool-literal-refinement0",
+  "publicVersion": "1.0.0-pskernel.66",
+  "baseline": "proofscript-v1-ka62-executable-expression-translator-bool-literal-refinement0",
+  "releaseKind": "strict-lean4lean-bridge",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA63",
+        "source": "assurance/ka63/executable-expression-translator-bool-literal-refinement-bridge.lean",
+        "destination": "PSKernelKA63ExecutableExpressionTranslatorBoolLiteralRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka63-executable-expression-translator-bool-literal-refinement0",
+    "publicVersion": "1.0.0-pskernel.66",
+    "featureSurfaceBridgeProgressPercent": 85,
+    "executableKernelEquivalenceProofProgressPercent": 50,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 188,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 184,
+      "newFormalLean4LeanBridgeObligations": 4,
+      "countedNewObligations": [
+        "translated_trExprS_boolFalse_wf",
+        "translated_trExprS_boolTrue_wf",
+        "translated_trExprS_boolLit_wf",
+        "translated_fvarsIn_boolLit_wf"
+      ]
+    },
+    "groups": [
+      {
+        "id": "expression-tags",
+        "progressPercent": 96,
+        "status": "TrExprS constructors/determinism/substitution/source conditions/source transforms/source invariants/application-list/beta/AppStack/uninstantiate/bool-literal facts strict-checked; full executable translator refinement incomplete"
+      },
+      {
+        "id": "typechecker-whnf-defeq",
+        "progressPercent": 53,
+        "status": "WHNF/DefEq surface strict-checked; executable checker refinement incomplete"
+      },
+      {
+        "id": "end-to-end-refinement-spine",
+        "progressPercent": 35,
+        "status": "checker pipeline skeleton strict-checked; no end-to-end theorem yet"
+      },
+      {
+        "id": "architecture-health",
+        "progressPercent": 95,
+        "status": "no-spaghetti ratchet plus KA63 semantic-package touch guard"
+      }
+    ],
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka63Files": [
+      {
+        "path": "tools/pskernel-ka63-executable-expression-translator-bool-literal-refinement-tests.ts",
+        "lines": 33,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka63-executable-expression-translator-bool-literal-refinement.ts",
+        "lines": 90,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka63/KA63_EXECUTABLE_EXPRESSION_TRANSLATOR_BOOL_LITERAL_REFINEMENT_RELEASE_GATE.json",
+        "lines": 154,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka63/KA63_EXECUTABLE_EXPRESSION_TRANSLATOR_BOOL_LITERAL_REFINEMENT_REPORT.md",
+        "lines": 37,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka63/KA63_EXECUTABLE_EXPRESSION_TRANSLATOR_BOOL_LITERAL_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 31,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka63/KA63_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 42,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka63/KA63_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka63/executable-expression-translator-bool-literal-refinement-bridge-spec.json",
+        "lines": 28,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka63/executable-expression-translator-bool-literal-refinement-bridge.lean",
+        "lines": 34,
+        "ext": ".lean"
+      }
+    ],
+    "ka63ToolFiles": [
+      {
+        "path": "tools/pskernel-ka63-executable-expression-translator-bool-literal-refinement-tests.ts",
+        "lines": 33,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka63-executable-expression-translator-bool-literal-refinement.ts",
+        "lines": 90,
+        "ext": ".ts"
+      }
+    ],
+    "newKA63OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableExpressionTranslatorRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false,
+  "packaging": {
+    "workspacePackageTarballs": 36,
+    "packageSha256Entries": 36,
+    "packageSha256Check": "passed",
+    "freshExtractSmoke": "passed",
+    "unzipTest": "passed",
+    "finalZipSha256Check": "passed",
+    "finalZipResidue": {
+      "node_modules": 0,
+      "dist": 0,
+      "tsbuildinfo": 0,
+      "tgz": 0,
+      "zip": 0
+    }
+  },
+  "verificationNotes": {
+    "combinedReleaseRun": "timed-out-not-counted at test:kernel:smoke; rerun individually passed",
+    "verifyArena": "timed-out-not-counted at tutorial-harness npm wrapper; direct node harness and tail commands passed individually"
+  }
+}

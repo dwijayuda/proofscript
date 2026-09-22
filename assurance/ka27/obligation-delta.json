@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka27-quot-env-no-overwrite-bridge0",
+  "baseline": "proofscript-v1-ka26-quot-env-bridge0",
+  "closedSinceKA26": [
+    "proved successful Lean4Lean addQuot requires original Quot freshness",
+    "proved successful Lean4Lean addQuot requires original Quot.mk freshness",
+    "proved successful Lean4Lean addQuot requires original Quot.lift freshness",
+    "proved successful Lean4Lean addQuot requires original Quot.ind freshness",
+    "proved successful Lean4Lean addQuot preserves unrelated existing constant lookups"
+  ],
+  "provenLeanTheoremObligations": [
+    "PSKernelKA27.translated_quot_fresh_quot_before_add",
+    "PSKernelKA27.translated_quot_fresh_quot_mk_before_add",
+    "PSKernelKA27.translated_quot_fresh_quot_lift_before_add",
+    "PSKernelKA27.translated_quot_fresh_quot_ind_before_add",
+    "PSKernelKA27.translated_quot_preserves_other_lookup"
+  ],
+  "stillOpen": [
+    "quotient semantic soundness",
+    "definitional equality soundness",
+    "inductive and mutual inductive soundness",
+    "executable PSKernel refinement proof",
+    "full Lean 4 equivalence",
+    "same-theory claim against full Lean 4"
+  ],
+  "formalLean4EquivalenceProvenObligations": 48,
+  "fullLean4Equivalence": false,
+  "sameTheoryAsFullLean4": false,
+  "fullyFormalK3": false,
+  "quotientSemanticSoundness": false
+}

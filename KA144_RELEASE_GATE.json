@@ -1,0 +1,16 @@
+{
+  "checkpoint": "proofscript-v1-ka144-state-model-descriptor0",
+  "version": "1.0.0-pskernel.147",
+  "status": "passed-alpha-gates",
+  "npmPackage": "proofscript",
+  "npmPack": "passed",
+  "npmPublishDryRun": "passed",
+  "freshTarballInstall": "passed",
+  "fullCodebaseZip": "pending-at-report-write",
+  "trustBoundary": {
+    "stateModelDescriptors": "structural-validation-only",
+    "monadicContracts": "descriptor-bound-structural-obligations",
+    "vcgenConnected": false,
+    "semanticProofChecking": "only explicit Lean proof-status checking from previous gate; no monadic vcgen discharge"
+  }
+}

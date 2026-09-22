@@ -1,0 +1,132 @@
+{
+  "checkpoint": "proofscript-v1-ka79-executable-infer-loop-refinement0",
+  "publicVersion": "1.0.0-pskernel.82",
+  "baseline": "proofscript-v1-ka78-recursor-projection-sorry-boundary-audit0",
+  "releaseKind": "strict-lean4lean-infer-loop-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA79",
+      "source": "assurance/ka79/executable-infer-loop-refinement-bridge.lean",
+      "destination": "PSKernelKA79ExecutableInferLoopRefinementBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 5,
+      "dependencyBuildStatus": "passed",
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka79-executable-infer-loop-refinement0",
+    "publicVersion": "1.0.0-pskernel.82",
+    "featureSurfaceBridgeProgressPercent": 91,
+    "executableKernelEquivalenceProofProgressPercent": 58,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 237,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 232,
+      "newFormalLean4LeanBridgeObligations": 5,
+      "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+      "correctedFormalLean4LeanBridgeObligations": 237,
+      "countedNewObligations": [
+        "translated_ensureForallCore_defeq_transport_wf",
+        "translated_inferLambda_loop_wf",
+        "translated_inferForall_loop_wf",
+        "translated_inferApp_loop_wf",
+        "translated_inferLet_loop_wf"
+      ]
+    },
+    "metricPolicy": "KA79 adds direct non-sorry-backed InferType loop bridge wrappers. Percentages remain conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka79Files": [
+      {
+        "path": "tools/pskernel-ka79-executable-infer-loop-refinement-tests.ts",
+        "lines": 38,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka79-executable-infer-loop-refinement.ts",
+        "lines": 129,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka79/KA79_EXECUTABLE_INFER_LOOP_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 36,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka79/KA79_EXECUTABLE_INFER_LOOP_REFINEMENT_RELEASE_GATE.json",
+        "lines": 133,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka79/KA79_EXECUTABLE_INFER_LOOP_REFINEMENT_REPORT.md",
+        "lines": 22,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka79/KA79_EXECUTABLE_INFER_LOOP_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 21,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka79/KA79_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 24,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka79/KA79_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka79/executable-infer-loop-refinement-bridge.lean",
+        "lines": 77,
+        "ext": ".lean"
+      }
+    ],
+    "ka79ToolFiles": [
+      {
+        "path": "tools/pskernel-ka79-executable-infer-loop-refinement-tests.ts",
+        "lines": 38,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka79-executable-infer-loop-refinement.ts",
+        "lines": 129,
+        "ext": ".ts"
+      }
+    ],
+    "newKA79OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableInferTypeRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "proofscript.release.sha256/v1",
+  "artifact": "proofscript-kernel-v71-stored-recursor-rhs-reconstruction-boundary1.zip",
+  "checkpoint": "assurance/lean4331/CHECKPOINT_V71_STORED_RECURSOR_RHS_RECONSTRUCTION_BOUNDARY1.json",
+  "checkpointSha256": "04c062446a0535d2ad0bfeccf6010a09b4cfb7704852ae2d2859d9980ce7be0a",
+  "markdown": "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_STORED_RECURSOR_RHS_RECONSTRUCTION_BOUNDARY1.md",
+  "markdownSha256": "f8f34ca1fb1d2399bce9ade3d4bede5be9c8fa4104830c3dc8fcbec332ff5f55",
+  "formalSource": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71StoredRecursorRHSReconstructionBoundary.lean",
+  "formalSourceSha256": "046f02bda263ec726a761ec10cda864ba2e2df9b6f81b1e7052637ca4378e0df",
+  "generatedAt": "2026-09-10T05:38:26.556Z"
+}

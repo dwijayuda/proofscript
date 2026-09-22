@@ -1,0 +1,670 @@
+{
+  "format": "proofscript-core",
+  "formatVersion": 10,
+  "proofscriptReference": "v0.1",
+  "leanSemanticBaseline": "4.33.1",
+  "implementationProfile": "K2r-recursive-instance-search0",
+  "declarations": [
+    {
+      "kind": "theorem",
+      "name": "identity",
+      "levelParams": [],
+      "type": {
+        "tag": "pi",
+        "domain": {
+          "tag": "sort",
+          "level": {
+            "tag": "zero"
+          }
+        },
+        "body": {
+          "tag": "pi",
+          "domain": {
+            "tag": "bvar",
+            "index": 0
+          },
+          "body": {
+            "tag": "bvar",
+            "index": 1
+          },
+          "binderInfo": "explicit"
+        },
+        "binderInfo": "explicit"
+      },
+      "value": {
+        "tag": "lam",
+        "domain": {
+          "tag": "sort",
+          "level": {
+            "tag": "zero"
+          }
+        },
+        "body": {
+          "tag": "lam",
+          "domain": {
+            "tag": "bvar",
+            "index": 0
+          },
+          "body": {
+            "tag": "bvar",
+            "index": 0
+          },
+          "binderInfo": "explicit"
+        },
+        "binderInfo": "explicit"
+      }
+    },
+    {
+      "kind": "theorem",
+      "name": "compose",
+      "levelParams": [],
+      "type": {
+        "tag": "pi",
+        "domain": {
+          "tag": "sort",
+          "level": {
+            "tag": "zero"
+          }
+        },
+        "body": {
+          "tag": "pi",
+          "domain": {
+            "tag": "sort",
+            "level": {
+              "tag": "zero"
+            }
+          },
+          "body": {
+            "tag": "pi",
+            "domain": {
+              "tag": "sort",
+              "level": {
+                "tag": "zero"
+              }
+            },
+            "body": {
+              "tag": "pi",
+              "domain": {
+                "tag": "pi",
+                "domain": {
+                  "tag": "bvar",
+                  "index": 2
+                },
+                "body": {
+                  "tag": "bvar",
+                  "index": 2
+                }
+              },
+              "body": {
+                "tag": "pi",
+                "domain": {
+                  "tag": "pi",
+                  "domain": {
+                    "tag": "bvar",
+                    "index": 2
+                  },
+                  "body": {
+                    "tag": "bvar",
+                    "index": 2
+                  }
+                },
+                "body": {
+                  "tag": "pi",
+                  "domain": {
+                    "tag": "bvar",
+                    "index": 4
+                  },
+                  "body": {
+                    "tag": "bvar",
+                    "index": 3
+                  },
+                  "binderInfo": "explicit"
+                },
+                "binderInfo": "explicit"
+              },
+              "binderInfo": "explicit"
+            },
+            "binderInfo": "explicit"
+          },
+          "binderInfo": "explicit"
+        },
+        "binderInfo": "explicit"
+      },
+      "value": {
+        "tag": "lam",
+        "domain": {
+          "tag": "sort",
+          "level": {
+            "tag": "zero"
+          }
+        },
+        "body": {
+          "tag": "lam",
+          "domain": {
+            "tag": "sort",
+            "level": {
+              "tag": "zero"
+            }
+          },
+          "body": {
+            "tag": "lam",
+            "domain": {
+              "tag": "sort",
+              "level": {
+                "tag": "zero"
+              }
+            },
+            "body": {
+              "tag": "lam",
+              "domain": {
+                "tag": "pi",
+                "domain": {
+                  "tag": "bvar",
+                  "index": 2
+                },
+                "body": {
+                  "tag": "bvar",
+                  "index": 2
+                }
+              },
+              "body": {
+                "tag": "lam",
+                "domain": {
+                  "tag": "pi",
+                  "domain": {
+                    "tag": "bvar",
+                    "index": 2
+                  },
+                  "body": {
+                    "tag": "bvar",
+                    "index": 2
+                  }
+                },
+                "body": {
+                  "tag": "lam",
+                  "domain": {
+                    "tag": "bvar",
+                    "index": 4
+                  },
+                  "body": {
+                    "tag": "app",
+                    "fn": {
+                      "tag": "bvar",
+                      "index": 1
+                    },
+                    "arg": {
+                      "tag": "app",
+                      "fn": {
+                        "tag": "bvar",
+                        "index": 2
+                      },
+                      "arg": {
+                        "tag": "bvar",
+                        "index": 0
+                      }
+                    }
+                  },
+                  "binderInfo": "explicit"
+                },
+                "binderInfo": "explicit"
+              },
+              "binderInfo": "explicit"
+            },
+            "binderInfo": "explicit"
+          },
+          "binderInfo": "explicit"
+        },
+        "binderInfo": "explicit"
+      }
+    },
+    {
+      "kind": "theorem",
+      "name": "proofIrrelTransport",
+      "levelParams": [],
+      "type": {
+        "tag": "pi",
+        "domain": {
+          "tag": "sort",
+          "level": {
+            "tag": "zero"
+          }
+        },
+        "body": {
+          "tag": "pi",
+          "domain": {
+            "tag": "bvar",
+            "index": 0
+          },
+          "body": {
+            "tag": "pi",
+            "domain": {
+              "tag": "bvar",
+              "index": 1
+            },
+            "body": {
+              "tag": "pi",
+              "domain": {
+                "tag": "pi",
+                "domain": {
+                  "tag": "bvar",
+                  "index": 2
+                },
+                "body": {
+                  "tag": "sort",
+                  "level": {
+                    "tag": "zero"
+                  }
+                }
+              },
+              "body": {
+                "tag": "pi",
+                "domain": {
+                  "tag": "app",
+                  "fn": {
+                    "tag": "bvar",
+                    "index": 0
+                  },
+                  "arg": {
+                    "tag": "bvar",
+                    "index": 2
+                  }
+                },
+                "body": {
+                  "tag": "app",
+                  "fn": {
+                    "tag": "bvar",
+                    "index": 1
+                  },
+                  "arg": {
+                    "tag": "bvar",
+                    "index": 2
+                  }
+                },
+                "binderInfo": "explicit"
+              },
+              "binderInfo": "explicit"
+            },
+            "binderInfo": "explicit"
+          },
+          "binderInfo": "explicit"
+        },
+        "binderInfo": "explicit"
+      },
+      "value": {
+        "tag": "lam",
+        "domain": {
+          "tag": "sort",
+          "level": {
+            "tag": "zero"
+          }
+        },
+        "body": {
+          "tag": "lam",
+          "domain": {
+            "tag": "bvar",
+            "index": 0
+          },
+          "body": {
+            "tag": "lam",
+            "domain": {
+              "tag": "bvar",
+              "index": 1
+            },
+            "body": {
+              "tag": "lam",
+              "domain": {
+                "tag": "pi",
+                "domain": {
+                  "tag": "bvar",
+                  "index": 2
+                },
+                "body": {
+                  "tag": "sort",
+                  "level": {
+                    "tag": "zero"
+                  }
+                }
+              },
+              "body": {
+                "tag": "lam",
+                "domain": {
+                  "tag": "app",
+                  "fn": {
+                    "tag": "bvar",
+                    "index": 0
+                  },
+                  "arg": {
+                    "tag": "bvar",
+                    "index": 2
+                  }
+                },
+                "body": {
+                  "tag": "bvar",
+                  "index": 0
+                },
+                "binderInfo": "explicit"
+              },
+              "binderInfo": "explicit"
+            },
+            "binderInfo": "explicit"
+          },
+          "binderInfo": "explicit"
+        },
+        "binderInfo": "explicit"
+      }
+    },
+    {
+      "kind": "theorem",
+      "name": "polymorphicProof",
+      "levelParams": [],
+      "type": {
+        "tag": "pi",
+        "domain": {
+          "tag": "sort",
+          "level": {
+            "tag": "succ",
+            "of": {
+              "tag": "zero"
+            }
+          }
+        },
+        "body": {
+          "tag": "pi",
+          "domain": {
+            "tag": "pi",
+            "domain": {
+              "tag": "bvar",
+              "index": 0
+            },
+            "body": {
+              "tag": "sort",
+              "level": {
+                "tag": "zero"
+              }
+            }
+          },
+          "body": {
+            "tag": "pi",
+            "domain": {
+              "tag": "bvar",
+              "index": 1
+            },
+            "body": {
+              "tag": "pi",
+              "domain": {
+                "tag": "app",
+                "fn": {
+                  "tag": "bvar",
+                  "index": 1
+                },
+                "arg": {
+                  "tag": "bvar",
+                  "index": 0
+                }
+              },
+              "body": {
+                "tag": "app",
+                "fn": {
+                  "tag": "bvar",
+                  "index": 2
+                },
+                "arg": {
+                  "tag": "bvar",
+                  "index": 1
+                }
+              },
+              "binderInfo": "explicit"
+            },
+            "binderInfo": "explicit"
+          },
+          "binderInfo": "explicit"
+        },
+        "binderInfo": "explicit"
+      },
+      "value": {
+        "tag": "lam",
+        "domain": {
+          "tag": "sort",
+          "level": {
+            "tag": "succ",
+            "of": {
+              "tag": "zero"
+            }
+          }
+        },
+        "body": {
+          "tag": "lam",
+          "domain": {
+            "tag": "pi",
+            "domain": {
+              "tag": "bvar",
+              "index": 0
+            },
+            "body": {
+              "tag": "sort",
+              "level": {
+                "tag": "zero"
+              }
+            }
+          },
+          "body": {
+            "tag": "lam",
+            "domain": {
+              "tag": "bvar",
+              "index": 1
+            },
+            "body": {
+              "tag": "lam",
+              "domain": {
+                "tag": "app",
+                "fn": {
+                  "tag": "bvar",
+                  "index": 1
+                },
+                "arg": {
+                  "tag": "bvar",
+                  "index": 0
+                }
+              },
+              "body": {
+                "tag": "bvar",
+                "index": 0
+              },
+              "binderInfo": "explicit"
+            },
+            "binderInfo": "explicit"
+          },
+          "binderInfo": "explicit"
+        },
+        "binderInfo": "explicit"
+      }
+    },
+    {
+      "kind": "theorem",
+      "name": "etaDefEq",
+      "levelParams": [],
+      "type": {
+        "tag": "pi",
+        "domain": {
+          "tag": "sort",
+          "level": {
+            "tag": "zero"
+          }
+        },
+        "body": {
+          "tag": "pi",
+          "domain": {
+            "tag": "sort",
+            "level": {
+              "tag": "zero"
+            }
+          },
+          "body": {
+            "tag": "pi",
+            "domain": {
+              "tag": "pi",
+              "domain": {
+                "tag": "bvar",
+                "index": 1
+              },
+              "body": {
+                "tag": "bvar",
+                "index": 1
+              }
+            },
+            "body": {
+              "tag": "pi",
+              "domain": {
+                "tag": "pi",
+                "domain": {
+                  "tag": "pi",
+                  "domain": {
+                    "tag": "bvar",
+                    "index": 2
+                  },
+                  "body": {
+                    "tag": "bvar",
+                    "index": 2
+                  }
+                },
+                "body": {
+                  "tag": "sort",
+                  "level": {
+                    "tag": "zero"
+                  }
+                }
+              },
+              "body": {
+                "tag": "pi",
+                "domain": {
+                  "tag": "app",
+                  "fn": {
+                    "tag": "bvar",
+                    "index": 0
+                  },
+                  "arg": {
+                    "tag": "bvar",
+                    "index": 1
+                  }
+                },
+                "body": {
+                  "tag": "app",
+                  "fn": {
+                    "tag": "bvar",
+                    "index": 1
+                  },
+                  "arg": {
+                    "tag": "lam",
+                    "domain": {
+                      "tag": "bvar",
+                      "index": 4
+                    },
+                    "body": {
+                      "tag": "app",
+                      "fn": {
+                        "tag": "bvar",
+                        "index": 3
+                      },
+                      "arg": {
+                        "tag": "bvar",
+                        "index": 0
+                      }
+                    },
+                    "binderInfo": "explicit"
+                  }
+                },
+                "binderInfo": "explicit"
+              },
+              "binderInfo": "explicit"
+            },
+            "binderInfo": "explicit"
+          },
+          "binderInfo": "explicit"
+        },
+        "binderInfo": "explicit"
+      },
+      "value": {
+        "tag": "lam",
+        "domain": {
+          "tag": "sort",
+          "level": {
+            "tag": "zero"
+          }
+        },
+        "body": {
+          "tag": "lam",
+          "domain": {
+            "tag": "sort",
+            "level": {
+              "tag": "zero"
+            }
+          },
+          "body": {
+            "tag": "lam",
+            "domain": {
+              "tag": "pi",
+              "domain": {
+                "tag": "bvar",
+                "index": 1
+              },
+              "body": {
+                "tag": "bvar",
+                "index": 1
+              }
+            },
+            "body": {
+              "tag": "lam",
+              "domain": {
+                "tag": "pi",
+                "domain": {
+                  "tag": "pi",
+                  "domain": {
+                    "tag": "bvar",
+                    "index": 2
+                  },
+                  "body": {
+                    "tag": "bvar",
+                    "index": 2
+                  }
+                },
+                "body": {
+                  "tag": "sort",
+                  "level": {
+                    "tag": "zero"
+                  }
+                }
+              },
+              "body": {
+                "tag": "lam",
+                "domain": {
+                  "tag": "app",
+                  "fn": {
+                    "tag": "bvar",
+                    "index": 0
+                  },
+                  "arg": {
+                    "tag": "bvar",
+                    "index": 1
+                  }
+                },
+                "body": {
+                  "tag": "bvar",
+                  "index": 0
+                },
+                "binderInfo": "explicit"
+              },
+              "binderInfo": "explicit"
+            },
+            "binderInfo": "explicit"
+          },
+          "binderInfo": "explicit"
+        },
+        "binderInfo": "explicit"
+      }
+    }
+  ],
+  "typeclasses": {
+    "classes": [],
+    "instances": []
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka26-quot-env-bridge0",
+  "publicVersion": "1.0.0-pskernel.29",
+  "baseline": "proofscript-v1-ka25-nondef-env-defeq-preservation-bridge0",
+  "referenceKind": "direct-imported-lean4lean-quot-env-bridge",
+  "imports": ["Lean4Lean.Theory.Typing.Env", "Lean4Lean.Theory.Typing.QuotLemmas"],
+  "bridgedRelations": [
+    "Lean4Lean.VDecl.WF",
+    "Lean4Lean.VEnv.WF",
+    "Lean4Lean.VEnv.LE",
+    "Lean4Lean.VEnv.addQuot",
+    "Lean4Lean.VEnv.constants",
+    "Lean4Lean.VEnv.defeqs"
+  ],
+  "coveredPSDeclKinds": ["quot"],
+  "alreadyCoveredPSDeclKinds": ["axiom", "definition", "theorem", "example", "opaque"],
+  "excludedPSDeclKinds": ["inductive", "mutualInductive"],
+  "conditionalBridgeLemmas": [
+    "PSKernelKA26.translated_quot_vdecl_wf",
+    "PSKernelKA26.translated_quot_env_wf",
+    "PSKernelKA26.translated_quot_env_extends",
+    "PSKernelKA26.translated_quot_env_lookup_quot",
+    "PSKernelKA26.translated_quot_env_lookup_quot_mk",
+    "PSKernelKA26.translated_quot_env_lookup_quot_lift",
+    "PSKernelKA26.translated_quot_env_lookup_quot_ind",
+    "PSKernelKA26.translated_quot_env_defeq_member"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "quotientSemanticSoundness": false,
+    "formalLean4EquivalenceProvenObligations": 43
+  }
+}

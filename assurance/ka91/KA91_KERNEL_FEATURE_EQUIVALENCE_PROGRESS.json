@@ -1,0 +1,20 @@
+{
+  "checkpoint": "proofscript-v1-ka91-primitive-logical-bitwise-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.94",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 69,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 281,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 278,
+    "newFormalLean4LeanBridgeObligations": 3,
+    "correctedFormalLean4LeanBridgeObligations": 281,
+    "countedNewObligations": [
+      "translated_checkNatLAnd_wf",
+      "translated_checkNatLOr_wf",
+      "translated_checkNatXor_wf"
+    ]
+  },
+  "metricPolicy": "KA91 adds direct non-sorry-backed primitive Nat logical-bitwise recognizer bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

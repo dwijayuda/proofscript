@@ -1,0 +1,14 @@
+{
+  "name": "@proofscript/kernel",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "pskernel-derived trusted-boundary standalone ProofScript kernel for Lean 4.33.1 semantics",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "docs"
+  ]
+}

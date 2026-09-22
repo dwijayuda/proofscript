@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka23-nondef-env-lookup-bridge0",
+  "publicVersion": "1.0.0-pskernel.26",
+  "baseline": "proofscript-v1-ka22-nondef-env-extension-bridge0",
+  "createdAtUtc": "2026-09-18T15:20:00Z",
+  "kernel": {
+    "name": "PSKernel",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "directLean4LeanNonDefEnvLookupBridge": {
+    "referenceKind": "direct-imported-lean4lean-nondef-env-lookup-bridge",
+    "actualLean4LeanImportBound": true,
+    "bridgedRelation": "Lean4Lean.VEnv.constants / Lean4Lean.VEnv.defeqs",
+    "directLean4LeanNonDefEnvLookupBridgeChecked": true,
+    "strictBridgeCheckPassed": true,
+    "blockedReasons": [],
+    "coveredPSDeclKinds": [
+      "theorem",
+      "opaque"
+    ],
+    "nonAddingPSDeclKinds": [
+      "example"
+    ],
+    "alreadyCoveredPSDeclKinds": [
+      "axiom",
+      "definition"
+    ],
+    "conditionalBridgeLemmas": [
+      "PSKernelKA23.translated_theorem_env_lookup",
+      "PSKernelKA23.translated_theorem_env_defeq_member",
+      "PSKernelKA23.translated_opaque_env_lookup"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 28,
+    "formalObligationMeaning": "KA-13 through KA-23 conditional Lean4Lean bridge lemmas only; not executable PSKernel refinement or full Lean equivalence"
+  },
+  "verificationSummary": {
+    "installBuildAndFocusedGates": "passed",
+    "lean4leanBridgeCheck": "passed",
+    "arenaPreflightStaticTutorialVerify": "passed",
+    "freshExtractSmoke": "passed",
+    "zipIntegrity": "passed"
+  }
+}

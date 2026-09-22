@@ -1,0 +1,43 @@
+{
+  "checkpoint": "proofscript-v1-ka41-codec-replay-refinement-bridge0",
+  "publicVersion": "1.0.0-pskernel.44",
+  "baseline": "proofscript-v1-ka40-primitive-literal-policy-bridge0",
+  "referenceKind": "direct-imported-lean4lean-codec-replay-refinement-bridge",
+  "imports": [
+    "Lean4Lean.Replay"
+  ],
+  "coveredLean4LeanReplaySurface": [
+    "Replay.Context.newConstants",
+    "Replay.Context.verbose",
+    "Replay.Context.compare",
+    "Replay.Context.checkQuot",
+    "Replay.State.env",
+    "Replay.State.numAdded",
+    "Replay.replay result pair"
+  ],
+  "coveredPSKernelCodecSurface": [
+    "decodeArtifact",
+    "canonicalJson",
+    "makeKernelLevelInstantiationConformanceArtifact",
+    "Core format 71 profile binding"
+  ],
+  "formalBridgeLemmas": [
+    "PSKernelKA41.translated_replay_context_lookup_preserved",
+    "PSKernelKA41.translated_replay_state_env_preserved",
+    "PSKernelKA41.translated_replay_state_num_added_preserved",
+    "PSKernelKA41.translated_replay_context_flags_preserved",
+    "PSKernelKA41.translated_replay_result_count_preserved",
+    "PSKernelKA41.translated_replay_result_env_preserved"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullCodecReplayRefinement": false,
+    "formalLean4EquivalenceProvenObligations": 120
+  }
+}

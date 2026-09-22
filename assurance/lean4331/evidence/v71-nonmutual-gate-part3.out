@@ -1,0 +1,8 @@
+PASS: Core v71 / KERNEL-level-instantiation-conformance1 / Lean 4.33.1 identity
+PASS: 218 assurance/trusted source fingerprints
+PASS: exact Lean executable 4.33.1/819816b2e0a3
+PASS: direct typing: 1,000 TS + 1,000 exact Lean
+PASS: beta/zeta: 1,000 TS + 1,000 exact Lean
+PASS: delta/transparency: 1,000 TS + 1,000 exact Lean
+PASS: ordinary WHNF: 1,000 TS + 1,000 exact Lean
+KERNEL v71 ASSURANCE GATE PART 3/6: PASS

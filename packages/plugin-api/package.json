@@ -1,0 +1,13 @@
+{
+  "name": "@proofscript/plugin-api",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "Versioned ProofScript plugin API without kernel mutation hooks",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}

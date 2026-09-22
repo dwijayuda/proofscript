@@ -1,0 +1,11 @@
+{
+  "artifact": "V71_K3TB_RELEASE_CANDIDATE1",
+  "checkpoint": "assurance/lean4331/CHECKPOINT_V71_K3TB_RELEASE_CANDIDATE1.json",
+  "checkpointSha256": "61e772b16161c25f5b42ebaa3e5f016c083e9e24c04c4b18689ceede55a17632",
+  "markdown": "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_K3TB_RELEASE_CANDIDATE1.md",
+  "markdownSha256": "53872fffa2c2be347a27c8e9e8119b62661fb5d075a43157591c2cfc891b79e2",
+  "formalStackHash": "b9032b47bfd0eab1860921f8f90bce73f283f9cc5c50e3b25f5b1ba2b5ce9757",
+  "checkpointLedgerHash": "34380cedb8174172fddcaeac2eacba64b6404df18d6337f39b61497dfb53c0b7",
+  "releaseDocsHash": "55be1a4fc476b8514d69255d6ef3e9a5208bf54c9b3b15b0df06bc08837b4ca0",
+  "combinedSha256": "817a106cc59f45aae5ac8beb7ba03b073bf669f3e44f9ab4176cfde8c1cd949c"
+}

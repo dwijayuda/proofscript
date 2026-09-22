@@ -1,0 +1,12 @@
+-- K2j: propositional equality surface syntax lowers to the checked Eq foundation.
+theorem natReflSurface(n: Nat): n = n := Eq.refl.{1}(Nat, n);
+theorem boolReflSurface(b: Bool): b = b := Eq.refl.{1}(Bool, b);
+theorem proofReflSurface(P: Prop, h: P): h = h := Eq.refl.{0}(P, h);
+
+-- Equality must bind tighter than implication.
+theorem equalityImplication(P: Prop): P = P → P = P :=
+  fun (h: P = P) => h;
+
+-- The right operand receives the left operand's inferred type.
+theorem zeroRightSurface: Nat.zero = 0 := Eq.refl.{1}(Nat, Nat.zero);
+theorem addZeroSurface(n: Nat): Nat.add(n, 0) = n := Eq.refl.{1}(Nat, n);

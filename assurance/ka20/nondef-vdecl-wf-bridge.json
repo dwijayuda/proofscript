@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka20-nondef-vdecl-wf-bridge0",
+  "publicVersion": "1.0.0-pskernel.23",
+  "referenceKind": "direct-imported-lean4lean-nondef-vdecl-wf-bridge",
+  "baseline": "proofscript-v1-ka19-env-defeq-preservation-bridge0",
+  "coreArtifactFormat": 71,
+  "certificateFormat": 2,
+  "bridgedRelation": "Lean4Lean.VDecl.WF",
+  "dependsOn": [
+    "Lean4Lean.Theory.Typing.Env",
+    "Lean4Lean.VDecl.WF",
+    "PSKernelKA19"
+  ],
+  "coveredPSDeclKinds": [
+    "theorem",
+    "example",
+    "opaque"
+  ],
+  "alreadyCoveredPSDeclKinds": [
+    "axiom",
+    "definition"
+  ],
+  "excludedPSDeclKinds": [
+    "quot",
+    "inductive",
+    "mutualInductive"
+  ],
+  "conditionalBridgeLemmas": [
+    "PSKernelKA20.translated_theorem_vdecl_wf",
+    "PSKernelKA20.translated_example_vdecl_wf",
+    "PSKernelKA20.translated_opaque_vdecl_wf"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 19,
+    "formalObligationMeaning": "KA-13 through KA-20 conditional Lean4Lean bridge lemmas only; not executable PSKernel refinement or full Lean equivalence"
+  }
+}

@@ -1,0 +1,8 @@
+
+> proofscript-monorepo@0.1.0-wave-b.1 test:v71:local-merged
+> node tools/kernel-v71-local-merged-regression-tests.ts
+
+MERGED_LOCAL_COMPONENT PASS O-DECL local environment preservation
+MERGED_LOCAL_COMPONENT PASS TS non-mutual classifier implementation bridge
+V71_MERGED_LOCAL_COMPONENTS=2 FAILURES=0
+PASS KERNEL-v71-local-merged-regression: O-DECL preservation + TS classifier implementation bridge

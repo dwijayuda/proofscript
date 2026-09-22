@@ -1,0 +1,4 @@
+def answer: Nat := { 42 }
+def addOne(n: Nat): Nat := { n + 1 }
+def result: Nat := { addOne(answer) }
+theorem result_eq_43: result = 43 := by { rfl }

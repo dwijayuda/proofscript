@@ -1,0 +1,15 @@
+class Loop(A: Type) {
+  tag: Nat;
+}
+
+instance {A: Type} [self: Loop(A)] looping: Loop(A) := {
+  tag := 0
+};
+
+def needLoop[l: Loop(Nat)](n: Nat): Nat := {
+  Loop.tag(Nat, l)
+}
+
+def impossible: Nat := {
+  needLoop(0)
+}

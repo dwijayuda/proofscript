@@ -1,0 +1,18 @@
+def exceptMap{E: Type, A: Type, B: Type}(f: A -> B, e: Except(E, A)): Except(E, B) := {
+  match (e) {
+    | .error(err) => .error(err)
+    | .ok(value) => .ok(f(value))
+  }
+}
+
+def plusOneE(x: Nat): Nat := { x + 1 }
+
+def unwrapExcept(e: Except(Nat, Nat)): Nat := {
+  match (e) {
+    | .error(err) => err
+    | .ok(value) => value
+  }
+}
+
+def exceptOk: Nat := { unwrapExcept(exceptMap(plusOneE, .ok(8))) }
+def exceptErr: Nat := { unwrapExcept(exceptMap(plusOneE, .error(4))) }

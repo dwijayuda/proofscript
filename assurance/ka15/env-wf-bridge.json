@@ -1,0 +1,41 @@
+{
+  "checkpoint": "proofscript-v1-ka15-env-wf-bridge0",
+  "publicVersion": "1.0.0-pskernel.18",
+  "baseline": "proofscript-v1-ka14-real-arena-corpus0",
+  "referenceKind": "direct-imported-lean4lean-env-wf-bridge",
+  "imports": [
+    "Lean4Lean.Theory.Typing.Env",
+    "PSKernelKA13VDeclWFBridge"
+  ],
+  "bridgedRelation": "Lean4Lean.VEnv.WF",
+  "dependsOn": [
+    "PSKernelKA13.translated_axiom_vdecl_wf",
+    "PSKernelKA13.translated_definition_vdecl_wf"
+  ],
+  "conditionalBridgeLemmas": [
+    "PSKernelKA15.translated_axiom_env_wf",
+    "PSKernelKA15.translated_definition_env_wf"
+  ],
+  "coveredPSDeclKinds": ["axiom", "definition"],
+  "stillExcludedDeclKinds": ["theorem", "example", "opaque", "quot", "inductive", "mutualInductive"],
+  "closedByKA15": [
+    "direct-import-lean4lean-env-wf-relation",
+    "conditional-env-wf-bridge-for-translated-axiom",
+    "conditional-env-wf-bridge-for-translated-definition",
+    "preserve-ka12-ka13-inductive-blocking",
+    "strict-lean4lean-env-wf-bridge-check"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "coreFormatChanged": false,
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanEnvWFBridgeChecked": true,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 4,
+    "formalObligationMeaning": "KA-13's two conditional VDecl.WF lemmas plus KA-15's two conditional VEnv.WF lemmas; not executable PSKernel refinement or full Lean equivalence"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "checkpoint": "proofscript-v1-ka44-end-to-end-checker-refinement-plan0",
+  "publicVersion": "1.0.0-pskernel.47",
+  "baseline": "proofscript-v1-ka43-theory-wide-refinement-map0",
+  "purpose": "make the end-to-end PSKernel-to-Lean4Lean checker refinement path explicit without adding spaghetti or trusted semantics",
+  "phases": [
+    {
+      "id": "KA44-refinement-spine",
+      "status": "completed",
+      "deliverable": "typed refinement spine, module boundaries, acceptance rules, and non-overclaiming release gate"
+    },
+    {
+      "id": "KA45-inductive-recursor-refinement",
+      "status": "planned",
+      "deliverable": "bridge generated inductive recursors/iota rules to Lean4Lean reduction facts"
+    },
+    {
+      "id": "KA46-projection-reduction-refinement",
+      "status": "planned",
+      "deliverable": "bridge projection reduction and structure field behavior"
+    },
+    {
+      "id": "KA47-executable-expression-translator-refinement",
+      "status": "planned",
+      "deliverable": "prove executable PSKernel expression translator cases refine Lean4Lean TrExprS"
+    },
+    {
+      "id": "KA48-executable-checker-result-refinement",
+      "status": "planned",
+      "deliverable": "connect PSKernel accept/reject/decline outcomes to Lean4Lean checker outcomes"
+    }
+  ],
+  "nextMilestones": [
+    "KA45-inductive-recursor-refinement-bridge",
+    "KA46-projection-reduction-refinement-bridge",
+    "KA47-executable-expression-translator-refinement",
+    "KA48-executable-checker-result-refinement"
+  ],
+  "formalLean4EquivalenceProvenObligations": 128,
+  "doesNotClaim": [
+    "full Lean4 equivalence",
+    "same theory as full Lean4",
+    "executable PSKernel refinement proof",
+    "complete inductive/recursor/projection parity"
+  ]
+}

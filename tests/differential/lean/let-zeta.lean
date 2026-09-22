@@ -1,0 +1,18 @@
+def letProof (P : Prop) (h : P) : P :=
+  let x := h
+  x
+
+def nestedLet (P : Prop) (h : P) : P :=
+  let x : P := h
+  let y := x
+  y
+
+theorem nestedLetWorks (P : Prop) (h : P) : P := nestedLet P h
+
+def haveProof (P : Prop) (h : P) : P := by
+  have hp : P := h
+  exact hp
+
+def haveProofInfer (P : Prop) (h : P) : P := by
+  have hp := h
+  exact hp

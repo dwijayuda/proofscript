@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka30-ordinary-env-aggregate-bridge0",
+  "baseline": "proofscript-v1-ka29-quot-env-aggregate-bridge0",
+  "deltaKind": "ordinary-env-aggregate-bridge",
+  "formalLean4EquivalenceProvenObligations": 55,
+  "previousFormalLean4EquivalenceProvenObligations": 51,
+  "newFormalLean4EquivalenceProvenObligations": 4,
+  "provenLeanTheoremObligations": [
+    "PSKernelKA30.translated_axiom_env_aggregate_bridge",
+    "PSKernelKA30.translated_definition_env_aggregate_bridge",
+    "PSKernelKA30.translated_theorem_env_aggregate_bridge",
+    "PSKernelKA30.translated_opaque_env_aggregate_bridge"
+  ],
+  "closedSinceKA29": [
+    "axiom ordinary aggregate theorem over real Lean4Lean VDecl.WF/VEnv.WF/VEnv.LE/constants/defeqs",
+    "definition ordinary aggregate theorem over real Lean4Lean VDecl.WF/VEnv.WF/VEnv.LE/constants/defeqs",
+    "theorem ordinary aggregate theorem over real Lean4Lean VDecl.WF/VEnv.WF/VEnv.LE/constants/defeqs",
+    "opaque ordinary aggregate theorem over real Lean4Lean VDecl.WF/VEnv.WF/VEnv.LE/constants/defeqs"
+  ],
+  "stillOpen": [
+    "executable PSKernel refinement proof",
+    "definitional-equality soundness",
+    "inductive and mutual inductive soundness",
+    "quotient semantic soundness",
+    "full Lean 4 equivalence",
+    "same theory as full Lean 4"
+  ]
+}

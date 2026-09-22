@@ -1,0 +1,42 @@
+{
+  "checkpoint": "proofscript-v1-ka32-feature-equivalence-audit0",
+  "publicVersion": "1.0.0-pskernel.35",
+  "baseline": "proofscript-v1-ka31-example-env-aggregate-bridge0",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "featureEquivalenceAudit": {
+    "actualLean4LeanSourceAudited": true,
+    "pskernelSourceAudited": true,
+    "totalFeatureGroups": 15,
+    "bridgedFeatureGroups": 4,
+    "gapFeatureGroups": 11,
+    "requiredNextMilestones": [
+      "KA33-inductive-env-bridge",
+      "KA33-level-executable-refinement",
+      "KA34-mutual-def-env-bridge",
+      "KA35-executable-typechecker-refinement",
+      "KA36-full-expression-tag-coverage",
+      "KA38-recursor-whnf-refinement",
+      "KA39-defeq-whnf-refinement",
+      "KA40-primitive-literal-policy-bridge",
+      "KA41-codec-replay-refinement",
+      "KA42-resource-error-conservativity",
+      "KA43-theory-wide-refinement-map"
+    ]
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "quotientSemanticSoundness": false,
+    "formalLean4EquivalenceProvenObligations": 56
+  },
+  "blockedReasons": []
+}

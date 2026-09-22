@@ -1,0 +1,19 @@
+{
+  "checkpoint": "proofscript-v1-ka74-executable-defeq-nat-offset-boundary-refinement0",
+  "publicVersion": "1.0.0-pskernel.77",
+  "featureSurfaceBridgeProgressPercent": 88,
+  "executableKernelEquivalenceProofProgressPercent": 55,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 221,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 219,
+    "newFormalLean4LeanBridgeObligations": 2,
+    "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+    "countedNewObligations": [
+      "translated_isNatZero_wf",
+      "translated_isNatSuccOf_wf"
+    ]
+  },
+  "metricPolicy": "KA74 advances the exact formal obligation counter after KA73 sorry-boundary correction; dashboard percentages remain conservative and unchanged pending the next broader coverage audit.",
+  "notAFormalEquivalenceClaim": true
+}

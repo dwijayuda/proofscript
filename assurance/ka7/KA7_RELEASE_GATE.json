@@ -1,0 +1,140 @@
+{
+  "checkpoint": "proofscript-v1-ka7-real-lean4lean-import0",
+  "publicVersion": "1.0.0-pskernel.9",
+  "createdAtUtc": "2026-09-18T06:03:08Z",
+  "baseline": "proofscript-v1-ka6-lean4lean-binding0",
+  "targetLeanVersion": "4.33.1",
+  "coreFormat": 71,
+  "kernel": {
+    "name": "PSKernel",
+    "defaultProfile": "KERNEL-level-instantiation-conformance1",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "ka7": {
+    "materializedLeanPath": "/mnt/data/lean-4.33.1-toolchain/lean-4.33.1-linux/bin/lean",
+    "sourceDiscoveryAttempted": [
+      {
+        "candidate": "vendor/lean4lean",
+        "resolved": "/mnt/data/ka7-work/proofscript-v1-ka6-lean4lean-binding0/vendor/lean4lean",
+        "exists": false,
+        "missingRequired": [
+          "lean-toolchain",
+          "lakefile.toml",
+          "Lean4Lean.lean",
+          "Lean4Lean/Environment.lean"
+        ],
+        "leanToolchain": null,
+        "toolchainMatchesTarget": false
+      },
+      {
+        "candidate": "external/lean4lean",
+        "resolved": "/mnt/data/ka7-work/proofscript-v1-ka6-lean4lean-binding0/external/lean4lean",
+        "exists": false,
+        "missingRequired": [
+          "lean-toolchain",
+          "lakefile.toml",
+          "Lean4Lean.lean",
+          "Lean4Lean/Environment.lean"
+        ],
+        "leanToolchain": null,
+        "toolchainMatchesTarget": false
+      },
+      {
+        "candidate": "/mnt/data/lean4lean",
+        "resolved": "/mnt/data/lean4lean",
+        "exists": false,
+        "missingRequired": [
+          "lean-toolchain",
+          "lakefile.toml",
+          "Lean4Lean.lean",
+          "Lean4Lean/Environment.lean"
+        ],
+        "leanToolchain": null,
+        "toolchainMatchesTarget": false
+      },
+      {
+        "candidate": "/mnt/data/lean4lean-master",
+        "resolved": "/mnt/data/lean4lean-master",
+        "exists": false,
+        "missingRequired": [
+          "lean-toolchain",
+          "lakefile.toml",
+          "Lean4Lean.lean",
+          "Lean4Lean/Environment.lean"
+        ],
+        "leanToolchain": null,
+        "toolchainMatchesTarget": false
+      },
+      {
+        "candidate": "/mnt/data/lean4lean-src",
+        "resolved": "/mnt/data/lean4lean-src",
+        "exists": false,
+        "missingRequired": [
+          "lean-toolchain",
+          "lakefile.toml",
+          "Lean4Lean.lean",
+          "Lean4Lean/Environment.lean"
+        ],
+        "leanToolchain": null,
+        "toolchainMatchesTarget": false
+      },
+      {
+        "candidate": "/mnt/data/lean4lean-test-clone",
+        "resolved": "/mnt/data/lean4lean-test-clone",
+        "exists": false,
+        "missingRequired": [
+          "lean-toolchain",
+          "lakefile.toml",
+          "Lean4Lean.lean",
+          "Lean4Lean/Environment.lean"
+        ],
+        "leanToolchain": null,
+        "toolchainMatchesTarget": false
+      }
+    ],
+    "actualLean4LeanSourcePresent": false,
+    "actualLean4LeanImportBound": false,
+    "strictActualImportPassed": false,
+    "blockedReason": "lean4lean_source_missing",
+    "ka6CompatibleScaffoldStillChecks": true,
+    "closedByKA7": 5,
+    "stillOpenObligations": 9
+  },
+  "verification": {
+    "npmInstallOffline": "passed",
+    "build": "passed",
+    "testPskernelKa1": "passed",
+    "testPskernelKa2": "passed",
+    "testPskernelKa3": "passed",
+    "testPskernelKa4": "passed",
+    "testPskernelKa5": "passed",
+    "testPskernelKa6": "passed",
+    "testPskernelKa7": "passed",
+    "assuranceKa1": "passed",
+    "assuranceKa2": "passed",
+    "assuranceKa3": "passed",
+    "assuranceKa4": "passed",
+    "assuranceKa5": "passed",
+    "assuranceKa6": "passed",
+    "assuranceKa7": "passed",
+    "leanKa6Check": "passed",
+    "leanKa7ImportSoft": "passed_with_source_missing",
+    "leanKa7ImportStrict": "failed_as_designed_exit_2_source_missing",
+    "verifyArena": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "conformanceBounded": "passed"
+  },
+  "claimBoundary": {
+    "actualLean4LeanImportBound": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0
+  }
+}

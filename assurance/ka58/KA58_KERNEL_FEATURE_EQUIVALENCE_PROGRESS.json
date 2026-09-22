@@ -1,0 +1,41 @@
+{
+  "checkpoint": "proofscript-v1-ka58-executable-expression-translator-invariant-refinement0",
+  "publicVersion": "1.0.0-pskernel.61",
+  "featureSurfaceBridgeProgressPercent": 80,
+  "executableKernelEquivalenceProofProgressPercent": 45,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 167,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 163,
+    "newFormalLean4LeanBridgeObligations": 4,
+    "countedNewObligations": [
+      "translated_trExprS_closed_wf",
+      "translated_trExprS_fvarsIn_wf",
+      "translated_trExpr_closed_wf",
+      "translated_trExpr_fvarsIn_wf"
+    ]
+  },
+  "groups": [
+    {
+      "id": "expression-tags",
+      "progressPercent": 90,
+      "status": "TrExprS constructors/determinism/substitution/source conditions/source transforms/source invariants strict-checked; full executable translator refinement incomplete"
+    },
+    {
+      "id": "typechecker-whnf-defeq",
+      "progressPercent": 53,
+      "status": "WHNF/DefEq surface strict-checked; executable checker refinement incomplete"
+    },
+    {
+      "id": "end-to-end-refinement-spine",
+      "progressPercent": 35,
+      "status": "checker pipeline skeleton strict-checked; no end-to-end theorem yet"
+    },
+    {
+      "id": "architecture-health",
+      "progressPercent": 93,
+      "status": "no-spaghetti ratchet plus KA58 semantic-package touch guard"
+    }
+  ],
+  "notAFormalEquivalenceClaim": true
+}

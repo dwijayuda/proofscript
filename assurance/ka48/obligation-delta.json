@@ -1,0 +1,7 @@
+{
+  "checkpoint": "proofscript-v1-ka48-executable-whnf-defeq-refinement-preflight0",
+  "baseline": "proofscript-v1-ka47-executable-expression-translator-refinement-preflight0",
+  "newFormalLean4LeanBridgeObligations": 0,
+  "totalFormalLean4LeanBridgeObligations": 132,
+  "reason": "KA-48 is a source-bound preflight. Strict Lean4Lean checking is blocked until offline Batteries v4.33.0-rc2 is available."
+}

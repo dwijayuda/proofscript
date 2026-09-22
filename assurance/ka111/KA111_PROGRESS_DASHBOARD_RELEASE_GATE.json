@@ -1,0 +1,152 @@
+{
+  "checkpoint": "proofscript-v1-ka111-progress-dashboard0",
+  "publicVersion": "1.0.0-pskernel.114",
+  "baseline": "proofscript-v1-ka110-feature-surface-closeout-audit0",
+  "releaseKind": "progress-dashboard-audit",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA111",
+      "source": "assurance/ka111/progress-dashboard-bridge.lean",
+      "destination": "KA111ProgressDashboardBridge.lean",
+      "status": "passed",
+      "proofBearing": false,
+      "obligations": 0,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "dashboard": {
+    "checkpoint": "proofscript-v1-ka111-progress-dashboard0",
+    "publicVersion": "1.0.0-pskernel.114",
+    "baseline": "proofscript-v1-ka110-feature-surface-closeout-audit0",
+    "metrics": {
+      "featureSurfaceBridgeProgressPercent": 100,
+      "executableKernelEquivalenceProofProgressPercent": 87,
+      "arenaCorpusRegressionPercent": 100,
+      "releasePackagingVerificationPercent": 100,
+      "progressDashboardPercent": 100,
+      "formalLean4LeanBridgeObligations": 366,
+      "fullLean4EquivalencePercent": 0,
+      "fullyFormalK3Percent": 0,
+      "overallConservativeProjectProgressPercent": 81,
+      "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+    },
+    "phaseStatus": {
+      "featureSurfaceBridge": "closed",
+      "executableEquivalence": "active",
+      "fullLean4Equivalence": "not-proven",
+      "fullyFormalK3": "not-proven",
+      "claimBoundary": "enforced"
+    },
+    "percentBoundaries": {
+      "featureSurfaceClosedDoesNotImplyFullLean4Equivalence": true,
+      "overallProgressIsDashboardEstimate": true,
+      "executableProgressIsNotARefinementProof": true
+    },
+    "nextMilestoneRecommendation": "KA112 should target executable equivalence proof progress, not more feature-surface wrappers.",
+    "claimBoundary": {
+      "fullLean4Equivalence": false,
+      "sameTheoryAsFullLean4": false,
+      "fullyFormalK3": false,
+      "executablePSKernelRefinementProof": false,
+      "trustedKernelSemanticChange": false,
+      "kernelCodecChange": false,
+      "coreFormatChanged": false,
+      "certificateFormatChanged": false
+    }
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka111Files": [
+      {
+        "path": "tools/pskernel-ka111-progress-dashboard-tests.ts",
+        "lines": 42,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka111-progress-dashboard.ts",
+        "lines": 14,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka111/KA111_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 18,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka111/KA111_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 15,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka111/KA111_PROGRESS_DASHBOARD.json",
+        "lines": 41,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka111/KA111_PROGRESS_DASHBOARD_BRIDGE_SPEC.json",
+        "lines": 22,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka111/KA111_PROGRESS_DASHBOARD_RELEASE_GATE.json",
+        "lines": 153,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka111/KA111_PROGRESS_DASHBOARD_REPORT.md",
+        "lines": 20,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka111/KA111_PROGRESS_DASHBOARD_VERIFICATION_SUMMARY.json",
+        "lines": 12,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka111/progress-dashboard-bridge.lean",
+        "lines": 10,
+        "ext": ".lean"
+      }
+    ],
+    "ka111ToolFiles": [
+      {
+        "path": "tools/pskernel-ka111-progress-dashboard-tests.ts",
+        "lines": 42,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka111-progress-dashboard.ts",
+        "lines": 14,
+        "ext": ".ts"
+      }
+    ],
+    "newKA111OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

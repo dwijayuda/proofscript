@@ -1,0 +1,82 @@
+{
+  "checkpoint": "proofscript-v1-pskernel-real-arena0",
+  "publicVersion": "1.0.0-pskernel.2",
+  "createdAtUtc": "2026-09-18T03:35:22Z",
+  "baseline": "proofscript-v1-pskernel-advancement-audit0",
+  "sourceBaselineSha256": "c2c28afb61723557ff30d1d06c9a272470c2355e42d495aa1817c856c7c284de",
+  "arenaCorpus": {
+    "path": "/mnt/data/lean-arena-tests.tar(4).gz",
+    "sha256": "f915a7c0e688bbdcbb117e4fbb8cbe26c1ad4388da7712dea641bc6041b3e8bc",
+    "extractedTo": "/mnt/data/arena-corpus-20260915",
+    "ndjsonCount": 190
+  },
+  "arenaResultsSource": {
+    "path": "/mnt/data/results(5).json",
+    "sha256": "1d485da062dde03f2b4a5a62027a0d3f068de838b8837cc5230319ff1f54ef04",
+    "timestamp": "2026-09-15 15:36:44 UTC",
+    "gitRevision": "a538455e201c1be48a11963cb83058649a36dc0e",
+    "githubRunId": "34974976650"
+  },
+  "kernel": {
+    "name": "PSKernel",
+    "defaultProfile": "KERNEL-level-instantiation-conformance1",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "resourceSecurityProfile": "KERNEL-resource-bounds0",
+    "resourceSecurityStatus": "accepted",
+    "checklist": "41/41 implemented;0 partial;0 unsupported",
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "arena": {
+    "preflight": "passed",
+    "verifyArena": "passed",
+    "tutorialCounts": {
+      "total": 140,
+      "expectedAccept": 93,
+      "expectedReject": 47,
+      "acceptedGood": 93,
+      "rejectedBad": 47,
+      "declinedUnsupported": 0,
+      "wrongAccepts": 0,
+      "wrongRejects": 0,
+      "checkerCrashes": 0,
+      "notRun": 0
+    },
+    "fullArenaTutorial": true,
+    "staticCounts": {
+      "total": 26,
+      "expectedAccept": 4,
+      "expectedReject": 22,
+      "acceptedGood": 4,
+      "rejectedBad": 22,
+      "declinedUnsupported": 0,
+      "wrongAccepts": 0,
+      "wrongRejects": 0,
+      "checkerCrashes": 0,
+      "notRun": 0
+    },
+    "fullStaticAgreement": true
+  },
+  "verification": {
+    "npmInstallOffline": "passed",
+    "build": "passed",
+    "verifyArena": "passed",
+    "pskernelV1Rename": "passed",
+    "pskernelAdvancementAudit": "passed",
+    "pscKernelStatus": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "crudTemplate": "passed",
+    "runtimeImportCrud": "passed",
+    "conformanceBounded": "passed"
+  },
+  "claimBoundary": {
+    "freshFullArenaPass": true,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0
+  }
+}

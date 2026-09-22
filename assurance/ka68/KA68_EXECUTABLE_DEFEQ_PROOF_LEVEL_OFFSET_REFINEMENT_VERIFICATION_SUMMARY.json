@@ -1,0 +1,39 @@
+{
+  "checkpoint": "proofscript-v1-ka68-executable-defeq-proof-level-offset-refinement0",
+  "publicVersion": "1.0.0-pskernel.71",
+  "baseline": "proofscript-v1-ka67-executable-defeq-binder-app-eta-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "baselineObligations": 204,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA68",
+        "source": "assurance/ka68/executable-defeq-proof-level-offset-refinement-bridge.lean",
+        "destination": "PSKernelKA68ExecutableDefEqProofLevelOffsetRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "dependencyBuildStatus": "passed",
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "oldCodebasePolicy": {
+    "oldCodebaseRegressionIgnoredByUser": true,
+    "fullNpmTestRequiredForThisCheckpoint": false,
+    "reason": "User requested continuing with KA66/KA67 lineage and ignoring old codebase; KA68 changes only strict Lean4Lean bridge wrappers and release metadata."
+  },
+  "fullNpmTestStatus": "not-run-old-codebase-ignored-by-user",
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA68 gate tool absent before implementation",
+  "finalFreshExtractBoundedChecks": "passed-before-zip",
+  "finalZipStatus": "passed",
+  "finalZipSha256": "d305e40e28b9a6583774bea40a2221ab0b4db246871c7ee2269739a3db6efcbc",
+  "finalZipUnzipTest": "passed",
+  "finalZipSha256Check": "passed"
+}

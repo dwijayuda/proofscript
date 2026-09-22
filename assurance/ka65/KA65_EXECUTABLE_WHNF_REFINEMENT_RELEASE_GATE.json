@@ -1,0 +1,163 @@
+{
+  "checkpoint": "proofscript-v1-ka65-executable-whnf-refinement0",
+  "publicVersion": "1.0.0-pskernel.68",
+  "baseline": "proofscript-v1-ka64-executable-expression-translator-eqv-refinement0",
+  "releaseKind": "strict-lean4lean-bridge",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanUnblocked": true,
+  "correctedBaselineObligations": 192,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA65",
+        "source": "assurance/ka65/executable-whnf-refinement-bridge.lean",
+        "destination": "PSKernelKA65ExecutableWHNFRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "dependencyBuildStatus": "passed",
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka65-executable-whnf-refinement0",
+    "publicVersion": "1.0.0-pskernel.68",
+    "featureSurfaceBridgeProgressPercent": 87,
+    "executableKernelEquivalenceProofProgressPercent": 53,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 196,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 192,
+      "newFormalLean4LeanBridgeObligations": 4,
+      "countedNewObligations": [
+        "translated_whnf_wf",
+        "translated_whnfCore_wf",
+        "translated_whnfCore_prime_wf",
+        "translated_whnf_prime_wf"
+      ],
+      "baselineCounterCorrection": {
+        "staleVersionsField": 188,
+        "authoritativeKA64ReleaseGate": 192
+      }
+    },
+    "groups": [
+      {
+        "id": "expression-tags",
+        "progressPercent": 97,
+        "status": "KA51-KA64 strict-check the current expression-translation bridge slices; full executable translator refinement remains incomplete"
+      },
+      {
+        "id": "typechecker-whnf-defeq",
+        "progressPercent": 65,
+        "status": "KA65 promotes direct WHNF/WHNFCore WF surfaces into counted strict Lean4Lean obligations; DefEq executable refinement remains incomplete"
+      },
+      {
+        "id": "end-to-end-refinement-spine",
+        "progressPercent": 35,
+        "status": "checker pipeline skeleton strict-checked; no end-to-end theorem yet"
+      },
+      {
+        "id": "architecture-health",
+        "progressPercent": 95,
+        "status": "no-spaghetti ratchet plus KA65 semantic-package touch guard"
+      }
+    ],
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka65Files": [
+      {
+        "path": "tools/pskernel-ka65-executable-whnf-refinement-tests.ts",
+        "lines": 34,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka65-executable-whnf-refinement.ts",
+        "lines": 94,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka65/KA65_EXECUTABLE_WHNF_REFINEMENT_RELEASE_GATE.json",
+        "lines": 160,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka65/KA65_EXECUTABLE_WHNF_REFINEMENT_REPORT.md",
+        "lines": 41,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka65/KA65_EXECUTABLE_WHNF_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 33,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka65/KA65_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 46,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka65/KA65_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka65/executable-whnf-refinement-bridge-spec.json",
+        "lines": 29,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka65/executable-whnf-refinement-bridge.lean",
+        "lines": 34,
+        "ext": ".lean"
+      }
+    ],
+    "ka65ToolFiles": [
+      {
+        "path": "tools/pskernel-ka65-executable-whnf-refinement-tests.ts",
+        "lines": 34,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka65-executable-whnf-refinement.ts",
+        "lines": 94,
+        "ext": ".ts"
+      }
+    ],
+    "newKA65OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWHNFDefEqRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false,
+  "verificationStatus": {
+    "metadataConsistencyRerun": "passed-package-version-fields-match-1.0.0-pskernel.68",
+    "rerunAfterMetadataPatch": "test:pskernel:ka65, lean:ka65:check, build, npm pack sha all passed"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "proofscript.assurance.ka9.obligation-delta/v1",
+  "checkpoint": "proofscript-v1-ka9-lean4lean-compat0",
+  "closedByKA9": [
+    "KA9-C1: accept numbered uploaded Lean4Lean archive names such as lean4lean-master(8).zip",
+    "KA9-C2: extract and inspect a real Lean4Lean source archive instead of only reporting source_missing",
+    "KA9-C3: record source lean-toolchain and Lake dependency compatibility against PSKernel target Lean 4.33.1",
+    "KA9-C4: attempt the actual Lake build/import path and classify concrete blockers",
+    "KA9-C5: preserve strict failure until compatibility and dependency blockers are resolved"
+  ],
+  "stillOpen": [
+    "KA9-O1: obtain or vendor a Lean4Lean source tree matching leanprover/lean4:v4.33.1, or prove compatibility of v4.33.0-rc2 source against v4.33.1",
+    "KA9-O2: vendor/materialize Lake dependency batteries at the required revision, or provide a network-independent dependency cache",
+    "KA9-O3: make lake build Lean4Lean pass in the pinned source tree",
+    "KA9-O4: make the KA-7 real Lean4Lean import gate pass strictly",
+    "KA9-O5: replace KA-6 compatible interface theorem targets with imported Lean4Lean modules",
+    "KA9-O6: prove first declaration-checking soundness lemma against the imported reference",
+    "KA9-O7: keep Arena pass as behavioral evidence, not formal equivalence"
+  ],
+  "formalLean4EquivalenceProvenObligations": 0
+}

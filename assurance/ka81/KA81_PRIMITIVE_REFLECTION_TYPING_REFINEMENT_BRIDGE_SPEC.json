@@ -1,0 +1,35 @@
+{
+  "checkpoint": "proofscript-v1-ka81-primitive-reflection-typing-refinement0",
+  "publicVersion": "1.0.0-pskernel.84",
+  "baseline": "proofscript-v1-ka80-infertype-top-level-projection-boundary-audit0",
+  "referenceKind": "primitive-reflection-typing-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 5,
+  "countedObligations": [
+    "translated_natZeroT_wf",
+    "translated_natSuccT_wf",
+    "translated_natPredT_wf",
+    "translated_natLitT_wf",
+    "translated_boolLitT_wf"
+  ],
+  "sourceTheorems": [
+    "VEnv.HasPrimitives.natZeroT",
+    "VEnv.HasPrimitives.natSuccT",
+    "VEnv.HasPrimitives.natPredT",
+    "VEnv.HasPrimitives.natLitT",
+    "VEnv.HasPrimitives.boolLitT"
+  ],
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveReflectionRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

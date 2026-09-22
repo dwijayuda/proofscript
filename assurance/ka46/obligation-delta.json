@@ -1,0 +1,15 @@
+{
+  "checkpoint": "proofscript-v1-ka46-projection-reduction-refinement-preflight0",
+  "baselineCheckpoint": "proofscript-v1-ka45-inductive-recursor-refinement-bridge0",
+  "formalLean4LeanBridgeObligationsBefore": 132,
+  "formalLean4LeanBridgeObligationsAdded": 0,
+  "formalLean4LeanBridgeObligationsAfter": 132,
+  "reason": "KA-46 prepared a source-bound projection-reduction bridge module and gate, but the formal Lean4Lean check is blocked in this runtime by the missing offline Batteries v4.33.0-rc2 dependency. No new formal obligation is counted until the Lean module is actually checked.",
+  "stillOpen": [
+    "obtain or materialize offline Batteries v4.33.0-rc2 archive",
+    "run lake build Lean4Lean.Verify.TypeChecker.Reduce",
+    "run lake build Lean4Lean.Verify.TypeChecker.InferType",
+    "run lake env lean PSKernelKA46ProjectionReductionRefinementBridge.lean",
+    "then promote the preflight to a proof-bearing KA-46 bridge checkpoint if all gates pass"
+  ]
+}

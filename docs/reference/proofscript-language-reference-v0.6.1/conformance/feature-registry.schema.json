@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProofScript Surface Feature Registry v0.6.1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "semantic_baseline",
+    "claim_ceiling",
+    "features"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.6.1"
+    },
+    "semantic_baseline": {
+      "type": "object",
+      "required": [
+        "lean_version",
+        "lean_commit"
+      ],
+      "properties": {
+        "lean_version": {
+          "const": "4.33.1"
+        },
+        "lean_commit": {
+          "type": "string",
+          "minLength": 40
+        }
+      }
+    },
+    "claim_ceiling": {
+      "const": "S1-specified"
+    },
+    "features": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "class",
+          "status",
+          "surface",
+          "canonical_lean",
+          "lowering",
+          "claim_level",
+          "proof_obligations",
+          "dx_rationale"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "class": {
+            "enum": [
+              "L",
+              "D",
+              "E",
+              "X"
+            ]
+          },
+          "status": {
+            "type": "string"
+          },
+          "surface": {
+            "type": "string"
+          },
+          "canonical_lean": {
+            "type": "string"
+          },
+          "lowering": {
+            "type": "string"
+          },
+          "claim_level": {
+            "type": "string"
+          },
+          "proof_obligations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "dx_rationale": {
+            "type": "string"
+          },
+          "compatibility_cost": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

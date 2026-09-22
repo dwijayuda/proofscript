@@ -1,0 +1,26 @@
+{
+  "checkpoint": "V71_MUTUAL_ADMISSION_COMPLETENESS_BOUNDARY1",
+  "progressOverall": 70,
+  "files": [
+    {
+      "file": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71MutualAdmissionCompletenessBoundary.lean",
+      "sha256": "d81094cdaaefd9f298dd68bd1e3d804ab6761510263000d4a2bcd27a828e75a1"
+    },
+    {
+      "file": "assurance/lean4331/CHECKPOINT_V71_MUTUAL_ADMISSION_COMPLETENESS_BOUNDARY1.json",
+      "sha256": "7b866f0310254e43cd9daca37ad2ad9f2fac9b86856e16d5e0b2ee4650c7c4c5"
+    },
+    {
+      "file": "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_MUTUAL_ADMISSION_COMPLETENESS_BOUNDARY1.md",
+      "sha256": "5383fa5242494f08767e68caa1f2940fd4712c8cf10e08d88bfcade08420a18b"
+    },
+    {
+      "file": "assurance/lean4331/evidence/v71-mutual-admission-completeness-boundary-formal1.out",
+      "sha256": "1809fc7fc05975fbf5a15506a4a2b2271b92cae8ed59c1141a6bc0bd07370911"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-09-10-v71-mutual-admission-completeness-boundary.md",
+      "sha256": "c52f972801d07ece02267668f57fc6dc30071d6d66d23ffd8a610357b9022c9a"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "proofscript.assurance.ka4.lean-toolchain-gate/v1",
+  "checkpoint": "proofscript-v1-ka4-lean-toolchain-gate0",
+  "publicVersion": "1.0.0-pskernel.6",
+  "targetLean": {
+    "version": "4.33.1",
+    "semanticBaseline": "Lean 4.33.1"
+  },
+  "commands": {
+    "strict": "npm run lean:ka4:check",
+    "soft": "npm run lean:ka4:check:soft",
+    "assurance": "npm run assurance:ka4",
+    "test": "npm run test:pskernel:ka4"
+  },
+  "proofFiles": [
+    "assurance/ka4/noninductive-soundness-machine-check.lean"
+  ],
+  "requiredPriorCheckpoints": [
+    "assurance/ka1/KA1_RELEASE_GATE.json",
+    "assurance/ka2/translation-relation.json",
+    "assurance/ka3/KA3_RELEASE_GATE.json"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0
+  }
+}

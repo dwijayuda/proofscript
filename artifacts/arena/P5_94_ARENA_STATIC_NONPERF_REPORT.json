@@ -1,0 +1,235 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "P5.94-arena-nested-helper-target-validation0",
+  "checker": "proofscript-arena-adapter0",
+  "fixturesDir": "/mnt/data/arena-corpus-20260915",
+  "counts": {
+    "total": 26,
+    "expectedAccept": 4,
+    "expectedReject": 22,
+    "acceptedGood": 4,
+    "rejectedBad": 22,
+    "declinedUnsupported": 0,
+    "wrongAccepts": 0,
+    "wrongRejects": 0,
+    "checkerCrashes": 0,
+    "notRun": 0
+  },
+  "strictAgreement": false,
+  "noWrongResults": true,
+  "fullStaticAgreement": true,
+  "publicArenaReady": false,
+  "fullLean4Equivalence": false,
+  "fullyFormalK3": false,
+  "formalLean4EquivalenceProvenObligations": 0,
+  "results": [
+    {
+      "rel": "bad/bogus1.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "type mismatch: inferred True, expected (((Eq.{Type 0} Nat) (((OfNat.ofNat.{Prop} Nat) 0) (instOfNatNat 0))) (((OfNat.ofNat.{Prop} Nat) 1) (instOfNatNat 1)))"
+    },
+    {
+      "rel": "bad/constlevels.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "type mismatch: inferred Type 0, expected Nat"
+    },
+    {
+      "rel": "bad/ctor-num-fields.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "type mismatch: inferred (((Eq.{Type 0} _private.Test.0.S) (_private.Test.0.S.mk Bool.true)) (_private.Test.0.S.mk Bool.true)), expected (((Eq.{Type 0} _private.Test.0.S) (_private.Test.0.S.mk Bool.true)) (_private.Test.0.S.mk Bool.false))"
+    },
+    {
+      "rel": "bad/extra-rec.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "line 18.inductive.recs must contain exactly one recursor for a supported single non-mutual inductive export, got 2"
+    },
+    {
+      "rel": "bad/k-rec-conv.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "type mismatch: inferred (((Eq.{Type 0} T) t1) t1), expected (((Eq.{Type 0} T) t1) t2)"
+    },
+    {
+      "rel": "bad/large-elim-param.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "MyBool has invalid universe polymorphic resulting type: the resulting universe is not Prop, but may be Prop for some parameter values"
+    },
+    {
+      "rel": "bad/large-elim-prop-bool.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "recursor universe-parameter arity for NewBool does not match independently derived recursor: exported 1, derived 0"
+    },
+    {
+      "rel": "bad/level-imax-leq.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "type mismatch: inferred (Pi (succ(imax(u, v))) -> succ(imax(u, v))), expected (Pi (succ(imax(u, v))) -> imax(u, v))"
+    },
+    {
+      "rel": "bad/level-imax-normalization.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "type mismatch: inferred (Pi (succ(imax(Prop, v))) -> succ(imax(Prop, v))), expected (Pi (succ(imax(Prop, v))) -> imax(Prop, v))"
+    },
+    {
+      "rel": "bad/nat-rec-k-lie.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "type mismatch: inferred (Pi (Nat) -> True), expected (Pi (Nat) -> (g #0))"
+    },
+    {
+      "rel": "bad/nat-rec-rules.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "line 94.inductive Nat.rec rule for Nat.succ applies its minor premise to 0 arguments, but the exported minor premise expects 2"
+    },
+    {
+      "rel": "bad/nested-unused-param.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "E nested inductive constructor contains projection C.0 whose target is not an already validated inductive family; nested-inductive parameters must still be type-checked"
+    },
+    {
+      "rel": "bad/orphan-ctor.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "line 19.inductive.ctors[0] is not listed by the inductive type"
+    },
+    {
+      "rel": "bad/orphan-rec.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "line 18.inductive.recs must contain exactly one recursor for a supported single non-mutual inductive export, got 2"
+    },
+    {
+      "rel": "bad/proj-non-structure.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "projection typing for non-structure family Bad is not implemented in the trusted kernel slice yet"
+    },
+    {
+      "rel": "bad/proj-of-imax-prop.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "line 139.inductive.types[1] has imax result universe that may be Prop for some level assignments; projections from this mutual block are rejected until the importer can prove every projected field is Prop at Prop instantiations"
+    },
+    {
+      "rel": "bad/proj-of-prop.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "type mismatch: inferred True, expected False"
+    },
+    {
+      "rel": "bad/proj-of-stuck-prop.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "Native64ResultSortOwner has a stuck recursor result sort headed by Native64ResultSortGate.rec"
+    },
+    {
+      "rel": "bad/proj-of-subst-prop.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "PR14806Subst.Owner has a transparently unfolded stuck recursor result sort headed by Eq.rec"
+    },
+    {
+      "rel": "bad/rec-k-lie.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "type mismatch: inferred True, expected (disc MyBool.true)"
+    },
+    {
+      "rel": "bad/rec-missing-ih.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "line 4811.inductive Native64TwoHashOwner.rec rule for Native64TwoHashOwner.step applies its minor premise to 3 arguments, but the exported minor premise expects 4"
+    },
+    {
+      "rel": "bad/rec-of-subst-prop.ndjson",
+      "expected": "reject",
+      "exitCode": 1,
+      "category": "rejectedBad",
+      "status": "rejected",
+      "message": "Issue.Owner has a transparently unfolded stuck recursor result sort headed by Eq.rec"
+    },
+    {
+      "rel": "good/corner-cases/proof-param-ok.ndjson",
+      "expected": "accept",
+      "exitCode": 0,
+      "category": "acceptedGood",
+      "status": "accepted",
+      "message": ""
+    },
+    {
+      "rel": "good/level-index-out-of-order.ndjson",
+      "expected": "accept",
+      "exitCode": 0,
+      "category": "acceptedGood",
+      "status": "accepted",
+      "message": ""
+    },
+    {
+      "rel": "good/proof-irrel.ndjson",
+      "expected": "accept",
+      "exitCode": 0,
+      "category": "acceptedGood",
+      "status": "accepted",
+      "message": ""
+    },
+    {
+      "rel": "good/sparse-name-index.ndjson",
+      "expected": "accept",
+      "exitCode": 0,
+      "category": "acceptedGood",
+      "status": "accepted",
+      "message": ""
+    }
+  ]
+}

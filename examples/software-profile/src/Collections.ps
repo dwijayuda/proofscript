@@ -1,0 +1,35 @@
+-- Software Profile example: finite list/array transformations.
+
+function nonZero(x: Nat): Bool := {
+  Bool.not(x == 0)
+}
+
+function large(x: Nat): Bool := {
+  x >= 3
+}
+
+def sourceList: List(Nat) := {
+  List.cons(Nat, 0, List.cons(Nat, 1, List.cons(Nat, 2, List.cons(Nat, 3, List.nil(Nat)))))
+}
+
+def nonZeroList: List(Nat) := {
+  List.filter(Nat, nonZero, sourceList)
+}
+
+def firstThree: Option(Nat) := {
+  List.find?(Nat, large, sourceList)
+}
+
+def sourceArray: Array(Nat) := {
+  [0, 4, 5]
+}
+
+def nonZeroArray: Array(Nat) := {
+  Array.filter(Nat, nonZero, sourceArray)
+}
+
+def anyLarge: Bool := {
+  Array.any(Nat, large, sourceArray)
+}
+
+theorem anyLarge_eq: anyLarge = true := by rfl

@@ -1,0 +1,52 @@
+{
+  "checkpoint": "proofscript-v1-ka57-executable-expression-translator-source-transform-refinement0",
+  "publicVersion": "1.0.0-pskernel.60",
+  "baseline": "proofscript-v1-ka56-executable-expression-translator-source-condition-refinement0",
+  "commands": {
+    "focusedTest": "passed",
+    "assuranceKA57": "passed",
+    "leanKA57Check": "passed"
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA57",
+        "source": "assurance/ka57/executable-expression-translator-source-transform-refinement-bridge.lean",
+        "destination": "PSKernelKA57ExecutableExpressionTranslatorSourceTransformRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA57 gate tool absent before implementation",
+  "releaseVerification": {
+    "verifyArenaWrapper": "timed-out-not-counted",
+    "verifyArenaTimedOutAt": "test:arena:tutorial-harness",
+    "arenaCommandsPassed": [
+      "arena:corpus-preflight",
+      "test:arena:static-nonperf",
+      "test:arena:tutorial",
+      "test:arena:tutorial-harness",
+      "test:arena:inductive-importer",
+      "test:arena:dependent-field-recursor",
+      "test:arena:prop-projection-conformance",
+      "test:arena:prop-index-large-elim",
+      "test:arena:transparent-recursive-field",
+      "test:arena:type-singleton-eta",
+      "test:arena:known-recursor-stuck-reject",
+      "test:arena:rbtree-recursive-ih-order",
+      "test:arena:recursor-rule-arity-validation",
+      "test:arena:transparent-result-sort-reject",
+      "test:arena:mutual-imax-prop-reject"
+    ],
+    "note": "verify:arena wrapper timed out and is not counted as passed; listed Arena commands were run separately and passed, with test:arena:tutorial passing before the wrapper attempt."
+  }
+}

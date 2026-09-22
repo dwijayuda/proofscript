@@ -1,0 +1,46 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "INDUCTIVE_DIRECT1_FINAL",
+  "coreFormat": 71,
+  "profile": "KERNEL-level-instantiation-conformance1",
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "kernelSemanticsChanged": false,
+  "formal": {
+    "modules": 23,
+    "targetStatement": true,
+    "reportedSorryAx": 0
+  },
+  "gates": [
+    {
+      "part": 1,
+      "status": "PASS"
+    },
+    {
+      "part": 2,
+      "status": "PASS"
+    },
+    {
+      "part": 3,
+      "status": "PASS"
+    },
+    {
+      "part": 4,
+      "status": "PASS"
+    },
+    {
+      "part": 5,
+      "status": "PASS"
+    },
+    {
+      "part": 6,
+      "status": "PASS"
+    }
+  ],
+  "build": "PASS",
+  "conformance": "PASS",
+  "k3WholeKernelEquivalence": false,
+  "next": "parameterized/indexed direct inductive admission and generated recursor type/RHS correspondence"
+}

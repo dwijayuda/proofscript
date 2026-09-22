@@ -1,0 +1,32 @@
+{
+  "name": "ProofScript v71 K3-TB dependency manifest",
+  "status": "SBOM_STYLE_MANIFEST_NOT_A_SECURITY_AUDIT",
+  "packages": [
+    {
+      "name": "types-node-22.19.7.tgz",
+      "path": "vendor/npm/types-node-22.19.7.tgz",
+      "sha256": "388e7b988f74625685da282be2fb50113bad3c30178b55a8619200628618ef75",
+      "sizeBytes": 435380
+    },
+    {
+      "name": "typescript-5.8.3.tgz",
+      "path": "vendor/npm/typescript-5.8.3.tgz",
+      "sha256": "4b867378e82e75791492505f2ed1b986a6c04b2196f78179d01670862444550a",
+      "sizeBytes": 4250406
+    },
+    {
+      "name": "undici-types-6.21.0.tgz",
+      "path": "vendor/npm/undici-types-6.21.0.tgz",
+      "sha256": "4c8a24c3a2277b6b397941a7d17e96c47198797566057f8c99bb6f7e358c4fbf",
+      "sizeBytes": 21015
+    }
+  ],
+  "lockfile": {
+    "path": "package-lock.json",
+    "sha256": "f69258d6e1474b48f130f3292ea8ba68ece220a74cf9d3cb6e84f46e79fc68b7"
+  },
+  "typescript": "file:vendor/npm/typescript-5.8.3.tgz",
+  "typesNode": "file:vendor/npm/types-node-22.19.7.tgz",
+  "undiciTypes": "file:vendor/npm/undici-types-6.21.0.tgz",
+  "boundary": "Dependencies are pinned as local file tarballs; this does not verify npm package authorship or the TypeScript compiler semantics."
+}

@@ -1,0 +1,6 @@
+
+> proofscript-monorepo@0.1.0-production-p5.94-arena-nested-helper-target-validation0 build
+> export NODE_OPTIONS="--experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON"; node tools/link-local-workspaces.cts && tsc -b && node tools/copy-static-assets.ts
+
+PROOFSCRIPT_LOCAL_WORKSPACE_LINKS=PASS packages=29 workspaceLinksSha256=b0bef8d159070c35357f3d8b7f92a50a9139a1b6c7530b905e29ba0fad53b5a8
+copied 13 static assets

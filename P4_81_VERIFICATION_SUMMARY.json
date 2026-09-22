@@ -1,0 +1,97 @@
+{
+  "release": "P4.81",
+  "title": "backend-typescript emitter extraction cleanup",
+  "trustBoundary": "K3-TB trusted-boundary; not fully formally equivalent to Lean 4",
+  "formalLean4EquivalenceProvenObligations": 0,
+  "changedAreas": [
+    "packages/backend-typescript/src/index.ts",
+    "packages/backend-typescript/src/types.ts",
+    "packages/backend-typescript/src/names.ts",
+    "packages/backend-typescript/src/termEmitter.ts",
+    "packages/backend-typescript/src/declarationAnalysis.ts",
+    "packages/backend-typescript/src/moduleEmitter.ts",
+    "tools/backend-typescript-extraction-tests.ts",
+    "package.json",
+    "package-lock.json",
+    "docs/reports/p4/PRODUCTION_P4_81_BACKEND_TYPESCRIPT_EMITTER_EXTRACTION_REPORT.md"
+  ],
+  "verification": [
+    {
+      "command": "node tools/backend-typescript-extraction-tests.ts before implementation",
+      "status": "FAIL_EXPECTED"
+    },
+    {
+      "command": "npm run build -- --pretty false",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:backend-typescript:extraction",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:pslive:build-ts",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:pslive:cleanup-harness",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:pslive:js-name-collision",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:pslive:reserved-identifiers",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "status": "PASS"
+    },
+    {
+      "command": "node tools/pskernel.ts status --json",
+      "status": "PASS",
+      "result": "trusted-boundary / not-proven"
+    },
+    {
+      "command": "unzip -tq P4.81 archive",
+      "status": "PASS"
+    },
+    {
+      "command": "fresh extract: npm run build -- --pretty false",
+      "status": "PASS"
+    },
+    {
+      "command": "fresh extract: npm run test:backend-typescript:extraction",
+      "status": "PASS"
+    },
+    {
+      "command": "fresh extract: node tools/pskernel.ts status --json",
+      "status": "PASS",
+      "result": "trusted-boundary / not-proven"
+    }
+  ],
+  "notRerun": [
+    {
+      "command": "npm run verify:k3tb:publish",
+      "reason": "still needs PROOFSCRIPT_LEAN_BIN"
+    },
+    {
+      "command": "full long matrix",
+      "reason": "skipped for fast cleanup iteration"
+    }
+  ],
+  "progress": {
+    "Standalone PSC-1 without Lean4": "~97.3%",
+    "PSC-1 small complete programming language": "~72.0%",
+    "PSC-1 small theorem prover": "~62.1%",
+    "Full ProofScript compiler": "~61.5%",
+    "Full Lean-like ProofScript without Lean4": "~13.8%",
+    "Formal Lean 4 equivalence": "0 proven obligations",
+    "Maintainability / anti-spaghetti score": "~72%"
+  }
+}

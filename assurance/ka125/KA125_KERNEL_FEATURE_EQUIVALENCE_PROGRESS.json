@@ -1,0 +1,18 @@
+{
+  "checkpoint": "proofscript-v1-ka125-executable-refinement-remaining-proof-gap0",
+  "publicVersion": "1.0.0-pskernel.128",
+  "featureSurfaceBridgeProgressPercent": 100,
+  "executableKernelEquivalenceProofProgressPercent": 99,
+  "executableKernelEquivalenceRemainingGapPercent": 1,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 366,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 366,
+    "newFormalLean4LeanBridgeObligations": 0,
+    "correctedFormalLean4LeanBridgeObligations": 366,
+    "countedNewObligations": []
+  },
+  "metricPolicy": "KA125 keeps executable-equivalence dashboard progress at 99%; the remaining 1% is reserved for an audited refinement theorem discharge or verified proof-carrying artifact.",
+  "notAFullLean4EquivalenceClaim": true,
+  "notAFormalEquivalenceClaim": true
+}

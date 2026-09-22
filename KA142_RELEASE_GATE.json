@@ -1,0 +1,29 @@
+{
+  "checkpoint": "proofscript-v1-ka142-loop-invariants-structural-workflow0",
+  "version": "1.0.0-pskernel.145",
+  "status": "accepted",
+  "gates": {
+    "build": "passed",
+    "ka142Tests": "passed",
+    "ka141Regression": "passed",
+    "ka140Regression": "passed",
+    "ka139Regression": "passed",
+    "ka138Regression": "passed",
+    "ka137Regression": "passed",
+    "ka136Regression": "passed",
+    "npmPack": "passed",
+    "npmPublishDryRun": "passed",
+    "freshNpmInstall": "passed",
+    "freshPscLoopContracts": "passed",
+    "freshPscLoopObligations": "passed",
+    "freshPscLoopProofStatusVerify": "passed",
+    "freshPscSoftwareAlpha": "passed"
+  },
+  "releaseBoundary": {
+    "npmInstallable": true,
+    "publishableAsAlpha": true,
+    "semanticLoopVerification": false,
+    "vcgenMvcgenConnected": false,
+    "fullLean4Equivalence": false
+  }
+}

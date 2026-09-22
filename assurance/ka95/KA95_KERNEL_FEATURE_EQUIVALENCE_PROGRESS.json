@@ -1,0 +1,20 @@
+{
+  "checkpoint": "proofscript-v1-ka95-primitive-typeeq-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.98",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 73,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 296,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 293,
+    "newFormalLean4LeanBridgeObligations": 3,
+    "correctedFormalLean4LeanBridgeObligations": 296,
+    "countedNewObligations": [
+      "translated_mkTyEqBitwise_wf",
+      "translated_mkTyEq_wf",
+      "translated_mkTyEq1_wf"
+    ]
+  },
+  "metricPolicy": "KA95 adds direct non-sorry-backed primitive type-equation helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

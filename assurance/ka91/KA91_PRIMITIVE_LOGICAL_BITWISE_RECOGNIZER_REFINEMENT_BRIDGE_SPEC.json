@@ -1,0 +1,31 @@
+{
+  "checkpoint": "proofscript-v1-ka91-primitive-logical-bitwise-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.94",
+  "baseline": "proofscript-v1-ka90-primitive-shift-recognizer-refinement0",
+  "referenceKind": "primitive-logical-bitwise-recognizer-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 3,
+  "countedObligations": [
+    "translated_checkNatLAnd_wf",
+    "translated_checkNatLOr_wf",
+    "translated_checkNatXor_wf"
+  ],
+  "sourceTheorems": [
+    "checkNatLAnd.WF",
+    "checkNatLOr.WF",
+    "checkNatXor.WF"
+  ],
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveLogicalBitwiseRecognizerRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

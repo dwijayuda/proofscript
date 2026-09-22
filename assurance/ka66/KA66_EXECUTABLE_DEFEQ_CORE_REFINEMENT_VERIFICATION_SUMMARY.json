@@ -1,0 +1,65 @@
+{
+  "checkpoint": "proofscript-v1-ka66-executable-defeq-core-refinement0",
+  "publicVersion": "1.0.0-pskernel.69",
+  "baseline": "proofscript-v1-ka65-executable-whnf-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "baselineObligations": 196,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA66",
+        "source": "assurance/ka66/executable-defeq-core-refinement-bridge.lean",
+        "destination": "PSKernelKA66ExecutableDefEqCoreRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "dependencyBuildStatus": "passed",
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "fullNpmTestStatus": "failed-known-baseline-regression",
+  "knownBaselineRegression": {
+    "test": "tools/kernel-indexed-recursors-tests.ts",
+    "assertion": "multi-index/multi-recursive iota mismatch",
+    "baselineKA65Reproduced": true,
+    "ka66Reproduced": true,
+    "introducedByKA66": false
+  },
+  "releaseToolingFix": {
+    "test": "tools/test-runner-child-runtime-tests.ts",
+    "issue": "test-runner child .ts processes omitted parent Node strip-types flags",
+    "fixed": true
+  },
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA66 gate tool absent before implementation",
+  "commands": {
+    "npmInstallOffline": "passed",
+    "npmRunBuild": "passed",
+    "testRunnerChildRuntime": "passed",
+    "testPSKernelKA66": "passed",
+    "assuranceKA66": "passed",
+    "leanKA66Check": "passed",
+    "kernelSmoke": "passed",
+    "pscKernelStatus": "passed",
+    "pscConformanceBounded": "passed",
+    "arenaCorpusPreflight": "passed",
+    "arenaStaticNonperf": "passed",
+    "arenaTutorial": "passed",
+    "arenaRecursorRuleArityValidation": "passed",
+    "arenaTransparentResultSortReject": "passed",
+    "arenaMutualImaxPropReject": "passed",
+    "npmPackWorkspaces": "passed-36-packages",
+    "workspacePackageSha256": "passed-36-of-36",
+    "npmTest": "failed-known-baseline-regression"
+  },
+  "aggregateRuns": {
+    "combinedReleaseBatch": "timed-out-not-counted-after-arena-preflight; remaining commands rerun individually",
+    "noTimeoutCountedAsPass": true
+  }
+}

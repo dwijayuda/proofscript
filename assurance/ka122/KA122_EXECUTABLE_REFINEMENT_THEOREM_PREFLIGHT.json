@@ -1,0 +1,101 @@
+{
+  "checkpoint": "proofscript-v1-ka122-executable-refinement-theorem-preflight0",
+  "publicVersion": "1.0.0-pskernel.125",
+  "baseline": "proofscript-v1-ka121-executable-refinement-proof-contract0",
+  "metrics": {
+    "featureSurfaceBridgeProgressPercent": 100,
+    "executableKernelEquivalenceProofProgressPercent": 98,
+    "executableKernelEquivalencePreviousPercent": 97,
+    "executableKernelEquivalenceDeltaPercent": 1,
+    "arenaCorpusRegressionPercent": 100,
+    "releasePackagingVerificationPercent": 100,
+    "executableRefinementTheoremPreflightPercent": 100,
+    "formalLean4LeanBridgeObligations": 366,
+    "newFormalLean4LeanBridgeObligations": 0,
+    "fullLean4EquivalencePercent": 0,
+    "fullyFormalK3Percent": 0,
+    "overallConservativeProjectProgressPercent": 84.4,
+    "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+  },
+  "phaseStatus": {
+    "featureSurfaceBridge": "closed",
+    "executableEquivalence": "active-theorem-preflight-mapped",
+    "fullLean4Equivalence": "not-proven",
+    "fullyFormalK3": "not-proven",
+    "claimBoundary": "enforced"
+  },
+  "theoremPreflight": {
+    "preflightPercent": 100,
+    "rows": [
+      {
+        "id": "statement-shape",
+        "status": "ready",
+        "evidence": "the executable refinement theorem statement is preflighted as a named source-to-target preservation contract",
+        "ready": true
+      },
+      {
+        "id": "source-artifact-lock",
+        "status": "ready",
+        "evidence": "source domain remains the KA117 module index plus KA121 proof contract",
+        "ready": true
+      },
+      {
+        "id": "target-artifact-lock",
+        "status": "ready",
+        "evidence": "target domain remains the KA118 coverage map plus KA120 discharge agenda",
+        "ready": true
+      },
+      {
+        "id": "dependency-closure-lock",
+        "status": "ready",
+        "evidence": "KA116 dependency closure remains the precondition for theorem discharge",
+        "ready": true
+      },
+      {
+        "id": "obligation-ledger-lock",
+        "status": "ready",
+        "evidence": "KA113 obligation ledger remains the accounting source and total formal bridge obligations stay 366",
+        "ready": true
+      },
+      {
+        "id": "release-evidence-lock",
+        "status": "ready",
+        "evidence": "fresh focused gate, Lean marker, package SHA, fresh extract, ZIP, and SHA evidence are mandatory",
+        "ready": true
+      },
+      {
+        "id": "negative-claims-lock",
+        "status": "ready",
+        "evidence": "full Lean4 equivalence, fully formal K3, and executable refinement proof remain explicitly unclaimed",
+        "ready": true
+      },
+      {
+        "id": "remaining-gap-lock",
+        "status": "ready",
+        "evidence": "remaining 2% is reserved for theorem audit and final release claim review after this preflight",
+        "ready": true
+      }
+    ],
+    "counts": {
+      "total": 8,
+      "ready": 8,
+      "notReady": 0
+    },
+    "evidenceMeaning": "the preflight locks theorem discharge inputs and boundaries; it is not the discharged executable refinement theorem"
+  },
+  "percentBoundaries": {
+    "executableProgressIsDashboardEvidenceNotRefinementProof": true,
+    "theoremPreflightDoesNotProvePSKernelEquivalence": true,
+    "overallProgressIsDashboardEstimate": true
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

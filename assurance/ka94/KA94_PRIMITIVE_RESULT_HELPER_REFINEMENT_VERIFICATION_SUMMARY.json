@@ -1,0 +1,20 @@
+{
+  "checkpoint": "proofscript-v1-ka94-primitive-result-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.97",
+  "baseline": "proofscript-v1-ka93-primitive-basic-helper-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 293,
+  "newFormalLean4LeanBridgeObligations": 5,
+  "baselineObligations": 288,
+  "countedObligations": [
+    "translated_mkResult_wf",
+    "translated_mkResult1_wf",
+    "translated_mkResultBool_wf",
+    "translated_mkResultBitwise_wf",
+    "translated_mkResultTypeEq_wf"
+  ],
+  "redTestObserved": true,
+  "redTestReason": "KA94 test failed first on missing KA94 gate tool",
+  "noWrapperTimeoutCountedAsPassed": true
+}

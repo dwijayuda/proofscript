@@ -1,0 +1,32 @@
+{
+  "checkpoint": "proofscript-v1-ka74-executable-defeq-nat-offset-boundary-refinement0",
+  "publicVersion": "1.0.0-pskernel.77",
+  "baseline": "proofscript-v1-ka73-defeq-sorry-boundary-audit0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "baselineObligations": 219,
+  "formalLean4LeanBridgeObligations": 221,
+  "newFormalLean4LeanBridgeObligations": 2,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA74",
+        "source": "assurance/ka74/executable-defeq-nat-offset-boundary-refinement-bridge.lean",
+        "destination": "PSKernelKA74ExecutableDefEqNatOffsetBoundaryRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 2,
+        "dependencyBuildStatus": "passed",
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "fullNpmTestStatus": "not-run",
+  "aggregateVerifyArenaStatus": "not-run",
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA74 gate tool absent before implementation"
+}

@@ -1,0 +1,135 @@
+{
+  "checkpoint": "proofscript-v1-ka75-executable-infer-atomic-refinement0",
+  "publicVersion": "1.0.0-pskernel.78",
+  "baseline": "proofscript-v1-ka74-executable-defeq-nat-offset-boundary-refinement0",
+  "releaseKind": "strict-lean4lean-bridge",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanUnblocked": true,
+  "baselineObligations": 221,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA75",
+        "source": "assurance/ka75/executable-infer-atomic-refinement-bridge.lean",
+        "destination": "PSKernelKA75ExecutableInferAtomicRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "dependencyBuildStatus": "passed",
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka75-executable-infer-atomic-refinement0",
+    "publicVersion": "1.0.0-pskernel.78",
+    "featureSurfaceBridgeProgressPercent": 89,
+    "executableKernelEquivalenceProofProgressPercent": 56,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 225,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 221,
+      "newFormalLean4LeanBridgeObligations": 4,
+      "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+      "countedNewObligations": [
+        "translated_checkLevel_wf",
+        "translated_inferFVar_wf",
+        "translated_envGet_wf",
+        "translated_infer_sort_wf"
+      ]
+    },
+    "metricPolicy": "KA75 starts the InferType proof-bearing surface with atomic level/free-variable/environment/sort facts; percentages are conservative dashboard estimates and not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka75Files": [
+      {
+        "path": "tools/pskernel-ka75-executable-infer-atomic-refinement-tests.ts",
+        "lines": 34,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka75-executable-infer-atomic-refinement.ts",
+        "lines": 130,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka75/KA75_EXECUTABLE_INFER_ATOMIC_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 36,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka75/KA75_EXECUTABLE_INFER_ATOMIC_REFINEMENT_RELEASE_GATE.json",
+        "lines": 136,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka75/KA75_EXECUTABLE_INFER_ATOMIC_REFINEMENT_REPORT.md",
+        "lines": 37,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka75/KA75_EXECUTABLE_INFER_ATOMIC_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 33,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka75/KA75_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 22,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka75/KA75_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka75/executable-infer-atomic-refinement-bridge.lean",
+        "lines": 33,
+        "ext": ".lean"
+      }
+    ],
+    "ka75ToolFiles": [
+      {
+        "path": "tools/pskernel-ka75-executable-infer-atomic-refinement-tests.ts",
+        "lines": 34,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka75-executable-infer-atomic-refinement.ts",
+        "lines": 130,
+        "ext": ".ts"
+      }
+    ],
+    "newKA75OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableInferTypeRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

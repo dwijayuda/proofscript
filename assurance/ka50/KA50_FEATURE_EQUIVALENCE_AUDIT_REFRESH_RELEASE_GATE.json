@@ -1,0 +1,237 @@
+{
+  "checkpoint": "proofscript-v1-ka50-feature-equivalence-audit-refresh0",
+  "publicVersion": "1.0.0-pskernel.53",
+  "baseline": "proofscript-v1-ka49-checker-pipeline-end-to-end-theorem-skeleton-preflight0",
+  "releaseKind": "strict-lean4lean-audit-refresh",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA46",
+        "source": "assurance/ka46/projection-reduction-refinement-bridge.lean",
+        "destination": "PSKernelKA46ProjectionReductionRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "stdoutTail": "",
+        "stderrTail": ""
+      },
+      {
+        "ka": "KA47",
+        "source": "assurance/ka47/executable-expression-translator-refinement-bridge.lean",
+        "destination": "PSKernelKA47ExecutableExpressionTranslatorRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": false,
+        "obligations": 0,
+        "stdoutTail": "",
+        "stderrTail": ""
+      },
+      {
+        "ka": "KA48",
+        "source": "assurance/ka48/executable-whnf-defeq-refinement-bridge.lean",
+        "destination": "PSKernelKA48ExecutableWhnfDefEqRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": false,
+        "obligations": 0,
+        "stdoutTail": "",
+        "stderrTail": ""
+      },
+      {
+        "ka": "KA49",
+        "source": "assurance/ka49/checker-pipeline-end-to-end-theorem-skeleton.lean",
+        "destination": "PSKernelKA49CheckerPipelineEndToEndTheoremSkeleton.lean",
+        "status": "passed",
+        "proofBearing": false,
+        "obligations": 0,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka50-feature-equivalence-audit-refresh0",
+    "publicVersion": "1.0.0-pskernel.53",
+    "featureSurfaceBridgeProgressPercent": 72,
+    "executableKernelEquivalenceProofProgressPercent": 37,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 136,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 132,
+      "newFormalLean4LeanBridgeObligations": 4,
+      "countedNewObligations": [
+        "KA46 translated_reduceProjCore_wf",
+        "KA46 translated_reduceProj_wf",
+        "KA46 translated_whnfCore_projection_path_wf",
+        "KA46 translated_inferProj_wf"
+      ],
+      "strictCheckedButNotCountedAsExecutableRefinement": [
+        "KA47 source-bound translator markers",
+        "KA48 WHNF/DefEq surface markers",
+        "KA49 checker-pipeline skeleton markers"
+      ]
+    },
+    "groups": [
+      {
+        "id": "ordinary-declarations",
+        "progressPercent": 84,
+        "status": "checker pipeline skeleton strict-checked; executable refinement incomplete"
+      },
+      {
+        "id": "quotients",
+        "progressPercent": 74,
+        "status": "environment bridge complete; semantic soundness incomplete"
+      },
+      {
+        "id": "inductives",
+        "progressPercent": 46,
+        "status": "recursor and projection proof-surface bridges strict-checked; generated rule/RHS refinement still open"
+      },
+      {
+        "id": "mutual-definitions",
+        "progressPercent": 43,
+        "status": "initial environment bridge; executable refinement incomplete"
+      },
+      {
+        "id": "expression-tags",
+        "progressPercent": 65,
+        "status": "executable translator surface strict-checked; executable translator not fully refined"
+      },
+      {
+        "id": "typechecker-whnf-defeq",
+        "progressPercent": 53,
+        "status": "WHNF/DefEq surface strict-checked; executable checker refinement incomplete"
+      },
+      {
+        "id": "codec-replay",
+        "progressPercent": 36,
+        "status": "Replay surface and PS codec stability gates exist"
+      },
+      {
+        "id": "resource-errors",
+        "progressPercent": 39,
+        "status": "fuel/error conservativity surface bridge only"
+      },
+      {
+        "id": "architecture-health",
+        "progressPercent": 84,
+        "status": "no-spaghetti ratchet plus KA50 semantic-package touch guard"
+      },
+      {
+        "id": "end-to-end-refinement-spine",
+        "progressPercent": 35,
+        "status": "checker pipeline skeleton strict-checked; no end-to-end theorem yet"
+      }
+    ],
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka50Files": [
+      {
+        "path": "tools/pskernel-ka50-feature-equivalence-audit-refresh-tests.ts",
+        "lines": 30,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka50-feature-equivalence-audit-refresh.ts",
+        "lines": 130,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka50/KA50_FEATURE_EQUIVALENCE_AUDIT_REFRESH_RELEASE_GATE.json",
+        "lines": 215,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka50/KA50_FEATURE_EQUIVALENCE_AUDIT_REFRESH_REPORT.md",
+        "lines": 46,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka50/KA50_FEATURE_EQUIVALENCE_AUDIT_REFRESH_VERIFICATION_SUMMARY.json",
+        "lines": 61,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka50/KA50_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 77,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka50/KA50_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka50/feature-equivalence-audit-refresh-bridge-spec.json",
+        "lines": 52,
+        "ext": ".json"
+      }
+    ],
+    "ka50ToolFiles": [
+      {
+        "path": "tools/pskernel-ka50-feature-equivalence-audit-refresh-tests.ts",
+        "lines": 30,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka50-feature-equivalence-audit-refresh.ts",
+        "lines": 130,
+        "ext": ".ts"
+      }
+    ],
+    "newKA50OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "endToEndCheckerPipelineTheorem": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false,
+  "npmPackages": {
+    "packed": 36,
+    "sha256Entries": 36,
+    "verification": "passed"
+  },
+  "verificationCommandsPassed": [
+    "npm install --offline --no-audit --no-fund",
+    "npm run build -- --pretty false",
+    "npm run test:pskernel:ka50",
+    "npm run assurance:ka50",
+    "npm run lean:ka50:check",
+    "npm run test:kernel:smoke",
+    "npm run test:standalone-small",
+    "npm run test:psc:kernel-status",
+    "npm run test:psc:conformance-bounded",
+    "npm run arena:corpus-preflight",
+    "npm run test:arena:static-nonperf",
+    "npm run test:arena:tutorial",
+    "npm run verify:arena",
+    "npm pack --workspaces --ignore-scripts",
+    "sha256sum -c package SHA manifest"
+  ],
+  "wrapperTimeoutsCountedAsPassed": false
+}

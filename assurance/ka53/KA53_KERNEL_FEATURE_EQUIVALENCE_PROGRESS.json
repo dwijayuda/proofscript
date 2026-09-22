@@ -1,0 +1,41 @@
+{
+  "checkpoint": "proofscript-v1-ka53-executable-expression-translator-residual-refinement0",
+  "publicVersion": "1.0.0-pskernel.56",
+  "featureSurfaceBridgeProgressPercent": 75,
+  "executableKernelEquivalenceProofProgressPercent": 40,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 147,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 143,
+    "newFormalLean4LeanBridgeObligations": 4,
+    "countedNewObligations": [
+      "translated_trExprS_fvar_constructor_wf",
+      "translated_trExprS_lit_constructor_wf",
+      "translated_trExprS_mdata_constructor_wf",
+      "translated_trExprS_proj_constructor_wf"
+    ]
+  },
+  "groups": [
+    {
+      "id": "expression-tags",
+      "progressPercent": 76,
+      "status": "TrExprS constructor/binder/residual bridge strict-checked for all direct TrExprS constructors; full executable translator incomplete"
+    },
+    {
+      "id": "typechecker-whnf-defeq",
+      "progressPercent": 53,
+      "status": "WHNF/DefEq surface strict-checked; executable checker refinement incomplete"
+    },
+    {
+      "id": "end-to-end-refinement-spine",
+      "progressPercent": 35,
+      "status": "checker pipeline skeleton strict-checked; no end-to-end theorem yet"
+    },
+    {
+      "id": "architecture-health",
+      "progressPercent": 87,
+      "status": "no-spaghetti ratchet plus KA53 semantic-package touch guard"
+    }
+  ],
+  "notAFormalEquivalenceClaim": true
+}

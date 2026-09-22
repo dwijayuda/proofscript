@@ -1,0 +1,9 @@
+inductive Box(A: Type): Type {
+  | mk(x: A);
+}
+class Marker(A: Type) {
+  tag: Nat;
+}
+instance {A: Type}[m: Marker(A)] boxMarker: Marker(Box(A)) := {
+  tag := 1
+};

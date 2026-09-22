@@ -1,0 +1,130 @@
+{
+  "checkpoint": "proofscript-v1-ka103-primitive-context-application-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.106",
+  "baseline": "proofscript-v1-ka102-primitive-substitution-composition-helper-refinement0",
+  "releaseKind": "strict-lean4lean-primitive-context-application-helper-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA103",
+      "source": "assurance/ka103/primitive-context-application-helper-refinement-bridge.lean",
+      "destination": "KA103PrimitiveContextApplicationHelperBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 5,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka103-primitive-context-application-helper-refinement0",
+    "publicVersion": "1.0.0-pskernel.106",
+    "featureSurfaceBridgeProgressPercent": 99,
+    "executableKernelEquivalenceProofProgressPercent": 81,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 336,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 331,
+      "newFormalLean4LeanBridgeObligations": 5,
+      "correctedFormalLean4LeanBridgeObligations": 336,
+      "countedNewObligations": [
+        "translated_onctx_of_append_wf",
+        "translated_vexpr_wf_app_inv2_wf",
+        "translated_vexpr_wf_appN_inv_wf",
+        "translated_isDefEqU_appN_wf",
+        "translated_argsTyped_natTelescope_wf"
+      ]
+    },
+    "metricPolicy": "KA103 adds direct non-sorry-backed primitive context/application helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka103Files": [
+      {
+        "path": "tools/pskernel-ka103-primitive-context-application-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka103-primitive-context-application-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka103/KA103_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 23,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka103/KA103_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka103/KA103_PRIMITIVE_CONTEXT_APPLICATION_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 36,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka103/KA103_PRIMITIVE_CONTEXT_APPLICATION_HELPER_REFINEMENT_RELEASE_GATE.json",
+        "lines": 131,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka103/KA103_PRIMITIVE_CONTEXT_APPLICATION_HELPER_REFINEMENT_REPORT.md",
+        "lines": 22,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka103/KA103_PRIMITIVE_CONTEXT_APPLICATION_HELPER_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 21,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka103/primitive-context-application-helper-refinement-bridge.lean",
+        "lines": 41,
+        "ext": ".lean"
+      }
+    ],
+    "ka103ToolFiles": [
+      {
+        "path": "tools/pskernel-ka103-primitive-context-application-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka103-primitive-context-application-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      }
+    ],
+    "newKA103OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveContextApplicationHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

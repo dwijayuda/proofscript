@@ -1,0 +1,34 @@
+{
+  "checkpoint": "proofscript-v1-ka65-executable-whnf-refinement0",
+  "publicVersion": "1.0.0-pskernel.68",
+  "baseline": "proofscript-v1-ka64-executable-expression-translator-eqv-refinement0",
+  "commands": {
+    "focusedTest": "passed",
+    "assuranceKA65": "passed",
+    "leanKA65Check": "passed",
+    "metadataConsistencyRerun": "passed-package-version-fields-match-1.0.0-pskernel.68",
+    "rerunAfterMetadataPatch": "test:pskernel:ka65, lean:ka65:check, build, npm pack sha all passed"
+  },
+  "strictLean4LeanUnblocked": true,
+  "correctedBaselineObligations": 192,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA65",
+        "source": "assurance/ka65/executable-whnf-refinement-bridge.lean",
+        "destination": "PSKernelKA65ExecutableWHNFRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "dependencyBuildStatus": "passed",
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA65 gate tool absent before implementation"
+}

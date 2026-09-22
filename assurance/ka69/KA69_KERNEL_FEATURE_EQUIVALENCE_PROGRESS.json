@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka69-executable-defeq-delta-string-refinement0",
+  "publicVersion": "1.0.0-pskernel.72",
+  "featureSurfaceBridgeProgressPercent": 87,
+  "featureSurfaceBridgeProgressPolicy": "held pending audit",
+  "executableKernelEquivalenceProofProgressPercent": 53,
+  "executableKernelEquivalenceProofProgressPolicy": "held pending audit",
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 212,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 208,
+    "newFormalLean4LeanBridgeObligations": 4,
+    "countedNewObligations": [
+      "translated_tryUnfoldProjApp_wf",
+      "translated_lazyDeltaReductionStep_wf",
+      "translated_lazyDeltaReductionLoop_wf",
+      "translated_tryStringLitExpansion_wf"
+    ]
+  },
+  "metricPolicy": "KA69 advances the exact formal obligation counter only; percentage estimates remain held pending a separate coverage audit.",
+  "notAFormalEquivalenceClaim": true
+}

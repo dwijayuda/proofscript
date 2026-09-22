@@ -1,0 +1,31 @@
+{
+  "schema": "proofscript.assurance.ka2.translation-obligations-delta/v1",
+  "checkpoint": "proofscript-v1-ka2-translation-relation0",
+  "status": "translation-scaffold-added-no-soundness-proof-yet",
+  "closedByKA2": [
+    "translation.level.shape",
+    "translation.term.shape",
+    "translation.declaration.shape",
+    "translation.metavariable-exclusion-policy",
+    "translation.metadata-erasure-policy"
+  ],
+  "partiallyAdvanced": [
+    "translation.level",
+    "translation.expr",
+    "translation.decl",
+    "translation.env-shape"
+  ],
+  "stillOpen": [
+    "soundness.checkDecl",
+    "soundness.defEq",
+    "soundness.replay",
+    "completeness.supportedCore",
+    "inductive-recursor-soundness",
+    "quotient-soundness",
+    "prop-elimination-soundness",
+    "metadata-smuggling-proof",
+    "official-arena-adapter-submission"
+  ],
+  "formalLean4EquivalenceProvenObligations": 0,
+  "fullLean4Equivalence": false
+}

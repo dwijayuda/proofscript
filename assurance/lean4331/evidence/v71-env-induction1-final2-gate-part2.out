@@ -1,0 +1,6 @@
+PASS: Core v71 / KERNEL-level-instantiation-conformance1 / Lean 4.33.1 identity
+PASS: 251 assurance/trusted source fingerprints
+PASS: exact Lean executable 4.33.1/819816b2e0a3
+PASS: 1,000 level + 1,000 shared-expression instantiation comparisons
+PASS: 1,000 recorded exact expression-operation comparisons
+KERNEL v71 ASSURANCE GATE PART 2/6: PASS

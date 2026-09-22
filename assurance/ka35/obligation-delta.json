@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka35-typechecker-refinement-bridge0",
+  "baseline": "proofscript-v1-ka34-mutual-def-env-bridge0",
+  "formalLean4EquivalenceProvenObligationsBefore": 66,
+  "formalLean4EquivalenceProvenObligationsAdded": 5,
+  "formalLean4EquivalenceProvenObligationsAfter": 71,
+  "closedSinceKA34": [
+    "direct Lean4Lean TypeChecker.whnf.WF wrapper bridge",
+    "direct Lean4Lean TypeChecker.whnfCore.WF wrapper bridge",
+    "direct Lean4Lean TypeChecker.inferType.WF wrapper bridge",
+    "direct Lean4Lean TypeChecker.checkType.WF wrapper bridge",
+    "direct Lean4Lean TypeChecker.isDefEq.WF wrapper bridge"
+  ],
+  "stillOpen": [
+    "executable PSKernel checker refinement to Lean4Lean TypeChecker.M.run is not proven",
+    "PSKernel expression codec/replay correctness is not tied to Lean4Lean TrExpr for all tags",
+    "WHNF and definitional equality algorithm parity are not proven end-to-end",
+    "recursor, projection, quotient, and primitive reduction completeness remain partial",
+    "resource/error conservativity for executable PSKernel checker is not proven",
+    "full Lean 4 equivalence and same-theory claims remain false"
+  ]
+}

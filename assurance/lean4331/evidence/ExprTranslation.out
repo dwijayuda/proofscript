@@ -1,0 +1,6 @@
+'ProofScriptKernelEquivalence.PSBinderInfo.toLean_injective' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSExpr.toLean_shared' depends on axioms: [propext, Quot.sound]
+'ProofScriptKernelEquivalence.PSExpr.toLean_sort' does not depend on any axioms
+'ProofScriptKernelEquivalence.PSExpr.toLean_bvar' does not depend on any axioms
+'ProofScriptKernelEquivalence.PSExpr.toLean_app' does not depend on any axioms
+'ProofScriptKernelEquivalence.PSExpr.toLean_proj' does not depend on any axioms

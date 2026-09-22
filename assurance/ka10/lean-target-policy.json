@@ -1,0 +1,46 @@
+{
+  "schema": "proofscript.assurance.ka10.lean-target-policy/v1",
+  "checkpoint": "proofscript-v1-ka10-lean-target-policy0",
+  "publicVersion": "1.0.0-pskernel.12",
+  "baseline": "proofscript-v1-ka9-lean4lean-compat0",
+  "requestedPolicyChange": "change strict target from leanprover/lean4:v4.33.1 to leanprover/lean4:v4.33.x or later",
+  "sourceToolchainPolicy": {
+    "id": "leanprover/lean4:v4.33.x-or-later",
+    "minimumMajor": 4,
+    "minimumMinor": 33,
+    "acceptSameMinorPatchAndPrerelease": true,
+    "acceptLaterMinorOrMajor": true,
+    "exactPatchRequired": false,
+    "exactCommitRequiredForSourceImport": false,
+    "note": "This policy is for accepting the external Lean4Lean source tree's declared lean-toolchain. It does not rewrite PSKernel's historical Lean 4.33.1 differential baseline or claim Lean4 equivalence."
+  },
+  "localProofToolchain": {
+    "materializedLeanVersion": "4.33.1",
+    "role": "local strict KA-4/KA-6 proof skeleton checking remains on the previously materialized Lean 4.33.1 toolchain unless a later local toolchain is explicitly materialized."
+  },
+  "lean4leanSource": {
+    "expectedUploadedSourceToolchain": "leanprover/lean4:v4.33.0-rc2",
+    "acceptedByNewPolicy": true,
+    "oldExactPolicyWouldBlock": true
+  },
+  "offlineDependencyPolicy": {
+    "lakeDependenciesMustBeMaterialized": true,
+    "dependencyExactRevisionPreferred": true,
+    "dependencyToolchainMayBeLaterButDoesNotProveCompatibility": true,
+    "uploadedBatteriesArchive": "/mnt/data/batteries-main.zip",
+    "knownUploadedBatteriesToolchain": "leanprover/lean4:v4.35.0-rc2",
+    "lean4leanRequiresBatteriesRev": "v4.33.0-rc2",
+    "exactRequiredBatteriesBundlePresent": false
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "coreFormatChanged": false,
+    "actualLean4LeanImportBound": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0
+  }
+}

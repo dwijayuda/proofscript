@@ -1,0 +1,43 @@
+{
+  "checkpoint": "P5.101-professional-build0",
+  "status": "PROFILE_CLI_PROFESSIONAL_BUILD_CHECKPOINT_FROZEN",
+  "baseline": {
+    "artifact": "proofscript-software-profile-v0-p5-100-windows-simple-setup1.zip",
+    "sha256": "91f3409aa47e64a748c7ba9f61dd57178e798a5883b87dd21995b0f6276d0c59"
+  },
+  "changes": {
+    "kernelChanged": false,
+    "kernelCodecChanged": false,
+    "arenaImporterChanged": false,
+    "trustedComputationRuleChanged": false,
+    "defaultOutDir": "dist",
+    "addedCleanCommand": true,
+    "sourceLocationDiagnostics": true,
+    "relativePathResolutionFromUserCwd": true
+  },
+  "tdd": {
+    "red": "psc-professional-build test failed on missing dist/build metadata and later exposed repository-root relative-path resolution",
+    "green": "PSC_PROFESSIONAL_BUILD0=PASS"
+  },
+  "verification": {
+    "npmInstallOffline": "passed",
+    "setup": "passed",
+    "buildPrettyFalse": "passed",
+    "testPscProfessionalBuild": "passed",
+    "testPscAdapter": "passed",
+    "testPscInit": "passed",
+    "testPscWindowsSimpleSetup": "passed",
+    "verifyProfileSoftware": "passed",
+    "testConformance": "passed",
+    "testStandaloneSmall": "passed",
+    "testTypescriptMigration": "passed",
+    "testKernelSmoke": "passed",
+    "cleanSourceVerification": "passed"
+  },
+  "claimBoundaries": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "backendExecutionCorrespondenceProof": false
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "checkpoint": "proofscript-v1-ka44-end-to-end-checker-refinement-plan0",
+  "moduleBoundaries": [
+    {
+      "module": "codec/replay",
+      "owner": "package boundary",
+      "allowedResponsibilities": ["decode/canonicalize/replay artifacts", "preserve Core v71 metadata"],
+      "forbiddenResponsibilities": ["decide typing", "perform reduction"]
+    },
+    {
+      "module": "environment",
+      "owner": "kernel boundary",
+      "allowedResponsibilities": ["constants", "defeqs", "declaration extension"],
+      "forbiddenResponsibilities": ["expression elaboration", "frontend syntax policy"]
+    },
+    {
+      "module": "typechecker",
+      "owner": "kernel boundary",
+      "allowedResponsibilities": ["inferType", "checkType", "isDefEq", "WHNF calls"],
+      "forbiddenResponsibilities": ["codec parsing", "frontend elaboration"]
+    },
+    {
+      "module": "lean4lean-bridges",
+      "owner": "assurance boundary",
+      "allowedResponsibilities": ["prove conditional bridge obligations", "state non-overclaim boundaries"],
+      "forbiddenResponsibilities": ["trusted runtime semantics", "codec mutation"]
+    }
+  ],
+  "antiSpaghettiPrinciples": [
+    "new KA work is a small gate plus data files",
+    "large existing modules are inventoried, not expanded",
+    "semantic changes require separate focused milestones",
+    "reports distinguish proof-surface bridges from executable refinement"
+  ]
+}

@@ -1,0 +1,467 @@
+{
+  "checkpoint": "proofscript-v1-ka44-end-to-end-checker-refinement-plan0",
+  "publicVersion": "1.0.0-pskernel.47",
+  "baseline": "proofscript-v1-ka43-theory-wide-refinement-map0",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "refinementPlan": {
+    "checkpoint": "proofscript-v1-ka44-end-to-end-checker-refinement-plan0",
+    "publicVersion": "1.0.0-pskernel.47",
+    "baseline": "proofscript-v1-ka43-theory-wide-refinement-map0",
+    "purpose": "make the end-to-end PSKernel-to-Lean4Lean checker refinement path explicit without adding spaghetti or trusted semantics",
+    "phases": [
+      {
+        "id": "KA44-refinement-spine",
+        "status": "completed",
+        "deliverable": "typed refinement spine, module boundaries, acceptance rules, and non-overclaiming release gate"
+      },
+      {
+        "id": "KA45-inductive-recursor-refinement",
+        "status": "planned",
+        "deliverable": "bridge generated inductive recursors/iota rules to Lean4Lean reduction facts"
+      },
+      {
+        "id": "KA46-projection-reduction-refinement",
+        "status": "planned",
+        "deliverable": "bridge projection reduction and structure field behavior"
+      },
+      {
+        "id": "KA47-executable-expression-translator-refinement",
+        "status": "planned",
+        "deliverable": "prove executable PSKernel expression translator cases refine Lean4Lean TrExprS"
+      },
+      {
+        "id": "KA48-executable-checker-result-refinement",
+        "status": "planned",
+        "deliverable": "connect PSKernel accept/reject/decline outcomes to Lean4Lean checker outcomes"
+      }
+    ],
+    "nextMilestones": [
+      "KA45-inductive-recursor-refinement-bridge",
+      "KA46-projection-reduction-refinement-bridge",
+      "KA47-executable-expression-translator-refinement",
+      "KA48-executable-checker-result-refinement"
+    ],
+    "formalLean4EquivalenceProvenObligations": 128,
+    "doesNotClaim": [
+      "full Lean4 equivalence",
+      "same theory as full Lean4",
+      "executable PSKernel refinement proof",
+      "complete inductive/recursor/projection parity"
+    ]
+  },
+  "moduleBoundaries": {
+    "checkpoint": "proofscript-v1-ka44-end-to-end-checker-refinement-plan0",
+    "moduleBoundaries": [
+      {
+        "module": "codec/replay",
+        "owner": "package boundary",
+        "allowedResponsibilities": [
+          "decode/canonicalize/replay artifacts",
+          "preserve Core v71 metadata"
+        ],
+        "forbiddenResponsibilities": [
+          "decide typing",
+          "perform reduction"
+        ]
+      },
+      {
+        "module": "environment",
+        "owner": "kernel boundary",
+        "allowedResponsibilities": [
+          "constants",
+          "defeqs",
+          "declaration extension"
+        ],
+        "forbiddenResponsibilities": [
+          "expression elaboration",
+          "frontend syntax policy"
+        ]
+      },
+      {
+        "module": "typechecker",
+        "owner": "kernel boundary",
+        "allowedResponsibilities": [
+          "inferType",
+          "checkType",
+          "isDefEq",
+          "WHNF calls"
+        ],
+        "forbiddenResponsibilities": [
+          "codec parsing",
+          "frontend elaboration"
+        ]
+      },
+      {
+        "module": "lean4lean-bridges",
+        "owner": "assurance boundary",
+        "allowedResponsibilities": [
+          "prove conditional bridge obligations",
+          "state non-overclaim boundaries"
+        ],
+        "forbiddenResponsibilities": [
+          "trusted runtime semantics",
+          "codec mutation"
+        ]
+      }
+    ],
+    "antiSpaghettiPrinciples": [
+      "new KA work is a small gate plus data files",
+      "large existing modules are inventoried, not expanded",
+      "semantic changes require separate focused milestones",
+      "reports distinguish proof-surface bridges from executable refinement"
+    ]
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "sourceFileCount": 1662,
+    "largeFileThresholdLines": 900,
+    "preexistingLargeSourceFilesInventoried": [
+      {
+        "path": "packages/std/core/bootstrap.pscore.json",
+        "lines": 10643,
+        "ext": ".json"
+      },
+      {
+        "path": "docs/reference/legacy/ProofScript_Language_Reference_v0.2.1_authoritative_prepublic.md",
+        "lines": 5980,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/lean4331/evidence/NameLtAsciiDifferential.lean",
+        "lines": 5018,
+        "ext": ".lean"
+      },
+      {
+        "path": "docs/PSKERNEL_TS_SOURCE_TREE.json",
+        "lines": 4238,
+        "ext": ".json"
+      },
+      {
+        "path": "packages/kernel/docs/PSKERNEL_TS_SOURCE_TREE.json",
+        "lines": 4203,
+        "ext": ".json"
+      },
+      {
+        "path": "packages/frontend-next/src/core/elaborator.ts",
+        "lines": 2519,
+        "ext": ".ts"
+      },
+      {
+        "path": "docs/REFERENCE_LANGUAGE_GOVERNANCE_SMOKE.json",
+        "lines": 2415,
+        "ext": ".json"
+      },
+      {
+        "path": "packages/unified-bridge/src/index.ts",
+        "lines": 2269,
+        "ext": ".ts"
+      },
+      {
+        "path": "tests/differential/manifest.json",
+        "lines": 2012,
+        "ext": ".json"
+      },
+      {
+        "path": "tools/kernel-smoke-instrumented.ts",
+        "lines": 1846,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-kernel-smoke.ts",
+        "lines": 1664,
+        "ext": ".ts"
+      },
+      {
+        "path": "packages/frontend-next/src/plugins/features/do.ts",
+        "lines": 1477,
+        "ext": ".ts"
+      },
+      {
+        "path": "packages/kernel/docs/PSKERNEL_TS_RELEASE_PREFLIGHT.json",
+        "lines": 1355,
+        "ext": ".json"
+      },
+      {
+        "path": "docs/PSKERNEL_TS_RELEASE_PREFLIGHT.json",
+        "lines": 1355,
+        "ext": ".json"
+      },
+      {
+        "path": "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "lines": 1282,
+        "ext": ".ts"
+      },
+      {
+        "path": "packages/kernel/docs/PROOF_OBLIGATIONS.md",
+        "lines": 1239,
+        "ext": ".md"
+      },
+      {
+        "path": "docs/PROOF_OBLIGATIONS.md",
+        "lines": 1239,
+        "ext": ".md"
+      },
+      {
+        "path": "packages/kernel/src/PSKernel/Declaration.ts",
+        "lines": 1156,
+        "ext": ".ts"
+      },
+      {
+        "path": "packages/kernel-codec/src/index.ts",
+        "lines": 1132,
+        "ext": ".ts"
+      },
+      {
+        "path": "packages/kernel/docs/PSKERNEL_TS_PROOF_OBLIGATIONS.json",
+        "lines": 1126,
+        "ext": ".json"
+      },
+      {
+        "path": "docs/PSKERNEL_TS_PROOF_OBLIGATIONS.json",
+        "lines": 1126,
+        "ext": ".json"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-09-12-p4-75-cleanup-refactor-roadmap.md",
+        "lines": 1103,
+        "ext": ".md"
+      },
+      {
+        "path": "packages/frontend-next/src/plugins/features/def.ts",
+        "lines": 1037,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/lean4331/evidence/ExprOperationDifferential.lean",
+        "lines": 1023,
+        "ext": ".lean"
+      },
+      {
+        "path": "packages/kernel/src/PSKernel/Environment.ts",
+        "lines": 1023,
+        "ext": ".ts"
+      }
+    ],
+    "ka44SourceFiles": [
+      {
+        "path": "assurance/ka44/KA44_END_TO_END_CHECKER_REFINEMENT_PLAN_RELEASE_GATE.json",
+        "lines": 404,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka44/KA44_END_TO_END_CHECKER_REFINEMENT_PLAN_VERIFICATION_SUMMARY.json",
+        "lines": 291,
+        "ext": ".json"
+      },
+      {
+        "path": "tools/pskernel-ka44-end-to-end-checker-refinement-plan.ts",
+        "lines": 173,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka44/end-to-end-checker-refinement-plan.json",
+        "lines": 47,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka44/KA44_END_TO_END_CHECKER_REFINEMENT_PLAN_REPORT.md",
+        "lines": 42,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka44/refinement-module-boundaries.json",
+        "lines": 36,
+        "ext": ".json"
+      },
+      {
+        "path": "tools/pskernel-ka44-end-to-end-checker-refinement-plan-tests.ts",
+        "lines": 32,
+        "ext": ".ts"
+      },
+      {
+        "path": "docs/architecture/KA44_END_TO_END_CHECKER_REFINEMENT_PLAN.md",
+        "lines": 26,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka44/KA44_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 25,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka44/architecture-no-spaghetti-policy.json",
+        "lines": 22,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka44/kernel-feature-equivalence-progress.json",
+        "lines": 21,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka44/obligation-delta.json",
+        "lines": 20,
+        "ext": ".json"
+      }
+    ],
+    "ka44ToolFiles": [
+      {
+        "path": "tools/pskernel-ka44-end-to-end-checker-refinement-plan.ts",
+        "lines": 173,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka44-end-to-end-checker-refinement-plan-tests.ts",
+        "lines": 32,
+        "ext": ".ts"
+      }
+    ],
+    "newKa44OversizedSourceFiles": [],
+    "semanticPackageTouched": false,
+    "moduleBoundaryCount": 4,
+    "note": "KA-44 fails on new oversized KA-44 files, generated semantic-package edits, too many gate tools, or missing module boundaries."
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka44-end-to-end-checker-refinement-plan0",
+    "featureSurfaceBridgeProgressPercent": 66,
+    "executableKernelEquivalenceProofProgressPercent": 33,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 128,
+    "groups": [
+      {
+        "id": "ordinary-declarations",
+        "progressPercent": 82,
+        "status": "bridged proof-surface; executable refinement incomplete"
+      },
+      {
+        "id": "quotients",
+        "progressPercent": 74,
+        "status": "environment bridge complete; semantic soundness incomplete"
+      },
+      {
+        "id": "inductives",
+        "progressPercent": 36,
+        "status": "initial environment bridge; recursor/projection refinement still planned"
+      },
+      {
+        "id": "mutual-definitions",
+        "progressPercent": 43,
+        "status": "initial environment bridge; executable refinement incomplete"
+      },
+      {
+        "id": "expression-tags",
+        "progressPercent": 63,
+        "status": "TrExprS constructor surface covered; executable translator not fully refined"
+      },
+      {
+        "id": "typechecker-whnf-defeq",
+        "progressPercent": 46,
+        "status": "proof-surface bridges exist; executable checker refinement incomplete"
+      },
+      {
+        "id": "primitive-literals",
+        "progressPercent": 40,
+        "status": "Nat/Bool/literal proof-surface bridge only"
+      },
+      {
+        "id": "codec-replay",
+        "progressPercent": 36,
+        "status": "Replay surface and PS codec stability gates exist"
+      },
+      {
+        "id": "resource-errors",
+        "progressPercent": 39,
+        "status": "fuel/error conservativity surface bridge only"
+      },
+      {
+        "id": "architecture-health",
+        "progressPercent": 76,
+        "status": "no-spaghetti ratchet plus module boundary plan"
+      },
+      {
+        "id": "end-to-end-refinement-spine",
+        "progressPercent": 25,
+        "status": "explicit staged checker refinement plan; no end-to-end theorem yet"
+      }
+    ]
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "endToEndCheckerRefinementTheorem": false,
+    "formalLean4EquivalenceProvenObligations": 128
+  },
+  "requiredCommands": [
+    {
+      "command": "npm install --offline --no-audit --no-fund",
+      "status": "passed"
+    },
+    {
+      "command": "npm run build -- --pretty false",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:pskernel:ka44",
+      "status": "passed"
+    },
+    {
+      "command": "npm run assurance:ka44",
+      "status": "passed"
+    },
+    {
+      "command": "npm run lean:ka44:check",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:psc:kernel-status",
+      "status": "passed-rerun-individual"
+    },
+    {
+      "command": "npm run test:psc:conformance-bounded",
+      "status": "passed-rerun-individual"
+    },
+    {
+      "command": "npm run arena:corpus-preflight",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:arena:static-nonperf",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:arena:tutorial",
+      "status": "timed-out-not-counted"
+    },
+    {
+      "command": "fresh extract install/build/test:pskernel:ka44/lean:ka44:check",
+      "status": "passed"
+    },
+    {
+      "command": "unzip -t final ZIP",
+      "status": "passed"
+    },
+    {
+      "command": "sha256sum -c final SHA file",
+      "status": "pending-final-repackage"
+    }
+  ],
+  "verificationNuance": "Aggregate command timed out during later tail once; timed-out tail commands were rerun individually where marked. Tutorial wrapper timed out and is not counted as fresh KA-44 evidence.",
+  "freshExtract": "passed"
+}

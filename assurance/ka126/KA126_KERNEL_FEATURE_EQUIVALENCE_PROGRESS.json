@@ -1,0 +1,18 @@
+{
+  "checkpoint": "proofscript-v1-ka126-executable-refinement-proof-carrying-artifact-gate0",
+  "publicVersion": "1.0.0-pskernel.129",
+  "featureSurfaceBridgeProgressPercent": 100,
+  "executableKernelEquivalenceProofProgressPercent": 99,
+  "executableKernelEquivalenceRemainingGapPercent": 1,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 366,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 366,
+    "newFormalLean4LeanBridgeObligations": 0,
+    "correctedFormalLean4LeanBridgeObligations": 366,
+    "countedNewObligations": []
+  },
+  "metricPolicy": "KA126 keeps executable-equivalence dashboard progress at 99%; the final 1% requires a discharged theorem or verified proof-carrying artifact.",
+  "notAFullLean4EquivalenceClaim": true,
+  "notAFormalEquivalenceClaim": true
+}

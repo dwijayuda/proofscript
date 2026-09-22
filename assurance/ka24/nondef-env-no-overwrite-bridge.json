@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka24-nondef-env-no-overwrite-bridge0",
+  "publicVersion": "1.0.0-pskernel.27",
+  "referenceKind": "direct-imported-lean4lean-nondef-env-no-overwrite-bridge",
+  "baseline": "proofscript-v1-ka23-nondef-env-lookup-bridge0",
+  "coreArtifactFormat": 71,
+  "certificateFormat": 2,
+  "bridgedRelations": ["Lean4Lean.VEnv.addConst", "Lean4Lean.VEnv.constants"],
+  "dependsOn": [
+    "Lean4Lean.Theory.Typing.Env",
+    "PSKernelKA23.translated_theorem_env_lookup",
+    "PSKernelKA23.translated_theorem_env_defeq_member",
+    "PSKernelKA23.translated_opaque_env_lookup",
+    "PSKernelKA18.addConst_success_requires_fresh",
+    "PSKernelKA18.addConst_preserves_other_lookup",
+    "PSKernelKA18.addDefEq_preserves_any_constant_lookup"
+  ],
+  "coveredPSDeclKinds": ["theorem", "opaque"],
+  "nonAddingPSDeclKinds": ["example"],
+  "alreadyCoveredPSDeclKinds": ["axiom", "definition"],
+  "excludedPSDeclKinds": ["quot", "inductive", "mutualInductive"],
+  "conditionalBridgeLemmas": [
+    "PSKernelKA24.translated_theorem_fresh_before_add",
+    "PSKernelKA24.translated_opaque_fresh_before_add",
+    "PSKernelKA24.translated_theorem_preserves_other_lookup",
+    "PSKernelKA24.translated_opaque_preserves_other_lookup"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 32,
+    "formalObligationMeaning": "KA-13 through KA-24 conditional Lean4Lean bridge lemmas only; not executable PSKernel refinement or full Lean equivalence"
+  }
+}

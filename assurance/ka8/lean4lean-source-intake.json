@@ -1,0 +1,48 @@
+{
+  "schema": "proofscript.assurance.ka8.lean4lean-source-intake/v1",
+  "checkpoint": "proofscript-v1-ka8-lean4lean-source-intake0",
+  "publicVersion": "1.0.0-pskernel.10",
+  "baseline": "proofscript-v1-ka7-real-lean4lean-import0",
+  "targetLeanVersion": "4.33.1",
+  "targetLeanCommit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "purpose": "Automatically accept a future mounted Lean4Lean source archive, extract it to a stable intake directory, and run the KA-7 strict actual import gate without changing PSKernel trusted semantics.",
+  "archiveDiscoveryCandidates": [
+    "/mnt/data/lean4lean-master.zip",
+    "/mnt/data/lean4lean.zip",
+    "/mnt/data/lean4lean-src.zip",
+    "/mnt/data/lean4lean-master.tar.gz",
+    "/mnt/data/lean4lean.tar.gz",
+    "/mnt/data/lean4lean-src.tar.gz",
+    "/mnt/data/lean4lean-master.tgz",
+    "/mnt/data/lean4lean.tgz",
+    "vendor/lean4lean-source.zip",
+    "external/lean4lean-source.zip"
+  ],
+  "stableIntakeRoot": "/mnt/data/lean4lean-intake",
+  "stableCandidatePaths": [
+    "/mnt/data/lean4lean-intake/lean4lean",
+    "/mnt/data/lean4lean-intake/lean4lean-master",
+    "/mnt/data/lean4lean-intake/source"
+  ],
+  "requiredSourceFiles": [
+    "lean-toolchain",
+    "lakefile.toml",
+    "Lean4Lean.lean",
+    "Lean4Lean/Environment.lean"
+  ],
+  "strictAcceptanceCriteria": [
+    "A mounted Lean4Lean source tree or archive is discovered.",
+    "Archive extraction produces a tree containing the required Lean4Lean source files.",
+    "The candidate lean-toolchain targets leanprover/lean4:v4.33.1 unless a separate compatibility override is created later.",
+    "KA-7 strict actual import gate passes against the intake candidate.",
+    "No PSKernel trusted-kernel semantics, codec, or computation rule is changed."
+  ],
+  "claimBoundary": {
+    "actualLean4LeanImportBound": false,
+    "strictImportPassed": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "checkpoint": "proofscript-v1-ka54-executable-expression-translator-determinism-refinement0",
+  "publicVersion": "1.0.0-pskernel.57",
+  "baseline": "proofscript-v1-ka53-executable-expression-translator-residual-refinement0",
+  "commands": {
+    "focusedTest": "passed",
+    "assuranceKA54": "passed",
+    "leanKA54Check": "passed"
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA54",
+        "source": "assurance/ka54/executable-expression-translator-determinism-refinement-bridge.lean",
+        "destination": "PSKernelKA54ExecutableExpressionTranslatorDeterminismRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA54 gate tool absent before implementation"
+}

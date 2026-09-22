@@ -1,0 +1,265 @@
+{
+  "checkpoint": "proofscript-v1-ka116-executable-proof-dependency-closure0",
+  "publicVersion": "1.0.0-pskernel.119",
+  "baseline": "proofscript-v1-ka115-executable-refinement-theorem-skeleton0",
+  "releaseKind": "executable-proof-dependency-closure-audit",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA116",
+      "source": "assurance/ka116/executable-proof-dependency-closure-bridge.lean",
+      "destination": "KA116ExecutableProofDependencyClosureBridge.lean",
+      "status": "passed",
+      "proofBearing": false,
+      "obligations": 0,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "progress": {
+    "checkpoint": "proofscript-v1-ka116-executable-proof-dependency-closure0",
+    "publicVersion": "1.0.0-pskernel.119",
+    "baseline": "proofscript-v1-ka115-executable-refinement-theorem-skeleton0",
+    "metrics": {
+      "featureSurfaceBridgeProgressPercent": 100,
+      "executableKernelEquivalenceProofProgressPercent": 92,
+      "executableKernelEquivalencePreviousPercent": 91,
+      "executableKernelEquivalenceDeltaPercent": 1,
+      "arenaCorpusRegressionPercent": 100,
+      "releasePackagingVerificationPercent": 100,
+      "executableProofDependencyClosurePercent": 100,
+      "formalLean4LeanBridgeObligations": 366,
+      "newFormalLean4LeanBridgeObligations": 0,
+      "fullLean4EquivalencePercent": 0,
+      "fullyFormalK3Percent": 0,
+      "overallConservativeProjectProgressPercent": 82.6,
+      "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+    },
+    "phaseStatus": {
+      "featureSurfaceBridge": "closed",
+      "executableEquivalence": "active-proof-dependency-closed",
+      "fullLean4Equivalence": "not-proven",
+      "fullyFormalK3": "not-proven",
+      "claimBoundary": "enforced"
+    },
+    "proofDependencyClosure": {
+      "closurePercent": 100,
+      "rows": [
+        {
+          "id": "dependency-ledger-inputs-linked",
+          "status": "done",
+          "evidence": "KA113 ledger, KA114 frontier checklist, and KA115 theorem-family skeleton are required inputs",
+          "done": true
+        },
+        {
+          "id": "theorem-family-dependencies-enumerated",
+          "status": "done",
+          "evidence": "future executable refinement proof families are grouped by dependency buckets",
+          "done": true
+        },
+        {
+          "id": "bridge-vs-dashboard-boundary-pinned",
+          "status": "done",
+          "evidence": "proof dependencies are separated from dashboard evidence and release evidence",
+          "done": true
+        },
+        {
+          "id": "unchecked-theorem-claims-blocked",
+          "status": "done",
+          "evidence": "no full executable PSKernel refinement theorem is claimed by the closure",
+          "done": true
+        },
+        {
+          "id": "negative-claims-pinned",
+          "status": "done",
+          "evidence": "full Lean4 equivalence and fully formal K3 remain 0%",
+          "done": true
+        },
+        {
+          "id": "next-mechanization-order-recorded",
+          "status": "done",
+          "evidence": "next work should convert dependency-closed rows into proof-bearing theorem modules",
+          "done": true
+        },
+        {
+          "id": "release-invariants-retained",
+          "status": "done",
+          "evidence": "Core 71/cert 2 and trusted semantic packages remain unchanged",
+          "done": true
+        }
+      ],
+      "counts": {
+        "total": 7,
+        "done": 7,
+        "missing": 0
+      },
+      "evidenceMeaning": "proof dependency closure records proof-family shape and boundaries; it is not an executable PSKernel refinement proof"
+    },
+    "percentBoundaries": {
+      "executableProgressIsDashboardEvidenceNotRefinementProof": true,
+      "proofDependencyClosureDoesNotProvePSKernelEquivalence": true,
+      "overallProgressIsDashboardEstimate": true
+    },
+    "claimBoundary": {
+      "fullLean4Equivalence": false,
+      "sameTheoryAsFullLean4": false,
+      "fullyFormalK3": false,
+      "executablePSKernelRefinementProof": false,
+      "trustedKernelSemanticChange": false,
+      "kernelCodecChange": false,
+      "coreFormatChanged": false,
+      "certificateFormatChanged": false
+    }
+  },
+  "proofDependencyClosure": {
+    "closurePercent": 100,
+    "rows": [
+      {
+        "id": "dependency-ledger-inputs-linked",
+        "status": "done",
+        "evidence": "KA113 ledger, KA114 frontier checklist, and KA115 theorem-family skeleton are required inputs",
+        "done": true
+      },
+      {
+        "id": "theorem-family-dependencies-enumerated",
+        "status": "done",
+        "evidence": "future executable refinement proof families are grouped by dependency buckets",
+        "done": true
+      },
+      {
+        "id": "bridge-vs-dashboard-boundary-pinned",
+        "status": "done",
+        "evidence": "proof dependencies are separated from dashboard evidence and release evidence",
+        "done": true
+      },
+      {
+        "id": "unchecked-theorem-claims-blocked",
+        "status": "done",
+        "evidence": "no full executable PSKernel refinement theorem is claimed by the closure",
+        "done": true
+      },
+      {
+        "id": "negative-claims-pinned",
+        "status": "done",
+        "evidence": "full Lean4 equivalence and fully formal K3 remain 0%",
+        "done": true
+      },
+      {
+        "id": "next-mechanization-order-recorded",
+        "status": "done",
+        "evidence": "next work should convert dependency-closed rows into proof-bearing theorem modules",
+        "done": true
+      },
+      {
+        "id": "release-invariants-retained",
+        "status": "done",
+        "evidence": "Core 71/cert 2 and trusted semantic packages remain unchanged",
+        "done": true
+      }
+    ],
+    "counts": {
+      "total": 7,
+      "done": 7,
+      "missing": 0
+    },
+    "evidenceMeaning": "proof dependency closure records proof-family shape and boundaries; it is not an executable PSKernel refinement proof"
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka116Files": [
+      {
+        "path": "tools/pskernel-ka116-executable-proof-dependency-closure-tests.ts",
+        "lines": 47,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka116-executable-proof-dependency-closure.ts",
+        "lines": 16,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka116/KA116_EXECUTABLE_PROOF_DEPENDENCY_CLOSURE.json",
+        "lines": 96,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka116/KA116_EXECUTABLE_PROOF_DEPENDENCY_CLOSURE_BRIDGE_SPEC.json",
+        "lines": 22,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka116/KA116_EXECUTABLE_PROOF_DEPENDENCY_CLOSURE_RELEASE_GATE.json",
+        "lines": 266,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka116/KA116_EXECUTABLE_PROOF_DEPENDENCY_CLOSURE_REPORT.md",
+        "lines": 19,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka116/KA116_EXECUTABLE_PROOF_DEPENDENCY_CLOSURE_ROWS.json",
+        "lines": 54,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka116/KA116_EXECUTABLE_PROOF_DEPENDENCY_CLOSURE_VERIFICATION_SUMMARY.json",
+        "lines": 12,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka116/KA116_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 18,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka116/KA116_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 15,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka116/executable-proof-dependency-closure-bridge.lean",
+        "lines": 18,
+        "ext": ".lean"
+      }
+    ],
+    "ka116ToolFiles": [
+      {
+        "path": "tools/pskernel-ka116-executable-proof-dependency-closure-tests.ts",
+        "lines": 47,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka116-executable-proof-dependency-closure.ts",
+        "lines": 16,
+        "ext": ".ts"
+      }
+    ],
+    "newKA116OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

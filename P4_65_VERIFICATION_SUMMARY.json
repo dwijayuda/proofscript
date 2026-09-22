@@ -1,0 +1,37 @@
+{
+  "release": "proofscript-standalone-kernel-maturity-replacement-p4-65",
+  "date": "2026-09-11",
+  "trustLabel": "trusted-boundary K3-TB; not fully formal K3",
+  "proofStatus": "not-proven",
+  "semanticBaseline": "Lean 4.33.1",
+  "pinnedLeanRevision": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "changes": [
+    "Added regression coverage for EnvironmentCore.fork() cacheRevision preservation before fork-local divergence.",
+    "Updated EnvironmentCore.fork() to copy the private mutation/cache revision when copying checked declarations and constants.",
+    "Updated kernel-status.json assurance for environment.declaration-order.",
+    "Added PRODUCTION_P4_65_ENVIRONMENT_FORK_REVISION_REPORT.md."
+  ],
+  "testFirstEvidence": {
+    "redCommand": "npm run test:kernel:typechecker",
+    "redFailure": "environment fork preserves the source cache revision before diverging: Expected values to be strictly equal: '0' !== '2'",
+    "greenCommands": [
+      "npm run build -- --pretty false",
+      "npm run test:kernel:typechecker"
+    ]
+  },
+  "freshVerification": [
+    { "command": "npm run build -- --pretty false", "status": "PASS" },
+    { "command": "npm run test:kernel:typechecker", "status": "PASS", "evidence": "43/43 tests passed" },
+    { "command": "npm run test:kernel:smoke", "status": "PASS", "evidence": "PSKERNEL_TS_KERNEL_SMOKE=PASS" },
+    { "command": "npm run test:standalone-small", "status": "PASS", "evidence": "PROOFSCRIPT_STANDALONE_SMALL_SUBSET=PASS" },
+    { "command": "npm run test:governance", "status": "PASS", "evidence": "checks=27 warnings=0 failures=0" },
+    { "command": "node tools/pskernel.ts status --json", "status": "PASS", "evidence": "status=trusted-boundary, proofStatus=not-proven" },
+    { "command": "node tools/pskernel.ts delivery-bootstrap --json", "status": "PASS", "evidence": "status=accepted, checkCount=4" },
+    { "command": "node tools/pskernel.ts source-tree --json", "status": "PASS", "evidence": "status=accepted, fileCount=847" },
+    { "command": "npm run verify:k3tb:publish", "status": "BLOCKED", "evidence": "K3TB_LEAN_ENV_STATUS=BLOCKED_MISSING_PROOFSCRIPT_LEAN_BIN; set PROOFSCRIPT_LEAN_BIN to Lean 4.33.1 binary" }
+  ],
+  "notes": [
+    "Direct reference-governance smoke emitted REFERENCE_LANGUAGE_GOVERNANCE=PASS during investigation, but repeated direct invocations in this container could hang/timeout around process shutdown. It is not counted as a completed fresh direct verification claim for this package.",
+    "This release does not claim full Lean 4 kernel equivalence or fully formal K3."
+  ]
+}

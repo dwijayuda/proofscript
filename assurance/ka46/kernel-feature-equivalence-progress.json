@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka46-projection-reduction-refinement-preflight0",
+  "publicVersion": "1.0.0-pskernel.49",
+  "featureSurfaceBridgeProgressPercent": 68,
+  "executableKernelEquivalenceProofProgressPercent": 34,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 132,
+  "groups": [
+    { "id": "ordinary-declarations", "progressPercent": 82, "status": "bridged proof-surface; executable refinement incomplete" },
+    { "id": "quotients", "progressPercent": 74, "status": "environment bridge complete; semantic soundness incomplete" },
+    { "id": "inductives", "progressPercent": 44, "status": "environment bridge plus recursor proof-surface bridge; projection-reduction bridge preflight prepared; generated rule/RHS refinement still open" },
+    { "id": "mutual-definitions", "progressPercent": 43, "status": "initial environment bridge; executable refinement incomplete" },
+    { "id": "expression-tags", "progressPercent": 63, "status": "TrExprS constructor surface covered; executable translator not fully refined" },
+    { "id": "typechecker-whnf-defeq", "progressPercent": 50, "status": "WHNF/defeq proof-surface bridges exist; projection-reduction bridge pending formal Lean check" },
+    { "id": "primitive-literals", "progressPercent": 40, "status": "Nat/Bool/literal proof-surface bridge only" },
+    { "id": "codec-replay", "progressPercent": 36, "status": "Replay surface and PS codec stability gates exist" },
+    { "id": "resource-errors", "progressPercent": 39, "status": "fuel/error conservativity surface bridge only" },
+    { "id": "architecture-health", "progressPercent": 80, "status": "no-spaghetti ratchet plus KA46 semantic-package touch guard" },
+    { "id": "end-to-end-refinement-spine", "progressPercent": 30, "status": "explicit staged checker refinement plan; no end-to-end theorem yet" }
+  ],
+  "notAFormalEquivalenceClaim": true
+}

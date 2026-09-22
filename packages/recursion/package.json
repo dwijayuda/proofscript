@@ -1,0 +1,16 @@
+{
+  "name": "@proofscript/recursion",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "ProofScript structural-recursion source compiler",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "@proofscript/syntax": "0.1.0-dev.0"
+  }
+}

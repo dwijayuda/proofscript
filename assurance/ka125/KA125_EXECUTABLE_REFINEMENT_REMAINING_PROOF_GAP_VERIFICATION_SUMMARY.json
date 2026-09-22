@@ -1,0 +1,12 @@
+{
+  "checkpoint": "proofscript-v1-ka125-executable-refinement-remaining-proof-gap0",
+  "status": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 366,
+  "newFormalLean4LeanBridgeObligations": 0,
+  "featureSurfaceBridgeProgressPercent": 100,
+  "executableKernelEquivalenceProofProgressPercent": 99,
+  "executableKernelEquivalenceRemainingGapPercent": 1,
+  "overallConservativeProjectProgressPercent": 84.7,
+  "architectureHealth": true
+}

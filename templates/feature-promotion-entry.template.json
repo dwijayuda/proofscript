@@ -1,0 +1,65 @@
+{
+  "id": "psc1-new-feature-id",
+  "title": "Human-readable feature name",
+  "lifecycle": "supported | experimental | fail-closed",
+  "since": "P?.??",
+  "productionGradePath": true,
+  "executable": true,
+  "trustLevel": "checked-bootstrap | existing-kernel-rules | trusted-kernel-change",
+  "kernelImpact": "checked-bootstrap-only | no-new-kernel-rule | new-kernel-obligation",
+  "syntax": [
+    "surface example"
+  ],
+  "checkedStory": "Explain how source elaborates into checked Core or checked bootstrap declarations before backend/runtime execution.",
+  "packages": [
+    "packages/parser",
+    "packages/elaborator",
+    "packages/std",
+    "packages/backend-typescript",
+    "packages/runtime"
+  ],
+  "evidence": {
+    "packageScripts": [
+      "test:pslive:new-feature"
+    ],
+    "parserOrSyntax": [
+      "tools/parser-new-feature-tests.ts"
+    ],
+    "elaboratorOrKernel": [
+      "tools/elaborator-new-feature-tests.ts"
+    ],
+    "checkedBootstrapOrObligation": [
+      "packages/std/src/Bootstrap/Foundation.ps"
+    ],
+    "backendOrRuntime": [
+      "packages/backend-typescript/src/termEmitter.ts",
+      "packages/runtime/src/source.ts"
+    ],
+    "jsExecutionSmoke": [
+      "tools/pslive-new-feature-tests.ts"
+    ],
+    "typescriptCompileSmoke": [
+      "tools/pslive-new-feature-tests.ts"
+    ],
+    "theoremOrReductionSmoke": [
+      "tools/pslive-new-feature-tests.ts"
+    ],
+    "negativeFailClosedSmoke": [
+      "tools/pslive-new-feature-tests.ts"
+    ],
+    "governanceOrMatrix": [
+      "tools/reference-language-governance-smoke.ts"
+    ],
+    "documentationReports": [
+      "docs/reports/p?/PRODUCTION_P?_NEW_FEATURE_REPORT.md"
+    ]
+  },
+  "notes": "State limitations and K3-TB caveat.",
+  "proofObligationIds": [
+    "feature-proof-obligation-coverage",
+    "elaborator-elaboration-soundness",
+    "artifact-replay-soundness",
+    "backend-semantic-preservation",
+    "runtime-observable-semantics"
+  ]
+}

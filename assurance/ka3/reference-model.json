@@ -1,0 +1,66 @@
+{
+  "schema": "proofscript.assurance.ka3.reference-model/v1",
+  "checkpoint": "proofscript-v1-ka3-noninductive-soundness0",
+  "publicVersion": "1.0.0-pskernel.5",
+  "status": "reference-model-binding-and-noninductive-soundness-skeleton-not-lean-checked-here",
+  "baseline": "proofscript-v1-ka2-translation-relation0",
+  "targetLean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+    "referenceModel": "Lean4Lean-compatible core model shape, self-contained KA-3 skeleton; not an imported Lean4Lean theorem yet"
+  },
+  "pscore": {
+    "kernelName": "PSKernel",
+    "formatVersion": 71,
+    "implementationProfile": "KERNEL-level-instantiation-conformance1",
+    "certificateFormat": 2
+  },
+  "nonInductiveSlice": {
+    "enabled": true,
+    "declarationKinds": [
+      "axiom",
+      "definition",
+      "theorem",
+      "example",
+      "opaque"
+    ],
+    "excludedDeclarationKinds": [
+      "quot",
+      "inductive",
+      "mutualInductive"
+    ],
+    "termTagsInheritedFromKA2": [
+      "sort",
+      "bvar",
+      "const",
+      "app",
+      "lam",
+      "pi",
+      "let",
+      "lit",
+      "proj",
+      "mdata-erased"
+    ],
+    "blockedBeforeTrustedCore": [
+      "level.mvar",
+      "expr.mvar",
+      "expr.fvar",
+      "unknown-level-tag",
+      "unknown-term-tag",
+      "unknown-declaration-kind"
+    ],
+    "soundnessClaim": "If KA-3 accepts a declaration as supported-noninductive and KA-2 translates its type/value shapes, the translation target is a well-formed Lean-reference declaration shape. This is a theorem target/skeleton, not a machine-checked Lean proof in this container."
+  },
+  "proofBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "leanCheckedHere": false,
+    "reasonLeanNotCheckedHere": "lean executable is not available in the execution environment",
+    "formalLean4EquivalenceProvenObligations": 0,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false
+  },
+  "leanCheckedHere": false
+}

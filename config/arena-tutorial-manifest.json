@@ -1,0 +1,1419 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "P5.94-arena-nested-helper-target-validation0",
+  "observedArenaTutorial": {
+    "source": "uploaded results(1).json and lean-arena-tests.tar.gz",
+    "timestamp": "2026-09-15 15:36:44 UTC",
+    "gitRevision": "a538455e201c1be48a11963cb83058649a36dc0e",
+    "gitRevisionShort": "a538455e",
+    "githubRunId": "34974976650",
+    "total": 140,
+    "good": 93,
+    "bad": 47,
+    "lean4exportVersion": "3.1.0",
+    "leanVersion": "4.29.1",
+    "note": "The uploaded Arena results/corpus contains the full 140 tutorial tests: 93 expected accept and 47 expected reject."
+  },
+  "entries": [
+    {
+      "name": "tutorial/001_basicDef",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/002_badDef",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/003_arrowType",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/004_dependentType",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/005_constType",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/006_betaReduction",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/007_betaReduction2",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/008_forallSortWhnf",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/009_forallSortBad",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/010_nonTypeType",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/011_nonTypeAxiom",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/012_nonPropThm",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/013_thmProof",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/014_selfProof",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/015_levelComp1",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/016_levelComp2",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/017_levelComp3",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/018_levelParams",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/019_tut06_bad01",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/020_levelComp4",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/021_levelComp5",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/022_imax1",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/023_imax2",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/024_levelMaxComm",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/025_levelMaxAssoc",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/026_levelMaxIdem",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/027_levelMaxAbsorb",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/028_inferVar",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/029_defEqLambda",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/030_peano1",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/031_peano2",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/032_peano3",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/033_letType",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/034_letTypeDep",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/035_letRed",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/036_empty",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/037_boolType",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/038_twoBool",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/039_andType",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/040_prodType",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/041_pprodType",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/042_pUnitType",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/043_eqType",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/044_natDef",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/045_rbTreeDef",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/046_inductBadNonSort",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/047_inductBadNonSort2",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/048_inductLevelParam",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/049_inductTooFewParams",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/050_inductWrongCtorParams",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/051_inductWrongCtorResParams",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/052_inductWrongCtorResLevel",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/053_inductInIndex",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/054_indNeg",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/055_reduceCtorParam.mk",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/056_reduceCtorType.mk",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/057_indNegReducible",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/058_predWithTypeField",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/059_typeWithTypeField",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/060_typeWithTypeFieldPoly",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/061_typeWithTooHighTypeField.mk",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/062_emptyRec",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/063_boolRec",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/064_twoBoolRec",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/065_andRec",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/066_prodRec",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/067_pprodRec",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/068_punitRec",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/069_eqRec",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/070_nRec",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/071_rbTreeRef",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/072_boolPropRec",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/073_BogusRecursor",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/074_existsRec",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/075_typeSingletonRecReduction",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/076_sortElimPropRec",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/077_sortElimProp2Rec",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/078_boolRecEqns",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/079_prodRecEqns",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/080_nRecReduction",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/081_listRecReduction",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/082_RBTree.id_spec",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/083_And.right",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/084_Prod.snd",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/085_PProd.snd",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/086_PSigma.snd",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/087_projOutOfRange",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/088_projNotStruct",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/089_projProp1",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/090_projProp2",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/091_projProp3",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/092_projProp4",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/093_projProp5",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/094_projProp6",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/095_projDataIndexRec",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/096_projIndexData",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/097_projIndexData2",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/098_projRed",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/099_ruleK",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/100_ruleKbad",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/101_ruleKAcc",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/102_aNatLit",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/103_natLitEq",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/104_proofIrrelevance",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/105_proofIrrelevanceBad",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/106_proofIrrelevanceWhnf",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/107_unitEta1",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/108_unitEta2",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/109_unitEta3",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/110_indexedUnitEta",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/111_structEta",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/112_indexedStructEta",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/113_funEta",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/114_funEtaDep",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/115_funEtaBad",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/116_reflOccLeft",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/117_reflOccInIndex",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/118_reduceCtorParamRefl.mk",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/119_reduceCtorParamRefl2.mk",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/120_rTreeRec",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/121_rtreeRecReduction",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/122_accRecType",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/123_accRecReduction",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/124_accRecNoEta",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/125_quotMkType",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/126_quotIndType",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/127_quotLiftType",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/128_quotSoundType",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/129_quotLiftReduction",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/130_quotIndReduction",
+      "outcome": "accept",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/131_dup_defs",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/132_dup_ind_def",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/133_dup_ctor_def",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/134_dup_rec_def",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/135_misnamed_rec_user",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/136_dup_rec_def2",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/137_dup_ctor_rec",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/138_DupConCon",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/139_falseFromUnsafe",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    },
+    {
+      "name": "tutorial/140_falseFromPartial",
+      "outcome": "reject",
+      "source": "uploaded results(1).json / lean-arena-tests.tar.gz, Arena commit a538455e",
+      "lean4exportVersion": "3.1.0",
+      "leanVersion": "4.29.1",
+      "leanGitHash": "f72c35b3f637c8c6571d353742168ab66cc22c00",
+      "yamlFile": "tests/tutorial.yaml",
+      "ndjsonPath": null
+    }
+  ]
+}

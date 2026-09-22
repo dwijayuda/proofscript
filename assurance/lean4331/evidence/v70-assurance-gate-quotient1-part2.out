@@ -1,0 +1,30 @@
+=== recursor metadata TS ===
+REC_META KARec.U.rec p=0 i=0 mot=1 min=1 firstMinor=1 firstIndex=2 major=2 k=false rules=[KARec.U.mk:0]
+REC_META KARec.B.rec p=0 i=0 mot=1 min=1 firstMinor=1 firstIndex=2 major=2 k=false rules=[KARec.B.mk:1]
+REC_META KARec.L.rec p=0 i=0 mot=1 min=2 firstMinor=1 firstIndex=3 major=3 k=false rules=[KARec.L.nil:0,KARec.L.cons:2]
+REC_META KARec.W.rec p=1 i=0 mot=1 min=1 firstMinor=2 firstIndex=3 major=3 k=false rules=[KARec.W.mk:1]
+REC_META KARec.Ix.rec p=0 i=1 mot=1 min=1 firstMinor=1 firstIndex=2 major=3 k=false rules=[KARec.Ix.mk:1]
+REC_META KARec.Eqish.rec p=2 i=1 mot=1 min=1 firstMinor=3 firstIndex=4 major=5 k=true rules=[KARec.Eqish.refl:0]
+REC_META KARec.Has.rec p=0 i=0 mot=1 min=1 firstMinor=1 firstIndex=2 major=2 k=false rules=[KARec.Has.mk:1]
+RECURSOR_METADATA_TS_CASES=7 FAILURES=0
+=== recursor metadata Lean ===
+REC_META KARec.U.rec p=0 i=0 mot=1 min=1 firstMinor=1 firstIndex=2 major=2 k=false rules=[KARec.U.mk:0]
+REC_META KARec.B.rec p=0 i=0 mot=1 min=1 firstMinor=1 firstIndex=2 major=2 k=false rules=[KARec.B.mk:1]
+REC_META KARec.L.rec p=0 i=0 mot=1 min=2 firstMinor=1 firstIndex=3 major=3 k=false rules=[KARec.L.nil:0,KARec.L.cons:2]
+REC_META KARec.W.rec p=1 i=0 mot=1 min=1 firstMinor=2 firstIndex=3 major=3 k=false rules=[KARec.W.mk:1]
+REC_META KARec.Ix.rec p=0 i=1 mot=1 min=1 firstMinor=1 firstIndex=2 major=3 k=false rules=[KARec.Ix.mk:1]
+REC_META KARec.Eqish.rec p=2 i=1 mot=1 min=1 firstMinor=3 firstIndex=4 major=5 k=true rules=[KARec.Eqish.refl:0]
+REC_META KARec.Has.rec p=0 i=0 mot=1 min=1 firstMinor=1 firstIndex=2 major=2 k=false rules=[KARec.Has.mk:1]
+RECURSOR_METADATA_NATIVE_CASES=7 FAILURES=0 RAW_KERNEL_DECLARATIONS=7
+=== quotient differential ===
+Q|Quot|u|type|(pi I (sort (p u)) (pi E (pi E (b 0) (pi E (b 1) (sort 0))) (sort (p u))))
+Q|Quot.mk|u|ctor|(pi I (sort (p u)) (pi E (pi E (b 0) (pi E (b 1) (sort 0))) (pi E (b 1) (a (a (c Quot [(p u)]) (b 2)) (b 1)))))
+Q|Quot.lift|u,v|lift|(pi I (sort (p u)) (pi I (pi E (b 0) (pi E (b 1) (sort 0))) (pi I (sort (p v)) (pi E (pi E (b 2) (b 1)) (pi E (pi E (b 3) (pi E (b 4) (pi E (a (a (b 4) (b 1)) (b 0)) (a (a (a (c Eq [(p v)]) (b 4)) (a (b 3) (b 2))) (a (b 3) (b 1)))))) (pi E (a (a (c Quot [(p u)]) (b 4)) (b 3)) (b 3)))))))
+Q|Quot.ind|u|ind|(pi I (sort (p u)) (pi I (pi E (b 0) (pi E (b 1) (sort 0))) (pi I (pi E (a (a (c Quot [(p u)]) (b 1)) (b 0)) (sort 0)) (pi E (pi E (b 2) (a (b 1) (a (a (a (c Quot.mk [(p u)]) (b 3)) (b 2)) (b 0)))) (pi E (a (a (c Quot [(p u)]) (b 3)) (b 2)) (a (b 2) (b 0)))))))
+QUOT_TS_LIFT=500 IND=500 LIFT_FAILURES=0 IND_FAILURES=0
+QUOT_STRUCTURAL_LINES=4 MISMATCHES=0
+✓ exact Lean 4.33.1 quotient structural + computation differential passed
+✓ ProofScript v70 quotient differential passed
+=== quotient legacy ===
+✓ exact Lean 4.33.1 quotient primitive/type/computation evidence passed
+✓ trusted kernel quotient tests passed

@@ -1,0 +1,66 @@
+{
+  "checkpoint": "proofscript-v1-ka6-lean4lean-binding0",
+  "publicVersion": "1.0.0-pskernel.8",
+  "createdAtUtc": "2026-09-18T05:58:00Z",
+  "baseline": "proofscript-v1-ka5-lean4331-strict-check0",
+  "kernel": {
+    "name": "PSKernel",
+    "defaultProfile": "KERNEL-level-instantiation-conformance1",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "ka6": {
+    "bindingKind": "lean4lean-compatible-reference-interface",
+    "actualLean4LeanImportBound": false,
+    "machineCheckedLeanFiles": [
+      "assurance/ka6/lean4lean-compatible-binding.lean"
+    ],
+    "closedMachineCheckedScaffoldObligations": 5,
+    "stillOpen": 9
+  },
+  "claimBoundary": {
+    "leanCheckedHere": true,
+    "actualLean4LeanImportBound": false,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "lean4LeanCompatibleInterfaceChecked": true
+  },
+  "verification": {
+    "npmInstallOffline": "passed",
+    "build": "passed",
+    "testPskernelKa1": "passed",
+    "testPskernelKa2": "passed",
+    "testPskernelKa3": "passed",
+    "testPskernelKa4": "passed",
+    "testPskernelKa5": "passed",
+    "testPskernelKa6": "passed",
+    "assuranceKa1": "passed",
+    "assuranceKa2": "passed",
+    "assuranceKa3": "passed",
+    "assuranceKa4": "passed",
+    "assuranceKa5": "passed",
+    "assuranceKa6": "passed",
+    "leanKa6Check": "passed",
+    "verifyArena": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "pscConformanceBounded": "passed",
+    "freshExtractInstall": "passed",
+    "freshExtractBuild": "passed",
+    "freshExtractLeanKa6Check": "passed",
+    "freshExtractTestKa6": "passed",
+    "freshExtractAssuranceKa6": "passed",
+    "freshExtractKernelSmoke": "passed",
+    "freshExtractArenaStaticNonperf": "passed",
+    "zipIntegrity": "passed"
+  }
+}

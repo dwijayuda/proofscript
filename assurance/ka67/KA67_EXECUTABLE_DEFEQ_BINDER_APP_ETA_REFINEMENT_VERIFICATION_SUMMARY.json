@@ -1,0 +1,34 @@
+{
+  "checkpoint": "proofscript-v1-ka67-executable-defeq-binder-app-eta-refinement0",
+  "publicVersion": "1.0.0-pskernel.70",
+  "baseline": "proofscript-v1-ka66-executable-defeq-core-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "baselineObligations": 200,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA67",
+        "source": "assurance/ka67/executable-defeq-binder-app-eta-refinement-bridge.lean",
+        "destination": "PSKernelKA67ExecutableDefEqBinderAppEtaRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "dependencyBuildStatus": "passed",
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "oldCodebasePolicy": {
+    "oldCodebaseRegressionIgnoredByUser": true,
+    "fullNpmTestRequiredForThisCheckpoint": false,
+    "reason": "User explicitly requested continuing with KA66 and ignoring old codebase; KA67 changes only strict Lean4Lean bridge wrappers and release metadata."
+  },
+  "fullNpmTestStatus": "not-run-old-codebase-ignored-by-user",
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA67 gate tool absent before implementation"
+}

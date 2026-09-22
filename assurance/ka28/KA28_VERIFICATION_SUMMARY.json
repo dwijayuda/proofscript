@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka28-quot-env-defeq-preservation-bridge0",
+  "publicVersion": "1.0.0-pskernel.31",
+  "formalLean4EquivalenceProvenObligations": 50,
+  "passed": [
+    "npm install --offline --no-audit --no-fund",
+    "npm run build -- --pretty false",
+    "npm run test:pskernel:ka28",
+    "npm run assurance:ka28",
+    "npm run lean:ka28:check",
+    "npm run test:kernel:smoke",
+    "npm run test:standalone-small",
+    "npm run test:psc:kernel-status",
+    "npm run test:psc:conformance-bounded",
+    "npm run arena:corpus-preflight",
+    "npm run test:arena:static-nonperf",
+    "fresh extract npm install --offline --no-audit --no-fund",
+    "fresh extract npm run build -- --pretty false",
+    "fresh extract npm run test:pskernel:ka28",
+    "fresh extract npm run lean:ka28:check",
+    "unzip -t final ZIP",
+    "sha256sum -c final SHA file"
+  ],
+  "notCounted": [
+    "combined verification batch timed out at lean:ka28:check; lean:ka28:check and remaining tail were rerun individually",
+    "npm run test:arena:tutorial timed out in this turn and is not counted for KA-28",
+    "npm run verify:arena was not run/counted for KA-28 because tutorial did not complete in this turn"
+  ],
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "quotientSemanticSoundness": false
+  },
+  "arenaEvidence": {
+    "corpusNdjsonFixtures": 190,
+    "staticNonPerf": {
+      "total": 26,
+      "acceptedGood": 4,
+      "rejectedBad": 22,
+      "wrong": 0,
+      "notRun": 0
+    },
+    "tutorial": {
+      "total": 140,
+      "acceptedGood": 93,
+      "rejectedBad": 47,
+      "wrong": 0,
+      "notRun": 0
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "checkpoint": "proofscript-v1-ka42-resource-error-conservativity-bridge0",
+  "publicVersion": "1.0.0-pskernel.45",
+  "baseline": "proofscript-v1-ka41-codec-replay-refinement-bridge0",
+  "referenceKind": "direct-imported-lean4lean-resource-error-conservativity-bridge",
+  "imports": [
+    "Lean4Lean.TypeChecker",
+    "Lean4Lean.FuelConfig"
+  ],
+  "coveredLean4LeanSurface": [
+    "Lean4Lean.FuelConfig.recDepth",
+    "Lean4Lean.FuelConfig.whnf",
+    "Lean4Lean.FuelConfig.lazyDelta",
+    "Lean4Lean.TypeChecker.Methods.withFuel",
+    "Lean4Lean.TypeChecker.Methods.whnf",
+    "Lean4Lean.TypeChecker.Methods.whnfCore",
+    "Lean4Lean.TypeChecker.Methods.inferType",
+    "Lean4Lean.TypeChecker.Methods.isDefEqCore",
+    "Except.error conservativity"
+  ],
+  "formalBridgeLemmas": [
+    "PSKernelKA42.translated_default_rec_depth_policy",
+    "PSKernelKA42.translated_default_whnf_policy",
+    "PSKernelKA42.translated_default_lazy_delta_policy",
+    "PSKernelKA42.translated_zero_fuel_whnf_deep_recursion",
+    "PSKernelKA42.translated_zero_fuel_whnfCore_deep_recursion",
+    "PSKernelKA42.translated_zero_fuel_inferType_deep_recursion",
+    "PSKernelKA42.translated_zero_fuel_isDefEqCore_deep_recursion",
+    "PSKernelKA42.translated_except_error_not_success"
+  ],
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullResourceErrorConservativity": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  }
+}

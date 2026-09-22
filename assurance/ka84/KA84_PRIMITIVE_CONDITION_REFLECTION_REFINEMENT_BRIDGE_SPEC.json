@@ -1,0 +1,41 @@
+{
+  "checkpoint": "proofscript-v1-ka84-primitive-condition-reflection-refinement0",
+  "publicVersion": "1.0.0-pskernel.87",
+  "baseline": "proofscript-v1-ka83-primitive-type-translation-refinement0",
+  "referenceKind": "primitive-condition-reflection-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 8,
+  "countedObligations": [
+    "translated_boolProp_wf",
+    "translated_propBoolProp_wf",
+    "translated_boolNat3_wf",
+    "translated_natNatProp_wf",
+    "translated_natLE_apply_wf",
+    "translated_natEq_apply_wf",
+    "translated_natLE_apply_zero_wf",
+    "translated_natEq_apply_zero_wf"
+  ],
+  "sourceTheorems": [
+    "TrExprS.boolProp",
+    "TrExprS.propBoolProp",
+    "TrExprS.boolNat3",
+    "TrExprS.natNatProp",
+    "Condition.WF.natLE_apply",
+    "Condition.WF.natEq_apply",
+    "Condition.WF.natLE_apply₀",
+    "Condition.WF.natEq_apply₀"
+  ],
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveConditionReflectionRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka27-quot-env-no-overwrite-bridge0",
+  "publicVersion": "1.0.0-pskernel.30",
+  "baseline": "proofscript-v1-ka26-quot-env-bridge0",
+  "referenceKind": "direct-imported-lean4lean-quot-env-no-overwrite-bridge",
+  "imports": [
+    "Lean4Lean.Theory.Typing.Env",
+    "Lean4Lean.Theory.Typing.QuotLemmas",
+    "PSKernelKA26QuotEnvBridge"
+  ],
+  "bridgedRelations": [
+    "Lean4Lean.VEnv.addQuot",
+    "Lean4Lean.VEnv.addConst",
+    "Lean4Lean.VEnv.constants"
+  ],
+  "coveredPSDeclKinds": ["quot"],
+  "conditionalBridgeLemmas": [
+    "PSKernelKA27.translated_quot_fresh_quot_before_add",
+    "PSKernelKA27.translated_quot_fresh_quot_mk_before_add",
+    "PSKernelKA27.translated_quot_fresh_quot_lift_before_add",
+    "PSKernelKA27.translated_quot_fresh_quot_ind_before_add",
+    "PSKernelKA27.translated_quot_preserves_other_lookup"
+  ],
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "quotientSemanticSoundness": false,
+    "formalLean4EquivalenceProvenObligations": 48
+  }
+}

@@ -1,0 +1,22 @@
+PASS: Core v71 / KERNEL-level-instantiation-conformance1 / Lean 4.33.1 identity
+PASS: 156 assurance/trusted source fingerprints
+PASS: inherited v69 universe conformance regression
+PASS: inherited v70 exact projection dependency/Prop-gating regression
+PASS: v71 level-instantiation profile identity + exact cheap-rebuild regression
+PASS: 30,000 generated pairs / 60,000 exact universe predicate comparisons recorded clean
+PASS: 5,000 valid ASCII universe-name ordering comparisons
+PASS: exact Lean executable 4.33.1/819816b2e0a3
+PASS: formal Lean bridge compiles with no reported sorryAx
+PASS: exact Lean 4.33.1 rejects historical-v68 universe counterexample
+PASS: live ASCII universe-name ordering differential
+PASS: 1,000 exact level + 1,000 shared-expression universe-instantiation comparisons
+PASS: 1,000 exact native expression-operation comparisons recorded clean
+PASS: 1,000 exact Lean native inference + kernel-check typing cases recorded clean
+PASS: 1,000 live TypeScript direct typing cases
+PASS: 1,000 live exact-Lean native typing cases
+PASS: 1,000 TypeScript + 1,000 exact-Lean beta/zeta head-reduction cases
+PASS: 1,000 TypeScript + 1,000 exact-Lean delta/transparency cases
+PASS: 1,000 TypeScript + 1,000 exact-Lean transparent-head ordinary-WHNF cases
+PASS: 1,000 TypeScript + 1,000 exact-Lean eta/proof-irrelevance decisions with negative controls
+PASS: 1,000 TypeScript + 1,000 exact-Lean ordinary conversion-dependent typing cases
+PASS: 1,000 TypeScript + 1,000 exact-Lean raw projection cases plus minimized historical-v69 counterexample

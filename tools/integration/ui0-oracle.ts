@@ -1,0 +1,13 @@
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { decodeArtifact } from "@proofscript/kernel-codec";
+import { stripStandardBootstrap } from "@proofscript/environment";
+import { emitLeanArtifact } from "@proofscript/lean-export";
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"../..");
+const artifactPath=path.join(root,".integration/ui0/basic.pscore.json");
+const artifact=decodeArtifact(JSON.parse(fs.readFileSync(artifactPath,"utf8")));
+const oracleArtifact=stripStandardBootstrap(artifact)??artifact;
+const lean=emitLeanArtifact(oracleArtifact)+"\n#eval result\n";
+const out=path.join(root,".integration/ui0/basic.lean"); fs.writeFileSync(out,lean);
+console.log(out);

@@ -1,0 +1,40 @@
+{
+  "schema": "proofscript.state-model.v1",
+  "name": "BankStateModel",
+  "stateType": "Bank",
+  "monad": {
+    "name": "State Bank",
+    "typeConstructor": "State Bank α"
+  },
+  "wp": {
+    "triple": "Std.Do.Triple",
+    "precondition": "Bank -> Prop",
+    "postcondition": "α -> Bank -> Prop"
+  },
+  "semantics": {
+    "runner": "runBankState",
+    "adequacyTheorem": "runBankState_adequate"
+  },
+  "operations": [
+    {
+      "name": "debit",
+      "type": "AccountId -> Nat -> State Bank Unit",
+      "spec": "decreases the source account balance by amount when funds are sufficient"
+    },
+    {
+      "name": "credit",
+      "type": "AccountId -> Nat -> State Bank Unit",
+      "spec": "increases the destination account balance by amount"
+    }
+  ],
+  "laws": [
+    {
+      "name": "transfer_preserves_total",
+      "statement": "debit followed by credit preserves total bank balance"
+    }
+  ],
+  "vcgen": {
+    "status": "not-connected",
+    "tactic": "vcgen"
+  }
+}

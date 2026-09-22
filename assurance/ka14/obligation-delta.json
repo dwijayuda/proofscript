@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka14-real-arena-corpus0",
+  "previousCheckpoint": "proofscript-v1-ka13-vdecl-wf-bridge0",
+  "previousFormalLean4EquivalenceProvenObligations": 2,
+  "newFormalLean4EquivalenceProvenObligations": 0,
+  "totalFormalLean4EquivalenceProvenObligations": 2,
+  "reason": "KA-14 verifies uploaded Lean Kernel Arena corpus execution evidence; it does not add a new Lean theorem."
+}

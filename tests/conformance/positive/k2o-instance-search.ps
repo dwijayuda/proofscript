@@ -1,0 +1,26 @@
+class Flag {
+  enabled: Bool;
+}
+
+instance (priority := 2000) flagHigh: Flag := {
+  enabled := true
+};
+
+instance (priority := 2000) flagLater: Flag := {
+  enabled := false
+};
+
+instance flagDefault: Flag := {
+  enabled := true
+};
+
+def readFlag[f: Flag](n: Nat): Bool := {
+  Flag.enabled(f)
+}
+
+def automaticRead: Bool := {
+  readFlag(0)
+}
+
+theorem automaticReadChoosesLaterHighPriority: automaticRead = false :=
+  Eq.refl.{1}(Bool, false);

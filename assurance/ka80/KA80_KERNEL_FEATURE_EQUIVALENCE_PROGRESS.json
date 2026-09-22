@@ -1,0 +1,52 @@
+{
+  "checkpoint": "proofscript-v1-ka80-infertype-top-level-projection-boundary-audit0",
+  "publicVersion": "1.0.0-pskernel.83",
+  "featureSurfaceBridgeProgressPercent": 91,
+  "executableKernelEquivalenceProofProgressPercent": 58,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 237,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 237,
+    "newFormalLean4LeanBridgeObligations": 0,
+    "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+    "correctedFormalLean4LeanBridgeObligations": 237,
+    "blockedTopLevelInferTypeObligations": [
+      {
+        "name": "translated_inferType_prime_wf",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.inferType'.WF",
+        "sourceFile": "Lean4Lean/Verify/TypeChecker/InferType.lean",
+        "status": "blocked-not-counted",
+        "reason": "theorem body contains a projection branch that calls inferProj.WF, which KA78 demoted as direct-sorry-backed"
+      },
+      {
+        "name": "translated_inferType_wf",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.inferType.WF",
+        "sourceFile": "Lean4Lean/Verify/TypeChecker/Basic.lean",
+        "status": "blocked-not-counted",
+        "reason": "wrapper depends on the state-field/top-level inferType proof surface; do not count until inferType'.WF projection boundary is repaired"
+      },
+      {
+        "name": "translated_checkType_wf",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.checkType.WF",
+        "sourceFile": "Lean4Lean/Verify/TypeChecker/Basic.lean",
+        "status": "blocked-not-counted",
+        "reason": "wrapper over inferType.WF'; do not count until the top-level InferType projection boundary is repaired"
+      }
+    ],
+    "rootBlockedDependency": {
+      "name": "translated_inferProj_wf",
+      "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.inferProj.WF",
+      "sourceFile": "Lean4Lean/Verify/TypeChecker/InferType.lean",
+      "status": "demoted-in-KA78",
+      "reason": "upstream_theorem_body_contains_sorry"
+    },
+    "stillCountedInferSlices": [
+      "KA75 executable Infer atomic refinement",
+      "KA76 executable Infer constant/literal refinement",
+      "KA77 executable Infer structural refinement",
+      "KA79 executable Infer loop refinement"
+    ]
+  },
+  "metricPolicy": "KA80 adds no proof obligations. It audits and blocks top-level InferType/checkType obligation counting until the InferType projection branch no longer depends on the KA78-demoted inferProj.WF boundary.",
+  "notAFormalEquivalenceClaim": true
+}

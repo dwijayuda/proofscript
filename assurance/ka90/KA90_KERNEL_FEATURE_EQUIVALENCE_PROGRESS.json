@@ -1,0 +1,19 @@
+{
+  "checkpoint": "proofscript-v1-ka90-primitive-shift-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.93",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 68,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 278,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 276,
+    "newFormalLean4LeanBridgeObligations": 2,
+    "correctedFormalLean4LeanBridgeObligations": 278,
+    "countedNewObligations": [
+      "translated_checkNatShiftLeft_wf",
+      "translated_checkNatShiftRight_wf"
+    ]
+  },
+  "metricPolicy": "KA90 adds direct non-sorry-backed primitive Nat shift recognizer bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

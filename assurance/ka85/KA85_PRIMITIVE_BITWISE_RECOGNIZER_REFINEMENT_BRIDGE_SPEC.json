@@ -1,0 +1,29 @@
+{
+  "checkpoint": "proofscript-v1-ka85-primitive-bitwise-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.88",
+  "baseline": "proofscript-v1-ka84-primitive-condition-reflection-refinement0",
+  "referenceKind": "primitive-bitwise-recognizer-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 2,
+  "countedObligations": [
+    "translated_boolOp2_apply_wf",
+    "translated_checkNatBitwise_wf"
+  ],
+  "sourceTheorems": [
+    "boolOp2_apply",
+    "checkNatBitwise.WF"
+  ],
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveBitwiseRecognizerRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

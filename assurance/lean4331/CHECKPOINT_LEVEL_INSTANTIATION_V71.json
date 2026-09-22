@@ -1,0 +1,92 @@
+{
+  "schema": "proofscript.kernel-assurance.v71-checkpoint/v1",
+  "generatedAt": "2026-09-09T20:05:03.305149+00:00",
+  "proofscript": {
+    "coreFormat": 71,
+    "profile": "KERNEL-level-instantiation-conformance1",
+    "certificateFormat": 2
+  },
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "status": "ASSURANCE_CHECKPOINT_PASS_NOT_K3",
+  "manifest": {
+    "path": "assurance/lean4331/MANIFEST.json",
+    "sha256": "5294aa30af80cf0ac18408b10e659a266f198d659b81388ef03debd068e9f95c",
+    "fingerprints": 156
+  },
+  "formal": {
+    "modules": 18,
+    "noSorryAx": true,
+    "v71LevelInstantiation": "proved-structural-spec-correspondence",
+    "v71ExprInstantiation": "proved-structural-spec-correspondence"
+  },
+  "differential": {
+    "universePairs": 30000,
+    "universePredicateComparisons": 60000,
+    "universeMismatches": 0,
+    "levelInstantiationCases": 1000,
+    "levelInstantiationMismatches": 0,
+    "exprLevelInstantiationCases": 1000,
+    "exprLevelInstantiationMismatches": 0,
+    "projectionTypeScriptCases": 1000,
+    "projectionLeanCases": 1000,
+    "quotientComputationTypeScriptCases": 1000,
+    "quotientComputationLeanCases": 1000,
+    "recursorMetadataShapes": 7
+  },
+  "boundedRegression": {
+    "trustedKernelArchitectureFamilies": 58,
+    "trustedKernelArchitecturePassed": 58,
+    "frontendToolingFamilies": 31,
+    "frontendToolingPassed": 31,
+    "conformance": "passed"
+  },
+  "sourceDifferential": {
+    "total": 25,
+    "accepted": 23,
+    "rejected": 2,
+    "status": "known-frontend-exporter-rejections",
+    "rejectedCases": [
+      "reduction-recursion",
+      "equation-patterns"
+    ],
+    "kernelEquivalenceEvidence": false
+  },
+  "gateParts": [
+    {
+      "part": 1,
+      "status": "passed",
+      "sha256": "a851e36bf8d3d55238349a812f18538dbe549b85b89c3a3959e92d70f282bf15"
+    },
+    {
+      "part": 2,
+      "status": "passed",
+      "sha256": "6a076ab4b4d0dfbca6dc8b92dd2794b13e42ea7f26876135b07ffb4a1f1ad38b"
+    },
+    {
+      "part": 3,
+      "status": "passed",
+      "sha256": "f36161a187b8e2abf6dcff559f6fde75092400fbe46bef5fb16730cca7ad730f"
+    },
+    {
+      "part": 4,
+      "status": "passed",
+      "sha256": "93dab85e9f0a685cd1a02381f998fb2b7e7055ad308294166db0a5b1b83c350c"
+    }
+  ],
+  "historicalSupersession": {
+    "v68": "universe-conformance-defect",
+    "v69": "projection-conformance-defect",
+    "v70": "level-instantiation-structural-conformance-gap"
+  },
+  "remainingMajorObligations": [
+    "O-LVL-NORM native/spec bridge",
+    "O-DECL declaration/environment preservation",
+    "O-IND remaining inductive admission/generated-recursors environment bridge",
+    "O-RES resource theorem",
+    "O-IMPL shipped TypeScript implementation correspondence",
+    "final bidirectional K3 theorem"
+  ]
+}

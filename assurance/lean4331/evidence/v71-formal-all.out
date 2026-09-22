@@ -1,0 +1,153 @@
+FORMAL LevelSemantics
+'ProofScriptKernelEquivalence.PSLevel.eval_toLean' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSLevel.isNeverZero_sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ProofScriptKernelEquivalence.PSLevel.isAlwaysZero_sound' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSLevel.imax_one_right' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSLevel.imax_of_neverZero' depends on axioms: [propext, Classical.choice, Quot.sound]
+PASS LevelSemantics
+FORMAL LevelLeanCorrespondence
+assurance/lean4331/formal/ProofScriptKernelEquivalence/LevelLeanCorrespondence.lean:57:10: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+'ProofScriptKernelEquivalence.PSLevel.toLean_noMVar' does not depend on any axioms
+'ProofScriptKernelEquivalence.PSLevel.toLean_injective' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSLevel.isNeverZero_toLean' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSLevel.isAlwaysZero_toLean' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSLevel.getOffset_toLean' depends on axioms: [propext, Quot.sound]
+'ProofScriptKernelEquivalence.PSLevel.getLevelOffset_toLean' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSLevel.toLean_eq_iff' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSLevel.addOffset_toLean' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSLevel.isAlreadyNormalizedCheap_toLean' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSLevel.ctorToNat_toLean' does not depend on any axioms
+PASS LevelLeanCorrespondence
+FORMAL LevelInstantiation
+assurance/lean4331/formal/ProofScriptKernelEquivalence/LevelInstantiation.lean:71:21: warning: This simp argument is unused:
+  h
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Option.map, Option.getD]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+assurance/lean4331/formal/ProofScriptKernelEquivalence/LevelInstantiation.lean:75:16: warning: This simp argument is unused:
+  h
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [PSLevel.toLean]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+assurance/lean4331/formal/ProofScriptKernelEquivalence/LevelInstantiation.lean:75:19: warning: This simp argument is unused:
+  PSLevel.toLean
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [h]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'ProofScriptKernelEquivalence.PSLevel.getParamSubst_toLean' depends on axioms: [propext, Quot.sound]
+'ProofScriptKernelEquivalence.PSLevel.instantiateParams_toLeanSpec' depends on axioms: [propext, Quot.sound]
+PASS LevelInstantiation
+FORMAL LevelInstantiationV71
+assurance/lean4331/formal/ProofScriptKernelEquivalence/LevelInstantiationV71.lean:226:22: warning: This simp argument is unused:
+  hf
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [h, hLf, if_false]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+assurance/lean4331/formal/ProofScriptKernelEquivalence/LevelInstantiationV71.lean:226:31: warning: This simp argument is unused:
+  if_false
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [h, hf, hLf]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'ProofScriptKernelEquivalence.PSLevelV71.mkLevelMaxPrime_toLean' depends on axioms: [propext, Quot.sound]
+'ProofScriptKernelEquivalence.PSLevelV71.mkLevelIMaxPrime_toLean' depends on axioms: [propext, Quot.sound]
+'ProofScriptKernelEquivalence.PSLevelV71.instantiateParams_toLeanSpec' depends on axioms: [propext, Quot.sound]
+PASS LevelInstantiationV71
+FORMAL ExprTranslation
+'ProofScriptKernelEquivalence.PSBinderInfo.toLean_injective' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSExpr.toLean_shared' depends on axioms: [propext, Quot.sound]
+'ProofScriptKernelEquivalence.PSExpr.toLean_sort' does not depend on any axioms
+'ProofScriptKernelEquivalence.PSExpr.toLean_bvar' does not depend on any axioms
+'ProofScriptKernelEquivalence.PSExpr.toLean_app' does not depend on any axioms
+'ProofScriptKernelEquivalence.PSExpr.toLean_proj' does not depend on any axioms
+PASS ExprTranslation
+FORMAL ExprLevelInstantiation
+'ProofScriptKernelEquivalence.PSExpr.instantiateLevelParams_toLeanSpec' depends on axioms: [propext, Quot.sound]
+PASS ExprLevelInstantiation
+FORMAL ExprLevelInstantiationV71
+'ProofScriptKernelEquivalence.PSExprV71.instantiateLevelParams_toLeanSpec' depends on axioms: [propext, Quot.sound]
+PASS ExprLevelInstantiationV71
+FORMAL ExprOperations
+'ProofScriptKernelEquivalence.PSExpr.lift_toLean' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSExpr.instantiateAt_toLean' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSExpr.instantiate1_toLean' depends on axioms: [propext]
+PASS ExprOperations
+FORMAL TypingDirect
+assurance/lean4331/formal/ProofScriptKernelEquivalence/TypingDirect.lean:87:2: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+'ProofScriptKernelEquivalence.DirectTyping.typing_sound' depends on axioms: [propext]
+PASS TypingDirect
+FORMAL ReductionBetaZeta
+'ProofScriptKernelEquivalence.BetaZeta.step_sound' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.BetaZeta.steps_sound' depends on axioms: [propext]
+PASS ReductionBetaZeta
+FORMAL DeltaTransparency
+assurance/lean4331/formal/ProofScriptKernelEquivalence/DeltaTransparency.lean:73:8: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+assurance/lean4331/formal/ProofScriptKernelEquivalence/DeltaTransparency.lean:92:14: warning: This simp argument is unused:
+  hps
+
+Hint: Omit it from the simp argument list.
+  [apply] simp at impossible
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'ProofScriptKernelEquivalence.DeltaTransparency.step_sound' does not depend on any axioms
+'ProofScriptKernelEquivalence.DeltaTransparency.step_complete_const' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.DeltaTransparency.stuck_iff' depends on axioms: [propext]
+PASS DeltaTransparency
+FORMAL ReductionOrdinary
+'ProofScriptKernelEquivalence.OrdinaryReduction.step_sound' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.OrdinaryReduction.steps_sound' depends on axioms: [propext]
+PASS ReductionOrdinary
+FORMAL DefEqOrdinary
+'ProofScriptKernelEquivalence.OrdinaryDefEq.etaExpansion_toLean' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.OrdinaryDefEq.sound' depends on axioms: [propext]
+PASS DefEqOrdinary
+FORMAL TypingConversion
+assurance/lean4331/formal/ProofScriptKernelEquivalence/TypingConversion.lean:95:2: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+'ProofScriptKernelEquivalence.ConversionTyping.typing_sound' depends on axioms: [propext]
+PASS TypingConversion
+FORMAL Projection
+assurance/lean4331/formal/ProofScriptKernelEquivalence/Projection.lean:177:2: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+'ProofScriptKernelEquivalence.PSExpr.hasLooseBVarAt_toLean' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.Projection.fieldWalk_sound' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.Projection.mkApps_toLean' does not depend on any axioms
+'ProofScriptKernelEquivalence.Projection.iota_sound' depends on axioms: [propext]
+PASS Projection
+FORMAL RecursorMetadata
+'ProofScriptKernelEquivalence.RecursorMetadata.firstMinorIdx_eq' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.RecursorMetadata.firstIndexIdx_eq' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.RecursorMetadata.majorIdx_eq' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.RecursorMetadata.ruleKeys_eq' does not depend on any axioms
+'ProofScriptKernelEquivalence.RecursorMetadata.k_eq' does not depend on any axioms
+PASS RecursorMetadata
+FORMAL RecursorDirect
+'ProofScriptKernelEquivalence.RecursorDirect.directIH_sound' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.RecursorDirect.iota_sound' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.RecursorDirect.kMajor_sound' does not depend on any axioms
+PASS RecursorDirect
+FORMAL Quotient
+'ProofScriptKernelEquivalence.Quotient.name_eq' does not depend on any axioms
+'ProofScriptKernelEquivalence.Quotient.levelParams_eq' does not depend on any axioms
+'ProofScriptKernelEquivalence.Quotient.type_eq' does not depend on any axioms
+'ProofScriptKernelEquivalence.Quotient.kind_eq' does not depend on any axioms
+'ProofScriptKernelEquivalence.Quotient.iota_sound' depends on axioms: [propext]
+PASS Quotient
+FORMAL_MODULES=18 STATUS=PASS NO_SORRY=PASS

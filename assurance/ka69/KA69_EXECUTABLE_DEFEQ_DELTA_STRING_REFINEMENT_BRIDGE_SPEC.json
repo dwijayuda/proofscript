@@ -1,0 +1,45 @@
+{
+  "checkpoint": "proofscript-v1-ka69-executable-defeq-delta-string-refinement0",
+  "publicVersion": "1.0.0-pskernel.72",
+  "baseline": "proofscript-v1-ka68-executable-defeq-proof-level-offset-refinement0",
+  "referenceKind": "strict-lean4lean-executable-defeq-delta-string-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "leanModule": "assurance/ka69/executable-defeq-delta-string-refinement-bridge.lean",
+  "baselineFormalObligations": 208,
+  "countedNewFormalObligations": 4,
+  "countedNewObligationNames": [
+    "translated_tryUnfoldProjApp_wf",
+    "translated_lazyDeltaReductionStep_wf",
+    "translated_lazyDeltaReductionLoop_wf",
+    "translated_tryStringLitExpansion_wf"
+  ],
+  "metricPolicy": "KA69 advances the exact formal obligation counter only; percentage estimates remain held pending a separate coverage audit.",
+  "oldCodebasePolicy": {
+    "oldCodebaseRegressionIgnoredByUser": true,
+    "fullNpmTestRequiredForThisCheckpoint": false,
+    "reason": "User requested continuation on the strict Lean4Lean KA lineage. KA69 changes only Lean4Lean bridge wrappers and release metadata; it does not touch trusted PSKernel semantics."
+  },
+  "baselineArtifactAudit": {
+    "baselineZip": "/mnt/data/proofscript-v1-ka68-executable-defeq-proof-level-offset-refinement0.zip",
+    "baselineShaFile": "/mnt/data/proofscript-v1-ka68-executable-defeq-proof-level-offset-refinement0.zip.sha256",
+    "actualBaselineZipSha256": "03854cb76c75e2aa2b46923e4b1b4c5e4a0f68eb3d9229b7807b44560dd4ac31",
+    "externalShaFileSha256": "03854cb76c75e2aa2b46923e4b1b4c5e4a0f68eb3d9229b7807b44560dd4ac31",
+    "externalShaMatchesActual": true,
+    "internalKA68ReleaseGateSha256": "d305e40e28b9a6583774bea40a2221ab0b4db246871c7ee2269739a3db6efcbc",
+    "internalKA68VerificationSummarySha256": "d305e40e28b9a6583774bea40a2221ab0b4db246871c7ee2269739a3db6efcbc",
+    "internalSelfHashFieldsKnownStale": true,
+    "policy": "External .sha256 file is authoritative for ZIP integrity; KA69 avoids embedding a self ZIP hash inside the ZIP because that creates stale self-reference risk."
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWHNFDefEqRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

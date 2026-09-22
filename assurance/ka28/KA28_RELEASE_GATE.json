@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka28-quot-env-defeq-preservation-bridge0",
+  "publicVersion": "1.0.0-pskernel.31",
+  "baseline": "proofscript-v1-ka27-quot-env-no-overwrite-bridge0",
+  "createdAtUtc": "2026-09-19T00:55:00Z",
+  "kernel": {
+    "name": "PSKernel",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "directLean4LeanQuotEnvDefEqPreservationBridge": {
+    "referenceKind": "direct-imported-lean4lean-quot-env-defeq-preservation-bridge",
+    "actualLean4LeanImportBound": true,
+    "bridgedRelations": [
+      "Lean4Lean.VEnv.addQuot",
+      "Lean4Lean.VEnv.addConst",
+      "Lean4Lean.VEnv.addDefEq",
+      "Lean4Lean.VEnv.defeqs"
+    ],
+    "directLean4LeanQuotEnvDefEqPreservationBridgeChecked": true,
+    "strictBridgeCheckPassed": true,
+    "blockedReasons": [],
+    "coveredPSDeclKinds": [
+      "quot"
+    ],
+    "conditionalBridgeLemmas": [
+      "PSKernelKA28.translated_quot_preserves_existing_defeq",
+      "PSKernelKA28.translated_quot_preserves_existing_and_adds_quot_defeq"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "quotientSemanticSoundness": false,
+    "formalLean4EquivalenceProvenObligations": 50
+  },
+  "verificationSummary": {
+    "passed": [
+      "npm install --offline --no-audit --no-fund",
+      "npm run build -- --pretty false",
+      "npm run test:pskernel:ka28",
+      "npm run assurance:ka28",
+      "npm run lean:ka28:check",
+      "npm run test:kernel:smoke",
+      "npm run test:standalone-small",
+      "npm run test:psc:kernel-status",
+      "npm run test:psc:conformance-bounded",
+      "npm run arena:corpus-preflight",
+      "npm run test:arena:static-nonperf",
+      "fresh extract npm install --offline --no-audit --no-fund",
+      "fresh extract npm run build -- --pretty false",
+      "fresh extract npm run test:pskernel:ka28",
+      "fresh extract npm run lean:ka28:check",
+      "unzip -t final ZIP",
+      "sha256sum -c final SHA file"
+    ],
+    "notCounted": [
+      "combined verification batch timed out at lean:ka28:check; lean:ka28:check and remaining tail were rerun individually",
+      "npm run test:arena:tutorial timed out in this turn and is not counted for KA-28",
+      "npm run verify:arena was not run/counted for KA-28 because tutorial did not complete in this turn"
+    ],
+    "arenaEvidence": {
+      "corpusNdjsonFixtures": 190,
+      "staticNonPerf": {
+        "total": 26,
+        "acceptedGood": 4,
+        "rejectedBad": 22,
+        "wrong": 0,
+        "notRun": 0
+      },
+      "tutorial": {
+        "total": 140,
+        "acceptedGood": 93,
+        "rejectedBad": 47,
+        "wrong": 0,
+        "notRun": 0
+      }
+    }
+  }
+}

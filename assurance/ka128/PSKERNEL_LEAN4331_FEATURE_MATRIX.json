@@ -1,0 +1,197 @@
+{
+  "matrixKind": "lean4331-kernel-parity-scope",
+  "targetLeanVersion": "Lean 4.33.1",
+  "targetLayer": "kernel-only",
+  "rows": [
+    {
+      "featureId": "universe-levels",
+      "feature": "Universe levels",
+      "lean4331KernelScope": "Level AST, max/imax/succ/zero/param/mvar-free kernel levels",
+      "pskernelStatus": "implemented-slice-needs-parity-proof",
+      "requiredEquivalenceObligation": "Level translation preserves well-formedness, comparison, max/imax normalization, and universe constraint behavior.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Define TrLevel and prove level normalization/comparison soundness+completeness.",
+      "risk": "high"
+    },
+    {
+      "featureId": "expressions",
+      "feature": "Expr representation",
+      "lean4331KernelScope": "Sort, const, app, lam, forallE, letE, lit, mdata, proj, bvar/fvar/mvar boundary",
+      "pskernelStatus": "implemented-slice-needs-parity-proof",
+      "requiredEquivalenceObligation": "TrExpr preserves expression well-formedness, binding depth, local context references, and closedness.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Formalize Expr translation relation and closedness lemmas.",
+      "risk": "high"
+    },
+    {
+      "featureId": "local-contexts",
+      "feature": "Local contexts",
+      "lean4331KernelScope": "Local declarations, dependency ordering, binder info relevance boundary",
+      "pskernelStatus": "partial-needs-audit",
+      "requiredEquivalenceObligation": "TrLCtx preserves variable lookup, dependency ordering, and declaration well-formedness.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Build Lean/PS local-context paired corpus.",
+      "risk": "medium"
+    },
+    {
+      "featureId": "declaration-checking",
+      "feature": "Declaration checking",
+      "lean4331KernelScope": "Kernel admission of declarations into an environment",
+      "pskernelStatus": "partial-needs-audit",
+      "requiredEquivalenceObligation": "Lean addDecl accepts iff PS addDecl accepts translated declarations.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Define declaration acceptance relation and rejection classes.",
+      "risk": "very-high"
+    },
+    {
+      "featureId": "definitions-theorems-axioms-opaque",
+      "feature": "Axiom/theorem/definition/opaque declarations",
+      "lean4331KernelScope": "Declaration kinds and safety/trust boundaries",
+      "pskernelStatus": "partial-needs-audit",
+      "requiredEquivalenceObligation": "Declaration-kind translation preserves typing, value optionality, opacity, reducibility, and safety metadata.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Audit PSKernel declaration metadata versus Lean declaration fields.",
+      "risk": "high"
+    },
+    {
+      "featureId": "mutual-definitions",
+      "feature": "Mutual definitions",
+      "lean4331KernelScope": "Mutual definitions and termination/compiled payload boundary",
+      "pskernelStatus": "not-yet-proven",
+      "requiredEquivalenceObligation": "Translated mutual blocks preserve type checking and do not accept extra recursive definitions.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Separate kernel checking from elaborator termination evidence.",
+      "risk": "very-high"
+    },
+    {
+      "featureId": "inductives-recursor",
+      "feature": "Inductives and recursors",
+      "lean4331KernelScope": "Inductive declarations, constructors, recursor metadata, computation rules",
+      "pskernelStatus": "implemented-slice-needs-parity-proof",
+      "requiredEquivalenceObligation": "Inductive/constructor/recursor translation preserves typing, parameter/index arity, major premises, motives, and iota behavior.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Use KA45+ arena corpus to seed theorem obligations.",
+      "risk": "very-high"
+    },
+    {
+      "featureId": "constructors-projections",
+      "feature": "Constructors and projections",
+      "lean4331KernelScope": "Constructor application, structure projections, projection reduction",
+      "pskernelStatus": "implemented-slice-needs-parity-proof",
+      "requiredEquivalenceObligation": "Projection and constructor reductions match Lean for translated structures/inductives.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Connect structure runtime tests to kernel recursor/projection model.",
+      "risk": "high"
+    },
+    {
+      "featureId": "whnf",
+      "feature": "WHNF",
+      "lean4331KernelScope": "Weak-head normalization under transparency modes",
+      "pskernelStatus": "implemented-slice-needs-parity-proof",
+      "requiredEquivalenceObligation": "Lean WHNF corresponds to PS WHNF for translated terms and environments.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Formalize trace certificate relation for WHNF.",
+      "risk": "very-high"
+    },
+    {
+      "featureId": "definitional-equality",
+      "feature": "Definitional equality",
+      "lean4331KernelScope": "Kernel defeq including beta/delta/zeta/iota/eta-like/proof-irrelevance/quotient behavior",
+      "pskernelStatus": "implemented-slice-needs-parity-proof",
+      "requiredEquivalenceObligation": "Lean DefEq iff PS DefEq for translated expressions under matched transparency.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Break into beta/delta/iota/proj/quot/proof-irrelevance lemmas.",
+      "risk": "very-high"
+    },
+    {
+      "featureId": "universe-cumulativity",
+      "feature": "Universe cumulativity",
+      "lean4331KernelScope": "Sort level cumulativity and constraints",
+      "pskernelStatus": "partial-needs-audit",
+      "requiredEquivalenceObligation": "Sort and inductive universe constraints are accepted/rejected equivalently.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Create invalid/valid cumulative universe corpus.",
+      "risk": "high"
+    },
+    {
+      "featureId": "quotients",
+      "feature": "Quotients",
+      "lean4331KernelScope": "Quot, Quot.mk/lift/sound and quotient reduction boundary",
+      "pskernelStatus": "not-yet-proven",
+      "requiredEquivalenceObligation": "Quotient typing and kernel reduction behavior match Lean exactly.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Isolate quotient primitives and prove/compare reduction rules.",
+      "risk": "very-high"
+    },
+    {
+      "featureId": "proof-irrelevance",
+      "feature": "Proof irrelevance",
+      "lean4331KernelScope": "Kernel proof irrelevance in Prop and proof-bearing terms",
+      "pskernelStatus": "not-yet-proven",
+      "requiredEquivalenceObligation": "Proof irrelevance rules neither under- nor over-accept translated terms.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Add Prop/proof irrelevance conformance corpus.",
+      "risk": "very-high"
+    },
+    {
+      "featureId": "transparency-reducibility",
+      "feature": "Transparency/reducibility",
+      "lean4331KernelScope": "Reducibility hints and transparency modes for unfolding",
+      "pskernelStatus": "partial-needs-audit",
+      "requiredEquivalenceObligation": "Transparency setting drives identical unfolding decisions for translated constants.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Map Lean transparency modes to PSKernel options.",
+      "risk": "high"
+    },
+    {
+      "featureId": "environment-extension",
+      "feature": "Environment extension/order",
+      "lean4331KernelScope": "Linear declaration addition and environment lookup effects",
+      "pskernelStatus": "partial-needs-audit",
+      "requiredEquivalenceObligation": "Environment extension and lookup commute with translation.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Formalize TrEnv and addDecl preservation/completeness.",
+      "risk": "high"
+    },
+    {
+      "featureId": "trust-unsafe-boundary",
+      "feature": "Trust/unsafe boundary",
+      "lean4331KernelScope": "Axioms, unsafe, trusted declarations, and kernel trust levels",
+      "pskernelStatus": "partial-needs-audit",
+      "requiredEquivalenceObligation": "PSKernel does not silently treat trusted/unsafe artifacts as proven equivalence.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Audit trust levels and metadata claims.",
+      "risk": "high"
+    },
+    {
+      "featureId": "kernel-error-boundary",
+      "feature": "Kernel rejection/error boundary",
+      "lean4331KernelScope": "Reject invalid terms/declarations with matched rejection class",
+      "pskernelStatus": "partial-needs-audit",
+      "requiredEquivalenceObligation": "If Lean rejects a kernel artifact, PSKernel rejects the translation class-equivalently.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Build negative conformance corpus and classify errors.",
+      "risk": "very-high"
+    },
+    {
+      "featureId": "erased-proof-runtime-boundary",
+      "feature": "Erased proof/runtime boundary",
+      "lean4331KernelScope": "Proof erasure versus executable artifacts and runtime emitters",
+      "pskernelStatus": "implemented-dashboard-only",
+      "requiredEquivalenceObligation": "Executable dashboard claims do not leak into full kernel theorem claims.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Keep proof/runtime boundary explicit in release gates.",
+      "risk": "medium"
+    },
+    {
+      "featureId": "artifact-translation-relation",
+      "feature": "Artifact translation relation",
+      "lean4331KernelScope": "Lean kernel objects ↔ PSKernel core/cert/proof-carrying artifacts",
+      "pskernelStatus": "not-yet-proven",
+      "requiredEquivalenceObligation": "Translation relation is total on scoped Lean objects and injective enough for completeness.",
+      "lean4ParityProofStatus": "unproven",
+      "nextProofWork": "Start KA-130 translation skeleton after conformance corpus.",
+      "risk": "very-high"
+    }
+  ]
+}

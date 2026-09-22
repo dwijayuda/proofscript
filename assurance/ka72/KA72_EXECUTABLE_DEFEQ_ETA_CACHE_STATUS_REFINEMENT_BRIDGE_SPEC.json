@@ -1,0 +1,32 @@
+{
+  "checkpoint": "proofscript-v1-ka72-executable-defeq-eta-cache-status-refinement0",
+  "publicVersion": "1.0.0-pskernel.75",
+  "baseline": "proofscript-v1-ka71-feature-equivalence-coverage-audit0",
+  "referenceKind": "strict-lean4lean-defeq-eta-cache-status-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedNewFormalObligations": 4,
+  "countedObligations": [
+    "translated_tryEtaExpansionCore_wf",
+    "translated_cacheFailure_wf",
+    "translated_reductionStatus_bool_wf",
+    "translated_reductionStatus_defeq_wf"
+  ],
+  "avoidedObligations": [
+    {
+      "name": "tryEtaStructCore.WF",
+      "reason": "upstream theorem body uses sorry; excluded from counted obligations"
+    }
+  ],
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWHNFDefEqRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

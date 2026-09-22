@@ -1,0 +1,7 @@
+{
+  "checkpoint": "proofscript-v1-ka128-lean4331-kernel-parity-scope-matrix0",
+  "publicVersion": "1.0.0-pskernel.131",
+  "status": "passed",
+  "redFirstEvidence": "npm run test:pskernel:ka128 failed before the KA-128 tool existed",
+  "generatedReports": true
+}

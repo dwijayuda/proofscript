@@ -1,0 +1,68 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "INDEXED_DIRECT1",
+  "coreFormat": 71,
+  "profile": "KERNEL-level-instantiation-conformance1",
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "kernelSemanticsChanged": false,
+  "formal": {
+    "modules": 25,
+    "targetStatement": true,
+    "reportedSorryAx": 0
+  },
+  "indexedAdmission": {
+    "positive": 6,
+    "negative": 6,
+    "failures": 0,
+    "atomicFailures": 6,
+    "generatedStructuralRecords": 19,
+    "mismatches": 0
+  },
+  "indexedIota": {
+    "cases": 6,
+    "kernelChecks": 6,
+    "mismatches": 0,
+    "claim": "generated recursor type/metadata + extensional iota/WHNF correspondence"
+  },
+  "mandatoryGates": [
+    {
+      "part": 1,
+      "status": "PASS"
+    },
+    {
+      "part": 2,
+      "status": "PASS"
+    },
+    {
+      "part": 3,
+      "status": "PASS"
+    },
+    {
+      "part": 4,
+      "status": "PASS"
+    },
+    {
+      "part": 5,
+      "status": "PASS"
+    },
+    {
+      "part": 6,
+      "status": "PASS"
+    }
+  ],
+  "build": "PASS",
+  "conformance": "PASS",
+  "sourceDifferential": {
+    "passed": 23,
+    "total": 25,
+    "knownNonKernelFailures": [
+      "reduction-recursion",
+      "equation-patterns"
+    ]
+  },
+  "k3WholeKernelEquivalence": false,
+  "next": "complete non-mutual inductive admission integration: WHNF/defeq, field-universe ceiling, generic recursor construction/type + extensional RHS/iota, whole-environment induction"
+}

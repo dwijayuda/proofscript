@@ -1,0 +1,46 @@
+import { ProofScriptError } from "../../core/errors.js";
+import type { IRParam, IRType } from "../../core/model.js";
+import type { PluginManifest, ProofScriptPlugin } from "../../core/plugin-api.js";
+import { nominalType, typeArgument } from "../../core/type-utils.js";
+
+function valueParam(name: string, type: IRType): IRParam { return { name, type, binderInfo: "explicit" }; }
+function ioOf(inner: IRType): IRType {
+  return nominalType(`lean.io(${inner.id})`, `IO(${inner.displayName})`, "lean.io", [typeArgument(inner)]);
+}
+
+export const proofscriptManifest: PluginManifest = {
+  schema: "proofscript.plugin/v1",
+  id: "proofscript.feature.io-fs-read-file",
+  version: "0.91.0",
+  kind: "feature",
+  semanticIds: ["lean.io.fs.readFile"],
+  proofscriptBaseline: "v0.1",
+  leanBaseline: "4.33.1",
+  lean: { assumptionPolicy: "none" },
+};
+
+const plugin: ProofScriptPlugin = {
+  id: proofscriptManifest.id,
+  version: proofscriptManifest.version,
+  kind: "feature",
+  requires: ["proofscript.feature.io", "proofscript.feature.filepath", "proofscript.feature.string"],
+  setup(registry) {
+    const filePath = nominalType("System.FilePath", "System.FilePath");
+    const stringType = nominalType("String", "String");
+    registry.registerBuiltinFunction("IO.FS.readFile", {
+      params: [valueParam("fname", filePath)],
+      result: ioOf(stringType),
+      operation: "lean.io.fs.readFile",
+    });
+    registry.registerOperation("lean.io.fs.readFile", {
+      requiredCapabilities: ["core.io.fs.readFile"],
+      verification: { level: "kernel-checkable", notes: "Lean IO.FS.readFile action; host correspondence is backend/platform/primitive specific." },
+      domain: "runtime",
+    });
+    registry.registerLeanExprLowering("lean.io.fs.readFile", (expr, context) => {
+      if (expr.kind !== "op" || expr.args.length !== 1) throw new ProofScriptError("PS4F20", "Malformed IO.FS.readFile IR node.");
+      return `(IO.FS.readFile ${context.emitExpr(expr.args[0]!)})`;
+    });
+  },
+};
+export default plugin;

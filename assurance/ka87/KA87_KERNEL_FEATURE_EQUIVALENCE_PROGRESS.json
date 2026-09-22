@@ -1,0 +1,23 @@
+{
+  "checkpoint": "proofscript-v1-ka87-primitive-arithmetic-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.90",
+  "featureSurfaceBridgeProgressPercent": 98,
+  "executableKernelEquivalenceProofProgressPercent": 65,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 272,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 267,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+    "correctedFormalLean4LeanBridgeObligations": 272,
+    "countedNewObligations": [
+      "translated_checkNatAdd_wf",
+      "translated_checkNatPred_wf",
+      "translated_checkNatSub_wf",
+      "translated_checkNatMul_wf",
+      "translated_checkNatPow_wf"
+    ]
+  },
+  "metricPolicy": "KA87 adds direct non-sorry-backed primitive Nat arithmetic recognizer bridge wrappers. Percentages remain conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

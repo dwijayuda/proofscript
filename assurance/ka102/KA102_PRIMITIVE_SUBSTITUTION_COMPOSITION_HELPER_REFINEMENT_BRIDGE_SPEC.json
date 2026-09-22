@@ -1,0 +1,35 @@
+{
+  "checkpoint": "proofscript-v1-ka102-primitive-substitution-composition-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.105",
+  "baseline": "proofscript-v1-ka101-primitive-substitution-helper-refinement0",
+  "referenceKind": "primitive-substitution-composition-helper-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 5,
+  "countedObligations": [
+    "translated_subst_consN_bvars_wf",
+    "translated_subst_lift_tail_inst_wf",
+    "translated_subst_consN_append_wf",
+    "translated_subst_consN_append_singleton_wf",
+    "translated_subst_lift_comp_one_wf"
+  ],
+  "sourceTheorems": [
+    "VExpr.subst_consN_bvars",
+    "VExpr.subst_lift_tail_inst",
+    "VExpr.Subst.consN_append",
+    "VExpr.Subst.consN_append_singleton",
+    "VExpr.Subst.lift_comp_one"
+  ],
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveSubstitutionCompositionHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

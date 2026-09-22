@@ -1,0 +1,8 @@
+-- K1c-indexed0 bootstrap source for Lean-style propositional equality.
+-- This is intentionally an ordinary checked inductive declaration, not a
+-- privileged host-language equality rule.
+universe u;
+
+inductive Eq(A: Sort u, a: A): A → Prop {
+  | refl: Eq(A, a, a);
+}

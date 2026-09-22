@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka28-quot-env-defeq-preservation-bridge0",
+  "publicVersion": "1.0.0-pskernel.31",
+  "baseline": "proofscript-v1-ka27-quot-env-no-overwrite-bridge0",
+  "referenceKind": "direct-imported-lean4lean-quot-env-defeq-preservation-bridge",
+  "imports": [
+    "Lean4Lean.Theory.Typing.Env",
+    "Lean4Lean.Theory.Typing.QuotLemmas",
+    "PSKernelKA27QuotEnvNoOverwriteBridge"
+  ],
+  "bridgedRelations": [
+    "Lean4Lean.VEnv.addQuot",
+    "Lean4Lean.VEnv.addConst",
+    "Lean4Lean.VEnv.addDefEq",
+    "Lean4Lean.VEnv.defeqs"
+  ],
+  "coveredPSDeclKinds": ["quot"],
+  "conditionalBridgeLemmas": [
+    "PSKernelKA28.translated_quot_preserves_existing_defeq",
+    "PSKernelKA28.translated_quot_preserves_existing_and_adds_quot_defeq"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "quotientSemanticSoundness": false,
+    "formalLean4EquivalenceProvenObligations": 50
+  }
+}

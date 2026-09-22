@@ -1,0 +1,22 @@
+{
+  "schema": "proofscript.assurance.ka8.obligation-delta/v1",
+  "checkpoint": "proofscript-v1-ka8-lean4lean-source-intake0",
+  "closedByKA8": [
+    "KA8-O1: define accepted Lean4Lean archive/source-tree discovery locations",
+    "KA8-O2: define stable extracted-source path used by the KA-7 real import gate",
+    "KA8-O3: define strict failure when no source/archive exists",
+    "KA8-O4: connect source intake to KA-7 strict actual import gate",
+    "KA8-O5: keep source intake outside PSKernel trusted semantics and Core format"
+  ],
+  "stillOpen": [
+    "KAI-O1: mount or vendor a real Lean4Lean source tree compatible with Lean 4.33.1",
+    "KAI-O2: make npm run lean:ka7:import pass strictly against the real source tree",
+    "KAI-O3: replace Lean4LeanCompat interface with concrete imported Lean4Lean modules",
+    "KAI-O4: prove PSKernel non-inductive declaration-checking soundness against imported reference",
+    "KAI-O5: extend soundness to defeq/WHNF",
+    "KAI-O6: extend soundness to inductives/recursors/projections/quotients",
+    "KAI-O7: prove supported-fragment completeness",
+    "KAI-O8: submit PSKernel to public Lean Kernel Arena as an independent checker"
+  ],
+  "formalLean4EquivalenceProvenObligations": 0
+}

@@ -1,0 +1,17 @@
+
+> proofscript-monorepo@0.1.0-production-p5.94-arena-nested-helper-target-validation0 test:v71:k3tb-independent-audit-pack
+> export NODE_OPTIONS="--experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON"; node tools/kernel-v71-k3tb-independent-audit-pack-tests.ts
+
+K3TB_AUDIT_PACK_PHASE=formal-build
+K3TB_AUDIT_PACK_PHASE=inherited-checkpoints
+K3TB_AUDIT_PACK_PHASE=docs
+K3TB_AUDIT_PACK_PHASE=overclaim-guard
+K3TB_AUDIT_PACK_PHASE=checkpoint
+K3TB_AUDIT_PACK_FORMAL_TARGET=PASS THEOREMS=7 SORRYAX=0 FORMAL_FILES=54
+K3TB_AUDIT_PACK_INHERITED_CHECKPOINTS=21 FAILURES=0
+K3TB_AUDIT_PACK_FULL_LEAN_GATE=6_PARTS_PASS
+K3TB_AUDIT_PACK_DOCS=5 OVERCLAIM_FORBIDDEN=3
+K3TB_AUDIT_PACK_PROGRESS_OVERALL=99.5%
+K3TB_AUDIT_PACK_BOUNDARY=INDEPENDENT_AUDIT_PACK_NOT_FULLY_FORMAL_K3
+K3TB_AUDIT_PACK_STATUS=PASS
+PASS KERNEL-v71-k3tb-independent-audit-pack

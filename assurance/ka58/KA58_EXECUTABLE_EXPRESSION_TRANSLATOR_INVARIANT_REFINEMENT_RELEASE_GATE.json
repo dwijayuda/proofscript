@@ -1,0 +1,158 @@
+{
+  "checkpoint": "proofscript-v1-ka58-executable-expression-translator-invariant-refinement0",
+  "publicVersion": "1.0.0-pskernel.61",
+  "baseline": "proofscript-v1-ka57-executable-expression-translator-source-transform-refinement0",
+  "releaseKind": "strict-lean4lean-bridge",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA58",
+        "source": "assurance/ka58/executable-expression-translator-invariant-refinement-bridge.lean",
+        "destination": "PSKernelKA58ExecutableExpressionTranslatorInvariantRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka58-executable-expression-translator-invariant-refinement0",
+    "publicVersion": "1.0.0-pskernel.61",
+    "featureSurfaceBridgeProgressPercent": 80,
+    "executableKernelEquivalenceProofProgressPercent": 45,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 167,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 163,
+      "newFormalLean4LeanBridgeObligations": 4,
+      "countedNewObligations": [
+        "translated_trExprS_closed_wf",
+        "translated_trExprS_fvarsIn_wf",
+        "translated_trExpr_closed_wf",
+        "translated_trExpr_fvarsIn_wf"
+      ]
+    },
+    "groups": [
+      {
+        "id": "expression-tags",
+        "progressPercent": 90,
+        "status": "TrExprS constructors/determinism/substitution/source conditions/source transforms/source invariants strict-checked; full executable translator refinement incomplete"
+      },
+      {
+        "id": "typechecker-whnf-defeq",
+        "progressPercent": 53,
+        "status": "WHNF/DefEq surface strict-checked; executable checker refinement incomplete"
+      },
+      {
+        "id": "end-to-end-refinement-spine",
+        "progressPercent": 35,
+        "status": "checker pipeline skeleton strict-checked; no end-to-end theorem yet"
+      },
+      {
+        "id": "architecture-health",
+        "progressPercent": 93,
+        "status": "no-spaghetti ratchet plus KA58 semantic-package touch guard"
+      }
+    ],
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka58Files": [
+      {
+        "path": "tools/pskernel-ka58-executable-expression-translator-invariant-refinement-tests.ts",
+        "lines": 33,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka58-executable-expression-translator-invariant-refinement.ts",
+        "lines": 89,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka58/KA58_EXECUTABLE_EXPRESSION_TRANSLATOR_INVARIANT_REFINEMENT_RELEASE_GATE.json",
+        "lines": 159,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka58/KA58_EXECUTABLE_EXPRESSION_TRANSLATOR_INVARIANT_REFINEMENT_REPORT.md",
+        "lines": 37,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka58/KA58_EXECUTABLE_EXPRESSION_TRANSLATOR_INVARIANT_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 31,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka58/KA58_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 42,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka58/KA58_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka58/executable-expression-translator-invariant-refinement-bridge-spec.json",
+        "lines": 28,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka58/executable-expression-translator-invariant-refinement-bridge.lean",
+        "lines": 37,
+        "ext": ".lean"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-09-19-ka58-expression-translator-invariant-refinement.md",
+        "lines": 51,
+        "ext": ".md"
+      }
+    ],
+    "ka58ToolFiles": [
+      {
+        "path": "tools/pskernel-ka58-executable-expression-translator-invariant-refinement-tests.ts",
+        "lines": 33,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka58-executable-expression-translator-invariant-refinement.ts",
+        "lines": 89,
+        "ext": ".ts"
+      }
+    ],
+    "newKA58OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableExpressionTranslatorRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

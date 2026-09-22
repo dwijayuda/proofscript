@@ -1,0 +1,30 @@
+{
+  "schema": "proofscript.kernel-assurance.odecl1-checkpoint/v1",
+  "date": "2026-09-10",
+  "baseProfile": "KERNEL-level-instantiation-conformance1",
+  "coreFormat": 71,
+  "semanticChange": false,
+  "title": "O-DECL phase 1 ordinary declaration environment preservation",
+  "added": [
+    "assurance/lean4331/formal/ProofScriptKernelEquivalence/DeclarationEnvironment.lean",
+    "tools/kernel-declaration-environment-preservation-tests.ts"
+  ],
+  "localValidation": {
+    "typescriptRegression": "passed",
+    "exactLean4331FormalCheck": "pending-unavailable-in-current-environment"
+  },
+  "scope": {
+    "covered": [
+      "ordinary constant type lookup",
+      "regular-definition delta lookup",
+      "v71 level/expression universe-instantiation bridge at lookup sites",
+      "opaque/theorem/example stuck boundary for delta"
+    ],
+    "remaining": [
+      "quotient primitive installation",
+      "inductive/constructor/recursor installation",
+      "projection metadata/classifier environment bridge",
+      "whole-declaration acceptance theorem"
+    ]
+  }
+}

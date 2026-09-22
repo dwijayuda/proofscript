@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka99-primitive-closure-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.102",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 77,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 316,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 311,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "correctedFormalLean4LeanBridgeObligations": 316,
+    "countedNewObligations": [
+      "translated_fvarsIn_appN_wf",
+      "translated_trExpr_appN_inv_wf",
+      "translated_trExpr_app2_inv_wf",
+      "translated_trExpr_closedN_nil_wf",
+      "translated_trExpr_fvar_lift_uniq_wf"
+    ]
+  },
+  "metricPolicy": "KA99 adds direct non-sorry-backed primitive closure/application-shape helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

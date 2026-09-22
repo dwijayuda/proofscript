@@ -1,0 +1,29 @@
+{
+  "checkpoint": "proofscript-v1-ka15-env-wf-bridge0",
+  "baseline": "proofscript-v1-ka14-real-arena-corpus0",
+  "closedSinceKA14": [
+    "Import Lean4Lean.Theory.Typing.Env and use the real Lean4Lean.VEnv.WF relation directly.",
+    "Machine-check that a KA-13 translated axiom VDecl.WF fact extends a well-formed Lean4Lean environment.",
+    "Machine-check that a KA-13 translated definition VDecl.WF fact extends a well-formed Lean4Lean environment with its defining equation.",
+    "Preserve the inherited inductive/mutual-inductive blocking theorem."
+  ],
+  "provenLeanTheoremObligations": [
+    "PSKernelKA13.translated_axiom_vdecl_wf",
+    "PSKernelKA13.translated_definition_vdecl_wf",
+    "PSKernelKA15.translated_axiom_env_wf",
+    "PSKernelKA15.translated_definition_env_wf"
+  ],
+  "newInKA15": [
+    "PSKernelKA15.translated_axiom_env_wf",
+    "PSKernelKA15.translated_definition_env_wf"
+  ],
+  "stillOpen": [
+    "The executable TypeScript PSKernel checker is not yet refined to these Lean4Lean premises.",
+    "The theorem/example/opaque/quot cases are not yet bridged to VDecl.WF/VEnv.WF in KA-15.",
+    "Definitional equality soundness against Lean4Lean.TypeChecker remains open.",
+    "Inductive/mutual/nested inductive soundness remains outside KA-15.",
+    "Full Lean 4 equivalence and same-theory claims remain false."
+  ],
+  "formalLean4EquivalenceProvenObligations": 4,
+  "formalObligationBoundary": "These are conditional VDecl.WF and VEnv.WF bridge lemmas for the direct Lean4Lean reference model only; they are not a full PSKernel executable refinement proof."
+}

@@ -1,0 +1,123 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "V71_KERNELTS_SEMANTICS_BOUNDARY1",
+  "coreFormat": 71,
+  "status": "PASS",
+  "leanSemanticBaseline": "4.33.1",
+  "leanReleaseCommit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "progress": {
+    "percent": 93,
+    "previousPercent": 90,
+    "label": "v71 K3-track conservative engineering progress",
+    "note": "Progress is a project ledger, not a probability and not a formal K3 theorem."
+  },
+  "formal": {
+    "target": "ProofScriptKernelEquivalence.KernelV71KernelTSSemanticsBoundary",
+    "source": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71KernelTSSemanticsBoundary.lean",
+    "targetSourceSha256": "5662d5f67edc323aadbf7a4fb5f1a07a83873aeab268e4e3e9ddf4c9f6fc75ae",
+    "log": "assurance/lean4331/evidence/v71-kernelts-semantics-boundary-formal1.out",
+    "logSha256": "5f2374c968fb20758fd42c5734c7bd700cf081f869af9bda801575991090ecef",
+    "targetTheorems": 11,
+    "reportedSorryAx": 0,
+    "effectiveFormalStackFiles": 45
+  },
+  "executable": {
+    "sourceAudit": {
+      "trustedFileCount": 5,
+      "trustedFiles": [
+        {
+          "path": "packages/kernel/src/core.ts",
+          "sha256": "a6118d1865e52b6c1d9e1bc9b7083538d42cd837f0e86919ace106ceac8a2742",
+          "lines": 267,
+          "importCount": 1,
+          "nonLocalImports": 0,
+          "bannedFeatureHits": 0
+        },
+        {
+          "path": "packages/kernel/src/level.ts",
+          "sha256": "b7846e322ec1b40369afddfde8fadf83f7e6e217a6613ecba7bbe957ab992074",
+          "lines": 382,
+          "importCount": 0,
+          "nonLocalImports": 0,
+          "bannedFeatureHits": 0
+        },
+        {
+          "path": "packages/kernel/src/inductive.ts",
+          "sha256": "b06156840066f9c06a5f2264b440be6c6cd555c1f85d84f6fc9cd79fd39c03f6",
+          "lines": 582,
+          "importCount": 2,
+          "nonLocalImports": 0,
+          "bannedFeatureHits": 0
+        },
+        {
+          "path": "packages/kernel/src/kernel.ts",
+          "sha256": "44c6fd4af2cd821976130c551f4769442de054496a6aa4a125fdbf820c221c6c",
+          "lines": 7117,
+          "importCount": 4,
+          "nonLocalImports": 0,
+          "bannedFeatureHits": 0
+        },
+        {
+          "path": "packages/kernel/src/quotient.ts",
+          "sha256": "b411b823c95ab220fa7e624e9e0020833f4b361b3836a532a430acfbe8203a47",
+          "lines": 106,
+          "importCount": 2,
+          "nonLocalImports": 0,
+          "bannedFeatureHits": 0
+        }
+      ],
+      "totalLines": 8454,
+      "localImportClosure": true,
+      "dynamicExecutionExcluded": true,
+      "ambientNondeterminismExcluded": true,
+      "bannedFeatureCount": 17,
+      "bannedFeatureHits": 0,
+      "tcbSourceHash": "59bd57ff628afab1938afedb2faac8556f2bf02d5db97b7c25f37672058d32c1"
+    },
+    "failures": 0,
+    "fullLeanGateLogCount": 6
+  },
+  "inherited": {
+    "fullLeanGate": {
+      "status": "PASS",
+      "partCount": 6
+    },
+    "tsClassifierImplementationTrace": {
+      "status": "PASS",
+      "sourceObligations": 46,
+      "sourceMissing": 0,
+      "failures": 0
+    },
+    "tsNestedPreprocessorRefinement": {
+      "status": "PASS",
+      "progress": 80
+    },
+    "positivityBoundary": {
+      "status": "PASS",
+      "progress": 85
+    },
+    "storedRHSBoundary": {
+      "status": "PASS",
+      "progress": 90
+    }
+  },
+  "completedSlices": [
+    "trusted TypeScript kernel source inventory",
+    "local import closure audit",
+    "dynamic code execution exclusion audit",
+    "ambient nondeterminism exclusion audit",
+    "deterministic error boundary audit",
+    "trusted source SHA-256 ledger",
+    "inherited TypeScript classifier implementation trace boundary",
+    "inherited TypeScript nested preprocessor refinement boundary",
+    "inherited positivity completeness-boundary certificate",
+    "inherited stored RecursorRule.rhs reconstruction-boundary certificate"
+  ],
+  "outstandingK3Obligations": [
+    "line-by-line small-step semantics for the full KernelTS subset",
+    "full TypeScript/Node runtime model or verified extraction path",
+    "arbitrary Lean acceptance completeness iff ProofScript acceptance",
+    "exhaustive reduction-path completeness for every Lean expression form",
+    "final whole-kernel K3 equivalence theorem"
+  ]
+}

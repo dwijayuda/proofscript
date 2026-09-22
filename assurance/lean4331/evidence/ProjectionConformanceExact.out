@@ -1,0 +1,8 @@
+PASS raw-indexed-proj-0
+PASS raw-indexed-proj-1
+PASS raw-indexed-proj-2=rejected
+PASS prop-data-target=rejected
+PASS prop-dependent-proof-crossing-data=rejected
+PASS prop-independent-data-target=rejected
+PASS prop-independent-proof-field
+PASS ProjectionConformanceExact: exact Lean 4.33.1 raw projection semantics

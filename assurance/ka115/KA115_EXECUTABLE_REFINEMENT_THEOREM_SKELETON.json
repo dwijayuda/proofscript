@@ -1,0 +1,95 @@
+{
+  "checkpoint": "proofscript-v1-ka115-executable-refinement-theorem-skeleton0",
+  "publicVersion": "1.0.0-pskernel.118",
+  "baseline": "proofscript-v1-ka114-executable-proof-frontier-checklist0",
+  "metrics": {
+    "featureSurfaceBridgeProgressPercent": 100,
+    "executableKernelEquivalenceProofProgressPercent": 91,
+    "executableKernelEquivalencePreviousPercent": 90,
+    "executableKernelEquivalenceDeltaPercent": 1,
+    "arenaCorpusRegressionPercent": 100,
+    "releasePackagingVerificationPercent": 100,
+    "executableRefinementTheoremSkeletonPercent": 100,
+    "formalLean4LeanBridgeObligations": 366,
+    "newFormalLean4LeanBridgeObligations": 0,
+    "fullLean4EquivalencePercent": 0,
+    "fullyFormalK3Percent": 0,
+    "overallConservativeProjectProgressPercent": 82.3,
+    "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+  },
+  "phaseStatus": {
+    "featureSurfaceBridge": "closed",
+    "executableEquivalence": "active-theorem-skeletonized",
+    "fullLean4Equivalence": "not-proven",
+    "fullyFormalK3": "not-proven",
+    "claimBoundary": "enforced"
+  },
+  "theoremSkeleton": {
+    "skeletonPercent": 100,
+    "rows": [
+      {
+        "id": "refinement-theorem-family-named",
+        "status": "done",
+        "evidence": "top-level executable refinement theorem family is named and separated from dashboard evidence",
+        "done": true
+      },
+      {
+        "id": "proof-input-ledger-linked",
+        "status": "done",
+        "evidence": "KA113 ledger and KA114 frontier checklist are required inputs",
+        "done": true
+      },
+      {
+        "id": "source-target-relation-defined",
+        "status": "done",
+        "evidence": "relation placeholder records PSKernel executable artifacts versus Lean4Lean evidence",
+        "done": true
+      },
+      {
+        "id": "assumption-boundary-separated",
+        "status": "done",
+        "evidence": "checked facts are separated from assumptions and future proof obligations",
+        "done": true
+      },
+      {
+        "id": "negative-claims-pinned",
+        "status": "done",
+        "evidence": "full Lean4 equivalence and fully formal K3 remain 0%",
+        "done": true
+      },
+      {
+        "id": "next-mechanization-order-recorded",
+        "status": "done",
+        "evidence": "next work should turn theorem-family skeleton rows into checked theorem families",
+        "done": true
+      },
+      {
+        "id": "release-invariants-retained",
+        "status": "done",
+        "evidence": "Core 71/cert 2 and trusted semantic packages remain unchanged",
+        "done": true
+      }
+    ],
+    "counts": {
+      "total": 7,
+      "done": 7,
+      "missing": 0
+    },
+    "evidenceMeaning": "theorem skeleton records proof-family shape and boundaries; it is not an executable PSKernel refinement proof"
+  },
+  "percentBoundaries": {
+    "executableProgressIsDashboardEvidenceNotRefinementProof": true,
+    "theoremSkeletonDoesNotProvePSKernelEquivalence": true,
+    "overallProgressIsDashboardEstimate": true
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

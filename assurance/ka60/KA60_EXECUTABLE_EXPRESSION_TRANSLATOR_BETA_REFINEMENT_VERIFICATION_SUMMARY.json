@@ -1,0 +1,52 @@
+{
+  "checkpoint": "proofscript-v1-ka60-executable-expression-translator-beta-refinement0",
+  "publicVersion": "1.0.0-pskernel.63",
+  "baseline": "proofscript-v1-ka59-executable-expression-translator-application-refinement0",
+  "commands": {
+    "redTest": "passed-expected-failure-before-tool-existed",
+    "install": "passed",
+    "build": "passed",
+    "focusedTest": "passed",
+    "assuranceKA60": "passed",
+    "leanKA60Check": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "pscConformanceBounded": "passed",
+    "arenaCorpusPreflight": "passed",
+    "arenaStaticNonperf": "passed",
+    "arenaTutorial": "timed-out-not-counted",
+    "arenaTutorialHarness": "passed",
+    "arenaTail": "passed",
+    "verifyArena": "not-run-as-counted-release-wrapper; tutorial command timed out separately",
+    "npmPackWorkspaces": "passed",
+    "packageSha256Manifest": "passed"
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA60",
+        "source": "assurance/ka60/executable-expression-translator-beta-refinement-bridge.lean",
+        "destination": "PSKernelKA60ExecutableExpressionTranslatorBetaRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA60 gate tool absent before implementation",
+  "wrapperTimeouts": [
+    {
+      "command": "npm run test:arena:tutorial",
+      "status": "timed-out-not-counted"
+    }
+  ],
+  "releaseVerificationNote": "KA60 focused/strict Lean4Lean gate passed. Arena tutorial full runner timed out in this runtime and is not counted; tutorial-harness and tail Arena gates passed individually."
+}

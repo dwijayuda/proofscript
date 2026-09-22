@@ -1,0 +1,42 @@
+{
+  "schema": "proofscript.kernel-assurance.merged-odecl-ts-classifier1/v1",
+  "date": "2026-09-10",
+  "baseProfile": "KERNEL-level-instantiation-conformance1",
+  "coreFormat": 71,
+  "semanticChange": false,
+  "title": "Merged O-DECL preservation and TypeScript non-mutual classifier implementation bridge",
+  "mergedFrom": [
+    "proofscript-kernel-v71-ts-classifier-impl1",
+    "proofscript-kernel-v71-odecl1"
+  ],
+  "added": [
+    "tools/kernel-declaration-environment-preservation-tests.ts",
+    "tools/kernel-v71-local-merged-regression-tests.ts",
+    "assurance/lean4331/CHECKPOINT_DECLARATION_ENVIRONMENT_ODECL1.json"
+  ],
+  "localValidation": {
+    "npmInstallOffline": "passed",
+    "typescriptBuild": "passed",
+    "odeclEnvironmentPreservation": "passed",
+    "tsClassifierImplementationBridge": "passed-with-exact-lean-bridge-skipped-when-PROOFSCRIPT_LEAN_BIN-unavailable",
+    "mergedLocalGate": "passed"
+  },
+  "claimBoundary": {
+    "doesClaim": [
+      "the two uploaded branches are merged on the stronger ts-classifier implementation baseline",
+      "ordinary declaration lookup/delta/opaque/example boundaries are locally regression-tested",
+      "the shipped non-mutual TypeScript classifier source obligations and runtime sentinels remain intact"
+    ],
+    "doesNotClaim": [
+      "new kernel semantics",
+      "full TypeScript implementation equivalence",
+      "full K3 Lean equivalence",
+      "rerun exact Lean 4.33.1 native bridge in this environment when PROOFSCRIPT_LEAN_BIN is unavailable"
+    ]
+  },
+  "next": [
+    "run the exact Lean 4.33.1 v71 assurance gate with PROOFSCRIPT_LEAN_BIN set",
+    "promote O-DECL/O-IND from formed-entry preservation to generic declaration admission/environment theorem",
+    "start mutual/nested classifier totality after non-mutual declaration admission is frozen"
+  ]
+}

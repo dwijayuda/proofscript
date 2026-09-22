@@ -1,0 +1,5 @@
+'ProofScriptKernelEquivalence.Quotient.name_eq' does not depend on any axioms
+'ProofScriptKernelEquivalence.Quotient.levelParams_eq' does not depend on any axioms
+'ProofScriptKernelEquivalence.Quotient.type_eq' does not depend on any axioms
+'ProofScriptKernelEquivalence.Quotient.kind_eq' does not depend on any axioms
+'ProofScriptKernelEquivalence.Quotient.iota_sound' depends on axioms: [propext]

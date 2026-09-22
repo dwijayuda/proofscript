@@ -1,0 +1,154 @@
+{
+  "checkpoint": "proofscript-v1-ka41-codec-replay-refinement-bridge0",
+  "publicVersion": "1.0.0-pskernel.44",
+  "baseline": "proofscript-v1-ka40-primitive-literal-policy-bridge0",
+  "requiredCommands": [
+    {
+      "command": "npm install --offline --no-audit --no-fund",
+      "status": "passed"
+    },
+    {
+      "command": "npm run build -- --pretty false",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:pskernel:ka41",
+      "status": "passed"
+    },
+    {
+      "command": "npm run assurance:ka41",
+      "status": "passed"
+    },
+    {
+      "command": "npm run lean:ka41:check",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:psc:kernel-status",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:psc:conformance-bounded",
+      "status": "passed"
+    },
+    {
+      "command": "npm run arena:corpus-preflight",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:arena:static-nonperf",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:arena:tutorial",
+      "status": "passed"
+    },
+    {
+      "command": "npm run verify:arena",
+      "status": "timed_out_not_counted"
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka41-codec-replay-refinement-bridge0",
+    "baseline": "proofscript-v1-ka40-primitive-literal-policy-bridge0",
+    "featureSurfaceBridgeProgressPercent": 61,
+    "executableKernelEquivalenceProofProgressPercent": 28,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 120,
+    "groups": [
+      {
+        "id": "ordinary-declarations",
+        "progressPercent": 78,
+        "status": "aggregate bridges complete for ordinary declaration surface"
+      },
+      {
+        "id": "quotient-declarations",
+        "progressPercent": 72,
+        "status": "environment/lookup/defeq bridges complete; semantic soundness still open"
+      },
+      {
+        "id": "inductive-declarations",
+        "progressPercent": 35,
+        "status": "first conditional env bridge only"
+      },
+      {
+        "id": "mutual-definitions",
+        "progressPercent": 40,
+        "status": "first conditional env bridge only"
+      },
+      {
+        "id": "typechecker-executable-surface",
+        "progressPercent": 35,
+        "status": "TypeChecker proof-surface wrappers present; executable refinement open"
+      },
+      {
+        "id": "expression-translation",
+        "progressPercent": 55,
+        "status": "TrExprS constructor surface covered; executable translator open"
+      },
+      {
+        "id": "whnf-defeq",
+        "progressPercent": 38,
+        "status": "theory-level WHNF/defeq bridges partial"
+      },
+      {
+        "id": "primitive-literal-policy",
+        "progressPercent": 32,
+        "status": "primitive/literal proof-surface bridge started"
+      },
+      {
+        "id": "codec-replay",
+        "progressPercent": 24,
+        "status": "replay/context and codec stability gates started"
+      },
+      {
+        "id": "resource-error-conservativity",
+        "progressPercent": 12,
+        "status": "mostly open"
+      }
+    ],
+    "nextHighestImpactMilestones": [
+      "KA42-resource-error-conservativity",
+      "KA43-theory-wide-refinement-map",
+      "KA44-executable-expression-translator-refinement",
+      "KA45-replay-certificate-bundle-refinement"
+    ]
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullCodecReplayRefinement": false,
+    "formalLean4EquivalenceProvenObligations": 120
+  },
+  "note": "KA-41 is a direct Lean4Lean Replay proof-surface bridge plus PSKernel codec stability gate. It does not prove full codec/replay refinement.",
+  "generatedAtUtc": "2026-09-19T04:40:00Z",
+  "freshExtract": {
+    "status": "passed",
+    "commands": [
+      "npm install --offline --no-audit --no-fund",
+      "npm run build -- --pretty false",
+      "npm run test:pskernel:ka41",
+      "npm run lean:ka41:check"
+    ]
+  },
+  "zipIntegrity": {
+    "status": "passed",
+    "commands": [
+      "unzip -t final ZIP",
+      "sha256sum -c final SHA file"
+    ]
+  }
+}

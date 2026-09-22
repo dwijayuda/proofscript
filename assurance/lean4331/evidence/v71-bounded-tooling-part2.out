@@ -1,0 +1,46 @@
+RUN[74] tools/k2l-implicit-synthesis-tests.ts
+✓ K2l infers direct implicit/strict-implicit type parameters from later explicit arguments; instance/noninferable/value-hidden synthesis remains unsupported
+PASS[74] tools/k2l-implicit-synthesis-tests.ts
+RUN[75] tools/k2m-unification-tests.ts
+✓ K2m scoped metas solve first-order structured hidden type parameters (including multiple metas), reject unsolved/higher-order cases, pass occurs check, and leave no metas in Core
+PASS[75] tools/k2m-unification-tests.ts
+RUN[76] tools/k2n-typeclass-env-tests.ts
+✓ K2n class/instance registration, priority/declaration ordering, binder-class validation, v9 replay, metadata tamper rejection, and Lean reconstruction passed
+PASS[76] tools/k2n-typeclass-env-tests.ts
+RUN[77] tools/k2o-instance-search-tests.ts
+✓ K2o exact-goal global instance synthesis honors priority/declaration order, emits explicit Core, rejects missing candidates, and independently replays
+PASS[77] tools/k2o-instance-search-tests.ts
+RUN[78] tools/k2p-parameterized-typeclass-tests.ts
+✓ K2p parameterized class metadata, recursor-backed projection, concrete instance registration/search, parameter-sensitive candidate matching, v10 replay, tamper rejection, and Lean reconstruction passed
+PASS[78] tools/k2p-parameterized-typeclass-tests.ts
+RUN[79] tools/k2q-polymorphic-instance-tests.ts
+✓ K2q polymorphic global candidates, first-order parameter solving, ranking after goal matching, unsolved-meta rejection, recursive-prerequisite compatibility, strict replay, and Lean emission passed
+PASS[79] tools/k2q-polymorphic-instance-tests.ts
+RUN[80] tools/k2r-recursive-instance-search-tests.ts
+✓ K2r bounded recursive global instance prerequisites, cycle guard, depth resource limit, explicit Core insertion, strict replay, and Lean emission passed
+PASS[80] tools/k2r-recursive-instance-search-tests.ts
+RUN[81] tools/artifact-compat-tests.ts
+✓ core artifacts v1-v7, v8/K2k/K2l/K2m, and v9/K2n/K2o and v10/K2p/K2q replay into current v12 K3c core; BinderInfo and K2n typeclass metadata are preserved
+PASS[81] tools/artifact-compat-tests.ts
+RUN[82] tools/k3b-module-interface-tests.ts
+✓ K3b module-interface fingerprints, deterministic cache identities, semantic-change propagation, v12 replay validation, K3a/v11 compatibility, certificate-v2 source binding, plugin-free replay, and module isolation passed
+PASS[82] tools/k3b-module-interface-tests.ts
+RUN[83] tools/k3c-names-tests.ts
+✓ K3c names: nested namespaces, relative/qualified/root resolution, namespace-scoped universes, recursive names, module ownership, exact Lean emission, and monotonic section/open extension passed
+PASS[83] tools/k3c-names-tests.ts
+RUN[84] tools/k3c-sections-open-tests.ts
+✓ K3c sections/open: section scope, ordinary open precedence/restoration, relative/imported opens, constructor resolution, and fail-closed richer forms passed
+PASS[84] tools/k3c-sections-open-tests.ts
+RUN[85] tools/k3c-section-vars-tests.ts
+✓ K3c section vars: auto-generalization, theorem include/omit, dependency closure, BinderInfo, lexical restoration, shadowing, and fail-closed deferred forms passed
+PASS[85] tools/k3c-section-vars-tests.ts
+RUN[86] tools/lean-differential-tooling-tests.ts
+✓ pinned Lean toolchain parser requires exact 4.33.1 release version + commit and rejects substitutions
+PASS[86] tools/lean-differential-tooling-tests.ts
+RUN[87] tools/lean-export-regression-tests.ts
+✓ Lean exporter regressions: universe precedence, equation-name hygiene, and selective recursor noncomputability
+PASS[87] tools/lean-export-regression-tests.ts
+RUN[88] tools/lean-differential-harness-tests.ts
+✓ differential harness schema-2 control flow covers equivalence, negative agreement, capability gaps, and all required dimensions (fake oracle; not semantic evidence)
+PASS[88] tools/lean-differential-harness-tests.ts
+BOUNDED_TOOLING_PART2=15/15 PASS

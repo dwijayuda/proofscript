@@ -1,0 +1,94 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "V71_ADMISSION_BOUNDARY_CERT1",
+  "coreFormat": 71,
+  "profile": "KERNEL-level-instantiation-conformance1",
+  "semanticChange": false,
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+    "executable": "/mnt/data/lean-install/lean-4.33.1-linux/bin/lean",
+    "versionOutput": "Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)"
+  },
+  "formal": {
+    "newTarget": "ProofScriptKernelEquivalence.KernelV71AdmissionBoundary",
+    "targetSource": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71AdmissionBoundary.lean",
+    "targetSourceSha256": "fda25193a149038b13ad7a0e003c5de62738d7706045714a0b9482f55a2595bb",
+    "targetTheorems": 6,
+    "reportedSorryAx": 0,
+    "log": "assurance/lean4331/evidence/v71-admission-boundary-formal1.out",
+    "totalFormalLeanFiles": 40,
+    "theoremBoundary": "non-mutual implementation raw admission + non-mutual environment preservation + mixed formed environment/RHS soundness; explicit ledger keeps full mutual/nested completeness and final K3 open"
+  },
+  "inherited": {
+    "tsClassifierImplementationTrace": {
+      "status": "PASS",
+      "sourceObligations": 46,
+      "missing": 0
+    },
+    "nonMutualDeclEnvironment": {
+      "status": "PASS"
+    },
+    "formedEnvironmentGeneralization": {
+      "status": "PASS",
+      "formalFiles": 37
+    },
+    "mutualNestedRecursorRHS": {
+      "status": "PASS",
+      "formalFiles": 37,
+      "exactLeanSuites": 5
+    },
+    "fullLeanGate": {
+      "status": "PASS",
+      "parts": 6,
+      "logs": [
+        {
+          "file": "assurance/lean4331/evidence/v71-gate-part1.out",
+          "sha256": "ec8220bca5a9453257661d3c65a80111fa1be08ac9f95fd11b68617bd7ac02f4"
+        },
+        {
+          "file": "assurance/lean4331/evidence/v71-gate-part2.out",
+          "sha256": "0e2d86c285d2ccce19e94111810df807b45736ba3b7d57346ac923788f14f7e7"
+        },
+        {
+          "file": "assurance/lean4331/evidence/v71-gate-part3.out",
+          "sha256": "237ddf58459558e7d352e9af0d497c5adda3ed29d611df228fddc59a9244ccd3"
+        },
+        {
+          "file": "assurance/lean4331/evidence/v71-gate-part4.out",
+          "sha256": "6cd4f9661ffa48fc18dfff4458b2eef2b62e76b2d089cb79b0d34802f6787f01"
+        },
+        {
+          "file": "assurance/lean4331/evidence/v71-gate-part5.out",
+          "sha256": "e9e2a9af2e74f58ec22784dbc47d93fb57deaad532ca42436f6b49f0ac5989fb"
+        },
+        {
+          "file": "assurance/lean4331/evidence/v71-gate-part6.out",
+          "sha256": "c0b48520655e88066ab1face2d2f97f9a1491dd09d4429f4281da25d690c5783"
+        }
+      ]
+    }
+  },
+  "scope": {
+    "completedSlices": [
+      "non-mutual implementation raw-family admission soundness",
+      "non-mutual implementation package environment preservation",
+      "mixed non-mutual/mutual/nested formed-environment preservation",
+      "mutual/nested linked recursor RHS endpoint correspondence"
+    ],
+    "outstandingK3Obligations": [
+      "full mutual admission completeness",
+      "full nested preprocessing completeness",
+      "full mutual+nested positivity completeness",
+      "arbitrary Lean stored RecursorRule.rhs reconstruction",
+      "final whole-kernel K3 equivalence theorem"
+    ],
+    "doesNotProveYet": [
+      "full K3 whole-kernel equivalence",
+      "Lean accepts iff ProofScript accepts for every Lean kernel artifact",
+      "complete arbitrary mutual/nested admission and positivity completeness",
+      "complete arbitrary stored RecursorRule.rhs reconstruction"
+    ]
+  },
+  "status": "PASS"
+}

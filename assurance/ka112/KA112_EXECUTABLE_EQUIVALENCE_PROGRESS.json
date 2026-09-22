@@ -1,0 +1,260 @@
+{
+  "checkpoint": "proofscript-v1-ka112-executable-equivalence-progress0",
+  "publicVersion": "1.0.0-pskernel.115",
+  "baseline": "proofscript-v1-ka111-progress-dashboard0",
+  "metrics": {
+    "featureSurfaceBridgeProgressPercent": 100,
+    "executableKernelEquivalenceProofProgressPercent": 88,
+    "executableKernelEquivalencePreviousPercent": 87,
+    "executableKernelEquivalenceDeltaPercent": 1,
+    "arenaCorpusRegressionPercent": 100,
+    "releasePackagingVerificationPercent": 100,
+    "formalLean4LeanBridgeObligations": 366,
+    "newFormalLean4LeanBridgeObligations": 0,
+    "fullLean4EquivalencePercent": 0,
+    "fullyFormalK3Percent": 0,
+    "overallConservativeProjectProgressPercent": 81.4,
+    "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+  },
+  "phaseStatus": {
+    "featureSurfaceBridge": "closed",
+    "executableEquivalence": "active-frontier-mapped",
+    "fullLean4Equivalence": "not-proven",
+    "fullyFormalK3": "not-proven",
+    "claimBoundary": "enforced"
+  },
+  "frontierSummary": {
+    "executableFrontierMappedPercent": 100,
+    "mapped": [
+      {
+        "ka": "ka51",
+        "label": "expr-constructor",
+        "leanBridge": "assurance/ka51/executable-expression-translator-constructor-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka51/executable-expression-translator-constructor-refinement-bridge-spec.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka52",
+        "label": "expr-binder",
+        "leanBridge": "assurance/ka52/executable-expression-translator-binder-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka52/executable-expression-translator-binder-refinement-bridge-spec.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka53",
+        "label": "expr-residual",
+        "leanBridge": "assurance/ka53/executable-expression-translator-residual-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka53/executable-expression-translator-residual-refinement-bridge-spec.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka54",
+        "label": "expr-determinism",
+        "leanBridge": "assurance/ka54/executable-expression-translator-determinism-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka54/executable-expression-translator-determinism-refinement-bridge-spec.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka55",
+        "label": "expr-substitution",
+        "leanBridge": "assurance/ka55/executable-expression-translator-substitution-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka55/executable-expression-translator-substitution-refinement-bridge-spec.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka56",
+        "label": "expr-source-condition",
+        "leanBridge": "assurance/ka56/executable-expression-translator-source-condition-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka56/executable-expression-translator-source-condition-refinement-bridge-spec.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka57",
+        "label": "expr-source-transform",
+        "leanBridge": "assurance/ka57/executable-expression-translator-source-transform-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka57/executable-expression-translator-source-transform-refinement-bridge-spec.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka58",
+        "label": "expr-invariant",
+        "leanBridge": "assurance/ka58/executable-expression-translator-invariant-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka58/executable-expression-translator-invariant-refinement-bridge-spec.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka59",
+        "label": "expr-application",
+        "leanBridge": "assurance/ka59/executable-expression-translator-application-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka59/executable-expression-translator-application-refinement-bridge-spec.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka60",
+        "label": "expr-beta",
+        "leanBridge": "assurance/ka60/executable-expression-translator-beta-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka60/executable-expression-translator-beta-refinement-bridge-spec.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka61",
+        "label": "expr-appstack",
+        "leanBridge": "assurance/ka61/executable-expression-translator-appstack-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka61/executable-expression-translator-appstack-refinement-bridge-spec.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka62",
+        "label": "expr-uninstantiate",
+        "leanBridge": "assurance/ka62/executable-expression-translator-uninstantiate-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka62/executable-expression-translator-uninstantiate-refinement-bridge-spec.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka63",
+        "label": "expr-bool-literal",
+        "leanBridge": "assurance/ka63/executable-expression-translator-bool-literal-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka63/executable-expression-translator-bool-literal-refinement-bridge-spec.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka64",
+        "label": "expr-eqv",
+        "leanBridge": "assurance/ka64/executable-expression-translator-eqv-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka64/executable-expression-translator-eqv-refinement-bridge-spec.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka65",
+        "label": "whnf",
+        "leanBridge": "assurance/ka65/executable-whnf-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka65/executable-whnf-refinement-bridge-spec.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka66",
+        "label": "defeq-core",
+        "leanBridge": "assurance/ka66/executable-defeq-core-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka66/executable-defeq-core-refinement-bridge-spec.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka67",
+        "label": "defeq-binder-app-eta",
+        "leanBridge": "assurance/ka67/executable-defeq-binder-app-eta-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka67/executable-defeq-binder-app-eta-refinement-bridge-spec.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka68",
+        "label": "defeq-proof-level-offset",
+        "leanBridge": "assurance/ka68/executable-defeq-proof-level-offset-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka68/executable-defeq-proof-level-offset-refinement-bridge-spec.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka69",
+        "label": "defeq-delta-string",
+        "leanBridge": "assurance/ka69/executable-defeq-delta-string-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka69/KA69_EXECUTABLE_DEFEQ_DELTA_STRING_REFINEMENT_BRIDGE_SPEC.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka70",
+        "label": "defeq-unit-proj",
+        "leanBridge": "assurance/ka70/executable-defeq-unit-proj-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka70/KA70_EXECUTABLE_DEFEQ_UNIT_PROJ_REFINEMENT_BRIDGE_SPEC.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka72",
+        "label": "defeq-eta-cache-status",
+        "leanBridge": "assurance/ka72/executable-defeq-eta-cache-status-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka72/KA72_EXECUTABLE_DEFEQ_ETA_CACHE_STATUS_REFINEMENT_BRIDGE_SPEC.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka74",
+        "label": "defeq-nat-offset-boundary",
+        "leanBridge": "assurance/ka74/executable-defeq-nat-offset-boundary-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka74/KA74_EXECUTABLE_DEFEQ_NAT_OFFSET_BOUNDARY_REFINEMENT_BRIDGE_SPEC.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka75",
+        "label": "infer-atomic",
+        "leanBridge": "assurance/ka75/executable-infer-atomic-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka75/KA75_EXECUTABLE_INFER_ATOMIC_REFINEMENT_BRIDGE_SPEC.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka76",
+        "label": "infer-constant-literal",
+        "leanBridge": "assurance/ka76/executable-infer-constant-literal-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka76/KA76_EXECUTABLE_INFER_CONSTANT_LITERAL_REFINEMENT_BRIDGE_SPEC.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka77",
+        "label": "infer-structural",
+        "leanBridge": "assurance/ka77/executable-infer-structural-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka77/KA77_EXECUTABLE_INFER_STRUCTURAL_REFINEMENT_BRIDGE_SPEC.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      },
+      {
+        "ka": "ka79",
+        "label": "infer-loop",
+        "leanBridge": "assurance/ka79/executable-infer-loop-refinement-bridge.lean",
+        "bridgeSpec": "assurance/ka79/KA79_EXECUTABLE_INFER_LOOP_REFINEMENT_BRIDGE_SPEC.json",
+        "exists": true,
+        "noSorryOrAdmit": true
+      }
+    ],
+    "counts": {
+      "expected": 26,
+      "presentNoSorryOrAdmit": 26,
+      "missingOrDirty": 0
+    },
+    "evidenceMeaning": "frontier map checks executable bridge artifacts already present; it is not an executable PSKernel refinement proof"
+  },
+  "percentBoundaries": {
+    "executableProgressIsDashboardEvidenceNotRefinementProof": true,
+    "frontierMapDoesNotProvePSKernelEquivalence": true,
+    "overallProgressIsDashboardEstimate": true
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

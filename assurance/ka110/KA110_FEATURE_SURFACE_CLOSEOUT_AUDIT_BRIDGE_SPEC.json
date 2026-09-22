@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka110-feature-surface-closeout-audit0",
+  "publicVersion": "1.0.0-pskernel.113",
+  "baseline": "proofscript-v1-ka109-primitive-condition-structural-helper-refinement0",
+  "referenceKind": "feature-surface-closeout-audit",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 0,
+  "countedObligations": [],
+  "sourceTheorems": [],
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveSurfaceRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

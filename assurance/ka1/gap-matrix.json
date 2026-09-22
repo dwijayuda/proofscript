@@ -1,0 +1,66 @@
+{
+  "schema": "proofscript.assurance.ka1.gap-matrix/v1",
+  "status": "gap-ledger-for-equivalence-roadmap",
+  "gaps": [
+    {
+      "id": "formal-soundness-proof",
+      "severity": "critical",
+      "currentStatus": "no machine-checked theorem connects PSKernel acceptance to Lean 4.33.1 acceptance",
+      "closureCriterion": "target_checkDecl_sound has a real proof over the supported fragment"
+    },
+    {
+      "id": "defeq-soundness-proof",
+      "severity": "critical",
+      "currentStatus": "conversion is tested and audited but not proved equivalent",
+      "closureCriterion": "target_defEq_sound is proved, including beta/delta/iota/zeta/eta/quot/proof irrelevance"
+    },
+    {
+      "id": "translation-relation",
+      "severity": "critical",
+      "currentStatus": "translation skeleton exists only as KA-1 target",
+      "closureCriterion": "translateLevel/Expr/Decl/Env are implemented in the formal model and validated against executable artifacts"
+    },
+    {
+      "id": "full-lean-input-parity",
+      "severity": "major",
+      "currentStatus": "PSKernel supports checked Core, not every Lean export/source input form",
+      "closureCriterion": "full input inventory either implemented or explicitly excluded with adapter proofs"
+    },
+    {
+      "id": "official-arena-submission",
+      "severity": "moderate",
+      "currentStatus": "local mounted corpus pass but not official checker registration",
+      "closureCriterion": "standalone pskernel-arena runner submitted and reflected in official Arena results"
+    },
+    {
+      "id": "release-delta-tracking",
+      "severity": "major",
+      "currentStatus": "Lean 4.33.1 is pinned; later versions need explicit delta analysis",
+      "closureCriterion": "each Lean release upgrade has a machine-readable delta inventory and proof-obligation update"
+    },
+    {
+      "id": "resource-policy-proof",
+      "severity": "moderate",
+      "currentStatus": "resource bounds implemented as implementation policy",
+      "closureCriterion": "resource_exhausted is formally excluded from semantic accept/reject results"
+    },
+    {
+      "id": "frontend-elaboration-proof",
+      "severity": "major",
+      "currentStatus": "macros/tactics/typeclass search/source elaboration are outside kernel equivalence",
+      "closureCriterion": "separate frontend theorem maps source language to PSCore"
+    },
+    {
+      "id": "metadata-smuggling-proof",
+      "severity": "major",
+      "currentStatus": "tests reject smuggling, but a general proof is pending",
+      "closureCriterion": "artifact field classification is enforced by a theorem that advisory metadata cannot alter acceptance"
+    },
+    {
+      "id": "quotient-and-prop-boundary-proof",
+      "severity": "major",
+      "currentStatus": "tests/evidence exist; no complete proof",
+      "closureCriterion": "quotient/proof-irrelevance/Prop-elimination obligations are proved"
+    }
+  ]
+}

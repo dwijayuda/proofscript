@@ -1,0 +1,36 @@
+{
+  "label": "K3-TB",
+  "status": "OVERCLAIM_GUARD_ACTIVE_NOT_FULLY_FORMAL_K3",
+  "allowedClaims": [
+    {
+      "claim": "K3-TB trusted-boundary release candidate",
+      "allowed": true
+    },
+    {
+      "claim": "Lean 4.33.1-backed assurance release candidate",
+      "allowed": true
+    },
+    {
+      "claim": "conditional K3 scaffold with explicit trusted infrastructure assumptions",
+      "allowed": true
+    }
+  ],
+  "forbiddenClaims": [
+    {
+      "claim": "fully formal K3",
+      "allowed": false,
+      "reason": "TypeScript compiler, Node/ECMAScript runtime, arbitrary Lean completeness, exhaustive reduction completeness, and unconditional theorem instantiation remain open."
+    },
+    {
+      "claim": "complete Lean kernel equivalence",
+      "allowed": false,
+      "reason": "The package is a trusted-boundary candidate and does not prove arbitrary Lean acceptance iff ProofScript acceptance."
+    },
+    {
+      "claim": "verified Node/TypeScript runtime semantics",
+      "allowed": false,
+      "reason": "Runtime and compiler infrastructure are audited/trusted, not fully modeled or verified."
+    }
+  ],
+  "requiredCaveat": "This is a trusted-boundary K3 candidate, not fully formal K3."
+}

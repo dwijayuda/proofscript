@@ -1,0 +1,330 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "V71_RUNTIME_EXTRACTION_TRUST_BOUNDARY1",
+  "coreFormat": 71,
+  "status": "PASS",
+  "leanSemanticBaseline": "4.33.1",
+  "leanReleaseCommit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "progress": {
+    "percent": 97,
+    "previousPercent": 95,
+    "label": "v71 K3-track conservative engineering progress",
+    "note": "Progress is a project ledger, not a probability and not a formal K3 theorem."
+  },
+  "formal": {
+    "target": "ProofScriptKernelEquivalence.KernelV71RuntimeExtractionTrustBoundary",
+    "source": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71RuntimeExtractionTrustBoundary.lean",
+    "targetSourceSha256": "98a35246cd36b6ee657cc4907fc2abe38f44336f48646b2b857e43459e705001",
+    "log": "assurance/lean4331/evidence/v71-runtime-extraction-trust-boundary-formal1.out",
+    "logSha256": "6df31d2d2f788b062e0403ff82f348a615e238ccf4ddb0a887ba129588838760",
+    "targetTheorems": 6,
+    "reportedSorryAx": 0,
+    "effectiveFormalStackFiles": 46
+  },
+  "executable": {
+    "extractionAudit": {
+      "nodeVersion": "v22.16.0",
+      "npmVersion": "10.9.2",
+      "packageManager": "npm@10",
+      "typeScriptPackage": "file:vendor/npm/typescript-5.8.3.tgz",
+      "typeScriptTarget": "ES2022",
+      "typeScriptModule": "CommonJS",
+      "kernelSourceFileCount": 7,
+      "emittedJsFileCount": 7,
+      "emittedDtsFileCount": 7,
+      "emittedSourceMapFileCount": 14,
+      "missingEmittedArtifacts": 0,
+      "nonLocalDistRequires": 0,
+      "bannedDynamicRuntimeHits": 0,
+      "runtimeVectorCount": 6,
+      "runtimeVectorFailures": 0,
+      "sourceLedger": [
+        {
+          "path": "packages/kernel/src/core.ts",
+          "sha256": "a6118d1865e52b6c1d9e1bc9b7083538d42cd837f0e86919ace106ceac8a2742"
+        },
+        {
+          "path": "packages/kernel/src/index.ts",
+          "sha256": "0415c8243b3f209d144891649d310374fa8c0c6eb8d7889c6ccf7bbd4fbdc5f6"
+        },
+        {
+          "path": "packages/kernel/src/inductive.ts",
+          "sha256": "b06156840066f9c06a5f2264b440be6c6cd555c1f85d84f6fc9cd79fd39c03f6"
+        },
+        {
+          "path": "packages/kernel/src/kernel.ts",
+          "sha256": "44c6fd4af2cd821976130c551f4769442de054496a6aa4a125fdbf820c221c6c"
+        },
+        {
+          "path": "packages/kernel/src/level.ts",
+          "sha256": "b7846e322ec1b40369afddfde8fadf83f7e6e217a6613ecba7bbe957ab992074"
+        },
+        {
+          "path": "packages/kernel/src/quotient.ts",
+          "sha256": "b411b823c95ab220fa7e624e9e0020833f4b361b3836a532a430acfbe8203a47"
+        },
+        {
+          "path": "packages/kernel/src/runner.ts",
+          "sha256": "f51230abac9a4dbcd322e93d5abcbc46d39e80d358651f3a61957e91751dc239"
+        }
+      ],
+      "distAuditFiles": [
+        {
+          "path": "packages/kernel/dist/core.js",
+          "sha256": "76b42ba5b22a1cf48758f3bb1d2f43051363af63c9f23c559aa33cea48d74cd1",
+          "lines": 192,
+          "requireCount": 1
+        },
+        {
+          "path": "packages/kernel/dist/index.js",
+          "sha256": "e1e155cdfaeb7fcf27d164926613ba3e14033bec69dd35daf042fb23c756b9bc",
+          "lines": 23,
+          "requireCount": 6
+        },
+        {
+          "path": "packages/kernel/dist/inductive.js",
+          "sha256": "a39cb85bdbc3bda6722eba1a2251cdb46cff873fb441e4f8f57071f16834aa9c",
+          "lines": 569,
+          "requireCount": 2
+        },
+        {
+          "path": "packages/kernel/dist/kernel.js",
+          "sha256": "d67f9ccbc79a82bf2727c3ae62d59061dbedc8fa32b0ff6e29baae15238e6f88",
+          "lines": 8185,
+          "requireCount": 4
+        },
+        {
+          "path": "packages/kernel/dist/level.js",
+          "sha256": "8c342deb79b08518d6300bb9540c8c7a8b36e43e28a9cd68fdac99a75068de8a",
+          "lines": 394,
+          "requireCount": 0
+        },
+        {
+          "path": "packages/kernel/dist/quotient.js",
+          "sha256": "6174fe7ad4b38ffde440c5c8ef9cd72740fb44724264420157221ca9941f9098",
+          "lines": 73,
+          "requireCount": 1
+        },
+        {
+          "path": "packages/kernel/dist/runner.js",
+          "sha256": "d04a1773e139df55b2f4e9acbcec214384723291c339bd41199b5a878f77049c",
+          "lines": 178,
+          "requireCount": 2
+        }
+      ],
+      "distLedger": [
+        {
+          "path": "packages/kernel/dist/core.d.ts",
+          "sha256": "18e0f0d7ad04c855e6df792d6d8ef7960bf4023a94e273d484ede1de607ceeb9",
+          "bytes": 8375
+        },
+        {
+          "path": "packages/kernel/dist/core.d.ts.map",
+          "sha256": "2429abc5deb4bd0e9de4fe0c1c73b84ab0a8b694670353548b56d27718ab89de",
+          "bytes": 5936
+        },
+        {
+          "path": "packages/kernel/dist/core.js",
+          "sha256": "76b42ba5b22a1cf48758f3bb1d2f43051363af63c9f23c559aa33cea48d74cd1",
+          "bytes": 10158
+        },
+        {
+          "path": "packages/kernel/dist/core.js.map",
+          "sha256": "c9d182fd62f8cbcc84b26938316d23576f82782cac54455c1e901e9de9ced0b9",
+          "bytes": 12613
+        },
+        {
+          "path": "packages/kernel/dist/index.d.ts",
+          "sha256": "4e05e24f7b36c555064c94820a3dd639d5337fa41b481b9dd4b95a1ab5558002",
+          "bytes": 193
+        },
+        {
+          "path": "packages/kernel/dist/index.d.ts.map",
+          "sha256": "1d6eaa3d5a9ff4e4ccf51bce9747b6d9eac0cd40bc1635a5dfbda1c6ba796f53",
+          "bytes": 228
+        },
+        {
+          "path": "packages/kernel/dist/index.js",
+          "sha256": "e1e155cdfaeb7fcf27d164926613ba3e14033bec69dd35daf042fb23c756b9bc",
+          "bytes": 1056
+        },
+        {
+          "path": "packages/kernel/dist/index.js.map",
+          "sha256": "bbb124f863c9813fa73f903ea9b343e2b7ce2c9d578680578780793f2c1037ba",
+          "bytes": 194
+        },
+        {
+          "path": "packages/kernel/dist/inductive.d.ts",
+          "sha256": "42d532bece21e562c972e796e4dead3e9be4b6545e0264c1d767c8261b22de27",
+          "bytes": 5153
+        },
+        {
+          "path": "packages/kernel/dist/inductive.d.ts.map",
+          "sha256": "331f0fe8403fbe413822f3191a1ba1d3440d91dfba22c736c6120a2670825d3f",
+          "bytes": 2793
+        },
+        {
+          "path": "packages/kernel/dist/inductive.js",
+          "sha256": "a39cb85bdbc3bda6722eba1a2251cdb46cff873fb441e4f8f57071f16834aa9c",
+          "bytes": 36751
+        },
+        {
+          "path": "packages/kernel/dist/inductive.js.map",
+          "sha256": "c47ad476c0f2bcc9f29590b09bb166dc3edf46d97fd5724f93e82b4a44f089d1",
+          "bytes": 38744
+        },
+        {
+          "path": "packages/kernel/dist/kernel.d.ts",
+          "sha256": "8b29744eda32dd141fd6e2ed298e2b42cf50874fece47a2ce8c50ef026898106",
+          "bytes": 13568
+        },
+        {
+          "path": "packages/kernel/dist/kernel.d.ts.map",
+          "sha256": "f3fe6fa1013a88d64c2ecf3e6c0f29570675b0bac8a8b6b7b009c324794f7066",
+          "bytes": 6755
+        },
+        {
+          "path": "packages/kernel/dist/kernel.js",
+          "sha256": "d67f9ccbc79a82bf2727c3ae62d59061dbedc8fa32b0ff6e29baae15238e6f88",
+          "bytes": 531227
+        },
+        {
+          "path": "packages/kernel/dist/kernel.js.map",
+          "sha256": "f0640ecacf6fc9bdea42883d2b72b58ec2e13eeb4e0b1f4aacf35ddd0416cd60",
+          "bytes": 537473
+        },
+        {
+          "path": "packages/kernel/dist/level.d.ts",
+          "sha256": "e0f794f6d0854835499d0376e8fdb076ca4e31533d5484804cc0cbb90d59f11f",
+          "bytes": 2975
+        },
+        {
+          "path": "packages/kernel/dist/level.d.ts.map",
+          "sha256": "2df1570779ac89a53941da20efa4f05cba05d1e47d4623c4930dacdcd827e9f6",
+          "bytes": 1852
+        },
+        {
+          "path": "packages/kernel/dist/level.js",
+          "sha256": "8c342deb79b08518d6300bb9540c8c7a8b36e43e28a9cd68fdac99a75068de8a",
+          "bytes": 14848
+        },
+        {
+          "path": "packages/kernel/dist/level.js.map",
+          "sha256": "148057d2aa4c33e022dc92fa8fbf11173b63942f88b5e3d0df5f9c72a97a72b6",
+          "bytes": 15708
+        },
+        {
+          "path": "packages/kernel/dist/quotient.d.ts",
+          "sha256": "dc00e46fee0d08ebc1bd28ef21c4fe2c0f06674d3ce4ee495cf2c938fd6fbbbc",
+          "bytes": 976
+        },
+        {
+          "path": "packages/kernel/dist/quotient.d.ts.map",
+          "sha256": "18908ee0586ddf041de0d3007ccc29b11803c3cdbce3d6d22f58a4a40520e2be",
+          "bytes": 675
+        },
+        {
+          "path": "packages/kernel/dist/quotient.js",
+          "sha256": "6174fe7ad4b38ffde440c5c8ef9cd72740fb44724264420157221ca9941f9098",
+          "bytes": 4728
+        },
+        {
+          "path": "packages/kernel/dist/quotient.js.map",
+          "sha256": "dbf91d6c14112bb8312e5e6186e9c9c9e95b63cdfc356fe460706e4a5b560aae",
+          "bytes": 6847
+        },
+        {
+          "path": "packages/kernel/dist/runner.d.ts",
+          "sha256": "9e0567e59c6dc5606839385b3786540004bb9a0ced27441246ea67927948bee6",
+          "bytes": 639
+        },
+        {
+          "path": "packages/kernel/dist/runner.d.ts.map",
+          "sha256": "7ee86a06b9c8e8377c30012a38c6fb1030bc2f99dfee9c40b0516ab3d9be5cfa",
+          "bytes": 647
+        },
+        {
+          "path": "packages/kernel/dist/runner.js",
+          "sha256": "d04a1773e139df55b2f4e9acbcec214384723291c339bd41199b5a878f77049c",
+          "bytes": 15643
+        },
+        {
+          "path": "packages/kernel/dist/runner.js.map",
+          "sha256": "1d2e90ad0339d4f587d539c7fc4c1821f21a7009a1380339fb7bca19fe709b64",
+          "bytes": 9873
+        }
+      ],
+      "sourceHash": "d29dea20a7eaa790ba3a4b29d31324e9b6dffd9777bbef52d3a086105dc16e3c",
+      "distHash": "c8fe23d3dcb999d3be663a48495a61b8865fab1a2ccc9084f01d3d77326e4421",
+      "extractionPairHash": "26ef4407c5dcdb3f3ed592566ec62f7453f84dfdcf6d1012351cc916d77c3763",
+      "buildLog": "assurance/lean4331/evidence/v71-runtime-extraction-build1.out",
+      "buildLogSha256": "d8dd31c5189a416706979c8f811a07ad0b99cde01569b56fe0b4505abc81ba6d"
+    },
+    "runtimeVectors": [
+      {
+        "name": "pretty Prop from emitted JS",
+        "status": "PASS",
+        "result": true
+      },
+      {
+        "name": "level zero defeq emitted JS",
+        "status": "PASS",
+        "result": true
+      },
+      {
+        "name": "sameTerm reflexive emitted JS",
+        "status": "PASS",
+        "result": true
+      },
+      {
+        "name": "axiom declaration accepted emitted JS",
+        "status": "PASS",
+        "result": true
+      },
+      {
+        "name": "bad definition rejected emitted JS",
+        "status": "PASS",
+        "result": true
+      },
+      {
+        "name": "quotient primitives emitted JS",
+        "status": "PASS",
+        "result": true
+      }
+    ],
+    "failures": 0
+  },
+  "inherited": {
+    "fullLeanGate": {
+      "status": "PASS",
+      "partCount": 6
+    },
+    "kernelTSSmallStepBoundary": {
+      "status": "PASS",
+      "progress": 95
+    },
+    "kernelTSSemanticsBoundary": {
+      "status": "PASS",
+      "progress": 93
+    }
+  },
+  "completedSlices": [
+    "pinned Node/npm runtime ledger",
+    "pinned vendored TypeScript package ledger",
+    "composite TypeScript build gate",
+    "emitted kernel dist completeness audit",
+    "local CommonJS emitted closure audit",
+    "emitted runtime dynamic-feature exclusion audit",
+    "emitted declaration and source-map ledger",
+    "emitted dist runtime smoke vectors",
+    "inherited KernelTS small-step execution-boundary certificate",
+    "inherited full Lean 4.33.1 gate evidence"
+  ],
+  "outstandingK3Obligations": [
+    "full ECMAScript or Node runtime model",
+    "verified TypeScript compiler or extraction path",
+    "arbitrary Lean acceptance completeness iff ProofScript acceptance",
+    "exhaustive all-Lean reduction-path completeness",
+    "final whole-kernel K3 equivalence theorem"
+  ]
+}

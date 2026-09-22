@@ -1,0 +1,34 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "../parser"
+    },
+    {
+      "path": "../elaborator"
+    },
+    {
+      "path": "../kernel"
+    },
+    {
+      "path": "../kernel-codec"
+    },
+    {
+      "path": "../environment"
+    },
+    {
+      "path": "../project"
+    },
+    {
+      "path": "../syntax"
+    }
+  ]
+}

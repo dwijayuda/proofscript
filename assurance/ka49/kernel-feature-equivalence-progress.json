@@ -1,0 +1,61 @@
+{
+  "checkpoint": "proofscript-v1-ka49-checker-pipeline-end-to-end-theorem-skeleton-preflight0",
+  "publicVersion": "1.0.0-pskernel.52",
+  "featureSurfaceBridgeProgressPercent": 71,
+  "executableKernelEquivalenceProofProgressPercent": 36,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 132,
+  "groups": [
+    {
+      "id": "ordinary-declarations",
+      "progressPercent": 83,
+      "status": "checker pipeline skeleton touches declaration checking; executable refinement incomplete"
+    },
+    {
+      "id": "quotients",
+      "progressPercent": 74,
+      "status": "environment bridge complete; semantic soundness incomplete"
+    },
+    {
+      "id": "inductives",
+      "progressPercent": 44,
+      "status": "environment bridge plus recursor/projection proof-surface scaffolds; generated rule/RHS refinement still open"
+    },
+    {
+      "id": "mutual-definitions",
+      "progressPercent": 43,
+      "status": "initial environment bridge; executable refinement incomplete"
+    },
+    {
+      "id": "expression-tags",
+      "progressPercent": 64,
+      "status": "TrExprS constructor surface plus executable translator preflight; executable translator not fully refined"
+    },
+    {
+      "id": "typechecker-whnf-defeq",
+      "progressPercent": 52,
+      "status": "WHNF/DefEq proof-surface bridges plus executable WHNF/DefEq preflight; executable checker refinement incomplete"
+    },
+    {
+      "id": "codec-replay",
+      "progressPercent": 36,
+      "status": "Replay surface and PS codec stability gates exist"
+    },
+    {
+      "id": "resource-errors",
+      "progressPercent": 39,
+      "status": "fuel/error conservativity surface bridge only"
+    },
+    {
+      "id": "architecture-health",
+      "progressPercent": 83,
+      "status": "no-spaghetti ratchet plus KA49 semantic-package touch guard"
+    },
+    {
+      "id": "end-to-end-refinement-spine",
+      "progressPercent": 34,
+      "status": "checker pipeline skeleton added; no end-to-end theorem yet"
+    }
+  ],
+  "notAFormalEquivalenceClaim": true
+}

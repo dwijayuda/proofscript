@@ -1,0 +1,41 @@
+{
+  "checkpoint": "proofscript-v1-ka90-primitive-shift-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.93",
+  "baseline": "proofscript-v1-ka89-primitive-comparison-recognizer-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 278,
+  "newFormalLean4LeanBridgeObligations": 2,
+  "baselineObligations": 276,
+  "countedObligations": [
+    "translated_checkNatShiftLeft_wf",
+    "translated_checkNatShiftRight_wf"
+  ],
+  "redTestObserved": true,
+  "redTestReason": "KA90 test failed first on missing KA90 gate tool",
+  "noWrapperTimeoutCountedAsPassed": true,
+  "commands": {
+    "redTest": "failed-as-expected",
+    "install": "passed",
+    "build": "passed",
+    "focusedTest": "passed",
+    "assurance": "passed",
+    "leanCheck": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "pscConformanceBounded": "passed",
+    "arenaCorpusPreflight": "passed",
+    "arenaStaticNonperf": "passed",
+    "arenaTutorial": "passed",
+    "verifyArena": "passed",
+    "npmPackWorkspaces": "passed",
+    "packageSha256Manifest": "passed"
+  },
+  "npmPackages": {
+    "packed": 36,
+    "sha256Entries": 36,
+    "verification": "passed"
+  },
+  "wrapperTimeoutsCountedAsPassed": false
+}

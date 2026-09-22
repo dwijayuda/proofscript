@@ -1,0 +1,46 @@
+{
+  "checkpoint": "proofscript-v1-ka56-executable-expression-translator-source-condition-refinement0",
+  "publicVersion": "1.0.0-pskernel.59",
+  "baseline": "proofscript-v1-ka55-executable-expression-translator-substitution-refinement0",
+  "commands": {
+    "focusedTest": "passed",
+    "assuranceKA56": "passed",
+    "leanKA56Check": "passed",
+    "verifyArenaWrapper": "timed-out-not-counted",
+    "arenaTailAfterTimeout": "passed"
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA56",
+        "source": "assurance/ka56/executable-expression-translator-source-condition-refinement-bridge.lean",
+        "destination": "PSKernelKA56ExecutableExpressionTranslatorSourceConditionRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA56 gate tool absent before implementation",
+  "arenaVerification": {
+    "arenaCorpusPreflight": "passed",
+    "staticNonPerf": "passed",
+    "tutorial": "passed",
+    "verifyArenaWrapper": "timed-out-not-counted",
+    "timedOutCommand": "TERM=xterm npm run verify:arena",
+    "tailRerunAfterTimeout": {
+      "test:arena:tutorial": "passed",
+      "test:arena:recursor-rule-arity-validation": "passed",
+      "test:arena:transparent-result-sort-reject": "passed",
+      "test:arena:mutual-imax-prop-reject": "passed"
+    },
+    "noWrapperTimeoutCountedAsPassed": true
+  }
+}

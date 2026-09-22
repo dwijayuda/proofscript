@@ -1,0 +1,150 @@
+{
+  "checkpoint": "proofscript-v1-ka105-primitive-defeq-application-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.108",
+  "baseline": "proofscript-v1-ka104-primitive-telescope-typing-helper-refinement0",
+  "releaseKind": "strict-lean4lean-primitive-defeq-application-helper-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA105",
+      "source": "assurance/ka105/primitive-defeq-application-helper-refinement-bridge.lean",
+      "destination": "KA105PrimitiveTelescopeTypingHelperBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 5,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka105-primitive-defeq-application-helper-refinement0",
+    "publicVersion": "1.0.0-pskernel.108",
+    "featureSurfaceBridgeProgressPercent": 99,
+    "executableKernelEquivalenceProofProgressPercent": 83,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 346,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 341,
+      "newFormalLean4LeanBridgeObligations": 5,
+      "correctedFormalLean4LeanBridgeObligations": 346,
+      "countedNewObligations": [
+        "translated_isDefEqU_appN_prime_wf",
+        "translated_trExprS_appN_wf",
+        "translated_isDefEqU_app_arg_wf",
+        "translated_vexpr_lams_ctx_wf",
+        "translated_vexpr_lams_appN_wf"
+      ]
+    },
+    "metricPolicy": "KA105 adds direct non-sorry-backed primitive defeq/application helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka105Files": [
+      {
+        "path": "tools/pskernel-ka105-primitive-defeq-application-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka105-primitive-defeq-application-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka105/KA105_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 23,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka105/KA105_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka105/KA105_PRIMITIVE_DEFEQ_APPLICATION_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 36,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka105/KA105_PRIMITIVE_DEFEQ_APPLICATION_HELPER_REFINEMENT_RELEASE_GATE.json",
+        "lines": 151,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka105/KA105_PRIMITIVE_DEFEQ_APPLICATION_HELPER_REFINEMENT_REPORT.md",
+        "lines": 22,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka105/KA105_PRIMITIVE_DEFEQ_APPLICATION_HELPER_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 9,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka105/KA105_PRIMITIVE_TELESCOPE_TYPING_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 36,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka105/KA105_PRIMITIVE_TELESCOPE_TYPING_HELPER_REFINEMENT_RELEASE_GATE.json",
+        "lines": 131,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka105/KA105_PRIMITIVE_TELESCOPE_TYPING_HELPER_REFINEMENT_REPORT.md",
+        "lines": 22,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka105/KA105_PRIMITIVE_TELESCOPE_TYPING_HELPER_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 9,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka105/primitive-defeq-application-helper-refinement-bridge.lean",
+        "lines": 58,
+        "ext": ".lean"
+      }
+    ],
+    "ka105ToolFiles": [
+      {
+        "path": "tools/pskernel-ka105-primitive-defeq-application-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka105-primitive-defeq-application-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      }
+    ],
+    "newKA105OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveDefeqApplicationHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

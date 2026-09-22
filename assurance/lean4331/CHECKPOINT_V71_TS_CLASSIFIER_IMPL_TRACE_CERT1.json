@@ -1,0 +1,52 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "V71_TS_CLASSIFIER_IMPL_TRACE_CERT1",
+  "coreFormat": 71,
+  "profile": "KERNEL-level-instantiation-conformance1",
+  "semanticChange": false,
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+    "executable": "/mnt/data/lean-install/lean-4.33.1-linux/bin/lean",
+    "versionOutput": "Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)"
+  },
+  "formal": {
+    "newTarget": "ProofScriptKernelEquivalence.InductiveClassifierImplementationTrace",
+    "compiledJobs": 31,
+    "inheritedEffectiveStackFromNonMutualDeclEnvCert": 31,
+    "effectiveModulesOrContractsAfterTrace": 32,
+    "targetStatements": 8,
+    "reportedSorryAx": 0,
+    "log": "assurance/lean4331/evidence/v71-ts-classifier-implementation-trace-formal1.out",
+    "source": "assurance/lean4331/formal/ProofScriptKernelEquivalence/InductiveClassifierImplementationTrace.lean",
+    "sourceSha256": "b1735f704d3b0343b9938e982eb3fb52c75fde0dac32a4c7127aef37449c5cf9",
+    "theoremBoundary": "implementation trace exposes PSCtorClassifierWitness/PSFamilyClassifierWitness and inherits generic admission plus whole-environment soundness"
+  },
+  "executable": {
+    "sourceFunctions": 6,
+    "sourceObligations": 46,
+    "sourceMissing": 0,
+    "runtimeAcceptedFamilies": 5,
+    "runtimeRejectedFamilies": 4,
+    "atomicRejections": 4,
+    "optionSentinels": 4,
+    "exactBridge": "PASS",
+    "failures": 0,
+    "log": "assurance/lean4331/evidence/v71-ts-classifier-implementation-correspondence2.out"
+  },
+  "inherited": {
+    "nonmutualDeclEnvCertificate": "PASS",
+    "fullLeanGateParts": 6,
+    "localMergedComponents": 2
+  },
+  "scope": {
+    "claim": "stronger implementation trace certificate for the non-mutual TypeScript classifier path",
+    "notClaimed": {
+      "javascriptRuntimeSemanticsFormalized": true,
+      "completeTypeScriptLanguageSemantics": true,
+      "mutualOrNestedInductiveAdmission": true,
+      "fullK3WholeKernelEquivalence": true
+    }
+  },
+  "status": "PASS"
+}

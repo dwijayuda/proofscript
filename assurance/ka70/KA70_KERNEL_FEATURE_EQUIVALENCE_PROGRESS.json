@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka70-executable-defeq-unit-proj-refinement0",
+  "publicVersion": "1.0.0-pskernel.73",
+  "featureSurfaceBridgeProgressPercent": 88,
+  "featureSurfaceBridgeProgressPolicy": "held pending audit",
+  "executableKernelEquivalenceProofProgressPercent": 54,
+  "executableKernelEquivalenceProofProgressPolicy": "held pending audit",
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 216,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 212,
+    "newFormalLean4LeanBridgeObligations": 4,
+    "countedNewObligations": [
+      "translated_tryStringLitExpansionCore_wf",
+      "translated_isDefEqUnitLike_wf",
+      "translated_lazyDeltaProjReduction_finish_wf",
+      "translated_lazyDeltaProjReduction_loop_wf"
+    ]
+  },
+  "metricPolicy": "KA70 advances the exact formal obligation counter only; percentage estimates remain held pending a separate coverage audit.",
+  "notAFormalEquivalenceClaim": true
+}

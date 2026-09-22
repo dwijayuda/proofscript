@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka98-primitive-fuel-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.101",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 76,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 311,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 306,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "correctedFormalLean4LeanBridgeObligations": 311,
+    "countedNewObligations": [
+      "translated_data_uvars_eq_wf",
+      "translated_goArgs_wf",
+      "translated_natFuelRec_wf",
+      "translated_elseFail_wf",
+      "translated_hok_wf"
+    ]
+  },
+  "metricPolicy": "KA98 adds direct non-sorry-backed primitive fuel-recursion helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

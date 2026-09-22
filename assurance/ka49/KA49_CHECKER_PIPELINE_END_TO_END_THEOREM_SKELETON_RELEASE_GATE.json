@@ -1,0 +1,176 @@
+{
+  "checkpoint": "proofscript-v1-ka49-checker-pipeline-end-to-end-theorem-skeleton-preflight0",
+  "publicVersion": "1.0.0-pskernel.52",
+  "baseline": "proofscript-v1-ka48-executable-whnf-defeq-refinement-preflight0",
+  "releaseKind": "formal-bridge",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "referenceKind": "source-bound-lean4lean-checker-pipeline-end-to-end-theorem-skeleton-preflight",
+  "actualLean4LeanImportBound": true,
+  "strictCheckerPipelineBridgePassed": true,
+  "formalLeanCheckStatus": "passed",
+  "blockedReasons": [],
+  "coveredLean4LeanCheckerPipelineSurface": [
+    "Environment.addDecl.WF",
+    "Environment.addDefinition.WF",
+    "Environment.addTheorem.WF",
+    "Environment.addOpaque.WF",
+    "Environment.addMutual.WF",
+    "Environment.addQuot.WF",
+    "Environment.Checker.checkConstantValBody.WF",
+    "Environment.Checker.checkNoMVarNoFVar.WF",
+    "TypeChecker.checkType.WF",
+    "TypeChecker.Inner.whnf.WF",
+    "TypeChecker.Inner.isDefEqCore.WF"
+  ],
+  "intendedFormalBridgeLemmas": [
+    "Lean4Lean.PSKernelKA49.translated_checkConstantValBody_surface_available",
+    "Lean4Lean.PSKernelKA49.translated_addDecl_pipeline_surface_available",
+    "Lean4Lean.PSKernelKA49.translated_checker_pipeline_spine_surface_available",
+    "Lean4Lean.PSKernelKA49.translated_checker_pipeline_refinement_not_claimed"
+  ],
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "sourceFileCount": 1715,
+    "ka49SourceFiles": [
+      {
+        "path": "assurance/ka49/KA49_CHECKER_PIPELINE_END_TO_END_THEOREM_SKELETON_RELEASE_GATE.json",
+        "lines": 179,
+        "ext": ".json"
+      },
+      {
+        "path": "tools/pskernel-ka49-checker-pipeline-end-to-end-theorem-skeleton.ts",
+        "lines": 76,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka49/kernel-feature-equivalence-progress.json",
+        "lines": 62,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka49/checker-pipeline-end-to-end-theorem-skeleton-bridge.json",
+        "lines": 54,
+        "ext": ".json"
+      },
+      {
+        "path": "tools/pskernel-ka49-checker-pipeline-end-to-end-theorem-skeleton-tests.ts",
+        "lines": 41,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka49/KA49_CHECKER_PIPELINE_END_TO_END_THEOREM_SKELETON_REPORT.md",
+        "lines": 40,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka49/checker-pipeline-end-to-end-theorem-skeleton.lean",
+        "lines": 28,
+        "ext": ".lean"
+      },
+      {
+        "path": "assurance/ka49/KA49_CHECKER_PIPELINE_END_TO_END_THEOREM_SKELETON_VERIFICATION_SUMMARY.json",
+        "lines": 19,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka49/KA49_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      }
+    ],
+    "ka49ToolFiles": [
+      {
+        "path": "tools/pskernel-ka49-checker-pipeline-end-to-end-theorem-skeleton.ts",
+        "lines": 76,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka49-checker-pipeline-end-to-end-theorem-skeleton-tests.ts",
+        "lines": 41,
+        "ext": ".ts"
+      }
+    ],
+    "newKA49OversizedFiles": [],
+    "semanticPackageTouched": false
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka49-checker-pipeline-end-to-end-theorem-skeleton-preflight0",
+    "publicVersion": "1.0.0-pskernel.52",
+    "featureSurfaceBridgeProgressPercent": 71,
+    "executableKernelEquivalenceProofProgressPercent": 36,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 132,
+    "groups": [
+      {
+        "id": "ordinary-declarations",
+        "progressPercent": 83,
+        "status": "checker pipeline skeleton touches declaration checking; executable refinement incomplete"
+      },
+      {
+        "id": "quotients",
+        "progressPercent": 74,
+        "status": "environment bridge complete; semantic soundness incomplete"
+      },
+      {
+        "id": "inductives",
+        "progressPercent": 44,
+        "status": "environment bridge plus recursor/projection proof-surface scaffolds; generated rule/RHS refinement still open"
+      },
+      {
+        "id": "mutual-definitions",
+        "progressPercent": 43,
+        "status": "initial environment bridge; executable refinement incomplete"
+      },
+      {
+        "id": "expression-tags",
+        "progressPercent": 64,
+        "status": "TrExprS constructor surface plus executable translator preflight; executable translator not fully refined"
+      },
+      {
+        "id": "typechecker-whnf-defeq",
+        "progressPercent": 52,
+        "status": "WHNF/DefEq proof-surface bridges plus executable WHNF/DefEq preflight; executable checker refinement incomplete"
+      },
+      {
+        "id": "codec-replay",
+        "progressPercent": 36,
+        "status": "Replay surface and PS codec stability gates exist"
+      },
+      {
+        "id": "resource-errors",
+        "progressPercent": 39,
+        "status": "fuel/error conservativity surface bridge only"
+      },
+      {
+        "id": "architecture-health",
+        "progressPercent": 83,
+        "status": "no-spaghetti ratchet plus KA49 semantic-package touch guard"
+      },
+      {
+        "id": "end-to-end-refinement-spine",
+        "progressPercent": 34,
+        "status": "checker pipeline skeleton added; no end-to-end theorem yet"
+      }
+    ],
+    "notAFormalEquivalenceClaim": true
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "endToEndCheckerPipelineTheorem": false,
+    "formalLean4LeanBridgeObligations": 132
+  },
+  "fullLean4Equivalence": false,
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

@@ -1,0 +1,58 @@
+{
+  "checkpoint": "proofscript-v1-ka63-executable-expression-translator-bool-literal-refinement0",
+  "publicVersion": "1.0.0-pskernel.66",
+  "baseline": "proofscript-v1-ka62-executable-expression-translator-bool-literal-refinement0",
+  "commands": {
+    "focusedTest": "passed",
+    "assuranceKA63": "passed",
+    "leanKA63Check": "passed",
+    "npmInstallOffline": "passed",
+    "build": "passed",
+    "testKernelSmoke": "passed_individual_after_combined_timeout",
+    "testStandaloneSmall": "passed",
+    "testPscKernelStatus": "passed",
+    "testPscConformanceBounded": "passed",
+    "arenaCorpusPreflight": "passed",
+    "arenaStaticNonperf": "passed",
+    "arenaTutorial": "passed_individual",
+    "arenaTutorialHarnessDirectNode": "passed_individual",
+    "arenaTailIndividual": "passed",
+    "npmPackWorkspaces": "passed",
+    "packageSha256Check": "passed",
+    "freshExtractSmoke": "passed",
+    "finalZipSha256Check": "passed",
+    "unzipTest": "passed"
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA63",
+        "source": "assurance/ka63/executable-expression-translator-bool-literal-refinement-bridge.lean",
+        "destination": "PSKernelKA63ExecutableExpressionTranslatorBoolLiteralRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA63 gate tool absent before implementation",
+  "aggregateWrappers": {
+    "combinedReleaseRun": "timed-out-not-counted at test:kernel:smoke; rerun individually passed",
+    "verifyArena": "timed-out-not-counted at npm test:arena:tutorial-harness; underlying direct node harness and remaining tail commands rerun individually passed"
+  },
+  "workspacePackagesPacked": 36,
+  "finalZipResidue": {
+    "node_modules": 0,
+    "dist": 0,
+    "tsbuildinfo": 0,
+    "tgz": 0,
+    "zip": 0
+  }
+}

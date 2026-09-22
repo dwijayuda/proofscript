@@ -1,0 +1,36 @@
+{
+  "checkpoint": "proofscript-v1-ka33-inductive-env-bridge0",
+  "publicVersion": "1.0.0-pskernel.36",
+  "baseline": "proofscript-v1-ka32-feature-equivalence-audit0",
+  "referenceKind": "direct-imported-lean4lean-inductive-env-bridge",
+  "imports": [
+    "Lean4Lean.Theory.Typing.Env",
+    "Lean4Lean.Theory.Typing.InductiveLemmas"
+  ],
+  "bridgedRelations": [
+    "Lean4Lean.VDecl.WF",
+    "Lean4Lean.VEnv.WF",
+    "Lean4Lean.VEnv.Ordered",
+    "Lean4Lean.VEnv.addInduct",
+    "Lean4Lean.VInductDecl.WF"
+  ],
+  "coveredPSDeclKinds": ["inductive"],
+  "stillBlockedPSDeclKinds": ["mutualInductive"],
+  "formalBridgeLemmas": [
+    "PSKernelKA33.translated_inductive_is_real_vdecl",
+    "PSKernelKA33.translated_inductive_vdecl_wf",
+    "PSKernelKA33.translated_inductive_env_wf",
+    "PSKernelKA33.translated_inductive_env_ordered"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "inductiveSemanticSoundness": false,
+    "formalLean4EquivalenceProvenObligations": 60
+  }
+}

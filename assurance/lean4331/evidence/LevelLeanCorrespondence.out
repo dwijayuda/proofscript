@@ -1,0 +1,13 @@
+ProofScriptKernelEquivalence/LevelLeanCorrespondence.lean:57:10: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+'ProofScriptKernelEquivalence.PSLevel.toLean_noMVar' does not depend on any axioms
+'ProofScriptKernelEquivalence.PSLevel.toLean_injective' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSLevel.isNeverZero_toLean' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSLevel.isAlwaysZero_toLean' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSLevel.getOffset_toLean' depends on axioms: [propext, Quot.sound]
+'ProofScriptKernelEquivalence.PSLevel.getLevelOffset_toLean' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSLevel.toLean_eq_iff' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSLevel.addOffset_toLean' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSLevel.isAlreadyNormalizedCheap_toLean' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.PSLevel.ctorToNat_toLean' does not depend on any axioms

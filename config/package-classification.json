@@ -1,0 +1,445 @@
+{
+  "schemaVersion": 1,
+  "release": "P5.94",
+  "trustClaim": {
+    "label": "K3-TB trusted-boundary",
+    "fullyFormalK3": false,
+    "lean4Equivalent": false,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "summary": "K3-TB trusted-boundary only; not fully formal K3 and not proven equivalent to Lean 4."
+  },
+  "tierDefinitions": {
+    "trusted": "TCB-adjacent code. Must stay small, dependency-limited, and independent from execution/plugin/product layers.",
+    "language": "Canonical PSC-1 source language, elaboration, checked standard-library, and environment path.",
+    "execution": "Runtime/backend code that executes already-checked Core artifacts; it must not validate proofs.",
+    "product": "CLI, project, editor, diagnostics, and formatter layers built around the canonical language path.",
+    "plugin-infra": "Plugin API and host infrastructure outside the trusted kernel boundary.",
+    "bridge": "Lean/oracle/unified bridge packages used for correspondence, migration, or optional integration.",
+    "experimental": "Future architecture, prototypes, or feature reservoirs. Not part of the canonical PSC-1 trust claim until promoted."
+  },
+  "stablePsc1Path": [
+    "packages/syntax",
+    "packages/parser",
+    "packages/recursion",
+    "packages/typeclass",
+    "packages/elaborator",
+    "packages/std",
+    "packages/environment",
+    "packages/frontend",
+    "packages/kernel",
+    "packages/kernel-codec",
+    "packages/certificates",
+    "packages/verifier",
+    "packages/backend-typescript",
+    "packages/runtime"
+  ],
+  "featurePromotionGate": [
+    "Add or update parser tests when syntax changes.",
+    "Elaborate into checked Core or checked bootstrap declarations before backend/runtime execution.",
+    "Add a kernel obligation entry when a feature changes trusted rules.",
+    "Add JS execution smoke and TypeScript compile smoke for executable features.",
+    "Add theorem/rfl smoke when reduction should be definitional.",
+    "Add fail-closed negative tests for unsupported or unsafe forms.",
+    "Update the reference-governance matrix and this classification manifest if package boundaries change."
+  ],
+  "packages": [
+    {
+      "path": "packages/kernel",
+      "npmName": "@proofscript/kernel",
+      "tier": "trusted",
+      "lifecycle": "canonical",
+      "trustBoundary": "TCB-adjacent kernel checker; no ProofScript package imports allowed.",
+      "productionRole": "Checks explicit Core declarations and maintains K3-TB kernel state.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/kernel-codec",
+      "npmName": "@proofscript/kernel-codec",
+      "tier": "trusted",
+      "lifecycle": "canonical",
+      "trustBoundary": "Artifact codec; may depend only on kernel.",
+      "productionRole": "Encodes and decodes inert checked Core artifacts.",
+      "allowedDependencies": [
+        "packages/kernel"
+      ]
+    },
+    {
+      "path": "packages/certificates",
+      "npmName": "@proofscript/certificates",
+      "tier": "trusted",
+      "lifecycle": "canonical",
+      "trustBoundary": "Certificate format and hashing; standalone by design.",
+      "productionRole": "Defines verification certificate payloads and hashes.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/verifier",
+      "npmName": "@proofscript/verifier",
+      "tier": "trusted",
+      "lifecycle": "canonical",
+      "trustBoundary": "Standalone replay verifier; cannot import parser/elaborator/runtime/backend/plugin layers.",
+      "productionRole": "Replays artifacts using kernel, codec, and certificates.",
+      "allowedDependencies": [
+        "packages/kernel",
+        "packages/kernel-codec",
+        "packages/certificates"
+      ]
+    },
+    {
+      "path": "packages/syntax",
+      "npmName": "@proofscript/syntax",
+      "tier": "language",
+      "lifecycle": "canonical",
+      "trustBoundary": "Surface AST types only; no kernel trust authority.",
+      "productionRole": "Defines parsed ProofScript source syntax shapes.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/parser",
+      "npmName": "@proofscript/parser",
+      "tier": "language",
+      "lifecycle": "canonical",
+      "trustBoundary": "Parses source only; never validates proofs by itself.",
+      "productionRole": "Turns .ps text into syntax AST through modular parser files.",
+      "allowedDependencies": [
+        "packages/syntax"
+      ]
+    },
+    {
+      "path": "packages/recursion",
+      "npmName": "@proofscript/recursion",
+      "tier": "language",
+      "lifecycle": "canonical",
+      "trustBoundary": "Source recursion analysis helper; kernel remains final checker.",
+      "productionRole": "Compiles supported structural recursion source metadata.",
+      "allowedDependencies": [
+        "packages/syntax"
+      ]
+    },
+    {
+      "path": "packages/typeclass",
+      "npmName": "@proofscript/typeclass",
+      "tier": "language",
+      "lifecycle": "canonical",
+      "trustBoundary": "Deterministic metadata and candidate ordering, not proof authority.",
+      "productionRole": "Supports limited typeclass metadata used by elaboration.",
+      "allowedDependencies": [
+        "packages/kernel"
+      ]
+    },
+    {
+      "path": "packages/elaborator",
+      "npmName": "@proofscript/elaborator",
+      "tier": "language",
+      "lifecycle": "canonical",
+      "trustBoundary": "Produces explicit Core; kernel still validates trusted terms.",
+      "productionRole": "Elaborates syntax into checked Core candidates, with proof/match/inductive submodules.",
+      "allowedDependencies": [
+        "packages/syntax",
+        "packages/kernel",
+        "packages/recursion",
+        "packages/typeclass"
+      ]
+    },
+    {
+      "path": "packages/std",
+      "npmName": "@proofscript/std",
+      "tier": "language",
+      "lifecycle": "canonical",
+      "trustBoundary": "Checked bootstrap source/artifact, not unchecked runtime semantics.",
+      "productionRole": "Provides canonical PSC-1 bootstrap declarations and checked artifacts.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/environment",
+      "npmName": "@proofscript/environment",
+      "tier": "language",
+      "lifecycle": "canonical",
+      "trustBoundary": "Loads checked prelude artifacts through codec/kernel; no source elaboration authority.",
+      "productionRole": "Builds checked initial environments from std artifacts.",
+      "allowedDependencies": [
+        "packages/kernel",
+        "packages/kernel-codec",
+        "packages/std"
+      ]
+    },
+    {
+      "path": "packages/frontend",
+      "npmName": "@proofscript/frontend",
+      "tier": "language",
+      "lifecycle": "canonical",
+      "trustBoundary": "Canonical PSC-1 pipeline orchestration; not a kernel replacement.",
+      "productionRole": "Connects parser, elaborator, environment, and artifact emission for the current product path.",
+      "allowedDependencies": [
+        "packages/parser",
+        "packages/elaborator",
+        "packages/kernel",
+        "packages/kernel-codec",
+        "packages/environment",
+        "packages/project",
+        "packages/syntax"
+      ]
+    },
+    {
+      "path": "packages/runtime",
+      "npmName": "@proofscript/runtime",
+      "tier": "execution",
+      "lifecycle": "canonical",
+      "trustBoundary": "Executes already-checked terms; must not decide proof validity.",
+      "productionRole": "Provides JS/TS runtime helpers for Nat, Bool, structures, and inductives.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/backend-typescript",
+      "npmName": "@proofscript/backend-typescript",
+      "tier": "execution",
+      "lifecycle": "canonical",
+      "trustBoundary": "Emits JS/TS from checked Core only; must not validate proofs.",
+      "productionRole": "Canonical PSC-1 JavaScript/TypeScript backend.",
+      "allowedDependencies": [
+        "packages/kernel",
+        "packages/runtime"
+      ]
+    },
+    {
+      "path": "packages/diagnostics",
+      "npmName": "@proofscript/diagnostics",
+      "tier": "product",
+      "lifecycle": "supported",
+      "trustBoundary": "Human-facing diagnostics only; no proof authority.",
+      "productionRole": "Structured diagnostics and traces for product tooling.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/formatter",
+      "npmName": "@proofscript/formatter",
+      "tier": "product",
+      "lifecycle": "supported",
+      "trustBoundary": "Formatting only; no semantic authority.",
+      "productionRole": "Canonical formatting surface for source files.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/project",
+      "npmName": "@proofscript/project",
+      "tier": "product",
+      "lifecycle": "supported",
+      "trustBoundary": "Configuration and plugin discovery only; not trusted kernel logic.",
+      "productionRole": "Project/config discovery for CLI and frontend.",
+      "allowedDependencies": [
+        "packages/plugin-api",
+        "packages/parser"
+      ]
+    },
+    {
+      "path": "packages/cli",
+      "npmName": "proofscript",
+      "tier": "product",
+      "lifecycle": "supported",
+      "trustBoundary": "Product entrypoint; may orchestrate but must not redefine trust claims.",
+      "productionRole": "CLI and npm entrypoint for user workflows.",
+      "allowedDependencies": [
+        "packages/frontend",
+        "packages/kernel-codec",
+        "packages/certificates",
+        "packages/project",
+        "packages/plugin-host",
+        "packages/compiler",
+        "packages/lean-export",
+        "packages/verifier",
+        "packages/syntax",
+        "packages/environment"
+      ]
+    },
+    {
+      "path": "packages/lsp",
+      "npmName": "@proofscript/lsp",
+      "tier": "product",
+      "lifecycle": "supported",
+      "trustBoundary": "Editor integration only; no trusted proof authority.",
+      "productionRole": "Language-server integration surface.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/plugin-api",
+      "npmName": "@proofscript/plugin-api",
+      "tier": "plugin-infra",
+      "lifecycle": "supported",
+      "trustBoundary": "Versioned extension API without kernel mutation hooks.",
+      "productionRole": "Defines safe plugin extension contracts outside the TCB.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/plugin-host",
+      "npmName": "@proofscript/plugin-host",
+      "tier": "plugin-infra",
+      "lifecycle": "supported",
+      "trustBoundary": "Loads non-verifier plugins; must not bypass kernel checks.",
+      "productionRole": "Plugin loading for non-verifier compiler workflows.",
+      "allowedDependencies": [
+        "packages/plugin-api",
+        "packages/project"
+      ]
+    },
+    {
+      "path": "packages/lean-export",
+      "npmName": "@proofscript/lean-export",
+      "tier": "bridge",
+      "lifecycle": "supported",
+      "trustBoundary": "Optional Lean correspondence/export bridge, not standalone proof authority.",
+      "productionRole": "Exports checked Core to Lean for oracle/differential evidence.",
+      "allowedDependencies": [
+        "packages/kernel"
+      ]
+    },
+    {
+      "path": "packages/oracle-lean",
+      "npmName": "@proofscript/oracle-lean",
+      "tier": "bridge",
+      "lifecycle": "supported",
+      "trustBoundary": "Optional external Lean oracle; strengthens evidence when available but is not required for K3-TB execution.",
+      "productionRole": "Runs pinned Lean correspondence/oracle checks when configured.",
+      "allowedDependencies": [
+        "packages/plugin-api",
+        "packages/kernel-codec",
+        "packages/lean-export",
+        "packages/environment"
+      ]
+    },
+    {
+      "path": "packages/unified-bridge",
+      "npmName": "@proofscript/unified-bridge",
+      "tier": "bridge",
+      "lifecycle": "experimental",
+      "trustBoundary": "Bridge/prototype layer; cannot redefine the canonical PSC-1 trust claim.",
+      "productionRole": "Connects broader frontend-next concepts to kernel/environment experiments.",
+      "allowedDependencies": [
+        "packages/environment",
+        "packages/frontend-next",
+        "packages/kernel",
+        "packages/kernel-codec"
+      ]
+    },
+    {
+      "path": "packages/compiler",
+      "npmName": "@proofscript/compiler",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Backend dispatch prototype; not canonical PSC-1 proof authority.",
+      "productionRole": "Future backend dispatch and plugin compilation experiments.",
+      "allowedDependencies": [
+        "packages/plugin-api",
+        "packages/semantic-ir",
+        "packages/kernel"
+      ]
+    },
+    {
+      "path": "packages/semantic-ir",
+      "npmName": "@proofscript/semantic-ir",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Execution-facing snapshot prototype; not canonical checked Core.",
+      "productionRole": "Experimental semantic snapshot for future backends/plugins.",
+      "allowedDependencies": [
+        "packages/kernel",
+        "packages/plugin-api"
+      ]
+    },
+    {
+      "path": "packages/frontend-next",
+      "npmName": "@proofscript/frontend-next",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Large future frontend/plugin architecture reservoir; not canonical PSC-1 path.",
+      "productionRole": "Experimental broad-language architecture and plugin feature reservoir.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/macro",
+      "npmName": "@proofscript/macro",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Macro prototype only; macros are not in canonical PSC-1 yet.",
+      "productionRole": "Future macro expansion and quotation experiments.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/tactics-core",
+      "npmName": "@proofscript/tactics-core",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Tactic prototype only; canonical prover currently uses restricted proof terms.",
+      "productionRole": "Future proof-state and tactic elaboration experiments.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "plugins/official/backend-manifest",
+      "npmName": "@proofscript/backend-manifest",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Plugin experiment; not part of canonical PSC-1 backend path.",
+      "productionRole": "Manifest backend plugin prototype.",
+      "allowedDependencies": [
+        "packages/plugin-api"
+      ]
+    },
+    {
+      "path": "plugins/official/backend-js",
+      "npmName": "@proofscript/backend-js",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Future backend placeholder; canonical JS/TS backend is packages/backend-typescript.",
+      "productionRole": "Future JavaScript backend plugin placeholder.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "plugins/official/backend-rust",
+      "npmName": "@proofscript/backend-rust",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Future backend placeholder; not production path.",
+      "productionRole": "Future Rust backend plugin placeholder.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "plugins/official/backend-wasm",
+      "npmName": "@proofscript/backend-wasm",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Future backend placeholder; not production path.",
+      "productionRole": "Future WebAssembly backend plugin placeholder.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "plugins/official/contracts",
+      "npmName": "@proofscript/contracts",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Future verification-extension plugin; not trusted kernel logic.",
+      "productionRole": "Future contracts feature lowering experiment.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "plugins/examples/backend-names",
+      "npmName": "example-proofscript-backend-names",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Example plugin only; not production path.",
+      "productionRole": "Demonstrates backend naming plugin conventions.",
+      "allowedDependencies": [
+        "packages/plugin-api"
+      ]
+    },
+    {
+      "path": "packages/arena-checker",
+      "npmName": "@proofscript/arena-checker",
+      "tier": "product",
+      "lifecycle": "supported",
+      "trustBoundary": "Arena adapter entrypoint; delegates checking to packages/kernel and does not add kernel axioms.",
+      "productionRole": "Lean Kernel Arena NDJSON adapter skeleton for smoke fixtures and future tutorial import work.",
+      "allowedDependencies": [
+        "packages/kernel"
+      ]
+    }
+  ]
+}

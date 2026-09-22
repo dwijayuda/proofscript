@@ -1,0 +1,19 @@
+{
+  "checkpoint": "KA-141",
+  "verification": [
+    "npm run build",
+    "npm run test:ka141",
+    "npm run test:ka140",
+    "npm run test:ka139",
+    "npm run test:ka138",
+    "npm run test:ka137",
+    "npm run test:ka136",
+    "npm pack --ignore-scripts",
+    "npm publish --dry-run --ignore-scripts --access public",
+    "fresh npm install from generated tarball",
+    "fresh npx psc proof-status with --lean-cmd",
+    "fresh npx psc verify proof-status",
+    "fresh npx psc check-obligations"
+  ],
+  "result": "pass"
+}

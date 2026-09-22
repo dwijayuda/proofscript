@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka104-primitive-telescope-typing-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.107",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 82,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 341,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 336,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "correctedFormalLean4LeanBridgeObligations": 341,
+    "countedNewObligations": [
+      "translated_onctx_append_right_wf",
+      "translated_argsTyped_substEq_wf",
+      "translated_vexpr_wf_lams_wf",
+      "translated_hasType_lams_wf",
+      "translated_hasType_appN_forallEs_wf"
+    ]
+  },
+  "metricPolicy": "KA104 adds direct non-sorry-backed primitive telescope typing helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

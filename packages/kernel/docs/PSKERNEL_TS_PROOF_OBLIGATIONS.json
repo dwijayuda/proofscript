@@ -1,0 +1,1125 @@
+{
+  "status": "trusted-boundary",
+  "proofStatus": "not-proven",
+  "semanticBaseline": "Lean 4.33.1",
+  "pinnedLeanRevision": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "trustLabel": "trusted-boundary standalone kernel; not fully formally equivalent to Lean 4 yet",
+  "total": 70,
+  "byStatus": {
+    "lean-proof-target": 28,
+    "informal-spec": 42
+  },
+  "byProofStatus": {
+    "not-proven": 70
+  },
+  "bySourceArea": {
+    "Level": 2,
+    "Expr": 2,
+    "TypeChecker": 6,
+    "Environment": 4,
+    "Inductive": 3,
+    "Recursor": 5,
+    "Projection": 2,
+    "Primitive": 3,
+    "Quot": 3,
+    "Replay": 14,
+    "CLI": 6,
+    "Frontend": 14,
+    "Runtime": 4,
+    "Kernel": 1,
+    "Unsupported": 1
+  },
+  "obligations": [
+    {
+      "id": "ProofScript.CLI.AuditBundle.Deterministic",
+      "sourceLeanFile": "Main.lean; PSKernel/Replay.lean; PSKernel/Verify.lean",
+      "sourceArea": "CLI",
+      "targetTypeScriptFile": "packages/kernel/src/Main.ts; tools/pskernel.ts; packages/kernel/src/PSKernel/Verify/Obligations.ts",
+      "targetSymbol": "pskernelAuditCoreArtifact",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Audit bundles combine replay, certificate, certificate verification, status, and machine-readable obligations into deterministic trusted-boundary evidence.",
+      "supportedSubset": "accepted CoreArtifact inputs",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.CLI.Status.TrustBoundary",
+      "sourceLeanFile": "Main.lean",
+      "sourceArea": "CLI",
+      "targetTypeScriptFile": "packages/kernel/src/Main.ts; tools/pskernel.ts",
+      "targetSymbol": "pskernelStatusReport",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Standalone CLI reports implemented and fail-closed slices without claiming full Lean equivalence.",
+      "supportedSubset": "pskernel status and status --json",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.CoreTerm.NatLiteral.TypeAndWHNF",
+      "sourceLeanFile": "PSKernel/Expr.lean; PSKernel/TypeChecker.lean; PSKernel/Primitive.lean",
+      "sourceArea": "Primitive",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Expr.ts; packages/kernel/src/PSKernel/TypeChecker.ts",
+      "targetSymbol": "literalToConstructorTerm",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Nat literals infer Nat only when Nat is present and normalize to Nat.zero/Nat.succ constructor chains.",
+      "supportedSubset": "nonnegative safe integer Nat literals",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.CoreTerm.StringLiteral.FailClosed",
+      "sourceLeanFile": "PSKernel/Primitive.lean",
+      "sourceArea": "Primitive",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/TypeChecker.ts",
+      "targetSymbol": "inferCore",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "String literals are recognized in serialized Core shape but rejected by trusted checking until logical/runtime String semantics are ported.",
+      "supportedSubset": "shape validation only",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Environment.Assumptions.Propagation",
+      "sourceLeanFile": "PSKernel/Environment.lean",
+      "sourceArea": "Environment",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Environment.ts",
+      "targetSymbol": "collectAssumptions",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Checked declaration summaries expose referenced axiom/opaque assumptions as audit evidence.",
+      "supportedSubset": "constant dependencies reachable in declaration type/value terms",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Environment.Declaration.TypeIsSort",
+      "sourceLeanFile": "PSKernel/Environment.lean",
+      "sourceArea": "Environment",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Environment.ts",
+      "targetSymbol": "checkConstantVal",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "A declaration is admitted only when its declared type itself has a Sort type.",
+      "supportedSubset": "axiom, definition, theorem, opaque, example, inductive family type",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Environment.Definition.BodyCheck",
+      "sourceLeanFile": "PSKernel/Environment.lean",
+      "sourceArea": "Environment",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Environment.ts",
+      "targetSymbol": "checkDefinitionBody",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Definition, theorem, opaque, and example bodies must check against their declared types before admission.",
+      "supportedSubset": "trusted Core declaration values",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Environment.Theorem.PropGuard",
+      "sourceLeanFile": "PSKernel/Environment.lean",
+      "sourceArea": "Environment",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Environment.ts",
+      "targetSymbol": "checkAndAddDeclaration",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Theorem-like declarations must prove propositions, not arbitrary data types.",
+      "supportedSubset": "theorem and example declarations",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Expr.LooseBVar.Rejected",
+      "sourceLeanFile": "PSKernel/Expr.lean",
+      "sourceArea": "Expr",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Expr.ts",
+      "targetSymbol": "containsLooseBVar",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Closed trusted declarations reject loose de Bruijn variables before admission.",
+      "supportedSubset": "direct and replayed Core declarations",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Expr.Substitution.BVar",
+      "sourceLeanFile": "PSKernel/Expr.lean",
+      "sourceArea": "Expr",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Expr.ts",
+      "targetSymbol": "instantiate",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Substitution for de Bruijn variables preserves the intended binder structure for the supported Core term subset.",
+      "supportedSubset": "sort, const, app, lam, pi, let, lit, proj",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Frontend.Bif.BoolRec",
+      "sourceLeanFile": "ProofScript_Language_Reference_v0.6.1_authoritative_draft.md; ProofScript_Parser_Lowering_API_Contract_v0.6.1.md; PSKernel/Inductive/Reduce.lean",
+      "sourceArea": "Frontend",
+      "targetTypeScriptFile": "packages/parser/src/index.ts; packages/elaborator/src/index.ts; packages/backend-typescript/src/index.ts; tools/reference-language-governance-smoke.ts",
+      "targetSymbol": "parseBif; elabBif; emitTerm(Bool.rec)",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "PSC-1 Boolean conditional `bif (b) { t } else { e }` is parsed as a source expression, elaborated through the checked Bool/Bool.rec prelude, reduces on Bool.true/Bool.false for rfl smoke, and emits JavaScript conditional code for executable definitions.",
+      "supportedSubset": "direct Bool conditions with expected branch result type; ordinary proposition/Decidable if remains fail-closed",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Frontend.DefBody.LocalLetHave",
+      "sourceLeanFile": "ProofScript_Parser_Lowering_API_Contract_v0.6.1.md; PSKernel/TypeChecker.lean",
+      "sourceArea": "Frontend",
+      "targetTypeScriptFile": "packages/parser/src/index.ts; packages/elaborator/src/index.ts; packages/backend-typescript/src/index.ts; tools/proofscript-live-small-smoke.ts; tools/reference-language-governance-smoke.ts",
+      "targetSymbol": "parseDefBodySequence; parseDefBodyBinding; elab(let); emitTerm(let)",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "PSC-1 local `let` and body-prefix `have` inside `{ ... }` defBodyBlock parse as body sequence prefixes, lower to checked Core let/zeta behavior, reject malformed final body semicolons, and emit JavaScript IIFE let bindings for executable definitions.",
+      "supportedSubset": "typed and inferred nonrecursive local bindings in def-body blocks; no local function binder sugar or let rec",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Frontend.Inductive.ExpectedFunctionTypePartialConstructorShorthand",
+      "sourceLeanFile": "ProofScript grammar/parser specification; Lean 4 constructor namespace and expected-type elaboration behavior",
+      "sourceArea": "Frontend",
+      "targetTypeScriptFile": "packages/elaborator/src/index.ts; tools/constructor-partial-shorthand-tests.ts; tools/pslive-smoke-lib.ts; tools/reference-language-governance-smoke.ts",
+      "targetSymbol": "tryElabExpectedTypeConstructorShorthand; expectedFunctionCodomainHeadForConstructorShorthand; elab(name/app)",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "PSC-1 expected-function-type constructor shorthand such as def mkSome: Nat -> MaybeNat := { some } is elaborated only when normal local/global resolution does not already bind the identifier, the expected function codomain is a known parameterless/indexless inductive, and the partially applied constructor type-checks definitionally against the whole expected function type before JS emission.",
+      "supportedSubset": "unqualified constructor terms and partially applied constructor calls whose remaining type exactly matches a nondependent expected Pi type ending in a parameterless/indexless inductive target; normal local/global names win; no dependent function targets, parameterized/indexed inductives, implicit arguments, typeclass inference, or unchecked JavaScript union constructors",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Frontend.Inductive.ExpectedTypeConstructorShorthand",
+      "sourceLeanFile": "ProofScript grammar/parser specification; Lean 4 constructor namespace and expected-type elaboration behavior",
+      "sourceArea": "Frontend",
+      "targetTypeScriptFile": "packages/elaborator/src/index.ts; tools/constructor-shorthand-tests.ts; tools/pslive-smoke-lib.ts; tools/reference-language-governance-smoke.ts",
+      "targetSymbol": "tryElabExpectedTypeConstructorShorthand; elab(name/app)",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "PSC-1 expected-type-directed constructor shorthand such as red and some(7) is elaborated only when normal local/global resolution does not already bind the identifier, the expected type is a known parameterless/indexless inductive, and the generated constructor application type-checks against that expected type before JS emission.",
+      "supportedSubset": "unqualified constructor terms and fully-applied constructor calls for parameterless/indexless source inductives and structures; normal local/global names win; no parameterized inductives, partial constructor inference, ambiguous open-namespace search, or unchecked JavaScript enum/union literals",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Frontend.Match.BoolRec",
+      "sourceLeanFile": "ProofScript_Language_Reference_v0.6.1_authoritative_draft.md; ProofScript_Parser_Lowering_API_Contract_v0.6.1.md; PSKernel/Inductive/Reduce.lean",
+      "sourceArea": "Frontend",
+      "targetTypeScriptFile": "packages/parser/src/index.ts; packages/elaborator/src/index.ts; packages/backend-typescript/src/index.ts; tools/proofscript-live-small-smoke.ts; tools/reference-language-governance-smoke.ts",
+      "targetSymbol": "parseMatch; resolveSurfaceCasesForRules; elab(match); emitTerm(Bool.rec)",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "PSC-1 `match (b) { | true => t | false => e }` over Bool is parsed with branch-local punctuation, elaborated through the checked Bool recursor, rejects non-exhaustive or malformed branches, reduces for rfl smoke, and executes through the existing Bool.rec JavaScript emission.",
+      "supportedSubset": "exhaustive Bool match with true/false or dot-constructor patterns; parameterless/indexless recursor lowering only",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Frontend.Match.LeanStyleConstructorPatternBinders",
+      "sourceLeanFile": "ProofScript grammar/parser specification; Lean 4 match alternative syntax",
+      "sourceArea": "Frontend",
+      "targetTypeScriptFile": "packages/parser/src/index.ts; packages/elaborator/src/index.ts",
+      "targetSymbol": "parsePattern; resolveSurfaceCasesForRules",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Lean-style constructor pattern binders such as Nat.succ k and scrutinee-type-scoped succ k are parsed as constructor patterns and elaborated to the same checked recursor applications as the parenthesized constructor pattern slice.",
+      "supportedSubset": "single-discriminant PSC-1 matches over parameterless/indexless inductives; plain identifier binders only; no nested/typed/as-patterns/pattern alternatives beyond the existing match-case subset",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Frontend.Match.NatLiteralDesugaring",
+      "sourceLeanFile": "ProofScript_Language_Reference_v0.6.1_authoritative_draft.md; ProofScript_Parser_Lowering_API_Contract_v0.6.1.md; PSKernel/Inductive/Reduce.lean",
+      "sourceArea": "Frontend",
+      "targetTypeScriptFile": "packages/parser/src/index.ts; packages/elaborator/src/index.ts; packages/backend-typescript/src/index.ts; tools/pslive-smoke-lib.ts; tools/reference-language-governance-smoke.ts",
+      "targetSymbol": "parsePattern(numeric); lowerNatLiteralMatch; elab(match); emitTerm(Nat.rec)",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "PSC-1 Nat numeric literal match alternatives above zero are parsed as Nat literal patterns, desugared into nested constructor matches over Nat.zero/Nat.succ, elaborated through checked Nat.rec applications, reduce for rfl smoke, and execute through the Nat.rec JavaScript runtime helper.",
+      "supportedSubset": "finite nonnegative safe-integer Nat literal alternatives with a final '_' catch-all; duplicate literal alternatives reject; mixed constructor/literal Nat matches above zero remain fail-closed",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Frontend.Structure.DottedProjectionSugar",
+      "sourceLeanFile": "ProofScript grammar/parser specification; Lean 4 generated structure projections",
+      "sourceArea": "Frontend",
+      "targetTypeScriptFile": "packages/elaborator/src/index.ts; tools/pslive-smoke-lib.ts; tools/reference-language-governance-smoke.ts",
+      "targetSymbol": "tryElabDottedStructureProjection; elab(name)",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Dotted PSC-1 structure projection syntax x.field is elaborated only after generated structure projections exist, by inferring the base term type and translating to the checked projection application Structure.field(x); it does not introduce target-backend-only field access semantics.",
+      "supportedSubset": "parameterless source structures/classes already known in the current compilation unit; single field segment at each step; no parameterized structures, dependent projections, namespace disambiguation beyond existing name resolution, or arbitrary JavaScript property access",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Frontend.Structure.LiteralFieldPunning",
+      "sourceLeanFile": "ProofScript grammar/parser specification; Lean 4 structure instance syntax; Lean 4 generated structure constructors",
+      "sourceArea": "Frontend",
+      "targetTypeScriptFile": "packages/parser/src/index.ts; packages/elaborator/src/index.ts; tools/structure-literal-field-punning-tests.ts; tools/pslive-smoke-lib.ts; tools/reference-language-governance-smoke.ts",
+      "targetSymbol": "parseStructureInstance(structInst field punning); elab(structInst)",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "PSC-1 structure literal field punning such as {x, y} is parsed as {x := x, y := y}; the punned identifiers are resolved and type-checked normally against the expected structure field types before constructor application and JS emission.",
+      "supportedSubset": "same-name punned fields in expected-type-directed structure literals for known parameterless single-constructor source structures; missing punned identifiers, wrong punned value types, duplicate fields, unknown fields, dependent structures, and dynamic JavaScript object literals reject or remain unsupported",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Frontend.Structure.NestedUpdateFieldPath",
+      "sourceLeanFile": "ProofScript grammar/parser specification; Lean 4 nested structure update syntax; Lean 4 generated structure projections",
+      "sourceArea": "Frontend",
+      "targetTypeScriptFile": "packages/elaborator/src/index.ts; tools/structure-nested-update-tests.ts; tools/pslive-smoke-lib.ts; tools/reference-language-governance-smoke.ts",
+      "targetSymbol": "elaborateStructureUpdateCore",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "PSC-1 nested structure update field paths such as { box with p.x := v } are elaborated by reconstructing the outer structure with generated checked projections, recursively reconstructing the nested structure field, and then executing through the existing frozen-record runtime after Core checking.",
+      "supportedSubset": "bounded field paths over parameterless single-constructor source structures; no direct+nested update conflict for the same top-level field; no parameterized/dependent structures or dynamic JavaScript property mutation",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Frontend.Structure.ParenthesizedUpdateBase",
+      "sourceLeanFile": "ProofScript grammar/parser specification; Lean 4 structure update syntax; Lean 4 generated structure projections",
+      "sourceArea": "Frontend",
+      "targetTypeScriptFile": "packages/parser/src/index.ts; packages/elaborator/src/index.ts; tools/structure-update-base-expression-tests.ts; tools/pslive-smoke-lib.ts; tools/reference-language-governance-smoke.ts",
+      "targetSymbol": "parseStructureInstance(parenthesized structUpdate); elaborateStructureUpdateCore",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "PSC-1 parenthesized structure update bases such as {(point) with x := v} and {(box.p) with y := v} are parsed as checked base terms, elaborated through the existing structure-update reconstruction path, and then verified by kernel inference before JS emission.",
+      "supportedSubset": "parenthesized checked base expressions whose inferred type is a known parameterless single-constructor source structure; no unparenthesized arbitrary update base parser yet; no parameterized/dependent structures or dynamic JavaScript property mutation",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Frontend.Structure.UpdateFieldPunning",
+      "sourceLeanFile": "ProofScript grammar/parser specification; Lean 4 structure update syntax; Lean 4 generated structure projections",
+      "sourceArea": "Frontend",
+      "targetTypeScriptFile": "packages/parser/src/index.ts; packages/elaborator/src/index.ts; tools/structure-update-field-punning-tests.ts; tools/pslive-smoke-lib.ts; tools/reference-language-governance-smoke.ts",
+      "targetSymbol": "parseStructureUpdateFields; elaborateStructureUpdateCore",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "PSC-1 structure update field punning such as {p with x} is parsed as {p with x := x}, then follows the existing checked structure-update elaboration path through generated projections/constructors and kernel inference before JS emission.",
+      "supportedSubset": "same-name punned update fields over known parameterless single-constructor source structures; the punned identifier must resolve as an ordinary checked term in scope; unknown fields, missing values, duplicate fields, dependent structures, and dynamic JavaScript property mutation reject",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Frontend.Structure.UpdateLowering",
+      "sourceLeanFile": "ProofScript grammar/parser specification; Lean 4 structure update syntax; Lean 4 generated structure projections",
+      "sourceArea": "Frontend",
+      "targetTypeScriptFile": "packages/parser/src/index.ts; packages/elaborator/src/index.ts; packages/backend-typescript/src/index.ts; tools/structure-update-runtime-tests.ts; tools/pslive-smoke-lib.ts; tools/reference-language-governance-smoke.ts",
+      "targetSymbol": "parseStructureInstance(structUpdate); elab(structUpdate); Struct_ctor; Struct_proj",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "PSC-1 structure update syntax { base with field := value } is accepted only for known parameterless source structures, lowers to the generated checked constructor while reconstructing unchanged fields through generated checked projections, reduces for rfl smoke, and executes through the existing frozen-record structure runtime encoding.",
+      "supportedSubset": "single-base identifier updates plus parenthesized checked base expressions for parameterless single-constructor structures with explicit direct and bounded nested field-path updates; duplicate/unknown fields and non-structure bases reject; no parameterized/dependent structure update elaboration yet",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Inductive.Admission.ConstructorTarget",
+      "sourceLeanFile": "PSKernel/Inductive/Add.lean",
+      "sourceArea": "Inductive",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Declaration.ts; packages/kernel/src/PSKernel/Environment.ts",
+      "targetSymbol": "validateConstructorTarget",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Constructors must target the declared inductive family with matching universe arguments and uniform parameters.",
+      "supportedSubset": "implemented simple, parameterized, and Eq slices",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Inductive.Admission.FamilyTelescope",
+      "sourceLeanFile": "PSKernel/Inductive/Add.lean",
+      "sourceArea": "Inductive",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Declaration.ts; packages/kernel/src/PSKernel/Environment.ts",
+      "targetSymbol": "checkInductiveDeclaration",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Inductive family telescope and codomain are checked before adding the family and generated declarations.",
+      "supportedSubset": "non-mutual and limited mutual shape validation; Sort codomain required",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Inductive.Positivity.Conservative",
+      "sourceLeanFile": "PSKernel/Inductive/Add.lean; PSKernel/Theory/Inductive.lean",
+      "sourceArea": "Inductive",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Declaration.ts",
+      "targetSymbol": "checkStrictPositivity",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "The standalone checker rejects obvious negative recursive occurrences and fails closed for not-yet-proven nested/container positivity.",
+      "supportedSubset": "direct positive recursive fields; nested/container positivity unsupported",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Kernel.CoreMaturity.P48ConformanceReplacement",
+      "sourceLeanFile": "PSKernel/TypeChecker.lean; PSKernel/LocalContext.lean; PSKernel/Environment.lean",
+      "sourceArea": "Kernel",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/TypeChecker.ts; packages/kernel/src/PSKernel/EquivManager.ts; packages/kernel/src/PSKernel/LocalContext.ts; packages/kernel/src/PSKernel/Environment/Basic.ts; tools/pskernel-typechecker-conformance.ts; tools/pskernel-context-conformance.ts; tools/pskernel-reference-runner-tests.ts; tools/pskernel-reference-compare.ts",
+      "targetSymbol": "isDefEqCore; whnfCore; inferProjectionCore; EquivManager; LocalContext; pskernel-reference-corpus",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "The current standalone kernel uses the more mature P4.48 core-kernel implementation for context-scoped definitional equality, local definition unfolding, unit-like equality, neutral projection congruence, function eta, binder-annotation-insensitive Pi/lambda equality, and dependent single-constructor projection typing, while preserving the newer P4.63 fail-closed opaque-transparency boundary and frontend/runtime slices.",
+      "supportedSubset": "trusted-boundary PSKernel-derived Core checker slice exercised by 42 recovered conformance/protocol tests plus the existing P4.63 smoke/governance suite; full Lean 4 equivalence, arbitrary native .olean replay, indexed/mutual/nested inductive completeness, and opaque unfolding remain unsupported/fail-closed",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Level.MVar.FailClosed",
+      "sourceLeanFile": "PSKernel/Level.lean",
+      "sourceArea": "Level",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Level.ts",
+      "targetSymbol": "assertNoLevelMVar",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Unresolved level metavariables cannot enter trusted checked declarations.",
+      "supportedSubset": "serialized trusted Core artifacts and direct declaration admission",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Level.Normalize.DefEq",
+      "sourceLeanFile": "PSKernel/Level.lean",
+      "sourceArea": "Level",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Level.ts",
+      "targetSymbol": "levelDefEq",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "TypeScript level normalization and equality accept the same supported universe-level equations as the pskernel level checker slice.",
+      "supportedSubset": "zero, succ, max, imax, named params; unresolved universe metavariables rejected before checking",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Primitive.Prelude.Admission",
+      "sourceLeanFile": "PSKernel/Primitive.lean",
+      "sourceArea": "Primitive",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Primitive.ts",
+      "targetSymbol": "installCorePrimitives",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Unit, Bool, Nat, and Eq primitive declarations are generated and admitted through the same kernel boundary as ordinary declarations.",
+      "supportedSubset": "core primitive prelude profile",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Projection.SimpleStructure.Iota",
+      "sourceLeanFile": "PSKernel/Inductive/Reduce.lean",
+      "sourceArea": "Projection",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/TypeChecker.ts",
+      "targetSymbol": "tryProjectCore",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Projection from a matching constructor application reduces to the selected constructor field.",
+      "supportedSubset": "single-constructor non-indexed structures",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Projection.SimpleStructure.Type",
+      "sourceLeanFile": "PSKernel/TypeChecker.lean; PSKernel/Inductive/Reduce.lean",
+      "sourceArea": "Projection",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/TypeChecker.ts",
+      "targetSymbol": "inferProjectionCore",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Projection typing returns the selected constructor field type instantiated by major premise parameters.",
+      "supportedSubset": "single-constructor non-indexed nondependent-field structures",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Quot.Bootstrap.Canonical",
+      "sourceLeanFile": "PSKernel/Quot.lean",
+      "sourceArea": "Quot",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Quot.ts",
+      "targetSymbol": "installQuotientPrimitives",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Quotient primitive installation requires canonical Eq/Eq.refl prerequisites and rejects arbitrary quotient markers.",
+      "supportedSubset": "core+quot prelude bootstrap",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Quot.IndBeta",
+      "sourceLeanFile": "PSKernel/Quot.lean; PSKernel/Theory/Quot.lean",
+      "sourceArea": "Quot",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Quot.ts",
+      "targetSymbol": "tryQuotReduce",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Quot.ind over Quot.mk reduces to applying the minor proof to the representative.",
+      "supportedSubset": "fully applied installed Quot.ind over matching Quot.mk",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Quot.LiftBeta",
+      "sourceLeanFile": "PSKernel/Quot.lean; PSKernel/Theory/Quot.lean",
+      "sourceArea": "Quot",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Quot.ts",
+      "targetSymbol": "tryQuotReduce",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Quot.lift over Quot.mk reduces to applying the lifted function to the representative.",
+      "supportedSubset": "fully applied installed Quot.lift over matching Quot.mk",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Recursor.Eq.ReflIota",
+      "sourceLeanFile": "PSKernel/Inductive/Reduce.lean",
+      "sourceArea": "Recursor",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Inductive/Reduce.ts",
+      "targetSymbol": "tryInductiveReduceRec",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Eq.rec over Eq.refl reduces to the refl case in the canonical supported slice.",
+      "supportedSubset": "typed-eq-indexed recursor metadata with refl major premise",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Recursor.Eq.Type",
+      "sourceLeanFile": "PSKernel/Inductive/Add.lean",
+      "sourceArea": "Recursor",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Declaration.ts",
+      "targetSymbol": "synthesizeEqRecursorType",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Canonical Eq gets the supported indexed equality eliminator type.",
+      "supportedSubset": "canonical Eq with Eq.refl only; general indexed recursors unsupported",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Recursor.ParameterizedSimpleNonIndexed.Type",
+      "sourceLeanFile": "PSKernel/Inductive/Add.lean",
+      "sourceArea": "Recursor",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Declaration.ts",
+      "targetSymbol": "synthesizeSimpleRecursorType",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Parameterized non-indexed generated recursor types include uniform parameters, motive, minors, major premise, and motive result.",
+      "supportedSubset": "nondependent uniform parameters; no indices; no mutual/nested families",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Recursor.SimpleNonIndexed.Iota",
+      "sourceLeanFile": "PSKernel/Inductive/Reduce.lean",
+      "sourceArea": "Recursor",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Inductive/Reduce.ts",
+      "targetSymbol": "tryInductiveReduceRec",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Fully applied simple recursors reduce on matching constructor major premises with field and IH arguments.",
+      "supportedSubset": "typed-simple-nonindexed recursor metadata only",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Recursor.SimpleNonIndexed.Type",
+      "sourceLeanFile": "PSKernel/Inductive/Add.lean",
+      "sourceArea": "Recursor",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Declaration.ts",
+      "targetSymbol": "synthesizeSimpleRecursorType",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Simple non-indexed generated recursor types match the Lean-style eliminator shape for the supported slice.",
+      "supportedSubset": "non-mutual, no indices, no dependent fields, direct recursive fields",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Release.Delivery.ArchiveFreshExtractVerification",
+      "sourceLeanFile": "PSKernel/Replay.lean; Main.lean; release evidence scripts",
+      "sourceArea": "Replay",
+      "targetTypeScriptFile": "tools/pskernel-kernel-delivery-archive-verify.ts; tools/pskernel.ts",
+      "targetSymbol": "verifyProofScriptDeliveryArchive; pskernel verify-delivery-archive",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "A distributed release zip can be verified by extracting it into a fresh temporary directory, bootstrapping local workspace links, building from that extracted tree, checking trusted-boundary kernel status, and rerunning delivery-bootstrap/source-tree evidence inside the extracted project.",
+      "supportedSubset": "bounded fresh-extract verification for ProofScript standalone release archives; full recursive delivery verification is available via --full but remains trusted-boundary evidence, not a formal Lean equivalence proof",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Release.Manifest.CertificateBundleBinding",
+      "sourceLeanFile": "PSKernel/Replay.lean; Main.lean; release evidence scripts",
+      "sourceArea": "Replay",
+      "targetTypeScriptFile": "tools/pskernel-kernel-release-manifest.ts; tools/pskernel.ts; packages/kernel/src/PSKernel/Replay.ts",
+      "targetSymbol": "runPSKernelKernelReleaseManifest; verifyPSKernelKernelReleaseManifest; pskernel release-manifest; pskernel verify-release-manifest",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "The release manifest binds the deterministic certificate bundle hash, certificate-bundle audit hash, proof-obligation hash, and environment snapshot hash into the final release evidence hash; verification rejects malformed or forged release-manifest payloads and can fresh-regenerate expected release evidence.",
+      "supportedSubset": "trusted-boundary release evidence for the supported standalone kernel package and canonical smoke CoreArtifact",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Release.Manifest.DeliveryBootstrapBinding",
+      "sourceLeanFile": "PSKernel/Replay.lean; Main.lean; release evidence scripts",
+      "sourceArea": "Replay",
+      "targetTypeScriptFile": "tools/pskernel-kernel-delivery-bootstrap.ts; tools/pskernel-kernel-release-manifest.ts; tools/pskernel.ts",
+      "targetSymbol": "runProofScriptDeliveryBootstrapVerification; runPSKernelKernelReleaseManifest; verifyPSKernelKernelReleaseManifest; pskernel delivery-bootstrap",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "The release manifest binds a manifestless fresh-extract delivery-bootstrap evidence hash, and fresh-bound manifest verification recomputes that bootstrap hash without recursively depending on full delivery verification.",
+      "supportedSubset": "trusted-boundary release delivery bootstrap checks for local workspace linking, kernel trust status, source-tree evidence, and source-archive evidence",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Release.Manifest.SourceArchiveBinding",
+      "sourceLeanFile": "PSKernel/Replay.lean; Main.lean; release evidence scripts",
+      "sourceArea": "Replay",
+      "targetTypeScriptFile": "tools/pskernel-kernel-release-archive.ts; tools/pskernel-kernel-release-manifest.ts; tools/pskernel.ts",
+      "targetSymbol": "createProofScriptReleaseArchive; verifyProofScriptReleaseArchiveEvidence; runPSKernelKernelReleaseManifest; verifyPSKernelKernelReleaseManifest; pskernel source-archive; pskernel verify-source-archive",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "The release archive evidence binds a deterministic zip archive hash to the release-critical source tree hash and payload hash, and the release manifest binds those source-archive hashes into fresh-bound release verification.",
+      "supportedSubset": "release-critical source archive generated from the deterministic source-tree profile with fixed timestamps and sorted file payloads",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Release.Manifest.SourceTreeBinding",
+      "sourceLeanFile": "PSKernel/Replay.lean; Main.lean; release evidence scripts",
+      "sourceArea": "Replay",
+      "targetTypeScriptFile": "tools/pskernel-kernel-source-tree.ts; tools/pskernel-kernel-release-manifest.ts; tools/pskernel.ts",
+      "targetSymbol": "snapshotProofScriptSourceTree; verifyProofScriptSourceTreeEvidence; runPSKernelKernelReleaseManifest; verifyPSKernelKernelReleaseManifest; pskernel source-tree; pskernel verify-source-tree",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "The release manifest binds a deterministic release-critical source tree inventory hash; verification rejects forged source-tree evidence and fresh-bound release verification recomputes the source-tree hash from the current workspace.",
+      "supportedSubset": "release-critical TypeScript, ProofScript, specification, and governance source files selected by the deterministic source-tree profile",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.ReleasePackage.DeterministicReleaseManifest",
+      "sourceLeanFile": "Main.lean; PSKernel.lean; release evidence manifest",
+      "sourceArea": "CLI",
+      "targetTypeScriptFile": "tools/pskernel-kernel-release-manifest.ts; tools/pskernel.ts; docs/PSKERNEL_TS_RELEASE_MANIFEST.json",
+      "targetSymbol": "runPSKernelKernelReleaseManifest",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "The release manifest deterministically ties trusted-boundary status, proof obligations, preflight, package audit, tarball install smoke, standalone audit bundle, and package hashes into one auditable evidence artifact.",
+      "supportedSubset": "release evidence only; does not prove Lean equivalence or expand accepted kernel semantics",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.ReleasePackage.InstallFromTarballSmoke",
+      "sourceLeanFile": "Main.lean; PSKernel.lean; release package manifest",
+      "sourceArea": "CLI",
+      "targetTypeScriptFile": "tools/pskernel-kernel-tarball-smoke.ts; tools/pskernel.ts; tools/pskernel-kernel-preflight.ts",
+      "targetSymbol": "runPSKernelKernelTarballSmoke",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "The packed @proofscript/kernel tarball must install into a fresh project and expose replay, certificate, status, and proof-obligation APIs from dist without depending on monorepo source files.",
+      "supportedSubset": "npm pack plus fresh npm install smoke for the pskernel-derived TypeScript kernel package",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.ReleasePackage.NpmContentsAudit",
+      "sourceLeanFile": "Main.lean; PSKernel.lean; release package manifest",
+      "sourceArea": "CLI",
+      "targetTypeScriptFile": "tools/pskernel-kernel-package-audit.ts; tools/pskernel.ts; packages/kernel/package.json; packages/kernel/docs/*",
+      "targetSymbol": "runPSKernelKernelPackageAudit",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "The publishable @proofscript/kernel package must include built dist entrypoints plus trust-boundary, porting-map, preflight, and proof-obligation evidence while excluding legacy compact-kernel files.",
+      "supportedSubset": "npm pack dry-run contents for the pskernel-derived TypeScript kernel package",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.ReleasePreflight.MirrorAudit",
+      "sourceLeanFile": "PSKernel.lean; Main.lean; pskernel source inventory",
+      "sourceArea": "CLI",
+      "targetTypeScriptFile": "tools/pskernel-kernel-preflight.ts; tools/pskernel.ts; docs/PSKERNEL_TS_RELEASE_PREFLIGHT.json",
+      "targetSymbol": "runPSKernelKernelPreflight",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Release preflight validates that the pskernel source mirror, trusted-boundary status, proof-obligation catalog, active package entrypoints, and deterministic audit evidence remain coherent before packaging.",
+      "supportedSubset": "structural mirror completeness, proof-obligation metadata, deterministic accepted smoke artifact audit, and active dist legacy-file absence",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Replay.Artifact.ShapeValidation",
+      "sourceLeanFile": "PSKernel/Replay.lean",
+      "sourceArea": "Replay",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Replay.ts",
+      "targetSymbol": "validateCoreArtifact",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Replay rejects malformed artifact, declaration, term, level, typeclass, and module metadata shapes before trusted checking.",
+      "supportedSubset": "CoreArtifact formatVersion 1",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Replay.Certificate.Deterministic",
+      "sourceLeanFile": "PSKernel/Replay.lean",
+      "sourceArea": "Replay",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Replay.ts",
+      "targetSymbol": "certifyCoreArtifact",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Replay certificates bind the artifact hash and semantic summary hash produced by deterministic canonicalization.",
+      "supportedSubset": "accepted replay artifacts only; evidence not cryptographic signature or proof",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Replay.Certificate.EnvironmentSnapshotBinding",
+      "sourceLeanFile": "PSKernel/Replay.lean; PSKernel/Environment/Basic.lean",
+      "sourceArea": "Replay",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Replay.ts; tools/pskernel.ts",
+      "targetSymbol": "certifyCoreArtifact; verifyCoreReplayCertificate; CoreReplayCertificate.environmentSha256",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Accepted replay certificates bind artifact SHA-256, semantic summary SHA-256, and the final deterministic environment snapshot SHA-256, and certificate verification rejects stale or forged environment hashes by fresh replay.",
+      "supportedSubset": "trusted-boundary CoreArtifact replay environments representable by snapshotEnvironment in the pskernel-derived TypeScript kernel slice",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Replay.Certificate.VerifyByFreshReplay",
+      "sourceLeanFile": "PSKernel/Replay.lean",
+      "sourceArea": "Replay",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Replay.ts; packages/kernel/src/Main.ts; tools/pskernel.ts",
+      "targetSymbol": "verifyCoreReplayCertificate",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Certificate verification reruns replay/certification and accepts only when supplied evidence exactly matches fresh trusted-boundary replay evidence.",
+      "supportedSubset": "CoreArtifact formatVersion 1 accepted artifacts",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Replay.CertificateBundle.DeterministicVerification",
+      "sourceLeanFile": "PSKernel/Replay.lean; PSKernel/Environment/Basic.lean",
+      "sourceArea": "Replay",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Replay.ts; packages/kernel/src/Main.ts; tools/pskernel.ts",
+      "targetSymbol": "createCoreReplayCertificateBundle; verifyCoreReplayCertificateBundle; pskernel bundle; pskernel verify-bundle",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Accepted certificate bundles deterministically bind the canonical CoreArtifact, replay certificate, certificate verification result, final environment snapshot, and audit hash; verification rejects stale, forged, or noncanonical bundle payloads by fresh replay.",
+      "supportedSubset": "trusted-boundary CoreArtifact replay and environment snapshot bundle evidence for the pskernel-derived TypeScript kernel slice",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Replay.CertificateBundle.ObligationCatalogBinding",
+      "sourceLeanFile": "PSKernel/Replay.lean; PSKernel/Verify.lean",
+      "sourceArea": "Replay",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Replay.ts; packages/kernel/src/PSKernel/Verify/Obligations.ts; tools/pskernel.ts",
+      "targetSymbol": "CoreReplayCertificateBundle.obligationsSha256; verifyCoreReplayCertificateBundle; proofObligationReport",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Accepted certificate bundles expose and bind the deterministic proof-obligation catalog hash separately from the audit hash, and verification rejects forged or stale obligation-catalog hashes by fresh replay.",
+      "supportedSubset": "trusted-boundary certificate bundle evidence and machine-readable obligation catalog for the supported standalone kernel slice",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Replay.EnvironmentSnapshot.Deterministic",
+      "sourceLeanFile": "PSKernel/Replay.lean; PSKernel/Environment/Basic.lean",
+      "sourceArea": "Replay",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Replay.ts; packages/kernel/src/PSKernel/Environment/Basic.ts; packages/kernel/src/Main.ts; tools/pskernel.ts",
+      "targetSymbol": "snapshotEnvironment; checkCoreDeclarationsWithSnapshot; replayCoreArtifactWithSnapshot; pskernelSnapshotCoreArtifact; pskernel snapshot",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Accepted replay and check-core executions can emit deterministic environment snapshot JSON and SHA-256 evidence for the final trusted environment, including admitted constants, checked declarations, generated names, assumptions, and prelude state.",
+      "supportedSubset": "trusted-boundary environment entries currently representable by ConstantInfo and CheckedDeclaration in the pskernel-derived TypeScript kernel slice",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Replay.ModuleMetadata.CrossCheck",
+      "sourceLeanFile": "PSKernel/Replay.lean",
+      "sourceArea": "Replay",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Replay.ts",
+      "targetSymbol": "validateModulesMetadataAgainstSummary",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Module declarations and exports must reference checked, generated, or prelude-installed names.",
+      "supportedSubset": "serialized module metadata side table",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Replay.Prelude.Deterministic",
+      "sourceLeanFile": "PSKernel/Replay.lean; PSKernel/Primitive.lean",
+      "sourceArea": "Replay",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/Replay.ts",
+      "targetSymbol": "replayCoreArtifact",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Declared prelude profile installs a deterministic primitive base environment before replaying serialized declarations.",
+      "supportedSubset": "none, core, core+quot prelude profiles",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Runtime.Inductive.NonrecursiveMultiConstructorMatchEncoding",
+      "sourceLeanFile": "ProofScript grammar/parser specification; Lean 4 recursor semantics for simple nonrecursive inductives",
+      "sourceArea": "Runtime",
+      "targetTypeScriptFile": "packages/backend-typescript/src/index.ts; packages/runtime/src/index.ts; tools/user-inductive-match-runtime-tests.ts; tools/pslive-smoke-lib.ts; tools/reference-language-governance-smoke.ts",
+      "targetSymbol": "collectSimpleRecursors; emitTerm(Color.rec/MaybeNat.rec); Inductive_rec",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "PSC-1 matches over parameterless/indexless nonrecursive multi-constructor user inductives are elaborated to checked recursor applications, then emitted as deterministic frozen tagged-record dispatch only after Core checking; the runtime validates inductive owner, constructor index, field arity, and curried branch application.",
+      "supportedSubset": "nonrecursive parameterless/indexless user inductives with first-order fields; constructor tags and payloads use the existing frozen-record encoding; recursive fields are handled only by the separate simple self-recursive recursor obligation; dependent motives at runtime, indexed inductives, parameters, mutual/nested inductives, and unchecked JavaScript union interop remain unsupported/fail-closed",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Runtime.Inductive.SimpleSelfRecursiveRecursorEncoding",
+      "sourceLeanFile": "ProofScript grammar/parser specification; Lean 4 recursor semantics for simple self-recursive inductives",
+      "sourceArea": "Runtime",
+      "targetTypeScriptFile": "packages/backend-typescript/src/index.ts; packages/runtime/src/index.ts; tools/user-recursive-inductive-runtime-tests.ts; tools/pslive-smoke-lib.ts; tools/reference-language-governance-smoke.ts",
+      "targetSymbol": "collectSimpleRecursors; emitTerm(NatList.rec); Inductive_rec",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "PSC-1 matches and primitive-recursive definitions over simple self-recursive parameterless/indexless inductives are elaborated to checked recursor applications. JS emission records direct owner-typed recursive field positions, and the runtime computes the corresponding induction hypotheses structurally before applying each checked curried branch.",
+      "supportedSubset": "direct first-order recursive fields whose type is exactly the inductive owner, with no parameters, indices, mutual recursion, nested recursion through containers/functions, dependent motives at runtime, or unchecked JavaScript recursion interop",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Runtime.Structure.ConstructorProjectionEncoding",
+      "sourceLeanFile": "ProofScript grammar/parser specification; Lean 4 structures as single-constructor inductives with generated projections",
+      "sourceArea": "Runtime",
+      "targetTypeScriptFile": "packages/backend-typescript/src/index.ts; packages/runtime/src/index.ts; tools/pslive-smoke-lib.ts; tools/reference-language-governance-smoke.ts",
+      "targetSymbol": "emitJavaScriptModule; Struct_mk; Struct_ctor; Struct_proj",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Parameterless PSC-1 structure instances are elaborated to checked constructor applications, and generated field projections are emitted as deterministic frozen-record projection functions whose executable observations agree with the checked Core projection/reduction behavior for the accepted subset.",
+      "supportedSubset": "parameterless single-constructor structures with explicit fields and generated first-order projections; no parameters, no dependent fields, no nested structure runtime interop beyond checked Core values",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Runtime.Structure.SingleConstructorMatchEncoding",
+      "sourceLeanFile": "ProofScript grammar/parser specification; Lean 4 recursor semantics for single-constructor structures",
+      "sourceArea": "Runtime",
+      "targetTypeScriptFile": "packages/backend-typescript/src/index.ts; packages/runtime/src/index.ts; tools/structure-match-runtime-tests.ts; tools/pslive-smoke-lib.ts; tools/reference-language-governance-smoke.ts",
+      "targetSymbol": "collectSimpleNonrecursiveRecursors; emitTerm(Point.rec); Struct_rec",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "PSC-1 matches over parameterless single-constructor source structures are elaborated to checked recursor applications, then emitted as deterministic frozen-record destructuring only after Core checking; the runtime validates the expected constructor tag and field arity before applying the curried branch.",
+      "supportedSubset": "parameterless/indexless single-constructor structures and inductives with explicit first-order fields; multi-constructor runtime coverage is handled separately for nonrecursive user inductives; no dependent motives at runtime and no unchecked JavaScript destructuring",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.StandaloneSmallSubset.LiveWithoutLean4",
+      "sourceLeanFile": "ProofScript_Language_Reference_v0.6.1_authoritative_draft.md; ProofScript_Parser_Lowering_API_Contract_v0.6.1.md",
+      "sourceArea": "Frontend",
+      "targetTypeScriptFile": "tools/pslive.ts; tools/proofscript-live-small-smoke.ts; examples/standalone-small/src/Main.ps",
+      "targetSymbol": "pslive check/build-js/run/smoke",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "A small standalone .ps subset is parsed, elaborated to checked Core, certified by the pskernel-derived TypeScript kernel, and emitted to executable JS without invoking Lean4.",
+      "supportedSubset": "explicit-typed def over Nat/Bool/Unit/Eq prelude, Nat literals, Nat.succ, Nat.add, local let/have def-body sequencing, Boolean bif, simple Bool match, and Nat literal/catch-all matches via checked recursors, direct calls to earlier checked definitions, rfl/exact/intro/assumption/apply proof smoke over checked Prop/Eq goals",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.TypeChecker.Check.Cumulativity",
+      "sourceLeanFile": "PSKernel/TypeChecker.lean; PSKernel/Theory/LevelSat.lean",
+      "sourceArea": "TypeChecker",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/TypeChecker.ts",
+      "targetSymbol": "checkCore",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Checking accepts Sort cumulativity when the implemented level ordering justifies the relation.",
+      "supportedSubset": "sort-level cumulativity over implemented levels",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.TypeChecker.DefEq.FunctionEta",
+      "sourceLeanFile": "PSKernel/TypeChecker.lean",
+      "sourceArea": "TypeChecker",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/TypeChecker.ts",
+      "targetSymbol": "isDefEqCore",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Conservative Pi/function eta recognizes f as equal to fun x => f x when f safely infers to a compatible Pi type.",
+      "supportedSubset": "single-step function eta for supported Core terms",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.TypeChecker.DefEq.ProofIrrelevance",
+      "sourceLeanFile": "PSKernel/TypeChecker.lean; PSKernel/Theory/Typing/UniqueTyping.lean",
+      "sourceArea": "TypeChecker",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/TypeChecker.ts",
+      "targetSymbol": "isDefEqCore",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Two terms safely inferred to the same proposition are treated definitionally equal in the supported proof-irrelevance slice.",
+      "supportedSubset": "same inferred Prop type under current environment and local context",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.TypeChecker.DefEq.StructureEta",
+      "sourceLeanFile": "PSKernel/TypeChecker.lean; PSKernel/Inductive/Reduce.lean",
+      "sourceArea": "TypeChecker",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/TypeChecker.ts",
+      "targetSymbol": "isDefEqCore",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Simple single-constructor projection-supported structures satisfy eta in the implemented slice.",
+      "supportedSubset": "non-indexed, one-constructor, nondependent-field structure-like inductives",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.TypeChecker.Infer.SortPiLamAppLet",
+      "sourceLeanFile": "PSKernel/TypeChecker.lean",
+      "sourceArea": "TypeChecker",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/TypeChecker.ts",
+      "targetSymbol": "inferType",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Inference for Sort, constants, Pi, lambda, application, and let follows the pskernel kernel typing skeleton for the supported subset.",
+      "supportedSubset": "Core terms after elaboration; no parser, tactic, typeclass, or termination search",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed",
+        "Semantic target is pinned Lean 4.33.1, not moving Lean latest"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.TypeChecker.WHNF.BetaZetaDelta",
+      "sourceLeanFile": "PSKernel/TypeChecker.lean",
+      "sourceArea": "TypeChecker",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/TypeChecker.ts",
+      "targetSymbol": "whnfCore",
+      "status": "lean-proof-target",
+      "proofStatus": "not-proven",
+      "semanticRelation": "WHNF implements beta, zeta, and controlled delta reduction for definitions/theorems while keeping opaques closed.",
+      "supportedSubset": "trusted Core terms; transparency reducible/default/all; no native compiler reductions",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    },
+    {
+      "id": "ProofScript.Unsupported.FullFrontend.FailClosed",
+      "sourceLeanFile": "ProofScript grammar/parser specification; PSKernel frontend boundary",
+      "sourceArea": "Unsupported",
+      "targetTypeScriptFile": "packages/kernel/src/PSKernel/*",
+      "targetSymbol": "KernelUnsupportedError",
+      "status": "informal-spec",
+      "proofStatus": "not-proven",
+      "semanticRelation": "Full parser, elaborator, macro, tactic, typeclass search, native .olean replay, and unsupported primitives remain outside the trusted kernel slice.",
+      "supportedSubset": "explicit unsupported errors or neutral reduction only",
+      "trustedAssumptions": [
+        "TypeScript implementation is trusted-boundary evidence only until related Lean proof is completed"
+      ],
+      "testStatus": "smoke"
+    }
+  ]
+}

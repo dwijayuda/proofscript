@@ -1,0 +1,41 @@
+{
+  "checkpoint": "proofscript-v1-ka35-typechecker-refinement-bridge0",
+  "publicVersion": "1.0.0-pskernel.38",
+  "baseline": "proofscript-v1-ka34-mutual-def-env-bridge0",
+  "referenceKind": "direct-imported-lean4lean-typechecker-refinement-bridge",
+  "imports": [
+    "Lean4Lean.Verify.TypeChecker"
+  ],
+  "coveredLean4LeanTypeCheckerOperations": [
+    "TypeChecker.whnf",
+    "TypeChecker.whnfCore",
+    "TypeChecker.inferType",
+    "TypeChecker.checkType",
+    "TypeChecker.isDefEq"
+  ],
+  "coveredLean4LeanTheorems": [
+    "Lean4Lean.TypeChecker.whnf.WF",
+    "Lean4Lean.TypeChecker.whnfCore.WF",
+    "Lean4Lean.TypeChecker.inferType.WF",
+    "Lean4Lean.TypeChecker.checkType.WF",
+    "Lean4Lean.TypeChecker.isDefEq.WF"
+  ],
+  "formalBridgeLemmas": [
+    "PSKernelKA35.translated_whnf_refines_typing",
+    "PSKernelKA35.translated_whnfCore_refines_typing",
+    "PSKernelKA35.translated_inferType_refines_typing",
+    "PSKernelKA35.translated_checkType_refines_typing",
+    "PSKernelKA35.translated_isDefEq_refines_defeq"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "typeCheckerSemanticCompleteness": false,
+    "formalLean4EquivalenceProvenObligations": 71
+  }
+}

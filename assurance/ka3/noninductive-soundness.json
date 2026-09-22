@@ -1,0 +1,38 @@
+{
+  "schema": "proofscript.assurance.ka3.noninductive-soundness/v1",
+  "checkpoint": "proofscript-v1-ka3-noninductive-soundness0",
+  "publicVersion": "1.0.0-pskernel.5",
+  "baseline": "proofscript-v1-ka2-translation-relation0",
+  "status": "first-noninductive-soundness-slice-skeleton",
+  "closedByKA3": [
+    "ka3.soundness.noninductive.classifier-totality",
+    "ka3.soundness.noninductive.translation-shape",
+    "ka3.soundness.noninductive.metadata-erasure-inert",
+    "ka3.soundness.noninductive.metavariable-exclusion",
+    "ka3.soundness.noninductive.no-trusted-kernel-change"
+  ],
+  "stillOpen": [
+    "soundness.checkDecl",
+    "soundness.defEq",
+    "soundness.whnf",
+    "soundness.environment-extension",
+    "soundness.quotient-primitives",
+    "soundness.inductive-admission",
+    "soundness.recursor-iota",
+    "soundness.supported-core-completeness",
+    "soundness.imported-Lean4Lean-binding"
+  ],
+  "sampleSuite": {
+    "total": 8,
+    "supportedNonInductive": 5,
+    "excludedOrBlocked": 3,
+    "wronglyTranslated": 0
+  },
+  "claimBoundary": {
+    "leanCheckedHere": false,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false
+  }
+}

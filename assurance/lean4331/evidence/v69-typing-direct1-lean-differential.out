@@ -1,0 +1,26 @@
+◇ prepared identity [semantic-equivalence]: declaration kind, declaration types
+◇ prepared universes [semantic-equivalence]: universe parameters, declaration types, max/imax normalization
+◇ prepared binder-info [semantic-equivalence]: BinderInfo, declaration types
+◇ prepared proof-irrelevance-eq [semantic-equivalence]: proof irrelevance, Eq behavior
+◇ prepared reduction-recursion [semantic-equivalence]: generated declarations, recursor reduction, definition reduction
+◇ prepared structure-recursor-projection [semantic-equivalence]: constructor types, recursor types, generated declarations, projection reduction
+◇ prepared typeclass-selection [semantic-equivalence]: typeclass candidate selection, instance BinderInfo, definition reduction
+◇ prepared axiom-dependencies [semantic-equivalence]: axiom dependencies, declaration types
+◇ prepared module-diamond-environment [semantic-equivalence]: module/import environment observations, declaration ownership, definition reduction
+◇ prepared let-zeta [semantic-equivalence]: local binding semantics, zeta reduction, definition reduction
+◇ prepared transparency [semantic-equivalence]: transparency, declaration kind, definition reduction
+◇ prepared equation-patterns [semantic-equivalence]: generated declarations, pattern lowering, definition reduction, recursor reduction
+◇ prepared structure-update [semantic-equivalence]: structure update lowering, projection reduction, definition reduction
+◇ prepared literals [semantic-equivalence]: literal lowering, definition reduction, Eq behavior
+◇ prepared implicit-unification [semantic-equivalence]: implicit synthesis, first-order unification, BinderInfo, definition reduction
+◇ prepared recursive-typeclass [semantic-equivalence]: typeclass candidate selection, recursive instance prerequisites, instance BinderInfo, definition reduction
+◇ prepared reject-type-mismatch [negative-agreement]: logical rejection, declaration type mismatch
+◇ prepared reject-equality-type-mismatch [negative-agreement]: logical rejection, Eq behavior
+◇ prepared reject-opaque-no-delta [negative-agreement]: logical rejection, transparency
+◇ prepared gap-higher-order-inference [capability-gap]: capability gap, higher-order implicit inference
+◇ prepared gap-dependent-instance-target [capability-gap]: capability gap, dependent instance target
+◇ prepared namespaces [semantic-equivalence]: namespace/name resolution, qualified declaration names, root-qualified resolution
+◇ prepared sections-open [semantic-equivalence]: section environment scope, open namespace resolution, open precedence
+◇ prepared section-vars [semantic-equivalence]: section variable telescope generalization, include/omit theorem policy, BinderInfo
+◇ prepared kernel-universe-equivalence [semantic-equivalence]: universe parameters, declaration types, max/imax normalization
+wrote differential evidence report: artifacts/LEAN_4_33_1_DIFFERENTIAL_REPORT.json

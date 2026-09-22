@@ -1,0 +1,41 @@
+{
+  "schema": "proofscript.kernel-assurance.validation/v1",
+  "checkpoint": "RECURSOR_GENERATED1",
+  "mandatoryGates": [
+    {
+      "part": 1,
+      "status": "PASS"
+    },
+    {
+      "part": 2,
+      "status": "PASS"
+    },
+    {
+      "part": 3,
+      "status": "PASS"
+    },
+    {
+      "part": 4,
+      "status": "PASS"
+    },
+    {
+      "part": 5,
+      "status": "PASS"
+    },
+    {
+      "part": 6,
+      "status": "PASS"
+    }
+  ],
+  "build": "PASS",
+  "conformance": "PASS",
+  "sourceDifferential": {
+    "passed": 23,
+    "total": 25,
+    "knownNonKernelFailures": [
+      "reduction-recursion",
+      "equation-patterns"
+    ]
+  },
+  "timeoutIsSuccess": false
+}

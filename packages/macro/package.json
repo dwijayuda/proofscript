@@ -1,0 +1,10 @@
+{
+  "name": "@proofscript/macro",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "Dynamic macro expansion and quotations.",
+  "license": "MIT",
+  "files": [
+    "README.md"
+  ]
+}

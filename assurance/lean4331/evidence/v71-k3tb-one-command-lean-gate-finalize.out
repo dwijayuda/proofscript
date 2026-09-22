@@ -1,0 +1,6 @@
+
+> proofscript-monorepo@0.1.0-production-p5.94-arena-nested-helper-target-validation0 test:v71:lean-gate:finalize
+> export NODE_OPTIONS="--experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON"; node tools/kernel-v71-assurance-finalize.ts
+
+PASS KERNEL-v71-assurance-finalize: wrote assurance/lean4331/FINAL_VALIDATION_V71_FULL_LEAN_GATE.json
+PASS KERNEL-v71-assurance-finalize: wrote assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_FULL_LEAN_GATE1.md

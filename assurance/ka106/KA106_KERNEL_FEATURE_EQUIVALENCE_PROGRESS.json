@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka106-primitive-extension-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.109",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 84,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 351,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 346,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "correctedFormalLean4LeanBridgeObligations": 351,
+    "countedNewObligations": [
+      "translated_vcontext_ext_mono_wf",
+      "translated_vcontext_ext_monoT_wf",
+      "translated_vcontext_ext_monoW_wf",
+      "translated_vcontext_ext_monoIsType_wf",
+      "translated_vcontext_ext_monoCtx_wf"
+    ]
+  },
+  "metricPolicy": "KA106 adds direct non-sorry-backed primitive extension monotonicity helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

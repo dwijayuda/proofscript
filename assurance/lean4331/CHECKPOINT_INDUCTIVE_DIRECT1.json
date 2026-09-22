@@ -1,0 +1,53 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "INDUCTIVE_DIRECT1",
+  "date": "2026-09-10",
+  "proofscript": {
+    "coreFormat": 71,
+    "profile": "KERNEL-level-instantiation-conformance1",
+    "kernelSemanticChange": false
+  },
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "formal": {
+    "modules": 23,
+    "statement": true,
+    "sorryAx": 0,
+    "newModules": [
+      "InductiveDirectAdmission.lean",
+      "DeclarationRecursorMetadata.lean"
+    ],
+    "formedEnvironmentKinds": [
+      "ordinary",
+      "quotient",
+      "inductive",
+      "constructor",
+      "recursor"
+    ]
+  },
+  "directInductiveDifferential": {
+    "positive": 6,
+    "negative": 4,
+    "failures": 0,
+    "atomicFailures": 4,
+    "generatedStructuralRecords": 18,
+    "structuralMismatches": 0,
+    "recursorUniverseBinderComparison": "alpha-normalized-by-position"
+  },
+  "releaseChecks": {
+    "typescriptBuild": "passed",
+    "conformance": "passed",
+    "gateParts": {
+      "1": "passed",
+      "2": "passed",
+      "3": "passed",
+      "4": "passed",
+      "5": "passed",
+      "6": "passed"
+    }
+  },
+  "claim": "partial O-IND/O-DECL assurance only; whole-kernel K3 equivalence not established",
+  "next": "parameterized/indexed direct inductive admission and constructor result-family correspondence"
+}

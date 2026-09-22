@@ -1,0 +1,447 @@
+-- Standalone ProofScript checked bootstrap foundation.
+-- Each declaration is kernel-checked; no host-language primitive is trusted.
+universe u;
+
+inductive Eq(A: Sort u, a: A): A → Prop {
+  | refl: Eq(A, a, a);
+}
+
+inductive Nat: Type {
+  | zero;
+  | succ(n: Nat);
+}
+
+inductive Bool: Type {
+  | false;
+  | true;
+}
+
+inductive Int: Type {
+  | token;
+}
+
+-- PSC-1 P5.10 bounded Int primitive API.
+-- These declarations provide checked Core types. Their computation is a
+-- trusted-boundary kernel primitive only for explicit Int literals.
+axiom Int.neg(a: Int): Int;
+axiom Int.add(a: Int, b: Int): Int;
+axiom Int.sub(a: Int, b: Int): Int;
+axiom Int.beq(a: Int, b: Int): Bool;
+
+inductive String: Type {
+  | token;
+}
+
+inductive Option(A: Type): Type {
+  | none;
+  | some(value: A);
+}
+
+def Option.isSome(A: Type, value: Option(A)): Bool := {
+  Option.rec.{1}(
+    A,
+    fun (x: Option(A)) => Bool,
+    Bool.false,
+    fun (inner: A) => Bool.true,
+    value
+  )
+}
+
+def Option.isNone(A: Type, value: Option(A)): Bool := {
+  Option.rec.{1}(
+    A,
+    fun (x: Option(A)) => Bool,
+    Bool.true,
+    fun (inner: A) => Bool.false,
+    value
+  )
+}
+
+def Option.getD(A: Type, value: Option(A), fallback: A): A := {
+  Option.rec.{1}(
+    A,
+    fun (x: Option(A)) => A,
+    fallback,
+    fun (inner: A) => inner,
+    value
+  )
+}
+
+def Option.orElse(A: Type, value: Option(A), fallback: Option(A)): Option(A) := {
+  Option.rec.{1}(
+    A,
+    fun (x: Option(A)) => Option(A),
+    fallback,
+    fun (inner: A) => Option.some(A, inner),
+    value
+  )
+}
+
+
+def Option.fold(A: Type, B: Type, none: B, some: A -> B, value: Option(A)): B := {
+  Option.rec.{1}(
+    A,
+    fun (x: Option(A)) => B,
+    none,
+    fun (inner: A) => some(inner),
+    value
+  )
+}
+
+def Option.any(A: Type, p: A -> Bool, value: Option(A)): Bool := {
+  Option.rec.{1}(
+    A,
+    fun (x: Option(A)) => Bool,
+    Bool.false,
+    fun (inner: A) => p(inner),
+    value
+  )
+}
+
+inductive List(A: Type): Type {
+  | nil;
+  | cons(head: A, tail: List(A));
+}
+
+-- PSC-1 P5.19/P5.20 bounded List primitive API.
+-- This declaration provides a checked Core type. Its computation is a
+-- trusted-boundary primitive only for checked finite List constructor payloads.
+axiom List.map(A: Type, B: Type, f: A -> B, xs: List(A)): List(B);
+axiom List.foldl(A: Type, B: Type, f: B -> A -> B, init: B, xs: List(A)): B;
+axiom List.filter(A: Type, p: A -> Bool, xs: List(A)): List(A);
+axiom List.append(A: Type, left: List(A), right: List(A)): List(A);
+axiom List.length(A: Type, xs: List(A)): Nat;
+axiom List.range(count: Nat): List(Nat);
+axiom List.replicate(A: Type, count: Nat, value: A): List(A);
+axiom List.isEmpty(A: Type, xs: List(A)): Bool;
+axiom List.head?(A: Type, xs: List(A)): Option(A);
+axiom List.get?(A: Type, xs: List(A), index: Nat): Option(A);
+axiom List.take(A: Type, xs: List(A), count: Nat): List(A);
+axiom List.takeWhile(A: Type, p: A -> Bool, xs: List(A)): List(A);
+axiom List.dropWhile(A: Type, p: A -> Bool, xs: List(A)): List(A);
+axiom List.drop(A: Type, xs: List(A), count: Nat): List(A);
+axiom List.last?(A: Type, xs: List(A)): Option(A);
+axiom List.tail?(A: Type, xs: List(A)): Option(List(A));
+axiom List.reverse(A: Type, xs: List(A)): List(A);
+axiom List.any(A: Type, p: A -> Bool, xs: List(A)): Bool;
+axiom List.all(A: Type, p: A -> Bool, xs: List(A)): Bool;
+axiom List.find?(A: Type, p: A -> Bool, xs: List(A)): Option(A);
+axiom List.countP(A: Type, p: A -> Bool, xs: List(A)): Nat;
+
+def List.singleton(A: Type, value: A): List(A) := {
+  List.cons(A, value, List.nil(A))
+}
+
+def Option.toList(A: Type, value: Option(A)): List(A) := {
+  Option.rec.{1}(
+    A,
+    fun (x: Option(A)) => List(A),
+    List.nil(A),
+    fun (inner: A) => List.cons(A, inner, List.nil(A)),
+    value
+  )
+}
+
+inductive Array(A: Type): Type {
+  | mk(data: List(A));
+}
+
+-- PSC-1 P5.14 bounded Array primitive API.
+-- These declarations provide checked Core types. Their computation is a
+-- trusted-boundary primitive only for checked Array.mk values over finite List payloads.
+axiom Array.size(A: Type, xs: Array(A)): Nat;
+axiom Array.range(count: Nat): Array(Nat);
+axiom Array.replicate(A: Type, count: Nat, value: A): Array(A);
+axiom Array.toList(A: Type, xs: Array(A)): List(A);
+axiom List.toArray(A: Type, xs: List(A)): Array(A);
+axiom Array.get?(A: Type, xs: Array(A), index: Nat): Option(A);
+axiom Array.take(A: Type, xs: Array(A), count: Nat): Array(A);
+axiom Array.takeWhile(A: Type, p: A -> Bool, xs: Array(A)): Array(A);
+axiom Array.dropWhile(A: Type, p: A -> Bool, xs: Array(A)): Array(A);
+axiom Array.drop(A: Type, xs: Array(A), count: Nat): Array(A);
+axiom Array.head?(A: Type, xs: Array(A)): Option(A);
+axiom Array.last?(A: Type, xs: Array(A)): Option(A);
+axiom Array.tail?(A: Type, xs: Array(A)): Option(Array(A));
+axiom Array.map(A: Type, B: Type, f: A -> B, xs: Array(A)): Array(B);
+axiom Array.foldl(A: Type, B: Type, f: B -> A -> B, init: B, xs: Array(A)): B;
+axiom Array.filter(A: Type, p: A -> Bool, xs: Array(A)): Array(A);
+axiom Array.append(A: Type, left: Array(A), right: Array(A)): Array(A);
+axiom Array.isEmpty(A: Type, xs: Array(A)): Bool;
+axiom Array.reverse(A: Type, xs: Array(A)): Array(A);
+axiom Array.any(A: Type, p: A -> Bool, xs: Array(A)): Bool;
+axiom Array.all(A: Type, p: A -> Bool, xs: Array(A)): Bool;
+axiom Array.find?(A: Type, p: A -> Bool, xs: Array(A)): Option(A);
+axiom Array.countP(A: Type, p: A -> Bool, xs: Array(A)): Nat;
+
+def Array.singleton(A: Type, value: A): Array(A) := {
+  Array.mk(A, List.singleton(A, value))
+}
+
+
+def Option.toArray(A: Type, value: Option(A)): Array(A) := {
+  Array.mk(A, Option.toList(A, value))
+}
+
+
+def Option.filter(A: Type, p: A -> Bool, value: Option(A)): Option(A) := {
+  Option.rec.{1}(
+    A,
+    fun (x: Option(A)) => Option(A),
+    Option.none(A),
+    fun (inner: A) => Bool.rec.{1}(
+      fun (b: Bool) => Option(A),
+      Option.none(A),
+      Option.some(A, inner),
+      p(inner)
+    ),
+    value
+  )
+}
+
+def Option.flatten(A: Type, value: Option(Option(A))): Option(A) := {
+  Option.rec.{1}(
+    Option(A),
+    fun (x: Option(Option(A))) => Option(A),
+    Option.none(A),
+    fun (inner: Option(A)) => inner,
+    value
+  )
+}
+
+inductive Except(E: Type, A: Type): Type {
+  | error(error: E);
+  | ok(value: A);
+}
+
+def Except.isOk(E: Type, A: Type, value: Except(E, A)): Bool := {
+  Except.rec.{1}(
+    E,
+    A,
+    fun (x: Except(E, A)) => Bool,
+    fun (error: E) => Bool.false,
+    fun (inner: A) => Bool.true,
+    value
+  )
+}
+
+def Except.isError(E: Type, A: Type, value: Except(E, A)): Bool := {
+  Except.rec.{1}(
+    E,
+    A,
+    fun (x: Except(E, A)) => Bool,
+    fun (error: E) => Bool.true,
+    fun (inner: A) => Bool.false,
+    value
+  )
+}
+
+def Except.getD(E: Type, A: Type, value: Except(E, A), fallback: A): A := {
+  Except.rec.{1}(
+    E,
+    A,
+    fun (x: Except(E, A)) => A,
+    fun (error: E) => fallback,
+    fun (inner: A) => inner,
+    value
+  )
+}
+
+def Except.orElse(E: Type, A: Type, value: Except(E, A), fallback: Except(E, A)): Except(E, A) := {
+  Except.rec.{1}(
+    E,
+    A,
+    fun (x: Except(E, A)) => Except(E, A),
+    fun (error: E) => fallback,
+    fun (inner: A) => Except.ok(E, A, inner),
+    value
+  )
+}
+
+def Except.toOption(E: Type, A: Type, value: Except(E, A)): Option(A) := {
+  Except.rec.{1}(
+    E,
+    A,
+    fun (x: Except(E, A)) => Option(A),
+    fun (error: E) => Option.none(A),
+    fun (inner: A) => Option.some(A, inner),
+    value
+  )
+}
+
+def Except.toError(E: Type, A: Type, value: Except(E, A)): Option(E) := {
+  Except.rec.{1}(
+    E,
+    A,
+    fun (x: Except(E, A)) => Option(E),
+    fun (error: E) => Option.some(E, error),
+    fun (inner: A) => Option.none(E),
+    value
+  )
+}
+
+
+def Except.getErrorD(E: Type, A: Type, value: Except(E, A), fallback: E): E := {
+  Except.rec.{1}(
+    E,
+    A,
+    fun (x: Except(E, A)) => E,
+    fun (error: E) => error,
+    fun (inner: A) => fallback,
+    value
+  )
+}
+
+
+def Except.swap(E: Type, A: Type, value: Except(E, A)): Except(A, E) := {
+  Except.rec.{1}(
+    E,
+    A,
+    fun (x: Except(E, A)) => Except(A, E),
+    fun (error: E) => Except.ok(A, E, error),
+    fun (inner: A) => Except.error(A, E, inner),
+    value
+  )
+}
+
+
+
+def Except.fold(E: Type, A: Type, B: Type, error: E -> B, ok: A -> B, value: Except(E, A)): B := {
+  Except.rec.{1}(
+    E,
+    A,
+    fun (x: Except(E, A)) => B,
+    error,
+    ok,
+    value
+  )
+}
+
+def Except.bimap(E: Type, F: Type, A: Type, B: Type, mapError: E -> F, mapOk: A -> B, value: Except(E, A)): Except(F, B) := {
+  Except.rec.{1}(
+    E,
+    A,
+    fun (x: Except(E, A)) => Except(F, B),
+    fun (error: E) => Except.error(F, B, mapError(error)),
+    fun (inner: A) => Except.ok(F, B, mapOk(inner)),
+    value
+  )
+}
+
+def Except.toList(E: Type, A: Type, value: Except(E, A)): List(A) := {
+  Option.toList(A, Except.toOption(E, A, value))
+}
+
+def Option.toExcept(E: Type, A: Type, value: Option(A), error: E): Except(E, A) := {
+  Option.rec.{1}(
+    A,
+    fun (x: Option(A)) => Except(E, A),
+    Except.error(E, A, error),
+    fun (inner: A) => Except.ok(E, A, inner),
+    value
+  )
+}
+
+def Except.toArray(E: Type, A: Type, value: Except(E, A)): Array(A) := {
+  Option.toArray(A, Except.toOption(E, A, value))
+}
+
+def Except.mapError(E: Type, F: Type, A: Type, f: E -> F, value: Except(E, A)): Except(F, A) := {
+  Except.rec.{1}(
+    E,
+    A,
+    fun (x: Except(E, A)) => Except(F, A),
+    fun (error: E) => Except.error(F, A, f(error)),
+    fun (inner: A) => Except.ok(F, A, inner),
+    value
+  )
+}
+
+def Except.flatten(E: Type, A: Type, value: Except(E, Except(E, A))): Except(E, A) := {
+  Except.rec.{1}(
+    E,
+    Except(E, A),
+    fun (x: Except(E, Except(E, A))) => Except(E, A),
+    fun (error: E) => Except.error(E, A, error),
+    fun (inner: Except(E, A)) => inner,
+    value
+  )
+}
+
+-- PSC-1 P5.15/P5.16 bounded functor/monad-like explicit API.
+-- These declarations provide checked Core types. Their computation is a
+-- trusted-boundary primitive only for checked Option/Except constructor values
+-- and already-checked mapping/binding functions.
+axiom Option.map(A: Type, B: Type, f: A -> B, value: Option(A)): Option(B);
+axiom Except.map(E: Type, A: Type, B: Type, f: A -> B, value: Except(E, A)): Except(E, B);
+axiom Option.bind(A: Type, B: Type, value: Option(A), f: A -> Option(B)): Option(B);
+axiom Except.bind(E: Type, A: Type, B: Type, value: Except(E, A), f: A -> Except(E, B)): Except(E, B);
+
+def Nat.add(a: Nat, b: Nat): Nat := {
+  Nat.rec.{1}(
+    fun (x: Nat) => Nat,
+    a,
+    fun (k: Nat, ih: Nat) => Nat.succ(ih),
+    b
+  )
+}
+
+
+def Nat.pred(n: Nat): Nat := {
+  Nat.rec.{1}(
+    fun (x: Nat) => Nat,
+    Nat.zero,
+    fun (k: Nat, ih: Nat) => k,
+    n
+  )
+}
+
+def Nat.sub(a: Nat, b: Nat): Nat := {
+  Nat.rec.{1}(
+    fun (x: Nat) => Nat,
+    a,
+    fun (k: Nat, ih: Nat) => Nat.pred(ih),
+    b
+  )
+}
+
+def Nat.mul(a: Nat, b: Nat): Nat := {
+  Nat.rec.{1}(
+    fun (x: Nat) => Nat,
+    Nat.zero,
+    fun (k: Nat, ih: Nat) => Nat.add(ih, a),
+    b
+  )
+}
+
+def Nat.leb(a: Nat, b: Nat): Bool := {
+  Nat.rec.{1}(
+    fun (x: Nat) => Nat -> Bool,
+    fun (b: Nat) => Bool.true,
+    fun (k: Nat, ih: Nat -> Bool) =>
+      fun (b: Nat) =>
+        Nat.rec.{1}(
+          fun (y: Nat) => Bool,
+          Bool.false,
+          fun (j: Nat, _ih: Bool) => ih(j),
+          b
+        ),
+    a
+  )(b)
+}
+
+def Nat.beq(a: Nat, b: Nat): Bool := {
+  Nat.leb(a, b) && Nat.leb(b, a)
+}
+
+def Nat.ltb(a: Nat, b: Nat): Bool := {
+  Nat.leb(Nat.succ(a), b)
+}
+
+def Bool.not(b: Bool): Bool := {
+  if b then Bool.false else Bool.true
+}
+
+def Bool.xor(a: Bool, b: Bool): Bool := {
+  if a then Bool.not(b) else b
+}
+

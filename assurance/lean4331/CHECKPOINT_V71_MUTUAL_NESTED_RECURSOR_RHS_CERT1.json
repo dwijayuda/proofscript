@@ -1,0 +1,131 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "V71_MUTUAL_NESTED_RECURSOR_RHS_CERT1",
+  "coreFormat": 71,
+  "profile": "KERNEL-level-instantiation-conformance1",
+  "semanticChange": false,
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+    "executable": "/mnt/data/lean-install/lean-4.33.1-linux/bin/lean",
+    "versionOutput": "Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)"
+  },
+  "formal": {
+    "newTarget": "ProofScriptKernelEquivalence.RecursorMutualNestedRHSCorrespondence",
+    "targetSource": "assurance/lean4331/formal/ProofScriptKernelEquivalence/RecursorMutualNestedRHSCorrespondence.lean",
+    "targetSourceSha256": "4b4c4dc111c12259d1f6b020b36b39d3353cbcebdf30634e1409e4c112e9b201",
+    "targetTheorems": 9,
+    "reportedSorryAx": 0,
+    "log": "assurance/lean4331/evidence/v71-mutual-nested-recursor-rhs-formal1.out",
+    "totalFormalLeanFiles": 37,
+    "theoremBoundary": "linked mutual/nested recursor RHS traces preserve Core→Lean endpoints across direct and indexed iota steps; not full arbitrary Lean stored RecursorRule.rhs reconstruction"
+  },
+  "executable": {
+    "sourceAudit": {
+      "path": "packages/kernel/src/kernel.ts#buildPointwise*RecursiveIH+reduceSimpleRecursor",
+      "sha256": "8fed19dee06fe13f99af604731b9ba61c6010db40589766ab7329d250d79f9c0",
+      "obligations": 19,
+      "missing": 0
+    },
+    "exactLeanSuites": [
+      {
+        "label": "minor-order",
+        "script": "tools/kernel-recursor-minor-order-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-mutual-nested-recursor-rhs-minor-order-exact-lean1.out",
+        "sha256": "a625430190284891a99616e9279b7bf291e6a7477ac42824128b5ce09dc3f6f3"
+      },
+      {
+        "label": "mutual-nested-generalization",
+        "script": "tools/kernel-mutual-nested-generalization-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-mutual-nested-recursor-rhs-mutual-nested-generalization-exact-lean1.out",
+        "sha256": "efc7e4f767a3ff70c4b8e337927465a1d40aa46d41e21a79869e220df43825ad"
+      },
+      {
+        "label": "mutual-nested-deeper",
+        "script": "tools/kernel-mutual-nested-deeper-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-mutual-nested-recursor-rhs-mutual-nested-deeper-exact-lean1.out",
+        "sha256": "1cee5736e49d7b19afd075a4fbd9d489164c69f67f8a26f289d7553a383c0901"
+      },
+      {
+        "label": "mutual-nested-deeper-indexed-containers",
+        "script": "tools/kernel-mutual-nested-deeper-indexed-containers-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-mutual-nested-recursor-rhs-mutual-nested-deeper-indexed-containers-exact-lean1.out",
+        "sha256": "9dd70a0af8422a8a0641c381ae80cae1cb131f23458493d7aa390e02a15d7fb1"
+      },
+      {
+        "label": "mutual-nested-final-generalization-audit",
+        "script": "tools/kernel-mutual-nested-final-generalization-audit-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-mutual-nested-recursor-rhs-mutual-nested-final-generalization-audit-exact-lean1.out",
+        "sha256": "62292ca8db95fefc842c26903b6e4e4912c2a76781005d2ecc8c76ee914d65ff"
+      }
+    ],
+    "suiteCount": 5,
+    "failures": 0
+  },
+  "inherited": {
+    "formedEnvironmentGeneralization": {
+      "status": "PASS",
+      "log": "assurance/lean4331/evidence/v71-formed-env-generalization-formal1.out",
+      "totalFormalLeanFiles": 37
+    },
+    "mutualFormedEnvironment": {
+      "status": "PASS",
+      "suites": 5
+    },
+    "nestedFormedEnvironment": {
+      "status": "PASS",
+      "suites": 9
+    },
+    "fullLeanGate": {
+      "status": "PASS",
+      "parts": 6,
+      "logs": [
+        {
+          "path": "assurance/lean4331/evidence/v71-gate-part1.out",
+          "sha256": "ec8220bca5a9453257661d3c65a80111fa1be08ac9f95fd11b68617bd7ac02f4",
+          "bytes": 1011
+        },
+        {
+          "path": "assurance/lean4331/evidence/v71-gate-part2.out",
+          "sha256": "0e2d86c285d2ccce19e94111810df807b45736ba3b7d57346ac923788f14f7e7",
+          "bytes": 643
+        },
+        {
+          "path": "assurance/lean4331/evidence/v71-gate-part3.out",
+          "sha256": "237ddf58459558e7d352e9af0d497c5adda3ed29d611df228fddc59a9244ccd3",
+          "bytes": 710
+        },
+        {
+          "path": "assurance/lean4331/evidence/v71-gate-part4.out",
+          "sha256": "6cd4f9661ffa48fc18dfff4458b2eef2b62e76b2d089cb79b0d34802f6787f01",
+          "bytes": 713
+        },
+        {
+          "path": "assurance/lean4331/evidence/v71-gate-part5.out",
+          "sha256": "e9e2a9af2e74f58ec22784dbc47d93fb57deaad532ca42436f6b49f0ac5989fb",
+          "bytes": 884
+        },
+        {
+          "path": "assurance/lean4331/evidence/v71-gate-part6.out",
+          "sha256": "c0b48520655e88066ab1face2d2f97f9a1491dd09d4429f4281da25d690c5783",
+          "bytes": 1390
+        }
+      ]
+    }
+  },
+  "scope": {
+    "proves": [
+      "Core→Lean translation of direct/indexed RHS iota steps",
+      "Core→Lean translation of linked RHS traces used by mutual/nested helper recursor paths",
+      "binding of RHS trace evidence to the mixed formed-inductive environment certificate",
+      "fresh exact-Lean executable evidence for fields-first, mutual+nested, deeper, indexed-container, and final-generalization linked iota paths"
+    ],
+    "doesNotProveYet": [
+      "full K3 whole-kernel equivalence",
+      "complete arbitrary mutual/nested admission and positivity completeness",
+      "full reconstruction of every Lean stored RecursorRule.rhs object",
+      "unbounded mutual+nested recursor RHS correspondence outside the declared v71 supported slices"
+    ]
+  },
+  "status": "PASS"
+}

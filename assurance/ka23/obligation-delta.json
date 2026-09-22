@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka23-nondef-env-lookup-bridge0",
+  "baseline": "proofscript-v1-ka22-nondef-env-extension-bridge0",
+  "previousFormalLean4EquivalenceProvenObligations": 25,
+  "newFormalLean4EquivalenceProvenObligations": 3,
+  "formalLean4EquivalenceProvenObligations": 28,
+  "provenLeanTheoremObligations": [
+    "PSKernelKA23.translated_theorem_env_lookup",
+    "PSKernelKA23.translated_theorem_env_defeq_member",
+    "PSKernelKA23.translated_opaque_env_lookup"
+  ],
+  "newObligationMeaning": "Conditional Lean4Lean VEnv.constants/VEnv.defeqs lookup-membership bridge lemmas for translated theorem and opaque declarations using real imported Lean4Lean environment operations.",
+  "stillOpen": [
+    "Executable PSKernel checker refinement to Lean4Lean typing",
+    "Definition/theorem/opaque body soundness beyond conditional VDefVal.WF premises",
+    "No-overwrite and existing-defeq preservation bridges for theorem/example/opaque where applicable",
+    "Quotient/inductive/mutual-inductive translation bridges",
+    "Full Lean 4 equivalence",
+    "Same-theory claim with full Lean 4"
+  ]
+}

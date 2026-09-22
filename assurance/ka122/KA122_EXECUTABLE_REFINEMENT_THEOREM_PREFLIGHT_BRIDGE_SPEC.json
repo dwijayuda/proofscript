@@ -1,0 +1,21 @@
+{
+  "checkpoint": "proofscript-v1-ka122-executable-refinement-theorem-preflight0",
+  "publicVersion": "1.0.0-pskernel.125",
+  "baseline": "proofscript-v1-ka121-executable-refinement-proof-contract0",
+  "referenceKind": "executable-refinement-theorem-preflight-audit",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 0,
+  "countedObligations": [],
+  "sourceTheorems": [],
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

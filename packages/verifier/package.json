@@ -1,0 +1,25 @@
+{
+  "name": "@proofscript/verifier",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "Isolated standalone ProofScript artifact verifier",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "@proofscript/kernel": "0.1.0-dev.0",
+    "@proofscript/kernel-codec": "0.1.0-dev.0",
+    "@proofscript/certificates": "0.1.0-dev.0"
+  },
+  "bin": {
+    "psverify": "dist/bin.js"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./bin": "./dist/bin.js"
+  }
+}

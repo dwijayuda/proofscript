@@ -1,0 +1,168 @@
+{
+  "checkpoint": "proofscript-v1-ka87-primitive-arithmetic-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.90",
+  "baseline": "proofscript-v1-ka86-primitive-divmod-recognizer-refinement0",
+  "releaseKind": "strict-lean4lean-primitive-arithmetic-recognizer-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA87",
+      "source": "assurance/ka87/primitive-arithmetic-recognizer-refinement-bridge.lean",
+      "destination": "PSKernelKA87PrimitiveArithmeticRecognizerRefinementBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 5,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka87-primitive-arithmetic-recognizer-refinement0",
+    "publicVersion": "1.0.0-pskernel.90",
+    "featureSurfaceBridgeProgressPercent": 98,
+    "executableKernelEquivalenceProofProgressPercent": 65,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 272,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 267,
+      "newFormalLean4LeanBridgeObligations": 5,
+      "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+      "correctedFormalLean4LeanBridgeObligations": 272,
+      "countedNewObligations": [
+        "translated_checkNatAdd_wf",
+        "translated_checkNatPred_wf",
+        "translated_checkNatSub_wf",
+        "translated_checkNatMul_wf",
+        "translated_checkNatPow_wf"
+      ]
+    },
+    "metricPolicy": "KA87 adds direct non-sorry-backed primitive Nat arithmetic recognizer bridge wrappers. Percentages remain conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka87Files": [
+      {
+        "path": "tools/pskernel-ka87-primitive-arithmetic-recognizer-refinement-tests.ts",
+        "lines": 29,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka87-primitive-arithmetic-recognizer-refinement.ts",
+        "lines": 54,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka87/KA87_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 24,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka87/KA87_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka87/KA87_PRIMITIVE_ARITHMETIC_RECOGNIZER_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 36,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka87/KA87_PRIMITIVE_ARITHMETIC_RECOGNIZER_REFINEMENT_RELEASE_GATE.json",
+        "lines": 132,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka87/KA87_PRIMITIVE_ARITHMETIC_RECOGNIZER_REFINEMENT_REPORT.md",
+        "lines": 22,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka87/KA87_PRIMITIVE_ARITHMETIC_RECOGNIZER_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 21,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka87/primitive-arithmetic-recognizer-refinement-bridge.lean",
+        "lines": 61,
+        "ext": ".lean"
+      }
+    ],
+    "ka87ToolFiles": [
+      {
+        "path": "tools/pskernel-ka87-primitive-arithmetic-recognizer-refinement-tests.ts",
+        "lines": 29,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka87-primitive-arithmetic-recognizer-refinement.ts",
+        "lines": 54,
+        "ext": ".ts"
+      }
+    ],
+    "newKA87OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveArithmeticRecognizerRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false,
+  "npmPackages": {
+    "packed": 36,
+    "sha256Entries": 36,
+    "verification": "passed"
+  },
+  "verificationCommandsPassed": [
+    "RED test first: missing KA87 gate tool failed as expected",
+    "npm install --offline --no-audit --no-fund",
+    "npm run build -- --pretty false",
+    "npm run test:pskernel:ka87",
+    "npm run assurance:ka87",
+    "npm run lean:ka87:check",
+    "npm run test:kernel:smoke",
+    "npm run test:standalone-small",
+    "npm run test:psc:kernel-status",
+    "npm run test:psc:conformance-bounded",
+    "npm run arena:corpus-preflight",
+    "npm run test:arena:static-nonperf",
+    "npm run test:arena:tutorial",
+    "npm run verify:arena",
+    "npm pack --workspaces --ignore-scripts",
+    "sha256sum -c package SHA manifest"
+  ],
+  "wrapperTimeoutsCountedAsPassed": false,
+  "freshExtract": {
+    "initialResidue": {
+      "node_modules": 0,
+      "dist": 0,
+      "tsbuildinfo": 0,
+      "tgz": 0,
+      "zip": 0
+    },
+    "install": "passed",
+    "build": "passed",
+    "focusedTest": "passed",
+    "leanCheck": "passed"
+  }
+}

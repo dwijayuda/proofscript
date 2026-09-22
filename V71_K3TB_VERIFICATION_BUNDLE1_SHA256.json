@@ -1,0 +1,9 @@
+{
+  "schema": "proofscript.sha256/v1",
+  "checkpoint": "V71_K3TB_VERIFICATION_BUNDLE1",
+  "checkpointSha256": "4356a0f017cc166d027cc737707fdf27321d6892a006d1f83a58ddf7471e2094",
+  "formalSourceSha256": "c83c0254349370fd8f638542f24f7029ec07bbbb9465c49916c270ecbee263c7",
+  "formalStackSha256": "b9032b47bfd0eab1860921f8f90bce73f283f9cc5c50e3b25f5b1ba2b5ce9757",
+  "inheritedLedgerSha256": "3be3185605cbd8e7dce009050b06340b7b2f0690363a829660db6acc1f103dc1",
+  "verificationDocsSha256": "9c56a2d4c0eff6879105e1ed0f49a87296963f043c6b4c4fa3f59c9a63d7240f"
+}

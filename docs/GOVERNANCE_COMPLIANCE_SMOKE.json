@@ -1,0 +1,179 @@
+{
+  "status": "accepted",
+  "trustLabel": "trusted-boundary standalone small subset; not fully formally equivalent to Lean 4 yet",
+  "policy": "ProofScript project governance/constitution compliance smoke gate",
+  "checkCount": 27,
+  "warningCount": 0,
+  "requiredFailureCount": 0,
+  "checks": [
+    {
+      "id": "governance.constitution.present",
+      "status": "accepted",
+      "message": "Governance/constitution bundle is checked into docs/constitution",
+      "details": {
+        "files": 12
+      }
+    },
+    {
+      "id": "governance.reference.present",
+      "status": "accepted",
+      "message": "Authoritative ProofScript v0.2.1 reference files are checked into docs/reference",
+      "details": {
+        "files": 2
+      }
+    },
+    {
+      "id": "governance.reference.pinned",
+      "status": "accepted",
+      "message": "Reference files pin Lean 4.33.1 and the expected source revision",
+      "details": {}
+    },
+    {
+      "id": "governance.reference.semantic-and-parser-rules",
+      "status": "accepted",
+      "message": "Reference files record semantic identity and dynamic parser requirements",
+      "details": {}
+    },
+    {
+      "id": "governance.script.build",
+      "status": "accepted",
+      "message": "Required fast-development script 'build' exists",
+      "details": {}
+    },
+    {
+      "id": "governance.script.test:kernel:smoke",
+      "status": "accepted",
+      "message": "Required fast-development script 'test:kernel:smoke' exists",
+      "details": {}
+    },
+    {
+      "id": "governance.script.test:standalone-small",
+      "status": "accepted",
+      "message": "Required fast-development script 'test:standalone-small' exists",
+      "details": {}
+    },
+    {
+      "id": "governance.script.test:governance",
+      "status": "accepted",
+      "message": "Required fast-development script 'test:governance' exists",
+      "details": {}
+    },
+    {
+      "id": "governance.script.test:reference-governance",
+      "status": "accepted",
+      "message": "Required fast-development script 'test:reference-governance' exists",
+      "details": {}
+    },
+    {
+      "id": "governance.script.test:fast-smoke",
+      "status": "accepted",
+      "message": "Required fast-development script 'test:fast-smoke' exists",
+      "details": {}
+    },
+    {
+      "id": "governance.package.packages/kernel",
+      "status": "accepted",
+      "message": "packages/kernel exists as a separated package boundary",
+      "details": {}
+    },
+    {
+      "id": "governance.package.packages/runtime",
+      "status": "accepted",
+      "message": "packages/runtime exists as a separated package boundary",
+      "details": {}
+    },
+    {
+      "id": "governance.package.packages/backend-typescript",
+      "status": "accepted",
+      "message": "packages/backend-typescript exists as a separated package boundary",
+      "details": {}
+    },
+    {
+      "id": "governance.package.packages/frontend",
+      "status": "accepted",
+      "message": "packages/frontend exists as a separated package boundary",
+      "details": {}
+    },
+    {
+      "id": "governance.package.packages/parser",
+      "status": "accepted",
+      "message": "packages/parser exists as a separated package boundary",
+      "details": {}
+    },
+    {
+      "id": "governance.package.packages/elaborator",
+      "status": "accepted",
+      "message": "packages/elaborator exists as a separated package boundary",
+      "details": {}
+    },
+    {
+      "id": "governance.package.packages/verifier",
+      "status": "accepted",
+      "message": "packages/verifier exists as a separated package boundary",
+      "details": {}
+    },
+    {
+      "id": "governance.tsconfig../packages/runtime",
+      "status": "accepted",
+      "message": "./packages/runtime participates in the root build",
+      "details": {}
+    },
+    {
+      "id": "governance.tsconfig../packages/backend-typescript",
+      "status": "accepted",
+      "message": "./packages/backend-typescript participates in the root build",
+      "details": {}
+    },
+    {
+      "id": "governance.kernel.single-active",
+      "status": "accepted",
+      "message": "Exactly one active @proofscript/kernel package exists",
+      "details": {}
+    },
+    {
+      "id": "governance.kernel.no-forbidden-imports",
+      "status": "accepted",
+      "message": "Kernel has no parser/compiler/runtime/frontend/backend/LSP imports",
+      "details": {}
+    },
+    {
+      "id": "governance.runtime.no-trusted-imports",
+      "status": "accepted",
+      "message": "Runtime does not import kernel/parser/frontend/compiler",
+      "details": {}
+    },
+    {
+      "id": "governance.parser.no-backend-kernel-imports",
+      "status": "accepted",
+      "message": "Parser has no backend/runtime/compiler/kernel imports",
+      "details": {}
+    },
+    {
+      "id": "governance.backend-typescript.no-frontend-deps",
+      "status": "accepted",
+      "message": "TypeScript backend does not depend on parser/frontend/elaborator/CLI",
+      "details": {}
+    },
+    {
+      "id": "governance.pslive.thin-cli",
+      "status": "accepted",
+      "message": "pslive is a thin CLI wrapper; backend/runtime logic moved to packages",
+      "details": {}
+    },
+    {
+      "id": "governance.pslive.size",
+      "status": "accepted",
+      "message": "pslive CLI remains small enough to audit quickly",
+      "details": {
+        "lines": 126
+      }
+    },
+    {
+      "id": "governance.legacy.quarantined",
+      "status": "accepted",
+      "message": "Old compact K3-TB kernel is legacy-only and absent from active dist",
+      "details": {}
+    }
+  ],
+  "governanceSha256": "59e1805b4feba6a40eb120b579f2d3e41ec1d31a21335075ac89282e47f72ebc"
+}

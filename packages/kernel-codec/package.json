@@ -1,0 +1,16 @@
+{
+  "name": "@proofscript/kernel-codec",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "Validated inert core artifact codec",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "@proofscript/kernel": "0.1.0-dev.0"
+  }
+}

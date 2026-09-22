@@ -1,0 +1,56 @@
+{
+  "checkpoint": "proofscript-v1-ka87-primitive-arithmetic-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.90",
+  "baseline": "proofscript-v1-ka86-primitive-divmod-recognizer-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 272,
+  "newFormalLean4LeanBridgeObligations": 5,
+  "baselineObligations": 267,
+  "countedObligations": [
+    "translated_checkNatAdd_wf",
+    "translated_checkNatPred_wf",
+    "translated_checkNatSub_wf",
+    "translated_checkNatMul_wf",
+    "translated_checkNatPow_wf"
+  ],
+  "redTestObserved": true,
+  "redTestReason": "KA87 test failed first on missing KA87 gate tool",
+  "noWrapperTimeoutCountedAsPassed": true,
+  "commands": {
+    "redTest": "failed-as-expected",
+    "install": "passed",
+    "build": "passed",
+    "focusedTest": "passed",
+    "assuranceKA87": "passed",
+    "leanKA87Check": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "pscConformanceBounded": "passed",
+    "arenaCorpusPreflight": "passed",
+    "arenaStaticNonperf": "passed",
+    "arenaTutorial": "passed",
+    "verifyArena": "passed",
+    "npmPackWorkspaces": "passed",
+    "packageSha256Manifest": "passed"
+  },
+  "npmPackages": {
+    "packed": 36,
+    "sha256Entries": 36,
+    "verification": "passed"
+  },
+  "freshExtract": {
+    "initialResidue": {
+      "node_modules": 0,
+      "dist": 0,
+      "tsbuildinfo": 0,
+      "tgz": 0,
+      "zip": 0
+    },
+    "install": "passed",
+    "build": "passed",
+    "focusedTest": "passed",
+    "leanCheck": "passed"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "proofscript",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "ProofScript standalone CLI and npm entrypoint",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "@proofscript/frontend": "0.1.0-dev.0",
+    "@proofscript/kernel-codec": "0.1.0-dev.0",
+    "@proofscript/certificates": "0.1.0-dev.0",
+    "@proofscript/project": "0.1.0-dev.0",
+    "@proofscript/plugin-host": "0.1.0-dev.0",
+    "@proofscript/compiler": "0.1.0-dev.0",
+    "@proofscript/lean-export": "0.1.0-production-p3.1",
+    "@proofscript/verifier": "0.1.0-dev.0",
+    "@proofscript/syntax": "0.1.0-dev.0",
+    "@proofscript/environment": "0.1.0-dev.0"
+  },
+  "bin": {
+    "psc": "dist/cli.js"
+  },
+  "exports": {
+    ".": "./dist/public.js"
+  }
+}

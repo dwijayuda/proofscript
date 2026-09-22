@@ -1,0 +1,353 @@
+{
+  "checkpoint": "proofscript-v1-ka32-feature-equivalence-audit0",
+  "publicVersion": "1.0.0-pskernel.35",
+  "baseline": "proofscript-v1-ka31-example-env-aggregate-bridge0",
+  "generatedAtUtc": "2026-09-19T02:35:00Z",
+  "sourceAudit": {
+    "lean4leanRoot": "/mnt/data/ka32-lean4lean-upload/lean4lean-master",
+    "leanToolchain": "leanprover/lean4:v4.33.0-rc2",
+    "lean4leanFileCount": 110,
+    "pskernelFileCount": 113,
+    "lean4leanKeySymbols": {
+      "vdeclConstructors": [
+        "axiom",
+        "def",
+        "example",
+        "induct",
+        "mutualDef",
+        "opaque",
+        "quot"
+      ],
+      "venvOps": [
+        "addConst",
+        "addConsts",
+        "addDefEq",
+        "addDefEqs",
+        "addInduct",
+        "addQuot"
+      ],
+      "typecheckerOps": [
+        "ensureForallCore",
+        "ensureSortCore",
+        "inferConstant",
+        "inferType",
+        "isDefEq",
+        "whnf"
+      ]
+    },
+    "pskernelKeySymbols": {
+      "hasInductiveSource": true,
+      "hasTheorySource": true,
+      "hasRuntimeCheckerSource": true
+    }
+  },
+  "matrixSummary": {
+    "total": 15,
+    "bridged": 4,
+    "implementedSource": 3,
+    "partial": 6,
+    "missingFormalBridge": 1,
+    "missing": 1,
+    "greenOrBridged": 7,
+    "gaps": 11
+  },
+  "features": [
+    {
+      "id": "levels-universe-normalization",
+      "lean4KernelFeature": "Universe levels: zero/succ/max/imax/param normalization, instantiation, comparison.",
+      "lean4leanEvidence": [
+        "Lean4Lean/Level.lean",
+        "Lean4Lean/Theory/VLevel.lean"
+      ],
+      "pskernelEvidence": [
+        "packages/kernel/src/PSKernel/Level.ts",
+        "packages/kernel/src/PSKernel/Theory/VLevel.ts",
+        "packages/kernel/src/PSKernel/Verify/Level.ts"
+      ],
+      "status": "implemented-source",
+      "formalBridgeStatus": "source-present; earlier V71/KA gates exist, but no full executable Lean4Lean refinement theorem for the TS level engine is counted here.",
+      "requiredToClaimLeanEquivalence": "Prove PSKernel level normalization/comparison refines Lean4Lean/Lean kernel level equivalence for every level expression accepted by the codec.",
+      "nextMilestone": "KA33-level-executable-refinement"
+    },
+    {
+      "id": "core-vexpr-six-constructor-theory",
+      "lean4KernelFeature": "Small formal expression theory: bvar/sort/const/app/lam/forallE used by current VExpr bridge.",
+      "lean4leanEvidence": [
+        "Lean4Lean/Theory/VExpr.lean"
+      ],
+      "pskernelEvidence": [
+        "packages/kernel/src/PSKernel/Theory/VExpr.ts",
+        "packages/kernel/src/PSKernel/Expr.ts",
+        "packages/kernel/src/PSKernel/Verify/Expr.ts"
+      ],
+      "status": "bridged",
+      "formalBridgeStatus": "covered by KA12+ translation surface and KA13..KA31 environment bridge obligations for the supported ordinary/quot slices.",
+      "requiredToClaimLeanEquivalence": "Preserve this bridge while extending to all kernel expression tags or document sound erasure/blocking rules.",
+      "nextMilestone": "KA36-full-expression-tag-coverage"
+    },
+    {
+      "id": "full-lean-expression-tags",
+      "lean4KernelFeature": "Full Lean Expr tags include fvar/mvar/let/lit/mdata/proj plus kernel expression operations.",
+      "lean4leanEvidence": [
+        "Lean4Lean/Expr.lean",
+        "Lean4Lean/TypeChecker.lean",
+        "Lean4Lean/Inductive/Reduce.lean"
+      ],
+      "pskernelEvidence": [
+        "packages/kernel/src/PSKernel/Expr.ts",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/kernel/src/PSKernel/Inductive/Reduce.ts"
+      ],
+      "status": "partial",
+      "formalBridgeStatus": "KA12 explicitly blocked fvar/mvar/let/lit/proj from the formal translation slice; runtime/source support exists for more tags but not full formal coverage.",
+      "requiredToClaimLeanEquivalence": "Add formal translation and bridge obligations for letE, literals, projections, fvar/mvar policy, and metadata erasure.",
+      "nextMilestone": "KA36-full-expression-tag-coverage"
+    },
+    {
+      "id": "ordinary-declarations",
+      "lean4KernelFeature": "Axiom, definition, theorem, opaque, and example declaration admission.",
+      "lean4leanEvidence": [
+        "Lean4Lean/Declaration.lean",
+        "Lean4Lean/Environment.lean",
+        "Lean4Lean/Theory/VDecl.lean",
+        "Lean4Lean/Theory/Typing/Env.lean"
+      ],
+      "pskernelEvidence": [
+        "packages/kernel/src/PSKernel/Declaration.ts",
+        "packages/kernel/src/PSKernel/Environment.ts",
+        "packages/kernel/src/PSKernel/Theory/VDecl.ts",
+        "packages/kernel/src/PSKernel/Theory/VEnv.ts"
+      ],
+      "status": "bridged",
+      "formalBridgeStatus": "KA13..KA25 and KA30..KA31 provide conditional VDecl.WF, VEnv.WF, VEnv.LE, lookup, freshness, and defeq aggregate bridges for ordinary declarations.",
+      "requiredToClaimLeanEquivalence": "Connect these conditional bridge facts to the executable PSKernel checker and codec, not just hand-constructed bridge witnesses.",
+      "nextMilestone": "KA35-executable-typechecker-refinement"
+    },
+    {
+      "id": "quot-declaration",
+      "lean4KernelFeature": "Quotient declaration admission and quotient constants/defeq insertion.",
+      "lean4leanEvidence": [
+        "Lean4Lean/Quot.lean",
+        "Lean4Lean/Theory/Quot.lean",
+        "Lean4Lean/Theory/Typing/QuotLemmas.lean"
+      ],
+      "pskernelEvidence": [
+        "packages/kernel/src/PSKernel/Quot.ts",
+        "packages/kernel/src/PSKernel/Theory/Quot.ts"
+      ],
+      "status": "bridged",
+      "formalBridgeStatus": "KA26..KA29 prove conditional environment bridges for addQuot lookup, freshness/no-overwrite, defeq preservation, and aggregate packaging.",
+      "requiredToClaimLeanEquivalence": "Prove quotient semantic soundness and executable refinement, not only environment-shape preservation.",
+      "nextMilestone": "KA37-quotient-semantic-soundness"
+    },
+    {
+      "id": "mutual-definitions",
+      "lean4KernelFeature": "Mutual definition block admission: add constants first, then add defining equations after block checking.",
+      "lean4leanEvidence": [
+        "Lean4Lean/Environment.lean",
+        "Lean4Lean/Theory/Typing/Env.lean",
+        "Lean4Lean/Theory/Typing/EnvLemmas.lean"
+      ],
+      "pskernelEvidence": [
+        "packages/kernel/src/PSKernel/Environment.ts",
+        "packages/kernel/src/PSKernel/Theory/VDecl.ts",
+        "packages/kernel/src/PSKernel/Theory/VEnv.ts"
+      ],
+      "status": "missing",
+      "formalBridgeStatus": "Lean4Lean has VDecl.WF.mutualDef and helper lemmas; PSKernel has source-level surfaces, but no KA counted mutualDef bridge obligations yet.",
+      "requiredToClaimLeanEquivalence": "Prove VDecl.WF/VEnv.WF/VEnv.LE/lookup/defeq preservation for mutualDef blocks and then connect to executable checking.",
+      "nextMilestone": "KA34-mutual-def-env-bridge"
+    },
+    {
+      "id": "inductive-declarations",
+      "lean4KernelFeature": "Inductive and mutual/nested inductive admission: parameters, constructors, positivity, recursor generation, K/large-elim/structure behavior.",
+      "lean4leanEvidence": [
+        "Lean4Lean/Inductive/Add.lean",
+        "Lean4Lean/Inductive/Reduce.lean",
+        "Lean4Lean/Theory/Inductive.lean",
+        "Lean4Lean/Theory/Typing/InductiveLemmas.lean"
+      ],
+      "pskernelEvidence": [
+        "packages/kernel/src/PSKernel/Inductive/Add.ts",
+        "packages/kernel/src/PSKernel/Inductive/Reduce.ts",
+        "packages/kernel/src/PSKernel/Theory/Inductive.ts"
+      ],
+      "status": "missing-formal-bridge",
+      "formalBridgeStatus": "PSKernel has substantial source/runtime inductive code and older V71 assurance checkpoints, but KA12..KA31 deliberately excluded inductive/mutual/nested from the Lean4Lean bridge count.",
+      "requiredToClaimLeanEquivalence": "Prove addInduct/VInductDecl.WF bridge, constructor/recursor environment effects, positivity/nested preprocessing soundness, and recursor reduction correspondence.",
+      "nextMilestone": "KA33-inductive-env-bridge"
+    },
+    {
+      "id": "recursor-reduction-iota-eta-k",
+      "lean4KernelFeature": "Recursor reduction, iota rules, K-like reductions, structure eta/projection behavior.",
+      "lean4leanEvidence": [
+        "Lean4Lean/Inductive/Reduce.lean",
+        "Lean4Lean/TypeChecker.lean",
+        "Lean4Lean/Verify/TypeChecker/Reduce.lean",
+        "Lean4Lean/Verify/TypeChecker/WHNF.lean"
+      ],
+      "pskernelEvidence": [
+        "packages/kernel/src/PSKernel/Inductive/Reduce.ts",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/kernel/src/PSKernel/Verify/TypeChecker.ts"
+      ],
+      "status": "partial",
+      "formalBridgeStatus": "Runtime/source and arena evidence exist, but no full formal reduction/refinement theorem counted against Lean4Lean here.",
+      "requiredToClaimLeanEquivalence": "Prove WHNF/reduction/refiner correspondence for recursor cases and projections under Lean4Lean semantics.",
+      "nextMilestone": "KA38-recursor-whnf-refinement"
+    },
+    {
+      "id": "type-inference-checking",
+      "lean4KernelFeature": "Kernel inferType/check/checkType/ensureSort/ensureForall and declaration body checking.",
+      "lean4leanEvidence": [
+        "Lean4Lean/TypeChecker.lean",
+        "Lean4Lean/Verify/TypeChecker/InferType.lean",
+        "Lean4Lean/Verify/TypeChecker/Basic.lean"
+      ],
+      "pskernelEvidence": [
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/kernel/src/PSKernel/Verify/TypeChecker.ts"
+      ],
+      "status": "implemented-source",
+      "formalBridgeStatus": "Implemented/source-bound but not proved as an executable refinement of Lean4Lean TypeChecker across all expression/declaration classes.",
+      "requiredToClaimLeanEquivalence": "Prove executable PSKernel TypeScript checker accepts/rejects exactly the Lean4Lean checker for the declared kernel feature subset.",
+      "nextMilestone": "KA35-executable-typechecker-refinement"
+    },
+    {
+      "id": "defeq-conversion-whnf",
+      "lean4KernelFeature": "Definitional equality, WHNF, delta/beta/zeta/iota/projection/quotient reductions with fuel/resource behavior.",
+      "lean4leanEvidence": [
+        "Lean4Lean/TypeChecker.lean",
+        "Lean4Lean/Verify/TypeChecker/IsDefEq.lean",
+        "Lean4Lean/Verify/TypeChecker/WHNF.lean",
+        "Lean4Lean/Verify/TypeChecker/Reduce.lean"
+      ],
+      "pskernelEvidence": [
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/kernel/src/PSKernel/EquivManager.ts",
+        "packages/kernel/src/PSKernel/Verify/EquivManager.ts"
+      ],
+      "status": "partial",
+      "formalBridgeStatus": "Runtime/source and arena evidence exist; full algorithmic conversion equivalence is not proven.",
+      "requiredToClaimLeanEquivalence": "Prove PSKernel conversion/WHNF refines Lean4Lean including all supported reductions and conservative decline/error policy.",
+      "nextMilestone": "KA39-defeq-whnf-refinement"
+    },
+    {
+      "id": "environment-extension-ordering",
+      "lean4KernelFeature": "Environment contains constants/defeqs and extension order LE, with addConst/addDefEq/addQuot/addInduct/addDecl effects.",
+      "lean4leanEvidence": [
+        "Lean4Lean/Theory/VEnv.lean",
+        "Lean4Lean/Theory/Typing/Env.lean",
+        "Lean4Lean/Theory/Typing/EnvLemmas.lean"
+      ],
+      "pskernelEvidence": [
+        "packages/kernel/src/PSKernel/Theory/VEnv.ts",
+        "packages/kernel/src/PSKernel/Environment.ts",
+        "packages/kernel/src/PSKernel/Verify/Environment.ts"
+      ],
+      "status": "bridged",
+      "formalBridgeStatus": "Strongly bridged for ordinary declarations and quotient; missing formal inductive/mutual block coverage.",
+      "requiredToClaimLeanEquivalence": "Complete environment bridge for inductive and mutualDef, then connect bridge to executable addDecl.",
+      "nextMilestone": "KA33-inductive-env-bridge"
+    },
+    {
+      "id": "primitive-axioms-literals",
+      "lean4KernelFeature": "Primitive constants, allowed axioms, Nat/String literals, and primitive checking policy.",
+      "lean4leanEvidence": [
+        "Lean4Lean/Primitive.lean",
+        "Lean4Lean/Verify/Axioms.lean",
+        "Lean4Lean/Verify/Primitive.lean",
+        "Lean4Lean/Expr.lean"
+      ],
+      "pskernelEvidence": [
+        "packages/kernel/src/PSKernel/Primitive.ts",
+        "packages/kernel/src/PSKernel/Verify/Axioms.ts",
+        "packages/kernel/src/PSKernel/Verify/Primitive.ts",
+        "packages/kernel/src/PSKernel/Expr.ts"
+      ],
+      "status": "partial",
+      "formalBridgeStatus": "Source present; formal bridge for literals/primitive policy is not complete in KA counted obligations.",
+      "requiredToClaimLeanEquivalence": "Prove literal expansion and primitive/axiom policy agree with Lean4Lean/Lean for all accepted exports.",
+      "nextMilestone": "KA40-primitive-literal-policy-bridge"
+    },
+    {
+      "id": "kernel-codec-export-arena",
+      "lean4KernelFeature": "External proof object / lean4export ingestion and kernel-result classification.",
+      "lean4leanEvidence": [
+        "Lean4Lean/Replay.lean",
+        "Lean4Lean/Verify.lean",
+        "Main.lean"
+      ],
+      "pskernelEvidence": [
+        "packages/kernel-codec/src/index.ts",
+        "packages/arena-checker/src/translate.ts",
+        "packages/arena-checker/src/classify.ts"
+      ],
+      "status": "partial",
+      "formalBridgeStatus": "Arena evidence exists and classifier gates pass, but codec/parser correctness is not formally connected to Lean4Lean semantics.",
+      "requiredToClaimLeanEquivalence": "Prove/validate codec translation preserves declarations, levels, expressions, and decline/error semantics against Lean4Lean replay.",
+      "nextMilestone": "KA41-codec-replay-refinement"
+    },
+    {
+      "id": "resource-fuel-error-semantics",
+      "lean4KernelFeature": "Fuel/resource bounded checking and distinguishing reject/decline/error from semantic rejection.",
+      "lean4leanEvidence": [
+        "Lean4Lean/FuelConfig.lean",
+        "Lean4Lean/KernelError.lean",
+        "Lean4Lean/TypeChecker.lean"
+      ],
+      "pskernelEvidence": [
+        "packages/kernel/src/PSKernel/FuelConfig.ts",
+        "packages/kernel/src/PSKernel/KernelError.ts"
+      ],
+      "status": "implemented-source",
+      "formalBridgeStatus": "Source present; full semantic proof of resource-policy conservativity is still open.",
+      "requiredToClaimLeanEquivalence": "Prove resource exhaustion never becomes an unsound accept/reject and is classified conservatively.",
+      "nextMilestone": "KA42-resource-error-conservativity"
+    },
+    {
+      "id": "metatheory-typing-relations",
+      "lean4KernelFeature": "Lean4Lean theory layer: VExpr typing, environment WF, Church-Rosser, injectivity, unique typing, strong typing lemmas.",
+      "lean4leanEvidence": [
+        "Lean4Lean/Theory/Typing/Basic.lean",
+        "Lean4Lean/Theory/Typing/ChurchRosser.lean",
+        "Lean4Lean/Theory/Typing/Injectivity.lean",
+        "Lean4Lean/Theory/Typing/UniqueTyping.lean",
+        "Lean4Lean/Theory/Typing/Strong.lean"
+      ],
+      "pskernelEvidence": [
+        "packages/kernel/src/PSKernel/Theory.ts",
+        "packages/kernel/src/PSKernel/Theory/VExpr.ts",
+        "packages/kernel/src/PSKernel/Theory/VEnv.ts"
+      ],
+      "status": "partial",
+      "formalBridgeStatus": "KA13..KA31 import slices of this theory, but no global theorem states PSKernel implements the full theory.",
+      "requiredToClaimLeanEquivalence": "Systematically connect every executable kernel rule to the corresponding Lean4Lean metatheory relation.",
+      "nextMilestone": "KA43-theory-wide-refinement-map"
+    }
+  ],
+  "requiredNextMilestones": [
+    "KA33-inductive-env-bridge",
+    "KA33-level-executable-refinement",
+    "KA34-mutual-def-env-bridge",
+    "KA35-executable-typechecker-refinement",
+    "KA36-full-expression-tag-coverage",
+    "KA38-recursor-whnf-refinement",
+    "KA39-defeq-whnf-refinement",
+    "KA40-primitive-literal-policy-bridge",
+    "KA41-codec-replay-refinement",
+    "KA42-resource-error-conservativity",
+    "KA43-theory-wide-refinement-map"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "quotientSemanticSoundness": false,
+    "formalLean4EquivalenceProvenObligations": 56
+  }
+}

@@ -1,0 +1,58 @@
+RUN[39] tools/kernel-mutual-nested-generalization-tests.ts
+✓ kernel v50 bounded mutual+nested preprocessing, linked helper recursors/iota, recursive-container traversal, variance rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[39] tools/kernel-mutual-nested-generalization-tests.ts
+RUN[40] tools/kernel-mutual-nested-parameters-tests.ts
+✓ kernel v51 shared/dependent-parameter mutual+nested graph, helper recursors/iota, uniformity rejection, replay, v50 isolation, and exact Lean observations passed with exact Lean differential
+PASS[40] tools/kernel-mutual-nested-parameters-tests.ts
+RUN[41] tools/kernel-mutual-nested-indices-tests.ts
+✓ kernel v52 indexed mutual+nested fixed/parameter-derived target indices, helper graph, replay, v51 isolation, and exact Lean observations passed with exact Lean differential
+PASS[41] tools/kernel-mutual-nested-indices-tests.ts
+RUN[42] tools/kernel-mutual-nested-polymorphic-tests.ts
+✓ kernel v53 universe-polymorphic mutual+nested preprocessing, explicit container instantiation, linked iota, outer-index composition, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[42] tools/kernel-mutual-nested-polymorphic-tests.ts
+RUN[43] tools/kernel-mutual-nested-prop-tests.ts
+✓ kernel v54 bounded mutual+nested Prop preprocessing, shared Prop-only motives, linked proof iota, parameters/fixed indices, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[43] tools/kernel-mutual-nested-prop-tests.ts
+RUN[44] tools/kernel-mutual-nested-indexed-containers-tests.ts
+✓ kernel v55 indexed nested containers inside Type/Prop mutual graphs, helper index telescopes, linked indexed iota, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[44] tools/kernel-mutual-nested-indexed-containers-tests.ts
+RUN[45] tools/kernel-mutual-nested-deeper-tests.ts
+✓ kernel v56 bounded arbitrary-depth mutual+nested helper chains, exact helper order, linked iota, Prop composition, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[45] tools/kernel-mutual-nested-deeper-tests.ts
+RUN[46] tools/kernel-mutual-nested-deeper-parameters-tests.ts
+✓ kernel v57 parameterized arbitrary-depth mutual+nested helper chains, dependent shared parameters, linked iota, uniformity/locality rejection, replay, v56 isolation, and exact Lean observations passed with exact Lean differential
+PASS[46] tools/kernel-mutual-nested-deeper-parameters-tests.ts
+RUN[47] tools/kernel-mutual-nested-deeper-indices-tests.ts
+✓ kernel v58 arbitrary-depth indexed mutual+nested helper chains, fixed/parameter-derived deep target indices, linked iota, locality rejection, replay, v57 isolation, and exact Lean observations passed with exact Lean differential
+PASS[47] tools/kernel-mutual-nested-deeper-indices-tests.ts
+RUN[48] tools/kernel-mutual-nested-deeper-polymorphic-tests.ts
+✓ kernel v59 polymorphic deeper indexed mutual+nested preprocessing, explicit deep container levels, linked iota, locality, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[48] tools/kernel-mutual-nested-deeper-polymorphic-tests.ts
+RUN[49] tools/kernel-mutual-nested-deeper-prop-tests.ts
+✓ kernel v60 deep polymorphic/indexed mutual+nested Prop composition, Prop-only motives, linked proof iota, locality rejection, replay, v59 isolation, and exact Lean observations passed with exact Lean differential
+PASS[49] tools/kernel-mutual-nested-deeper-prop-tests.ts
+RUN[50] tools/kernel-mutual-nested-deeper-indexed-containers-tests.ts
+✓ kernel v61 deep indexed Prop containers, live helper indices, locality boundary, linked iota, replay, v60 isolation, and exact Lean observations passed with exact Lean differential
+PASS[50] tools/kernel-mutual-nested-deeper-indexed-containers-tests.ts
+RUN[51] tools/kernel-mutual-nested-deeper-multi-parameter-containers-tests.ts
+✓ kernel v62 deep multi-parameter indexed Prop containers, arbitrary recursive parameter slot, linked iota, locality, replay, v61 isolation, and exact Lean observations passed with exact Lean differential
+PASS[51] tools/kernel-mutual-nested-deeper-multi-parameter-containers-tests.ts
+RUN[52] tools/kernel-mutual-nested-deeper-dependent-container-parameters-tests.ts
+✓ kernel v63 dependent container parameter telescopes, live helper indices, linked iota, locality, replay, v62 isolation, and exact Lean observations passed with exact Lean differential
+PASS[52] tools/kernel-mutual-nested-deeper-dependent-container-parameters-tests.ts
+RUN[53] tools/kernel-mutual-nested-deeper-multiple-fields-tests.ts
+✓ kernel v64 multiple deep fields, helper dedup/order, linked iota, dependent locality, replay, v63 isolation, and exact Lean observations passed with exact Lean differential
+PASS[53] tools/kernel-mutual-nested-deeper-multiple-fields-tests.ts
+RUN[54] tools/kernel-mutual-nested-deeper-multiple-recursive-parameter-slots-tests.ts
+✓ kernel v65 multiple recursive parameter slots, helper sharing, linked iota, locality, replay, v64 isolation, and exact Lean observations passed with exact Lean differential
+PASS[54] tools/kernel-mutual-nested-deeper-multiple-recursive-parameter-slots-tests.ts
+RUN[55] tools/kernel-mutual-nested-final-generalization-audit-tests.ts
+✓ kernel v66 final mutual/nested Sort/monomorphic/higher-order/container-closure generalization audit, Type+Prop nonlinear helper graphs, linked Type iota, universe hardening, locality, replay, v65 isolation, and exact Lean observations passed with exact Lean differential
+PASS[55] tools/kernel-mutual-nested-final-generalization-audit-tests.ts
+RUN[56] tools/kernel-conversion-final-audit-tests.ts
+✓ kernel v67 final conversion/WHNF audit cross-product, transparent-head recursor/quotient re-flattening, opacity, replay, v66 isolation, and exact Lean observations passed
+PASS[56] tools/kernel-conversion-final-audit-tests.ts
+RUN[57] tools/kernel-resource-bounds-tests.ts
+✓ kernel v68 deterministic typed resource bounds, direct-Core preflight, stack-safe codec, verifier taxonomy, CLI exit code, and historical v67 isolation passed
+PASS[57] tools/kernel-resource-bounds-tests.ts
+BOUNDED_KERNEL_PART3=19/19 PASS

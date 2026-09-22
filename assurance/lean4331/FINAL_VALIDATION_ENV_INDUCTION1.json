@@ -1,0 +1,46 @@
+{
+  "checkpoint": "ENV_INDUCTION1",
+  "mandatoryGates": [
+    {
+      "part": 1,
+      "status": "PASS",
+      "file": "assurance/lean4331/evidence/v71-env-induction1-final2-gate-part1.out"
+    },
+    {
+      "part": 2,
+      "status": "PASS",
+      "file": "assurance/lean4331/evidence/v71-env-induction1-final2-gate-part2.out"
+    },
+    {
+      "part": 3,
+      "status": "PASS",
+      "file": "assurance/lean4331/evidence/v71-env-induction1-final2-gate-part3.out"
+    },
+    {
+      "part": 4,
+      "status": "PASS",
+      "file": "assurance/lean4331/evidence/v71-env-induction1-final2-gate-part4.out"
+    },
+    {
+      "part": 5,
+      "status": "PASS",
+      "file": "assurance/lean4331/evidence/v71-env-induction1-final2-gate-part5.out"
+    },
+    {
+      "part": 6,
+      "status": "PASS",
+      "file": "assurance/lean4331/evidence/v71-env-induction1-final2-gate-part6.out"
+    }
+  ],
+  "build": "PASS",
+  "conformance": "PASS",
+  "sourceDifferential": {
+    "passed": 23,
+    "total": 25,
+    "knownNonKernelFailures": [
+      "reduction-recursion",
+      "equation-patterns"
+    ]
+  },
+  "k3WholeKernelEquivalence": false
+}

@@ -1,0 +1,40 @@
+{
+  "checkpoint": "proofscript-v1-ka46-projection-reduction-refinement-preflight0",
+  "publicVersion": "1.0.0-pskernel.49",
+  "baseline": "proofscript-v1-ka45-inductive-recursor-refinement-bridge0",
+  "referenceKind": "source-bound-lean4lean-projection-reduction-refinement-preflight",
+  "purpose": "Prepare the narrow KA-46 Lean4Lean projection-reduction bridge without touching trusted PSKernel semantics. Formal Lean checking is required before this can become a proof-bearing projection bridge checkpoint.",
+  "coveredLean4LeanProjectionSurface": [
+    "TypeChecker.Inner.reduceProjCore.WF",
+    "TypeChecker.Inner.reduceProj.WF",
+    "TypeChecker.Inner.whnfCore'.WF projection path",
+    "TypeChecker.Inner.inferProj.WF"
+  ],
+  "intendedFormalBridgeLemmas": [
+    "Lean4Lean.PSKernelKA46.translated_reduceProjCore_wf",
+    "Lean4Lean.PSKernelKA46.translated_reduceProj_wf",
+    "Lean4Lean.PSKernelKA46.translated_whnfCore_projection_path_wf",
+    "Lean4Lean.PSKernelKA46.translated_inferProj_wf"
+  ],
+  "antiSpaghettiPolicy": {
+    "maxNewKA46SourceLines": 260,
+    "maxNewKA46ToolFiles": 2,
+    "forbiddenGeneratedSemanticPackagePrefixes": [
+      "packages/kernel/src/PSKernel",
+      "packages/kernel-codec/src",
+      "packages/frontend-next/src/core",
+      "packages/unified-bridge/src"
+    ]
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullProjectionReductionRefinement": false,
+    "formalLean4LeanBridgeObligations": 132
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "checkpoint": "proofscript-v1-ka51-executable-expression-translator-constructor-refinement0",
+  "publicVersion": "1.0.0-pskernel.54",
+  "baseline": "proofscript-v1-ka50-feature-equivalence-audit-refresh0",
+  "releaseKind": "strict-lean4lean-bridge",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA51",
+        "source": "assurance/ka51/executable-expression-translator-constructor-refinement-bridge.lean",
+        "destination": "PSKernelKA51ExecutableExpressionTranslatorConstructorRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka51-executable-expression-translator-constructor-refinement0",
+    "publicVersion": "1.0.0-pskernel.54",
+    "featureSurfaceBridgeProgressPercent": 73,
+    "executableKernelEquivalenceProofProgressPercent": 38,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 140,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 136,
+      "newFormalLean4LeanBridgeObligations": 4,
+      "countedNewObligations": [
+        "translated_trExprS_bvar_constructor_wf",
+        "translated_trExprS_sort_constructor_wf",
+        "translated_trExprS_const_constructor_wf",
+        "translated_trExprS_app_constructor_wf"
+      ],
+      "supportingNoncountedLemma": "translated_trExprS_unique_surface_wf"
+    },
+    "groups": [
+      {
+        "id": "expression-tags",
+        "progressPercent": 68,
+        "status": "TrExprS constructor bridge strict-checked for bvar/sort/const/app; full executable translator incomplete"
+      },
+      {
+        "id": "typechecker-whnf-defeq",
+        "progressPercent": 53,
+        "status": "WHNF/DefEq surface strict-checked; executable checker refinement incomplete"
+      },
+      {
+        "id": "end-to-end-refinement-spine",
+        "progressPercent": 35,
+        "status": "checker pipeline skeleton strict-checked; no end-to-end theorem yet"
+      },
+      {
+        "id": "architecture-health",
+        "progressPercent": 85,
+        "status": "no-spaghetti ratchet plus KA51 semantic-package touch guard"
+      }
+    ],
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka51Files": [
+      {
+        "path": "tools/pskernel-ka51-executable-expression-translator-constructor-refinement-tests.ts",
+        "lines": 30,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka51-executable-expression-translator-constructor-refinement.ts",
+        "lines": 85,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka51/KA51_EXECUTABLE_EXPRESSION_TRANSLATOR_CONSTRUCTOR_REFINEMENT_RELEASE_GATE.json",
+        "lines": 155,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka51/KA51_EXECUTABLE_EXPRESSION_TRANSLATOR_CONSTRUCTOR_REFINEMENT_REPORT.md",
+        "lines": 41,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka51/KA51_EXECUTABLE_EXPRESSION_TRANSLATOR_CONSTRUCTOR_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 31,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka51/KA51_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 43,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka51/KA51_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka51/executable-expression-translator-constructor-refinement-bridge-spec.json",
+        "lines": 22,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka51/executable-expression-translator-constructor-refinement-bridge.lean",
+        "lines": 53,
+        "ext": ".lean"
+      }
+    ],
+    "ka51ToolFiles": [
+      {
+        "path": "tools/pskernel-ka51-executable-expression-translator-constructor-refinement-tests.ts",
+        "lines": 30,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka51-executable-expression-translator-constructor-refinement.ts",
+        "lines": 85,
+        "ext": ".ts"
+      }
+    ],
+    "newKA51OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableExpressionTranslatorRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

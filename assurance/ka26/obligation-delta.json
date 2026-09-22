@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka26-quot-env-bridge0",
+  "baseline": "proofscript-v1-ka25-nondef-env-defeq-preservation-bridge0",
+  "newFormalLean4LeanBridgeObligations": 8,
+  "formalLean4EquivalenceProvenObligations": 43,
+  "provenLeanTheoremObligations": [
+    "PSKernelKA26.translated_quot_vdecl_wf",
+    "PSKernelKA26.translated_quot_env_wf",
+    "PSKernelKA26.translated_quot_env_extends",
+    "PSKernelKA26.translated_quot_env_lookup_quot",
+    "PSKernelKA26.translated_quot_env_lookup_quot_mk",
+    "PSKernelKA26.translated_quot_env_lookup_quot_lift",
+    "PSKernelKA26.translated_quot_env_lookup_quot_ind",
+    "PSKernelKA26.translated_quot_env_defeq_member"
+  ],
+  "stillOpen": [
+    "Executable PSKernel refinement proof against Lean4Lean declaration checking",
+    "Definitional-equality soundness for PSKernel computation rules",
+    "Inductive and mutual-inductive translation soundness",
+    "Quotient semantic soundness",
+    "Full Lean 4 equivalence",
+    "Same-theory proof with full Lean 4"
+  ]
+}

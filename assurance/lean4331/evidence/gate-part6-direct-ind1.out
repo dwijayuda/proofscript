@@ -1,0 +1,6 @@
+PASS: Core v71 / KERNEL-level-instantiation-conformance1 / Lean 4.33.1 identity
+PASS: 185 assurance/trusted source fingerprints
+PASS: exact Lean executable 4.33.1/819816b2e0a3
+PASS: ordinary declarations: 7 ConstantInfo structures + 1,000 instantiated types exact against Lean.addDecl
+PASS: direct inductives: 6 positive + 4 negative exact admission cases, 18 generated metadata lines, zero mismatch
+KERNEL v71 ASSURANCE GATE PART 6/6: PASS

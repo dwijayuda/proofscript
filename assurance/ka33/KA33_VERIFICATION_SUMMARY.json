@@ -1,0 +1,108 @@
+{
+  "checkpoint": "proofscript-v1-ka33-inductive-env-bridge0",
+  "publicVersion": "1.0.0-pskernel.36",
+  "baseline": "proofscript-v1-ka32-feature-equivalence-audit0",
+  "requiredCommands": [
+    {
+      "command": "npm install --offline --no-audit --no-fund",
+      "status": 0
+    },
+    {
+      "command": "npm run build -- --pretty false",
+      "status": 0
+    },
+    {
+      "command": "npm run test:pskernel:ka33",
+      "status": 0
+    },
+    {
+      "command": "npm run assurance:ka33",
+      "status": 0
+    },
+    {
+      "command": "npm run lean:ka33:check",
+      "status": 0
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "status": 0
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "status": 0
+    },
+    {
+      "command": "npm run test:psc:kernel-status",
+      "status": 0
+    },
+    {
+      "command": "npm run test:psc:conformance-bounded",
+      "status": 0
+    },
+    {
+      "command": "npm run arena:corpus-preflight",
+      "status": 0
+    },
+    {
+      "command": "npm run test:arena:static-nonperf",
+      "status": 0
+    },
+    {
+      "command": "npm run test:arena:tutorial",
+      "status": "timed_out_not_counted"
+    },
+    {
+      "command": "npm run verify:arena",
+      "status": "not_counted_after_tutorial_timeout"
+    },
+    {
+      "command": "fresh extract npm install --offline --no-audit --no-fund",
+      "status": 0
+    },
+    {
+      "command": "fresh extract npm run build -- --pretty false",
+      "status": 0
+    },
+    {
+      "command": "fresh extract npm run test:pskernel:ka33",
+      "status": 0
+    },
+    {
+      "command": "fresh extract npm run lean:ka33:check",
+      "status": 0
+    },
+    {
+      "command": "unzip -t final ZIP",
+      "status": 0
+    },
+    {
+      "command": "sha256sum -c final SHA file",
+      "status": 0
+    }
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "inductiveSemanticSoundness": false,
+    "formalLean4EquivalenceProvenObligations": 60
+  },
+  "note": "KA-33 is a conditional direct Lean4Lean inductive environment bridge only. It does not prove inductive semantic soundness or full Lean equivalence.",
+  "verificationStatus": "release-packaged-with-fresh-extract",
+  "arenaEvidence": {
+    "corpusPreflight": "passed",
+    "staticNonPerf": "passed",
+    "tutorial": "timed_out_not_counted_for_KA33",
+    "retainedEarlierTutorialEvidence": true
+  },
+  "freshExtract": {
+    "install": "passed",
+    "build": "passed",
+    "test:pskernel:ka33": "passed",
+    "lean:ka33:check": "passed"
+  }
+}

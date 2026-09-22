@@ -1,0 +1,24 @@
+{
+  "release": "P4.71",
+  "title": "Direct by proof sugar",
+  "trustLabel": "K3-TB trusted-boundary; not fully formally equivalent to Lean 4 yet",
+  "commands": [
+    { "command": "npm run build -- --pretty false", "status": "PASS" },
+    { "command": "npm run test:pslive:by-sugar", "status": "PASS" },
+    { "command": "npm run test:standalone-small", "status": "PASS" },
+    { "command": "npm run test:kernel:smoke", "status": "PASS" },
+    { "command": "node tools/pskernel.ts status --json", "status": "PASS", "proofStatus": "not-proven" }
+  ],
+  "notRun": [
+    { "command": "npm run verify:k3tb:publish", "reason": "fast slice; previously blocked by missing PROOFSCRIPT_LEAN_BIN" },
+    { "command": "full long matrix", "reason": "user requested faster / less test" }
+  ],
+  "progressEstimate": {
+    "Standalone PSC-1 without Lean4": "~96.9%",
+    "PSC-1 small complete programming language": "~70.6%",
+    "PSC-1 small theorem prover": "~62.0%",
+    "Full ProofScript compiler": "~59.6%",
+    "Full Lean-like ProofScript without Lean4": "~13.6%",
+    "Formal Lean 4 equivalence": "0 proven obligations"
+  }
+}

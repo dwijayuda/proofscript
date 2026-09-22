@@ -1,0 +1,58 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "V71_NONMUTUAL_DECL_ENV_CERT1",
+  "date": "2026-09-10",
+  "status": "PASS",
+  "coreFormat": 71,
+  "profile": "KERNEL-level-instantiation-conformance1",
+  "semanticChange": false,
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "formal": {
+    "inheritedModules": 31,
+    "reportedSorryAx": 0,
+    "sourceEvidence": [
+      "assurance/lean4331/evidence/v71-env-induction-formal28.out",
+      "assurance/lean4331/evidence/v71-generic-nonmutual-formal1.out",
+      "assurance/lean4331/evidence/v71-nonmutual-classifier-formal1.out",
+      "assurance/lean4331/evidence/v71-ts-classifier-implementation-contract-formal1.out"
+    ],
+    "stableTheorems": [
+      "EnvironmentNonMutualInduction.nonMutualWholeEnvironment_sound",
+      "InductiveNonMutualGenericAdmission.genericNonMutualAdmission_sound",
+      "InductiveNonMutualGenericAdmission.genericPackages_wholeEnvironment_sound",
+      "InductiveNonMutualClassifierCorrespondence.classifier_rawAdmission_sound",
+      "InductiveNonMutualClassifierCorrespondence.classifierPackages_wholeEnvironment_sound",
+      "TypeScriptClassifierImplementationContract.acceptedOutcome_hasWitness"
+    ]
+  },
+  "executable": {
+    "fullLeanGateParts": 6,
+    "localMergedComponents": 2,
+    "sourceEvidence": [
+      "assurance/lean4331/FINAL_VALIDATION_V71_FULL_LEAN_GATE.json",
+      "assurance/lean4331/evidence/v71-generic-nonmutual-admission1.out",
+      "assurance/lean4331/evidence/v71-nonmutual-classifier-correspondence1.out",
+      "assurance/lean4331/evidence/v71-ts-classifier-implementation-correspondence1.out"
+    ]
+  },
+  "scope": {
+    "covered": [
+      "generic non-mutual raw constructor admission refines to the Lean-side admission predicate",
+      "classifier accepted outcomes are tied to formal admission witnesses",
+      "checker-produced non-mutual packages preserve Core-to-Lean environment translation",
+      "direct typing and delta/transparency premises remain available after package installation",
+      "generated recursor structural/extensional obligations remain sound for normalized packages",
+      "all six persisted v71 Lean-backed assurance gate parts passed against pinned Lean 4.33.1"
+    ],
+    "notClaimed": {
+      "fullK3WholeKernelEquivalence": true,
+      "mutualOrNestedInductiveAdmission": true,
+      "completeTypeScriptImplementationCorrespondence": true,
+      "exactNativeLeanOperationalCompleteness": true
+    }
+  },
+  "next": "Close the remaining TypeScript classifier implementation correspondence beyond source-audit/runtime trace contracts, then extend O-IND to mutual and nested families."
+}

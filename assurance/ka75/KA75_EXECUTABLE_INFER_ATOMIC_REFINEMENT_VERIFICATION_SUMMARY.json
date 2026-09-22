@@ -1,0 +1,55 @@
+{
+  "checkpoint": "proofscript-v1-ka75-executable-infer-atomic-refinement0",
+  "publicVersion": "1.0.0-pskernel.78",
+  "baseline": "proofscript-v1-ka74-executable-defeq-nat-offset-boundary-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "baselineObligations": 221,
+  "formalLean4LeanBridgeObligations": 225,
+  "newFormalLean4LeanBridgeObligations": 4,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA75",
+        "source": "assurance/ka75/executable-infer-atomic-refinement-bridge.lean",
+        "destination": "PSKernelKA75ExecutableInferAtomicRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "dependencyBuildStatus": "passed",
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "fullNpmTestStatus": "not-run",
+  "aggregateVerifyArenaStatus": "not-run",
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA75 gate tool absent before implementation",
+  "releaseVerification": {
+    "redTestFirst": "passed_expected_failure_missing_gate_tool",
+    "passed": [
+      "npm install --offline --no-audit --no-fund",
+      "npm run build -- --pretty false",
+      "npm run test:pskernel:ka75",
+      "npm run assurance:ka75",
+      "npm run lean:ka75:check",
+      "npm run test:kernel:smoke",
+      "npm run test:standalone-small",
+      "npm run test:psc:kernel-status",
+      "npm run test:psc:conformance-bounded",
+      "npm run arena:corpus-preflight",
+      "npm run test:arena:static-nonperf"
+    ],
+    "notCountedAsPassed": [
+      "combined verification wrapper timed-out before PSC tail; tail rerun individually",
+      "npm run test:arena:tutorial timed-out-not-counted",
+      "full legacy repository-wide npm test not run",
+      "aggregate verify:arena wrapper not run"
+    ],
+    "noTimeoutCountedAsPassed": true
+  }
+}

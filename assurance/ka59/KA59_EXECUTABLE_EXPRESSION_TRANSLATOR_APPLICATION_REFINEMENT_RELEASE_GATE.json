@@ -1,0 +1,227 @@
+{
+  "checkpoint": "proofscript-v1-ka59-executable-expression-translator-application-refinement0",
+  "publicVersion": "1.0.0-pskernel.62",
+  "baseline": "proofscript-v1-ka58-executable-expression-translator-invariant-refinement0",
+  "releaseKind": "strict-lean4lean-bridge",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA59",
+        "source": "assurance/ka59/executable-expression-translator-application-refinement-bridge.lean",
+        "destination": "PSKernelKA59ExecutableExpressionTranslatorApplicationRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka59-executable-expression-translator-application-refinement0",
+    "publicVersion": "1.0.0-pskernel.62",
+    "featureSurfaceBridgeProgressPercent": 81,
+    "executableKernelEquivalenceProofProgressPercent": 46,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 171,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 167,
+      "newFormalLean4LeanBridgeObligations": 4,
+      "countedNewObligations": [
+        "translated_fvarsIn_mkAppRevList_wf",
+        "translated_fvarsIn_mkAppList_wf",
+        "translated_fvarsBelow_mkAppList_wf",
+        "translated_fvarsBelow_mkAppRevList_wf"
+      ]
+    },
+    "groups": [
+      {
+        "id": "expression-tags",
+        "progressPercent": 92,
+        "status": "TrExprS constructors/determinism/substitution/source conditions/source transforms/source invariants/application-list facts strict-checked; full executable translator refinement incomplete"
+      },
+      {
+        "id": "typechecker-whnf-defeq",
+        "progressPercent": 53,
+        "status": "WHNF/DefEq surface strict-checked; executable checker refinement incomplete"
+      },
+      {
+        "id": "end-to-end-refinement-spine",
+        "progressPercent": 35,
+        "status": "checker pipeline skeleton strict-checked; no end-to-end theorem yet"
+      },
+      {
+        "id": "architecture-health",
+        "progressPercent": 94,
+        "status": "no-spaghetti ratchet plus KA59 semantic-package touch guard"
+      }
+    ],
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka59Files": [
+      {
+        "path": "tools/pskernel-ka59-executable-expression-translator-application-refinement-tests.ts",
+        "lines": 33,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka59-executable-expression-translator-application-refinement.ts",
+        "lines": 89,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka59/KA59_EXECUTABLE_EXPRESSION_TRANSLATOR_APPLICATION_REFINEMENT_RELEASE_GATE.json",
+        "lines": 159,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka59/KA59_EXECUTABLE_EXPRESSION_TRANSLATOR_APPLICATION_REFINEMENT_REPORT.md",
+        "lines": 37,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka59/KA59_EXECUTABLE_EXPRESSION_TRANSLATOR_APPLICATION_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 31,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka59/KA59_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 42,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka59/KA59_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka59/executable-expression-translator-application-refinement-bridge-spec.json",
+        "lines": 28,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka59/executable-expression-translator-application-refinement-bridge.lean",
+        "lines": 34,
+        "ext": ".lean"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-09-19-pskernel-ka59-application-refinement.md",
+        "lines": 52,
+        "ext": ".md"
+      }
+    ],
+    "ka59ToolFiles": [
+      {
+        "path": "tools/pskernel-ka59-executable-expression-translator-application-refinement-tests.ts",
+        "lines": 33,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka59-executable-expression-translator-application-refinement.ts",
+        "lines": 89,
+        "ext": ".ts"
+      }
+    ],
+    "newKA59OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableExpressionTranslatorRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false,
+  "verificationSummary": {
+    "checkpoint": "proofscript-v1-ka59-executable-expression-translator-application-refinement0",
+    "publicVersion": "1.0.0-pskernel.62",
+    "baseline": "proofscript-v1-ka58-executable-expression-translator-invariant-refinement0",
+    "commands": {
+      "focusedTest": "passed",
+      "assuranceKA59": "passed",
+      "leanKA59Check": "passed",
+      "npmInstallOffline": "passed",
+      "buildPrettyFalse": "passed",
+      "kernelSmoke": "passed_individual_after_combined_timeout",
+      "standaloneSmall": "passed",
+      "pscKernelStatus": "passed",
+      "pscConformanceBounded": "passed",
+      "arenaCorpusPreflight": "passed",
+      "arenaStaticNonperf": "passed",
+      "arenaTutorial": "passed_individual",
+      "verifyArenaWrapper": "timed_out_not_counted",
+      "arenaTutorialHarness": "passed_individual",
+      "arenaTailCommands": "passed_individual",
+      "npmPackWorkspaces": "passed",
+      "packageSha256Manifest": "passed"
+    },
+    "strictLean4LeanUnblocked": true,
+    "strictLean4LeanModules": {
+      "status": "passed",
+      "reason": null,
+      "modules": [
+        {
+          "ka": "KA59",
+          "source": "assurance/ka59/executable-expression-translator-application-refinement-bridge.lean",
+          "destination": "PSKernelKA59ExecutableExpressionTranslatorApplicationRefinementBridge.lean",
+          "status": "passed",
+          "proofBearing": true,
+          "obligations": 4,
+          "stdoutTail": "",
+          "stderrTail": ""
+        }
+      ]
+    },
+    "noWrapperTimeoutCountedAsPassed": true,
+    "redTestObserved": true,
+    "redTestReason": "KA59 gate tool absent before implementation",
+    "wrapperTimeouts": [
+      {
+        "command": "TERM=xterm timeout 600s npm run verify:arena",
+        "status": "timed_out_not_counted",
+        "lastStage": "test:arena:tutorial-harness",
+        "log": "/mnt/data/ka59-verify-arena.log"
+      }
+    ],
+    "packageSha256Entries": 36,
+    "freshExtractSmoke": {
+      "residueCount": 0,
+      "npmInstallOffline": "passed",
+      "buildPrettyFalse": "passed",
+      "testPskernelKA59": "passed",
+      "leanKA59Check": "passed"
+    }
+  },
+  "packageSha256Entries": 36,
+  "verifyArenaWrapperStatus": "timed_out_not_counted",
+  "freshExtractSmoke": {
+    "residueCount": 0,
+    "npmInstallOffline": "passed",
+    "buildPrettyFalse": "passed",
+    "testPskernelKA59": "passed",
+    "leanKA59Check": "passed"
+  }
+}

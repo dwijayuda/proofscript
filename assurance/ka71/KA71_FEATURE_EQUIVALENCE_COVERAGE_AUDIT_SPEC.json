@@ -1,0 +1,245 @@
+{
+  "checkpoint": "proofscript-v1-ka71-feature-equivalence-coverage-audit0",
+  "publicVersion": "1.0.0-pskernel.74",
+  "baseline": "proofscript-v1-ka70-executable-defeq-unit-proj-refinement0",
+  "referenceKind": "feature-equivalence-coverage-audit-only",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "baselineFormalObligations": 216,
+  "countedNewFormalObligations": 0,
+  "auditedClassification": {
+    "proofBearingCheckpoints": 21,
+    "preflightOrScaffoldCheckpoints": 4,
+    "promotedScaffoldCheckpoints": 3,
+    "unresolvedScaffoldCheckpoints": 1,
+    "proofBearing": [
+      {
+        "ka": 50,
+        "checkpoint": "proofscript-v1-ka50-feature-equivalence-audit-refresh0",
+        "publicVersion": "1.0.0-pskernel.53",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka50/feature-equivalence-audit-refresh-bridge-spec.json",
+        "verificationPath": "assurance/ka50/KA50_FEATURE_EQUIVALENCE_AUDIT_REFRESH_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 51,
+        "checkpoint": "proofscript-v1-ka51-executable-expression-translator-constructor-refinement0",
+        "publicVersion": "1.0.0-pskernel.54",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka51/executable-expression-translator-constructor-refinement-bridge-spec.json",
+        "verificationPath": "assurance/ka51/KA51_EXECUTABLE_EXPRESSION_TRANSLATOR_CONSTRUCTOR_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 52,
+        "checkpoint": "proofscript-v1-ka52-executable-expression-translator-binder-refinement0",
+        "publicVersion": "1.0.0-pskernel.55",
+        "obligations": 3,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka52/executable-expression-translator-binder-refinement-bridge-spec.json",
+        "verificationPath": "assurance/ka52/KA52_EXECUTABLE_EXPRESSION_TRANSLATOR_BINDER_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 53,
+        "checkpoint": "proofscript-v1-ka53-executable-expression-translator-residual-refinement0",
+        "publicVersion": "1.0.0-pskernel.56",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka53/executable-expression-translator-residual-refinement-bridge-spec.json",
+        "verificationPath": "assurance/ka53/KA53_EXECUTABLE_EXPRESSION_TRANSLATOR_RESIDUAL_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 54,
+        "checkpoint": "proofscript-v1-ka54-executable-expression-translator-determinism-refinement0",
+        "publicVersion": "1.0.0-pskernel.57",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka54/executable-expression-translator-determinism-refinement-bridge-spec.json",
+        "verificationPath": "assurance/ka54/KA54_EXECUTABLE_EXPRESSION_TRANSLATOR_DETERMINISM_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 55,
+        "checkpoint": "proofscript-v1-ka55-executable-expression-translator-substitution-refinement0",
+        "publicVersion": "1.0.0-pskernel.58",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka55/executable-expression-translator-substitution-refinement-bridge-spec.json",
+        "verificationPath": "assurance/ka55/KA55_EXECUTABLE_EXPRESSION_TRANSLATOR_SUBSTITUTION_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 56,
+        "checkpoint": "proofscript-v1-ka56-executable-expression-translator-source-condition-refinement0",
+        "publicVersion": "1.0.0-pskernel.59",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka56/executable-expression-translator-source-condition-refinement-bridge-spec.json",
+        "verificationPath": "assurance/ka56/KA56_EXECUTABLE_EXPRESSION_TRANSLATOR_SOURCE_CONDITION_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 57,
+        "checkpoint": "proofscript-v1-ka57-executable-expression-translator-source-transform-refinement0",
+        "publicVersion": "1.0.0-pskernel.60",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka57/executable-expression-translator-source-transform-refinement-bridge-spec.json",
+        "verificationPath": "assurance/ka57/KA57_EXECUTABLE_EXPRESSION_TRANSLATOR_SOURCE_TRANSFORM_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 58,
+        "checkpoint": "proofscript-v1-ka58-executable-expression-translator-invariant-refinement0",
+        "publicVersion": "1.0.0-pskernel.61",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka58/executable-expression-translator-invariant-refinement-bridge-spec.json",
+        "verificationPath": "assurance/ka58/KA58_EXECUTABLE_EXPRESSION_TRANSLATOR_INVARIANT_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 59,
+        "checkpoint": "proofscript-v1-ka59-executable-expression-translator-application-refinement0",
+        "publicVersion": "1.0.0-pskernel.62",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka59/executable-expression-translator-application-refinement-bridge-spec.json",
+        "verificationPath": "assurance/ka59/KA59_EXECUTABLE_EXPRESSION_TRANSLATOR_APPLICATION_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 60,
+        "checkpoint": "proofscript-v1-ka60-executable-expression-translator-beta-refinement0",
+        "publicVersion": "1.0.0-pskernel.63",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka60/executable-expression-translator-beta-refinement-bridge-spec.json",
+        "verificationPath": "assurance/ka60/KA60_EXECUTABLE_EXPRESSION_TRANSLATOR_BETA_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 61,
+        "checkpoint": "proofscript-v1-ka61-executable-expression-translator-appstack-refinement0",
+        "publicVersion": "1.0.0-pskernel.64",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka61/executable-expression-translator-appstack-refinement-bridge-spec.json",
+        "verificationPath": "assurance/ka61/KA61_EXECUTABLE_EXPRESSION_TRANSLATOR_APPSTACK_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 62,
+        "checkpoint": "proofscript-v1-ka62-executable-expression-translator-uninstantiate-refinement0",
+        "publicVersion": "1.0.0-pskernel.65",
+        "obligations": 5,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka62/executable-expression-translator-uninstantiate-refinement-bridge-spec.json",
+        "verificationPath": "assurance/ka62/KA62_EXECUTABLE_EXPRESSION_TRANSLATOR_UNINSTANTIATE_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 63,
+        "checkpoint": "proofscript-v1-ka63-executable-expression-translator-bool-literal-refinement0",
+        "publicVersion": "1.0.0-pskernel.66",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka63/executable-expression-translator-bool-literal-refinement-bridge-spec.json",
+        "verificationPath": "assurance/ka63/KA63_EXECUTABLE_EXPRESSION_TRANSLATOR_BOOL_LITERAL_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 64,
+        "checkpoint": "proofscript-v1-ka64-executable-expression-translator-eqv-refinement0",
+        "publicVersion": "1.0.0-pskernel.67",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka64/executable-expression-translator-eqv-refinement-bridge-spec.json",
+        "verificationPath": "assurance/ka64/KA64_EXECUTABLE_EXPRESSION_TRANSLATOR_EQV_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 65,
+        "checkpoint": "proofscript-v1-ka65-executable-whnf-refinement0",
+        "publicVersion": "1.0.0-pskernel.68",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka65/executable-whnf-refinement-bridge-spec.json",
+        "verificationPath": "assurance/ka65/KA65_EXECUTABLE_WHNF_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 66,
+        "checkpoint": "proofscript-v1-ka66-executable-defeq-core-refinement0",
+        "publicVersion": "1.0.0-pskernel.69",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka66/executable-defeq-core-refinement-bridge-spec.json",
+        "verificationPath": "assurance/ka66/KA66_EXECUTABLE_DEFEQ_CORE_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 67,
+        "checkpoint": "proofscript-v1-ka67-executable-defeq-binder-app-eta-refinement0",
+        "publicVersion": "1.0.0-pskernel.70",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka67/executable-defeq-binder-app-eta-refinement-bridge-spec.json",
+        "verificationPath": "assurance/ka67/KA67_EXECUTABLE_DEFEQ_BINDER_APP_ETA_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 68,
+        "checkpoint": "proofscript-v1-ka68-executable-defeq-proof-level-offset-refinement0",
+        "publicVersion": "1.0.0-pskernel.71",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka68/executable-defeq-proof-level-offset-refinement-bridge-spec.json",
+        "verificationPath": "assurance/ka68/KA68_EXECUTABLE_DEFEQ_PROOF_LEVEL_OFFSET_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 69,
+        "checkpoint": "proofscript-v1-ka69-executable-defeq-delta-string-refinement0",
+        "publicVersion": "1.0.0-pskernel.72",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka69/KA69_EXECUTABLE_DEFEQ_DELTA_STRING_REFINEMENT_BRIDGE_SPEC.json",
+        "verificationPath": "assurance/ka69/KA69_EXECUTABLE_DEFEQ_DELTA_STRING_REFINEMENT_VERIFICATION_SUMMARY.json"
+      },
+      {
+        "ka": 70,
+        "checkpoint": "proofscript-v1-ka70-executable-defeq-unit-proj-refinement0",
+        "publicVersion": "1.0.0-pskernel.73",
+        "obligations": 4,
+        "strictStatus": "passed",
+        "specPath": "assurance/ka70/KA70_EXECUTABLE_DEFEQ_UNIT_PROJ_REFINEMENT_BRIDGE_SPEC.json",
+        "verificationPath": "assurance/ka70/KA70_EXECUTABLE_DEFEQ_UNIT_PROJ_REFINEMENT_VERIFICATION_SUMMARY.json"
+      }
+    ],
+    "preflight": [
+      {
+        "ka": 46,
+        "checkpoint": "proofscript-v1-ka46-projection-reduction-refinement-preflight0",
+        "status": "promoted-by-KA50",
+        "countedHere": 0
+      },
+      {
+        "ka": 47,
+        "checkpoint": "proofscript-v1-ka47-executable-expression-translator-refinement-preflight0",
+        "status": "promoted-by-KA51-KA64",
+        "countedHere": 0
+      },
+      {
+        "ka": 48,
+        "checkpoint": "proofscript-v1-ka48-executable-whnf-defeq-refinement-preflight0",
+        "status": "promoted-by-KA65-KA70",
+        "countedHere": 0
+      },
+      {
+        "ka": 49,
+        "checkpoint": "proofscript-v1-ka49-checker-pipeline-end-to-end-theorem-skeleton-preflight0",
+        "status": "unresolved-scaffold",
+        "countedHere": 0
+      }
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWHNFDefEqRefinement": false,
+    "fullExecutableExpressionTranslatorRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

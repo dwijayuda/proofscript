@@ -1,0 +1,45 @@
+{
+  "schema": "proofscript.assurance.ka9.lean4lean-compat-audit/v1",
+  "checkpoint": "proofscript-v1-ka9-lean4lean-compat0",
+  "publicVersion": "1.0.0-pskernel.11",
+  "baseline": "proofscript-v1-ka8-lean4lean-source-intake0",
+  "targetLeanVersion": "4.33.1",
+  "targetLeanCommit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "uploadedSourceArchivePatterns": [
+    "/mnt/data/lean4lean*.zip",
+    "/mnt/data/lean4lean*.tar.gz",
+    "/mnt/data/lean4lean*.tgz",
+    "/mnt/data/lean4lean*.tar"
+  ],
+  "stableIntakeRoot": "/mnt/data/lean4lean-intake",
+  "stableSourceRoot": "/mnt/data/lean4lean-intake/lean4lean",
+  "requiredSourceFiles": [
+    "lean-toolchain",
+    "lakefile.toml",
+    "Lean4Lean.lean",
+    "Lean4Lean/Environment.lean"
+  ],
+  "strictAcceptanceCriteria": [
+    "A Lean4Lean source archive or source tree is present and contains the required files.",
+    "The source lean-toolchain matches leanprover/lean4:v4.33.1, or an explicit version-compatibility proof is added later.",
+    "All external Lake dependencies are materialized locally or available without network ambiguity.",
+    "lake build Lean4Lean succeeds with the materialized Lean 4.33.1 toolchain.",
+    "The KA-7 real Lean4Lean import gate passes strictly.",
+    "No PSKernel trusted semantics, codec, or computation rule changes."
+  ],
+  "knownCurrentUpload": {
+    "observedFilename": "lean4lean-master(8).zip",
+    "sourceLeanToolchain": "leanprover/lean4:v4.33.0-rc2",
+    "compatibilityWithTargetLean4331": "not_proven",
+    "expectedStrictStatus": "blocked"
+  },
+  "claimBoundary": {
+    "actualLean4LeanSourcePresent": true,
+    "actualLean4LeanImportBound": false,
+    "strictImportPassed": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0
+  }
+}

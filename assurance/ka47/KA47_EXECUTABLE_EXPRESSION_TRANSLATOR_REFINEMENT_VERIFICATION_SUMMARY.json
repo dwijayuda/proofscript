@@ -1,0 +1,135 @@
+{
+  "checkpoint": "proofscript-v1-ka47-executable-expression-translator-refinement-preflight0",
+  "publicVersion": "1.0.0-pskernel.50",
+  "requiredCommands": [
+    {
+      "command": "RED: node tools/pskernel-ka47-executable-expression-translator-refinement-tests.ts before implementation",
+      "status": "failed-as-expected",
+      "reason": "missing KA47 gate/tool/assurance files"
+    },
+    {
+      "command": "npm install --offline --no-audit --no-fund",
+      "status": "passed"
+    },
+    {
+      "command": "npm run build -- --pretty false",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:pskernel:ka47",
+      "status": "passed"
+    },
+    {
+      "command": "npm run assurance:ka47",
+      "status": "passed-soft-preflight"
+    },
+    {
+      "command": "npm run lean:ka47:check",
+      "status": "passed-soft-preflight"
+    },
+    {
+      "command": "npm run lean:ka47:check:strict",
+      "status": "blocked-not-counted",
+      "reason": "GitHub DNS unavailable while fetching batteries; offline Batteries v4.33.0-rc2 archive not present"
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:psc:kernel-status",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:psc:conformance-bounded",
+      "status": "passed"
+    },
+    {
+      "command": "npm run arena:corpus-preflight",
+      "status": "passed",
+      "ndjsonCount": 190
+    },
+    {
+      "command": "npm run test:arena:static-nonperf",
+      "status": "passed",
+      "decisive": "26/26"
+    },
+    {
+      "command": "npm run test:arena:tutorial",
+      "status": "passed",
+      "decisive": "140/140"
+    },
+    {
+      "command": "npm run verify:arena",
+      "status": "passed"
+    },
+    {
+      "command": "npm pack --workspaces --ignore-scripts",
+      "status": "passed",
+      "packageCount": 36
+    },
+    {
+      "command": "sha256sum -c KA47_NPM_SHA256SUMS.txt",
+      "status": "passed",
+      "entries": 36
+    }
+  ],
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "sourceFileCount": 1695,
+    "ka47ToolFiles": [
+      {
+        "path": "tools/pskernel-ka47-executable-expression-translator-refinement.ts",
+        "lines": 133,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka47-executable-expression-translator-refinement-tests.ts",
+        "lines": 46,
+        "ext": ".ts"
+      }
+    ],
+    "newKA47OversizedFiles": [],
+    "semanticPackageTouched": false
+  },
+  "formalLeanCheckStatus": "blocked",
+  "blockedReasons": [
+    "external_dependency_fetch_failed_or_dependency_unavailable"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableExpressionTranslatorRefinement": false,
+    "formalLean4LeanBridgeObligations": 132
+  },
+  "packageHashes": {
+    "packageCount": 36,
+    "sha256Entries": 36,
+    "status": "passed"
+  },
+  "arena": {
+    "corpusNdjson": 190,
+    "staticNonperf": {
+      "total": 26,
+      "decisive": 26,
+      "wrongAccepts": 0,
+      "wrongRejects": 0
+    },
+    "tutorial": {
+      "total": 140,
+      "decisive": 140,
+      "wrongAccepts": 0,
+      "wrongRejects": 0
+    },
+    "verifyArenaPassed": true
+  }
+}

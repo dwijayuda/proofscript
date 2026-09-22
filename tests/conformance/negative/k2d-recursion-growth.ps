@@ -1,0 +1,6 @@
+def bad(n: Nat): Nat := {
+  match (n) {
+    | .zero => Nat.zero
+    | .succ(k) => bad(Nat.succ(k))
+  }
+}

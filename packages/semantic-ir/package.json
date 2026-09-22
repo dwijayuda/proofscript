@@ -1,0 +1,17 @@
+{
+  "name": "@proofscript/semantic-ir",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "Checked execution-facing semantic snapshot bootstrap",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "@proofscript/kernel": "0.1.0-dev.0",
+    "@proofscript/plugin-api": "0.1.0-dev.0"
+  }
+}

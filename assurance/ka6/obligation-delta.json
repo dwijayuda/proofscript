@@ -1,0 +1,20 @@
+{
+  "schema": "proofscript.assurance.ka6.obligation-delta/v1",
+  "checkpoint": "proofscript-v1-ka6-lean4lean-binding0",
+  "publicVersion": "1.0.0-pskernel.8",
+  "closedAsMachineCheckedScaffold": [
+    "ka6.reference-interface.lean4lean-compatible-shape",
+    "ka6.soundness.noninductive-reference-shape",
+    "ka6.policy.metadata-erasure-preserved",
+    "ka6.policy.metavariables-and-freevars-blocked",
+    "ka6.no-trusted-kernel-change"
+  ],
+  "notClosedBecauseNoPinnedLean4LeanImport": [
+    "soundness.imported-Lean4Lean-binding",
+    "soundness.checkDecl-against-Lean4Lean",
+    "soundness.defEq",
+    "soundness.whnf"
+  ],
+  "nextMilestone": "KA-7 pinned Lean4Lean source/vendor binding gate",
+  "formalLean4EquivalenceProvenObligations": 0
+}

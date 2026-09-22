@@ -1,0 +1,54 @@
+{
+  "checkpoint": "proofscript-v1-ka89-primitive-comparison-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.92",
+  "baseline": "proofscript-v1-ka88-primitive-gcd-recognizer-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 276,
+  "newFormalLean4LeanBridgeObligations": 3,
+  "baselineObligations": 273,
+  "countedObligations": [
+    "translated_checkNatBoolCases_wf",
+    "translated_checkNatBEq_wf",
+    "translated_checkNatBLE_wf"
+  ],
+  "redTestObserved": true,
+  "redTestReason": "KA89 test failed first on missing KA89 gate tool",
+  "noWrapperTimeoutCountedAsPassed": true,
+  "commands": {
+    "redTestFirst": "failed-as-expected",
+    "install": "passed",
+    "build": "passed",
+    "focusedTest": "passed",
+    "assuranceKA89": "passed",
+    "leanKA89Check": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "pscConformanceBounded": "passed",
+    "arenaCorpusPreflight": "passed",
+    "arenaStaticNonperf": "passed",
+    "arenaTutorial": "passed",
+    "verifyArena": "passed",
+    "npmPackWorkspaces": "passed",
+    "packageSha256Manifest": "passed"
+  },
+  "npmPackages": {
+    "packed": 36,
+    "sha256Entries": 36,
+    "verification": "passed"
+  },
+  "freshExtract": {
+    "initialResidue": {
+      "node_modules": 0,
+      "dist": 0,
+      "tsbuildinfo": 0,
+      "tgz": 0,
+      "zip": 0
+    },
+    "install": "passed",
+    "build": "passed",
+    "focusedTest": "passed",
+    "strictLeanCheck": "passed"
+  }
+}

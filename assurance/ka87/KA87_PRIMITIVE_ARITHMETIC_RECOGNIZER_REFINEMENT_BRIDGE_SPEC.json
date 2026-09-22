@@ -1,0 +1,35 @@
+{
+  "checkpoint": "proofscript-v1-ka87-primitive-arithmetic-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.90",
+  "baseline": "proofscript-v1-ka86-primitive-divmod-recognizer-refinement0",
+  "referenceKind": "primitive-arithmetic-recognizer-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 5,
+  "countedObligations": [
+    "translated_checkNatAdd_wf",
+    "translated_checkNatPred_wf",
+    "translated_checkNatSub_wf",
+    "translated_checkNatMul_wf",
+    "translated_checkNatPow_wf"
+  ],
+  "sourceTheorems": [
+    "checkNatAdd.WF",
+    "checkNatPred.WF",
+    "checkNatSub.WF",
+    "checkNatMul.WF",
+    "checkNatPow.WF"
+  ],
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveArithmeticRecognizerRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

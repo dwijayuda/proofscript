@@ -1,0 +1,300 @@
+{
+  "schema": "proofscript-pskernel-ts-kernel-release-manifest/v1",
+  "status": "accepted",
+  "proofStatus": "not-proven",
+  "trustLabel": "trusted-boundary standalone kernel; not fully formally equivalent to Lean 4 yet",
+  "semanticBaseline": "Lean 4.33.1",
+  "pinnedLeanRevision": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "package": {
+    "name": "@proofscript/kernel",
+    "version": "0.1.0-dev.0",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts"
+  },
+  "checkCount": 15,
+  "requiredFailureCount": 0,
+  "checks": [
+    {
+      "id": "status.trust-boundary",
+      "status": "accepted",
+      "message": "Kernel status keeps trusted-boundary / not-proven wording",
+      "details": {}
+    },
+    {
+      "id": "package.entrypoints",
+      "status": "accepted",
+      "message": "Package entrypoints are release-manifest compatible",
+      "details": {}
+    },
+    {
+      "id": "obligations.not-proven",
+      "status": "accepted",
+      "message": "Proof obligations validate and do not claim proven status",
+      "details": {}
+    },
+    {
+      "id": "source-tree.evidence",
+      "status": "accepted",
+      "message": "Release source tree inventory is deterministic and verifies against the workspace",
+      "details": {
+        "sourceTreeSha256": "d2ca734a45ede6bb5a5d689fbe7842e1fea35299868a98940e55189887dedbdd",
+        "fileCount": 831
+      }
+    },
+    {
+      "id": "source-archive.evidence",
+      "status": "accepted",
+      "message": "Release source archive is deterministic and verifies against the workspace",
+      "details": {
+        "releaseArchiveSha256": "77f46737bccc74d8cc9a3ad7cec268367c659835a014591a0ef515c7436eaeaa",
+        "archiveSha256": "bb1ab2d9dab793b613d7200dabf8a9b08cf4b7664addd3f6865bd568a0d5441a"
+      }
+    },
+    {
+      "id": "component.delivery-bootstrap",
+      "status": "accepted",
+      "message": "Manifestless delivery bootstrap evidence accepts",
+      "details": {
+        "deliveryBootstrapSha256": "08dca01626e38f2dbbc8e39f55588f24a4aa05667f19d4c8bf862794de93a1b2"
+      }
+    },
+    {
+      "id": "component.preflight",
+      "status": "accepted",
+      "message": "Release preflight accepts",
+      "details": {
+        "preflightSha256": "9237ee610bff4e4a503527978dc6e0b2f71e2398c5f59f05529bcaaad54e33b8",
+        "checkCount": 4
+      }
+    },
+    {
+      "id": "component.package-audit",
+      "status": "accepted",
+      "message": "Package audit accepts",
+      "details": {
+        "packageAuditSha256": "ac2c2adeb73fb9b5759df47dbf55429229c7b0a0cfb9e5fbaf257192f8c254bc",
+        "checkCount": 32
+      }
+    },
+    {
+      "id": "component.tarball-smoke",
+      "status": "accepted",
+      "message": "Install-from-tarball smoke accepts",
+      "details": {
+        "tarballSmokeSha256": "49a7b77665aee673feb03d253aaa79a53855992b496227de7fa9d7d07c64682c",
+        "checkCount": 8
+      }
+    },
+    {
+      "id": "component.audit-bundle",
+      "status": "accepted",
+      "message": "Standalone audit bundle accepts and verifies its certificate",
+      "details": {
+        "auditSha256": "6137e2513fcfde7cb6c0a3c583ab4c40b42eea69a7aba0692bd9f9283ca59a21"
+      }
+    },
+    {
+      "id": "component.certificate-bundle",
+      "status": "accepted",
+      "message": "Certificate bundle accepts and verifies by fresh replay",
+      "details": {
+        "bundleSha256": "1e4a00312818881015e1b9cbfb5088c9e176140f606be2b4c22328e922b47f57",
+        "auditSha256": "6137e2513fcfde7cb6c0a3c583ab4c40b42eea69a7aba0692bd9f9283ca59a21",
+        "obligationsSha256": "33d98a196ca33a7f9e3495b5956a81fbfa9a01c97e1511c31a1e6cfccd4fb47b",
+        "environmentSha256": "60ae4d840beb515016710e003b45ed8adc771cc1c2d38a87f99b3d6aef936f0d"
+      }
+    },
+    {
+      "id": "component.certificate-bundle.deterministic",
+      "status": "accepted",
+      "message": "Certificate bundle hash is deterministic across repeated fresh replay",
+      "details": {
+        "bundleSha256": "1e4a00312818881015e1b9cbfb5088c9e176140f606be2b4c22328e922b47f57"
+      }
+    },
+    {
+      "id": "component.certificate-bundle.audit-binding",
+      "status": "accepted",
+      "message": "Certificate bundle audit hash matches standalone audit bundle hash",
+      "details": {
+        "auditSha256": "6137e2513fcfde7cb6c0a3c583ab4c40b42eea69a7aba0692bd9f9283ca59a21"
+      }
+    },
+    {
+      "id": "component.certificate-bundle.obligation-binding",
+      "status": "accepted",
+      "message": "Certificate bundle obligation hash matches release obligation catalog hash",
+      "details": {
+        "obligationsSha256": "33d98a196ca33a7f9e3495b5956a81fbfa9a01c97e1511c31a1e6cfccd4fb47b"
+      }
+    },
+    {
+      "id": "evidence.files",
+      "status": "accepted",
+      "message": "Release evidence files exist and are hashable",
+      "details": {
+        "count": 12
+      }
+    }
+  ],
+  "componentHashes": {
+    "statusReportSha256": "745368daa6b02d4f556da001a851210b510949ece6aed7c5e6821b08a2ba8da6",
+    "proofObligationsSha256": "33d98a196ca33a7f9e3495b5956a81fbfa9a01c97e1511c31a1e6cfccd4fb47b",
+    "sourceTreeSha256": "d2ca734a45ede6bb5a5d689fbe7842e1fea35299868a98940e55189887dedbdd",
+    "releaseArchiveSha256": "77f46737bccc74d8cc9a3ad7cec268367c659835a014591a0ef515c7436eaeaa",
+    "releaseArchiveZipSha256": "bb1ab2d9dab793b613d7200dabf8a9b08cf4b7664addd3f6865bd568a0d5441a",
+    "releaseArchivePayloadSha256": "a3620becde67e26a55d0226a09a028905bdacf8a14f65ea08f9393dcb42f5565",
+    "releaseArchiveSourceTreeSha256": "d2ca734a45ede6bb5a5d689fbe7842e1fea35299868a98940e55189887dedbdd",
+    "deliveryBootstrapSha256": "08dca01626e38f2dbbc8e39f55588f24a4aa05667f19d4c8bf862794de93a1b2",
+    "preflightSha256": "9237ee610bff4e4a503527978dc6e0b2f71e2398c5f59f05529bcaaad54e33b8",
+    "packageAuditSha256": "ac2c2adeb73fb9b5759df47dbf55429229c7b0a0cfb9e5fbaf257192f8c254bc",
+    "tarballSmokeSha256": "49a7b77665aee673feb03d253aaa79a53855992b496227de7fa9d7d07c64682c",
+    "standaloneAuditSha256": "6137e2513fcfde7cb6c0a3c583ab4c40b42eea69a7aba0692bd9f9283ca59a21",
+    "certificateBundleSha256": "1e4a00312818881015e1b9cbfb5088c9e176140f606be2b4c22328e922b47f57",
+    "certificateBundleVerificationSha256": "b496db29d7cc845d6d14b1e4a8f1d9a5d5c3bdd9c5843df4970933e9f2f70a94",
+    "certificateBundleAuditSha256": "6137e2513fcfde7cb6c0a3c583ab4c40b42eea69a7aba0692bd9f9283ca59a21",
+    "certificateBundleObligationsSha256": "33d98a196ca33a7f9e3495b5956a81fbfa9a01c97e1511c31a1e6cfccd4fb47b",
+    "certificateBundleEnvironmentSha256": "60ae4d840beb515016710e003b45ed8adc771cc1c2d38a87f99b3d6aef936f0d",
+    "tarballSha256": "62a7f54ba9650da86e22d2b793fec368fb77cc78098d8db919cf9190bd61068c",
+    "tarballFilesSha256": "1b7b3f6bfc763048694fc37549a8aad61ce37e59689bfb462f46c214fa98f245"
+  },
+  "componentSummaries": {
+    "preflight": {
+      "status": "accepted",
+      "checks": 4,
+      "failures": 0,
+      "warnings": 0
+    },
+    "packageAudit": {
+      "status": "accepted",
+      "checks": 32,
+      "failures": 0,
+      "fileCount": 479
+    },
+    "tarballSmoke": {
+      "status": "accepted",
+      "checks": 8,
+      "failures": 0,
+      "fileCount": 479,
+      "runtime": "accepted"
+    },
+    "auditBundle": {
+      "status": "accepted",
+      "certificateVerification": "accepted",
+      "auditSha256": "6137e2513fcfde7cb6c0a3c583ab4c40b42eea69a7aba0692bd9f9283ca59a21"
+    },
+    "certificateBundle": {
+      "status": "accepted",
+      "verification": "accepted",
+      "bundleSha256": "1e4a00312818881015e1b9cbfb5088c9e176140f606be2b4c22328e922b47f57",
+      "auditSha256": "6137e2513fcfde7cb6c0a3c583ab4c40b42eea69a7aba0692bd9f9283ca59a21",
+      "obligationsSha256": "33d98a196ca33a7f9e3495b5956a81fbfa9a01c97e1511c31a1e6cfccd4fb47b",
+      "environmentSha256": "60ae4d840beb515016710e003b45ed8adc771cc1c2d38a87f99b3d6aef936f0d"
+    },
+    "obligations": {
+      "total": 56,
+      "byStatus": {
+        "lean-proof-target": 28,
+        "informal-spec": 28
+      },
+      "byProofStatus": {
+        "not-proven": 56
+      }
+    },
+    "sourceTree": {
+      "status": "accepted",
+      "verification": "accepted",
+      "fileCount": 831,
+      "totalBytes": 5129504,
+      "sourceTreeSha256": "d2ca734a45ede6bb5a5d689fbe7842e1fea35299868a98940e55189887dedbdd"
+    },
+    "sourceArchive": {
+      "status": "accepted",
+      "verification": "accepted",
+      "releaseArchiveSha256": "77f46737bccc74d8cc9a3ad7cec268367c659835a014591a0ef515c7436eaeaa",
+      "archiveSha256": "bb1ab2d9dab793b613d7200dabf8a9b08cf4b7664addd3f6865bd568a0d5441a",
+      "archiveBytes": 1552703
+    },
+    "deliveryBootstrap": {
+      "status": "accepted",
+      "failures": 0,
+      "deliveryBootstrapSha256": "08dca01626e38f2dbbc8e39f55588f24a4aa05667f19d4c8bf862794de93a1b2"
+    }
+  },
+  "evidenceFiles": [
+    {
+      "path": "packages/kernel/package.json",
+      "exists": true,
+      "bytes": 330,
+      "sha256": "87bb7994f07a97b6a24d69ebfd62afa352f1caa210472464c8fb224474a91ef1"
+    },
+    {
+      "path": "packages/kernel/dist/index.js",
+      "exists": true,
+      "bytes": 1170,
+      "sha256": "d78b79ae0cc6dbe19ec9f8105d59091dc5737e567b41bbbe46ec818eb254db1d"
+    },
+    {
+      "path": "packages/kernel/dist/index.d.ts",
+      "exists": true,
+      "bytes": 379,
+      "sha256": "1be9971d89c2a169fddbb32e8d010c6bcc9db2efd106c7243c955cf12cc5b6b2"
+    },
+    {
+      "path": "docs/TRUST_BOUNDARY.md",
+      "exists": true,
+      "bytes": 341,
+      "sha256": "c0d22ecd768a76df4d7f840ef57193cb07f413f805fa8a3b40c295eb4d47189d"
+    },
+    {
+      "path": "docs/PROOF_OBLIGATIONS.md",
+      "exists": true,
+      "bytes": 34742,
+      "sha256": "1278b44dc760ff48f11c667264791c68764bbcab929240a4f499a96b06c1de22"
+    },
+    {
+      "path": "docs/PSKERNEL_TS_PORTING_MAP.md",
+      "exists": true,
+      "bytes": 12317,
+      "sha256": "257f825f5533bed74d3b06720ac3339dbe03099a83e1de1526cfc69b1a6d5d6f"
+    },
+    {
+      "path": "docs/PSKERNEL_TS_PHASE_PLAN.md",
+      "exists": true,
+      "bytes": 1822,
+      "sha256": "68a7b4664f78d58063a8df5b19ac1ffd44bc3842b0b0bf1fad7a3dcfc5f10579"
+    },
+    {
+      "path": "docs/PSKERNEL_TS_RELEASE_PREFLIGHT.json",
+      "exists": true,
+      "bytes": 53519,
+      "sha256": "76ed39be10e17e4d6bad8bb7f5031f4fb124a4d622761f17ed8855c30c0762c1"
+    },
+    {
+      "path": "docs/PSKERNEL_TS_PROOF_OBLIGATIONS.json",
+      "exists": true,
+      "bytes": 50787,
+      "sha256": "403687f60a1690458e9edec0b9ed3a48b86cd07346e45384fbf4c8e88ae35e2a"
+    },
+    {
+      "path": "docs/PSKERNEL_TS_PACKAGE_AUDIT.json",
+      "exists": true,
+      "bytes": 8620,
+      "sha256": "b9faf9b60183b95b543c30fbc34463d05b8468363976ae821a26f980043ea946"
+    },
+    {
+      "path": "docs/PSKERNEL_TS_TARBALL_SMOKE.json",
+      "exists": true,
+      "bytes": 3484,
+      "sha256": "7d3dd48135620384f413d3fd2d9d79fbb75b0e16b65c3a63abbc7a56b691d3b5"
+    },
+    {
+      "path": "docs/PSKERNEL_TS_RELEASE_ARCHIVE.json",
+      "exists": true,
+      "bytes": 1208,
+      "sha256": "b1d5d60fb0cb8c162521ac79c39ac859608d1f023537f5a1e93ad63e86906a12"
+    }
+  ],
+  "releaseManifestSha256": "d6d6628ff987a00d2a4a9df2a3c13e30c8fcec8b5290ba8f7e25e5568bc48d8d"
+}

@@ -1,0 +1,4 @@
+structure PairNat { left: Nat; right: Nat; }
+def bad(p: PairNat): PairNat := {
+  { p with nope := Nat.zero }
+}

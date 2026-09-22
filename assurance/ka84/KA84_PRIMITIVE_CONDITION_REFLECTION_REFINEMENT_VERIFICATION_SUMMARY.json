@@ -1,0 +1,68 @@
+{
+  "checkpoint": "proofscript-v1-ka84-primitive-condition-reflection-refinement0",
+  "publicVersion": "1.0.0-pskernel.87",
+  "baseline": "proofscript-v1-ka83-primitive-type-translation-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 263,
+  "newFormalLean4LeanBridgeObligations": 8,
+  "baselineObligations": 255,
+  "countedObligations": [
+    "translated_boolProp_wf",
+    "translated_propBoolProp_wf",
+    "translated_boolNat3_wf",
+    "translated_natNatProp_wf",
+    "translated_natLE_apply_wf",
+    "translated_natEq_apply_wf",
+    "translated_natLE_apply_zero_wf",
+    "translated_natEq_apply_zero_wf"
+  ],
+  "redTestObserved": true,
+  "redTestReason": "KA84 test failed first on missing KA84 gate tool",
+  "noWrapperTimeoutCountedAsPassed": true,
+  "boundedReleaseVerification": {
+    "passed": [
+      "npm install --offline --no-audit --no-fund",
+      "npm run build -- --pretty false",
+      "npm run test:pskernel:ka84",
+      "npm run assurance:ka84",
+      "npm run lean:ka84:check",
+      "npm run test:kernel:smoke",
+      "npm run test:standalone-small",
+      "npm run test:psc:kernel-status",
+      "npm run test:psc:conformance-bounded",
+      "npm run arena:corpus-preflight",
+      "npm run test:arena:static-nonperf",
+      "npm run test:arena:tutorial",
+      "npm run verify:arena",
+      "npm pack --workspaces --ignore-scripts",
+      "sha256sum -c package SHA manifest"
+    ],
+    "notCountedAsPassed": []
+  },
+  "npmPackages": {
+    "packed": 36,
+    "sha256Entries": 36,
+    "verification": "passed"
+  },
+  "arenaEvidence": {
+    "corpusPreflight": "passed",
+    "ndjsonFixtures": 190,
+    "staticNonPerf": "26/26 decisive",
+    "tutorial": "140/140 decisive",
+    "verifyArenaWrapper": "passed"
+  },
+  "freshExtract": {
+    "initialResidue": {
+      "node_modules": 0,
+      "dist": 0,
+      "tsbuildinfo": 0,
+      "tgz": 0,
+      "zip": 0
+    },
+    "install": "passed",
+    "build": "passed",
+    "focusedGate": "passed",
+    "strictLeanCheck": "passed"
+  }
+}

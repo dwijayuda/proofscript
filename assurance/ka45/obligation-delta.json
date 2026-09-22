@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka45-inductive-recursor-refinement-bridge0",
+  "baseline": "proofscript-v1-ka44-end-to-end-checker-refinement-plan0",
+  "formalLean4EquivalenceProvenObligationsBefore": 128,
+  "formalLean4EquivalenceProvenObligationsAdded": 4,
+  "formalLean4EquivalenceProvenObligationsAfter": 132,
+  "closedByKA45": [
+    "direct bridge to Lean4Lean.TypeChecker.Inner.reduceRecursor.WF",
+    "WHNF-core recursor path inherits Lean4Lean verified whnfCore'.WF",
+    "public WHNF path inherits Lean4Lean verified whnf'.WF",
+    "Inductive.Reduce.inductiveReduceRec proof-surface import is explicitly bound"
+  ],
+  "stillOpen": [
+    "full executable PSKernel recursor reducer refinement",
+    "generated recursor rule equality against Lean4Lean addInductive output",
+    "iota rule RHS reconstruction refinement",
+    "K-like recursor conversion refinement",
+    "structure eta recursor/projection interaction refinement",
+    "nested and mutual inductive recursor parity",
+    "full Lean4 equivalence"
+  ]
+}

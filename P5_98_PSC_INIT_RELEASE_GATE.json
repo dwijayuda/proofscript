@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "P5.98-psc-init0",
+  "status": "PROFILE_CLI_INIT_CHECKPOINT_FROZEN",
+  "baseline": "P5.97 psc-software-cli-adapter0",
+  "feature": {
+    "summary": "Add psc init starter-project scaffolding and install documentation.",
+    "details": [
+      "psc init [dir] creates a Software Profile starter project.",
+      "The starter contains README.md, .gitignore, package.json, proofscript.config.json, and src/Main.ps.",
+      "The generated program checks and builds to TypeScript through the existing PSC-1 software-profile path.",
+      "Non-empty target directories are rejected unless --force is passed.",
+      "Unsupported templates return unsupported/exit 2."
+    ],
+    "kernelSourceChanged": false,
+    "arenaImporterChanged": false,
+    "kernelCodecChanged": false,
+    "newTrustedComputationRule": false
+  },
+  "gates": {
+    "workingTreeOfflineInstall": "PASS",
+    "workingTreeBuild": "PASS",
+    "pscAdapter": "PASS",
+    "pscInit": "PASS",
+    "profileSoftwareVerify": "PASS",
+    "conformance": "PASS",
+    "standaloneSmall": "PASS",
+    "typescriptMigration": "PASS",
+    "kernelSmoke": "PASS",
+    "sourceResidue": "PASS",
+    "zipIntegrity": "PASS",
+    "zipSha256": "PASS",
+    "cleanExtractInstallBuild": "PASS",
+    "cleanExtractVerifyProfileSoftware": "NOT_COUNTED_SESSION_TIMEOUT_COMPONENTS_RERUN_PASS",
+    "cleanExtractPscInitCheckBuild": "PASS",
+    "cleanExtractProfileComponentGates": "PASS"
+  },
+  "trustBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "backendExecutionCorrespondenceProof": false,
+    "arenaAgreementIsFormalEquivalence": false
+  },
+  "notes": [
+    "In final clean extract, the grouped npm verify wrapper exceeded the session timeout after starting the examples gate; profile consistency, executable examples, psc adapter/init, and psc init/check/build-ts/compile were rerun as bounded component gates and passed."
+  ]
+}

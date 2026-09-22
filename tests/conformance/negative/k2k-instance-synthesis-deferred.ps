@@ -1,0 +1,5 @@
+class Flag {
+  enabled: Bool;
+}
+def takeInst[inst: Flag](x: Nat): Bool := { Flag.enabled(inst) }
+def bad: Bool := { takeInst(0) }

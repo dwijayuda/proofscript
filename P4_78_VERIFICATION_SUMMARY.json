@@ -1,0 +1,70 @@
+{
+  "release": "P4.78",
+  "title": "Parser sugar extraction cleanup",
+  "timestamp_utc": "2026-09-11T18:11:07Z",
+  "trust_status": "K3-TB trusted-boundary; not fully formal K3; not proven equivalent to Lean 4",
+  "formal_lean4_equivalence_proven_obligations": 0,
+  "changes": [
+    "created packages/parser/src/sugar.ts",
+    "moved source-sugar lowering constructors behind named helpers",
+    "added parser sugar extraction characterization test",
+    "preserved parser behavior for Nat +/*, whitespace application, by sugar, Boolean if/operators"
+  ],
+  "verified_commands": [
+    {
+      "command": "node tools/parser-sugar-extraction-tests.ts before implementation",
+      "result": "FAIL_EXPECTED: packages/parser/src/sugar.ts missing"
+    },
+    {
+      "command": "npm run build -- --pretty false",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run test:parser:sugar",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run test:parser:cursor",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run test:parser:tokenize",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run test:pslive:language-fast",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "result": "PASS"
+    },
+    {
+      "command": "node tools/pskernel.ts status --json",
+      "result": "PASS: trusted-boundary / not-proven"
+    }
+  ],
+  "not_rerun": [
+    {
+      "command": "npm run verify:k3tb:publish",
+      "reason": "requires PROOFSCRIPT_LEAN_BIN / Lean 4.33.1 binary not available in this environment"
+    },
+    {
+      "command": "full long matrix",
+      "reason": "skipped for fast cleanup iteration"
+    }
+  ],
+  "progress_estimate": {
+    "Standalone PSC-1 without Lean4": "~97.3%",
+    "PSC-1 small complete programming language": "~72.0%",
+    "PSC-1 small theorem prover": "~62.1%",
+    "Full ProofScript compiler": "~60.9%",
+    "Full Lean-like ProofScript without Lean4": "~13.8%",
+    "Formal Lean 4 equivalence": "0 proven obligations",
+    "Maintainability / anti-spaghetti score": "~66%"
+  }
+}

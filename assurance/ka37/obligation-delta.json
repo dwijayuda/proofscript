@@ -1,0 +1,21 @@
+{
+  "checkpoint": "proofscript-v1-ka37-whnf-head-reduction-bridge0",
+  "baseline": "proofscript-v1-ka36-expression-tag-coverage-bridge0",
+  "formalLean4EquivalenceProvenObligationsBefore": 82,
+  "formalLean4EquivalenceProvenObligationsAdded": 8,
+  "formalLean4EquivalenceProvenObligationsAfter": 90,
+  "closedByKA37": [
+    "direct Lean4Lean HeadReduction import is checked",
+    "WHNF constructor wrappers for bvar/lam/sort/forallE are checked",
+    "WHRed beta and application-head congruence wrappers are checked",
+    "WHRedS application congruence and deterministic WHNF endpoint wrapper are checked"
+  ],
+  "stillOpen": [
+    "end-to-end executable PSKernel WHNF refinement is not proven",
+    "recursor reduction/iota refinement is not proven",
+    "projection reduction refinement is not proven",
+    "quotient reduction refinement is not proven",
+    "WHNF cache/refinement relation to PSKernel runtime data structures is not proven",
+    "full Lean4 equivalence remains unproven"
+  ]
+}

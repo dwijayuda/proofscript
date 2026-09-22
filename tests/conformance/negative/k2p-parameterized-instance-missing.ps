@@ -1,0 +1,6 @@
+class Default(A: Type) {
+  value: A;
+}
+instance natDefault: Default(Nat) := { value := 0 };
+def getBool[d: Default(Bool)](n: Nat): Bool := { Default.value(Bool, d) }
+def bad: Bool := { getBool(0) }

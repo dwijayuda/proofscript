@@ -1,0 +1,16 @@
+{
+  "artifact": "V71_RUNTIME_EXTRACTION_TRUST_BOUNDARY1",
+  "checkpoint": "assurance/lean4331/CHECKPOINT_V71_RUNTIME_EXTRACTION_TRUST_BOUNDARY1.json",
+  "checkpointSha256": "e7ccde036e08af693b72f32451bfb092638b7f2c1a8d59bccfc209b8e618b888",
+  "markdown": "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_RUNTIME_EXTRACTION_TRUST_BOUNDARY1.md",
+  "markdownSha256": "85d188f351685bbe688b21f2cd7269bd0f4cfb687f7bce1bdb106624debe9aa4",
+  "formalSource": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71RuntimeExtractionTrustBoundary.lean",
+  "formalSourceSha256": "98a35246cd36b6ee657cc4907fc2abe38f44336f48646b2b857e43459e705001",
+  "formalLog": "assurance/lean4331/evidence/v71-runtime-extraction-trust-boundary-formal1.out",
+  "formalLogSha256": "6df31d2d2f788b062e0403ff82f348a615e238ccf4ddb0a887ba129588838760",
+  "buildLog": "assurance/lean4331/evidence/v71-runtime-extraction-build1.out",
+  "buildLogSha256": "d8dd31c5189a416706979c8f811a07ad0b99cde01569b56fe0b4505abc81ba6d",
+  "sourceHash": "d29dea20a7eaa790ba3a4b29d31324e9b6dffd9777bbef52d3a086105dc16e3c",
+  "distHash": "c8fe23d3dcb999d3be663a48495a61b8865fab1a2ccc9084f01d3d77326e4421",
+  "extractionPairHash": "26ef4407c5dcdb3f3ed592566ec62f7453f84dfdcf6d1012351cc916d77c3763"
+}

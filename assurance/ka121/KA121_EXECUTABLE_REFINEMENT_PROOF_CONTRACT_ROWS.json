@@ -1,0 +1,59 @@
+{
+  "contractPercent": 100,
+  "rows": [
+    {
+      "id": "theorem-name",
+      "status": "ready",
+      "evidence": "the final executable refinement theorem has a stable contract identity",
+      "ready": true
+    },
+    {
+      "id": "source-domain-contract",
+      "status": "ready",
+      "evidence": "source artifacts are restricted to the KA117 indexed executable proof modules",
+      "ready": true
+    },
+    {
+      "id": "target-domain-contract",
+      "status": "ready",
+      "evidence": "target artifacts are restricted to the KA118 refinement coverage map",
+      "ready": true
+    },
+    {
+      "id": "precondition-contract",
+      "status": "ready",
+      "evidence": "preconditions are closed by KA116 dependency closure and KA120 discharge agenda",
+      "ready": true
+    },
+    {
+      "id": "obligation-accounting-contract",
+      "status": "ready",
+      "evidence": "formal Lean4Lean bridge accounting remains pinned at 366 with zero new counted obligations",
+      "ready": true
+    },
+    {
+      "id": "evidence-contract",
+      "status": "ready",
+      "evidence": "the release must include focused gate, Lean marker, arena target, package SHA, fresh extract, ZIP, and SHA evidence",
+      "ready": true
+    },
+    {
+      "id": "negative-claim-contract",
+      "status": "ready",
+      "evidence": "full Lean4 equivalence, fully formal K3, and executable refinement proof are still explicitly unclaimed",
+      "ready": true
+    },
+    {
+      "id": "remaining-gap-contract",
+      "status": "ready",
+      "evidence": "the remaining 3% is reserved for actual theorem discharge, theorem audit, and final release claim review",
+      "ready": true
+    }
+  ],
+  "counts": {
+    "total": 8,
+    "ready": 8,
+    "notReady": 0
+  },
+  "evidenceMeaning": "the proof contract records the theorem boundary and release evidence requirements; it is not the discharged executable refinement theorem"
+}

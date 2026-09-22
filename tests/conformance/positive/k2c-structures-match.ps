@@ -1,0 +1,15 @@
+structure PairNat {
+  fst: Nat;
+  snd: Nat;
+}
+
+def isZeroNat(n: Nat): Bool := {
+  match (n) {
+    | .zero => Bool.true
+    | .succ k => Bool.false
+  }
+}
+
+theorem fstProjection(a: Nat, b: Nat): Eq.{1}(Nat, PairNat.fst(PairNat.mk(a, b)), a) := Eq.refl.{1}(Nat, a);
+theorem zeroMatch: Eq.{1}(Bool, isZeroNat(Nat.zero), Bool.true) := Eq.refl.{1}(Bool, Bool.true);
+theorem succMatch: Eq.{1}(Bool, isZeroNat(Nat.succ(Nat.zero)), Bool.false) := Eq.refl.{1}(Bool, Bool.false);

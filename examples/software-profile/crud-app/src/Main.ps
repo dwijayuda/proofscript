@@ -1,0 +1,126 @@
+-- ProofScript Software Profile v0 CRUD-style example.
+-- The domain is pure and immutable: create/read/update/delete return new stores.
+
+inductive Priority: Type where {
+  | low
+  | normal
+  | high
+}
+
+inductive TaskStatus: Type where {
+  | todo
+  | doing
+  | done
+  | archived
+}
+
+structure Task {
+  id: Nat;
+  title: String;
+  priority: Priority;
+  status: TaskStatus;
+  estimate: Nat;
+}
+
+structure TaskStore {
+  nextId: Nat;
+  tasks: List(Task);
+}
+
+def emptyStore: TaskStore := {
+  { nextId := 1, tasks := List.nil(Task) }
+}
+
+function mkTask(id: Nat, title: String, priority: Priority, estimate: Nat): Task := {
+  { id := id, title := title, priority := priority, status := TaskStatus.todo, estimate := estimate }
+}
+
+function createTask(store: TaskStore, title: String, priority: Priority, estimate: Nat): Except(String, TaskStore) := {
+  if estimate == 0 then
+    Except.error(String, TaskStore, "estimate must be positive")
+  else
+    Except.ok(String, TaskStore, {
+      store with
+        nextId := store.nextId + 1,
+        tasks := List.cons(Task, mkTask(store.nextId, title, priority, estimate), store.tasks)
+    })
+}
+
+function unwrapStore(result: Except(String, TaskStore), fallback: TaskStore): TaskStore := {
+  match (result) {
+    | Except.error message => fallback
+    | Except.ok value => value
+  }
+}
+
+function sameId(target: Nat, task: Task): Bool := {
+  task.id == target
+}
+
+function differentId(target: Nat, task: Task): Bool := {
+  Bool.not(task.id == target)
+}
+
+function findTask(store: TaskStore, id: Nat): Option(Task) := {
+  List.find?(Task, sameId(id), store.tasks)
+}
+
+function setStatusWhen(target: Nat, status: TaskStatus, task: Task): Task := {
+  if task.id == target then { task with status := status } else task
+}
+
+function updateStatus(store: TaskStore, id: Nat, status: TaskStatus): TaskStore := {
+  { store with tasks := List.map(Task, Task, setStatusWhen(id, status), store.tasks) }
+}
+
+function deleteTask(store: TaskStore, id: Nat): TaskStore := {
+  { store with tasks := List.filter(Task, differentId(id), store.tasks) }
+}
+
+function addEstimate(acc: Nat, task: Task): Nat := {
+  acc + task.estimate
+}
+
+function totalEstimate(store: TaskStore): Nat := {
+  List.foldl(Task, Nat, addEstimate, 0, store.tasks)
+}
+
+def createOne: Except(String, TaskStore) := {
+  createTask(emptyStore, "Write spec", Priority.high, 3)
+}
+
+def afterCreateOne: TaskStore := {
+  unwrapStore(createOne, emptyStore)
+}
+
+def createTwo: Except(String, TaskStore) := {
+  createTask(afterCreateOne, "Review code", Priority.normal, 2)
+}
+
+def afterCreateTwo: TaskStore := {
+  unwrapStore(createTwo, afterCreateOne)
+}
+
+def afterUpdate: TaskStore := {
+  updateStatus(afterCreateTwo, 1, TaskStatus.done)
+}
+
+def afterDelete: TaskStore := {
+  deleteTask(afterUpdate, 2)
+}
+
+def foundTaskOne: Bool := {
+  Option.isSome(Task, findTask(afterUpdate, 1))
+}
+
+def rejectedCreate: Bool := {
+  Except.isError(String, TaskStore, createTask(emptyStore, "Bad task", Priority.low, 0))
+}
+
+def smokeSummary: Nat := {
+  totalEstimate(afterDelete)
+}
+
+theorem foundTaskOne_eq: foundTaskOne = true := by rfl
+theorem rejectedCreate_eq: rejectedCreate = true := by rfl
+theorem smokeSummary_eq: smokeSummary = 3 := by rfl

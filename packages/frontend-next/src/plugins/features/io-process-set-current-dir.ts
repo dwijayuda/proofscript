@@ -1,0 +1,9 @@
+import { ProofScriptError } from "../../core/errors.js";
+import type { IRParam, IRType } from "../../core/model.js";
+import type { PluginManifest, ProofScriptPlugin } from "../../core/plugin-api.js";
+import { nominalType, typeArgument } from "../../core/type-utils.js";
+function valueParam(name:string,type:IRType):IRParam{return{name,type,binderInfo:"explicit"};}
+function ioOf(inner:IRType):IRType{return nominalType(`lean.io(${inner.id})`,`IO(${inner.displayName})`,"lean.io",[typeArgument(inner)]);}
+export const proofscriptManifest:PluginManifest={schema:"proofscript.plugin/v1",id:"proofscript.feature.io-process-set-current-dir",version: "0.91.0",kind:"feature",semanticIds:["lean.io.process.setCurrentDir"],proofscriptBaseline:"v0.1",leanBaseline:"4.33.1",lean:{assumptionPolicy:"none"}};
+const plugin:ProofScriptPlugin={id:proofscriptManifest.id,version:proofscriptManifest.version,kind:"feature",requires:["proofscript.feature.io","proofscript.feature.filepath","proofscript.feature.unit"],setup(registry){const fp=nominalType("System.FilePath","System.FilePath"),unit=nominalType("Unit","Unit");registry.registerBuiltinFunction("IO.Process.setCurrentDir",{params:[valueParam("path",fp)],result:ioOf(unit),operation:"lean.io.process.setCurrentDir"});registry.registerOperation("lean.io.process.setCurrentDir",{requiredCapabilities:["core.io.process.setCurrentDir"],verification:{level:"kernel-checkable",notes:"Lean IO.Process.setCurrentDir; host correspondence is backend/platform/primitive specific."},domain:"runtime"});registry.registerLeanExprLowering("lean.io.process.setCurrentDir",(expr,context)=>{if(expr.kind!=="op"||expr.args.length!==1)throw new ProofScriptError("PS4F73","Malformed IO.Process.setCurrentDir IR node.");return `(IO.Process.setCurrentDir ${context.emitExpr(expr.args[0]!)})`;});}};
+export default plugin;

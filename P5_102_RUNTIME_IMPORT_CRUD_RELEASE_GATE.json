@@ -1,0 +1,88 @@
+{
+  "checkpoint": "P5.102-runtime-import-crud0",
+  "status": "PROFILE_CLI_RUNTIME_IMPORT_CRUD_CHECKPOINT_FROZEN",
+  "baseline": {
+    "artifact": "proofscript-software-profile-v0-p5-101-professional-build0.zip",
+    "sha256": "ace6c219a7a5fbe690b78faa5b8de90aa43c52cbf2c971aa746eb60c7df95f67"
+  },
+  "scope": {
+    "runtimeOutputArchitectureChanged": true,
+    "crudExampleAdded": true,
+    "boundedConformanceScriptsAdded": true,
+    "kernelChanged": false,
+    "kernelCodecChanged": false,
+    "arenaImporterChanged": false,
+    "trustedComputationChanged": false
+  },
+  "runtime": {
+    "defaultMode": "local",
+    "defaultOutDir": "dist",
+    "mainOutput": "dist/Main.ts",
+    "localRuntimeOutput": "dist/proofscript-runtime.ts",
+    "manifest": "dist/proofscript.manifest.json",
+    "importSpecifier": "./proofscript-runtime.js",
+    "bundledModeFlag": "--bundle-runtime",
+    "packageRuntimeMode": "--runtime package"
+  },
+  "verification": {
+    "initialCleanSource": {
+      "node_modules": 0,
+      "dist": 0,
+      "distJs": 0,
+      "tsbuildinfo": 0,
+      "nestedZip": 0,
+      "intentionalVendorTgz": 3
+    },
+    "commands": {
+      "npm install --offline --no-audit --no-fund": "PASS",
+      "npm run setup -- --pretty false": "PASS",
+      "npm run build -- --pretty false": "PASS",
+      "npm run test:psc:adapter": "PASS",
+      "npm run test:psc:init": "PASS",
+      "npm run test:psc:simple": "PASS",
+      "npm run test:psc:professional-build": "PASS",
+      "npm run test:psc:windows-simple-setup": "PASS",
+      "npm run test:psc:runtime-import-crud": "PASS",
+      "npm run test:psc:conformance-bounded": "PASS",
+      "npm run verify:profile:software": "PASS",
+      "npm run test:standalone-small": "PASS",
+      "npm run test:typescript-migration": "PASS",
+      "npm run test:kernel:smoke": "PASS",
+      "npm link": "PASS",
+      "psc doctor": "PASS",
+      "psc doctor --json": "PASS",
+      "psc init smoke-app": "PASS",
+      "smoke-app psc check": "PASS",
+      "smoke-app psc build": "PASS",
+      "smoke-app psc compile src --out-dir dist": "PASS",
+      "smoke-app generated TypeScript to JavaScript execution": "PASS",
+      "crud-app psc check": "PASS",
+      "crud-app psc build": "PASS",
+      "crud-app generated TypeScript to JavaScript execution": "PASS"
+    },
+    "boundedConformance": {
+      "suites": 8,
+      "cases": 83,
+      "positiveCore": 8,
+      "positiveK2cK2j": 8,
+      "positiveK2kK2r": 8,
+      "negativeCore": 11,
+      "negativeK2dK2f": 11,
+      "negativeK2gK2j": 15,
+      "negativeK2kK2m": 10,
+      "negativeK2nK2r": 12,
+      "status": "PASS"
+    }
+  },
+  "claimBoundaries": {
+    "fullLean4EquivalenceClaimed": false,
+    "sameTheoryAsFullLean4Claimed": false,
+    "fullyFormalK3Claimed": false,
+    "backendExecutionCorrespondenceProofClaimed": false,
+    "contractsImplemented": false
+  },
+  "finalArchive": {
+    "file": "proofscript-software-profile-v0-p5-102-runtime-import-crud0.zip",
+    "sha256": null
+  }
+}

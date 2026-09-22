@@ -1,0 +1,49 @@
+{
+  "checkpoint": "proofscript-v1-ka85-primitive-bitwise-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.88",
+  "baseline": "proofscript-v1-ka84-primitive-condition-reflection-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 265,
+  "newFormalLean4LeanBridgeObligations": 2,
+  "baselineObligations": 263,
+  "countedObligations": [
+    "translated_boolOp2_apply_wf",
+    "translated_checkNatBitwise_wf"
+  ],
+  "redTestObserved": true,
+  "redTestReason": "KA85 test failed first on missing KA85 gate tool",
+  "noWrapperTimeoutCountedAsPassed": true,
+  "boundedReleaseVerification": {
+    "passed": [
+      "npm install --offline --no-audit --no-fund",
+      "npm run build -- --pretty false",
+      "npm run test:pskernel:ka85",
+      "npm run assurance:ka85",
+      "npm run lean:ka85:check",
+      "npm run test:kernel:smoke",
+      "npm run test:standalone-small",
+      "npm run test:psc:kernel-status",
+      "npm run test:psc:conformance-bounded",
+      "npm run arena:corpus-preflight",
+      "npm run test:arena:static-nonperf",
+      "npm run test:arena:tutorial",
+      "npm run verify:arena",
+      "npm pack --workspaces --ignore-scripts",
+      "sha256sum -c package SHA manifest"
+    ],
+    "notCountedAsPassed": []
+  },
+  "npmPackages": {
+    "packed": 36,
+    "sha256Entries": 36,
+    "verification": "passed"
+  },
+  "arenaEvidence": {
+    "corpusPreflight": "passed",
+    "ndjsonFixtures": 190,
+    "staticNonPerf": "26/26 decisive",
+    "tutorial": "140/140 decisive",
+    "verifyArenaWrapper": "passed"
+  }
+}

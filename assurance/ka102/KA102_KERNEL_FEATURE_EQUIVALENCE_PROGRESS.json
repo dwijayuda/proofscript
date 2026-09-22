@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka102-primitive-substitution-composition-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.105",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 80,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 331,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 326,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "correctedFormalLean4LeanBridgeObligations": 331,
+    "countedNewObligations": [
+      "translated_subst_consN_bvars_wf",
+      "translated_subst_lift_tail_inst_wf",
+      "translated_subst_consN_append_wf",
+      "translated_subst_consN_append_singleton_wf",
+      "translated_subst_lift_comp_one_wf"
+    ]
+  },
+  "metricPolicy": "KA102 adds direct non-sorry-backed primitive substitution-composition helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

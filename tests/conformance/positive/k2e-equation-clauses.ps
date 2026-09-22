@@ -1,0 +1,19 @@
+def isZeroEq: Nat → Bool
+  | .zero => Bool.true
+  | .succ(k) => Bool.false;
+
+def doubleEq: Nat → Nat
+  | .zero => Nat.zero
+  | .succ(k) => Nat.succ(Nat.succ(doubleEq(k)));
+
+theorem doubleEqOne:
+  Eq.{1}(Nat, doubleEq(Nat.succ(Nat.zero)), Nat.succ(Nat.succ(Nat.zero))) :=
+  Eq.refl.{1}(Nat, Nat.succ(Nat.succ(Nat.zero)));
+
+theorem useIsZeroEquation:
+  Eq.{1}(Bool, isZeroEq(Nat.zero), Bool.true) :=
+  isZeroEq.eq_1;
+
+theorem useDoubleEqEquation(k: Nat):
+  Eq.{1}(Nat, doubleEq(Nat.succ(k)), Nat.succ(Nat.succ(doubleEq(k)))) :=
+  doubleEq.eq_2(k);

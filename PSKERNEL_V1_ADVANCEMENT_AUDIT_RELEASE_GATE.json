@@ -1,0 +1,104 @@
+{
+  "checkpoint": "proofscript-v1-pskernel-advancement-audit0",
+  "status": "AUDIT_CHECKPOINT_NOT_FULL_ARENA_FROZEN",
+  "publicVersion": "1.0.0-pskernel.1",
+  "semanticBaseline": "4.33.1",
+  "leanCommit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "activeKernel": {
+    "name": "PSKernel",
+    "source": "packages/kernel/src/PSKernel",
+    "implementationProfile": "KERNEL-level-instantiation-conformance1",
+    "coreFormat": 71,
+    "certificateFormat": 2,
+    "resourceSecurityProfile": "KERNEL-resource-bounds0",
+    "resourceSecurityStatus": "accepted"
+  },
+  "kernelStatus": {
+    "summary": {
+      "total": 41,
+      "implemented": 41,
+      "unsupported": 0,
+      "partially_implemented": 0,
+      "blocked": 0,
+      "needs_validation": 0,
+      "profile": "KERNEL-level-instantiation-conformance1"
+    },
+    "auditedK3TBChecklistComplete": true,
+    "fullKernelCompleteField": false,
+    "fullLean4Equivalence": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0
+  },
+  "arena": {
+    "freshFullArenaStatus": "not_run_blocked_missing_corpus",
+    "preflight": {
+      "schemaVersion": 1,
+      "status": "arena_corpus_missing",
+      "fixturesDir": "/mnt/data/arena-corpus-20260915",
+      "requiredFixtures": [
+        "bad/extra-rec.ndjson",
+        "bad/orphan-rec.ndjson",
+        "bad/bogus1.ndjson",
+        "good/corner-cases/proof-param-ok.ndjson",
+        "good/tutorial/001_basicDef.ndjson",
+        "bad/tutorial/002_badDef.ndjson",
+        "good/tutorial/036_empty.ndjson",
+        "good/tutorial/074_existsRec.ndjson",
+        "good/tutorial/086_PSigma.snd.ndjson"
+      ],
+      "missingRequired": [
+        "bad/extra-rec.ndjson",
+        "bad/orphan-rec.ndjson",
+        "bad/bogus1.ndjson",
+        "good/corner-cases/proof-param-ok.ndjson",
+        "good/tutorial/001_basicDef.ndjson",
+        "bad/tutorial/002_badDef.ndjson",
+        "good/tutorial/036_empty.ndjson",
+        "good/tutorial/074_existsRec.ndjson",
+        "good/tutorial/086_PSigma.snd.ndjson"
+      ],
+      "ndjsonCount": 0,
+      "minimumExpectedNdjson": 166,
+      "hasEnoughNdjson": false,
+      "expectedLayout": "Lean Kernel Arena corpus root containing good/... and bad/... NDJSON fixtures",
+      "remedy": "Materialize or extract the Lean Kernel Arena corpus to this directory, or set PROOFSCRIPT_ARENA_CORPUS_DIR/ARENA_FIXTURES_DIR.",
+      "fullLean4Equivalence": false,
+      "fullyFormalK3": false,
+      "formalLean4EquivalenceProvenObligations": 0
+    },
+    "smoke": "PASS",
+    "tutorialHarness": "PASS",
+    "historicalEmbeddedEvidence": "P5.94/P5.85 reports remain bundled, but this checkpoint does not count them as a fresh Arena rerun."
+  },
+  "renameGuard": {
+    "activeKernelLegacyLabelHits": [],
+    "oldLabelHitsInActiveKernel": 0
+  },
+  "verification": {
+    "npm install --offline --no-audit --no-fund": "PASS",
+    "npm run build -- --pretty false": "PASS",
+    "npm run test:pskernel:v1-rename": "PASS",
+    "npm run test:pskernel:advancement-audit": "PASS",
+    "npm run test:arena:corpus-preflight": "PASS",
+    "npm run arena:corpus-preflight:soft": "PASS",
+    "npm run test:psc:kernel-status": "PASS",
+    "npm run test:kernel:smoke": "PASS",
+    "npm run test:standalone-small": "PASS",
+    "npm run test:psc:conformance-bounded": "PASS",
+    "npm run test:psc:crud-template": "PASS",
+    "npm run test:psc:runtime-import-crud": "PASS",
+    "npm run test:arena:smoke": "PASS",
+    "npm run test:arena:tutorial-harness": "PASS",
+    "npm run verify:arena": "BLOCKED_CORPUS_MISSING"
+  },
+  "claims": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "freshFullArenaPass": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false
+  },
+  "nextAction": "Materialize Lean Kernel Arena corpus and rerun npm run verify:arena; otherwise continue above the trusted kernel boundary unless a trusted-semantic defect is found."
+}

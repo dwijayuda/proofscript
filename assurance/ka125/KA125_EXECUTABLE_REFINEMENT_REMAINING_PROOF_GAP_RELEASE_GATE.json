@@ -1,0 +1,269 @@
+{
+  "checkpoint": "proofscript-v1-ka125-executable-refinement-remaining-proof-gap0",
+  "publicVersion": "1.0.0-pskernel.128",
+  "baseline": "proofscript-v1-ka124-executable-refinement-proof-boundary-gate0",
+  "releaseKind": "executable-refinement-remaining-proof-gap-audit",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA125",
+      "source": "assurance/ka125/executable-refinement-remaining-proof-gap-bridge.lean",
+      "destination": "KA125ExecutableRefinementRemainingProofGapBridge.lean",
+      "status": "passed",
+      "proofBearing": false,
+      "obligations": 0,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "progress": {
+    "checkpoint": "proofscript-v1-ka125-executable-refinement-remaining-proof-gap0",
+    "publicVersion": "1.0.0-pskernel.128",
+    "baseline": "proofscript-v1-ka124-executable-refinement-proof-boundary-gate0",
+    "metrics": {
+      "featureSurfaceBridgeProgressPercent": 100,
+      "executableKernelEquivalenceProofProgressPercent": 99,
+      "executableKernelEquivalencePreviousPercent": 99,
+      "executableKernelEquivalenceDeltaPercent": 0,
+      "executableKernelEquivalenceRemainingGapPercent": 1,
+      "arenaCorpusRegressionPercent": 100,
+      "releasePackagingVerificationPercent": 100,
+      "executableRefinementRemainingProofGapPercent": 100,
+      "formalLean4LeanBridgeObligations": 366,
+      "newFormalLean4LeanBridgeObligations": 0,
+      "fullLean4EquivalencePercent": 0,
+      "fullyFormalK3Percent": 0,
+      "overallConservativeProjectProgressPercent": 84.7,
+      "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+    },
+    "phaseStatus": {
+      "featureSurfaceBridge": "closed",
+      "executableEquivalence": "blocked-at-remaining-proof-gap",
+      "fullLean4Equivalence": "not-proven",
+      "fullyFormalK3": "not-proven",
+      "claimBoundary": "enforced"
+    },
+    "remainingProofGap": {
+      "gatePercent": 100,
+      "gapPercent": 1,
+      "rows": [
+        {
+          "id": "remaining-gap-quantified",
+          "status": "ready",
+          "evidence": "KA125 quantifies the remaining executable-equivalence dashboard gap as exactly 1%: 99% complete, 100% reserved for theorem discharge",
+          "ready": true
+        },
+        {
+          "id": "ka124-boundary-preserved",
+          "status": "ready",
+          "evidence": "KA124 proof-boundary gate remains enforced and is not bypassed by this checkpoint",
+          "ready": true
+        },
+        {
+          "id": "no-new-theorem-counted",
+          "status": "ready",
+          "evidence": "KA125 counts no proof-bearing theorem module and therefore does not claim executable PSKernel refinement proof",
+          "ready": true
+        },
+        {
+          "id": "required-final-artifact-identified",
+          "status": "ready",
+          "evidence": "the remaining gap requires an audited theorem module or verified proof-carrying artifact binding executable PSKernel behavior to Lean4Lean semantics",
+          "ready": true
+        },
+        {
+          "id": "formal-obligation-total-stable",
+          "status": "ready",
+          "evidence": "formal Lean4Lean bridge obligation total remains 366 and new formal obligations remain 0",
+          "ready": true
+        },
+        {
+          "id": "claim-boundary-lock",
+          "status": "ready",
+          "evidence": "full Lean4 equivalence, fully formal K3, and same-theory-as-full-Lean claims remain false",
+          "ready": true
+        },
+        {
+          "id": "release-evidence-lock",
+          "status": "ready",
+          "evidence": "focused gate, Lean marker, package SHA, fresh extract, ZIP integrity, and ZIP SHA remain required release evidence",
+          "ready": true
+        }
+      ],
+      "counts": {
+        "total": 7,
+        "ready": 7,
+        "notReady": 0
+      },
+      "evidenceMeaning": "KA125 makes the final 1% executable-equivalence gap explicit and blocks any 100% claim without theorem discharge."
+    },
+    "percentBoundaries": {
+      "ka125DoesNotIncreaseExecutableProgressTo100": true,
+      "executableProgressIsDashboardEvidenceNotRefinementProof": true,
+      "remainingOnePercentRequiresTheoremDischarge": true,
+      "overallProgressIsDashboardEstimate": true
+    },
+    "claimBoundary": {
+      "fullLean4Equivalence": false,
+      "sameTheoryAsFullLean4": false,
+      "fullyFormalK3": false,
+      "executablePSKernelRefinementProof": false,
+      "trustedKernelSemanticChange": false,
+      "kernelCodecChange": false,
+      "coreFormatChanged": false,
+      "certificateFormatChanged": false
+    }
+  },
+  "remainingProofGap": {
+    "gatePercent": 100,
+    "gapPercent": 1,
+    "rows": [
+      {
+        "id": "remaining-gap-quantified",
+        "status": "ready",
+        "evidence": "KA125 quantifies the remaining executable-equivalence dashboard gap as exactly 1%: 99% complete, 100% reserved for theorem discharge",
+        "ready": true
+      },
+      {
+        "id": "ka124-boundary-preserved",
+        "status": "ready",
+        "evidence": "KA124 proof-boundary gate remains enforced and is not bypassed by this checkpoint",
+        "ready": true
+      },
+      {
+        "id": "no-new-theorem-counted",
+        "status": "ready",
+        "evidence": "KA125 counts no proof-bearing theorem module and therefore does not claim executable PSKernel refinement proof",
+        "ready": true
+      },
+      {
+        "id": "required-final-artifact-identified",
+        "status": "ready",
+        "evidence": "the remaining gap requires an audited theorem module or verified proof-carrying artifact binding executable PSKernel behavior to Lean4Lean semantics",
+        "ready": true
+      },
+      {
+        "id": "formal-obligation-total-stable",
+        "status": "ready",
+        "evidence": "formal Lean4Lean bridge obligation total remains 366 and new formal obligations remain 0",
+        "ready": true
+      },
+      {
+        "id": "claim-boundary-lock",
+        "status": "ready",
+        "evidence": "full Lean4 equivalence, fully formal K3, and same-theory-as-full-Lean claims remain false",
+        "ready": true
+      },
+      {
+        "id": "release-evidence-lock",
+        "status": "ready",
+        "evidence": "focused gate, Lean marker, package SHA, fresh extract, ZIP integrity, and ZIP SHA remain required release evidence",
+        "ready": true
+      }
+    ],
+    "counts": {
+      "total": 7,
+      "ready": 7,
+      "notReady": 0
+    },
+    "evidenceMeaning": "KA125 makes the final 1% executable-equivalence gap explicit and blocks any 100% claim without theorem discharge."
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka125Files": [
+      {
+        "path": "tools/pskernel-ka125-executable-refinement-remaining-proof-gap-tests.ts",
+        "lines": 52,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka125-executable-refinement-remaining-proof-gap.ts",
+        "lines": 45,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka125/KA125_EXECUTABLE_REFINEMENT_REMAINING_PROOF_GAP.json",
+        "lines": 99,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka125/KA125_EXECUTABLE_REFINEMENT_REMAINING_PROOF_GAP_BRIDGE_SPEC.json",
+        "lines": 23,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka125/KA125_EXECUTABLE_REFINEMENT_REMAINING_PROOF_GAP_RELEASE_GATE.json",
+        "lines": 270,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka125/KA125_EXECUTABLE_REFINEMENT_REMAINING_PROOF_GAP_REPORT.md",
+        "lines": 20,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka125/KA125_EXECUTABLE_REFINEMENT_REMAINING_PROOF_GAP_ROWS.json",
+        "lines": 55,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka125/KA125_EXECUTABLE_REFINEMENT_REMAINING_PROOF_GAP_VERIFICATION_SUMMARY.json",
+        "lines": 13,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka125/KA125_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 19,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka125/KA125_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 16,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka125/executable-refinement-remaining-proof-gap-bridge.lean",
+        "lines": 11,
+        "ext": ".lean"
+      }
+    ],
+    "ka125ToolFiles": [
+      {
+        "path": "tools/pskernel-ka125-executable-refinement-remaining-proof-gap-tests.ts",
+        "lines": 52,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka125-executable-refinement-remaining-proof-gap.ts",
+        "lines": 45,
+        "ext": ".ts"
+      }
+    ],
+    "newKA125OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

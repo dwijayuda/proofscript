@@ -1,0 +1,30 @@
+{
+  "checkpoint": "proofscript-v1-ka51-executable-expression-translator-constructor-refinement0",
+  "publicVersion": "1.0.0-pskernel.54",
+  "baseline": "proofscript-v1-ka50-feature-equivalence-audit-refresh0",
+  "commands": {
+    "focusedTest": "passed",
+    "assuranceKA51": "passed",
+    "leanKA51Check": "passed"
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA51",
+        "source": "assurance/ka51/executable-expression-translator-constructor-refinement-bridge.lean",
+        "destination": "PSKernelKA51ExecutableExpressionTranslatorConstructorRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA51 gate tool absent before implementation"
+}

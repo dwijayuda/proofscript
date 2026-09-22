@@ -1,0 +1,51 @@
+name: ci
+on: [push, pull_request]
+
+jobs:
+  production-local:
+    name: Production local gates (Core v71 trusted-boundary K3-TB; not fully formal K3)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - run: npm run verify:production:no-build
+
+  k3tb-publish-preflight-lean-4-33-1:
+    name: K3-TB publish preflight with pinned Lean 4.33.1 (not fully formal K3)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - name: Install exact pinned Lean 4.33.1 for trusted-boundary K3-TB
+        shell: bash
+        run: |
+          set -euo pipefail
+          url="https://github.com/leanprover/lean4/releases/download/v4.33.1/lean-4.33.1-linux.zip"
+          curl --fail --location --retry 3 --output /tmp/lean-4.33.1-linux.zip "$url"
+          echo "0376ac87487246b40dd077268c097e701f552e94c6d020d2373b50c7444fa22f  /tmp/lean-4.33.1-linux.zip" | sha256sum --check --strict
+          unzip -q /tmp/lean-4.33.1-linux.zip -d /tmp/lean-4.33.1
+          lean_bin="$(find /tmp/lean-4.33.1 -type f -path '*/bin/lean' -print -quit)"
+          test -n "$lean_bin"
+          lean_dir="$(dirname "$lean_bin")"
+          echo "$lean_dir" >> "$GITHUB_PATH"
+          echo "PROOFSCRIPT_LEAN_BIN=$lean_bin" >> "$GITHUB_ENV"
+          "$lean_bin" --version | tee /tmp/lean-version.txt
+          grep -Eq 'version[[:space:]]+4\.33\.1([^0-9]|$)' /tmp/lean-version.txt
+          grep -Eq '819816b2e0a3bf405af45ae5c7af2491d8f5bee6' /tmp/lean-version.txt
+      - run: npm run doctor:k3tb
+      - run: npm run verify:k3tb:publish
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: k3tb-publish-preflight-artifacts
+          path: |
+            artifacts/**
+            *_K3TB*.json
+            RELEASE_*K3TB*.json
+            FINAL_RELEASE_MANIFEST_K3TB.json

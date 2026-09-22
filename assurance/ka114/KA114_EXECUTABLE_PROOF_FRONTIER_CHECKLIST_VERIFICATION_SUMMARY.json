@@ -1,0 +1,11 @@
+{
+  "checkpoint": "proofscript-v1-ka114-executable-proof-frontier-checklist0",
+  "status": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 366,
+  "newFormalLean4LeanBridgeObligations": 0,
+  "featureSurfaceBridgeProgressPercent": 100,
+  "executableKernelEquivalenceProofProgressPercent": 90,
+  "overallConservativeProjectProgressPercent": 82,
+  "architectureHealth": true
+}

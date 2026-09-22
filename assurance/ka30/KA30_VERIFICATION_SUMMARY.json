@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka30-ordinary-env-aggregate-bridge0",
+  "publicVersion": "1.0.0-pskernel.33",
+  "baseline": "proofscript-v1-ka29-quot-env-aggregate-bridge0",
+  "formalLean4EquivalenceProvenObligations": 55,
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "coreArtifactFormat": 71,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "quotientSemanticSoundness": false
+  },
+  "passed": [
+    "npm install --offline --no-audit --no-fund",
+    "npm run build -- --pretty false",
+    "npm run test:pskernel:ka30",
+    "npm run assurance:ka30",
+    "npm run lean:ka30:check",
+    "npm run test:kernel:smoke",
+    "npm run test:standalone-small",
+    "npm run test:psc:kernel-status",
+    "npm run test:psc:conformance-bounded",
+    "npm run arena:corpus-preflight",
+    "npm run test:arena:static-nonperf",
+    "npm run test:arena:tutorial",
+    "fresh extract npm install --offline --no-audit --no-fund",
+    "fresh extract npm run build -- --pretty false",
+    "fresh extract npm run test:pskernel:ka30",
+    "fresh extract npm run lean:ka30:check",
+    "unzip -t final ZIP",
+    "sha256sum -c final SHA file"
+  ],
+  "notCounted": [
+    "combined verification loop timed out at test:kernel:smoke; test:kernel:smoke and remaining tail were rerun individually",
+    "npm run verify:arena transport/timing timeout while running the long arena wrapper and is not counted for KA-30"
+  ],
+  "arenaEvidence": {
+    "corpusNdjsonFixtures": 190,
+    "staticNonPerf": {
+      "total": 26,
+      "acceptedGood": 4,
+      "rejectedBad": 22,
+      "wrong": 0,
+      "notRun": 0
+    },
+    "tutorial": {
+      "total": 140,
+      "acceptedGood": 93,
+      "rejectedBad": 47,
+      "wrong": 0,
+      "notRun": 0
+    }
+  }
+}

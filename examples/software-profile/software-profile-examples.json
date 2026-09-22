@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "profileId": "proofscript-software-v0",
+  "checkpoint": "P5.96-software-executable-examples0",
+  "baseline": {
+    "profileCheckpoint": "P5.95-profile-plan0",
+    "kernelCheckpoint": "P5.94 arena-nested-helper-target-validation0"
+  },
+  "claim": "Executable examples for the supported small software subset; not a full Lean 4 equivalence claim.",
+  "examples": [
+    {
+      "file": "BusinessRules.ps",
+      "themes": ["business rules", "Nat arithmetic", "if", "theorem"]
+    },
+    {
+      "file": "StateMachine.ps",
+      "themes": ["inductive", "structure", "match", "workflow state"]
+    },
+    {
+      "file": "SecurityPolicy.ps",
+      "themes": ["policy", "ADTs", "total decision function"]
+    },
+    {
+      "file": "Validation.ps",
+      "themes": ["Except", "explicit errors", "String", "Nat"]
+    },
+    {
+      "file": "Collections.ps",
+      "themes": ["List", "Array", "filter", "find", "any"]
+    }
+  ],
+  "deferred": [
+    "requires/ensures contract syntax",
+    "loop invariants",
+    "full backend execution-correspondence proof",
+    "full Lean 4 equivalence"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "checkpoint": "proofscript-v1-ka5-lean4331-strict-check0",
+  "publicVersion": "1.0.0-pskernel.7",
+  "createdAtUtc": "2026-09-18T05:30:00Z",
+  "baseline": "proofscript-v1-ka4-lean-toolchain-gate0",
+  "kernel": {
+    "name": "PSKernel",
+    "defaultProfile": "KERNEL-level-instantiation-conformance1",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "ka5": {
+    "scope": "Lean 4.33.1 toolchain materialization and strict proof-file check",
+    "targetLeanVersion": "4.33.1",
+    "targetLeanCommit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+    "materializedLeanPath": "/mnt/data/lean-4.33.1-toolchain/lean-4.33.1-linux/bin/lean",
+    "proofFiles": [
+      "assurance/ka4/noninductive-soundness-machine-check.lean"
+    ],
+    "leanCheckedHere": true,
+    "strictLeanCheckPassed": true,
+    "lean4leanBinding": "planned, not imported yet"
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "machineCheckedLeanProofInThisCheckpoint": true
+  },
+  "verification": {
+    "npmInstallOffline": "passed",
+    "build": "passed",
+    "leanKA5Materialize": "passed-or-already-materialized",
+    "leanKA4CheckStrict": "passed",
+    "leanKA5CheckStrict": "passed",
+    "testKA1": "passed",
+    "testKA2": "passed",
+    "testKA3": "passed",
+    "testKA4": "passed",
+    "testKA5": "passed",
+    "assuranceKA1": "passed",
+    "assuranceKA2": "passed",
+    "assuranceKA3": "passed",
+    "assuranceKA4": "passed-strict-lean-available",
+    "assuranceKA5": "passed",
+    "verifyArena": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "conformanceBounded": "passed"
+  }
+}

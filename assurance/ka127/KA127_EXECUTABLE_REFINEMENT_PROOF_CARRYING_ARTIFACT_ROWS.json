@@ -1,0 +1,50 @@
+[
+  {
+    "id": "baseline-gate-satisfied",
+    "status": "verified",
+    "evidence": "KA-126 requires a proof-carrying artifact before any 100% executable-equivalence claim.",
+    "verified": true
+  },
+  {
+    "id": "artifact-hash-bound",
+    "status": "verified",
+    "evidence": "Artifact manifest aggregate hash 5631e235e0ba17689114c5f8b24408e8d4ea1c5ce9dd8b1143d54b5df4821101 binds proof specs, Lean modules, release metadata, and gate inputs.",
+    "verified": true
+  },
+  {
+    "id": "lean-certificate-checked",
+    "status": "passed",
+    "evidence": "Lean 4.33.1/lake checked the KA-127 certificate module in the Lean4Lean environment.",
+    "verified": true
+  },
+  {
+    "id": "bridge-modules-sorry-free",
+    "status": "verified",
+    "evidence": "Scanned 115 assurance Lean modules for direct sorry/admit residues.",
+    "verified": true
+  },
+  {
+    "id": "formal-obligation-ledger-bound",
+    "status": "verified",
+    "evidence": "Formal Lean4Lean bridge-obligation total remains 366; KA-127 adds no new theorem-wrapper obligations.",
+    "verified": true
+  },
+  {
+    "id": "core-cert-format-stable",
+    "status": "verified",
+    "evidence": "Core format 71 and certificate format 2 are unchanged.",
+    "verified": true
+  },
+  {
+    "id": "no-trusted-semantic-package-change",
+    "status": "verified",
+    "evidence": "KA-127 adds only assurance/tooling/certificate metadata and does not touch trusted kernel semantic packages.",
+    "verified": true
+  },
+  {
+    "id": "claim-boundary-preserved",
+    "status": "verified",
+    "evidence": "The artifact closes the executable-equivalence dashboard, not full Lean4 equivalence, fully formal K3, or a single discharged semantic theorem.",
+    "verified": true
+  }
+]

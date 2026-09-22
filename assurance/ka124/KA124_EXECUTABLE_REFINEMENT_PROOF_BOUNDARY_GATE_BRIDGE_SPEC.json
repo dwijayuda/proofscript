@@ -1,0 +1,21 @@
+{
+  "checkpoint": "proofscript-v1-ka124-executable-refinement-proof-boundary-gate0",
+  "publicVersion": "1.0.0-pskernel.127",
+  "baseline": "proofscript-v1-ka123-executable-refinement-final-audit-harness0",
+  "referenceKind": "executable-refinement-proof-boundary-gate-audit",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 0,
+  "countedObligations": [],
+  "sourceTheorems": [],
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@proofscript/lsp",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "Language Server Protocol integration.",
+  "license": "MIT",
+  "files": [
+    "README.md"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "profile": "proofscript-software-v0",
+  "entry": "src/Main.ps",
+  "sourceDir": "src",
+  "outDir": "dist",
+  "build": {
+    "target": "ts",
+    "outDir": "dist"
+  },
+  "runtime": {
+    "mode": "local",
+    "file": "proofscript-runtime.ts"
+  },
+  "diagnostics": {
+    "sourceLocations": true
+  },
+  "targets": ["ts", "js"],
+  "trustBoundary": {
+    "fullLean4Equivalence": false,
+    "backendExecutionCorrespondenceProof": false
+  }
+}

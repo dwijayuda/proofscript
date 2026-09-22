@@ -1,0 +1,25 @@
+{
+  "schema": "proofscript.assurance.ka5.toolchain-materialization/v1",
+  "checkpoint": "proofscript-v1-ka5-lean4331-strict-check0",
+  "publicVersion": "1.0.0-pskernel.7",
+  "targetLeanVersion": "4.33.1",
+  "targetLeanCommit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "sourceArchives": {
+    "splitArchive001": "/mnt/data/lean-4.33.1-linux.7z(2).001",
+    "splitArchive002": "/mnt/data/lean-4.33.1-linux.7z(2).002",
+    "sevenZipArchive": "/mnt/data/7z2603-linux-x64.tar.xz"
+  },
+  "materializedToolchain": {
+    "root": "/mnt/data/lean-4.33.1-toolchain/lean-4.33.1-linux",
+    "lean": "/mnt/data/lean-4.33.1-toolchain/lean-4.33.1-linux/bin/lean",
+    "lake": "/mnt/data/lean-4.33.1-toolchain/lean-4.33.1-linux/bin/lake"
+  },
+  "proofFiles": [
+    "assurance/ka4/noninductive-soundness-machine-check.lean"
+  ],
+  "trustedKernelSemanticChange": false,
+  "kernelCodecChange": false,
+  "newTrustedComputationRule": false,
+  "fullLean4Equivalence": false,
+  "formalLean4EquivalenceProvenObligations": 0
+}

@@ -1,0 +1,19 @@
+{
+  "checkpoint": "proofscript-v1-ka92-primitive-char-string-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.95",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 70,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 283,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 281,
+    "newFormalLean4LeanBridgeObligations": 2,
+    "correctedFormalLean4LeanBridgeObligations": 283,
+    "countedNewObligations": [
+      "translated_checkCharOfNat_wf",
+      "translated_checkStringOfList_wf"
+    ]
+  },
+  "metricPolicy": "KA92 adds direct non-sorry-backed primitive Char/String recognizer bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

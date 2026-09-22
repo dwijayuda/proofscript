@@ -1,0 +1,11 @@
+{
+  "checkpoint": "proofscript-v1-ka117-executable-proof-module-index0",
+  "status": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 366,
+  "newFormalLean4LeanBridgeObligations": 0,
+  "featureSurfaceBridgeProgressPercent": 100,
+  "executableKernelEquivalenceProofProgressPercent": 93,
+  "overallConservativeProjectProgressPercent": 82.9,
+  "architectureHealth": true
+}

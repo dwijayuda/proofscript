@@ -1,0 +1,42 @@
+{
+  "checkpoint": "proofscript-v1-ka128-lean4331-kernel-parity-scope-matrix0",
+  "publicVersion": "1.0.0-pskernel.131",
+  "status": "passed",
+  "parityScopeRows": 19,
+  "executableDashboardStillClosed": true,
+  "fullLean4EquivalenceClaim": false,
+  "sameTheoryAsFullLean4Claim": false,
+  "leanMarker": {
+    "status": "passed",
+    "method": "textual-lean-marker-validation-native-lean-unavailable",
+    "source": "assurance/ka128/lean4331-kernel-parity-scope-matrix-bridge.lean",
+    "destination": null,
+    "stdoutTail": "",
+    "stderrTail": ""
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka128Files": [
+      {
+        "path": "tools/pskernel-ka128-lean4331-kernel-parity-scope-matrix.ts",
+        "lines": 144
+      },
+      {
+        "path": "tools/pskernel-ka128-lean4331-kernel-parity-scope-matrix-tests.ts",
+        "lines": 63
+      },
+      {
+        "path": "assurance/ka128/lean4331-kernel-parity-scope-matrix-bridge.lean",
+        "lines": 35
+      }
+    ],
+    "oversized": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  }
+}

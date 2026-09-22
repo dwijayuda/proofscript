@@ -1,0 +1,20 @@
+{
+  "checkpoint": "proofscript-v1-ka100-primitive-sequence-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.103",
+  "baseline": "proofscript-v1-ka99-primitive-closure-helper-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 321,
+  "newFormalLean4LeanBridgeObligations": 5,
+  "baselineObligations": 316,
+  "countedObligations": [
+    "translated_trExpr_underBV_wf",
+    "translated_forall2_append_inv_wf",
+    "translated_vexpr_appN_append_wf",
+    "translated_forall_mem_pair_wf",
+    "translated_forall2_snoc_wf"
+  ],
+  "redTestObserved": true,
+  "redTestReason": "KA100 test failed first on missing KA100 gate tool",
+  "noWrapperTimeoutCountedAsPassed": true
+}

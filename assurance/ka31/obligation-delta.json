@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka31-example-env-aggregate-bridge0",
+  "baseline": "proofscript-v1-ka30-ordinary-env-aggregate-bridge0",
+  "deltaKind": "example-env-aggregate-bridge",
+  "formalLean4EquivalenceProvenObligations": 56,
+  "previousFormalLean4EquivalenceProvenObligations": 55,
+  "newFormalLean4EquivalenceProvenObligations": 1,
+  "provenLeanTheoremObligations": [
+    "PSKernelKA31.translated_example_env_aggregate_bridge"
+  ],
+  "closedSinceKA30": [
+    "example aggregate theorem over real Lean4Lean VDecl.WF/VEnv.WF/VEnv.LE for the intentionally non-adding example declaration kind"
+  ],
+  "stillOpen": [
+    "executable PSKernel refinement proof",
+    "definitional-equality soundness",
+    "inductive and mutual inductive soundness",
+    "quotient semantic soundness",
+    "full Lean 4 equivalence",
+    "same theory as full Lean 4"
+  ]
+}

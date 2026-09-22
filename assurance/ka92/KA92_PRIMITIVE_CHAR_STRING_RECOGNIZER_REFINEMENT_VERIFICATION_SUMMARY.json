@@ -1,0 +1,57 @@
+{
+  "checkpoint": "proofscript-v1-ka92-primitive-char-string-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.95",
+  "baseline": "proofscript-v1-ka91-primitive-logical-bitwise-recognizer-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 283,
+  "newFormalLean4LeanBridgeObligations": 2,
+  "baselineObligations": 281,
+  "countedObligations": [
+    "translated_checkCharOfNat_wf",
+    "translated_checkStringOfList_wf"
+  ],
+  "redTestObserved": true,
+  "redTestReason": "KA92 test failed first on missing KA92 gate tool",
+  "noWrapperTimeoutCountedAsPassed": true,
+  "verificationCommandsPassed": [
+    "RED test first: failed as expected on missing KA-92 gate tool",
+    "npm install --offline --no-audit --no-fund",
+    "npm run build -- --pretty false",
+    "npm run test:pskernel:ka92",
+    "npm run assurance:ka92",
+    "npm run lean:ka92:check",
+    "npm run test:kernel:smoke",
+    "npm run test:standalone-small",
+    "npm run test:psc:kernel-status",
+    "npm run test:psc:conformance-bounded",
+    "npm run arena:corpus-preflight",
+    "npm run test:arena:static-nonperf",
+    "npm run test:arena:tutorial",
+    "TERM=xterm npm run verify:arena",
+    "npm pack --workspaces --ignore-scripts",
+    "sha256sum -c package SHA manifest",
+    "fresh extract install/build/test:pskernel:ka92/lean:ka92:check",
+    "unzip -t final ZIP",
+    "sha256sum -c final ZIP SHA"
+  ],
+  "npmPackages": {
+    "workspaceTarballs": 36,
+    "sha256Entries": 36,
+    "sha256Verification": "passed"
+  },
+  "wrapperTimeoutsCountedAsPassed": false,
+  "freshExtract": {
+    "initialResidue": {
+      "node_modules": 0,
+      "dist": 0,
+      "tsbuildinfo": 0,
+      "tgz": 0,
+      "zip": 0
+    },
+    "install": "passed",
+    "build": "passed",
+    "focusedTest": "passed",
+    "softLeanCheck": "passed"
+  }
+}

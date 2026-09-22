@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka103-primitive-context-application-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.106",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 81,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 336,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 331,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "correctedFormalLean4LeanBridgeObligations": 336,
+    "countedNewObligations": [
+      "translated_onctx_of_append_wf",
+      "translated_vexpr_wf_app_inv2_wf",
+      "translated_vexpr_wf_appN_inv_wf",
+      "translated_isDefEqU_appN_wf",
+      "translated_argsTyped_natTelescope_wf"
+    ]
+  },
+  "metricPolicy": "KA103 adds direct non-sorry-backed primitive context/application helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

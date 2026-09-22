@@ -1,0 +1,3 @@
+def makeAdder(x: Nat): Nat -> Nat := { fun (y: Nat) => x + y }
+def add5: Nat -> Nat := { makeAdder(5) }
+def closureResult: Nat := { add5(7) }

@@ -1,0 +1,95 @@
+{
+  "schema": "proofscript-pskernel-ts-kernel-delivery-verification/v1",
+  "status": "accepted",
+  "proofStatus": "not-proven",
+  "trustLabel": "trusted-boundary standalone kernel; not fully formally equivalent to Lean 4 yet",
+  "semanticBaseline": "Lean 4.33.1",
+  "pinnedLeanRevision": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "mode": "fresh-extract-delivery-bound",
+  "checkCount": 8,
+  "requiredFailureCount": 0,
+  "checks": [
+    {
+      "id": "delivery.bootstrap",
+      "status": "accepted",
+      "message": "Manifestless delivery bootstrap evidence accepts",
+      "details": {
+        "deliveryBootstrapSha256": "45ca0f5f92d02b75c67b6c5def359c6f70bf2f920f2778f4b329e1c6ec62aedf"
+      }
+    },
+    {
+      "id": "delivery.workspace-links",
+      "status": "accepted",
+      "message": "Local workspace packages are symlinked for fresh-extract builds",
+      "details": {
+        "packageCount": 28,
+        "workspaceLinksSha256": "8ed3f7ee0566f8e3ef849f65fb4d2ea31a063dc587358b690866d96a850beb10"
+      }
+    },
+    {
+      "id": "delivery.status",
+      "status": "accepted",
+      "message": "Kernel status remains trusted-boundary / not-proven",
+      "details": {
+        "status": "trusted-boundary",
+        "proofStatus": "not-proven"
+      }
+    },
+    {
+      "id": "delivery.source-tree",
+      "status": "accepted",
+      "message": "Fresh source tree evidence verifies",
+      "details": {
+        "sourceTreeSha256": "4483786bbaadd33c26935aadfb06499f788f3ee1191205dabb38ebd34f2bf603",
+        "fileCount": 847
+      }
+    },
+    {
+      "id": "delivery.source-archive",
+      "status": "accepted",
+      "message": "Fresh source archive evidence verifies",
+      "details": {
+        "releaseArchiveSha256": "5545e8d270f011d8d1481bf0b0d457da822aadf7f0e1076ca56aa52e475042ed",
+        "archiveSha256": "5c2961226408f6ea80a0e1175a02b5c11e76c0896f3c5ecf053f73afb68a48d9"
+      }
+    },
+    {
+      "id": "delivery.package-audit",
+      "status": "accepted",
+      "message": "Package audit accepts from delivered tree",
+      "details": {
+        "packageAuditSha256": "bfd081ebe3c9628016151c91cea0bbdbc3685d1a707f05ad8f9e4ba519000f61",
+        "failures": 0
+      }
+    },
+    {
+      "id": "delivery.tarball-smoke",
+      "status": "accepted",
+      "message": "Tarball smoke accepts from delivered tree",
+      "details": {
+        "tarballSmokeSha256": "44d5f13b63ef38ac0e294f75caf6be21b0a65e7dba880fa9850f8d0984bd22e7",
+        "runtime": "accepted"
+      }
+    },
+    {
+      "id": "delivery.release-manifest-fresh",
+      "status": "accepted",
+      "message": "Release manifest regenerates and verifies in fresh-bound mode",
+      "details": {
+        "releaseManifestSha256": "0c6a52f84f7c9e8a99b8bb67f898c468b24ca8ca648c6bfb4ff89676faf98fbc"
+      }
+    }
+  ],
+  "componentHashes": {
+    "deliveryBootstrapSha256": "45ca0f5f92d02b75c67b6c5def359c6f70bf2f920f2778f4b329e1c6ec62aedf",
+    "workspaceLinksSha256": "8ed3f7ee0566f8e3ef849f65fb4d2ea31a063dc587358b690866d96a850beb10",
+    "sourceTreeSha256": "4483786bbaadd33c26935aadfb06499f788f3ee1191205dabb38ebd34f2bf603",
+    "releaseArchiveSha256": "5545e8d270f011d8d1481bf0b0d457da822aadf7f0e1076ca56aa52e475042ed",
+    "releaseArchiveZipSha256": "5c2961226408f6ea80a0e1175a02b5c11e76c0896f3c5ecf053f73afb68a48d9",
+    "packageAuditSha256": "bfd081ebe3c9628016151c91cea0bbdbc3685d1a707f05ad8f9e4ba519000f61",
+    "tarballSmokeSha256": "44d5f13b63ef38ac0e294f75caf6be21b0a65e7dba880fa9850f8d0984bd22e7",
+    "releaseManifestSha256": "0c6a52f84f7c9e8a99b8bb67f898c468b24ca8ca648c6bfb4ff89676faf98fbc"
+  },
+  "deliveryVerificationSha256": "f94d87b218d22aabc3cc26ea70f37fb83b4d1eb596ddfcb5c4b31702603fa328"
+}

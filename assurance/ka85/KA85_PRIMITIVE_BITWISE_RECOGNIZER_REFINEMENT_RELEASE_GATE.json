@@ -1,0 +1,161 @@
+{
+  "checkpoint": "proofscript-v1-ka85-primitive-bitwise-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.88",
+  "baseline": "proofscript-v1-ka84-primitive-condition-reflection-refinement0",
+  "releaseKind": "strict-lean4lean-primitive-bitwise-recognizer-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA85",
+      "source": "assurance/ka85/primitive-bitwise-recognizer-refinement-bridge.lean",
+      "destination": "PSKernelKA85PrimitiveBitwiseRecognizerRefinementBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 2,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka85-primitive-bitwise-recognizer-refinement0",
+    "publicVersion": "1.0.0-pskernel.88",
+    "featureSurfaceBridgeProgressPercent": 96,
+    "executableKernelEquivalenceProofProgressPercent": 63,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 265,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 263,
+      "newFormalLean4LeanBridgeObligations": 2,
+      "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+      "correctedFormalLean4LeanBridgeObligations": 265,
+      "countedNewObligations": [
+        "translated_boolOp2_apply_wf",
+        "translated_checkNatBitwise_wf"
+      ]
+    },
+    "metricPolicy": "KA85 adds direct non-sorry-backed primitive bitwise recognizer bridge wrappers. Percentages remain conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka85Files": [
+      {
+        "path": "tools/pskernel-ka85-primitive-bitwise-recognizer-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka85-primitive-bitwise-recognizer-refinement.ts",
+        "lines": 35,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka85/KA85_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 21,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka85/KA85_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka85/KA85_PRIMITIVE_BITWISE_RECOGNIZER_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 30,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka85/KA85_PRIMITIVE_BITWISE_RECOGNIZER_REFINEMENT_RELEASE_GATE.json",
+        "lines": 129,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka85/KA85_PRIMITIVE_BITWISE_RECOGNIZER_REFINEMENT_REPORT.md",
+        "lines": 19,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka85/KA85_PRIMITIVE_BITWISE_RECOGNIZER_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 18,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka85/primitive-bitwise-recognizer-refinement-bridge.lean",
+        "lines": 34,
+        "ext": ".lean"
+      }
+    ],
+    "ka85ToolFiles": [
+      {
+        "path": "tools/pskernel-ka85-primitive-bitwise-recognizer-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka85-primitive-bitwise-recognizer-refinement.ts",
+        "lines": 35,
+        "ext": ".ts"
+      }
+    ],
+    "newKA85OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveBitwiseRecognizerRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false,
+  "boundedReleaseVerification": {
+    "passed": [
+      "npm install --offline --no-audit --no-fund",
+      "npm run build -- --pretty false",
+      "npm run test:pskernel:ka85",
+      "npm run assurance:ka85",
+      "npm run lean:ka85:check",
+      "npm run test:kernel:smoke",
+      "npm run test:standalone-small",
+      "npm run test:psc:kernel-status",
+      "npm run test:psc:conformance-bounded",
+      "npm run arena:corpus-preflight",
+      "npm run test:arena:static-nonperf",
+      "npm run test:arena:tutorial",
+      "npm run verify:arena",
+      "npm pack --workspaces --ignore-scripts",
+      "sha256sum -c package SHA manifest"
+    ],
+    "notCountedAsPassed": []
+  },
+  "npmPackages": {
+    "packed": 36,
+    "sha256Entries": 36,
+    "verification": "passed"
+  },
+  "arenaEvidence": {
+    "corpusPreflight": "passed",
+    "ndjsonFixtures": 190,
+    "staticNonPerf": "26/26 decisive",
+    "tutorial": "140/140 decisive",
+    "verifyArenaWrapper": "passed"
+  },
+  "noWrapperTimeoutCountedAsPassed": true
+}

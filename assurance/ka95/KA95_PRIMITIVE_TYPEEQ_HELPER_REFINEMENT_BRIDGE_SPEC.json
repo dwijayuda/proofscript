@@ -1,0 +1,31 @@
+{
+  "checkpoint": "proofscript-v1-ka95-primitive-typeeq-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.98",
+  "baseline": "proofscript-v1-ka94-primitive-result-helper-refinement0",
+  "referenceKind": "primitive-typeeq-helper-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 3,
+  "countedObligations": [
+    "translated_mkTyEqBitwise_wf",
+    "translated_mkTyEq_wf",
+    "translated_mkTyEq1_wf"
+  ],
+  "sourceTheorems": [
+    "Data.mkTyEqBitwise",
+    "Data.mkTyEq",
+    "Data.mkTyEq1"
+  ],
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveTypeEqHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

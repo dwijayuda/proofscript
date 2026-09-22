@@ -1,0 +1,127 @@
+{
+  "checkpoint": "proofscript-v1-ka41-codec-replay-refinement-bridge0",
+  "publicVersion": "1.0.0-pskernel.44",
+  "baseline": "proofscript-v1-ka40-primitive-literal-policy-bridge0",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "directLean4LeanCodecReplayBridge": {
+    "referenceKind": "direct-imported-lean4lean-codec-replay-refinement-bridge",
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanCodecReplayBridgeChecked": true,
+    "strictCodecReplayBridgePassed": true,
+    "replayBuildStatus": 0,
+    "directBridgeCheckStatus": 0,
+    "coveredLean4LeanReplaySurface": [
+      "Replay.Context.newConstants",
+      "Replay.Context.verbose",
+      "Replay.Context.compare",
+      "Replay.Context.checkQuot",
+      "Replay.State.env",
+      "Replay.State.numAdded",
+      "Replay.replay result pair"
+    ],
+    "codecRoundTripChecks": {
+      "canonicalJsonStable": true,
+      "decodeArtifactRoundTrip": true,
+      "profileVersionBinding": true,
+      "declarationCount": 0
+    },
+    "formalBridgeLemmas": [
+      "PSKernelKA41.translated_replay_context_lookup_preserved",
+      "PSKernelKA41.translated_replay_state_env_preserved",
+      "PSKernelKA41.translated_replay_state_num_added_preserved",
+      "PSKernelKA41.translated_replay_context_flags_preserved",
+      "PSKernelKA41.translated_replay_result_count_preserved",
+      "PSKernelKA41.translated_replay_result_env_preserved"
+    ],
+    "stillOpen": [
+      "full PSKernel JSON codec to Lean4Lean olean/NDJSON replay refinement is not proven",
+      "per-declaration dependency replay order correctness is not proven end-to-end",
+      "constructor/recursor replay equality checks are only imported/wrapped, not connected to PSKernel executable replay",
+      "certificate bundle verification is not yet tied to Lean4Lean Replay.replay",
+      "resource/error conservativity for codec/replay is not proven",
+      "full Lean 4 equivalence and same-theory claims remain false"
+    ]
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka41-codec-replay-refinement-bridge0",
+    "baseline": "proofscript-v1-ka40-primitive-literal-policy-bridge0",
+    "featureSurfaceBridgeProgressPercent": 61,
+    "executableKernelEquivalenceProofProgressPercent": 28,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 120,
+    "groups": [
+      {
+        "id": "ordinary-declarations",
+        "progressPercent": 78,
+        "status": "aggregate bridges complete for ordinary declaration surface"
+      },
+      {
+        "id": "quotient-declarations",
+        "progressPercent": 72,
+        "status": "environment/lookup/defeq bridges complete; semantic soundness still open"
+      },
+      {
+        "id": "inductive-declarations",
+        "progressPercent": 35,
+        "status": "first conditional env bridge only"
+      },
+      {
+        "id": "mutual-definitions",
+        "progressPercent": 40,
+        "status": "first conditional env bridge only"
+      },
+      {
+        "id": "typechecker-executable-surface",
+        "progressPercent": 35,
+        "status": "TypeChecker proof-surface wrappers present; executable refinement open"
+      },
+      {
+        "id": "expression-translation",
+        "progressPercent": 55,
+        "status": "TrExprS constructor surface covered; executable translator open"
+      },
+      {
+        "id": "whnf-defeq",
+        "progressPercent": 38,
+        "status": "theory-level WHNF/defeq bridges partial"
+      },
+      {
+        "id": "primitive-literal-policy",
+        "progressPercent": 32,
+        "status": "primitive/literal proof-surface bridge started"
+      },
+      {
+        "id": "codec-replay",
+        "progressPercent": 24,
+        "status": "replay/context and codec stability gates started"
+      },
+      {
+        "id": "resource-error-conservativity",
+        "progressPercent": 12,
+        "status": "mostly open"
+      }
+    ],
+    "nextHighestImpactMilestones": [
+      "KA42-resource-error-conservativity",
+      "KA43-theory-wide-refinement-map",
+      "KA44-executable-expression-translator-refinement",
+      "KA45-replay-certificate-bundle-refinement"
+    ]
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullCodecReplayRefinement": false,
+    "formalLean4EquivalenceProvenObligations": 120
+  },
+  "blockedReasons": []
+}

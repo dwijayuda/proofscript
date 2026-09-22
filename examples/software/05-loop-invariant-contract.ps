@@ -1,0 +1,15 @@
+function sumTo(n: Nat): Nat
+  ensures closed_form: result = n * (n + 1) / 2
+:= {
+  let mut i: Nat := 0;
+  let mut acc: Nat := 0;
+  while (i <= n)
+    invariant inv_acc: acc = i * (i - 1) / 2
+    invariant inv_bound: i <= n + 1
+    decreases dec: n - i
+  {
+    acc := acc + i;
+    i := i + 1;
+  }
+  acc
+}

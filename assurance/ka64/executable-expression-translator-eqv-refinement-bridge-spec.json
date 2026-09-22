@@ -1,0 +1,27 @@
+{
+  "checkpoint": "proofscript-v1-ka64-executable-expression-translator-eqv-refinement0",
+  "publicVersion": "1.0.0-pskernel.67",
+  "baseline": "proofscript-v1-ka63-executable-expression-translator-bool-literal-refinement0",
+  "referenceKind": "strict-lean4lean-expression-translator-eqv-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "leanModule": "assurance/ka64/executable-expression-translator-eqv-refinement-bridge.lean",
+  "countedNewFormalObligations": 4,
+  "countedNewObligationNames": [
+    "translated_fvarsList_eqv_wf",
+    "translated_fvarsIn_eqv_wf",
+    "translated_fvarsBelow_eqv_wf",
+    "translated_trTyping_eqv_wf"
+  ],
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableExpressionTranslatorRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "checkpoint": "proofscript-v1-ka73-defeq-sorry-boundary-audit0",
+  "publicVersion": "1.0.0-pskernel.76",
+  "baseline": "proofscript-v1-ka72-executable-defeq-eta-cache-status-refinement0",
+  "releaseKind": "sorry-boundary-audit-no-new-proof-obligations",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "not-applicable-audit-only",
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka73-defeq-sorry-boundary-audit0",
+    "publicVersion": "1.0.0-pskernel.76",
+    "featureSurfaceBridgeProgressPercent": 88,
+    "executableKernelEquivalenceProofProgressPercent": 55,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 219,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 220,
+      "newFormalLean4LeanBridgeObligations": 0,
+      "ledgerCorrectionFormalLean4LeanBridgeObligations": -1,
+      "correctedFormalLean4LeanBridgeObligations": 219,
+      "demotedCountedObligations": [
+        {
+          "ka": 70,
+          "name": "translated_isDefEqUnitLike_wf",
+          "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.isDefEqUnitLike.WF",
+          "reason": "upstream_theorem_body_contains_sorry",
+          "previousStatus": "counted",
+          "correctedStatus": "demoted-not-counted"
+        }
+      ]
+    },
+    "metricPolicy": "KA73 corrects the formal obligation ledger by demoting a KA70 obligation backed by upstream Lean4Lean sorry. Percentages stay conservative and do not increase.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "auditFindings": {
+    "demotedCountedObligations": [
+      {
+        "ka": 70,
+        "name": "translated_isDefEqUnitLike_wf",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.isDefEqUnitLike.WF",
+        "reason": "upstream_theorem_body_contains_sorry",
+        "previousStatus": "counted",
+        "correctedStatus": "demoted-not-counted"
+      }
+    ],
+    "alreadyExcludedSorryBacked": [
+      {
+        "ka": 72,
+        "name": "tryEtaStructCore.WF",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.tryEtaStructCore.WF",
+        "reason": "upstream_theorem_body_contains_sorry",
+        "status": "already-excluded-by-KA72"
+      }
+    ]
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka73Files": [
+      {
+        "path": "tools/pskernel-ka73-defeq-sorry-boundary-audit-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka73-defeq-sorry-boundary-audit.ts",
+        "lines": 182,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka73/KA73_DEFEQ_SORRY_BOUNDARY_AUDIT_RELEASE_GATE.json",
+        "lines": 139,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka73/KA73_DEFEQ_SORRY_BOUNDARY_AUDIT_REPORT.md",
+        "lines": 32,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka73/KA73_DEFEQ_SORRY_BOUNDARY_AUDIT_SPEC.json",
+        "lines": 44,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka73/KA73_DEFEQ_SORRY_BOUNDARY_AUDIT_VERIFICATION_SUMMARY.json",
+        "lines": 35,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka73/KA73_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 27,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka73/KA73_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      }
+    ],
+    "ka73ToolFiles": [
+      {
+        "path": "tools/pskernel-ka73-defeq-sorry-boundary-audit-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka73-defeq-sorry-boundary-audit.ts",
+        "lines": 182,
+        "ext": ".ts"
+      }
+    ],
+    "newKA73OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWHNFDefEqRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

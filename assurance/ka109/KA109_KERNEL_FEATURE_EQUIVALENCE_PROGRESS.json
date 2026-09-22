@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka109-primitive-condition-structural-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.112",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 87,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 366,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 361,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "correctedFormalLean4LeanBridgeObligations": 366,
+    "countedNewObligations": [
+      "translated_condition_wf_hprop0_wf",
+      "translated_condition_wf_hdec0_wf",
+      "translated_condition_wf_prop_closed_wf",
+      "translated_condition_wf_dec_closed_wf",
+      "translated_condition_impl_ok_reflect_wf"
+    ]
+  },
+  "metricPolicy": "KA109 adds direct non-sorry-backed primitive condition structural helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

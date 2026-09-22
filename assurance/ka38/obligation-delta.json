@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka38-whnf-preservation-bridge0",
+  "baseline": "proofscript-v1-ka37-whnf-head-reduction-bridge0",
+  "formalLean4EquivalenceProvenObligationsBefore": 90,
+  "formalLean4EquivalenceProvenObligationsAdded": 6,
+  "formalLean4EquivalenceProvenObligationsAfter": 96,
+  "closedSinceKA37": [
+    "single-step WHRed determinism bridge",
+    "WHRed definitional-equality preservation bridge",
+    "WHRed type-preservation bridge",
+    "WHRedS definitional-equality preservation bridge",
+    "WHRedS type-preservation bridge",
+    "WHNF fixed-point under WHRedS bridge"
+  ],
+  "stillOpen": [
+    "end-to-end executable PSKernel WHNF refinement against Lean4Lean TypeChecker.whnf",
+    "recursor/iota/projection/structure reduction refinement",
+    "quotient computation semantic soundness",
+    "definitional equality algorithm completeness/refinement",
+    "full Lean4 equivalence remains unproven"
+  ]
+}

@@ -1,0 +1,25 @@
+-- Software Profile example: small business rules with total Nat arithmetic.
+
+function loyaltyPrice(total: Nat, loyal: Bool): Nat := {
+  if loyal then total - 5 else total
+}
+
+function bulkPrice(total: Nat): Nat := {
+  if total >= 100 then total - 10 else total
+}
+
+def discountSmall: Nat := {
+  loyaltyPrice(100, true)
+}
+
+def discountLarge: Nat := {
+  bulkPrice(100)
+}
+
+def clampedUnderflow: Nat := {
+  3 - 5
+}
+
+theorem discountSmall_eq: discountSmall = 95 := by rfl
+theorem discountLarge_eq: discountLarge = 90 := by rfl
+theorem clampedUnderflow_eq: clampedUnderflow = 0 := by rfl

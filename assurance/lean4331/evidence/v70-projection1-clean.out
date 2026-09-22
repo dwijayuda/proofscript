@@ -1,0 +1,4 @@
+
+> proofscript-monorepo@0.1.0-wave-b.1 clean
+> tsc -b --clean
+

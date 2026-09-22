@@ -1,0 +1,122 @@
+{
+  "checkpoint": "proofscript-v1-ka40-primitive-literal-policy-bridge0",
+  "publicVersion": "1.0.0-pskernel.43",
+  "baseline": "proofscript-v1-ka39-defeq-whnf-refinement-bridge0",
+  "requiredCommands": [
+    {
+      "command": "lake build Lean4Lean.Verify.Primitive",
+      "status": 0
+    },
+    {
+      "command": "lake env lean PSKernelKA40PrimitiveLiteralPolicyBridge.lean",
+      "status": 0
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka40-primitive-literal-policy-bridge0",
+    "publicVersion": "1.0.0-pskernel.43",
+    "baseline": "proofscript-v1-ka39-defeq-whnf-refinement-bridge0",
+    "measurementKind": "conservative checkpoint progress estimate, not a formal theorem",
+    "featureSurfaceBridgeProgressPercent": 58,
+    "executableKernelEquivalenceProofProgressPercent": 26,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 114,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "groups": [
+      {
+        "id": "levels-universe-normalization",
+        "progressPercent": 65,
+        "status": "source-present plus earlier gates; executable refinement open"
+      },
+      {
+        "id": "core-vexpr-six-constructor-theory",
+        "progressPercent": 80,
+        "status": "bridged for current formal VExpr slice"
+      },
+      {
+        "id": "full-lean-expression-tags",
+        "progressPercent": 70,
+        "status": "TrExprS constructor surface covered; mvar/executable translator refinement open"
+      },
+      {
+        "id": "ordinary-declarations",
+        "progressPercent": 85,
+        "status": "strong conditional environment bridge; executable addDecl refinement open"
+      },
+      {
+        "id": "quot-declaration",
+        "progressPercent": 75,
+        "status": "environment bridge complete; semantic quotient computation open"
+      },
+      {
+        "id": "mutual-definitions",
+        "progressPercent": 45,
+        "status": "conditional environment bridge present; executable checking open"
+      },
+      {
+        "id": "inductive-declarations",
+        "progressPercent": 35,
+        "status": "first conditional environment bridge; positivity/recursors/nested open"
+      },
+      {
+        "id": "recursor-reduction-iota-eta-k",
+        "progressPercent": 34,
+        "status": "WHNF/head-reduction preservation started; recursor/projection/iota open"
+      },
+      {
+        "id": "type-inference-checking",
+        "progressPercent": 46,
+        "status": "TypeChecker proof-surface bridge; end-to-end executable refinement open"
+      },
+      {
+        "id": "defeq-conversion-whnf",
+        "progressPercent": 50,
+        "status": "defeq algebra/monotonicity plus WHNF preservation bridged; conversion completeness open"
+      },
+      {
+        "id": "environment-extension-ordering",
+        "progressPercent": 76,
+        "status": "ordinary/quotient/mutual/inductive slices bridged conditionally"
+      },
+      {
+        "id": "primitive-axioms-literals",
+        "progressPercent": 40,
+        "status": "Nat/Bool/literal policy bridge added; executable primitive reflection open"
+      },
+      {
+        "id": "kernel-codec-export-arena",
+        "progressPercent": 45,
+        "status": "arena evidence strong; codec/replay proof open"
+      },
+      {
+        "id": "resource-fuel-error-semantics",
+        "progressPercent": 35,
+        "status": "source present; conservativity proof open"
+      },
+      {
+        "id": "metatheory-typing-relations",
+        "progressPercent": 58,
+        "status": "defeq/typing monotonicity bridge added; global refinement map open"
+      }
+    ],
+    "nextHighestImpactMilestones": [
+      "KA41-codec-replay-refinement",
+      "KA42-resource-error-conservativity",
+      "KA43-theory-wide-refinement-map",
+      "KA44-primitive-reflection-executable-bridge"
+    ]
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullPrimitiveLiteralPolicyRefinement": false,
+    "formalLean4EquivalenceProvenObligations": 114
+  },
+  "note": "KA-40 is a direct Lean4Lean primitive/literal policy proof-surface bridge. It does not prove executable primitive reflection completeness."
+}

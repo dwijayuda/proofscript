@@ -1,0 +1,21 @@
+{
+  "schema": "proofscript.assurance.ka10.obligation-delta/v1",
+  "checkpoint": "proofscript-v1-ka10-lean-target-policy0",
+  "closedByKA10": [
+    "KA10-POLICY-1: exact Lean4Lean source lean-toolchain equality to v4.33.1 is no longer required",
+    "KA10-POLICY-2: v4.33.x prereleases/patches and later Lean 4 minors are classified by an explicit parser",
+    "KA10-POLICY-3: source toolchain compatibility is separated from dependency materialization compatibility",
+    "KA10-POLICY-4: uploaded batteries archives are discovered and audited before any strict import claim",
+    "KA10-POLICY-5: strict import remains blocked unless dependencies are actually materialized and the build/import succeeds"
+  ],
+  "stillOpen": [
+    "KA10-OPEN-1: materialize an exact or proven-compatible batteries dependency for the Lean4Lean source",
+    "KA10-OPEN-2: make lake build Lean4Lean pass without network access",
+    "KA10-OPEN-3: replace Lean4LeanCompat with an actual imported Lean4Lean module",
+    "KA10-OPEN-4: prove first PSKernel-to-Lean4Lean non-inductive declaration soundness lemma",
+    "KA10-OPEN-5: prove conversion/definitional-equality soundness",
+    "KA10-OPEN-6: extend proof to inductives, recursors, quotients, proof irrelevance, and Prop elimination",
+    "KA10-OPEN-7: submit or reproduce PSKernel in an official/public Lean Kernel Arena runner"
+  ],
+  "formalLean4EquivalenceProvenObligations": 0
+}

@@ -1,0 +1,24 @@
+PS_PRECONDITION_EXACT_ARITY=PASS
+PS_SHARED_DOMAIN_UNIQUE_PARAMS=DECLARATION_VALIDATION
+LEVEL_INSTANTIATION_CASES=1000 MISMATCHES=125
+EXPR_INSTANTIATION_CASES=1000 MISMATCHES=375
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+125 !== 0
+
+    at file:///mnt/data/psv70-work/proofscript-kernel-v70-projection-conformance1/tools/kernel-level-expr-instantiation-differential-tests.ts:105:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 125,
+  expected: 0,
+  operator: 'strictEqual'
+}
+
+Node.js v22.16.0

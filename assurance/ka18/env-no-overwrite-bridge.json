@@ -1,0 +1,55 @@
+{
+  "checkpoint": "proofscript-v1-ka18-env-no-overwrite-bridge0",
+  "publicVersion": "1.0.0-pskernel.21",
+  "baseline": "proofscript-v1-ka17-env-lookup-bridge0",
+  "referenceKind": "direct-imported-lean4lean-env-no-overwrite-bridge",
+  "imports": [
+    "Lean4Lean.Theory.Typing.Env",
+    "PSKernelKA17EnvLookupBridge"
+  ],
+  "bridgedRelations": [
+    "Lean4Lean.VEnv.addConst",
+    "Lean4Lean.VEnv.constants"
+  ],
+  "dependsOn": [
+    "PSKernelKA17.translated_axiom_env_lookup",
+    "PSKernelKA17.translated_definition_env_lookup",
+    "PSKernelKA17.translated_definition_env_defeq_member"
+  ],
+  "conditionalBridgeLemmas": [
+    "PSKernelKA18.translated_axiom_fresh_before_add",
+    "PSKernelKA18.translated_definition_fresh_before_add",
+    "PSKernelKA18.translated_axiom_preserves_other_lookup",
+    "PSKernelKA18.translated_definition_preserves_other_lookup"
+  ],
+  "helperLemmas": [
+    "PSKernelKA18.addConst_success_requires_fresh",
+    "PSKernelKA18.addConst_preserves_other_lookup",
+    "PSKernelKA18.addDefEq_preserves_any_constant_lookup"
+  ],
+  "coveredPSDeclKinds": ["axiom", "definition"],
+  "stillExcludedDeclKinds": ["theorem", "example", "opaque", "quot", "inductive", "mutualInductive"],
+  "closedByKA18": [
+    "direct-import-lean4lean-addConst-freshness-from-success",
+    "direct-import-lean4lean-addConst-no-overwrite-other-lookup-preservation",
+    "conditional-freshness-bridge-for-translated-axiom",
+    "conditional-freshness-bridge-for-translated-definition",
+    "conditional-other-lookup-preservation-bridge-for-translated-axiom",
+    "conditional-other-lookup-preservation-bridge-for-translated-definition",
+    "preserve-ka12-through-ka17-inductive-blocking",
+    "strict-lean4lean-env-no-overwrite-bridge-check"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "coreFormatChanged": false,
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanEnvNoOverwriteBridgeChecked": true,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 13,
+    "formalObligationMeaning": "KA-13 through KA-18 conditional Lean4Lean bridge lemmas only; not executable PSKernel refinement or full Lean equivalence"
+  }
+}

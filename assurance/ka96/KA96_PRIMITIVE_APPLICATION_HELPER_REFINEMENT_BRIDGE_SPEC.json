@@ -1,0 +1,35 @@
+{
+  "checkpoint": "proofscript-v1-ka96-primitive-application-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.99",
+  "baseline": "proofscript-v1-ka95-primitive-typeeq-helper-refinement0",
+  "referenceKind": "primitive-application-helper-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 5,
+  "countedObligations": [
+    "translated_vexpr_insts_appN_wf",
+    "translated_vexpr_subst_appN_wf",
+    "translated_vexpr_lams_append_wf",
+    "translated_expr_appN_eq_mkAppList_wf",
+    "translated_expr_mkAppN_eq_wf"
+  ],
+  "sourceTheorems": [
+    "VExpr.insts_appN",
+    "VExpr.subst_appN",
+    "VExpr.lams_append",
+    "Lean.Expr.appN_eq_mkAppList",
+    "Lean.Expr.mkAppN_eq"
+  ],
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveApplicationHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

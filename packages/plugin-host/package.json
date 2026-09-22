@@ -1,0 +1,17 @@
+{
+  "name": "@proofscript/plugin-host",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "npm plugin loader for non-verifier compiler workflows",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "@proofscript/plugin-api": "0.1.0-dev.0",
+    "@proofscript/project": "0.1.0-dev.0"
+  }
+}

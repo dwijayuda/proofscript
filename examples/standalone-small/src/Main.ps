@@ -1,0 +1,548 @@
+-- Standalone PSC-1 example governed by the ProofScript v0.2.1 reference.
+-- Standard ProofScript uses Lean-compatible comments and rejects JavaScript // comments.
+
+const two: Nat := { 2 }
+
+function inc(x: Nat): Nat := {
+  Nat.succ(x)
+}
+
+function add2(x: Nat): Nat := {
+  Nat.add(x, 2)
+}
+
+function choose(b: Bool): Nat := {
+  bif (b) { 1 } else { 2 }
+}
+
+function not(b: Bool): Bool := {
+  bif (b) { false } else { true }
+}
+
+function chooseMatch(b: Bool): Nat := {
+  match (b) {
+    | true => 1
+    | false => 2
+  }
+}
+
+function isZeroMatch(n: Nat): Bool := {
+  match (n) {
+    | 0 => true
+    | _ => false
+  }
+}
+
+function natTagMatch(n: Nat): Nat := {
+  match (n) {
+    | 0 => 10
+    | 1 => 20
+    | 2 => 30
+    | _ => 40
+  }
+}
+
+function predLeanStyle(n: Nat): Nat := {
+  match (n) {
+    | 0 => 0
+    | Nat.succ k => k
+  }
+}
+
+function predShortSucc(n: Nat): Nat := {
+  match (n) {
+    | 0 => 0
+    | succ k => k
+  }
+}
+
+def four: Nat := {
+  add2(2)
+}
+
+def six: Nat := {
+  let x: Nat := add2(2);
+  add2(x)
+}
+
+def inferredLet: Nat := {
+  let x := 2;
+  add2(x)
+}
+
+def haveValue: Nat := {
+  have x: Nat := 2;
+  add2(x)
+}
+
+def chooseTrue: Nat := {
+  choose(true)
+}
+
+def chooseFalse: Nat := {
+  choose(false)
+}
+
+def chooseMatchTrue: Nat := {
+  chooseMatch(true)
+}
+
+def chooseMatchFalse: Nat := {
+  chooseMatch(false)
+}
+
+def isZeroMatchZero: Bool := {
+  isZeroMatch(0)
+}
+
+def isZeroMatchOne: Bool := {
+  isZeroMatch(1)
+}
+
+def natTagMatchZero: Nat := {
+  natTagMatch(0)
+}
+
+def natTagMatchOne: Nat := {
+  natTagMatch(1)
+}
+
+def natTagMatchTwo: Nat := {
+  natTagMatch(2)
+}
+
+def natTagMatchLarge: Nat := {
+  natTagMatch(5)
+}
+
+def predLeanStyleThree: Nat := {
+  predLeanStyle(3)
+}
+
+def predShortSuccThree: Nat := {
+  predShortSucc(3)
+}
+
+inductive Tiny: Type where {
+  | mk
+}
+
+inductive Color: Type where {
+  | red
+  | green
+  | blue
+}
+
+inductive MaybeNat: Type where {
+  | none
+  | some (value: Nat)
+}
+
+def redColor: Color := {
+  Color.red
+}
+
+def greenColor: Color := {
+  Color.green
+}
+
+def blueColor: Color := {
+  Color.blue
+}
+
+def redShort: Color := {
+  red
+}
+
+def greenShort: Color := {
+  green
+}
+
+function colorCode(c: Color): Nat := {
+  match (c) {
+    | Color.red => 1
+    | Color.green => 2
+    | Color.blue => 3
+  }
+}
+
+def redCode: Nat := {
+  colorCode(redColor)
+}
+
+def greenCode: Nat := {
+  colorCode(greenColor)
+}
+
+def blueCode: Nat := {
+  colorCode(blueColor)
+}
+
+def redShortCode: Nat := {
+  colorCode(redShort)
+}
+
+def greenShortCode: Nat := {
+  colorCode(greenShort)
+}
+
+def maybeNone: MaybeNat := {
+  MaybeNat.none
+}
+
+def maybeSome: MaybeNat := {
+  MaybeNat.some(7)
+}
+
+def someShort: MaybeNat := {
+  some(11)
+}
+
+def mkSomeShort: Nat -> MaybeNat := {
+  some
+}
+
+def fromMkSomeShort: MaybeNat := {
+  mkSomeShort(13)
+}
+
+function maybeDefault(m: MaybeNat): Nat := {
+  match (m) {
+    | MaybeNat.none => 0
+    | MaybeNat.some value => value
+  }
+}
+
+def noneDefault: Nat := {
+  maybeDefault(maybeNone)
+}
+
+def someDefault: Nat := {
+  maybeDefault(maybeSome)
+}
+
+def someShortDefault: Nat := {
+  maybeDefault(someShort)
+}
+
+def fromMkSomeShortDefault: Nat := {
+  maybeDefault(fromMkSomeShort)
+}
+
+inductive NatList: Type where {
+  | nil
+  | cons (head: Nat) (tail: NatList)
+}
+
+def listZero: NatList := {
+  nil
+}
+
+def listOne: NatList := {
+  cons(5, listZero)
+}
+
+def listTwo: NatList := {
+  cons(6, listOne)
+}
+
+function listLength(xs: NatList): Nat := {
+  match (xs) {
+    | nil => 0
+    | cons h t => Nat.succ(listLength(t))
+  }
+}
+
+function listIsEmpty(xs: NatList): Bool := {
+  match (xs) {
+    | nil => true
+    | cons h t => false
+  }
+}
+
+def listZeroLength: Nat := {
+  listLength(listZero)
+}
+
+def listOneLength: Nat := {
+  listLength(listOne)
+}
+
+def listTwoLength: Nat := {
+  listLength(listTwo)
+}
+
+def listZeroEmpty: Bool := {
+  listIsEmpty(listZero)
+}
+
+def listOneEmpty: Bool := {
+  listIsEmpty(listOne)
+}
+
+structure Point: Type where {
+  x: Nat;
+  y: Nat;
+}
+
+structure Box: Type where {
+  p: Point;
+  label: Nat;
+}
+
+def point: Point := {
+  {x := 1, y := 2}
+}
+
+function mkLiteralPunnedPoint(x: Nat, y: Nat): Point := {
+  {x, y}
+}
+
+def literalPunnedPoint: Point := {
+  mkLiteralPunnedPoint(4, 5)
+}
+
+def literalPunnedX: Nat := {
+  literalPunnedPoint.x
+}
+
+def literalPunnedY: Nat := {
+  literalPunnedPoint.y
+}
+
+def pointX: Nat := {
+  Point.x(point)
+}
+
+def pointY: Nat := {
+  Point.y(point)
+}
+
+def pointDotX: Nat := {
+  point.x
+}
+
+def pointDotY: Nat := {
+  point.y
+}
+
+def pointMoved: Point := {
+  {point with x := 3}
+}
+
+def pointMovedX: Nat := {
+  pointMoved.x
+}
+
+def pointMovedY: Nat := {
+  pointMoved.y
+}
+
+function setX(p: Point, x: Nat): Point := {
+  {p with x}
+}
+
+def pointPunned: Point := {
+  setX(point, 6)
+}
+
+def pointPunnedX: Nat := {
+  pointPunned.x
+}
+
+def pointPunnedY: Nat := {
+  pointPunned.y
+}
+
+function matchPointX(p: Point): Nat := {
+  match (p) {
+    | Point.mk x y => x
+  }
+}
+
+function matchPointY(p: Point): Nat := {
+  match (p) {
+    | Point.mk x y => y
+  }
+}
+
+def matchedX: Nat := {
+  matchPointX(point)
+}
+
+def matchedY: Nat := {
+  matchPointY(point)
+}
+
+def box: Box := {
+  {p := point, label := 9}
+}
+
+def boxMoved: Box := {
+  {box with p.x := 7}
+}
+
+def boxMovedBoth: Box := {
+  {box with p.x := 8, p.y := 6}
+}
+
+def boxMovedX: Nat := {
+  boxMoved.p.x
+}
+
+def boxMovedY: Nat := {
+  boxMoved.p.y
+}
+
+def boxMovedLabel: Nat := {
+  boxMoved.label
+}
+
+def boxMovedBothX: Nat := {
+  boxMovedBoth.p.x
+}
+
+def boxMovedBothY: Nat := {
+  boxMovedBoth.p.y
+}
+
+def pointFromParenBase: Point := {
+  {(point) with x := 4}
+}
+
+def pointFromDottedParenBase: Point := {
+  {(box.p) with y := 6}
+}
+
+def parenBaseX: Nat := {
+  pointFromParenBase.x
+}
+
+def parenBaseY: Nat := {
+  pointFromParenBase.y
+}
+
+def dottedParenBaseX: Nat := {
+  pointFromDottedParenBase.x
+}
+
+def dottedParenBaseY: Nat := {
+  pointFromDottedParenBase.y
+}
+
+theorem red_code_eq_one: redCode = 1 := by { rfl }
+
+theorem green_code_eq_two: greenCode = 2 := by { rfl }
+
+theorem blue_code_eq_three: blueCode = 3 := by { rfl }
+
+theorem red_short_code_eq_one: redShortCode = 1 := by { rfl }
+
+theorem green_short_code_eq_two: greenShortCode = 2 := by { rfl }
+
+theorem none_default_eq_zero: noneDefault = 0 := by { rfl }
+
+theorem some_default_eq_seven: someDefault = 7 := by { rfl }
+
+theorem some_short_default_eq_eleven: someShortDefault = 11 := by { rfl }
+
+theorem from_mk_some_short_default_eq_thirteen: fromMkSomeShortDefault = 13 := by { rfl }
+
+theorem list_zero_length_eq_zero: listZeroLength = 0 := by { rfl }
+
+theorem list_one_length_eq_one: listOneLength = 1 := by { rfl }
+
+theorem list_two_length_eq_two: listTwoLength = 2 := by { rfl }
+
+theorem point_x_eq_one: pointX = 1 := by { rfl }
+
+theorem point_y_eq_two: pointY = 2 := by { rfl }
+
+theorem literal_punned_x_eq_four: literalPunnedX = 4 := by { rfl }
+
+theorem literal_punned_y_eq_five: literalPunnedY = 5 := by { rfl }
+
+theorem point_dot_x_eq_one: pointDotX = 1 := by { rfl }
+
+theorem point_dot_y_eq_two: pointDotY = 2 := by { rfl }
+
+theorem point_moved_x_eq_three: pointMovedX = 3 := by { rfl }
+
+theorem point_moved_y_eq_two: pointMovedY = 2 := by { rfl }
+
+theorem point_punned_x_eq_six: pointPunnedX = 6 := by { rfl }
+
+theorem point_punned_y_eq_two: pointPunnedY = 2 := by { rfl }
+
+theorem matched_x_eq_one: matchedX = 1 := by { rfl }
+
+theorem matched_y_eq_two: matchedY = 2 := by { rfl }
+
+theorem box_moved_x_eq_seven: boxMovedX = 7 := by { rfl }
+
+theorem box_moved_y_eq_two: boxMovedY = 2 := by { rfl }
+
+theorem box_moved_label_eq_nine: boxMovedLabel = 9 := by { rfl }
+
+theorem box_moved_both_x_eq_eight: boxMovedBothX = 8 := by { rfl }
+
+theorem box_moved_both_y_eq_six: boxMovedBothY = 6 := by { rfl }
+
+theorem paren_base_x_eq_four: parenBaseX = 4 := by { rfl }
+
+theorem paren_base_y_eq_two: parenBaseY = 2 := by { rfl }
+
+theorem dotted_paren_base_x_eq_one: dottedParenBaseX = 1 := by { rfl }
+
+theorem dotted_paren_base_y_eq_six: dottedParenBaseY = 6 := by { rfl }
+
+theorem two_eq_two: 2 = 2 := by { rfl }
+
+example: add2(2) = 4 := by { rfl }
+
+theorem choose_true_eq_one: choose(true) = 1 := by { rfl }
+
+theorem choose_false_eq_two: choose(false) = 2 := by { rfl }
+
+theorem choose_match_true_eq_one: chooseMatch(true) = 1 := by { rfl }
+
+theorem choose_match_false_eq_two: chooseMatch(false) = 2 := by { rfl }
+
+theorem is_zero_match_zero_eq_true: isZeroMatch(0) = true := by { rfl }
+
+theorem is_zero_match_one_eq_false: isZeroMatch(1) = false := by { rfl }
+
+theorem nat_tag_match_zero_eq_ten: natTagMatch(0) = 10 := by { rfl }
+
+theorem nat_tag_match_one_eq_twenty: natTagMatch(1) = 20 := by { rfl }
+
+theorem nat_tag_match_two_eq_thirty: natTagMatch(2) = 30 := by { rfl }
+
+theorem nat_tag_match_large_eq_forty: natTagMatch(5) = 40 := by { rfl }
+
+theorem pred_lean_style_three_eq_two: predLeanStyle(3) = 2 := by { rfl }
+
+theorem pred_short_succ_three_eq_two: predShortSucc(3) = 2 := by { rfl }
+
+theorem six_eq_six: six = 6 := by { rfl }
+
+theorem inferred_let_eq_four: inferredLet = 4 := by { rfl }
+
+theorem have_value_eq_four: haveValue = 4 := by { rfl }
+
+theorem exact_two_eq_two: 2 = 2 := by { exact two_eq_two }
+
+axiom P: Prop;
+axiom Q: Prop;
+
+theorem intro_id_prop: P -> P := by { intro h; exact h }
+
+theorem intro_id_prop_assumption: P -> P := by { intro h; assumption }
+
+theorem direct_assumption(h: P): P := by { assumption }
+
+theorem apply_implication(h: P -> Q, hp: P): Q := by { apply h; assumption }
+
+theorem apply_implication_exact(h: P -> Q, hp: P): Q := by { apply h; exact hp }
+
+theorem direct_apply(h: P): P := by { apply h }

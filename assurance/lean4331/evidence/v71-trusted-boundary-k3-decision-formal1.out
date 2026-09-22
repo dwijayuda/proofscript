@@ -1,0 +1,16 @@
+TARGET=ProofScriptKernelEquivalence.KernelV71TrustedBoundaryK3Decision
+LEAN=Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+SOURCE=assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71TrustedBoundaryK3Decision.lean
+SOURCE_SHA256=d9a6a020d31d031345d894f311468d8b34db28f357c07ef3127bc6ab07c8596e
+
+ℹ [2/2] Built ProofScriptKernelEquivalence.KernelV71TrustedBoundaryK3Decision (684ms)
+info: ProofScriptKernelEquivalence/KernelV71TrustedBoundaryK3Decision.lean:193:0: 'ProofScriptKernelEquivalence.KernelV71TrustedBoundaryK3Decision.completedTrustedBoundarySlices_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71TrustedBoundaryK3Decision.lean:194:0: 'ProofScriptKernelEquivalence.KernelV71TrustedBoundaryK3Decision.trustedInfrastructureAssumptions_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71TrustedBoundaryK3Decision.lean:195:0: 'ProofScriptKernelEquivalence.KernelV71TrustedBoundaryK3Decision.fullyFormalK3RemainingObligations_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71TrustedBoundaryK3Decision.lean:196:0: 'ProofScriptKernelEquivalence.KernelV71TrustedBoundaryK3Decision.k3EngineeringProgress_basisPoints' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71TrustedBoundaryK3Decision.lean:197:0: 'ProofScriptKernelEquivalence.KernelV71TrustedBoundaryK3Decision.selectedEngineeringRoute_isTrustedBoundary' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71TrustedBoundaryK3Decision.lean:198:0: 'ProofScriptKernelEquivalence.KernelV71TrustedBoundaryK3Decision.v71TrustedBoundaryK3Decision_sound' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71TrustedBoundaryK3Decision.lean:199:0: 'ProofScriptKernelEquivalence.KernelV71TrustedBoundaryK3Decision.v71TrustedBoundaryDecision_notFullyFormalK3' does not depend on any axioms
+Build completed successfully (2 jobs).
+info: proofScriptKernelEquivalence: no previous manifest, creating one from scratch
+info: toolchain not updated; no toolchain information found

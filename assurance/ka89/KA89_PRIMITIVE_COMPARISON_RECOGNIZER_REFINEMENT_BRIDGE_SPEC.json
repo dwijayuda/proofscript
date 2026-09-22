@@ -1,0 +1,31 @@
+{
+  "checkpoint": "proofscript-v1-ka89-primitive-comparison-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.92",
+  "baseline": "proofscript-v1-ka88-primitive-gcd-recognizer-refinement0",
+  "referenceKind": "primitive-comparison-recognizer-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 3,
+  "countedObligations": [
+    "translated_checkNatBoolCases_wf",
+    "translated_checkNatBEq_wf",
+    "translated_checkNatBLE_wf"
+  ],
+  "sourceTheorems": [
+    "checkNatBoolCases.WF",
+    "checkNatBEq.WF",
+    "checkNatBLE.WF"
+  ],
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveComparisonRecognizerRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

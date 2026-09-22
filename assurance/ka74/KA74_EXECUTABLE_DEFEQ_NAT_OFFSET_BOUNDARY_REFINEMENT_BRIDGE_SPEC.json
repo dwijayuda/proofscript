@@ -1,0 +1,27 @@
+{
+  "checkpoint": "proofscript-v1-ka74-executable-defeq-nat-offset-boundary-refinement0",
+  "publicVersion": "1.0.0-pskernel.77",
+  "baseline": "proofscript-v1-ka73-defeq-sorry-boundary-audit0",
+  "referenceKind": "strict-lean4lean-executable-defeq-nat-offset-boundary-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "leanModule": "assurance/ka74/executable-defeq-nat-offset-boundary-refinement-bridge.lean",
+  "baselineFormalObligations": 219,
+  "countedNewFormalObligations": 2,
+  "countedObligations": [
+    "translated_isNatZero_wf",
+    "translated_isNatSuccOf_wf"
+  ],
+  "sorryBoundaryPolicy": "do-not-count-upstream-sorry-backed-theorems",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWHNFDefEqRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "status": "accepted",
+  "command": "language status",
+  "profile": "ProofScript v0.7 alpha",
+  "packageVersion": "1.0.0-pskernel.144",
+  "sourceReference": "proofscript-language-reference-v0.6.1 compiler-ready + v0.7 verification extensions",
+  "layers": {
+    "programmingLanguage": {
+      "status": "usable-software-alpha",
+      "progress": 0.58,
+      "note": "PSC-1 small software profile with def/function/const, structures, inductives, if/match, Nat/Int/Bool/String/Unit/Option/List subset."
+    },
+    "theoremProver": {
+      "status": "partial-lean-export",
+      "progress": 0.28,
+      "note": "theorem/proof surface is checked in the supported kernel/Core subset; full tactic engine is not implemented."
+    },
+    "formalVerification": {
+      "status": "lean-backed-obligation-alpha",
+      "progress": 0.56,
+      "note": "requires/ensures/result plus old/assert/ghost generate obligations; proof-status can run an external Lean command for obligations with explicit Lean proof bodies; semantic discharge is partial and toolchain-dependent."
+    },
+    "runtimeCorrespondence": {
+      "status": "source-proof-runtime-certificate-alpha",
+      "progress": 0.35,
+      "note": "TS/JS build artifacts, Core/cert hashes, obligation manifests, and software-alpha manifests are bindable; full execution-correspondence proof is not claimed."
+    }
+  },
+  "features": {
+    "programming": [
+      "def",
+      "function",
+      "const",
+      "structures",
+      "inductives",
+      "match",
+      "if",
+      "where",
+      "Nat",
+      "Int",
+      "Bool",
+      "String",
+      "Unit",
+      "Option",
+      "List"
+    ],
+    "theoremProver": [
+      "theorem",
+      "rfl/simp passthrough where supported",
+      "Core artifact checking",
+      "Lean export"
+    ],
+    "formalVerification": [
+      "requires",
+      "ensures",
+      "result",
+      "old",
+      "assert",
+      "ghost",
+      "proof obligation listing",
+      "proof status records",
+      "stale proof detection",
+      "exact theorem statement printing",
+      "structural certificates",
+      "software examples workflow",
+      "source/proof/runtime artifact binding",
+      "Lean-backed proof-status checking"
+    ],
+    "notYetImplemented": [
+      "invariant",
+      "decreases",
+      "monadic vcgen/mvcgen contracts",
+      "full macros",
+      "full tactic engine",
+      "full Lean4 equivalence"
+    ]
+  },
+  "commands": [
+    "init",
+    "check",
+    "build",
+    "build-ts",
+    "build-js",
+    "emit-core",
+    "emit-lean",
+    "contracts",
+    "obligations",
+    "proof-status",
+    "check-obligations",
+    "certify",
+    "verify",
+    "software-alpha",
+    "run",
+    "npm-readiness"
+  ],
+  "trustBoundary": {
+    "fullLean4Equivalence": false,
+    "fullyFormalK3": false,
+    "semanticContractProofChecking": false,
+    "npmInstallableToolchain": true
+  }
+}

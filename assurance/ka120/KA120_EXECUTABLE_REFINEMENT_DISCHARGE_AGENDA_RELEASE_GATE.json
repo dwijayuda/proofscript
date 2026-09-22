@@ -1,0 +1,277 @@
+{
+  "checkpoint": "proofscript-v1-ka120-executable-refinement-discharge-agenda0",
+  "publicVersion": "1.0.0-pskernel.123",
+  "baseline": "proofscript-v1-ka119-executable-refinement-proof-readiness0",
+  "releaseKind": "executable-refinement-discharge-agenda-audit",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA120",
+      "source": "assurance/ka120/executable-refinement-discharge-agenda-bridge.lean",
+      "destination": "KA120ExecutableRefinementDischargeAgendaBridge.lean",
+      "status": "passed",
+      "proofBearing": false,
+      "obligations": 0,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "progress": {
+    "checkpoint": "proofscript-v1-ka120-executable-refinement-discharge-agenda0",
+    "publicVersion": "1.0.0-pskernel.123",
+    "baseline": "proofscript-v1-ka119-executable-refinement-proof-readiness0",
+    "metrics": {
+      "featureSurfaceBridgeProgressPercent": 100,
+      "executableKernelEquivalenceProofProgressPercent": 96,
+      "executableKernelEquivalencePreviousPercent": 95,
+      "executableKernelEquivalenceDeltaPercent": 1,
+      "arenaCorpusRegressionPercent": 100,
+      "releasePackagingVerificationPercent": 100,
+      "executableRefinementDischargeAgendaPercent": 100,
+      "formalLean4LeanBridgeObligations": 366,
+      "newFormalLean4LeanBridgeObligations": 0,
+      "fullLean4EquivalencePercent": 0,
+      "fullyFormalK3Percent": 0,
+      "overallConservativeProjectProgressPercent": 83.8,
+      "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+    },
+    "phaseStatus": {
+      "featureSurfaceBridge": "closed",
+      "executableEquivalence": "active-discharge-agenda-mapped",
+      "fullLean4Equivalence": "not-proven",
+      "fullyFormalK3": "not-proven",
+      "claimBoundary": "enforced"
+    },
+    "dischargeAgenda": {
+      "agendaPercent": 100,
+      "rows": [
+        {
+          "id": "statement-shape",
+          "status": "ready",
+          "evidence": "final executable-refinement theorem statement shape is identified from KA115 skeleton",
+          "ready": true
+        },
+        {
+          "id": "source-artifact-domain",
+          "status": "ready",
+          "evidence": "source artifact families are indexed by KA117 module map",
+          "ready": true
+        },
+        {
+          "id": "target-artifact-domain",
+          "status": "ready",
+          "evidence": "target executable artifact families are coverage-mapped by KA118",
+          "ready": true
+        },
+        {
+          "id": "proof-precondition-set",
+          "status": "ready",
+          "evidence": "preconditions are closed by KA116 dependency closure and KA119 readiness",
+          "ready": true
+        },
+        {
+          "id": "bridge-obligation-total",
+          "status": "ready",
+          "evidence": "formal Lean4Lean bridge total remains audited at 366",
+          "ready": true
+        },
+        {
+          "id": "claim-boundary",
+          "status": "ready",
+          "evidence": "full Lean4 equivalence, fully formal K3, and executable refinement proof remain explicitly unclaimed",
+          "ready": true
+        },
+        {
+          "id": "discharge-order",
+          "status": "ready",
+          "evidence": "remaining theorem discharge order is specified without touching trusted semantics",
+          "ready": true
+        },
+        {
+          "id": "release-evidence",
+          "status": "ready",
+          "evidence": "build, focused gate, Lean marker, Arena evidence, package SHAs, fresh extract, ZIP, and SHA are required by the release process",
+          "ready": true
+        }
+      ],
+      "counts": {
+        "total": 8,
+        "ready": 8,
+        "notReady": 0
+      },
+      "evidenceMeaning": "the discharge agenda records the next proof-discharge map; it is not the discharged executable refinement theorem"
+    },
+    "percentBoundaries": {
+      "executableProgressIsDashboardEvidenceNotRefinementProof": true,
+      "dischargeAgendaDoesNotProvePSKernelEquivalence": true,
+      "overallProgressIsDashboardEstimate": true
+    },
+    "claimBoundary": {
+      "fullLean4Equivalence": false,
+      "sameTheoryAsFullLean4": false,
+      "fullyFormalK3": false,
+      "executablePSKernelRefinementProof": false,
+      "trustedKernelSemanticChange": false,
+      "kernelCodecChange": false,
+      "coreFormatChanged": false,
+      "certificateFormatChanged": false
+    }
+  },
+  "dischargeAgenda": {
+    "agendaPercent": 100,
+    "rows": [
+      {
+        "id": "statement-shape",
+        "status": "ready",
+        "evidence": "final executable-refinement theorem statement shape is identified from KA115 skeleton",
+        "ready": true
+      },
+      {
+        "id": "source-artifact-domain",
+        "status": "ready",
+        "evidence": "source artifact families are indexed by KA117 module map",
+        "ready": true
+      },
+      {
+        "id": "target-artifact-domain",
+        "status": "ready",
+        "evidence": "target executable artifact families are coverage-mapped by KA118",
+        "ready": true
+      },
+      {
+        "id": "proof-precondition-set",
+        "status": "ready",
+        "evidence": "preconditions are closed by KA116 dependency closure and KA119 readiness",
+        "ready": true
+      },
+      {
+        "id": "bridge-obligation-total",
+        "status": "ready",
+        "evidence": "formal Lean4Lean bridge total remains audited at 366",
+        "ready": true
+      },
+      {
+        "id": "claim-boundary",
+        "status": "ready",
+        "evidence": "full Lean4 equivalence, fully formal K3, and executable refinement proof remain explicitly unclaimed",
+        "ready": true
+      },
+      {
+        "id": "discharge-order",
+        "status": "ready",
+        "evidence": "remaining theorem discharge order is specified without touching trusted semantics",
+        "ready": true
+      },
+      {
+        "id": "release-evidence",
+        "status": "ready",
+        "evidence": "build, focused gate, Lean marker, Arena evidence, package SHAs, fresh extract, ZIP, and SHA are required by the release process",
+        "ready": true
+      }
+    ],
+    "counts": {
+      "total": 8,
+      "ready": 8,
+      "notReady": 0
+    },
+    "evidenceMeaning": "the discharge agenda records the next proof-discharge map; it is not the discharged executable refinement theorem"
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka120Files": [
+      {
+        "path": "tools/pskernel-ka120-executable-refinement-discharge-agenda-tests.ts",
+        "lines": 48,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka120-executable-refinement-discharge-agenda.ts",
+        "lines": 16,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka120/KA120_EXECUTABLE_REFINEMENT_DISCHARGE_AGENDA.json",
+        "lines": 102,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka120/KA120_EXECUTABLE_REFINEMENT_DISCHARGE_AGENDA_BRIDGE_SPEC.json",
+        "lines": 22,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka120/KA120_EXECUTABLE_REFINEMENT_DISCHARGE_AGENDA_RELEASE_GATE.json",
+        "lines": 278,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka120/KA120_EXECUTABLE_REFINEMENT_DISCHARGE_AGENDA_REPORT.md",
+        "lines": 19,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka120/KA120_EXECUTABLE_REFINEMENT_DISCHARGE_AGENDA_ROWS.json",
+        "lines": 60,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka120/KA120_EXECUTABLE_REFINEMENT_DISCHARGE_AGENDA_VERIFICATION_SUMMARY.json",
+        "lines": 12,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka120/KA120_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 18,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka120/KA120_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 15,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka120/executable-refinement-discharge-agenda-bridge.lean",
+        "lines": 22,
+        "ext": ".lean"
+      }
+    ],
+    "ka120ToolFiles": [
+      {
+        "path": "tools/pskernel-ka120-executable-refinement-discharge-agenda-tests.ts",
+        "lines": 48,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka120-executable-refinement-discharge-agenda.ts",
+        "lines": 16,
+        "ext": ".ts"
+      }
+    ],
+    "newKA120OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

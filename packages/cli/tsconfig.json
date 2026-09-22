@@ -1,0 +1,40 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "../frontend"
+    },
+    {
+      "path": "../kernel-codec"
+    },
+    {
+      "path": "../certificates"
+    },
+    {
+      "path": "../project"
+    },
+    {
+      "path": "../plugin-host"
+    },
+    {
+      "path": "../compiler"
+    },
+    {
+      "path": "../lean-export"
+    },
+    {
+      "path": "../verifier"
+    },
+    {
+      "path": "../syntax"
+    }
+  ]
+}

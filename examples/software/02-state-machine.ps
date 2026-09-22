@@ -1,0 +1,76 @@
+-- Software Profile example: finite state machine as an inductive type.
+
+inductive OrderStatus: Type where {
+  | new
+  | paid
+  | shipped
+  | cancelled
+}
+
+structure Order {
+  status: OrderStatus;
+  amount: Nat;
+}
+
+def newOrder: Order := {
+  { status := OrderStatus.new, amount := 25 }
+}
+
+function pay(order: Order): Order := {
+  match (order.status) {
+    | OrderStatus.new => { order with status := OrderStatus.paid }
+    | OrderStatus.paid => order
+    | OrderStatus.shipped => order
+    | OrderStatus.cancelled => order
+  }
+}
+
+function ship(order: Order): Order := {
+  match (order.status) {
+    | OrderStatus.new => order
+    | OrderStatus.paid => { order with status := OrderStatus.shipped }
+    | OrderStatus.shipped => order
+    | OrderStatus.cancelled => order
+  }
+}
+
+function cancel(order: Order): Order := {
+  match (order.status) {
+    | OrderStatus.new => { order with status := OrderStatus.cancelled }
+    | OrderStatus.paid => { order with status := OrderStatus.cancelled }
+    | OrderStatus.shipped => order
+    | OrderStatus.cancelled => order
+  }
+}
+
+function canShip(order: Order): Bool := {
+  match (order.status) {
+    | OrderStatus.new => false
+    | OrderStatus.paid => true
+    | OrderStatus.shipped => false
+    | OrderStatus.cancelled => false
+  }
+}
+
+def paidOrder: Order := {
+  pay(newOrder)
+}
+
+def shippedOrder: Order := {
+  ship(paidOrder)
+}
+
+def cancelledOrder: Order := {
+  cancel(paidOrder)
+}
+
+def canShipPaid: Bool := {
+  canShip(paidOrder)
+}
+
+def canShipNew: Bool := {
+  canShip(newOrder)
+}
+
+theorem canShipPaid_eq: canShipPaid = true := by rfl
+theorem canShipNew_eq: canShipNew = false := by rfl

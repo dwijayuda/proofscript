@@ -1,0 +1,35 @@
+{
+  "checkpoint": "proofscript-v1-ka76-executable-infer-constant-literal-refinement0",
+  "publicVersion": "1.0.0-pskernel.79",
+  "baseline": "proofscript-v1-ka75-executable-infer-atomic-refinement0",
+  "referenceKind": "strict-lean4lean-executable-infer-constant-literal-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "leanModule": "assurance/ka76/executable-infer-constant-literal-refinement-bridge.lean",
+  "baselineFormalObligations": 225,
+  "countedNewFormalObligations": 5,
+  "countedObligations": [
+    "translated_inferConstant_wf",
+    "translated_literal_is_primitive_nat_wf",
+    "translated_literal_is_primitive_char_wf",
+    "translated_literal_is_primitive_string_wf",
+    "translated_infer_literal_wf"
+  ],
+  "sourceTheorems": [
+    "inferConstant.WF",
+    "literal_is_primitive",
+    "infer_literal"
+  ],
+  "sorryBoundaryPolicy": "do-not-count-upstream-sorry-backed-theorems",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableInferTypeRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

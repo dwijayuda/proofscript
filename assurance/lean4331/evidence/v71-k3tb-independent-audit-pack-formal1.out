@@ -1,0 +1,43 @@
+TARGET=ProofScriptKernelEquivalence.KernelV71K3TBIndependentAuditPack
+LEAN=Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+SOURCE=assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71K3TBIndependentAuditPack.lean
+SOURCE_SHA256=78ca2efb7ae72aa1e9753a28d0f8de615fbcb516509cf28b57fc193a27297db7
+
+ℹ [2/5] Built ProofScriptKernelEquivalence.KernelV71TrustedBoundaryK3Decision (785ms)
+info: ProofScriptKernelEquivalence/KernelV71TrustedBoundaryK3Decision.lean:193:0: 'ProofScriptKernelEquivalence.KernelV71TrustedBoundaryK3Decision.completedTrustedBoundarySlices_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71TrustedBoundaryK3Decision.lean:194:0: 'ProofScriptKernelEquivalence.KernelV71TrustedBoundaryK3Decision.trustedInfrastructureAssumptions_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71TrustedBoundaryK3Decision.lean:195:0: 'ProofScriptKernelEquivalence.KernelV71TrustedBoundaryK3Decision.fullyFormalK3RemainingObligations_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71TrustedBoundaryK3Decision.lean:196:0: 'ProofScriptKernelEquivalence.KernelV71TrustedBoundaryK3Decision.k3EngineeringProgress_basisPoints' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71TrustedBoundaryK3Decision.lean:197:0: 'ProofScriptKernelEquivalence.KernelV71TrustedBoundaryK3Decision.selectedEngineeringRoute_isTrustedBoundary' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71TrustedBoundaryK3Decision.lean:198:0: 'ProofScriptKernelEquivalence.KernelV71TrustedBoundaryK3Decision.v71TrustedBoundaryK3Decision_sound' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71TrustedBoundaryK3Decision.lean:199:0: 'ProofScriptKernelEquivalence.KernelV71TrustedBoundaryK3Decision.v71TrustedBoundaryDecision_notFullyFormalK3' does not depend on any axioms
+ℹ [3/5] Built ProofScriptKernelEquivalence.KernelV71K3TBReleaseCandidate (629ms)
+info: ProofScriptKernelEquivalence/KernelV71K3TBReleaseCandidate.lean:229:0: 'ProofScriptKernelEquivalence.KernelV71K3TBReleaseCandidate.releaseLabel_isK3TrustedBoundary' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBReleaseCandidate.lean:230:0: 'ProofScriptKernelEquivalence.KernelV71K3TBReleaseCandidate.completedReleaseSlices_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBReleaseCandidate.lean:231:0: 'ProofScriptKernelEquivalence.KernelV71K3TBReleaseCandidate.requiredReleaseDocuments_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBReleaseCandidate.lean:232:0: 'ProofScriptKernelEquivalence.KernelV71K3TBReleaseCandidate.trustedAssumptions_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBReleaseCandidate.lean:233:0: 'ProofScriptKernelEquivalence.KernelV71K3TBReleaseCandidate.remainingFullFormalObligations_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBReleaseCandidate.lean:234:0: 'ProofScriptKernelEquivalence.KernelV71K3TBReleaseCandidate.k3TBEngineeringProgress_basisPoints' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBReleaseCandidate.lean:235:0: 'ProofScriptKernelEquivalence.KernelV71K3TBReleaseCandidate.progress_notInflatedBeyondTrustedBoundaryDecision' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBReleaseCandidate.lean:236:0: 'ProofScriptKernelEquivalence.KernelV71K3TBReleaseCandidate.v71K3TBReleaseCandidate_sound' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBReleaseCandidate.lean:237:0: 'ProofScriptKernelEquivalence.KernelV71K3TBReleaseCandidate.v71K3TBReleaseCandidate_notFullyFormalK3' does not depend on any axioms
+ℹ [4/5] Built ProofScriptKernelEquivalence.KernelV71K3TBVerificationBundle (523ms)
+info: ProofScriptKernelEquivalence/KernelV71K3TBVerificationBundle.lean:185:0: 'ProofScriptKernelEquivalence.KernelV71K3TBVerificationBundle.verificationBundleAssets_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBVerificationBundle.lean:186:0: 'ProofScriptKernelEquivalence.KernelV71K3TBVerificationBundle.verificationPhases_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBVerificationBundle.lean:187:0: 'ProofScriptKernelEquivalence.KernelV71K3TBVerificationBundle.verificationTrustedBoundary_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBVerificationBundle.lean:188:0: 'ProofScriptKernelEquivalence.KernelV71K3TBVerificationBundle.verificationRemainingFullFormalObligations_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBVerificationBundle.lean:189:0: 'ProofScriptKernelEquivalence.KernelV71K3TBVerificationBundle.k3TBVerificationProgress_basisPoints' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBVerificationBundle.lean:190:0: 'ProofScriptKernelEquivalence.KernelV71K3TBVerificationBundle.verificationBundleReleaseLabel_isK3TB' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBVerificationBundle.lean:191:0: 'ProofScriptKernelEquivalence.KernelV71K3TBVerificationBundle.v71K3TBVerificationBundle_sound' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBVerificationBundle.lean:192:0: 'ProofScriptKernelEquivalence.KernelV71K3TBVerificationBundle.v71K3TBVerificationBundle_notFullyFormalK3' does not depend on any axioms
+ℹ [5/5] Built ProofScriptKernelEquivalence.KernelV71K3TBIndependentAuditPack (465ms)
+info: ProofScriptKernelEquivalence/KernelV71K3TBIndependentAuditPack.lean:179:0: 'ProofScriptKernelEquivalence.KernelV71K3TBIndependentAuditPack.auditAssets_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBIndependentAuditPack.lean:180:0: 'ProofScriptKernelEquivalence.KernelV71K3TBIndependentAuditPack.auditQuestions_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBIndependentAuditPack.lean:181:0: 'ProofScriptKernelEquivalence.KernelV71K3TBIndependentAuditPack.claimClasses_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBIndependentAuditPack.lean:182:0: 'ProofScriptKernelEquivalence.KernelV71K3TBIndependentAuditPack.auditPackProgress_basisPoints' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBIndependentAuditPack.lean:183:0: 'ProofScriptKernelEquivalence.KernelV71K3TBIndependentAuditPack.auditPackReleaseLabel_isK3TB' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBIndependentAuditPack.lean:184:0: 'ProofScriptKernelEquivalence.KernelV71K3TBIndependentAuditPack.v71K3TBIndependentAuditPack_sound' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71K3TBIndependentAuditPack.lean:185:0: 'ProofScriptKernelEquivalence.KernelV71K3TBIndependentAuditPack.v71K3TBIndependentAuditPack_notFullyFormalK3' does not depend on any axioms
+Build completed successfully (5 jobs).
+info: proofScriptKernelEquivalence: no previous manifest, creating one from scratch
+info: toolchain not updated; no toolchain information found

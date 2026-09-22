@@ -1,0 +1,681 @@
+{
+  "format": "proofscript-core",
+  "formatVersion": 9,
+  "proofscriptReference": "v0.1",
+  "leanSemanticBaseline": "4.33.1",
+  "implementationProfile": "K2n-typeclass-env0",
+  "declarations": [
+    {
+      "kind": "inductive",
+      "name": "Eq",
+      "levelParams": [
+        "u"
+      ],
+      "type": {
+        "tag": "pi",
+        "domain": {
+          "tag": "sort",
+          "level": {
+            "tag": "param",
+            "name": "u"
+          }
+        },
+        "body": {
+          "tag": "pi",
+          "domain": {
+            "tag": "bvar",
+            "index": 0
+          },
+          "body": {
+            "tag": "pi",
+            "domain": {
+              "tag": "bvar",
+              "index": 1
+            },
+            "body": {
+              "tag": "sort",
+              "level": {
+                "tag": "zero"
+              }
+            }
+          }
+        }
+      },
+      "numParams": 2,
+      "numIndices": 1,
+      "constructors": [
+        {
+          "name": "Eq.refl",
+          "type": {
+            "tag": "pi",
+            "domain": {
+              "tag": "sort",
+              "level": {
+                "tag": "param",
+                "name": "u"
+              }
+            },
+            "body": {
+              "tag": "pi",
+              "domain": {
+                "tag": "bvar",
+                "index": 0
+              },
+              "body": {
+                "tag": "app",
+                "fn": {
+                  "tag": "app",
+                  "fn": {
+                    "tag": "app",
+                    "fn": {
+                      "tag": "const",
+                      "name": "Eq",
+                      "levels": [
+                        {
+                          "tag": "param",
+                          "name": "u"
+                        }
+                      ]
+                    },
+                    "arg": {
+                      "tag": "bvar",
+                      "index": 1
+                    }
+                  },
+                  "arg": {
+                    "tag": "bvar",
+                    "index": 0
+                  }
+                },
+                "arg": {
+                  "tag": "bvar",
+                  "index": 0
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "kind": "inductive",
+      "name": "Nat",
+      "levelParams": [],
+      "type": {
+        "tag": "sort",
+        "level": {
+          "tag": "succ",
+          "of": {
+            "tag": "zero"
+          }
+        }
+      },
+      "numParams": 0,
+      "numIndices": 0,
+      "constructors": [
+        {
+          "name": "Nat.zero",
+          "type": {
+            "tag": "const",
+            "name": "Nat",
+            "levels": []
+          }
+        },
+        {
+          "name": "Nat.succ",
+          "type": {
+            "tag": "pi",
+            "domain": {
+              "tag": "const",
+              "name": "Nat",
+              "levels": []
+            },
+            "body": {
+              "tag": "const",
+              "name": "Nat",
+              "levels": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "kind": "inductive",
+      "name": "Bool",
+      "levelParams": [],
+      "type": {
+        "tag": "sort",
+        "level": {
+          "tag": "succ",
+          "of": {
+            "tag": "zero"
+          }
+        }
+      },
+      "numParams": 0,
+      "numIndices": 0,
+      "constructors": [
+        {
+          "name": "Bool.false",
+          "type": {
+            "tag": "const",
+            "name": "Bool",
+            "levels": []
+          }
+        },
+        {
+          "name": "Bool.true",
+          "type": {
+            "tag": "const",
+            "name": "Bool",
+            "levels": []
+          }
+        }
+      ]
+    },
+    {
+      "kind": "definition",
+      "name": "Nat.add",
+      "levelParams": [],
+      "type": {
+        "tag": "pi",
+        "domain": {
+          "tag": "const",
+          "name": "Nat",
+          "levels": []
+        },
+        "body": {
+          "tag": "pi",
+          "domain": {
+            "tag": "const",
+            "name": "Nat",
+            "levels": []
+          },
+          "body": {
+            "tag": "const",
+            "name": "Nat",
+            "levels": []
+          }
+        }
+      },
+      "value": {
+        "tag": "lam",
+        "domain": {
+          "tag": "const",
+          "name": "Nat",
+          "levels": []
+        },
+        "body": {
+          "tag": "lam",
+          "domain": {
+            "tag": "const",
+            "name": "Nat",
+            "levels": []
+          },
+          "body": {
+            "tag": "app",
+            "fn": {
+              "tag": "app",
+              "fn": {
+                "tag": "app",
+                "fn": {
+                  "tag": "app",
+                  "fn": {
+                    "tag": "const",
+                    "name": "Nat.rec",
+                    "levels": [
+                      {
+                        "tag": "succ",
+                        "of": {
+                          "tag": "zero"
+                        }
+                      }
+                    ]
+                  },
+                  "arg": {
+                    "tag": "lam",
+                    "domain": {
+                      "tag": "const",
+                      "name": "Nat",
+                      "levels": []
+                    },
+                    "body": {
+                      "tag": "const",
+                      "name": "Nat",
+                      "levels": []
+                    }
+                  }
+                },
+                "arg": {
+                  "tag": "bvar",
+                  "index": 1
+                }
+              },
+              "arg": {
+                "tag": "lam",
+                "domain": {
+                  "tag": "const",
+                  "name": "Nat",
+                  "levels": []
+                },
+                "body": {
+                  "tag": "lam",
+                  "domain": {
+                    "tag": "const",
+                    "name": "Nat",
+                    "levels": []
+                  },
+                  "body": {
+                    "tag": "app",
+                    "fn": {
+                      "tag": "const",
+                      "name": "Nat.succ",
+                      "levels": []
+                    },
+                    "arg": {
+                      "tag": "bvar",
+                      "index": 0
+                    }
+                  }
+                }
+              }
+            },
+            "arg": {
+              "tag": "bvar",
+              "index": 0
+            }
+          }
+        }
+      },
+      "reducibility": "regular"
+    },
+    {
+      "kind": "inductive",
+      "name": "Flag",
+      "levelParams": [],
+      "type": {
+        "tag": "sort",
+        "level": {
+          "tag": "succ",
+          "of": {
+            "tag": "zero"
+          }
+        }
+      },
+      "numParams": 0,
+      "numIndices": 0,
+      "constructors": [
+        {
+          "name": "Flag.mk",
+          "type": {
+            "tag": "pi",
+            "domain": {
+              "tag": "const",
+              "name": "Bool",
+              "levels": []
+            },
+            "body": {
+              "tag": "const",
+              "name": "Flag",
+              "levels": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "kind": "definition",
+      "name": "Flag.enabled",
+      "levelParams": [],
+      "type": {
+        "tag": "pi",
+        "domain": {
+          "tag": "const",
+          "name": "Flag",
+          "levels": []
+        },
+        "body": {
+          "tag": "const",
+          "name": "Bool",
+          "levels": []
+        }
+      },
+      "value": {
+        "tag": "lam",
+        "domain": {
+          "tag": "const",
+          "name": "Flag",
+          "levels": []
+        },
+        "body": {
+          "tag": "app",
+          "fn": {
+            "tag": "app",
+            "fn": {
+              "tag": "app",
+              "fn": {
+                "tag": "const",
+                "name": "Flag.rec",
+                "levels": [
+                  {
+                    "tag": "succ",
+                    "of": {
+                      "tag": "zero"
+                    }
+                  }
+                ]
+              },
+              "arg": {
+                "tag": "lam",
+                "domain": {
+                  "tag": "const",
+                  "name": "Flag",
+                  "levels": []
+                },
+                "body": {
+                  "tag": "const",
+                  "name": "Bool",
+                  "levels": []
+                }
+              }
+            },
+            "arg": {
+              "tag": "lam",
+              "domain": {
+                "tag": "const",
+                "name": "Bool",
+                "levels": []
+              },
+              "body": {
+                "tag": "bvar",
+                "index": 0
+              }
+            }
+          },
+          "arg": {
+            "tag": "bvar",
+            "index": 0
+          }
+        }
+      },
+      "reducibility": "regular"
+    },
+    {
+      "kind": "definition",
+      "name": "flagHigh",
+      "levelParams": [],
+      "type": {
+        "tag": "const",
+        "name": "Flag",
+        "levels": []
+      },
+      "value": {
+        "tag": "app",
+        "fn": {
+          "tag": "const",
+          "name": "Flag.mk",
+          "levels": []
+        },
+        "arg": {
+          "tag": "const",
+          "name": "Bool.true",
+          "levels": []
+        }
+      },
+      "reducibility": "regular"
+    },
+    {
+      "kind": "definition",
+      "name": "flagLater",
+      "levelParams": [],
+      "type": {
+        "tag": "const",
+        "name": "Flag",
+        "levels": []
+      },
+      "value": {
+        "tag": "app",
+        "fn": {
+          "tag": "const",
+          "name": "Flag.mk",
+          "levels": []
+        },
+        "arg": {
+          "tag": "const",
+          "name": "Bool.false",
+          "levels": []
+        }
+      },
+      "reducibility": "regular"
+    },
+    {
+      "kind": "definition",
+      "name": "__inst_3",
+      "levelParams": [],
+      "type": {
+        "tag": "const",
+        "name": "Flag",
+        "levels": []
+      },
+      "value": {
+        "tag": "app",
+        "fn": {
+          "tag": "const",
+          "name": "Flag.mk",
+          "levels": []
+        },
+        "arg": {
+          "tag": "const",
+          "name": "Bool.true",
+          "levels": []
+        }
+      },
+      "reducibility": "regular"
+    },
+    {
+      "kind": "definition",
+      "name": "readFlag",
+      "levelParams": [],
+      "type": {
+        "tag": "pi",
+        "domain": {
+          "tag": "const",
+          "name": "Flag",
+          "levels": []
+        },
+        "body": {
+          "tag": "pi",
+          "domain": {
+            "tag": "const",
+            "name": "Nat",
+            "levels": []
+          },
+          "body": {
+            "tag": "const",
+            "name": "Bool",
+            "levels": []
+          },
+          "binderInfo": "explicit"
+        },
+        "binderInfo": "instImplicit"
+      },
+      "value": {
+        "tag": "lam",
+        "domain": {
+          "tag": "const",
+          "name": "Flag",
+          "levels": []
+        },
+        "body": {
+          "tag": "lam",
+          "domain": {
+            "tag": "const",
+            "name": "Nat",
+            "levels": []
+          },
+          "body": {
+            "tag": "app",
+            "fn": {
+              "tag": "const",
+              "name": "Flag.enabled",
+              "levels": []
+            },
+            "arg": {
+              "tag": "bvar",
+              "index": 1
+            }
+          },
+          "binderInfo": "explicit"
+        },
+        "binderInfo": "instImplicit"
+      },
+      "reducibility": "regular"
+    },
+    {
+      "kind": "definition",
+      "name": "explicitRead",
+      "levelParams": [],
+      "type": {
+        "tag": "const",
+        "name": "Bool",
+        "levels": []
+      },
+      "value": {
+        "tag": "app",
+        "fn": {
+          "tag": "app",
+          "fn": {
+            "tag": "const",
+            "name": "readFlag",
+            "levels": []
+          },
+          "arg": {
+            "tag": "const",
+            "name": "flagHigh",
+            "levels": []
+          }
+        },
+        "arg": {
+          "tag": "const",
+          "name": "Nat.zero",
+          "levels": []
+        }
+      },
+      "reducibility": "regular"
+    },
+    {
+      "kind": "theorem",
+      "name": "explicitReadComputes",
+      "levelParams": [],
+      "type": {
+        "tag": "app",
+        "fn": {
+          "tag": "app",
+          "fn": {
+            "tag": "app",
+            "fn": {
+              "tag": "const",
+              "name": "Eq",
+              "levels": [
+                {
+                  "tag": "succ",
+                  "of": {
+                    "tag": "zero"
+                  }
+                }
+              ]
+            },
+            "arg": {
+              "tag": "const",
+              "name": "Bool",
+              "levels": []
+            }
+          },
+          "arg": {
+            "tag": "const",
+            "name": "explicitRead",
+            "levels": []
+          }
+        },
+        "arg": {
+          "tag": "const",
+          "name": "Bool.true",
+          "levels": []
+        }
+      },
+      "value": {
+        "tag": "app",
+        "fn": {
+          "tag": "app",
+          "fn": {
+            "tag": "const",
+            "name": "Eq.refl",
+            "levels": [
+              {
+                "tag": "succ",
+                "of": {
+                  "tag": "zero"
+                }
+              }
+            ]
+          },
+          "arg": {
+            "tag": "const",
+            "name": "Bool",
+            "levels": []
+          }
+        },
+        "arg": {
+          "tag": "const",
+          "name": "Bool.true",
+          "levels": []
+        }
+      }
+    }
+  ],
+  "typeclasses": {
+    "classes": [
+      {
+        "name": "Flag",
+        "numParams": 0,
+        "fields": [
+          {
+            "name": "enabled",
+            "type": {
+              "tag": "const",
+              "name": "Bool",
+              "levels": []
+            }
+          }
+        ],
+        "declarationOrder": 0
+      }
+    ],
+    "instances": [
+      {
+        "name": "flagHigh",
+        "className": "Flag",
+        "priority": 2000,
+        "declarationOrder": 1,
+        "scope": "global",
+        "anonymous": false
+      },
+      {
+        "name": "flagLater",
+        "className": "Flag",
+        "priority": 2000,
+        "declarationOrder": 2,
+        "scope": "global",
+        "anonymous": false
+      },
+      {
+        "name": "__inst_3",
+        "className": "Flag",
+        "priority": 1000,
+        "declarationOrder": 3,
+        "scope": "global",
+        "anonymous": true
+      }
+    ]
+  }
+}

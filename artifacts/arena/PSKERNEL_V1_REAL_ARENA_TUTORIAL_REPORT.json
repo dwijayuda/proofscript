@@ -1,0 +1,1299 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "P5.94-arena-nested-helper-target-validation0",
+  "checker": "proofscript-arena-adapter0",
+  "manifest": "config/arena-tutorial-manifest.json",
+  "fixturesDir": "../../arena-corpus-20260915",
+  "observedArenaTutorial": {
+    "source": "uploaded results(1).json and lean-arena-tests.tar.gz",
+    "timestamp": "2026-09-15 15:36:44 UTC",
+    "gitRevision": "a538455e201c1be48a11963cb83058649a36dc0e",
+    "gitRevisionShort": "a538455e",
+    "githubRunId": "34974976650",
+    "total": 140,
+    "good": 93,
+    "bad": 47,
+    "lean4exportVersion": "3.1.0",
+    "leanVersion": "4.29.1",
+    "note": "The uploaded Arena results/corpus contains the full 140 tutorial tests: 93 expected accept and 47 expected reject."
+  },
+  "counts": {
+    "total": 140,
+    "expectedAccept": 93,
+    "expectedReject": 47,
+    "acceptedGood": 93,
+    "rejectedBad": 47,
+    "declinedUnsupported": 0,
+    "wrongAccepts": 0,
+    "wrongRejects": 0,
+    "checkerCrashes": 0,
+    "notRun": 0
+  },
+  "publicArenaReady": false,
+  "fullArenaTutorial": true,
+  "fullLean4Equivalence": false,
+  "fullyFormalK3": false,
+  "formalLean4EquivalenceProvenObligations": 0,
+  "results": [
+    {
+      "name": "tutorial/001_basicDef",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/001_basicDef.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/002_badDef",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/002_badDef.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "type mismatch: inferred Type 1, expected Prop"
+    },
+    {
+      "name": "tutorial/003_arrowType",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/003_arrowType.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/004_dependentType",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/004_dependentType.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/005_constType",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/005_constType.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/006_betaReduction",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/006_betaReduction.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/007_betaReduction2",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/007_betaReduction2.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/008_forallSortWhnf",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/008_forallSortWhnf.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/009_forallSortBad",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/009_forallSortBad.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "expected sort, got #1"
+    },
+    {
+      "name": "tutorial/010_nonTypeType",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/010_nonTypeType.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "expected sort, got (Pi (Type 0) -> (Pi (Type 0) -> Type 0))"
+    },
+    {
+      "name": "tutorial/011_nonTypeAxiom",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/011_nonTypeAxiom.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "expected sort, got (Pi (Type 0) -> (Pi (Type 0) -> Type 0))"
+    },
+    {
+      "name": "tutorial/012_nonPropThm",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/012_nonPropThm.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "theorem nonPropThm type must be a proposition (Prop), got type Type 0"
+    },
+    {
+      "name": "tutorial/013_thmProof",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/013_thmProof.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/014_selfProof",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/014_selfProof.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "unknown constant: selfProof"
+    },
+    {
+      "name": "tutorial/015_levelComp1",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/015_levelComp1.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/016_levelComp2",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/016_levelComp2.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/017_levelComp3",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/017_levelComp3.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/018_levelParams",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/018_levelParams.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/019_tut06_bad01",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/019_tut06_bad01.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "duplicate universe parameter: u"
+    },
+    {
+      "name": "tutorial/020_levelComp4",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/020_levelComp4.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/021_levelComp5",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/021_levelComp5.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/022_imax1",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/022_imax1.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/023_imax2",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/023_imax2.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/024_levelMaxComm",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/024_levelMaxComm.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/025_levelMaxAssoc",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/025_levelMaxAssoc.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/026_levelMaxIdem",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/026_levelMaxIdem.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/027_levelMaxAbsorb",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/027_levelMaxAbsorb.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/028_inferVar",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/028_inferVar.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/029_defEqLambda",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/029_defEqLambda.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/030_peano1",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/030_peano1.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/031_peano2",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/031_peano2.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/032_peano3",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/032_peano3.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/033_letType",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/033_letType.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/034_letTypeDep",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/034_letTypeDep.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/035_letRed",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/035_letRed.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/036_empty",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/036_empty.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/037_boolType",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/037_boolType.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/038_twoBool",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/038_twoBool.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/039_andType",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/039_andType.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/040_prodType",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/040_prodType.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/041_pprodType",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/041_pprodType.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/042_pUnitType",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/042_pUnitType.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/043_eqType",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/043_eqType.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/044_natDef",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/044_natDef.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/045_rbTreeDef",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/045_rbTreeDef.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/046_inductBadNonSort",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/046_inductBadNonSort.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "line 20.inductive.recs is empty; a valid non-mutual inductive export must include its recursor"
+    },
+    {
+      "name": "tutorial/047_inductBadNonSort2",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/047_inductBadNonSort2.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "line 8.inductive.recs is empty; a valid non-mutual inductive export must include its recursor"
+    },
+    {
+      "name": "tutorial/048_inductLevelParam",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/048_inductLevelParam.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "line 7.inductive.recs is empty; a valid non-mutual inductive export must include its recursor"
+    },
+    {
+      "name": "tutorial/049_inductTooFewParams",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/049_inductTooFewParams.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "line 6.inductive.recs is empty; a valid non-mutual inductive export must include its recursor"
+    },
+    {
+      "name": "tutorial/050_inductWrongCtorParams",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/050_inductWrongCtorParams.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "line 16.inductive.recs[0].numParams does not match inductive numParams"
+    },
+    {
+      "name": "tutorial/051_inductWrongCtorResParams",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/051_inductWrongCtorResParams.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "line 19.inductive.recs[0].numParams does not match inductive numParams"
+    },
+    {
+      "name": "tutorial/052_inductWrongCtorResLevel",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/052_inductWrongCtorResLevel.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "line 23.inductive.recs[0].numParams does not match inductive numParams"
+    },
+    {
+      "name": "tutorial/053_inductInIndex",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/053_inductInIndex.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "line 14.inductive.recs[0].numIndices does not match inductive numIndices"
+    },
+    {
+      "name": "tutorial/054_indNeg",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/054_indNeg.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "line 12.inductive.recs[0].numMotives must be 1 for a valid non-mutual inductive export"
+    },
+    {
+      "name": "tutorial/055_reduceCtorParam.mk",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/055_reduceCtorParam.mk.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/056_reduceCtorType.mk",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/056_reduceCtorType.mk.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "line 26.inductive.recs[0].numMotives must be 1 for a valid non-mutual inductive export"
+    },
+    {
+      "name": "tutorial/057_indNegReducible",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/057_indNegReducible.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "line 31.inductive.recs[0].numMotives must be 1 for a valid non-mutual inductive export"
+    },
+    {
+      "name": "tutorial/058_predWithTypeField",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/058_predWithTypeField.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/059_typeWithTypeField",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/059_typeWithTypeField.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/060_typeWithTypeFieldPoly",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/060_typeWithTypeFieldPoly.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/061_typeWithTooHighTypeField.mk",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/061_typeWithTooHighTypeField.mk.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "line 11.inductive.recs[0].numMotives must be 1 for a valid non-mutual inductive export"
+    },
+    {
+      "name": "tutorial/062_emptyRec",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/062_emptyRec.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/063_boolRec",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/063_boolRec.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/064_twoBoolRec",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/064_twoBoolRec.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/065_andRec",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/065_andRec.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/066_prodRec",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/066_prodRec.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/067_pprodRec",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/067_pprodRec.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/068_punitRec",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/068_punitRec.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/069_eqRec",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/069_eqRec.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/070_nRec",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/070_nRec.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/071_rbTreeRef",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/071_rbTreeRef.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/072_boolPropRec",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/072_boolPropRec.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/073_BogusRecursor",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/073_BogusRecursor.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "line 24.inductive.recs[0].numMotives must be 1 for a valid non-mutual inductive export"
+    },
+    {
+      "name": "tutorial/074_existsRec",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/074_existsRec.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/075_typeSingletonRecReduction",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/075_typeSingletonRecReduction.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/076_sortElimPropRec",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/076_sortElimPropRec.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/077_sortElimProp2Rec",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/077_sortElimProp2Rec.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/078_boolRecEqns",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/078_boolRecEqns.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/079_prodRecEqns",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/079_prodRecEqns.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/080_nRecReduction",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/080_nRecReduction.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/081_listRecReduction",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/081_listRecReduction.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/082_RBTree.id_spec",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/082_RBTree.id_spec.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/083_And.right",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/083_And.right.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/084_Prod.snd",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/084_Prod.snd.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/085_PProd.snd",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/085_PProd.snd.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/086_PSigma.snd",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/086_PSigma.snd.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/087_projOutOfRange",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/087_projOutOfRange.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "projection index 2 out of range for And; field count is 2"
+    },
+    {
+      "name": "tutorial/088_projNotStruct",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/088_projNotStruct.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "projection typing for non-structure family N is not implemented in the trusted kernel slice yet"
+    },
+    {
+      "name": "tutorial/089_projProp1",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/089_projProp1.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/090_projProp2",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/090_projProp2.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "projection PropStructure.1 cannot extract a non-proposition field from a possibly proposition-valued structure"
+    },
+    {
+      "name": "tutorial/091_projProp3",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/091_projProp3.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/092_projProp4",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/092_projProp4.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "projection PropStructure.3 cannot extract a non-proposition field from a possibly proposition-valued structure"
+    },
+    {
+      "name": "tutorial/093_projProp5",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/093_projProp5.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "projection PropStructure.3 cannot extract a non-proposition field from a possibly proposition-valued structure"
+    },
+    {
+      "name": "tutorial/094_projProp6",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/094_projProp6.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "projection PropStructure.5 cannot occur after dependent non-proposition field 3 in a possibly proposition-valued structure"
+    },
+    {
+      "name": "tutorial/095_projDataIndexRec",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/095_projDataIndexRec.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/096_projIndexData",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/096_projIndexData.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "projection PropStructure.0 targets an unknown or non-inductive family"
+    },
+    {
+      "name": "tutorial/097_projIndexData2",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/097_projIndexData2.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "projection PropStructure.1 targets an unknown or non-inductive family"
+    },
+    {
+      "name": "tutorial/098_projRed",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/098_projRed.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/099_ruleK",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/099_ruleK.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/100_ruleKbad",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/100_ruleKbad.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "type mismatch: inferred (Pi ((((Eq.{Type 0} Bool) Bool.true) Bool.false)) -> (Pi (Bool) -> (((Eq.{Type 0} Bool) #0) #0))), expected (Pi ((((Eq.{Type 0} Bool) Bool.true) Bool.false)) -> (Pi (Bool) -> (((Eq.{Type 0} Bool) ((((((Eq.rec.{Type 0,Type 0} Bool) Bool.true) (fun (Bool) => (fun ((((Eq.{Type 0} Bool) Bool.true) #0)) => Bool))) #0) Bool.false) #1)) #0)))"
+    },
+    {
+      "name": "tutorial/101_ruleKAcc",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/101_ruleKAcc.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "type mismatch: inferred (Pi (u) -> (Pi ((Pi (#0) -> (Pi (#1) -> Prop))) -> (Pi (#1) -> (Pi ((((Acc.{u} #2) #1) #0)) -> (Pi (Bool) -> (((Eq.{Type 0} Bool) #0) #0)))))), expected (Pi (u) -> (Pi ((Pi (#0) -> (Pi (#1) -> Prop))) -> (Pi (#1) -> (Pi ((((Acc.{u} #2) #1) #0)) -> (Pi (Bool) -> (((Eq.{Type 0} Bool) ((((((Acc.rec.{Type 0,u} #4) #3) (fun (#4) => (fun ((((Acc.{u} #5) #4) #0)) => Bool))) (fun (#4) => (fun ((Pi (#5) -> (Pi (((#5 #0) #1)) -> (((Acc.{u} #7) #6) #1)))) => (fun ((Pi (#6) -> (Pi (((#6 #0) #2)) -> (((fun (#8) => (fun ((((Acc.{u} #9) #8) #0)) => Bool)) #1) ((#2 #1) #0))))) => #3)))) #2) #1)) #0))))))"
+    },
+    {
+      "name": "tutorial/102_aNatLit",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/102_aNatLit.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/103_natLitEq",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/103_natLitEq.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/104_proofIrrelevance",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/104_proofIrrelevance.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/105_proofIrrelevanceBad",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/105_proofIrrelevanceBad.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "type mismatch: inferred (Pi (Type 0) -> (Pi (#0) -> (Pi (#1) -> (((Eq.{Type 0} #2) #1) #1)))), expected (Pi (Type 0) -> (Pi (#0) -> (Pi (#1) -> (((Eq.{Type 0} #2) #1) #0))))"
+    },
+    {
+      "name": "tutorial/106_proofIrrelevanceWhnf",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/106_proofIrrelevanceWhnf.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/107_unitEta1",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/107_unitEta1.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/108_unitEta2",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/108_unitEta2.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/109_unitEta3",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/109_unitEta3.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/110_indexedUnitEta",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/110_indexedUnitEta.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "type mismatch: inferred (Pi ((IndexedUnit Bool.true)) -> (Pi ((IndexedUnit Bool.true)) -> (((Eq.{Type 0} (IndexedUnit Bool.true)) #1) #1))), expected (Pi ((IndexedUnit Bool.true)) -> (Pi ((IndexedUnit Bool.true)) -> (((Eq.{Type 0} (IndexedUnit Bool.true)) #1) #0)))"
+    },
+    {
+      "name": "tutorial/111_structEta",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/111_structEta.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/112_indexedStructEta",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/112_indexedStructEta.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "type mismatch: inferred (Pi ((IndexedSingleton Bool.true)) -> (((Eq.{Type 0} (IndexedSingleton Bool.true)) #0) #0)), expected (Pi ((IndexedSingleton Bool.true)) -> (((Eq.{Type 0} (IndexedSingleton Bool.true)) (IndexedSingleton.mk True.intro)) #0))"
+    },
+    {
+      "name": "tutorial/113_funEta",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/113_funEta.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/114_funEtaDep",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/114_funEtaDep.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/115_funEtaBad",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/115_funEtaBad.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "type mismatch: inferred (Pi (Type 0) -> (Pi (Type 0) -> (Pi ((Pi (#1) -> #2)) -> (Pi ((Pi (#2) -> #2)) -> (((Eq.{Type 0} (Pi (#3) -> #3)) #0) #0))))), expected (Pi (Type 0) -> (Pi (Type 0) -> (Pi ((Pi (#1) -> #2)) -> (Pi ((Pi (#2) -> #2)) -> (((Eq.{Type 0} (Pi (#3) -> #3)) (fun (#3) => (#1 (#2 #0)))) #0)))))"
+    },
+    {
+      "name": "tutorial/116_reflOccLeft",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/116_reflOccLeft.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "line 61.inductive.recs[0].numMotives must be 1 for a valid non-mutual inductive export"
+    },
+    {
+      "name": "tutorial/117_reflOccInIndex",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/117_reflOccInIndex.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "line 66.inductive.recs[0].numIndices does not match inductive numIndices"
+    },
+    {
+      "name": "tutorial/118_reduceCtorParamRefl.mk",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/118_reduceCtorParamRefl.mk.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/119_reduceCtorParamRefl2.mk",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/119_reduceCtorParamRefl2.mk.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/120_rTreeRec",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/120_rTreeRec.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/121_rtreeRecReduction",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/121_rtreeRecReduction.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/122_accRecType",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/122_accRecType.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/123_accRecReduction",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/123_accRecReduction.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/124_accRecNoEta",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/124_accRecNoEta.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "type mismatch: inferred (Pi (Type 0) -> (Pi ((Pi (#0) -> (Pi (#1) -> Prop))) -> (Pi (#1) -> (Pi ((((Acc.{Type 0} #2) #1) #0)) -> (Pi (Bool) -> (((Eq.{Type 0} Bool) #0) #0)))))), expected (Pi (Type 0) -> (Pi ((Pi (#0) -> (Pi (#1) -> Prop))) -> (Pi (#1) -> (Pi ((((Acc.{Type 0} #2) #1) #0)) -> (Pi (Bool) -> (((Eq.{Type 0} Bool) ((((((Acc.rec.{Type 0,Type 0} #4) #3) (fun (#4) => (fun ((((Acc.{Type 0} #5) #4) #0)) => Bool))) (fun (#4) => (fun ((Pi (#5) -> (Pi (((#5 #0) #1)) -> (((Acc.{Type 0} #7) #6) #1)))) => (fun ((Pi (#6) -> (Pi (((#6 #0) #2)) -> (((fun (#8) => (fun ((((Acc.{Type 0} #9) #8) #0)) => Bool)) #1) ((#2 #1) #0))))) => #3)))) #2) #1)) #0))))))"
+    },
+    {
+      "name": "tutorial/125_quotMkType",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/125_quotMkType.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/126_quotIndType",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/126_quotIndType.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/127_quotLiftType",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/127_quotLiftType.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/128_quotSoundType",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/128_quotSoundType.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/129_quotLiftReduction",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/129_quotLiftReduction.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/130_quotIndReduction",
+      "outcome": "accept",
+      "fixture": "../../arena-corpus-20260915/good/tutorial/130_quotIndReduction.ndjson",
+      "category": "acceptedGood",
+      "exitCode": 0,
+      "checkerStatus": "accepted",
+      "message": ""
+    },
+    {
+      "name": "tutorial/131_dup_defs",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/131_dup_defs.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "duplicate declaration: dup_defs"
+    },
+    {
+      "name": "tutorial/132_dup_ind_def",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/132_dup_ind_def.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "duplicate declaration: dup_ind_def"
+    },
+    {
+      "name": "tutorial/133_dup_ctor_def",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/133_dup_ctor_def.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "duplicate declaration: dup_ctor_def.mk"
+    },
+    {
+      "name": "tutorial/134_dup_rec_def",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/134_dup_rec_def.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "duplicate declaration: dup_rec_def.rec"
+    },
+    {
+      "name": "tutorial/135_misnamed_rec_user",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/135_misnamed_rec_user.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "line 26.inductive.recs[0].name must be misnamed_rec.rec"
+    },
+    {
+      "name": "tutorial/136_dup_rec_def2",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/136_dup_rec_def2.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "line 28.inductive.recs[0].name must be dup_rec_def2.rec"
+    },
+    {
+      "name": "tutorial/137_dup_ctor_rec",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/137_dup_ctor_rec.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "duplicate declaration generated in batch: dup_ctor_rec.rec"
+    },
+    {
+      "name": "tutorial/138_DupConCon",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/138_DupConCon.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "line 35.inductive.types[0].ctors does not match constructor records"
+    },
+    {
+      "name": "tutorial/139_falseFromUnsafe",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/139_falseFromUnsafe.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "definition safety unsafe cannot enter the logical kernel; unsafe/partial declarations must not justify theorems"
+    },
+    {
+      "name": "tutorial/140_falseFromPartial",
+      "outcome": "reject",
+      "fixture": "../../arena-corpus-20260915/bad/tutorial/140_falseFromPartial.ndjson",
+      "category": "rejectedBad",
+      "exitCode": 1,
+      "checkerStatus": "rejected",
+      "message": "definition safety partial cannot enter the logical kernel; unsafe/partial declarations must not justify theorems"
+    }
+  ]
+}

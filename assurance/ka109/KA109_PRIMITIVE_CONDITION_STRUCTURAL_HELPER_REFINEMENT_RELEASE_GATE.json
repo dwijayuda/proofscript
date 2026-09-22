@@ -1,0 +1,130 @@
+{
+  "checkpoint": "proofscript-v1-ka109-primitive-condition-structural-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.112",
+  "baseline": "proofscript-v1-ka108-primitive-lambda-helper-refinement0",
+  "releaseKind": "strict-lean4lean-primitive-condition-structural-helper-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA109",
+      "source": "assurance/ka109/primitive-condition-structural-helper-refinement-bridge.lean",
+      "destination": "KA109PrimitiveConditionStructuralHelperBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 5,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka109-primitive-condition-structural-helper-refinement0",
+    "publicVersion": "1.0.0-pskernel.112",
+    "featureSurfaceBridgeProgressPercent": 99,
+    "executableKernelEquivalenceProofProgressPercent": 87,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 366,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 361,
+      "newFormalLean4LeanBridgeObligations": 5,
+      "correctedFormalLean4LeanBridgeObligations": 366,
+      "countedNewObligations": [
+        "translated_condition_wf_hprop0_wf",
+        "translated_condition_wf_hdec0_wf",
+        "translated_condition_wf_prop_closed_wf",
+        "translated_condition_wf_dec_closed_wf",
+        "translated_condition_impl_ok_reflect_wf"
+      ]
+    },
+    "metricPolicy": "KA109 adds direct non-sorry-backed primitive condition structural helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka109Files": [
+      {
+        "path": "tools/pskernel-ka109-primitive-condition-structural-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka109-primitive-condition-structural-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka109/KA109_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 23,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka109/KA109_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka109/KA109_PRIMITIVE_CONDITION_STRUCTURAL_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 36,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka109/KA109_PRIMITIVE_CONDITION_STRUCTURAL_HELPER_REFINEMENT_RELEASE_GATE.json",
+        "lines": 131,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka109/KA109_PRIMITIVE_CONDITION_STRUCTURAL_HELPER_REFINEMENT_REPORT.md",
+        "lines": 22,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka109/KA109_PRIMITIVE_CONDITION_STRUCTURAL_HELPER_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 9,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka109/primitive-condition-structural-helper-refinement-bridge.lean",
+        "lines": 39,
+        "ext": ".lean"
+      }
+    ],
+    "ka109ToolFiles": [
+      {
+        "path": "tools/pskernel-ka109-primitive-condition-structural-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka109-primitive-condition-structural-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      }
+    ],
+    "newKA109OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveConditionStructuralHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

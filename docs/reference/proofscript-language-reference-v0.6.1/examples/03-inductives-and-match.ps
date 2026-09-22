@@ -1,0 +1,10 @@
+inductive Result(α : Type, ε : Type) where {
+  | ok(value : α);
+  | error(error : ε);
+}
+
+function mapResult {α β ε : Type}(f : α -> β, result : Result α ε) : Result β ε :=
+  match result with {
+    | .ok value => .ok(f(value));
+    | .error err => .error(err);
+  };

@@ -1,0 +1,40 @@
+{
+  "checkpoint": "proofscript-v1-ka111-progress-dashboard0",
+  "publicVersion": "1.0.0-pskernel.114",
+  "baseline": "proofscript-v1-ka110-feature-surface-closeout-audit0",
+  "metrics": {
+    "featureSurfaceBridgeProgressPercent": 100,
+    "executableKernelEquivalenceProofProgressPercent": 87,
+    "arenaCorpusRegressionPercent": 100,
+    "releasePackagingVerificationPercent": 100,
+    "progressDashboardPercent": 100,
+    "formalLean4LeanBridgeObligations": 366,
+    "fullLean4EquivalencePercent": 0,
+    "fullyFormalK3Percent": 0,
+    "overallConservativeProjectProgressPercent": 81,
+    "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+  },
+  "phaseStatus": {
+    "featureSurfaceBridge": "closed",
+    "executableEquivalence": "active",
+    "fullLean4Equivalence": "not-proven",
+    "fullyFormalK3": "not-proven",
+    "claimBoundary": "enforced"
+  },
+  "percentBoundaries": {
+    "featureSurfaceClosedDoesNotImplyFullLean4Equivalence": true,
+    "overallProgressIsDashboardEstimate": true,
+    "executableProgressIsNotARefinementProof": true
+  },
+  "nextMilestoneRecommendation": "KA112 should target executable equivalence proof progress, not more feature-surface wrappers.",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

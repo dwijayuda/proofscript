@@ -1,0 +1,22 @@
+def minNat(a: Nat, b: Nat): Nat := {
+  if (a <= b) { a } else { b }
+}
+
+def maxNat(a: Nat, b: Nat): Nat := {
+  if (a < b) { b } else { a }
+}
+
+def eqPick(a: Nat, b: Nat): Nat := {
+  if (a = b) { 42 } else { 0 }
+}
+
+def arithmeticControl(a: Nat, b: Nat): Nat := {
+  let p: Nat := a * 3;
+  if (p <= b) { b - p } else { p - b }
+}
+
+def answer: Nat := {
+  arithmeticControl(8, 18)
+}
+
+theorem answer_eq_6: answer = 6 := by { rfl }

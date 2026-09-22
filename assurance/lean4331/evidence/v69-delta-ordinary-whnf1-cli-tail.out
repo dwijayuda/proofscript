@@ -1,0 +1,29 @@
++ node cli check examples/basic/src/Main.ps (expect 0)
+accepted 5/5 declaration(s); assumptions=0; modules=1
++ node cli check examples/basic/src/Invalid.ps (expect 1)
+rejected: type mismatch
+  expected: ((x0: Prop) → (x0 → x0))
+  actual:   ((x0: Prop) → (x0 → Prop))
++ node cli check examples/basic/src/Unsupported.ps (expect 2)
+unsupported: K3c-section-vars0 does not implement tactic syntax ('by'); use a direct proof term
++ node cli check examples/basic/src/Main.ps --emit-core examples/basic/proof/Main.pscore.json (expect 0)
+accepted 5/5 declaration(s); assumptions=0; modules=1
++ node cli build examples/basic/src/Main.ps --target manifest --out examples/basic/dist/manifest.json (expect 0)
+✓ built manifest: /mnt/data/psv69-work/proofscript-kernel-v69-universe-conformance1/examples/basic/dist/manifest.json (execution correspondence: not-claimed)
++ node cli build examples/basic/src/Main.ps --target names --out examples/basic/dist/names.txt (expect 0)
+✓ built names: /mnt/data/psv69-work/proofscript-kernel-v69-universe-conformance1/examples/basic/dist/names.txt (execution correspondence: not-claimed)
++ node cli certify examples/basic/src/Main.ps --core examples/basic/proof/Main.pscore.json --out examples/basic/proof/Main.pscert.json (expect 0)
+✓ certified 5 declaration(s) from 1 module source(s): examples/basic/proof/Main.pscert.json
++ node cli verify examples/basic/proof/Main.pscert.json (expect 0)
+✓ independently replayed 5 declaration(s); project plugins loaded: no
++ node cli check examples/basic/src/WithAxiom.ps --emit-core examples/basic/proof/WithAxiom.pscore.json (expect 0)
+accepted 3/3 declaration(s); assumptions=2; modules=1
++ node cli verify examples/basic/proof/WithAxiom.pscore.json (expect 1)
+rejected: unapproved axiom/assumption(s): P, h
++ node cli verify examples/basic/proof/WithAxiom.pscore.json --allow-axioms P,h (expect 0)
+✓ independently replayed 3 declaration(s); project plugins loaded: no
++ node cli emit-lean examples/basic/proof/Main.pscore.json --out examples/basic/proof/Generated.lean (expect 0)
+✓ emitted Lean artifact: examples/basic/proof/Generated.lean
++ node cli verify examples/basic/proof/Tampered.pscore.json (expect 1)
+rejected: declarations[0].value.level must be a level object
+CLI_TAIL=PASS

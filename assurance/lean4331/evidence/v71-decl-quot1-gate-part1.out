@@ -1,0 +1,10 @@
+PASS: Core v71 / KERNEL-level-instantiation-conformance1 / Lean 4.33.1 identity
+PASS: 171 assurance/trusted source fingerprints
+PASS: exact Lean executable 4.33.1/819816b2e0a3
+PASS: inherited v69 universe conformance regression
+PASS: inherited v70 projection conformance regression
+PASS: v71 level-instantiation identity + cheap-rebuild regression
+PASS: 30,000 universe pairs / 60,000 predicate comparisons recorded clean
+PASS: 21 formal modules + target statement compile with no reported sorryAx
+PASS: exact Lean rejects historical-v68 universe counterexample
+PASS: 5,000 live universe-name ordering comparisons

@@ -1,0 +1,80 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./packages/kernel"
+    },
+    {
+      "path": "./packages/runtime"
+    },
+    {
+      "path": "./packages/backend-typescript"
+    },
+    {
+      "path": "./packages/kernel-codec"
+    },
+    {
+      "path": "./packages/certificates"
+    },
+    {
+      "path": "./packages/syntax"
+    },
+    {
+      "path": "./packages/parser"
+    },
+    {
+      "path": "./packages/recursion"
+    },
+    {
+      "path": "./packages/typeclass"
+    },
+    {
+      "path": "./packages/elaborator"
+    },
+    {
+      "path": "./packages/environment"
+    },
+    {
+      "path": "./packages/frontend"
+    },
+    {
+      "path": "./packages/plugin-api"
+    },
+    {
+      "path": "./packages/project"
+    },
+    {
+      "path": "./packages/plugin-host"
+    },
+    {
+      "path": "./packages/semantic-ir"
+    },
+    {
+      "path": "./packages/compiler"
+    },
+    {
+      "path": "./packages/lean-export"
+    },
+    {
+      "path": "./packages/oracle-lean"
+    },
+    {
+      "path": "./packages/verifier"
+    },
+    {
+      "path": "./packages/cli"
+    },
+    {
+      "path": "./plugins/official/backend-manifest"
+    },
+    {
+      "path": "./packages/frontend-next"
+    },
+    {
+      "path": "./packages/unified-bridge"
+    },
+    {
+      "path": "./packages/arena-checker"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "mandatoryGates": [
+    {
+      "part": 1,
+      "pass": true
+    },
+    {
+      "part": 2,
+      "pass": true
+    },
+    {
+      "part": 3,
+      "pass": true
+    },
+    {
+      "part": 4,
+      "pass": true
+    },
+    {
+      "part": 5,
+      "pass": true
+    },
+    {
+      "part": 6,
+      "pass": true
+    }
+  ],
+  "build": "PASS",
+  "conformance": "PASS",
+  "manifestSha256": "ccb91d560cbff1fdde41c266022d599f034d12b0541f402723e64dc2f57ba6b3"
+}

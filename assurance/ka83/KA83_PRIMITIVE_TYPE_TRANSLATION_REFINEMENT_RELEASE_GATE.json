@@ -1,0 +1,184 @@
+{
+  "checkpoint": "proofscript-v1-ka83-primitive-type-translation-refinement0",
+  "publicVersion": "1.0.0-pskernel.86",
+  "baseline": "proofscript-v1-ka82-primitive-dependency-reflection-refinement0",
+  "releaseKind": "strict-lean4lean-primitive-type-translation-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA83",
+      "source": "assurance/ka83/primitive-type-translation-refinement-bridge.lean",
+      "destination": "PSKernelKA83PrimitiveTypeTranslationRefinementBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 6,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka83-primitive-type-translation-refinement0",
+    "publicVersion": "1.0.0-pskernel.86",
+    "featureSurfaceBridgeProgressPercent": 94,
+    "executableKernelEquivalenceProofProgressPercent": 61,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 255,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 249,
+      "newFormalLean4LeanBridgeObligations": 6,
+      "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+      "correctedFormalLean4LeanBridgeObligations": 255,
+      "countedNewObligations": [
+        "translated_natLitClosed_wf",
+        "translated_natFstLamApp_wf",
+        "translated_natIsType_wf",
+        "translated_trNat_wf",
+        "translated_boolIsType_wf",
+        "translated_trBool_wf"
+      ]
+    },
+    "metricPolicy": "KA83 adds direct non-sorry-backed primitive Nat/Bool type-translation and literal-closure bridge wrappers. Percentages remain conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka83Files": [
+      {
+        "path": "tools/pskernel-ka83-primitive-type-translation-refinement-tests.ts",
+        "lines": 40,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka83-primitive-type-translation-refinement.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka83/KA83_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 25,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka83/KA83_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka83/KA83_PRIMITIVE_TYPE_TRANSLATION_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 38,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka83/KA83_PRIMITIVE_TYPE_TRANSLATION_REFINEMENT_RELEASE_GATE.json",
+        "lines": 133,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka83/KA83_PRIMITIVE_TYPE_TRANSLATION_REFINEMENT_REPORT.md",
+        "lines": 23,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka83/KA83_PRIMITIVE_TYPE_TRANSLATION_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 22,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka83/primitive-type-translation-refinement-bridge.lean",
+        "lines": 47,
+        "ext": ".lean"
+      }
+    ],
+    "ka83ToolFiles": [
+      {
+        "path": "tools/pskernel-ka83-primitive-type-translation-refinement-tests.ts",
+        "lines": 40,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka83-primitive-type-translation-refinement.ts",
+        "lines": 39,
+        "ext": ".ts"
+      }
+    ],
+    "newKA83OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveTypeTranslationRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false,
+  "boundedReleaseVerification": {
+    "passed": [
+      "npm install --offline --no-audit --no-fund",
+      "npm run build -- --pretty false",
+      "npm run test:pskernel:ka83",
+      "npm run assurance:ka83",
+      "npm run lean:ka83:check",
+      "npm run test:kernel:smoke",
+      "npm run test:standalone-small",
+      "npm run test:psc:kernel-status",
+      "npm run test:psc:conformance-bounded",
+      "npm run arena:corpus-preflight",
+      "npm run test:arena:static-nonperf",
+      "npm run test:arena:tutorial",
+      "npm run test:arena:recursor-rule-arity-validation",
+      "npm run test:arena:transparent-result-sort-reject",
+      "npm run test:arena:mutual-imax-prop-reject",
+      "npm pack --workspaces --ignore-scripts",
+      "sha256sum -c package SHA manifest"
+    ],
+    "notCountedAsPassed": [
+      "npm run verify:arena timed out at internal tutorial step; tail commands rerun individually and passed"
+    ]
+  },
+  "npmPackages": {
+    "packed": 36,
+    "sha256Entries": 36,
+    "verification": "passed"
+  },
+  "arenaEvidence": {
+    "corpusPreflight": "passed",
+    "ndjsonFixtures": 190,
+    "staticNonPerf": "26/26 decisive",
+    "tutorial": "140/140 decisive",
+    "verifyArenaWrapper": "timed-out-not-counted",
+    "tailCommands": "passed-individually"
+  },
+  "freshExtract": {
+    "initialResidue": {
+      "node_modules": 0,
+      "dist": 0,
+      "tsbuildinfo": 0,
+      "tgz": 0,
+      "zip": 0
+    },
+    "install": "passed",
+    "build": "passed",
+    "focusedKA83Test": "passed",
+    "strictLeanCheck": "passed"
+  },
+  "zipIntegrity": "passed",
+  "zipSha256Check": "passed"
+}

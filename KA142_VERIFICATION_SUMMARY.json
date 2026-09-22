@@ -1,0 +1,28 @@
+{
+  "checkpoint": "proofscript-v1-ka142-loop-invariants-structural-workflow0",
+  "freshVerification": [
+    "npm run build",
+    "npm run test:ka142",
+    "npm run test:ka141",
+    "npm run test:ka140",
+    "npm run test:ka139",
+    "npm run test:ka138",
+    "npm run test:ka137",
+    "npm run test:ka136",
+    "npm pack --ignore-scripts",
+    "npm publish --dry-run --ignore-scripts --access public",
+    "fresh npm install from generated tarball",
+    "fresh npx psc contracts for loop invariant example",
+    "fresh npx psc obligations for loop invariant example",
+    "fresh npx psc proof-status and verify for loop invariant example",
+    "fresh npx psc software-alpha with loop invariant example"
+  ],
+  "redGreen": {
+    "red": "KA-142 test failed before implementation because contracts output had no loops field/loop obligations.",
+    "green": "KA-142 test passed after parser, artifact, obligation, software-alpha, and language-status updates."
+  },
+  "notes": [
+    "Loop obligations are structural and intentionally unproved until a real vcgen/mvcgen lowering is implemented.",
+    "No hidden axioms, sorry, or admit were introduced."
+  ]
+}

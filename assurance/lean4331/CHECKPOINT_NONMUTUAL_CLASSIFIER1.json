@@ -1,0 +1,55 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "NONMUTUAL_CLASSIFIER1",
+  "coreFormat": 71,
+  "profile": "KERNEL-level-instantiation-conformance1",
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "kernelSemanticsChanged": false,
+  "formal": {
+    "effectiveModules": 30,
+    "newModules": ["InductiveNonMutualClassifierCorrespondence.lean"],
+    "targetStatement": true,
+    "reportedSorryAx": 0
+  },
+  "classifierVectors": {
+    "acceptedFamilies": 5,
+    "rejectedFamilies": 4,
+    "propExemptionCases": 1,
+    "whnfDefEqCases": 3,
+    "higherOrderPointwiseIHCases": 1,
+    "atomicRejections": 4,
+    "failures": 0
+  },
+  "composedBridge": {
+    "components": 5,
+    "failures": 0,
+    "componentsNamed": [
+      "classifier vectors",
+      "generic non-mutual admission",
+      "non-mutual integration",
+      "generated non-mutual recursors",
+      "whole-environment induction"
+    ]
+  },
+  "mandatoryGates": [
+    {"part": 1, "status": "PASS"},
+    {"part": 2, "status": "PASS"},
+    {"part": 3, "status": "PASS"},
+    {"part": 4, "status": "PASS"},
+    {"part": 5, "status": "PASS"},
+    {"part": 6, "status": "PASS"}
+  ],
+  "build": "PASS",
+  "conformance": "PASS",
+  "sourceDifferential": {
+    "passed": 23,
+    "total": 25,
+    "knownNonKernelFailures": ["reduction-recursion", "equation-patterns"]
+  },
+  "k3WholeKernelEquivalence": false,
+  "claimBoundary": "classifier witness boundary, not proof of every shipped TypeScript branch",
+  "next": "mutual inductive admission correspondence, or first extract the TypeScript classifier into a proof-oriented model"
+}

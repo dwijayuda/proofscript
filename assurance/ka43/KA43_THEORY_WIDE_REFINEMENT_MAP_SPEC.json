@@ -1,0 +1,29 @@
+{
+  "checkpoint": "proofscript-v1-ka43-theory-wide-refinement-map0",
+  "purpose": "keep ProofScript/PSKernel feature equivalence development non-spaghetti by adding a modular architecture ratchet and explicit theory-wide refinement map",
+  "filesCreatedOrModified": [
+    "tools/pskernel-ka43-theory-wide-refinement-map.ts",
+    "tools/pskernel-ka43-theory-wide-refinement-map-tests.ts",
+    "assurance/ka43/theory-wide-refinement-map.json",
+    "assurance/ka43/architecture-health-policy.json",
+    "assurance/ka43/kernel-feature-equivalence-progress.json"
+  ],
+  "antiSpaghettiRules": [
+    "no new trusted semantics in KA43",
+    "no Core/codec changes",
+    "new KA43 source max 500 lines",
+    "preexisting oversized modules inventoried",
+    "semantic packages not touched by generated gate"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "theoryWideRefinementComplete": false,
+    "formalLean4EquivalenceProvenObligations": 128
+  }
+}

@@ -1,0 +1,309 @@
+{
+  "format": "proofscript-core",
+  "formatVersion": 10,
+  "proofscriptReference": "v0.1",
+  "leanSemanticBaseline": "4.33.1",
+  "implementationProfile": "K2p-parameterized-typeclasses0",
+  "declarations": [
+    {
+      "kind": "inductive",
+      "name": "Eq",
+      "levelParams": [
+        "u"
+      ],
+      "type": {
+        "tag": "pi",
+        "domain": {
+          "tag": "sort",
+          "level": {
+            "tag": "param",
+            "name": "u"
+          }
+        },
+        "body": {
+          "tag": "pi",
+          "domain": {
+            "tag": "bvar",
+            "index": 0
+          },
+          "body": {
+            "tag": "pi",
+            "domain": {
+              "tag": "bvar",
+              "index": 1
+            },
+            "body": {
+              "tag": "sort",
+              "level": {
+                "tag": "zero"
+              }
+            }
+          },
+          "binderInfo": "explicit"
+        },
+        "binderInfo": "explicit"
+      },
+      "numParams": 2,
+      "numIndices": 1,
+      "constructors": [
+        {
+          "name": "Eq.refl",
+          "type": {
+            "tag": "pi",
+            "domain": {
+              "tag": "sort",
+              "level": {
+                "tag": "param",
+                "name": "u"
+              }
+            },
+            "body": {
+              "tag": "pi",
+              "domain": {
+                "tag": "bvar",
+                "index": 0
+              },
+              "body": {
+                "tag": "app",
+                "fn": {
+                  "tag": "app",
+                  "fn": {
+                    "tag": "app",
+                    "fn": {
+                      "tag": "const",
+                      "name": "Eq",
+                      "levels": [
+                        {
+                          "tag": "param",
+                          "name": "u"
+                        }
+                      ]
+                    },
+                    "arg": {
+                      "tag": "bvar",
+                      "index": 1
+                    }
+                  },
+                  "arg": {
+                    "tag": "bvar",
+                    "index": 0
+                  }
+                },
+                "arg": {
+                  "tag": "bvar",
+                  "index": 0
+                }
+              },
+              "binderInfo": "explicit"
+            },
+            "binderInfo": "explicit"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "inductive",
+      "name": "Nat",
+      "levelParams": [],
+      "type": {
+        "tag": "sort",
+        "level": {
+          "tag": "succ",
+          "of": {
+            "tag": "zero"
+          }
+        }
+      },
+      "numParams": 0,
+      "numIndices": 0,
+      "constructors": [
+        {
+          "name": "Nat.zero",
+          "type": {
+            "tag": "const",
+            "name": "Nat",
+            "levels": []
+          }
+        },
+        {
+          "name": "Nat.succ",
+          "type": {
+            "tag": "pi",
+            "domain": {
+              "tag": "const",
+              "name": "Nat",
+              "levels": []
+            },
+            "body": {
+              "tag": "const",
+              "name": "Nat",
+              "levels": []
+            },
+            "binderInfo": "explicit"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "inductive",
+      "name": "Bool",
+      "levelParams": [],
+      "type": {
+        "tag": "sort",
+        "level": {
+          "tag": "succ",
+          "of": {
+            "tag": "zero"
+          }
+        }
+      },
+      "numParams": 0,
+      "numIndices": 0,
+      "constructors": [
+        {
+          "name": "Bool.false",
+          "type": {
+            "tag": "const",
+            "name": "Bool",
+            "levels": []
+          }
+        },
+        {
+          "name": "Bool.true",
+          "type": {
+            "tag": "const",
+            "name": "Bool",
+            "levels": []
+          }
+        }
+      ]
+    },
+    {
+      "kind": "definition",
+      "name": "Nat.add",
+      "levelParams": [],
+      "type": {
+        "tag": "pi",
+        "domain": {
+          "tag": "const",
+          "name": "Nat",
+          "levels": []
+        },
+        "body": {
+          "tag": "pi",
+          "domain": {
+            "tag": "const",
+            "name": "Nat",
+            "levels": []
+          },
+          "body": {
+            "tag": "const",
+            "name": "Nat",
+            "levels": []
+          },
+          "binderInfo": "explicit"
+        },
+        "binderInfo": "explicit"
+      },
+      "value": {
+        "tag": "lam",
+        "domain": {
+          "tag": "const",
+          "name": "Nat",
+          "levels": []
+        },
+        "body": {
+          "tag": "lam",
+          "domain": {
+            "tag": "const",
+            "name": "Nat",
+            "levels": []
+          },
+          "body": {
+            "tag": "app",
+            "fn": {
+              "tag": "app",
+              "fn": {
+                "tag": "app",
+                "fn": {
+                  "tag": "app",
+                  "fn": {
+                    "tag": "const",
+                    "name": "Nat.rec",
+                    "levels": [
+                      {
+                        "tag": "succ",
+                        "of": {
+                          "tag": "zero"
+                        }
+                      }
+                    ]
+                  },
+                  "arg": {
+                    "tag": "lam",
+                    "domain": {
+                      "tag": "const",
+                      "name": "Nat",
+                      "levels": []
+                    },
+                    "body": {
+                      "tag": "const",
+                      "name": "Nat",
+                      "levels": []
+                    },
+                    "binderInfo": "explicit"
+                  }
+                },
+                "arg": {
+                  "tag": "bvar",
+                  "index": 1
+                }
+              },
+              "arg": {
+                "tag": "lam",
+                "domain": {
+                  "tag": "const",
+                  "name": "Nat",
+                  "levels": []
+                },
+                "body": {
+                  "tag": "lam",
+                  "domain": {
+                    "tag": "const",
+                    "name": "Nat",
+                    "levels": []
+                  },
+                  "body": {
+                    "tag": "app",
+                    "fn": {
+                      "tag": "const",
+                      "name": "Nat.succ",
+                      "levels": []
+                    },
+                    "arg": {
+                      "tag": "bvar",
+                      "index": 0
+                    }
+                  },
+                  "binderInfo": "explicit"
+                },
+                "binderInfo": "explicit"
+              }
+            },
+            "arg": {
+              "tag": "bvar",
+              "index": 0
+            }
+          },
+          "binderInfo": "explicit"
+        },
+        "binderInfo": "explicit"
+      },
+      "reducibility": "regular"
+    }
+  ],
+  "typeclasses": {
+    "classes": [],
+    "instances": []
+  }
+}

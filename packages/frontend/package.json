@@ -1,0 +1,22 @@
+{
+  "name": "@proofscript/frontend",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "ProofScript frontend pipeline bootstrap",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "@proofscript/parser": "0.1.0-dev.0",
+    "@proofscript/elaborator": "0.1.0-dev.0",
+    "@proofscript/kernel": "0.1.0-dev.0",
+    "@proofscript/kernel-codec": "0.1.0-dev.0",
+    "@proofscript/environment": "0.1.0-dev.0",
+    "@proofscript/project": "0.1.0-dev.0",
+    "@proofscript/syntax": "0.1.0-dev.0"
+  }
+}

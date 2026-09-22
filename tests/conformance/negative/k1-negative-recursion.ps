@@ -1,0 +1,4 @@
+-- The recursive occurrence is to the left of an arrow and is not strictly positive.
+inductive Bad: Type {
+  | mk(f: Bad → Bad);
+}

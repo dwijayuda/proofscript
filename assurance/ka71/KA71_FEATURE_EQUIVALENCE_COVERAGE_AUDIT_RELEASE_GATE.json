@@ -1,0 +1,93 @@
+{
+  "checkpoint": "proofscript-v1-ka71-feature-equivalence-coverage-audit0",
+  "publicVersion": "1.0.0-pskernel.74",
+  "baseline": "proofscript-v1-ka70-executable-defeq-unit-proj-refinement0",
+  "releaseKind": "coverage-audit-no-new-proof-obligations",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "not-applicable-audit-only",
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka71-feature-equivalence-coverage-audit0",
+    "publicVersion": "1.0.0-pskernel.74",
+    "auditedFeatureSurfaceBridgeProgressPercent": 88,
+    "auditedExecutableKernelEquivalenceProofProgressPercent": 54,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 216,
+    "obligationAccounting": {
+      "initialBaselineObligations": 132,
+      "auditedNewFormalLean4LeanBridgeObligations": 84,
+      "checkpointNewFormalLean4LeanBridgeObligations": 0
+    },
+    "metricPolicy": "KA71 is a coverage audit. It unlocks KA70 held-pending-audit percentages as audited conservative dashboard estimates, not formal theorem percentages.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "auditClassification": {
+    "proofBearingCheckpoints": 21,
+    "preflightOrScaffoldCheckpoints": 4,
+    "promotedScaffoldCheckpoints": 3,
+    "unresolvedScaffoldCheckpoints": 1
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka71Files": [
+      {
+        "path": "tools/pskernel-ka71-feature-equivalence-coverage-audit-tests.ts",
+        "lines": 38,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka71-feature-equivalence-coverage-audit.ts",
+        "lines": 126,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka71/KA71_FEATURE_EQUIVALENCE_COVERAGE_AUDIT_REPORT.md",
+        "lines": 37,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka71/KA71_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      }
+    ],
+    "ka71ToolFiles": [
+      {
+        "path": "tools/pskernel-ka71-feature-equivalence-coverage-audit-tests.ts",
+        "lines": 38,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka71-feature-equivalence-coverage-audit.ts",
+        "lines": 126,
+        "ext": ".ts"
+      }
+    ],
+    "newKA71OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWHNFDefEqRefinement": false,
+    "fullExecutableExpressionTranslatorRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

@@ -1,0 +1,18 @@
+def isZeroPattern: Nat → Bool
+  | 0 => Bool.true
+  | _ => Bool.false;
+
+def isZeroMatch(n: Nat): Bool := {
+  match (n) {
+    | 0 => Bool.true
+    | _ => Bool.false
+  }
+}
+
+theorem useZeroEquation:
+  Eq.{1}(Bool, isZeroPattern(Nat.zero), Bool.true) :=
+  isZeroPattern.eq_1;
+
+theorem useSuccEquation(k: Nat):
+  Eq.{1}(Bool, isZeroPattern(Nat.succ(k)), Bool.false) :=
+  isZeroPattern.eq_2(k);

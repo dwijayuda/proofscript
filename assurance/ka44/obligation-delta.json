@@ -1,0 +1,19 @@
+{
+  "checkpoint": "proofscript-v1-ka44-end-to-end-checker-refinement-plan0",
+  "baseline": "proofscript-v1-ka43-theory-wide-refinement-map0",
+  "formalLean4EquivalenceProvenObligationsBefore": 128,
+  "formalLean4EquivalenceProvenObligationsAdded": 0,
+  "formalLean4EquivalenceProvenObligationsAfter": 128,
+  "closedByKA44": [
+    "explicit end-to-end checker refinement milestone spine",
+    "module-boundary contract for no-spaghetti future implementation",
+    "anti-spaghetti gate extended from KA-43 to KA-44"
+  ],
+  "stillOpen": [
+    "full executable PSKernel checker refinement proof",
+    "inductive recursor/projection/iota refinement",
+    "executable expression translator refinement",
+    "accept/reject/decline outcome refinement against Lean4Lean",
+    "full Lean4 equivalence"
+  ]
+}

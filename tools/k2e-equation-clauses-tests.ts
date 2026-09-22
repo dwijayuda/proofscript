@@ -1,0 +1,34 @@
+import fs from "node:fs";
+import path from "node:path";
+import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
+const cli=path.join(root,"packages/cli/dist/cli.js");
+const src="tests/conformance/positive/k2e-equation-clauses.ps";
+const out=path.join(root,"artifacts/test-k2e.pscore.json");
+const run=(args,expect=0)=>{const r=spawnSync(process.execPath,[cli,...args],{cwd:root,encoding:"utf8"});if(r.status!==expect)throw new Error(`${args.join(" ")} failed (${r.status})\n${r.stdout}\n${r.stderr}`);return r;};
+fs.mkdirSync(path.dirname(out),{recursive:true});
+const checked=JSON.parse(run(["check",src,"--std","--emit-core",out,"--json"]).stdout);
+assert.equal(checked.status,"accepted");
+const artifact=JSON.parse(fs.readFileSync(out,"utf8"));
+assert.equal(artifact.formatVersion,12);
+assert.equal(artifact.implementationProfile,"K3c-section-vars0");
+const names=artifact.declarations.map(d=>d.name);
+for(const name of ["isZeroEq","isZeroEq.eq_1","isZeroEq.eq_2","doubleEq","doubleEq.eq_1","doubleEq.eq_2","doubleEqOne","useIsZeroEquation","useDoubleEqEquation"]) assert.ok(names.includes(name),`missing ${name}`);
+const doubleDef=artifact.declarations.find(d=>d.name==="doubleEq");
+assert.equal(doubleDef.kind,"definition");
+const constants=(term,out=[])=>{if(!term||typeof term!=="object")return out;if(term.tag==="const")out.push(term.name);for(const k of ["fn","arg","domain","body","type","value"])if(term[k])constants(term[k],out);return out;};
+const cs=constants(doubleDef.value);
+assert.ok(cs.includes("Nat.rec"),"equation recursion must lower through Nat.rec");
+assert.ok(!cs.includes("doubleEq"),"lowered recursive definition must not self-reference");
+const isZeroDef=artifact.declarations.find(d=>d.name==="isZeroEq");
+assert.ok(constants(isZeroDef.value).includes("Nat.rec"),"nonrecursive equation clauses must lower through match/recursor");
+const replay=JSON.parse(run(["verify",out,"--json"]).stdout);
+assert.equal(replay.status,"accepted");assert.equal(replay.projectPluginsLoaded,false);
+for(const [file,status] of [["k2e-equation-nonexhaustive.ps",1],["k2e-equation-duplicate.ps",1],["k2e-equation-arity.ps",1],["k2e-equation-multiarg.ps",2]]){
+  const r=run(["check",`tests/conformance/negative/${file}`,"--std"],status);
+  if(status===2)assert.match(r.stderr,/unsupported:/);
+}
+fs.rmSync(out,{force:true});
+console.log("✓ K2e equation-clause definitions lower to match/recursors, generate reusable equations, reject malformed coverage/arity, and independently replay");

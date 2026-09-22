@@ -1,0 +1,35 @@
+import fs from "node:fs";
+import path from "node:path";
+import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
+const cli=path.join(root,"packages/cli/dist/cli.js");
+const src="tests/conformance/positive/k2d-structural-recursion.ps";
+const out=path.join(root,"artifacts/test-k2d.pscore.json");
+const run=(args,expect=0)=>{const r=spawnSync(process.execPath,[cli,...args],{cwd:root,encoding:"utf8"});if(r.status!==expect)throw new Error(`${args.join(" ")} failed (${r.status})\n${r.stdout}\n${r.stderr}`);return r;};
+fs.mkdirSync(path.dirname(out),{recursive:true});
+const checked=JSON.parse(run(["check",src,"--std","--emit-core",out,"--json"]).stdout);
+assert.equal(checked.status,"accepted");
+const artifact=JSON.parse(fs.readFileSync(out,"utf8"));
+assert.equal(artifact.formatVersion,12);
+assert.equal(artifact.implementationProfile,"K3c-section-vars0");
+const names=artifact.declarations.map(d=>d.name);
+assert.ok(names.includes("doubleNat"));
+assert.ok(names.includes("doubleNat.eq_1"));
+assert.ok(names.includes("doubleNat.eq_2"));
+const def=artifact.declarations.find(d=>d.name==="doubleNat");
+assert.equal(def.kind,"definition");
+const constants=(term,out=[])=>{if(!term||typeof term!=="object")return out;if(term.tag==="const")out.push(term.name);for(const k of ["fn","arg","domain","body","type","value"])if(term[k])constants(term[k],out);return out;};
+const cs=constants(def.value);
+assert.ok(cs.includes("Nat.rec"),"recursive source must lower to Nat.rec");
+assert.ok(!cs.includes("doubleNat"),"definition value must not contain a self-recursive constant");
+const replay=JSON.parse(run(["verify",out,"--json"]).stdout);
+assert.equal(replay.status,"accepted");
+assert.equal(replay.projectPluginsLoaded,false);
+for(const f of ["k2d-recursion-growth.ps","k2d-recursion-not-structural.ps","k2d-recursion-nonrecursive-field.ps"]){
+  const r=run(["check",`tests/conformance/negative/${f}`,"--std"],2);
+  assert.match(r.stderr,/unsupported:/);
+}
+fs.rmSync(out,{force:true});
+console.log("✓ K2d structural recursion lowers to recursors, generates equation theorems, rejects non-structural recursion, and independently replays");

@@ -1,0 +1,12 @@
+{
+  "artifact": "V71_WHOLE_K3_READINESS_BOUNDARY1",
+  "checkpoint": "assurance/lean4331/CHECKPOINT_V71_WHOLE_K3_READINESS_BOUNDARY1.json",
+  "checkpointSha256": "09ed32321a1f0fabefe505516ed36417606b5dcde552f101078c06b160fa175f",
+  "markdown": "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_WHOLE_K3_READINESS_BOUNDARY1.md",
+  "markdownSha256": "790eba33e739c7f3626d2fb7b7e1abc6d80c4f1ac541fd9fa411421e6c49aa84",
+  "formalSource": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71WholeK3ReadinessBoundary.lean",
+  "formalSourceSha256": "e8718d22f6433278badbe2c8f1a8a49bbe715db7067aa27fb3aa059e3c97453c",
+  "formalEvidence": "assurance/lean4331/evidence/v71-whole-k3-readiness-boundary-formal1.out",
+  "formalEvidenceSha256": "668562a01e1bf6d8a899af0ccd949327c2fb57b749638c27742f8a0169ede8bb",
+  "inheritedCheckpointLedgerHash": "47273040cc8abcd492166c01600a219395dbddc550a4b3a1377200b5e8967691"
+}

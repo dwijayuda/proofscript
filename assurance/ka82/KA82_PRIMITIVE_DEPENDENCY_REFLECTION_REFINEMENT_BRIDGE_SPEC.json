@@ -1,0 +1,39 @@
+{
+  "checkpoint": "proofscript-v1-ka82-primitive-dependency-reflection-refinement0",
+  "publicVersion": "1.0.0-pskernel.85",
+  "baseline": "proofscript-v1-ka81-primitive-reflection-typing-refinement0",
+  "referenceKind": "primitive-dependency-reflection-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 7,
+  "countedObligations": [
+    "translated_containsNatOfHasType_wf",
+    "translated_natOfPred_wf",
+    "translated_natOfAdd_wf",
+    "translated_natOfMul_wf",
+    "translated_natOfDiv_wf",
+    "translated_natOfMod_wf",
+    "translated_boolOfBitwise_wf"
+  ],
+  "sourceTheorems": [
+    "VEnv.contains_nat_of_hasType",
+    "VEnv.HasPrimitives.natOfPred",
+    "VEnv.HasPrimitives.natOfAdd",
+    "VEnv.HasPrimitives.natOfMul",
+    "VEnv.HasPrimitives.natOfDiv",
+    "VEnv.HasPrimitives.natOfMod",
+    "VEnv.HasPrimitives.boolOfBitwise"
+  ],
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveDependencyReflectionRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

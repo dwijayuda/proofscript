@@ -1,0 +1,153 @@
+{
+  "checkpoint": "proofscript-v1-ka55-executable-expression-translator-substitution-refinement0",
+  "publicVersion": "1.0.0-pskernel.58",
+  "baseline": "proofscript-v1-ka54-executable-expression-translator-determinism-refinement0",
+  "releaseKind": "strict-lean4lean-bridge",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA55",
+        "source": "assurance/ka55/executable-expression-translator-substitution-refinement-bridge.lean",
+        "destination": "PSKernelKA55ExecutableExpressionTranslatorSubstitutionRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka55-executable-expression-translator-substitution-refinement0",
+    "publicVersion": "1.0.0-pskernel.58",
+    "featureSurfaceBridgeProgressPercent": 77,
+    "executableKernelEquivalenceProofProgressPercent": 42,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 155,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 151,
+      "newFormalLean4LeanBridgeObligations": 4,
+      "countedNewObligations": [
+        "translated_vexpr_instL_instN_wf",
+        "translated_vexpr_lift_prime_comp_wf",
+        "translated_vexpr_subst_lift_prime_wf",
+        "translated_vexpr_subst_subst_wf"
+      ]
+    },
+    "groups": [
+      {
+        "id": "expression-tags",
+        "progressPercent": 82,
+        "status": "TrExprS constructor/determinism plus VExpr lift/substitution bridge strict-checked; full executable translator refinement incomplete"
+      },
+      {
+        "id": "typechecker-whnf-defeq",
+        "progressPercent": 53,
+        "status": "WHNF/DefEq surface strict-checked; executable checker refinement incomplete"
+      },
+      {
+        "id": "end-to-end-refinement-spine",
+        "progressPercent": 35,
+        "status": "checker pipeline skeleton strict-checked; no end-to-end theorem yet"
+      },
+      {
+        "id": "architecture-health",
+        "progressPercent": 89,
+        "status": "no-spaghetti ratchet plus KA55 semantic-package touch guard"
+      }
+    ],
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka55Files": [
+      {
+        "path": "tools/pskernel-ka55-executable-expression-translator-substitution-refinement-tests.ts",
+        "lines": 33,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka55-executable-expression-translator-substitution-refinement.ts",
+        "lines": 84,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka55/KA55_EXECUTABLE_EXPRESSION_TRANSLATOR_SUBSTITUTION_REFINEMENT_RELEASE_GATE.json",
+        "lines": 154,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka55/KA55_EXECUTABLE_EXPRESSION_TRANSLATOR_SUBSTITUTION_REFINEMENT_REPORT.md",
+        "lines": 37,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka55/KA55_EXECUTABLE_EXPRESSION_TRANSLATOR_SUBSTITUTION_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 31,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka55/KA55_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 42,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka55/KA55_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka55/executable-expression-translator-substitution-refinement-bridge-spec.json",
+        "lines": 28,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka55/executable-expression-translator-substitution-refinement-bridge.lean",
+        "lines": 33,
+        "ext": ".lean"
+      }
+    ],
+    "ka55ToolFiles": [
+      {
+        "path": "tools/pskernel-ka55-executable-expression-translator-substitution-refinement-tests.ts",
+        "lines": 33,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka55-executable-expression-translator-substitution-refinement.ts",
+        "lines": 84,
+        "ext": ".ts"
+      }
+    ],
+    "newKA55OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableExpressionTranslatorRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

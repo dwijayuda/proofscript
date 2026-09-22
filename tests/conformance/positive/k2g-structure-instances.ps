@@ -1,0 +1,25 @@
+structure PairNat {
+  left: Nat;
+  right: Nat;
+}
+
+def pairValue: PairNat := {
+  { left := Nat.zero, right := Nat.succ(Nat.zero) }
+}
+
+theorem pairLeft:
+  Eq.{1}(Nat, PairNat.left(pairValue), Nat.zero) :=
+  Eq.refl.{1}(Nat, Nat.zero);
+
+theorem pairRight:
+  Eq.{1}(Nat, PairNat.right(pairValue), Nat.succ(Nat.zero)) :=
+  Eq.refl.{1}(Nat, Nat.succ(Nat.zero));
+
+
+def pairPunned(left: Nat, right: Nat): PairNat := {
+  { left, right }
+}
+
+theorem punnedLeft(left: Nat, right: Nat):
+  Eq.{1}(Nat, PairNat.left(pairPunned(left, right)), left) :=
+  Eq.refl.{1}(Nat, left);

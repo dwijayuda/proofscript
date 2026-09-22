@@ -1,0 +1,35 @@
+{
+  "checkpoint": "proofscript-v1-ka104-primitive-telescope-typing-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.107",
+  "baseline": "proofscript-v1-ka103-primitive-context-application-helper-refinement0",
+  "referenceKind": "primitive-telescope-typing-helper-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 5,
+  "countedObligations": [
+    "translated_onctx_append_right_wf",
+    "translated_argsTyped_substEq_wf",
+    "translated_vexpr_wf_lams_wf",
+    "translated_hasType_lams_wf",
+    "translated_hasType_appN_forallEs_wf"
+  ],
+  "sourceTheorems": [
+    "OnCtx.append_right",
+    "VExpr.ArgsTyped.substEq",
+    "VExpr.wf_lams",
+    "VEnv.HasType.lams",
+    "VEnv.HasType.appN_forallEs"
+  ],
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveTelescopeTypingHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

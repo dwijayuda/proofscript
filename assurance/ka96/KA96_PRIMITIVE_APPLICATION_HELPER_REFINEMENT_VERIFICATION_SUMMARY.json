@@ -1,0 +1,20 @@
+{
+  "checkpoint": "proofscript-v1-ka96-primitive-application-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.99",
+  "baseline": "proofscript-v1-ka95-primitive-typeeq-helper-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 301,
+  "newFormalLean4LeanBridgeObligations": 5,
+  "baselineObligations": 296,
+  "countedObligations": [
+    "translated_vexpr_insts_appN_wf",
+    "translated_vexpr_subst_appN_wf",
+    "translated_vexpr_lams_append_wf",
+    "translated_expr_appN_eq_mkAppList_wf",
+    "translated_expr_mkAppN_eq_wf"
+  ],
+  "redTestObserved": true,
+  "redTestReason": "KA96 test failed first on missing KA96 gate tool",
+  "noWrapperTimeoutCountedAsPassed": true
+}

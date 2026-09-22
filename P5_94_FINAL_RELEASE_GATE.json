@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "release": "P5.94",
+  "checkpoint": "arena-nested-helper-target-validation0",
+  "status": "FROZEN",
+  "baseline": "P5.93 arena-nested-recursor-preflight0",
+  "finalZip": "/mnt/data/proofscript-standalone-kernel-maturity-replacement-p5-94-arena-nested-helper-target-validation0.zip",
+  "finalZipSha256": "8994a1e4317b82b07a032004eda9a66255cab76e63ee0923cb0ebee40f9d873c",
+  "feature": {
+    "summary": "Nested helper recursor target validation for Arena lean4export imports.",
+    "details": [
+      "Validates that each nested helper recursor rule targets a single validated container family.",
+      "Rejects forged Lean.Syntax helper rules that swap List helper targets to Array.mk.",
+      "Preserves valid Lean.Syntax as unsupported at inductive.nested.helper-iota until helper recursor derivation/iota is implemented."
+    ],
+    "kernelSourceChanged": false,
+    "arenaImporterChanged": true,
+    "kernelCodecChanged": false,
+    "newTrustedComputationRule": false
+  },
+  "gates": {
+    "zipIntegrity": "PASS",
+    "zipSha256": "PASS",
+    "sourceResidue": {
+      "status": "PASS",
+      "residueCount": 0,
+      "vendoredNpmTgz": 3
+    },
+    "cleanOfflineInstall": "PASS",
+    "cleanBuild": "PASS",
+    "focusedNestedHelperTargetValidation": "PASS",
+    "focusedNestedRecursorPreflight": "PASS",
+    "arenaStatic": "PASS",
+    "arenaTutorialStrict": "PASS",
+    "kernelSmoke": "PASS",
+    "standaloneSmall": "PASS",
+    "conformance": "PASS",
+    "typescriptMigration": "PASS",
+    "p5Baseline": "PASS",
+    "architecture": "PASS",
+    "exactLeanDifferential": "PASS",
+    "k3tbRelease": "PASS",
+    "k3tbPublishPreflight": "PASS",
+    "workspacePack": "PASS",
+    "packageSha256": "PASS",
+    "externalConsumer": "PASS"
+  },
+  "arenaTutorialCounts": {
+    "total": 140,
+    "expectedAccept": 93,
+    "expectedReject": 47,
+    "acceptedGood": 93,
+    "rejectedBad": 47,
+    "declinedUnsupported": 0,
+    "wrongAccepts": 0,
+    "wrongRejects": 0,
+    "checkerCrashes": 0,
+    "notRun": 0
+  },
+  "arenaStaticCounts": {
+    "total": 26,
+    "expectedAccept": 4,
+    "expectedReject": 22,
+    "acceptedGood": 4,
+    "rejectedBad": 22,
+    "declinedUnsupported": 0,
+    "wrongAccepts": 0,
+    "wrongRejects": 0,
+    "checkerCrashes": 0,
+    "notRun": 0
+  },
+  "exactLeanDifferentialSummary": {
+    "total": 25,
+    "semanticEquivalence": 20,
+    "negativeAgreement": 3,
+    "capabilityGaps": 2,
+    "accepted": 25,
+    "rejected": 0,
+    "unsupported": 0
+  },
+  "externalConsumer": {
+    "packages": 36,
+    "arenaGoodFixture": "good/tutorial/001_basicDef.ndjson",
+    "arenaGoodStatus": 0,
+    "arenaBadFixture": "bad/tutorial/002_badDef.ndjson",
+    "arenaBadStatus": 1,
+    "initPreludeFixture": "good/init-prelude.ndjson",
+    "initPreludeStatus": 2,
+    "expectedInitPreludeUnsupportedKind": "inductive.nested.helper-iota",
+    "leanRequired": false,
+    "projectPluginsLoaded": false
+  },
+  "trustBoundary": {
+    "trustedBoundaryK3TB": true,
+    "fullyFormalK3": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "arenaAgreementIsFormalEquivalence": false
+  },
+  "notes": [
+    "One grouped dev/clean wrapper timed out after reaching long conformance/standalone output; its tail commands were rerun separately and passed. The timed wrapper itself is not counted as a pass."
+  ]
+}

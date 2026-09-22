@@ -1,0 +1,21 @@
+{
+  "checkpoint": "proofscript-v1-ka42-resource-error-conservativity-bridge0",
+  "baseline": "proofscript-v1-ka41-codec-replay-refinement-bridge0",
+  "formalLean4EquivalenceProvenObligationsBefore": 120,
+  "formalLean4EquivalenceProvenObligationsAdded": 8,
+  "formalLean4EquivalenceProvenObligationsAfter": 128,
+  "closedSinceKA41": [
+    "explicit default recDepth fuel policy is machine-checked against Lean4Lean.FuelConfig",
+    "explicit default whnf and lazyDelta fuel policies are machine-checked against Lean4Lean.FuelConfig",
+    "zero recursion fuel for whnf/whnfCore/inferType/isDefEqCore deterministically throws deepRecursion",
+    "Except.error cannot be reinterpreted as an accepted value for an arbitrary postcondition"
+  ],
+  "stillOpen": [
+    "full executable PSKernel checker resource/error refinement against Lean4Lean TypeChecker.M.run",
+    "full deterministicTimeout coverage for whnf unfold loops and lazyDelta loops",
+    "memory-exhaustion and interruption conservativity",
+    "resource/error equivalence for importer/replay/codec parsing failures",
+    "proof that PSKernel never maps Lean4Lean resource exhaustion to acceptance",
+    "end-to-end Arena runner crash/timeout/decline policy refinement"
+  ]
+}

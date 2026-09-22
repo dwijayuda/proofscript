@@ -1,0 +1,19 @@
+{
+  "checkpoint": "proofscript-v1-ka88-primitive-gcd-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.91",
+  "featureSurfaceBridgeProgressPercent": 98,
+  "executableKernelEquivalenceProofProgressPercent": 66,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 273,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 272,
+    "newFormalLean4LeanBridgeObligations": 1,
+    "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+    "correctedFormalLean4LeanBridgeObligations": 273,
+    "countedNewObligations": [
+      "translated_checkNatGcd_wf"
+    ]
+  },
+  "metricPolicy": "KA88 adds a direct non-sorry-backed primitive Nat.gcd recognizer bridge wrapper. Percentages remain conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

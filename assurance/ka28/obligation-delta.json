@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka28-quot-env-defeq-preservation-bridge0",
+  "baseline": "proofscript-v1-ka27-quot-env-no-overwrite-bridge0",
+  "formalLean4EquivalenceProvenObligations": 50,
+  "provenLeanTheoremObligations": [
+    "PSKernelKA28.translated_quot_preserves_existing_defeq",
+    "PSKernelKA28.translated_quot_preserves_existing_and_adds_quot_defeq"
+  ],
+  "closedSinceKA27": [
+    "successful translated quotient addition preserves every pre-existing Lean4Lean VEnv.defeqs member",
+    "successful translated quotient addition preserves an existing defeq and exposes the quotient defining equation in one bridge theorem"
+  ],
+  "stillOpen": [
+    "quotient semantic soundness is not proven",
+    "definitional-equality soundness is not proven",
+    "executable PSKernel refinement is not proven",
+    "inductive and mutual inductive declaration checking remain outside this bridge",
+    "full Lean 4 equivalence remains false"
+  ]
+}

@@ -1,0 +1,15 @@
+universe u;
+section {
+  variable {A: Type u};
+  variable (x: A);
+  variable (n: Nat);
+
+  def keep: A := { x }
+  def bodyOnly: Nat := { n }
+  theorem headerUse: x = x := Eq.refl.{u+1}(A, x);
+
+  include x;
+  theorem forced: 0 = 0 := Eq.refl.{1}(Nat, 0);
+  omit x;
+  theorem afterOmit: 0 = 0 := Eq.refl.{1}(Nat, 0);
+}

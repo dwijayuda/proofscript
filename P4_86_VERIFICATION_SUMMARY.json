@@ -1,0 +1,40 @@
+{
+  "release": "P4.86",
+  "title": "Parser binder/level extraction",
+  "kind": "behavior-preserving cleanup/refactor",
+  "trust_status": "K3-TB trusted-boundary; not fully formal K3; not proven equivalent to Lean 4",
+  "formal_lean4_equivalence_obligations_proven": 0,
+  "commands": [
+    {"command": "node tools/parser-binder-level-extraction-tests.ts before implementation", "status": "FAIL_EXPECTED", "evidence": "failed because packages/parser/src/binderParser.ts did not exist"},
+    {"command": "npm run build -- --pretty false", "status": "PASS"},
+    {"command": "npm run test:parser:binder-level", "status": "PASS"},
+    {"command": "npm run test:parser:proof", "status": "PASS"},
+    {"command": "npm run test:parser:declaration-dispatch", "status": "PASS"},
+    {"command": "npm run test:parser:sugar", "status": "PASS"},
+    {"command": "npm run test:pslive:language-fast", "status": "PASS"},
+    {"command": "npm run test:reference-governance:json", "status": "PASS", "evidence": "94 checks accepted"},
+    {"command": "npm run test:architecture", "status": "PASS"},
+    {"command": "npm run test:standalone-small", "status": "PASS"},
+    {"command": "npm run test:kernel:smoke", "status": "PASS"},
+    {"command": "node tools/pskernel.ts status --json", "status": "PASS", "evidence": "trusted-boundary / not-proven"},
+    {"command": "fresh extract: npm run build -- --pretty false", "status": "PASS"},
+    {"command": "fresh extract: npm run test:parser:binder-level", "status": "PASS"},
+    {"command": "fresh extract: npm run test:architecture", "status": "PASS"},
+    {"command": "fresh extract: node tools/pskernel.ts status --json", "status": "PASS", "evidence": "trusted-boundary / not-proven"},
+    {"command": "unzip -tq P4.86 archive", "status": "PASS"}
+  ],
+  "packaging_note": "Archive excludes node_modules so fresh extraction can relink local workspaces cleanly.",
+  "not_rerun": [
+    {"command": "npm run verify:k3tb:publish", "reason": "still needs PROOFSCRIPT_LEAN_BIN"},
+    {"command": "full long matrix", "reason": "skipped for fast cleanup iteration"}
+  ],
+  "progress": {
+    "Standalone PSC-1 without Lean4": "~97.3%",
+    "PSC-1 small complete programming language": "~72.0%",
+    "PSC-1 small theorem prover": "~62.1%",
+    "Full ProofScript compiler": "~62.4%",
+    "Full Lean-like ProofScript without Lean4": "~13.8%",
+    "Formal Lean 4 equivalence": "0 proven obligations",
+    "Maintainability / anti-spaghetti score": "~82%"
+  }
+}

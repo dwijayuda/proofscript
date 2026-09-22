@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "P5.96-software-executable-examples0",
+  "profileId": "proofscript-software-v0",
+  "status": "PROFILE_EXECUTABLE_CHECKPOINT_FROZEN",
+  "kernelSemanticsRelease": false,
+  "baseline": {
+    "profileCheckpoint": "P5.95-profile-plan0",
+    "kernelRelease": "P5.94",
+    "kernelCheckpoint": "arena-nested-helper-target-validation0",
+    "kernelSha256": "8994a1e4317b82b07a032004eda9a66255cab76e63ee0923cb0ebee40f9d873c"
+  },
+  "examples": {
+    "count": 5,
+    "files": [
+      "examples/software-profile/src/BusinessRules.ps",
+      "examples/software-profile/src/StateMachine.ps",
+      "examples/software-profile/src/SecurityPolicy.ps",
+      "examples/software-profile/src/Validation.ps",
+      "examples/software-profile/src/Collections.ps"
+    ],
+    "observations": [
+      "check each file",
+      "build each file to JavaScript",
+      "build each file to TypeScript",
+      "compile generated TypeScript",
+      "execute selected exported values/functions",
+      "reject deferred requires/ensures-style contract syntax instead of silently compiling it"
+    ]
+  },
+  "gates": {
+    "workingTreeOfflineInstall": "PASS",
+    "workingTreeBuild": "PASS",
+    "workingTreeSoftwareProfile": "PASS",
+    "workingTreeSoftwareExamples": "PASS",
+    "workingTreeVerifyProfileSoftware": "PASS",
+    "workingTreeConformance": "PASS",
+    "workingTreeStandaloneSmall": "PASS",
+    "workingTreeTypescriptMigration": "PASS",
+    "workingTreeKernelSmoke": "PASS",
+    "cleanSourceInstall": "PASS",
+    "cleanSourceBuild": "PASS",
+    "cleanSourceSoftwareExamples": "PASS"
+  },
+  "inheritedP5_94Evidence": {
+    "arenaTutorialCounts": {
+      "total": 140,
+      "expectedAccept": 93,
+      "expectedReject": 47,
+      "acceptedGood": 93,
+      "rejectedBad": 47,
+      "declinedUnsupported": 0,
+      "wrongAccepts": 0,
+      "wrongRejects": 0,
+      "checkerCrashes": 0,
+      "notRun": 0
+    },
+    "arenaStaticCounts": {
+      "total": 26,
+      "expectedAccept": 4,
+      "expectedReject": 22,
+      "acceptedGood": 4,
+      "rejectedBad": 22,
+      "declinedUnsupported": 0,
+      "wrongAccepts": 0,
+      "wrongRejects": 0,
+      "checkerCrashes": 0,
+      "notRun": 0
+    },
+    "exactLeanDifferentialSummary": {
+      "total": 25,
+      "semanticEquivalence": 20,
+      "negativeAgreement": 3,
+      "capabilityGaps": 2,
+      "accepted": 25,
+      "rejected": 0,
+      "unsupported": 0
+    }
+  },
+  "trustBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "newTrustedComputationRule": false,
+    "kernelSourceChanged": false,
+    "arenaImporterChanged": false,
+    "kernelCodecChanged": false,
+    "contractsImplemented": false,
+    "backendExecutionCorrespondenceProof": false
+  }
+}

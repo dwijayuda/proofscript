@@ -1,0 +1,26 @@
+{
+  "checkpoint": "proofscript-v1-ka33-inductive-env-bridge0",
+  "baseline": "proofscript-v1-ka32-feature-equivalence-audit0",
+  "formalLean4EquivalenceProvenObligationsBefore": 56,
+  "formalLean4EquivalenceProvenObligationsAfter": 60,
+  "newConditionalObligations": [
+    "PSKernelKA33.translated_inductive_is_real_vdecl",
+    "PSKernelKA33.translated_inductive_vdecl_wf",
+    "PSKernelKA33.translated_inductive_env_wf",
+    "PSKernelKA33.translated_inductive_env_ordered"
+  ],
+  "closedSinceKA32": [
+    "first direct Lean4Lean VDecl.induct bridge surface for PSKernel .inductive declarations",
+    "conditional VDecl.WF bridge for inductive declarations",
+    "conditional VEnv.WF bridge for successful addInduct",
+    "conditional orderedness bridge using Lean4Lean.Theory.Typing.InductiveLemmas.addInduct_WF"
+  ],
+  "stillOpen": [
+    "no executable PSKernel inductive translator refinement proof",
+    "no positivity checker refinement proof",
+    "no recursor generation/refinement proof",
+    "no projection/reduction/iota semantic soundness proof",
+    "mutual and nested inductive feature parity remains open",
+    "full Lean 4 equivalence remains false"
+  ]
+}

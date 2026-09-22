@@ -1,0 +1,53 @@
+-- Software Profile example: permission table as total functions over ADTs.
+
+inductive Role: Type where {
+  | viewer
+  | editor
+  | admin
+}
+
+inductive Action: Type where {
+  | read
+  | write
+  | delete
+}
+
+function viewerCan(action: Action): Bool := {
+  match (action) {
+    | Action.read => true
+    | Action.write => false
+    | Action.delete => false
+  }
+}
+
+function editorCan(action: Action): Bool := {
+  match (action) {
+    | Action.read => true
+    | Action.write => true
+    | Action.delete => false
+  }
+}
+
+function can(role: Role, action: Action): Bool := {
+  match (role) {
+    | Role.viewer => viewerCan(action)
+    | Role.editor => editorCan(action)
+    | Role.admin => true
+  }
+}
+
+def adminCanDelete: Bool := {
+  can(Role.admin, Action.delete)
+}
+
+def editorCannotDelete: Bool := {
+  can(Role.editor, Action.delete)
+}
+
+def viewerCanRead: Bool := {
+  can(Role.viewer, Action.read)
+}
+
+theorem adminCanDelete_eq: adminCanDelete = true := by rfl
+theorem editorCannotDelete_eq: editorCannotDelete = false := by rfl
+theorem viewerCanRead_eq: viewerCanRead = true := by rfl

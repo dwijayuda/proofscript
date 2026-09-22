@@ -1,0 +1,21 @@
+{
+  "checkpoint": "proofscript-v1-ka75-executable-infer-atomic-refinement0",
+  "publicVersion": "1.0.0-pskernel.78",
+  "featureSurfaceBridgeProgressPercent": 89,
+  "executableKernelEquivalenceProofProgressPercent": 56,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 225,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 221,
+    "newFormalLean4LeanBridgeObligations": 4,
+    "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+    "countedNewObligations": [
+      "translated_checkLevel_wf",
+      "translated_inferFVar_wf",
+      "translated_envGet_wf",
+      "translated_infer_sort_wf"
+    ]
+  },
+  "metricPolicy": "KA75 starts the InferType proof-bearing surface with atomic level/free-variable/environment/sort facts; percentages are conservative dashboard estimates and not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

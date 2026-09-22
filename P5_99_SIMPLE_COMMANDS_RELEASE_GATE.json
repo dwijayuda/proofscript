@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "P5.99-simple-commands0",
+  "status": "PROFILE_CLI_SIMPLE_COMMANDS_CHECKPOINT_FROZEN",
+  "baseline": {
+    "release": "P5.98",
+    "checkpoint": "psc-init0",
+    "sha256": "97256119923b991e04461c0a37fcc2904467a30b9f736da603cbeabd17d6f38d"
+  },
+  "feature": {
+    "summary": "Simplified psc setup and project commands; Windows-friendly workspace linking.",
+    "details": [
+      "Adds psc setup and npm run setup.",
+      "Keeps npm run build as an alias to setup.",
+      "Uses Windows junctions with source-copy fallback for workspace links.",
+      "Defaults psc check/build/build-ts/build-js/compile/run from proofscript.config.json.",
+      "Simplifies psc init starter scripts and next-step output."
+    ]
+  },
+  "simpleCommands": [
+    "npm install --offline --no-audit --no-fund",
+    "npm run setup",
+    "npm link",
+    "psc init my-app",
+    "cd my-app",
+    "psc check",
+    "psc build",
+    "psc run sample"
+  ],
+  "gates": {
+    "workingTreeOfflineInstall": "PASS",
+    "workingTreeBuildSetup": "PASS",
+    "workingTreePscSimple": "PASS",
+    "workingTreePscAdapter": "PASS",
+    "workingTreeVerifyProfileSoftware": "PASS",
+    "workingTreeVerifyProfileSoftwareFull": "PASS_BEFORE_PACKAGING",
+    "workingTreeConformance": "PASS",
+    "workingTreeStandaloneSmall": "PASS",
+    "workingTreeTypescriptMigration": "PASS",
+    "workingTreeKernelSmoke": "PASS",
+    "cleanSourceResidue": "PASS",
+    "zipIntegrity": "PASS",
+    "zipSha256": "PASS",
+    "cleanExtractInstallBuild": "PASS",
+    "cleanExtractVerifyProfileSoftware": "PASS",
+    "cleanExtractPscSimpleCommands": "PASS",
+    "cleanExtractPscInitCheckBuildRun": "PASS"
+  },
+  "notes": [
+    "P5.99 keeps full inherited example verification available as verify:profile:software:full, but default verify:profile:software is now the faster profile/CLI gate for local setup."
+  ],
+  "changed": {
+    "kernelSourceChanged": false,
+    "arenaImporterChanged": false,
+    "kernelCodecChanged": false,
+    "newTrustedComputationRule": false,
+    "cliChanged": true,
+    "windowsWorkspaceLinkFallbackChanged": true
+  },
+  "trustBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "backendExecutionCorrespondenceProof": false
+  }
+}

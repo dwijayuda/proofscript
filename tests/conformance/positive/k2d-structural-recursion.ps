@@ -1,0 +1,16 @@
+def doubleNat(n: Nat): Nat := {
+  match (n) {
+    | .zero => Nat.zero
+    | .succ k => Nat.succ(Nat.succ(doubleNat(k)))
+  }
+}
+
+theorem doubleOne:
+  Eq.{1}(Nat, doubleNat(Nat.succ(Nat.zero)), Nat.succ(Nat.succ(Nat.zero))) :=
+  Eq.refl.{1}(Nat, Nat.succ(Nat.succ(Nat.zero)));
+
+theorem useDoubleEquation(k: Nat):
+  Eq.{1}(Nat,
+    doubleNat(Nat.succ(k)),
+    Nat.succ(Nat.succ(doubleNat(k)))) :=
+  doubleNat.eq_2(k);

@@ -1,0 +1,31 @@
+-- Software Profile example: explicit error handling with Except.
+
+function validateAdult(age: Nat): Except(String, Nat) := {
+  if age >= 18 then Except.ok(String, Nat, age) else Except.error(String, Nat, "too young")
+}
+
+def validAge: Except(String, Nat) := {
+  validateAdult(42)
+}
+
+def invalidAge: Except(String, Nat) := {
+  validateAdult(12)
+}
+
+function valueOrZero(result: Except(String, Nat)): Nat := {
+  match (result) {
+    | Except.error message => 0
+    | Except.ok value => value
+  }
+}
+
+def validValue: Nat := {
+  valueOrZero(validAge)
+}
+
+def invalidValue: Nat := {
+  valueOrZero(invalidAge)
+}
+
+theorem validValue_eq: validValue = 42 := by rfl
+theorem invalidValue_eq: invalidValue = 0 := by rfl

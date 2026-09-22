@@ -1,0 +1,17 @@
+import fs from "node:fs";
+import path from "node:path";
+import assert from "node:assert/strict";
+import {spawnSync} from "node:child_process";
+import {fileURLToPath} from "node:url";
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");const cli=path.join(root,"packages/cli/dist/cli.js");
+const out=path.join(root,"artifacts/test-k2k.pscore.json"),leanOut=path.join(root,"artifacts/test-k2k.lean");
+const run=(args,expect=0)=>{const r=spawnSync(process.execPath,[cli,...args],{cwd:root,encoding:"utf8"});if(r.status!==expect)throw new Error(`${args.join(" ")} failed (${r.status})\n${r.stdout}\n${r.stderr}`);return r;};
+const summary=JSON.parse(run(["check","tests/conformance/positive/k2k-binder-info.ps","--std","--emit-core",out,"--json"]).stdout);assert.equal(summary.status,"accepted");
+const artifact=JSON.parse(fs.readFileSync(out,"utf8"));assert.equal(artifact.formatVersion,12);assert.equal(artifact.implementationProfile,"K3c-section-vars0");
+const text=JSON.stringify(artifact);for(const info of ["implicit","strictImplicit","instImplicit"])assert.ok(text.includes(`\"binderInfo\":\"${info}\"`)||text.includes(`\"binderInfo\": \"${info}\"`),`missing ${info}`);
+const replay=JSON.parse(run(["verify",out,"--json"]).stdout);assert.equal(replay.status,"accepted");assert.equal(replay.projectPluginsLoaded,false);
+run(["emit-lean",out,"--std","--out",leanOut]);const lean=fs.readFileSync(leanOut,"utf8");assert.match(lean,/\{x0 : Type\}/);assert.match(lean,/⦃x0 : Type⦄/);assert.match(lean,/\[x0 : (?:_root_\.)?Flag\]/);
+run(["check","tests/conformance/negative/k2k-implicit-synthesis-deferred.ps","--std"]);
+run(["check","tests/conformance/negative/k2k-instance-synthesis-deferred.ps","--std"],1);for(const f of ["k2k-optional-binder-deferred.ps","k2k-explicit-at-without-call.ps"])run(["check",`tests/conformance/negative/${f}`,"--std"],2);
+fs.rmSync(out,{force:true});fs.rmSync(leanOut,{force:true});
+console.log("✓ K2k implicit/strict/instance BinderInfo survives source→Core→artifact→Lean; @ supplies hidden args explicitly while direct type-parameter synthesis is now supported and instance/default binders remain unsupported");

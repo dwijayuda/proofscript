@@ -1,0 +1,20 @@
+{
+  "checkpoint": "proofscript-v1-ka68-executable-defeq-proof-level-offset-refinement0",
+  "publicVersion": "1.0.0-pskernel.71",
+  "featureSurfaceBridgeProgressPercent": 87,
+  "executableKernelEquivalenceProofProgressPercent": 53,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 208,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 204,
+    "newFormalLean4LeanBridgeObligations": 4,
+    "countedNewObligations": [
+      "translated_getSortLevel_wf",
+      "translated_isProp_wf",
+      "translated_isDefEqProofIrrel_wf",
+      "translated_isDefEqOffset_wf"
+    ]
+  },
+  "metricPolicy": "KA68 advances the exact formal obligation counter only; percentage estimates remain held pending a separate coverage audit.",
+  "notAFormalEquivalenceClaim": true
+}

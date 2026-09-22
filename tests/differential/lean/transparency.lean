@@ -1,0 +1,6 @@
+axiom P : Prop
+axiom h : P
+abbrev AliasP : Prop := P
+opaque HiddenP : Prop := P
+theorem aliasUse : AliasP := h
+example : P := h

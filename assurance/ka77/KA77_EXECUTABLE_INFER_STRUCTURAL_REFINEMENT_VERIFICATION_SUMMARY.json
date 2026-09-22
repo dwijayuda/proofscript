@@ -1,0 +1,32 @@
+{
+  "checkpoint": "proofscript-v1-ka77-executable-infer-structural-refinement0",
+  "publicVersion": "1.0.0-pskernel.80",
+  "baseline": "proofscript-v1-ka76-executable-infer-constant-literal-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "baselineObligations": 230,
+  "formalLean4LeanBridgeObligations": 235,
+  "newFormalLean4LeanBridgeObligations": 5,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA77",
+        "source": "assurance/ka77/executable-infer-structural-refinement-bridge.lean",
+        "destination": "PSKernelKA77ExecutableInferStructuralRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 5,
+        "dependencyBuildStatus": "passed",
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "fullNpmTestStatus": "not-run",
+  "aggregateVerifyArenaStatus": "not-run",
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA77 gate tool absent before implementation"
+}

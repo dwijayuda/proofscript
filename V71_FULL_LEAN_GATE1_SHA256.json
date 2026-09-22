@@ -1,0 +1,22 @@
+{
+  "archiveProfile": "proofscript-kernel-v71-full-lean-gate1",
+  "semanticChange": false,
+  "createdAtUtc": "2026-09-10T03:12:42.736Z",
+  "importantArtifacts": {
+    "tools/kernel-v71-assurance-gate.ts": "4ace64e37b7726edde5401f1a7923e847f05f81ae890b889afe15a641cc53f4a",
+    "tools/kernel-v71-assurance-wrapper-streaming-tests.ts": "740d8c6b44630e3657fa980e724b81ce6c82ef43c43275f88b88943d574d943d",
+    "tools/kernel-v71-assurance-run-part.ts": "8ffca8cb6358f981de189ffe954b1ea0bdc9210b9a95a71a1cd9f989d708aa59",
+    "tools/kernel-v71-assurance-finalize.ts": "a7ef9e09b5500222611d891ca3d0b9ed1d3d8f9e82533ca91245e0c32cd763ed",
+    "tools/kernel-v71-assurance-resumable-gate-tests.ts": "ced6d9263341f7a5bb006e99315e71256ba649cb5fc1c9b11dd9f0068fe152b5",
+    "package.json": "642153f485752d6ed60ecb5c74998fce48744508acbb8fd1b0340093398edde3",
+    "assurance/lean4331/MANIFEST.json": "bf7cb9121ae71c360f4d592c02d05bff1b87b2d2b4f5914d7510081caab5c9fe",
+    "assurance/lean4331/FINAL_VALIDATION_V71_FULL_LEAN_GATE.json": "084093b13e3ea42821e95be6e9b7540530a49b8d7644e3ece91f38181384e147",
+    "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_FULL_LEAN_GATE1.md": "cf3146910097e9ca462190ce8425cd167ef3a641a2ce0cd0a2dca12ffb148eab",
+    "assurance/lean4331/evidence/v71-gate-part1.out": "ec8220bca5a9453257661d3c65a80111fa1be08ac9f95fd11b68617bd7ac02f4",
+    "assurance/lean4331/evidence/v71-gate-part2.out": "0e2d86c285d2ccce19e94111810df807b45736ba3b7d57346ac923788f14f7e7",
+    "assurance/lean4331/evidence/v71-gate-part3.out": "237ddf58459558e7d352e9af0d497c5adda3ed29d611df228fddc59a9244ccd3",
+    "assurance/lean4331/evidence/v71-gate-part4.out": "6cd4f9661ffa48fc18dfff4458b2eef2b62e76b2d089cb79b0d34802f6787f01",
+    "assurance/lean4331/evidence/v71-gate-part5.out": "e9e2a9af2e74f58ec22784dbc47d93fb57deaad532ca42436f6b49f0ac5989fb",
+    "assurance/lean4331/evidence/v71-gate-part6.out": "c0b48520655e88066ab1face2d2f97f9a1491dd09d4429f4281da25d690c5783"
+  }
+}

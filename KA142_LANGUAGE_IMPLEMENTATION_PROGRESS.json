@@ -1,0 +1,40 @@
+{
+  "checkpoint": "proofscript-v1-ka142-loop-invariants-structural-workflow0",
+  "version": "1.0.0-pskernel.145",
+  "base": "proofscript-v1-ka141-lean-backed-obligation-checking0",
+  "package": "proofscript",
+  "cli": "psc",
+  "progress": {
+    "smallProgrammingLanguage": 0.58,
+    "theoremProverSurface": 0.31,
+    "formalVerificationContracts": 0.62,
+    "runtimeCertificateCorrespondence": 0.39,
+    "typescriptRuntimeAlpha": 0.42,
+    "overallConservativeDashboard": 0.886
+  },
+  "implementedInThisCheckpoint": [
+    "while-loop invariant syntax parsing in contract bodies",
+    "decreases syntax parsing in contract bodies",
+    "structural loop invariant initialization obligations",
+    "structural loop invariant preservation obligations",
+    "structural loop exit/postcondition-scope obligations",
+    "structural loop decreases obligations",
+    "software-alpha workflow includes a loop-invariant contract example"
+  ],
+  "notImplementedYet": [
+    "semantic loop proof discharge",
+    "Lean vcgen/mvcgen lowering for loops",
+    "decreases/termination proof checking",
+    "monadic contracts",
+    "automatic proof search",
+    "full Lean4 equivalence",
+    "fully formal K3"
+  ],
+  "trustBoundary": {
+    "loopInvariantChecking": "structural-obligations-only",
+    "vcgenConnected": false,
+    "semanticLoopChecking": false,
+    "fullLean4Equivalence": false,
+    "fullyFormalK3": false
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "checkpoint": "proofscript-v1-ka140-usable-software-verification-alpha0",
+  "version": "1.0.0-pskernel.143",
+  "commands": [
+    "npm run build",
+    "npm run test:ka140",
+    "npm run test:ka139",
+    "npm run test:ka138",
+    "npm run test:ka137",
+    "npm run test:ka136",
+    "npm pack --ignore-scripts",
+    "fresh npm install from generated tarball",
+    "fresh npx psc software-alpha --out-dir software-alpha-out --json",
+    "fresh npx psc verify software-alpha-out/01-domain-model.pscert.json --json",
+    "fresh npx psc verify software-alpha-out/03-bounded-counter-contract.proofstatus.json --json",
+    "npm publish --dry-run --ignore-scripts --access public"
+  ],
+  "result": "passed",
+  "notes": [
+    "npm publish dry-run emits the expected npm login warning while still completing the dry-run gate.",
+    "Semantic proof checking remains explicitly false."
+  ]
+}

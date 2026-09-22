@@ -1,0 +1,35 @@
+{
+  "checkpoint": "proofscript-v1-ka105-primitive-defeq-application-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.108",
+  "baseline": "proofscript-v1-ka104-primitive-telescope-typing-helper-refinement0",
+  "referenceKind": "primitive-defeq-application-helper-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 5,
+  "countedObligations": [
+    "translated_isDefEqU_appN_prime_wf",
+    "translated_trExprS_appN_wf",
+    "translated_isDefEqU_app_arg_wf",
+    "translated_vexpr_lams_ctx_wf",
+    "translated_vexpr_lams_appN_wf"
+  ],
+  "sourceTheorems": [
+    "VEnv.IsDefEqU.appN'",
+    "TrExprS.appN",
+    "VEnv.IsDefEqU.app_arg",
+    "VExpr.lams_ctx",
+    "VExpr.lams_appN"
+  ],
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveDefeqApplicationHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

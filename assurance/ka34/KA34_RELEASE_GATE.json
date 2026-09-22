@@ -1,0 +1,74 @@
+{
+  "checkpoint": "proofscript-v1-ka34-mutual-def-env-bridge0",
+  "publicVersion": "1.0.0-pskernel.37",
+  "baseline": "proofscript-v1-ka33-inductive-env-bridge0",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "directLean4LeanMutualDefEnvBridge": {
+    "referenceKind": "direct-imported-lean4lean-mutual-def-env-bridge",
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanMutualDefEnvBridgeChecked": true,
+    "strictMutualDefEnvBridgePassed": true,
+    "theoryBuildStatus": 0,
+    "directBridgeCheckStatus": 0,
+    "coveredLean4LeanDeclConstructors": [
+      "VDecl.mutualDef"
+    ],
+    "coveredLean4LeanEnvOperations": [
+      "VEnv.addConsts",
+      "VEnv.addDefEqs",
+      "VEnv.constants",
+      "VEnv.defeqs"
+    ],
+    "formalBridgeLemmas": [
+      "PSKernelKA34.translated_mutual_def_is_real_vdecl",
+      "PSKernelKA34.translated_mutual_def_vdecl_wf",
+      "PSKernelKA34.translated_mutual_def_env_wf",
+      "PSKernelKA34.translated_mutual_def_env_ordered",
+      "PSKernelKA34.translated_mutual_def_constants_member",
+      "PSKernelKA34.translated_mutual_def_defeq_member"
+    ],
+    "stillOpen": [
+      "no executable PSKernel mutual-recursion checker refinement proof",
+      "no termination/recursive-safety refinement proof for mutual definitions",
+      "no frontend syntax or Core codec change for mutual definitions",
+      "no WHNF/defeq refinement for mutually recursive unfolding",
+      "no full Lean 4 equivalence",
+      "same-theory claim remains false"
+    ]
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "mutualDefinitionSemanticSoundness": false,
+    "formalLean4EquivalenceProvenObligations": 66
+  },
+  "blockedReasons": [],
+  "verificationSummary": {
+    "npm install --offline --no-audit --no-fund": "passed",
+    "npm run build -- --pretty false": "passed",
+    "npm run test:pskernel:ka34": "passed",
+    "npm run assurance:ka34": "passed",
+    "npm run lean:ka34:check": "passed",
+    "npm run test:kernel:smoke": "passed",
+    "npm run test:standalone-small": "passed",
+    "npm run test:psc:kernel-status": "passed",
+    "npm run test:psc:conformance-bounded": "passed",
+    "npm run arena:corpus-preflight": "passed",
+    "npm run test:arena:static-nonperf": "passed",
+    "npm run test:arena:tutorial": "passed",
+    "npm run verify:arena": "passed",
+    "fresh extract install/build/test:pskernel:ka34/lean:ka34:check": "passed",
+    "unzip -t final ZIP": "passed",
+    "sha256sum -c final SHA file": "passed_after_packaging"
+  },
+  "createdAtUtc": "2026-09-18T22:55:00Z"
+}

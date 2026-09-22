@@ -1,0 +1,10 @@
+PASS: Core v71 / KERNEL-level-instantiation-conformance1 / Lean 4.33.1 identity
+PASS: 277 assurance/trusted source fingerprints
+PASS: exact Lean executable 4.33.1/819816b2e0a3
+PASS: ordinary declarations: 7 ConstantInfo structures + 1,000 instantiated types exact against Lean.addDecl
+PASS: direct inductives: 6 positive + 4 negative exact admission cases, 18 generated metadata lines, zero mismatch
+PASS: parameterized/indexed direct inductives: 6 positive + 6 negative, 19 structural records, atomic rejects
+PASS: non-mutual integration: field-universe + uniform-param defEq + direct/indexed admission + indexed iota
+PASS: non-mutual whole-environment induction: ordered ordinary/quotient/direct/indexed/recursor components
+PASS: generic non-mutual admission: raw constructor types normalized into checked constructor-body obligations
+KERNEL v71 ASSURANCE GATE PART 6/6: PASS

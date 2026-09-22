@@ -1,0 +1,24 @@
+{
+  "schema": "proofscript-pskernel-ts-kernel-release-archive/v1",
+  "status": "accepted",
+  "proofStatus": "not-proven",
+  "trustLabel": "trusted-boundary standalone kernel; not fully formally equivalent to Lean 4 yet",
+  "semanticBaseline": "Lean 4.33.1",
+  "pinnedLeanRevision": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "profile": "release-critical-source-tree-zip",
+  "zipTool": "zip -X -q -@ over fixed-mtime staged files",
+  "fixedTimestamp": "1980-01-01T00:00:00.000Z",
+  "rootDirectory": "proofscript-standalone-release",
+  "sourceTreeSha256": "4483786bbaadd33c26935aadfb06499f788f3ee1191205dabb38ebd34f2bf603",
+  "sourceTreeFileCount": 847,
+  "sourceTreeTotalBytes": 5425298,
+  "archivePayloadSha256": "01e68e55933edc1a986f5791c668bc406588f1c208fb2857d4c3726db809c24e",
+  "archive": {
+    "path": "artifacts/release-manifest-source-archive/proofscript-standalone-release-source.zip",
+    "filename": "proofscript-standalone-release-source.zip",
+    "bytes": 1616696,
+    "sha256": "5c2961226408f6ea80a0e1175a02b5c11e76c0896f3c5ecf053f73afb68a48d9"
+  },
+  "releaseArchiveSha256": "4c59683107f62924ac25385674b3bc8fc1b94180831462e68eb27de2d79fcbce"
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "proofscript.release.sha256/v1",
+  "artifact": "proofscript-kernel-v71-positivity-completeness-boundary1.zip",
+  "checkpoint": "assurance/lean4331/CHECKPOINT_V71_POSITIVITY_COMPLETENESS_BOUNDARY1.json",
+  "checkpointSha256": "8551400a4e4f7bd7d753dcabb5c709bd69a26ce8b8bdb6cc0e29e0c174c26d75",
+  "markdown": "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_POSITIVITY_COMPLETENESS_BOUNDARY1.md",
+  "markdownSha256": "68a9008a8eddcb8fa3d4a91dba814295bd38f8a6a9d67de1ac23a903b975d0d5",
+  "formalSource": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71PositivityCompletenessBoundary.lean",
+  "formalSourceSha256": "f17cb2178366b6f47dda6cadc3c29e4854f17704935cd7da994b64001e8cce5f",
+  "generatedAt": "2026-09-10T05:18:09.902Z"
+}

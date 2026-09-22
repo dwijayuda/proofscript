@@ -1,0 +1,45 @@
+{
+  "checkpoint": "proofscript-v1-ka65-executable-whnf-refinement0",
+  "publicVersion": "1.0.0-pskernel.68",
+  "featureSurfaceBridgeProgressPercent": 87,
+  "executableKernelEquivalenceProofProgressPercent": 53,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 196,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 192,
+    "newFormalLean4LeanBridgeObligations": 4,
+    "countedNewObligations": [
+      "translated_whnf_wf",
+      "translated_whnfCore_wf",
+      "translated_whnfCore_prime_wf",
+      "translated_whnf_prime_wf"
+    ],
+    "baselineCounterCorrection": {
+      "staleVersionsField": 188,
+      "authoritativeKA64ReleaseGate": 192
+    }
+  },
+  "groups": [
+    {
+      "id": "expression-tags",
+      "progressPercent": 97,
+      "status": "KA51-KA64 strict-check the current expression-translation bridge slices; full executable translator refinement remains incomplete"
+    },
+    {
+      "id": "typechecker-whnf-defeq",
+      "progressPercent": 65,
+      "status": "KA65 promotes direct WHNF/WHNFCore WF surfaces into counted strict Lean4Lean obligations; DefEq executable refinement remains incomplete"
+    },
+    {
+      "id": "end-to-end-refinement-spine",
+      "progressPercent": 35,
+      "status": "checker pipeline skeleton strict-checked; no end-to-end theorem yet"
+    },
+    {
+      "id": "architecture-health",
+      "progressPercent": 95,
+      "status": "no-spaghetti ratchet plus KA65 semantic-package touch guard"
+    }
+  ],
+  "notAFormalEquivalenceClaim": true
+}

@@ -1,0 +1,65 @@
+{
+  "checkpoint": "proofscript-v1-ka1-lean4331-inventory0",
+  "publicVersion": "1.0.0-pskernel.3",
+  "baseline": "proofscript-v1-pskernel-real-arena0",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "kernel": {
+    "name": "PSKernel",
+    "defaultProfile": "KERNEL-level-instantiation-conformance1",
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "assurance": {
+    "ka1": "passed",
+    "inventoryItems": 15,
+    "proofObligations": 15,
+    "gaps": 10,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false
+  },
+  "arena": {
+    "corpus": "/mnt/data/arena-corpus-20260915",
+    "ndjsonCount": 190,
+    "verifyArena": "passed",
+    "tutorial": {
+      "total": 140,
+      "expectedAccept": 93,
+      "expectedReject": 47,
+      "acceptedGood": 93,
+      "rejectedBad": 47,
+      "wrongAccepts": 0,
+      "wrongRejects": 0,
+      "checkerCrashes": 0,
+      "notRun": 0
+    },
+    "staticNonPerf": {
+      "total": 26,
+      "expectedAccept": 4,
+      "expectedReject": 22,
+      "acceptedGood": 4,
+      "rejectedBad": 22,
+      "wrongAccepts": 0,
+      "wrongRejects": 0,
+      "checkerCrashes": 0,
+      "notRun": 0
+    }
+  },
+  "verification": {
+    "npmInstallOffline": "passed",
+    "build": "passed",
+    "testPskernelKa1": "passed",
+    "assuranceKa1": "passed",
+    "testPskernelV1Rename": "passed",
+    "testPskernelAdvancementAudit": "passed",
+    "testPscKernelStatus": "passed",
+    "testPscConformanceBounded": "passed",
+    "verifyArena": "passed",
+    "testKernelSmoke": "passed",
+    "testStandaloneSmall": "passed"
+  },
+  "next": "KA-2 formal translation relation for non-inductive core"
+}

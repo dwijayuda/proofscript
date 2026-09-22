@@ -1,0 +1,37 @@
+{
+  "checkpoint": "proofscript-v1-ka83-primitive-type-translation-refinement0",
+  "publicVersion": "1.0.0-pskernel.86",
+  "baseline": "proofscript-v1-ka82-primitive-dependency-reflection-refinement0",
+  "referenceKind": "primitive-type-translation-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 6,
+  "countedObligations": [
+    "translated_natLitClosed_wf",
+    "translated_natFstLamApp_wf",
+    "translated_natIsType_wf",
+    "translated_trNat_wf",
+    "translated_boolIsType_wf",
+    "translated_trBool_wf"
+  ],
+  "sourceTheorems": [
+    "VExpr.closedN_natLit",
+    "VEnv.HasPrimitives.natFstLamApp",
+    "VEnv.HasPrimitives.natIsType",
+    "VEnv.HasPrimitives.trNat",
+    "VEnv.HasPrimitives.boolIsType",
+    "VEnv.HasPrimitives.trBool"
+  ],
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveTypeTranslationRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

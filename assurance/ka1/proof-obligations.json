@@ -1,0 +1,146 @@
+{
+  "schema": "proofscript.assurance.ka1.proof-obligations/v1",
+  "status": "ledger-created-no-equivalence-proof-yet",
+  "summary": {
+    "totalProvenObligations": 0,
+    "openOrPlannedObligations": 14,
+    "evidenceOnlyObligations": 3
+  },
+  "obligations": [
+    {
+      "id": "translation.level",
+      "status": "planned",
+      "priority": "P0",
+      "statement": "translateLevel preserves Lean 4.33.1 level normalization and comparison predicates",
+      "evidence": [
+        "v71 level-instantiation conformance evidence"
+      ]
+    },
+    {
+      "id": "translation.expr",
+      "status": "planned",
+      "priority": "P0",
+      "statement": "translateExpr maps every accepted PSCore expression to a well-scoped Lean expression",
+      "evidence": [
+        "PSKernel expression/typechecker tests"
+      ]
+    },
+    {
+      "id": "translation.decl",
+      "status": "planned",
+      "priority": "P0",
+      "statement": "translateDecl maps every accepted PSCore declaration to a Lean declaration in the corresponding environment",
+      "evidence": [
+        "declaration environment checkpoints"
+      ]
+    },
+    {
+      "id": "soundness.checkDecl",
+      "status": "open",
+      "priority": "P0",
+      "statement": "if PSKernel CheckDecl accepts d in env then Lean 4.33.1 accepts translateDecl d in translateEnv env",
+      "evidence": [
+        "Arena pass is evidence only, not proof"
+      ]
+    },
+    {
+      "id": "soundness.defEq",
+      "status": "open",
+      "priority": "P0",
+      "statement": "if PSKernel DefEq env t u then Lean 4.33.1 DefEq translateExpr t translateExpr u",
+      "evidence": [
+        "conversion final audit evidence"
+      ]
+    },
+    {
+      "id": "soundness.replay",
+      "status": "open",
+      "priority": "P0",
+      "statement": "if standalone replay accepts an artifact then every checked declaration has a Lean-valid translation",
+      "evidence": [
+        "standalone replay tests"
+      ]
+    },
+    {
+      "id": "soundness.quotients",
+      "status": "open",
+      "priority": "P1",
+      "statement": "quotient primitive checking and reductions are Lean-valid",
+      "evidence": [
+        "quotient active tests"
+      ]
+    },
+    {
+      "id": "soundness.inductiveAdmission",
+      "status": "open",
+      "priority": "P1",
+      "statement": "admitted inductive blocks translate to Lean-valid inductive blocks",
+      "evidence": [
+        "inductive checkpoints and Arena pass"
+      ]
+    },
+    {
+      "id": "soundness.recursors",
+      "status": "open",
+      "priority": "P1",
+      "statement": "generated recursors and iota rules agree with Lean rules for supported Core",
+      "evidence": [
+        "recursor checkpoints"
+      ]
+    },
+    {
+      "id": "soundness.nestedPreprocessing",
+      "status": "open",
+      "priority": "P1",
+      "statement": "nested helper preprocessing preserves Lean meaning",
+      "evidence": [
+        "nested checkpoints"
+      ]
+    },
+    {
+      "id": "soundness.propElimination",
+      "status": "open",
+      "priority": "P1",
+      "statement": "Prop elimination/projection decisions match Lean for supported Core",
+      "evidence": [
+        "prop projection conformance and static Arena pass"
+      ]
+    },
+    {
+      "id": "nonSemantic.resourceExhausted",
+      "status": "planned",
+      "priority": "P1",
+      "statement": "resource_exhausted cannot be interpreted as reject or accept",
+      "evidence": [
+        "KERNEL-resource-bounds0"
+      ]
+    },
+    {
+      "id": "completeness.supportedCore",
+      "status": "open",
+      "priority": "P2",
+      "statement": "if Lean accepts a declaration in the supported PSCore v71 fragment then PSKernel accepts it",
+      "evidence": [
+        "future theorem; not currently proven"
+      ]
+    },
+    {
+      "id": "arena.officialAdapter",
+      "status": "evidence-only",
+      "priority": "P2",
+      "statement": "public Arena runner should report exit codes 0/1/2/3 and be submitted to official Arena",
+      "evidence": [
+        "local mounted corpus pass"
+      ]
+    },
+    {
+      "id": "frontend.fullLanguage",
+      "status": "out-of-scope",
+      "priority": "P3",
+      "statement": "full ProofScript/Lean source frontend equivalence requires separate elaborator proof",
+      "evidence": [
+        "kernel works on Core"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,713 @@
+{
+  "inputFileCount": 176,
+  "proofSpecCount": 56,
+  "leanModuleCount": 115,
+  "aggregateHash": "5631e235e0ba17689114c5f8b24408e8d4ea1c5ce9dd8b1143d54b5df4821101",
+  "sorryHits": [],
+  "entries": [
+    {
+      "path": "assurance/ka1/translation-soundness-skeleton.lean",
+      "sha256": "83215bd140761c9fee2366ba69e8435db95a4bbf6c160f758eb1be0781b3b373"
+    },
+    {
+      "path": "assurance/ka100/KA100_PRIMITIVE_SEQUENCE_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "83493cf4cf343028e2f4c9e6677f0e22377d592d771732bc2bccaf109f8eabb1"
+    },
+    {
+      "path": "assurance/ka100/primitive-sequence-helper-refinement-bridge.lean",
+      "sha256": "10d4abd6f907ae1c8eacd8832383cbd14c84cff66aae47bfcc42f2dfe2b40afc"
+    },
+    {
+      "path": "assurance/ka101/KA101_PRIMITIVE_SUBSTITUTION_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "3828b35ea4cf8c66a0a79af00edf2109399e600f3fb6f54d0e78196db9ee2b25"
+    },
+    {
+      "path": "assurance/ka101/primitive-substitution-helper-refinement-bridge.lean",
+      "sha256": "ff6e8933d3281a896731304209ccb0990c259e1f7bd0b6219763ec3e0a634b9e"
+    },
+    {
+      "path": "assurance/ka102/KA102_PRIMITIVE_SUBSTITUTION_COMPOSITION_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "32a76cd6220d9f406e88a10fb86f873759ea59ad433d451e2861511b866aeb17"
+    },
+    {
+      "path": "assurance/ka102/primitive-substitution-composition-helper-refinement-bridge.lean",
+      "sha256": "6b8c0846cbf666ac2b8e3a3ef5d1b81700fd6ace2295706f0591b5e6c436d769"
+    },
+    {
+      "path": "assurance/ka103/KA103_PRIMITIVE_CONTEXT_APPLICATION_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "8c3996075496ce61ecd4b919a15cd02eed97afd6f3e91738e432081c35ef9b76"
+    },
+    {
+      "path": "assurance/ka103/primitive-context-application-helper-refinement-bridge.lean",
+      "sha256": "8322f2eb8ec5fb3042427d4d2640af7555fbde3f1cdfa373b9e38d56cbb67f39"
+    },
+    {
+      "path": "assurance/ka104/KA104_PRIMITIVE_TELESCOPE_TYPING_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "ca9f655fe19b769154924feef690169b2884a2456576ab1818a509789402644f"
+    },
+    {
+      "path": "assurance/ka104/primitive-telescope-typing-helper-refinement-bridge.lean",
+      "sha256": "6e83694daba2967c2b3f129bf79c1b8d1e0f3d84a303a3fd3dfafcba6867403b"
+    },
+    {
+      "path": "assurance/ka105/KA105_PRIMITIVE_DEFEQ_APPLICATION_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "5f67b53bcad99569b1bf17d4c195a9d42962f5df490f77ec8e2657ef0d27a8ec"
+    },
+    {
+      "path": "assurance/ka105/KA105_PRIMITIVE_TELESCOPE_TYPING_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "5f67b53bcad99569b1bf17d4c195a9d42962f5df490f77ec8e2657ef0d27a8ec"
+    },
+    {
+      "path": "assurance/ka105/primitive-defeq-application-helper-refinement-bridge.lean",
+      "sha256": "37d6577ce000da6516050b816e5800f6cc1bc8a76f90f3b223f1b9e259ab72bc"
+    },
+    {
+      "path": "assurance/ka106/KA106_PRIMITIVE_EXTENSION_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "b2a9a3f7af8f2d5e61157489632f221d5dfd88d0152eada1f93cbba3ff1aae60"
+    },
+    {
+      "path": "assurance/ka106/primitive-extension-helper-refinement-bridge.lean",
+      "sha256": "b6559311f473d5a9ab4da811eee429b7973bd366648623b823ac17d0e136c770"
+    },
+    {
+      "path": "assurance/ka107/KA107_PRIMITIVE_TELESCOPE_SHAPE_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "4b4d6c32a591cf70434dc08b700a6533f64990c9ce37c8e0e7ee3ea628be10e3"
+    },
+    {
+      "path": "assurance/ka107/primitive-telescope-shape-helper-refinement-bridge.lean",
+      "sha256": "5085f8c3b46291dce8d31b1f7527b36377aba0729d289a723b4f6fc7cd009143"
+    },
+    {
+      "path": "assurance/ka108/KA108_PRIMITIVE_LAMBDA_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "327ef0bb55f3f43be7a1bb5b7cb4daf730bae2674c21ea1900ccf6133ad47a44"
+    },
+    {
+      "path": "assurance/ka108/primitive-lambda-helper-refinement-bridge.lean",
+      "sha256": "c3ed22aa3d3ebd87d320965ce9986b60600e634d8fc00826e77c60ce8d423780"
+    },
+    {
+      "path": "assurance/ka109/KA109_PRIMITIVE_CONDITION_STRUCTURAL_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "46e8dce407bac85eeaec5b308449ff436a6f7a308cc94d7152694b52855b4a28"
+    },
+    {
+      "path": "assurance/ka109/primitive-condition-structural-helper-refinement-bridge.lean",
+      "sha256": "29cb64921fb347d51934209a9b813ba3e99e9cea778553ec3de6b85c8f136a42"
+    },
+    {
+      "path": "assurance/ka11/lean4lean-real-import-check.lean",
+      "sha256": "9bfdc12dbccfefc5e79192f2368c4ac5e32aba7242fd0855f3a2f22a2cab112e"
+    },
+    {
+      "path": "assurance/ka110/KA110_FEATURE_SURFACE_CLOSEOUT_AUDIT_BRIDGE_SPEC.json",
+      "sha256": "06e7b90b0859bb8bd93740cdc6f9319fa69e4abfcd6c80eea2864d91b41f783f"
+    },
+    {
+      "path": "assurance/ka110/feature-surface-closeout-audit-bridge.lean",
+      "sha256": "c964bbfd625fa16421244e8973d4dad60a639cc60588c824db0e8cd7e8bc97a9"
+    },
+    {
+      "path": "assurance/ka111/KA111_PROGRESS_DASHBOARD_BRIDGE_SPEC.json",
+      "sha256": "57bff633aaa3572026e6facd1c1aa668bc3af302b15507e42dc79efc97278542"
+    },
+    {
+      "path": "assurance/ka111/progress-dashboard-bridge.lean",
+      "sha256": "43cd844d6b6b16513ebff7f912ca587d3b9cc531698346672ef59f1aa36f4df1"
+    },
+    {
+      "path": "assurance/ka112/KA112_EXECUTABLE_EQUIVALENCE_PROGRESS_BRIDGE_SPEC.json",
+      "sha256": "740565db84a2512165b7ebb7fdc85bfb3789db094a89e02f40f6c803a87c781a"
+    },
+    {
+      "path": "assurance/ka112/executable-equivalence-progress-bridge.lean",
+      "sha256": "6369bef77be154a67bdd7cd8d0346056f6ae4a5758504b766a88e7b81bf303d5"
+    },
+    {
+      "path": "assurance/ka113/KA113_EXECUTABLE_OBLIGATION_LEDGER_BRIDGE_SPEC.json",
+      "sha256": "dd95dedd3933376f1bce438a3b245306a4fdb4ab00990728d0f0ff23af03cb89"
+    },
+    {
+      "path": "assurance/ka113/executable-obligation-ledger-bridge.lean",
+      "sha256": "3bf1a4ae08a524ccb9f9dd208bb1dd84a14699c01ec46389e94bc4eff61e7db0"
+    },
+    {
+      "path": "assurance/ka114/KA114_EXECUTABLE_PROOF_FRONTIER_CHECKLIST_BRIDGE_SPEC.json",
+      "sha256": "729e62c1fa60b633218ef0991eee17b4cf9158012781a051076da76faf0d4420"
+    },
+    {
+      "path": "assurance/ka114/executable-proof-frontier-checklist-bridge.lean",
+      "sha256": "5852d927d6d90f1755666c03ed9c3304e1c9c4dc9100bc08539cfa5c8c1e8b44"
+    },
+    {
+      "path": "assurance/ka115/KA115_EXECUTABLE_REFINEMENT_THEOREM_SKELETON_BRIDGE_SPEC.json",
+      "sha256": "20ef68d37df0ad831477b72bb33899790890b10dfade41b6665a0fe6856ac796"
+    },
+    {
+      "path": "assurance/ka115/executable-refinement-theorem-skeleton-bridge.lean",
+      "sha256": "17e4189492e29e0d9cf66928db05f7a1d415c283887870a933845caabe78da3f"
+    },
+    {
+      "path": "assurance/ka116/KA116_EXECUTABLE_PROOF_DEPENDENCY_CLOSURE_BRIDGE_SPEC.json",
+      "sha256": "42d4c6c449b16e83f9fd46d4506b1b87620bd30ca17ad7b441bf6595b0c51072"
+    },
+    {
+      "path": "assurance/ka116/executable-proof-dependency-closure-bridge.lean",
+      "sha256": "3f57c08dba7c48761f70a4b0086b71cdb843d9133bb47e29c866a2f0d7975ccd"
+    },
+    {
+      "path": "assurance/ka117/KA117_EXECUTABLE_PROOF_MODULE_INDEX_BRIDGE_SPEC.json",
+      "sha256": "fa85300c784c08e8d4aed3bb10ba7dd51878491a47d61285cc2682d482783f42"
+    },
+    {
+      "path": "assurance/ka117/executable-proof-module-index-bridge.lean",
+      "sha256": "3887cf00a429d804d6b44e048629bbe8648a1939002cc096c6a3c12f2c03a865"
+    },
+    {
+      "path": "assurance/ka118/KA118_EXECUTABLE_REFINEMENT_COVERAGE_MAP_BRIDGE_SPEC.json",
+      "sha256": "84793265ad259ad4121bf7f950f8ef1939310d00e6acfb6ddccb71666ce20361"
+    },
+    {
+      "path": "assurance/ka118/executable-refinement-coverage-map-bridge.lean",
+      "sha256": "9b81e7160b42a6fabb7905aab340c2fb8a16e97772eff2b2d209af7c74fe7ef0"
+    },
+    {
+      "path": "assurance/ka119/KA119_EXECUTABLE_REFINEMENT_PROOF_READINESS_BRIDGE_SPEC.json",
+      "sha256": "2b3588fb7437e4d580c55f1d26a04c0dd265d774f0801663a13dc492b0d28aed"
+    },
+    {
+      "path": "assurance/ka119/executable-refinement-proof-readiness-bridge.lean",
+      "sha256": "eb9dbf9ba08e341efb720ae262eff889c93fb72e0fad7eb1f55ef506ef867810"
+    },
+    {
+      "path": "assurance/ka12/direct-lean4lean-reference.lean",
+      "sha256": "3b7970b4b5f2aca2cff901002903dbf74abe9e9e7fd179bc3d6877b48fa5a2e9"
+    },
+    {
+      "path": "assurance/ka12/pskernel-direct-lean4lean-binding.lean",
+      "sha256": "102b8eabe3df6e6b1bf2c94783398f357c7f13ee61f8fbaf7972f19e36d209ce"
+    },
+    {
+      "path": "assurance/ka120/KA120_EXECUTABLE_REFINEMENT_DISCHARGE_AGENDA_BRIDGE_SPEC.json",
+      "sha256": "80725c96cb79a6f4b5ea6385c5c58409aa941f06e6984aa242250f7946efd3a5"
+    },
+    {
+      "path": "assurance/ka120/executable-refinement-discharge-agenda-bridge.lean",
+      "sha256": "9930a90a4bca841a3fdd0c3d581f87dc58fe496cb30f2eb89a8051a972dd7799"
+    },
+    {
+      "path": "assurance/ka121/KA121_EXECUTABLE_REFINEMENT_PROOF_CONTRACT_BRIDGE_SPEC.json",
+      "sha256": "0d2c45af623b6d9f21933b287de084b05b3a45589813753c68a76e4d703d1ce4"
+    },
+    {
+      "path": "assurance/ka121/executable-refinement-proof-contract-bridge.lean",
+      "sha256": "5c3cf6a04ba6886fa3fed386bc5f3d57d814adaa905654a0992ed055a44fe902"
+    },
+    {
+      "path": "assurance/ka122/KA122_EXECUTABLE_REFINEMENT_THEOREM_PREFLIGHT_BRIDGE_SPEC.json",
+      "sha256": "17459c3845b79d3182645bf5c5ddae9fd7f53da49ebe9231aa2761c98b9263f5"
+    },
+    {
+      "path": "assurance/ka122/executable-refinement-theorem-preflight-bridge.lean",
+      "sha256": "1da7636dca6f57bd2354bf189cbf7d0be7bdfabc8368c769c8677d02412c6bed"
+    },
+    {
+      "path": "assurance/ka123/KA123_EXECUTABLE_REFINEMENT_FINAL_AUDIT_HARNESS_BRIDGE_SPEC.json",
+      "sha256": "10077ed1aaa7143275a0f7191f1d082abbe8a14d274d654bd0472d4952536b06"
+    },
+    {
+      "path": "assurance/ka123/executable-refinement-final-audit-harness-bridge.lean",
+      "sha256": "db17842296bcb864a7152d428bad2c4a72b69e9acbba6f9bb7a9e5194e162068"
+    },
+    {
+      "path": "assurance/ka124/KA124_EXECUTABLE_REFINEMENT_PROOF_BOUNDARY_GATE_BRIDGE_SPEC.json",
+      "sha256": "9ae6e836b2657c78f3a17a15694d9a05c875d8ce4cef41b97faae5d8b73286de"
+    },
+    {
+      "path": "assurance/ka124/executable-refinement-proof-boundary-gate-bridge.lean",
+      "sha256": "4e791d64f9ffd0a86908bda7bc2af5869714c0eb18dd3ee14e8c7b96c4d091d3"
+    },
+    {
+      "path": "assurance/ka125/KA125_EXECUTABLE_REFINEMENT_REMAINING_PROOF_GAP_BRIDGE_SPEC.json",
+      "sha256": "29680a7003dc6d3d1c7dbe9afc7fb0f6b31edf56f8f579195a20bb92a6ff21bf"
+    },
+    {
+      "path": "assurance/ka125/executable-refinement-remaining-proof-gap-bridge.lean",
+      "sha256": "56043e8491a2a0d21a409435e3eca6ab3587eb2c18e390cf9b6037ecc5d24295"
+    },
+    {
+      "path": "assurance/ka126/KA126_EXECUTABLE_REFINEMENT_PROOF_CARRYING_ARTIFACT_GATE.json",
+      "sha256": "c5eaca5447cf1f21c68aa3b6fb1b1ae2606300116ddd07144c61ece2d5847e00"
+    },
+    {
+      "path": "assurance/ka126/KA126_EXECUTABLE_REFINEMENT_PROOF_CARRYING_ARTIFACT_GATE_BRIDGE_SPEC.json",
+      "sha256": "9c46e6b60bda9756e9c23b1a6f9e060357deb293ad6b441b4ed551d2b29da596"
+    },
+    {
+      "path": "assurance/ka126/executable-refinement-proof-carrying-artifact-gate-bridge.lean",
+      "sha256": "7b33f040345e9d9921d0ff6fa44276bde9a586111c5dca4c206e2688651fec69"
+    },
+    {
+      "path": "assurance/ka127/KA127_EXECUTABLE_REFINEMENT_PROOF_CARRYING_ARTIFACT_BRIDGE_SPEC.json",
+      "sha256": "e0f3f3a6c640cf73f93efb7b907140807477ba25eb3ecb2c43df5ff8f2733a0a"
+    },
+    {
+      "path": "assurance/ka127/executable-refinement-proof-carrying-artifact-certificate.lean",
+      "sha256": "2db7d860fea65fb00ad8ffe9bbed63f119583db484aa89c80f6f1aeed92c9728"
+    },
+    {
+      "path": "assurance/ka13/vdecl-wf-bridge.lean",
+      "sha256": "740613c8a415561c8621397aae50a8bb60c4ffd0e1e9a92c5bc1421b3888d59c"
+    },
+    {
+      "path": "assurance/ka15/env-wf-bridge.lean",
+      "sha256": "1ac6a27890b960c7dd40ce9e1657839e09031aba68b8af495f512402fab17d03"
+    },
+    {
+      "path": "assurance/ka16/env-extension-bridge.lean",
+      "sha256": "e96d080987e04dd1d636976ad0b02cb6addfb1c2d4eb6c21fa25d7ff1affb85f"
+    },
+    {
+      "path": "assurance/ka17/env-lookup-bridge.lean",
+      "sha256": "369da48c761b48fe280250f40c767524868f8c926d61f277caff1b355779891e"
+    },
+    {
+      "path": "assurance/ka18/env-no-overwrite-bridge.lean",
+      "sha256": "e1102891065899ca12a43b20a2ca595aad5365cd9fb6c561abab1663d58c2668"
+    },
+    {
+      "path": "assurance/ka19/env-defeq-preservation-bridge.lean",
+      "sha256": "9f7dd415618513c193f351715dc06017b96b20461383aa53bb024fa11a6a8a56"
+    },
+    {
+      "path": "assurance/ka2/translation-soundness-skeleton.lean",
+      "sha256": "7030e08111bec3fa2cbb375e7cfffa6f237f43538c4dc7d12af96143cd392869"
+    },
+    {
+      "path": "assurance/ka20/nondef-vdecl-wf-bridge.lean",
+      "sha256": "d0850cde8a172766ff28ee55b381dbd4229531c053ba8b0f76364a3ddcd7d16b"
+    },
+    {
+      "path": "assurance/ka21/nondef-env-wf-bridge.lean",
+      "sha256": "078582bb003cb4a50ed19cb820b2e3c7d7fb8dbf3161d3828cec411b30824d93"
+    },
+    {
+      "path": "assurance/ka22/nondef-env-extension-bridge.lean",
+      "sha256": "6879892a2e93da2d186064f98f96ad3796ec1db57027117c731184c2d3a7bf45"
+    },
+    {
+      "path": "assurance/ka23/nondef-env-lookup-bridge.lean",
+      "sha256": "35110315f9b88c9530c7bfb48c2c804293439c933b713f84332fcd7afc200824"
+    },
+    {
+      "path": "assurance/ka24/nondef-env-no-overwrite-bridge.lean",
+      "sha256": "7ec3bb917ca29b363b62a07d01e5009a737472dc5a403448d270e57fb97b9ca0"
+    },
+    {
+      "path": "assurance/ka25/nondef-env-defeq-preservation-bridge.lean",
+      "sha256": "25e5906d61cfd3686f2b8fb7cdd2ccecef78ad12a755103adeeaa1d26dae36c5"
+    },
+    {
+      "path": "assurance/ka26/quot-env-bridge.lean",
+      "sha256": "6dd5687de0ac913f7047bd77c79e23edf136c0e7b1fc15419d664157340927e5"
+    },
+    {
+      "path": "assurance/ka27/quot-env-no-overwrite-bridge.lean",
+      "sha256": "3bb3aaf9cd170c399f9a45a245b6409040df562c1ac6f97bbc73de51e52d28de"
+    },
+    {
+      "path": "assurance/ka28/quot-env-defeq-preservation-bridge.lean",
+      "sha256": "65cdc727757dea68866b1c03091cf1b28f8e0c1d08192060dc64c7f03c280e9d"
+    },
+    {
+      "path": "assurance/ka29/quot-env-aggregate-bridge.lean",
+      "sha256": "0c4cd15e1512c20f4502d0548ff1e1b7dbf6978d0b6a706ee65fcb307e099db1"
+    },
+    {
+      "path": "assurance/ka3/noninductive-soundness-skeleton.lean",
+      "sha256": "3687964f4a7086c1c71be4d406af7c4d59e7373af268e9473d8bb5f7498448b9"
+    },
+    {
+      "path": "assurance/ka30/ordinary-env-aggregate-bridge.lean",
+      "sha256": "8a059289a0e6be2e423c66e59909147973d393e4c32c2633c9cb673adc8b663d"
+    },
+    {
+      "path": "assurance/ka31/example-env-aggregate-bridge.lean",
+      "sha256": "b188be97b6109f674d4efb32378f877f505b0b2ede357a06280906cc230ce499"
+    },
+    {
+      "path": "assurance/ka33/inductive-env-bridge.lean",
+      "sha256": "b25dacf448b1e85aff38b897cd9f7ee949b8a167edc900c0fd726ac281a7c932"
+    },
+    {
+      "path": "assurance/ka34/mutual-def-env-bridge.lean",
+      "sha256": "e818a845de798e5e08ea2c2142240f5fb6e2a25e73662f1f68f83587ca16e4db"
+    },
+    {
+      "path": "assurance/ka35/typechecker-refinement-bridge.lean",
+      "sha256": "e0fc938900c459dc1cf4126899b9f75c4fe9a66bcda1bbe38dba07c6680effb2"
+    },
+    {
+      "path": "assurance/ka36/expression-tag-coverage-bridge.lean",
+      "sha256": "56c02e05dc97d531587150579b94f63ec3f580f4b99d3b5c1132ac4de2caf08a"
+    },
+    {
+      "path": "assurance/ka37/whnf-head-reduction-bridge.lean",
+      "sha256": "6847648a756f5642ca434be2ab3ddd10b855a594ad52b700935c209e330d8a67"
+    },
+    {
+      "path": "assurance/ka38/whnf-preservation-bridge.lean",
+      "sha256": "a48f7304b3ac77bed38fe4a1c59861b28df0a5e942d38dd38b7d040566469e63"
+    },
+    {
+      "path": "assurance/ka39/defeq-whnf-refinement-bridge.lean",
+      "sha256": "403f2f126e61b5199a8c6d6968a44306747f1d49e6e8c1f2812ef6b40e8876ce"
+    },
+    {
+      "path": "assurance/ka4/noninductive-soundness-machine-check.lean",
+      "sha256": "8485f8780a3187aa7de3cf4b63166ae80249adafe1c363af7ce741a5f48ddb2b"
+    },
+    {
+      "path": "assurance/ka40/primitive-literal-policy-bridge.lean",
+      "sha256": "ccc99dc9f1d5f6dcc56f270dfe3209f7d68c6ca5ec9a620d52ae0a7b448846d1"
+    },
+    {
+      "path": "assurance/ka41/codec-replay-refinement-bridge.lean",
+      "sha256": "6a152fe876948f35c50480fe155bdeca97fe0c5affc4f847220b8f2f86ad072e"
+    },
+    {
+      "path": "assurance/ka42/resource-error-conservativity-bridge.lean",
+      "sha256": "1d18680a6fd6bf580ee802c621b4b9c78c4a2283e6931abc2934653907ec2039"
+    },
+    {
+      "path": "assurance/ka45/inductive-recursor-refinement-bridge.lean",
+      "sha256": "9fbc7c8ee9b46007c5aeefd52f7ed0524486af7ee0995a0f18c74c2023c96900"
+    },
+    {
+      "path": "assurance/ka46/projection-reduction-refinement-bridge.lean",
+      "sha256": "ac4f4c5aa40823c30b7e6608de7f297e0f541c7bf84d7c790f1cbcce0f517f61"
+    },
+    {
+      "path": "assurance/ka47/executable-expression-translator-refinement-bridge.lean",
+      "sha256": "175b5db02c7017414046e3da25651638a8ea67770bd4e070dd995ecbf81a0a7c"
+    },
+    {
+      "path": "assurance/ka48/executable-whnf-defeq-refinement-bridge.lean",
+      "sha256": "0fc14d84334b712111c1f073499756b82a7aacad8548e0fbf21981c050369993"
+    },
+    {
+      "path": "assurance/ka49/checker-pipeline-end-to-end-theorem-skeleton.lean",
+      "sha256": "6ded43f3a43341913911883ead824688a22f286bd5a6ff5dda549786dbd1b861"
+    },
+    {
+      "path": "assurance/ka51/executable-expression-translator-constructor-refinement-bridge.lean",
+      "sha256": "0edf01d7494d70aadc4d5aea9914073a7e5eb65e8b848199074a9fb355488bbe"
+    },
+    {
+      "path": "assurance/ka52/executable-expression-translator-binder-refinement-bridge.lean",
+      "sha256": "824abb2ef3b9a64d60403cabeada016d248ff67226e3964b02da6db695aa603f"
+    },
+    {
+      "path": "assurance/ka53/executable-expression-translator-residual-refinement-bridge.lean",
+      "sha256": "ac9ea68f3a1678c9c55783de1d49065617716d8bc1c61fc14162400a508906bc"
+    },
+    {
+      "path": "assurance/ka54/executable-expression-translator-determinism-refinement-bridge.lean",
+      "sha256": "0a2b6496a9532d9df2db4f6a11df22a4d7ff20af17d12920d1aa012c8363cc51"
+    },
+    {
+      "path": "assurance/ka55/executable-expression-translator-substitution-refinement-bridge.lean",
+      "sha256": "6030124e95390106a25eb48063597dfc1a993c5977c63002381b6b765d354809"
+    },
+    {
+      "path": "assurance/ka56/executable-expression-translator-source-condition-refinement-bridge.lean",
+      "sha256": "527d1dc28a8b6a57f6fe6e6f73bcd75073d41d37e25c8948c15985bac9318b34"
+    },
+    {
+      "path": "assurance/ka57/executable-expression-translator-source-transform-refinement-bridge.lean",
+      "sha256": "d23aa7ea9ca2831bf6fb1edda6069e6001b9be3ad49766b3f6069bc788f7a6c5"
+    },
+    {
+      "path": "assurance/ka58/executable-expression-translator-invariant-refinement-bridge.lean",
+      "sha256": "9fa5a2e590147d672375d23aba7459dd602ae01797f66a0643cf2df2e74fca9b"
+    },
+    {
+      "path": "assurance/ka59/executable-expression-translator-application-refinement-bridge.lean",
+      "sha256": "52435e556974eb2c5ed61821da8e010e7ab44ca38784b9cf33046c85accb1f34"
+    },
+    {
+      "path": "assurance/ka6/lean4lean-compatible-binding.lean",
+      "sha256": "ce94d04b992315af190a31207864c851c478ad70bc37ccef8cc17420c156d337"
+    },
+    {
+      "path": "assurance/ka60/executable-expression-translator-beta-refinement-bridge.lean",
+      "sha256": "63704afab534b89208a2ab153ff7bdf6b1a3fb492b36d557216b995cf7d2bd36"
+    },
+    {
+      "path": "assurance/ka61/executable-expression-translator-appstack-refinement-bridge.lean",
+      "sha256": "ace0cb177cc71873556e4c4ce1afe3b7d212810be824690fb8313028f1259804"
+    },
+    {
+      "path": "assurance/ka62/executable-expression-translator-uninstantiate-refinement-bridge.lean",
+      "sha256": "d6e2d039c071057bda69c95cb84fdc66f38885313cf065bbd519522f852089b1"
+    },
+    {
+      "path": "assurance/ka63/executable-expression-translator-bool-literal-refinement-bridge.lean",
+      "sha256": "32a05feaae32819b3805e8f88a621d344a59f20e8c4e67f74fa37dc651a28968"
+    },
+    {
+      "path": "assurance/ka64/executable-expression-translator-eqv-refinement-bridge.lean",
+      "sha256": "6eb09d9f70840e82f7520a86b95bddeb64b353b84bee392dfaea7994e353baf6"
+    },
+    {
+      "path": "assurance/ka65/executable-whnf-refinement-bridge.lean",
+      "sha256": "1fcaf66af14b580c6f71d5c8461b2425e2cc73fb7b2be4d936e2578b742ad868"
+    },
+    {
+      "path": "assurance/ka66/executable-defeq-core-refinement-bridge.lean",
+      "sha256": "3e54ba27c20febf0831af85daa259ff1805ae01bfd4ed3b4fd02c8aecf163389"
+    },
+    {
+      "path": "assurance/ka67/executable-defeq-binder-app-eta-refinement-bridge.lean",
+      "sha256": "c6b24eaaf43058d32690069d9ee3ec05813fc2e84cee1f5e8c74e48bf077bd43"
+    },
+    {
+      "path": "assurance/ka68/executable-defeq-proof-level-offset-refinement-bridge.lean",
+      "sha256": "7228a214a52b8337e0b7bf13d13ad4ed223fafdf6d36f732ffdde42eae4cf1a0"
+    },
+    {
+      "path": "assurance/ka69/KA69_EXECUTABLE_DEFEQ_DELTA_STRING_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "feb281876374a96d204a07e30554f97479026aad3e7f4cab3add22a1ce0360e6"
+    },
+    {
+      "path": "assurance/ka69/executable-defeq-delta-string-refinement-bridge.lean",
+      "sha256": "8a2fbf014e88a64ed1090743012f0c0f124a60f97371a52f681705f11f535f72"
+    },
+    {
+      "path": "assurance/ka7/lean4lean-real-import-check-template.lean",
+      "sha256": "f39a26b9330ad4286afce36424022a1bde95a0ff0730564869434c377bb6c402"
+    },
+    {
+      "path": "assurance/ka70/KA70_EXECUTABLE_DEFEQ_UNIT_PROJ_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "5120a1e89cb300363824286786e17f52773f60fa8749dffd9001a599dcb700e5"
+    },
+    {
+      "path": "assurance/ka70/executable-defeq-unit-proj-refinement-bridge.lean",
+      "sha256": "2697c7689e52c5d8d296916009346f546e5cbe51a2bb22347db37570846e0dd4"
+    },
+    {
+      "path": "assurance/ka72/KA72_EXECUTABLE_DEFEQ_ETA_CACHE_STATUS_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "016f3bb4a8622b368d2936f193addf6e8adcd1251b330c0be4b7b3fe0eb955f1"
+    },
+    {
+      "path": "assurance/ka72/executable-defeq-eta-cache-status-refinement-bridge.lean",
+      "sha256": "cec1d49502ab364b60d8fb3fdf9a1e76b62d64eb6b22ac0e7a937f403db83356"
+    },
+    {
+      "path": "assurance/ka74/KA74_EXECUTABLE_DEFEQ_NAT_OFFSET_BOUNDARY_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "ab4fd09226be68423196af33d3791ee752c3b8946586cfea4ba653ff873d9d7f"
+    },
+    {
+      "path": "assurance/ka74/executable-defeq-nat-offset-boundary-refinement-bridge.lean",
+      "sha256": "04ba104819170739e0c50e2151bc3245a6dfda4d83577681a3e70c0eecbea899"
+    },
+    {
+      "path": "assurance/ka75/KA75_EXECUTABLE_INFER_ATOMIC_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "fac958650994a7ac1cc1a4d08c829eb6a532a0f81a15885ccc6b1818b0f66fc4"
+    },
+    {
+      "path": "assurance/ka75/executable-infer-atomic-refinement-bridge.lean",
+      "sha256": "770fc9072e91fc3d691fde7e8d91cad7f2c35b044b897984389de34b645564e5"
+    },
+    {
+      "path": "assurance/ka76/KA76_EXECUTABLE_INFER_CONSTANT_LITERAL_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "cc5a7e0c0c699e7c8646a8f2329d1d9bb01acd392d93857528731be3f2417baf"
+    },
+    {
+      "path": "assurance/ka76/executable-infer-constant-literal-refinement-bridge.lean",
+      "sha256": "993bc46efc049d2e1da9ec3223f4a40911875bda2919a87c79e723cc82e2fa61"
+    },
+    {
+      "path": "assurance/ka77/KA77_EXECUTABLE_INFER_STRUCTURAL_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "ee026217a70d8f0608b9ac43ce264825d77fe77275b7a07d955236589263bcd7"
+    },
+    {
+      "path": "assurance/ka77/executable-infer-structural-refinement-bridge.lean",
+      "sha256": "cabb4e324b280a64892047023a23e67c6f0106ea99d524d8a5feb5e8f205d245"
+    },
+    {
+      "path": "assurance/ka79/KA79_EXECUTABLE_INFER_LOOP_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "581637ab4163b869aa83d98c7c80786ec784eaa630a20c819a9683e6347a8751"
+    },
+    {
+      "path": "assurance/ka79/executable-infer-loop-refinement-bridge.lean",
+      "sha256": "9f75448eb4bce5d9d43a0403db3f1cfc1d43fe99bdff93bd2a01c553546371ae"
+    },
+    {
+      "path": "assurance/ka81/KA81_PRIMITIVE_REFLECTION_TYPING_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "cd8e736c13768787033c74ce91d3bddd64f6b33e6fe26cd3ed9c70547c3e915b"
+    },
+    {
+      "path": "assurance/ka81/primitive-reflection-typing-refinement-bridge.lean",
+      "sha256": "0b8233005310dc69f6d13fe0c49cc7500e19595c989f47bcc2fc1da0b758f895"
+    },
+    {
+      "path": "assurance/ka82/KA82_PRIMITIVE_DEPENDENCY_REFLECTION_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "68333ecee57eb6a0889f110bf85bf575eeb137712f1f183b27b7e3233bcb3a36"
+    },
+    {
+      "path": "assurance/ka82/primitive-dependency-reflection-refinement-bridge.lean",
+      "sha256": "6cea2f96ad20af7d6d6785560c0273a45627ab9cd3790e81bc6b033180914ee9"
+    },
+    {
+      "path": "assurance/ka83/KA83_PRIMITIVE_TYPE_TRANSLATION_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "286c8e3fb805052c98f3b89580918d156b44df140ae5324107d60ef9c69ec630"
+    },
+    {
+      "path": "assurance/ka83/primitive-type-translation-refinement-bridge.lean",
+      "sha256": "6fca4cf182c5c5c3d327ed7d6300bbff19102f6204255353d55901509fed8ba2"
+    },
+    {
+      "path": "assurance/ka84/KA84_PRIMITIVE_CONDITION_REFLECTION_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "f70ff45241ac762390637b52ecd8b91cb61f2fea83f8cbef758effe4cb6205ab"
+    },
+    {
+      "path": "assurance/ka84/primitive-condition-reflection-refinement-bridge.lean",
+      "sha256": "150c94b3a61c9358bd3dd85852dac9cee321f69606f808c78554c46f5ee466b1"
+    },
+    {
+      "path": "assurance/ka85/KA85_PRIMITIVE_BITWISE_RECOGNIZER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "aa1d6719d271d528c7353bd9c686d6bccc668965bdd73c7f66760f08a8e074f8"
+    },
+    {
+      "path": "assurance/ka85/primitive-bitwise-recognizer-refinement-bridge.lean",
+      "sha256": "a93e1ee77181f35758a01c2582910242bb6ca79fafa3aaf87f39d5ae3146d879"
+    },
+    {
+      "path": "assurance/ka86/KA86_PRIMITIVE_DIVMOD_RECOGNIZER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "60cd72f5c820436ad3ed1e604c399f3d8e612706848d75f8bdac725e233eedda"
+    },
+    {
+      "path": "assurance/ka86/primitive-divmod-recognizer-refinement-bridge.lean",
+      "sha256": "4c816c3c5af0a80fc945916230b9f460c2c175fe1f0965214237f1453489ee07"
+    },
+    {
+      "path": "assurance/ka87/KA87_PRIMITIVE_ARITHMETIC_RECOGNIZER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "943f6043bceb97d6a5313236b53d4f954ed4b592c6532c67061e5ec2f1dd9178"
+    },
+    {
+      "path": "assurance/ka87/primitive-arithmetic-recognizer-refinement-bridge.lean",
+      "sha256": "cbfc11078f59144cad1a9a3a40026df1007f35c45aac4b7569841c21ff23b13f"
+    },
+    {
+      "path": "assurance/ka88/KA88_PRIMITIVE_GCD_RECOGNIZER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "68186e18268d193a1643105db6741623d5401853653b8fd95d7fc44f9ca6435c"
+    },
+    {
+      "path": "assurance/ka88/primitive-gcd-recognizer-refinement-bridge.lean",
+      "sha256": "054ba99e9ac7396dfc13110a0c54989f871040993cacc77a205a6e8af50f4287"
+    },
+    {
+      "path": "assurance/ka89/KA89_PRIMITIVE_COMPARISON_RECOGNIZER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "c36cb813a5a6d727e408f1845f314a475da8a067f6e3da9c16a507e3fd718231"
+    },
+    {
+      "path": "assurance/ka89/primitive-comparison-recognizer-refinement-bridge.lean",
+      "sha256": "7864614deec5ee295aca411b4758db585e3c5640aa5a4345d319153b324004f6"
+    },
+    {
+      "path": "assurance/ka90/KA90_PRIMITIVE_SHIFT_RECOGNIZER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "4b9c9b997e2065f4007a0b87bc922a373c53c0681ae4a019ae74a2d352f3af84"
+    },
+    {
+      "path": "assurance/ka90/primitive-shift-recognizer-refinement-bridge.lean",
+      "sha256": "51740c4bec368285f9a9d2b8bd38ee79e3748f084a20fab724583392c7c00444"
+    },
+    {
+      "path": "assurance/ka91/KA91_PRIMITIVE_LOGICAL_BITWISE_RECOGNIZER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "6e5bcf8d35d5c9bef3efd3966ddf88984bc2b82c2530f3b2d46050cf8144c479"
+    },
+    {
+      "path": "assurance/ka91/primitive-logical-bitwise-recognizer-refinement-bridge.lean",
+      "sha256": "d847a7bd99c8c3f7fac8e12ee9d87e29805a16e118a62fbc953a7b96977408cc"
+    },
+    {
+      "path": "assurance/ka92/KA92_PRIMITIVE_CHAR_STRING_RECOGNIZER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "06be7e5fa26f5502bf3c71173d432b3c400cc14790b97e1f9f9324a42682201e"
+    },
+    {
+      "path": "assurance/ka92/primitive-char-string-recognizer-refinement-bridge.lean",
+      "sha256": "cc631c85d688f751361ad4f2e21021752726470e41983daf69764404461e7752"
+    },
+    {
+      "path": "assurance/ka93/KA93_PRIMITIVE_BASIC_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "31df8c1c42b303ec5472a8f56898616d79522e0ca8bc4a93ec5a9eedfc5504d5"
+    },
+    {
+      "path": "assurance/ka93/primitive-basic-helper-refinement-bridge.lean",
+      "sha256": "627060cf16dd9f59f6d5551069bb00ea475d913fc5356e077bccca2e799a747e"
+    },
+    {
+      "path": "assurance/ka94/KA94_PRIMITIVE_RESULT_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "92cba656bcc1492dfee174607cf048b7f0bee8ba4ea26b1a2a4a006bd9678aa3"
+    },
+    {
+      "path": "assurance/ka94/primitive-result-helper-refinement-bridge.lean",
+      "sha256": "15d6e885c4884aa5e8cfdd6677032ca447248c6f675b5dfd71d33537efb7216b"
+    },
+    {
+      "path": "assurance/ka95/KA95_PRIMITIVE_TYPEEQ_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "d967f5aa2dc225a53d31ead4f4c58ac1d4042f8f74f37dfb2813997966ff9779"
+    },
+    {
+      "path": "assurance/ka95/primitive-typeeq-helper-refinement-bridge.lean",
+      "sha256": "c43e58ecdbb772f0ae9bf54f34092ff3b1180a63e30c67d010ffe100b152f1e1"
+    },
+    {
+      "path": "assurance/ka96/KA96_PRIMITIVE_APPLICATION_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "26b076c83148ed70a147d8e7dc81fee0686f3e0d2a7cbb091e5564ab8b57ce91"
+    },
+    {
+      "path": "assurance/ka96/primitive-application-helper-refinement-bridge.lean",
+      "sha256": "c8fc99b9939011afc2ea7aaed2023f724dd776d3cd69387bf1a63701332642ac"
+    },
+    {
+      "path": "assurance/ka97/KA97_PRIMITIVE_INSTANTIATION_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "3586e58ab4adaed734bebcf2caab302b3af77501ad3241bf66b79fabbc5befcf"
+    },
+    {
+      "path": "assurance/ka97/primitive-instantiation-helper-refinement-bridge.lean",
+      "sha256": "2bef02d4a9efa1f48bd72fce2c071bfd8806979f4cb93a7420ea4990fd137549"
+    },
+    {
+      "path": "assurance/ka98/KA98_PRIMITIVE_FUEL_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "7af72f3b639938ccf1638864f3c37297f41a5c031ea89b49f88322d949efbd74"
+    },
+    {
+      "path": "assurance/ka98/primitive-fuel-helper-refinement-bridge.lean",
+      "sha256": "4314b80289eaf3efe89a239df4e0ae482f831ad346f4e65f10d9cb8d8f73723f"
+    },
+    {
+      "path": "assurance/ka99/KA99_PRIMITIVE_CLOSURE_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+      "sha256": "337ce4a02e59fb991cfe9e68d717f039926ed4b3a09eb9027ac77be93d598e03"
+    },
+    {
+      "path": "assurance/ka99/primitive-closure-helper-refinement-bridge.lean",
+      "sha256": "a3f6d64146b1a6c9340540e41cc770a232333b9e49ee432d6bfd7ceb7c2990cf"
+    },
+    {
+      "path": "implementation-status.json",
+      "sha256": "5f0daa1563a63428c7086c9249afe1b4d57fa729160e77f4b9e7dc7de623037f"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "14e50d78142f75f07c065b2707572dad677d0d14c955306d2607909db00654f6"
+    },
+    {
+      "path": "package.json",
+      "sha256": "3e6017fc70a1bc6b036dccad63d6ac0c4a85dd37df7b62933316443939dd972c"
+    },
+    {
+      "path": "versions.json",
+      "sha256": "05c878223ea7ca0fd3b84caacd276792a43973eb5c27bbec4b5d89766af29925"
+    }
+  ]
+}

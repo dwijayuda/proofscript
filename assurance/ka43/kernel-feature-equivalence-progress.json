@@ -1,0 +1,59 @@
+{
+  "checkpoint": "proofscript-v1-ka43-theory-wide-refinement-map0",
+  "featureSurfaceBridgeProgressPercent": 65,
+  "executableKernelEquivalenceProofProgressPercent": 31,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 128,
+  "groups": [
+    {
+      "id": "ordinary-declarations",
+      "progressPercent": 82,
+      "status": "bridged proof-surface; executable refinement incomplete"
+    },
+    {
+      "id": "quotients",
+      "progressPercent": 74,
+      "status": "environment bridge complete; semantic soundness incomplete"
+    },
+    {
+      "id": "inductives",
+      "progressPercent": 35,
+      "status": "initial VInductDecl environment bridge only"
+    },
+    {
+      "id": "mutual-definitions",
+      "progressPercent": 42,
+      "status": "initial VDecl.mutualDef environment bridge only"
+    },
+    {
+      "id": "expression-tags",
+      "progressPercent": 62,
+      "status": "TrExprS constructor surface covered; executable translator not fully refined"
+    },
+    {
+      "id": "typechecker-whnf-defeq",
+      "progressPercent": 44,
+      "status": "proof-surface bridges exist; executable checker refinement incomplete"
+    },
+    {
+      "id": "primitive-literals",
+      "progressPercent": 38,
+      "status": "Nat/Bool/literal proof-surface bridge only"
+    },
+    {
+      "id": "codec-replay",
+      "progressPercent": 33,
+      "status": "Replay surface and PS codec stability gates exist"
+    },
+    {
+      "id": "resource-errors",
+      "progressPercent": 36,
+      "status": "fuel/error conservativity surface bridge only"
+    },
+    {
+      "id": "architecture-health",
+      "progressPercent": 70,
+      "status": "no-spaghetti ratchet added; existing large modules inventoried"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "checkpoint": "proofscript-v1-ka9-lean4lean-compat0",
+  "publicVersion": "1.0.0-pskernel.11",
+  "baseline": "proofscript-v1-ka8-lean4lean-source-intake0",
+  "kernel": {
+    "name": "PSKernel",
+    "coreArtifactFormat": 71,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "lean4lean": {
+    "sourcePresent": true,
+    "sourceRequiredFilesPresent": true,
+    "targetLeanVersion": "4.33.1",
+    "observedSourceToolchain": "leanprover/lean4:v4.33.0-rc2",
+    "toolchainMatchesTarget": false,
+    "strictActualImportPassed": false,
+    "blockedReasons": [
+      "lean4lean_toolchain_mismatch",
+      "external_dependency_fetch_failed_or_dependency_unavailable"
+    ],
+    "selectedArchive": {
+      "name": "lean4lean-master.zip",
+      "resolved": "/mnt/data/lean4lean-master.zip",
+      "sizeBytes": 650114,
+      "mtimeMs": 1789714165079.7383,
+      "sha256": "295a1f4b23f39be73a27a7617c3fe1c6787892ff799607213b913419819f7383"
+    },
+    "sourceRoot": "/mnt/data/lean4lean-intake/lean4lean",
+    "lakeRequires": [
+      {
+        "name": "batteries",
+        "git": "https://github.com/leanprover-community/batteries",
+        "rev": "v4.33.0-rc2"
+      }
+    ],
+    "buildAttempt": {
+      "attempted": true,
+      "status": 1,
+      "blockedReason": "external_dependency_fetch_failed_or_dependency_unavailable",
+      "stderrTail": "info: batteries: cloning https://github.com/leanprover-community/batteries\ninfo: stderr:\nCloning into '/mnt/data/lean4lean-intake/lean4lean/.lake/packages/batteries'...\nfatal: unable to access 'https://github.com/leanprover-community/batteries/': Could not resolve host: github.com\nerror: external command 'git' exited with code 128\n"
+    }
+  },
+  "claimBoundary": {
+    "actualLean4LeanImportBound": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0
+  },
+  "createdAtUtc": "2026-09-18T06:46:00Z",
+  "verification": {
+    "build": "passed",
+    "ka1": "passed",
+    "ka2": "passed",
+    "ka3": "passed",
+    "ka4": "passed",
+    "ka5": "passed",
+    "ka6": "passed",
+    "ka7": "passed",
+    "ka8": "passed",
+    "ka9": "passed",
+    "verifyArena": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "conformanceBounded": "passed",
+    "strictKa9Import": "expected_fail_exit_2"
+  }
+}

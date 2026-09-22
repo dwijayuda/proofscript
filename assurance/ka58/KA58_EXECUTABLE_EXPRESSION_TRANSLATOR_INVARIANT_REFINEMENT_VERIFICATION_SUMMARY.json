@@ -1,0 +1,50 @@
+{
+  "checkpoint": "proofscript-v1-ka58-executable-expression-translator-invariant-refinement0",
+  "publicVersion": "1.0.0-pskernel.61",
+  "baseline": "proofscript-v1-ka57-executable-expression-translator-source-transform-refinement0",
+  "commands": {
+    "focusedTest": "passed",
+    "assuranceKA58": "passed",
+    "leanKA58Check": "passed",
+    "npmInstallOffline": "passed",
+    "buildPrettyFalse": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "pscConformanceBounded": "passed-after-rerun",
+    "arenaCorpusPreflight": "passed",
+    "arenaStaticNonPerf": "passed",
+    "arenaTutorial": "passed-after-rerun",
+    "verifyArenaWrapper": "timed-out-not-counted",
+    "arenaTailAfterWrapperTimeout": "passed",
+    "npmPackWorkspaces": "passed",
+    "packageSha256Manifest": "passed",
+    "freshExtractInstallBuildFocusedLean": "passed",
+    "unzipTest": "passed",
+    "finalZipSha256": "passed"
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA58",
+        "source": "assurance/ka58/executable-expression-translator-invariant-refinement-bridge.lean",
+        "destination": "PSKernelKA58ExecutableExpressionTranslatorInvariantRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA58 gate tool absent before implementation",
+  "wrapperTimeouts": [
+    "TERM=xterm timeout 600s npm run verify:arena timed out at test:arena:tutorial-harness; not counted as pass"
+  ],
+  "packageSha256Entries": 36
+}

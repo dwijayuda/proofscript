@@ -1,0 +1,7 @@
+/mnt/data/psv70-work/proofscript-kernel-v70-projection-conformance1/assurance/lean4331/formal/ProofScriptKernelEquivalence/Projection.lean:177:2: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+'ProofScriptKernelEquivalence.PSExpr.hasLooseBVarAt_toLean' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.Projection.fieldWalk_sound' depends on axioms: [propext]
+'ProofScriptKernelEquivalence.Projection.mkApps_toLean' does not depend on any axioms
+'ProofScriptKernelEquivalence.Projection.iota_sound' depends on axioms: [propext]

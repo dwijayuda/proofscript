@@ -1,0 +1,26 @@
+{
+  "checkpoint": "proofscript-v1-ka73-defeq-sorry-boundary-audit0",
+  "publicVersion": "1.0.0-pskernel.76",
+  "featureSurfaceBridgeProgressPercent": 88,
+  "executableKernelEquivalenceProofProgressPercent": 55,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 219,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 220,
+    "newFormalLean4LeanBridgeObligations": 0,
+    "ledgerCorrectionFormalLean4LeanBridgeObligations": -1,
+    "correctedFormalLean4LeanBridgeObligations": 219,
+    "demotedCountedObligations": [
+      {
+        "ka": 70,
+        "name": "translated_isDefEqUnitLike_wf",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.isDefEqUnitLike.WF",
+        "reason": "upstream_theorem_body_contains_sorry",
+        "previousStatus": "counted",
+        "correctedStatus": "demoted-not-counted"
+      }
+    ]
+  },
+  "metricPolicy": "KA73 corrects the formal obligation ledger by demoting a KA70 obligation backed by upstream Lean4Lean sorry. Percentages stay conservative and do not increase.",
+  "notAFormalEquivalenceClaim": true
+}

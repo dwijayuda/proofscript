@@ -1,0 +1,17 @@
+{
+  "checkpoint": "proofscript-v1-ka112-executable-equivalence-progress0",
+  "publicVersion": "1.0.0-pskernel.115",
+  "featureSurfaceBridgeProgressPercent": 100,
+  "executableKernelEquivalenceProofProgressPercent": 88,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 366,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 366,
+    "newFormalLean4LeanBridgeObligations": 0,
+    "correctedFormalLean4LeanBridgeObligations": 366,
+    "countedNewObligations": []
+  },
+  "metricPolicy": "KA112 increments executable-equivalence dashboard progress through frontier mapping evidence; it is not a full executable refinement proof or full Lean4 equivalence theorem.",
+  "notAFullLean4EquivalenceClaim": true,
+  "notAFormalEquivalenceClaim": true
+}

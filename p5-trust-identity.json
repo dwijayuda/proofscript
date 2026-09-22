@@ -1,0 +1,36 @@
+{
+  "base": "proofscript-production-p4",
+  "trusted_source_identity": {
+    "packages/kernel/src": true,
+    "packages/kernel-codec/src": true,
+    "packages/verifier/src": true,
+    "packages/certificates/src": true
+  },
+  "frontend_source_identity": true,
+  "changed_non_dist_files_vs_p4": [
+    "coverage/proofscript-unified-coverage.json",
+    "integration-fixtures/production-p5/namespaces/Lib/Api.ps",
+    "integration-fixtures/production-p5/namespaces/Main.ps",
+    "integration-fixtures/production-p5/namespaces/Reexport.ps",
+    "package-lock.json",
+    "package.json",
+    "packages/unified-bridge/package.json",
+    "packages/unified-bridge/src/index.ts",
+    "tools/integration/production-p1-test.ts",
+    "tools/integration/production-p2-test.ts",
+    "tools/integration/production-p3-closure-test.ts",
+    "tools/integration/production-p3-except-test.ts",
+    "tools/integration/production-p3-int-test.ts",
+    "tools/integration/production-p3-list-test.ts",
+    "tools/integration/production-p3-test.ts",
+    "tools/integration/production-p4-modules-test.ts",
+    "tools/integration/production-p5-namespaces-test.ts",
+    "tools/integration/wave-c-test.ts",
+    "tools/integration/wave-d-test.ts",
+    "tools/integration/wave-e-test.ts",
+    "tools/integration/wave-f-test.ts",
+    "tools/integration/wave-g-test.ts",
+    "tools/integration/wave-h-test.ts",
+    "tools/verify-production.ts"
+  ]
+}

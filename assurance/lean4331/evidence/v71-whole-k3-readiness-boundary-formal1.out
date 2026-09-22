@@ -1,0 +1,15 @@
+TARGET=ProofScriptKernelEquivalence.KernelV71WholeK3ReadinessBoundary
+LEAN=Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+SOURCE=assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71WholeK3ReadinessBoundary.lean
+SOURCE_SHA256=e8718d22f6433278badbe2c8f1a8a49bbe715db7067aa27fb3aa059e3c97453c
+
+ℹ [2/2] Built ProofScriptKernelEquivalence.KernelV71WholeK3ReadinessBoundary (481ms)
+info: ProofScriptKernelEquivalence/KernelV71WholeK3ReadinessBoundary.lean:152:0: 'ProofScriptKernelEquivalence.KernelV71WholeK3ReadinessBoundary.completedWholeK3ReadinessSlices_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71WholeK3ReadinessBoundary.lean:153:0: 'ProofScriptKernelEquivalence.KernelV71WholeK3ReadinessBoundary.outstandingWholeK3ReadinessObligations_count' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71WholeK3ReadinessBoundary.lean:154:0: 'ProofScriptKernelEquivalence.KernelV71WholeK3ReadinessBoundary.k3OverallProgress_percent' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71WholeK3ReadinessBoundary.lean:155:0: 'ProofScriptKernelEquivalence.KernelV71WholeK3ReadinessBoundary.inheritedRuntimeExtractionProgress_prior' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71WholeK3ReadinessBoundary.lean:156:0: 'ProofScriptKernelEquivalence.KernelV71WholeK3ReadinessBoundary.inheritedRuntimeExtractionTrustBoundary_checkpoint' does not depend on any axioms
+info: ProofScriptKernelEquivalence/KernelV71WholeK3ReadinessBoundary.lean:157:0: 'ProofScriptKernelEquivalence.KernelV71WholeK3ReadinessBoundary.v71WholeK3ReadinessBoundary_sound' does not depend on any axioms
+Build completed successfully (2 jobs).
+info: proofScriptKernelEquivalence: no previous manifest, creating one from scratch
+info: toolchain not updated; no toolchain information found

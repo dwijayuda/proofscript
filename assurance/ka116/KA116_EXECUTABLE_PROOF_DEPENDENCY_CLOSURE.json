@@ -1,0 +1,95 @@
+{
+  "checkpoint": "proofscript-v1-ka116-executable-proof-dependency-closure0",
+  "publicVersion": "1.0.0-pskernel.119",
+  "baseline": "proofscript-v1-ka115-executable-refinement-theorem-skeleton0",
+  "metrics": {
+    "featureSurfaceBridgeProgressPercent": 100,
+    "executableKernelEquivalenceProofProgressPercent": 92,
+    "executableKernelEquivalencePreviousPercent": 91,
+    "executableKernelEquivalenceDeltaPercent": 1,
+    "arenaCorpusRegressionPercent": 100,
+    "releasePackagingVerificationPercent": 100,
+    "executableProofDependencyClosurePercent": 100,
+    "formalLean4LeanBridgeObligations": 366,
+    "newFormalLean4LeanBridgeObligations": 0,
+    "fullLean4EquivalencePercent": 0,
+    "fullyFormalK3Percent": 0,
+    "overallConservativeProjectProgressPercent": 82.6,
+    "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+  },
+  "phaseStatus": {
+    "featureSurfaceBridge": "closed",
+    "executableEquivalence": "active-proof-dependency-closed",
+    "fullLean4Equivalence": "not-proven",
+    "fullyFormalK3": "not-proven",
+    "claimBoundary": "enforced"
+  },
+  "proofDependencyClosure": {
+    "closurePercent": 100,
+    "rows": [
+      {
+        "id": "dependency-ledger-inputs-linked",
+        "status": "done",
+        "evidence": "KA113 ledger, KA114 frontier checklist, and KA115 theorem-family skeleton are required inputs",
+        "done": true
+      },
+      {
+        "id": "theorem-family-dependencies-enumerated",
+        "status": "done",
+        "evidence": "future executable refinement proof families are grouped by dependency buckets",
+        "done": true
+      },
+      {
+        "id": "bridge-vs-dashboard-boundary-pinned",
+        "status": "done",
+        "evidence": "proof dependencies are separated from dashboard evidence and release evidence",
+        "done": true
+      },
+      {
+        "id": "unchecked-theorem-claims-blocked",
+        "status": "done",
+        "evidence": "no full executable PSKernel refinement theorem is claimed by the closure",
+        "done": true
+      },
+      {
+        "id": "negative-claims-pinned",
+        "status": "done",
+        "evidence": "full Lean4 equivalence and fully formal K3 remain 0%",
+        "done": true
+      },
+      {
+        "id": "next-mechanization-order-recorded",
+        "status": "done",
+        "evidence": "next work should convert dependency-closed rows into proof-bearing theorem modules",
+        "done": true
+      },
+      {
+        "id": "release-invariants-retained",
+        "status": "done",
+        "evidence": "Core 71/cert 2 and trusted semantic packages remain unchanged",
+        "done": true
+      }
+    ],
+    "counts": {
+      "total": 7,
+      "done": 7,
+      "missing": 0
+    },
+    "evidenceMeaning": "proof dependency closure records proof-family shape and boundaries; it is not an executable PSKernel refinement proof"
+  },
+  "percentBoundaries": {
+    "executableProgressIsDashboardEvidenceNotRefinementProof": true,
+    "proofDependencyClosureDoesNotProvePSKernelEquivalence": true,
+    "overallProgressIsDashboardEstimate": true
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

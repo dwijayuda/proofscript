@@ -1,0 +1,62 @@
+{
+  "format": "proofscript-certificate",
+  "version": 1,
+  "proofscriptReference": "v0.1",
+  "semanticBaseline": "lean-4.33.1",
+  "implementationProfile": "K2r-recursive-instance-search0",
+  "checker": {
+    "name": "@proofscript/kernel",
+    "implementation": "0.1.0-dev.0"
+  },
+  "source": {
+    "path": "../src/Main.ps",
+    "sha256": "82b04d29b71c32ef7402f8ac1d9a726841eabba906a801c869202f97b3ac996b"
+  },
+  "core": {
+    "path": "Main.pscore.json",
+    "sha256": "37734793c488dbe430541da938ba54195099bae7b6f843579c02825867622fa2"
+  },
+  "declarations": [
+    {
+      "name": "identity",
+      "kind": "theorem",
+      "universes": [],
+      "type": "((x0: Prop) → (x0 → x0))",
+      "generated": [],
+      "assumptions": []
+    },
+    {
+      "name": "compose",
+      "kind": "theorem",
+      "universes": [],
+      "type": "((x0: Prop) → ((x1: Prop) → ((x2: Prop) → ((x0 → x1) → ((x1 → x2) → (x0 → x2))))))",
+      "generated": [],
+      "assumptions": []
+    },
+    {
+      "name": "proofIrrelTransport",
+      "kind": "theorem",
+      "universes": [],
+      "type": "((x0: Prop) → ((x1: x0) → ((x2: x0) → ((x3: (x0 → Prop)) → (x3(x1) → x3(x2))))))",
+      "generated": [],
+      "assumptions": []
+    },
+    {
+      "name": "polymorphicProof",
+      "kind": "theorem",
+      "universes": [],
+      "type": "((x0: Type) → ((x1: (x0 → Prop)) → ((x2: x0) → (x1(x2) → x1(x2)))))",
+      "generated": [],
+      "assumptions": []
+    },
+    {
+      "name": "etaDefEq",
+      "kind": "theorem",
+      "universes": [],
+      "type": "((x0: Prop) → ((x1: Prop) → ((x2: (x0 → x1)) → ((x3: ((x0 → x1) → Prop)) → (x3(x2) → x3((fun (x4: x0) => x2(x4))))))))",
+      "generated": [],
+      "assumptions": []
+    }
+  ],
+  "assumptions": []
+}

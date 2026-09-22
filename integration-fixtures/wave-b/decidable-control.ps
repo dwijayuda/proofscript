@@ -1,0 +1,52 @@
+def n2: Nat := { 2 }
+def n3: Nat := { 3 }
+def n4: Nat := { 4 }
+def n5: Nat := { 5 }
+
+def minNat(a: Nat, b: Nat): Nat := {
+  if (a <= b) { a } else { b }
+}
+
+def maxNat(a: Nat, b: Nat): Nat := {
+  if (a < b) { b } else { a }
+}
+
+def eqPick(a: Nat, b: Nat): Nat := {
+  if (a = b) { 42 } else { 0 }
+}
+
+def falseEq: Nat := {
+  if (n2 = n3) { 9 } else { 4 }
+}
+
+def falseLe: Nat := {
+  if (n5 <= n3) { 9 } else { 4 }
+}
+
+def falseLt: Nat := {
+  if (n3 < n3) { 9 } else { 4 }
+}
+
+def trueEq: Nat := {
+  if (n4 = n4) { 7 } else { 0 }
+}
+
+def trueLe: Nat := {
+  if (n3 <= n5) { 7 } else { 0 }
+}
+
+def trueLt: Nat := {
+  if (n3 < n5) { 7 } else { 0 }
+}
+
+def answer: Nat := {
+  minNat(trueEq + falseEq, maxNat(trueLe, trueLt))
+}
+
+theorem falseEq_eq_4: falseEq = 4 := by { rfl }
+theorem falseLe_eq_4: falseLe = 4 := by { rfl }
+theorem falseLt_eq_4: falseLt = 4 := by { rfl }
+theorem trueEq_eq_7: trueEq = 7 := by { rfl }
+theorem trueLe_eq_7: trueLe = 7 := by { rfl }
+theorem trueLt_eq_7: trueLt = 7 := by { rfl }
+theorem answer_eq_7: answer = 7 := by { rfl }

@@ -1,0 +1,11 @@
+class Flag {
+  enabled: Bool;
+}
+
+def readFlag[f: Flag](n: Nat): Bool := {
+  Flag.enabled(f)
+}
+
+def missing: Bool := {
+  readFlag(0)
+}

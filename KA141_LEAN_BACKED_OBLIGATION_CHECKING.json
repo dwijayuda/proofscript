@@ -1,0 +1,21 @@
+{
+  "checkpoint": "proofscript-v1-ka141-lean-backed-obligation-checking0",
+  "version": "1.0.0-pskernel.144",
+  "base": "proofscript-v1-ka140-usable-software-verification-alpha0",
+  "package": "proofscript",
+  "cli": "psc",
+  "status": "accepted",
+  "implemented": [
+    "psc proof-status --proofs --lean-cmd --emit-lean-check",
+    "psc check-obligations alias",
+    "Lean-check-file binding in proof-status artifacts",
+    "proof-status verify rejects tampered Lean check files",
+    "fresh npm install path for Lean-backed obligation checking"
+  ],
+  "trustBoundary": {
+    "fullLean4Equivalence": false,
+    "fullyFormalK3": false,
+    "semanticContractProofChecking": "partial: only obligations with explicit Lean proof bodies and a provided Lean-compatible executable are marked checked",
+    "hiddenAxiomsIntroduced": false
+  }
+}

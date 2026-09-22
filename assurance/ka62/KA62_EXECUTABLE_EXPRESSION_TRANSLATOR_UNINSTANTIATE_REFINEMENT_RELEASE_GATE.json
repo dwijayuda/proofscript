@@ -1,0 +1,180 @@
+{
+  "checkpoint": "proofscript-v1-ka62-executable-expression-translator-uninstantiate-refinement0",
+  "publicVersion": "1.0.0-pskernel.65",
+  "baseline": "proofscript-v1-ka61-executable-expression-translator-appstack-refinement0",
+  "releaseKind": "strict-lean4lean-bridge",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA62",
+        "source": "assurance/ka62/executable-expression-translator-uninstantiate-refinement-bridge.lean",
+        "destination": "PSKernelKA62ExecutableExpressionTranslatorUninstantiateRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 5,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka62-executable-expression-translator-uninstantiate-refinement0",
+    "publicVersion": "1.0.0-pskernel.65",
+    "featureSurfaceBridgeProgressPercent": 84,
+    "executableKernelEquivalenceProofProgressPercent": 49,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 184,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 179,
+      "newFormalLean4LeanBridgeObligations": 5,
+      "countedNewObligations": [
+        "translated_trExprS_uninstantiateN_wf",
+        "translated_trExpr_uninstantiateN_wf",
+        "translated_trExprS_uninstantiate_wf",
+        "translated_trExpr_uninstantiate_wf",
+        "translated_trExprS_inst_fvar_wf"
+      ]
+    },
+    "groups": [
+      {
+        "id": "expression-tags",
+        "progressPercent": 96,
+        "status": "TrExprS constructors/determinism/substitution/source conditions/source transforms/source invariants/application-list/beta/AppStack/uninstantiate facts strict-checked; full executable translator refinement incomplete"
+      },
+      {
+        "id": "typechecker-whnf-defeq",
+        "progressPercent": 53,
+        "status": "WHNF/DefEq surface strict-checked; executable checker refinement incomplete"
+      },
+      {
+        "id": "end-to-end-refinement-spine",
+        "progressPercent": 35,
+        "status": "checker pipeline skeleton strict-checked; no end-to-end theorem yet"
+      },
+      {
+        "id": "architecture-health",
+        "progressPercent": 95,
+        "status": "no-spaghetti ratchet plus KA62 semantic-package touch guard"
+      }
+    ],
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka62Files": [
+      {
+        "path": "tools/pskernel-ka62-executable-expression-translator-uninstantiate-refinement-tests.ts",
+        "lines": 33,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka62-executable-expression-translator-uninstantiate-refinement.ts",
+        "lines": 91,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka62/KA62_EXECUTABLE_EXPRESSION_TRANSLATOR_UNINSTANTIATE_REFINEMENT_RELEASE_GATE.json",
+        "lines": 155,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka62/KA62_EXECUTABLE_EXPRESSION_TRANSLATOR_UNINSTANTIATE_REFINEMENT_REPORT.md",
+        "lines": 38,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka62/KA62_EXECUTABLE_EXPRESSION_TRANSLATOR_UNINSTANTIATE_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 31,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka62/KA62_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 43,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka62/KA62_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka62/executable-expression-translator-uninstantiate-refinement-bridge-spec.json",
+        "lines": 29,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka62/executable-expression-translator-uninstantiate-refinement-bridge.lean",
+        "lines": 56,
+        "ext": ".lean"
+      }
+    ],
+    "ka62ToolFiles": [
+      {
+        "path": "tools/pskernel-ka62-executable-expression-translator-uninstantiate-refinement-tests.ts",
+        "lines": 33,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka62-executable-expression-translator-uninstantiate-refinement.ts",
+        "lines": 91,
+        "ext": ".ts"
+      }
+    ],
+    "newKA62OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableExpressionTranslatorRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false,
+  "releaseVerification": {
+    "install": "passed",
+    "build": "passed",
+    "focusedTest": "passed",
+    "assuranceKA62": "passed",
+    "leanKA62Check": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "pscConformanceBounded": "passed",
+    "arenaCorpusPreflight": "passed",
+    "arenaStaticNonperf": "passed",
+    "arenaTutorial": "passed",
+    "arenaTutorialHarness": "passed",
+    "arenaTailRerunIndividually": "passed",
+    "npmPackWorkspaces": "passed",
+    "packageSha256Check": "passed",
+    "freshExtractSmoke": "passed",
+    "finalZipIntegrity": "passed"
+  },
+  "wrapperStatus": {
+    "verifyArena": "timed-out-not-counted",
+    "lastObservedStage": "test:arena:inductive-importer",
+    "note": "aggregate verify:arena wrapper was terminated/not counted; constituent Arena commands were rerun individually where needed"
+  },
+  "noWrapperTimeoutCountedAsPassed": true
+}

@@ -1,0 +1,21 @@
+{
+  "checkpoint": "proofscript-v1-ka44-end-to-end-checker-refinement-plan0",
+  "policy": "no-spaghetti ratchet: KA-44 may add focused assurance/planning gates only; it must not modify trusted semantic packages, Core codec, or generated runtime behavior",
+  "thresholds": {
+    "newKa44SourceMaxLines": 420,
+    "reportLargeFileThresholdLines": 900,
+    "maxNewKa44ToolFiles": 2,
+    "forbiddenGeneratedSemanticPackagePrefixes": [
+      "packages/kernel/src/PSKernel",
+      "packages/kernel-codec/src",
+      "packages/frontend-next/src/core",
+      "packages/unified-bridge/src"
+    ]
+  },
+  "requiredBoundaries": [
+    "one focused KA44 gate tool",
+    "one focused KA44 test file",
+    "assurance JSON/Markdown only",
+    "no generated semantic package edits"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "checkpoint": "proofscript-v1-ka12-direct-lean4lean-reference0",
+  "baseline": "proofscript-v1-ka12-direct-lean4lean-binding0",
+  "closedSinceKA11": [
+    "Replace compatibility-only interface for the first slice with direct imported Lean4Lean theory structures.",
+    "Machine-check translation of PSKernel level/expr/decl shapes into Lean4Lean.VLevel/VExpr/VDecl.",
+    "Machine-check direct blocking of unresolved metavariables/free variables in the direct Lean4Lean binding slice.",
+    "Machine-check inductive/mutual-inductive exclusion from the KA-12 non-inductive slice.",
+    "Build Lean4Lean.Theory.VDecl offline before the direct import check.",
+    "Expose the requested KA-12 direct-reference artifact/script surface while preserving the same checked Lean4Lean binding semantics."
+  ],
+  "stillOpen": [
+    "Declaration checking soundness against Lean4Lean.Environment.addDecl/addDecl' is not proven.",
+    "Definitional equality soundness against Lean4Lean.TypeChecker is not proven.",
+    "PSKernel executable implementation is not yet linked to the Lean model by refinement proof.",
+    "Inductive/mutual/nested inductive soundness is intentionally outside KA-12.",
+    "Quotient semantic soundness is not proven; KA-12 only maps the quotient marker shape.",
+    "Full Lean 4 equivalence and same-theory claims remain false."
+  ],
+  "formalLean4EquivalenceProvenObligations": 0
+}

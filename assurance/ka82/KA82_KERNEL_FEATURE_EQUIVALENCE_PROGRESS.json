@@ -1,0 +1,25 @@
+{
+  "checkpoint": "proofscript-v1-ka82-primitive-dependency-reflection-refinement0",
+  "publicVersion": "1.0.0-pskernel.85",
+  "featureSurfaceBridgeProgressPercent": 93,
+  "executableKernelEquivalenceProofProgressPercent": 60,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 249,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 242,
+    "newFormalLean4LeanBridgeObligations": 7,
+    "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+    "correctedFormalLean4LeanBridgeObligations": 249,
+    "countedNewObligations": [
+      "translated_containsNatOfHasType_wf",
+      "translated_natOfPred_wf",
+      "translated_natOfAdd_wf",
+      "translated_natOfMul_wf",
+      "translated_natOfDiv_wf",
+      "translated_natOfMod_wf",
+      "translated_boolOfBitwise_wf"
+    ]
+  },
+  "metricPolicy": "KA82 adds direct non-sorry-backed primitive dependency-presence reflection bridge wrappers. Percentages remain conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

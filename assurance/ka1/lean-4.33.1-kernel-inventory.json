@@ -1,0 +1,164 @@
+{
+  "schema": "proofscript.assurance.ka1.lean-kernel-inventory/v1",
+  "status": "inventory-only-not-equivalence-proof",
+  "createdAtUtc": "2026-09-18T03:55:00Z",
+  "lean": {
+    "version": "4.33.1",
+    "releaseCommit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+    "role": "pinned semantic baseline for KA-1; later Lean releases require delta inventory"
+  },
+  "pskernel": {
+    "name": "PSKernel",
+    "publicVersion": "1.0.0-pskernel.3",
+    "coreFormat": 71,
+    "profile": "KERNEL-level-instantiation-conformance1",
+    "certificateFormat": 2,
+    "arenaBaseline": "proofscript-v1-pskernel-real-arena0"
+  },
+  "kernelInventory": [
+    {
+      "id": "levels",
+      "leanKernelConcept": "universe level syntax, normalization, parameter instantiation, max/imax/succ/zero/param",
+      "pskernelDisposition": "required",
+      "pskernelEvidence": [
+        "kernel-status: levels.* implemented",
+        "v71 level instantiation conformance metadata"
+      ],
+      "equivalenceObligation": "prove translateLevel preserves normalization, ordering predicates, and level instantiation outcomes"
+    },
+    {
+      "id": "expressions",
+      "leanKernelConcept": "sort, const, bvar, app, lam, forall/Pi, let, proj, lit/metadata/fvar adapters",
+      "pskernelDisposition": "required",
+      "pskernelEvidence": [
+        "Core v71 terms.* implemented",
+        "PSCore excludes unresolved metavariables and normalized frontend-only nodes"
+      ],
+      "equivalenceObligation": "prove every accepted PSCore expression translates to a well-scoped Lean kernel expression"
+    },
+    {
+      "id": "environment",
+      "leanKernelConcept": "declaration environment, lookup, well-formed extension, trusted primitive declarations",
+      "pskernelDisposition": "required",
+      "pskernelEvidence": [
+        "environment and declaration checkpoints under assurance/lean4331"
+      ],
+      "equivalenceObligation": "prove checked environment extension preserves Lean-valid environments"
+    },
+    {
+      "id": "declarations",
+      "leanKernelConcept": "axioms, definitions, theorems, opaque-like constants, inductive declarations",
+      "pskernelDisposition": "required",
+      "pskernelEvidence": [
+        "kernel-status declarations.* implemented"
+      ],
+      "equivalenceObligation": "prove each PSKernel declaration admission rule implies corresponding Lean declaration admissibility"
+    },
+    {
+      "id": "definitional-equality",
+      "leanKernelConcept": "beta, delta, iota, zeta, eta, quotient reduction, proof irrelevance, WHNF strategy",
+      "pskernelDisposition": "required",
+      "pskernelEvidence": [
+        "conversion.overall implemented",
+        "real Arena pass",
+        "kernel smoke and standalone replay"
+      ],
+      "equivalenceObligation": "prove PSKernel DefEq implies Lean definitional equality for translated terms"
+    },
+    {
+      "id": "quotients",
+      "leanKernelConcept": "Quot, Quot.mk, Quot.lift, Quot.ind, quotient reduction, proof irrelevance interactions",
+      "pskernelDisposition": "required",
+      "pskernelEvidence": [
+        "quotient-defeq and quot-sound active tests",
+        "assurance quotient checkpoints"
+      ],
+      "equivalenceObligation": "prove quotient primitives and reduction behavior are sound under the Lean quotient theory"
+    },
+    {
+      "id": "inductive-admission",
+      "leanKernelConcept": "positive inductive declarations, parameter/index discipline, result universe constraints",
+      "pskernelDisposition": "required",
+      "pskernelEvidence": [
+        "41/41 implemented checklist",
+        "Arena tutorial/static pass"
+      ],
+      "equivalenceObligation": "prove every admitted PSKernel inductive block translates to a Lean-admissible inductive block"
+    },
+    {
+      "id": "inductive-recursors",
+      "leanKernelConcept": "recursor derivation, motives, minors, K-like recursors, iota rules, recursor universe levels",
+      "pskernelDisposition": "required",
+      "pskernelEvidence": [
+        "recursor checkpoints",
+        "Arena strict pass against 140 tutorial fixtures"
+      ],
+      "equivalenceObligation": "prove generated/restored recursors and iota reductions match Lean rules for supported Core"
+    },
+    {
+      "id": "mutual-inductives",
+      "leanKernelConcept": "mutual family admission, shared parameter discipline, cross-family recursion and iota",
+      "pskernelDisposition": "required",
+      "pskernelEvidence": [
+        "mutual admission/formal checkpoints under assurance/lean4331"
+      ],
+      "equivalenceObligation": "prove mutual block translation and mutual recursor behavior are sound"
+    },
+    {
+      "id": "nested-inductives",
+      "leanKernelConcept": "nested preprocessing into helper families, helper recursors, helper iota, container variance",
+      "pskernelDisposition": "required",
+      "pskernelEvidence": [
+        "nested preprocessing checkpoints",
+        "fresh Arena pass"
+      ],
+      "equivalenceObligation": "prove nested helper generation is a semantics-preserving preprocessing into direct/mutual inductives"
+    },
+    {
+      "id": "prop-elimination",
+      "leanKernelConcept": "Prop elimination restrictions, proof-only fields, projection from Prop, universe-normalized Sort 0 behavior",
+      "pskernelDisposition": "required",
+      "pskernelEvidence": [
+        "prop projection conformance tests",
+        "Arena static adversarial pass"
+      ],
+      "equivalenceObligation": "prove accepted eliminations are Lean-valid and rejected data-leaking Prop eliminations cannot be accepted"
+    },
+    {
+      "id": "resource-bounds",
+      "leanKernelConcept": "operational limits are implementation policy, not Lean logical semantics",
+      "pskernelDisposition": "adapter-normalized",
+      "pskernelEvidence": [
+        "KERNEL-resource-bounds0 accepted"
+      ],
+      "equivalenceObligation": "prove resource_exhausted is a non-semantic result distinct from accept/reject and cannot become a proof of rejection"
+    },
+    {
+      "id": "unsafe-partial-runtime",
+      "leanKernelConcept": "unsafe/partial executable/runtime metadata outside proof-validating kernel core",
+      "pskernelDisposition": "explicitly-excluded",
+      "pskernelEvidence": [
+        "formalCoreExclusions in kernel-status.json"
+      ],
+      "equivalenceObligation": "prove excluded unsafe/partial artifacts cannot enter trusted proof replay"
+    },
+    {
+      "id": "frontend-elaboration",
+      "leanKernelConcept": "macros, tactics, parser elaboration, typeclass search, unification/metavariables",
+      "pskernelDisposition": "out-of-scope",
+      "pskernelEvidence": [
+        "PSKernel operates on checked Core artifacts, not full source elaboration"
+      ],
+      "equivalenceObligation": "document as out-of-scope for kernel theory equivalence; require separate frontend theorem later"
+    },
+    {
+      "id": "native-literals-reflection",
+      "leanKernelConcept": "native literal nodes, reflection/native reduction/eager reduction paths",
+      "pskernelDisposition": "adapter-normalized",
+      "pskernelEvidence": [
+        "literal nodes are lowered before trusted Core in kernel-status exclusions"
+      ],
+      "equivalenceObligation": "prove normalization/lowering preserves Lean meaning or keep outside supported Core"
+    }
+  ]
+}

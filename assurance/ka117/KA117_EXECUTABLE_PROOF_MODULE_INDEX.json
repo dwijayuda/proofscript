@@ -1,0 +1,95 @@
+{
+  "checkpoint": "proofscript-v1-ka117-executable-proof-module-index0",
+  "publicVersion": "1.0.0-pskernel.120",
+  "baseline": "proofscript-v1-ka116-executable-proof-dependency-closure0",
+  "metrics": {
+    "featureSurfaceBridgeProgressPercent": 100,
+    "executableKernelEquivalenceProofProgressPercent": 93,
+    "executableKernelEquivalencePreviousPercent": 92,
+    "executableKernelEquivalenceDeltaPercent": 1,
+    "arenaCorpusRegressionPercent": 100,
+    "releasePackagingVerificationPercent": 100,
+    "executableProofModuleIndexPercent": 100,
+    "formalLean4LeanBridgeObligations": 366,
+    "newFormalLean4LeanBridgeObligations": 0,
+    "fullLean4EquivalencePercent": 0,
+    "fullyFormalK3Percent": 0,
+    "overallConservativeProjectProgressPercent": 82.9,
+    "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+  },
+  "phaseStatus": {
+    "featureSurfaceBridge": "closed",
+    "executableEquivalence": "active-proof-module-indexed",
+    "fullLean4Equivalence": "not-proven",
+    "fullyFormalK3": "not-proven",
+    "claimBoundary": "enforced"
+  },
+  "proofModuleIndex": {
+    "indexPercent": 100,
+    "rows": [
+      {
+        "id": "kernel-expression-module-indexed",
+        "status": "done",
+        "evidence": "expression/reflection proof-family module slot recorded",
+        "indexed": true
+      },
+      {
+        "id": "checker-soundness-module-indexed",
+        "status": "done",
+        "evidence": "checking/admission proof-family module slot recorded",
+        "indexed": true
+      },
+      {
+        "id": "evaluator-whnf-defeq-module-indexed",
+        "status": "done",
+        "evidence": "WHNF/defeq executable refinement module slot recorded",
+        "indexed": true
+      },
+      {
+        "id": "primitive-recognizer-module-indexed",
+        "status": "done",
+        "evidence": "primitive recognizer helper module slot recorded",
+        "indexed": true
+      },
+      {
+        "id": "certificate-replay-module-indexed",
+        "status": "done",
+        "evidence": "certificate/replay module slot recorded",
+        "indexed": true
+      },
+      {
+        "id": "arena-regression-link-indexed",
+        "status": "done",
+        "evidence": "arena evidence remains separate from proof theorem modules",
+        "indexed": true
+      },
+      {
+        "id": "negative-claim-module-indexed",
+        "status": "done",
+        "evidence": "full Lean4 equivalence and fully formal K3 remain 0%",
+        "indexed": true
+      }
+    ],
+    "counts": {
+      "total": 7,
+      "indexed": 7,
+      "missing": 0
+    },
+    "evidenceMeaning": "proof module index records executable proof-module destinations; it is not an executable PSKernel refinement proof"
+  },
+  "percentBoundaries": {
+    "executableProgressIsDashboardEvidenceNotRefinementProof": true,
+    "proofModuleIndexDoesNotProvePSKernelEquivalence": true,
+    "overallProgressIsDashboardEstimate": true
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

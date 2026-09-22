@@ -1,0 +1,105 @@
+{
+  "checkpoint": "proofscript-v1-ka17-env-lookup-bridge0",
+  "publicVersion": "1.0.0-pskernel.20",
+  "createdAtUtc": "2026-09-18T12:55:00Z",
+  "baseline": "proofscript-v1-ka16-env-extension-bridge0",
+  "kernel": {
+    "name": "PSKernel",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "directLean4LeanEnvLookupBridge": {
+    "referenceKind": "direct-imported-lean4lean-env-lookup-bridge",
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanEnvLookupBridgeChecked": true,
+    "strictBridgeCheckPassed": true,
+    "blockedReasons": [],
+    "targets": {
+      "relations": [
+        "Lean4Lean.VEnv.constants",
+        "Lean4Lean.VEnv.defeqs"
+      ],
+      "dependencies": [
+        "Lean4Lean.VDecl.WF",
+        "Lean4Lean.VEnv.WF",
+        "Lean4Lean.VEnv.LE"
+      ]
+    },
+    "coveredPSDeclKinds": [
+      "axiom",
+      "definition"
+    ],
+    "excludedPSDeclKinds": [
+      "theorem",
+      "example",
+      "opaque",
+      "quot",
+      "inductive",
+      "mutualInductive"
+    ],
+    "theoryBuildStatus": 0,
+    "bridgeCheckStatus": 0
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 9,
+    "formalObligationMeaning": "KA-13 VDecl.WF + KA-15 VEnv.WF + KA-16 VEnv.LE + KA-17 VEnv.constants/VEnv.defeqs conditional bridge lemmas only; not full Lean equivalence"
+  },
+  "verificationSummary": {
+    "npm install --offline --no-audit --no-fund": "passed",
+    "npm run build -- --pretty false": "passed",
+    "npm run test:pskernel:ka1..ka11": "passed before aggregate timeout at ka12; ka12..ka17 rerun individually",
+    "npm run test:pskernel:ka12": "passed",
+    "npm run test:pskernel:ka13": "passed",
+    "npm run test:pskernel:ka14": "passed",
+    "npm run test:pskernel:ka15": "passed",
+    "npm run test:pskernel:ka16": "passed",
+    "npm run test:pskernel:ka17": "passed",
+    "npm run assurance:ka1..ka11": "passed before aggregate timeout at ka12; ka12..ka17 rerun individually",
+    "npm run assurance:ka12": "passed",
+    "npm run assurance:ka13": "passed",
+    "npm run assurance:ka14": "passed",
+    "npm run assurance:ka15": "passed",
+    "npm run assurance:ka16": "passed",
+    "npm run assurance:ka17": "passed",
+    "npm run lean:ka16:check": "passed",
+    "npm run lean:ka17:check": "passed",
+    "npm run test:kernel:smoke": "passed",
+    "npm run test:standalone-small": "passed",
+    "npm run test:psc:kernel-status": "passed",
+    "npm run test:psc:conformance-bounded": "passed",
+    "npm run arena:corpus-preflight": "passed: 190 NDJSON fixtures",
+    "npm run test:arena:static-nonperf": "passed: 26/26 decisive",
+    "npm run test:arena:tutorial": "passed: 140/140 decisive",
+    "npm run verify:arena": "passed"
+  },
+  "arenaSummary": {
+    "corpusPath": "/mnt/data/arena-corpus-20260915",
+    "ndjsonFixtures": 190,
+    "staticNonperf": {
+      "total": 26,
+      "decisive": 26,
+      "acceptedGood": 4,
+      "rejectedBad": 22,
+      "wrong": 0,
+      "notRun": 0
+    },
+    "tutorial": {
+      "total": 140,
+      "decisive": 140,
+      "acceptedGood": 93,
+      "rejectedBad": 47,
+      "wrong": 0,
+      "notRun": 0
+    }
+  },
+  "aggregateLoopNotes": [
+    "The all-KA test loop timed out while entering expensive KA-12; KA-12 through KA-17 were rerun individually and passed.",
+    "The all-KA assurance loop timed out while entering expensive KA-12; KA-12 through KA-17 were rerun individually and passed. The timeout itself is not counted as a pass."
+  ]
+}

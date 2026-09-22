@@ -1,0 +1,16 @@
+-- K2k regression under current semantics: preserve all hidden binder classes.
+class Flag {
+  enabled: Bool;
+}
+
+def iid{A: Type}(x: A): A := { x }
+def sid⦃A: Type⦄(x: A): A := { x }
+def takeInst[inst: Flag](x: Nat): Bool := { Flag.enabled(inst) }
+def ignoreAnonInst[Flag](x: Nat): Nat := { x }
+
+def useImplicitExplicit(n: Nat): Nat := { @iid(Nat, n) }
+def useStrictExplicit(n: Nat): Nat := { @sid(Nat, n) }
+def useInstanceExplicit: Bool := { @takeInst({ enabled := true }, 0) }
+def useAnonInstanceExplicit: Nat := { @ignoreAnonInst({ enabled := false }, 0) }
+
+theorem implicitResult(n: Nat): useImplicitExplicit(n) = n := Eq.refl.{1}(Nat, n);

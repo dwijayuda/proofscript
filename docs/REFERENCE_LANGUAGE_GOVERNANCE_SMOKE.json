@@ -1,0 +1,2414 @@
+{
+  "checkCount": 94,
+  "checks": [
+    {
+      "details": {
+        "sha256": "575849aa9d1cfb70eb9ea09587c52a4c98473dfb60dc4d5ad4e1c29ba5197fc4"
+      },
+      "id": "reference.language.pinned-baseline",
+      "message": "Language reference v0.6.1 pins Lean 4.33.1 and exact revision",
+      "status": "accepted"
+    },
+    {
+      "details": {},
+      "id": "reference.language.v061-principle-and-claim-ceiling",
+      "message": "Language reference v0.6.1 principle and S1 claim ceiling are present",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "sha256": "249edc9c31b09b2ea30b9e5a92051196b1a2ccb3a58619ed00530f91796d280d"
+      },
+      "id": "reference.grammar.dynamic-parser-baseline",
+      "message": "Parser/lowering API contract v0.6.1 is present",
+      "status": "accepted"
+    },
+    {
+      "details": {},
+      "id": "reference.grammar.psc1-alias-comment-rules",
+      "message": "Parser/lowering API contract lists v0.6.1 alias and braced-if feature IDs",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "const.alias.expands",
+            "message": "const alias appears as definition",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "function.alias.expands",
+            "message": "function alias appears as definition",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "bif.definition.accepted",
+            "message": "Boolean bif definition elaborates to checked Core",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "bool-if.definition.accepted",
+            "message": "Boolean if expression elaborates to checked Bool.rec sugar",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "match.definition.accepted",
+            "message": "Boolean match definition elaborates through checked Bool recursor",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "nat.match.definition.accepted",
+            "message": "Nat literal/catch-all match definition elaborates through checked Nat recursor",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "nat.multi-literal-match.definition.accepted",
+            "message": "multi-literal Nat match definition elaborates through nested checked Nat recursors",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "nat.lean-style-succ-pattern.definition.accepted",
+            "message": "Lean-style Nat.succ k constructor pattern elaborates through checked Nat recursor",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "nat.short-succ-pattern.definition.accepted",
+            "message": "Type-scoped succ k constructor pattern elaborates through checked Nat recursor",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "defbody.let.accepted",
+            "message": "local let inside defBodyBlock elaborates to checked Core let",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "defbody.inferred-let.accepted",
+            "message": "local let with inferred type elaborates to checked Core let",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "defbody.have.accepted",
+            "message": "local have prefix inside defBodyBlock elaborates as nondependent checked let",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "bif.rfl.true.accepted",
+            "message": "bif true branch reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "bif.rfl.false.accepted",
+            "message": "bif false branch reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "bool-if.rfl.true.accepted",
+            "message": "Boolean if true branch reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "bool-if.rfl.false.accepted",
+            "message": "Boolean if false branch reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "match.rfl.true.accepted",
+            "message": "match true branch reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "match.rfl.false.accepted",
+            "message": "match false branch reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "nat.match.rfl.zero.accepted",
+            "message": "Nat match zero branch reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "nat.match.rfl.succ.accepted",
+            "message": "Nat match successor branch reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "defbody.let.rfl.accepted",
+            "message": "local let reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "defbody.have.rfl.accepted",
+            "message": "local have reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "inductive.where.accepted",
+            "message": "canonical inductive where block accepted",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "inductive.user-multictor.accepted",
+            "message": "parameterless multi-constructor user inductive accepted",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "inductive.user-multictor.match.accepted",
+            "message": "multi-constructor user inductive match elaborates through checked recursor",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "inductive.user-payload.match.accepted",
+            "message": "payload-carrying nonrecursive user inductive match elaborates through checked recursor",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "inductive.user-multictor.rfl.red.accepted",
+            "message": "multi-constructor user inductive red branch reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "inductive.user-payload.rfl.some.accepted",
+            "message": "payload-carrying user inductive branch reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.where.accepted",
+            "message": "canonical structure where block elaborates to inductive",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.projection.x.accepted",
+            "message": "structure field projection Point.x elaborates",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.instance.accepted",
+            "message": "structure instance elaborates to checked constructor application",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.literal.punning.accepted",
+            "message": "structure literal field punning elaborates to same-name checked field values",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.literal.punning.projection.x.accepted",
+            "message": "literal-punned structure x projection elaborates",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.literal.punning.projection.y.accepted",
+            "message": "literal-punned structure y projection elaborates",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.dot-projection.x.accepted",
+            "message": "dotted structure projection point.x elaborates to generated projection",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.dot-projection.y.accepted",
+            "message": "dotted structure projection point.y elaborates to generated projection",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.accepted",
+            "message": "structure update elaborates to generated constructor plus projections",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.projection.x.accepted",
+            "message": "updated structure x projection elaborates",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.projection.y.accepted",
+            "message": "updated structure y projection elaborates",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.punning.accepted",
+            "message": "structure update field punning elaborates to same-name checked value",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.punning.projection.x.accepted",
+            "message": "punned structure update x projection elaborates",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.punning.projection.y.accepted",
+            "message": "punned structure update y projection elaborates",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.match.x.accepted",
+            "message": "single-constructor structure match/destructuring elaborates through checked recursor",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.match.y.accepted",
+            "message": "single-constructor structure match/destructuring exposes later field binders",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.match.call.x.accepted",
+            "message": "structure match result can flow through checked function call",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.match.call.y.accepted",
+            "message": "structure match second-field result can flow through checked function call",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.projection.rfl.x.accepted",
+            "message": "structure projection reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.projection.rfl.y.accepted",
+            "message": "structure projection y reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.dot-projection.rfl.x.accepted",
+            "message": "dotted structure projection x reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.dot-projection.rfl.y.accepted",
+            "message": "dotted structure projection y reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.rfl.x.accepted",
+            "message": "structure update changed field reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.rfl.y.accepted",
+            "message": "structure update preserved field reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.punning.rfl.x.accepted",
+            "message": "punned structure update changed field reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.punning.rfl.y.accepted",
+            "message": "punned structure update preserved field reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.match.rfl.x.accepted",
+            "message": "structure match first field reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.match.rfl.y.accepted",
+            "message": "structure match second field reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.nested-update.accepted",
+            "message": "nested structure update field path p.x elaborates through generated checked projections",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.nested-update.multi.accepted",
+            "message": "multiple nested structure update field paths sharing a top-level field elaborate",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.parenthesized-base.accepted",
+            "message": "parenthesized checked structure update base elaborates through constructor/projection lowering",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.dotted-parenthesized-base.accepted",
+            "message": "parenthesized dotted projection update base elaborates through checked projections",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.nested-update.rfl.x.accepted",
+            "message": "nested structure update changed field reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.nested-update.rfl.preserved.accepted",
+            "message": "nested structure update preserves sibling field for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.nested-update.rfl.outer-preserved.accepted",
+            "message": "nested structure update preserves outer sibling field for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.nested-update.rfl.multi-x.accepted",
+            "message": "multi nested structure update x field reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.nested-update.rfl.multi-y.accepted",
+            "message": "multi nested structure update y field reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.parenthesized-base.rfl.x.accepted",
+            "message": "parenthesized update base changed field reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.parenthesized-base.rfl.y.accepted",
+            "message": "parenthesized update base preserved field reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.dotted-parenthesized-base.rfl.x.accepted",
+            "message": "dotted parenthesized update base preserved field reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.dotted-parenthesized-base.rfl.y.accepted",
+            "message": "dotted parenthesized update base changed field reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "intro.tactic.accepted",
+            "message": "intro/exact proof elaborates to checked theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "assumption.tactic.accepted",
+            "message": "intro/assumption proof elaborates to checked theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "direct.assumption.accepted",
+            "message": "direct local-context assumption proof elaborates to checked theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "apply.tactic.accepted",
+            "message": "apply/assumption proof elaborates to checked theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "apply.exact.accepted",
+            "message": "apply/exact proof elaborates to checked theorem",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "e28645495de19ec3d91f5382c12dbdef7b8920e56c2296795c9071f324951251"
+      },
+      "id": "reference.psc1.aliases-where-check",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "build-js",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--out",
+          "<reference-governance-tmp>/reference-governed.js",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.projection.x.emitted",
+            "message": "structure projection Point.x emits executable JS",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.instance.emitted",
+            "message": "structure instance emits executable JS frozen-record constructor",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.emitted",
+            "message": "structure update emits executable JS through checked constructor/projection lowering",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.punning.emitted",
+            "message": "punned structure update emits executable JS through checked constructor/projection lowering",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.match.x.emitted",
+            "message": "single-constructor structure match emits executable JS through recursor runtime",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.match.y.emitted",
+            "message": "single-constructor structure match second field emits executable JS through recursor runtime",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "inductive.user-multictor.match.emitted",
+            "message": "multi-constructor user inductive match emits executable JS through checked recursor runtime",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "inductive.user-payload.match.emitted",
+            "message": "payload user inductive match emits executable JS through checked recursor runtime",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.nested-update.emitted",
+            "message": "nested structure update emits executable JS through checked constructor/projection lowering",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.parenthesized-base.emitted",
+            "message": "parenthesized update base emits executable JS through checked lowering",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "structure.update.dotted-parenthesized-base.emitted",
+            "message": "dotted parenthesized update base emits executable JS through checked lowering",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "0df7b5e984deffa5abb846d23766c5076a2ca9631c146c303f6eabd500a670f4"
+      },
+      "id": "reference.psc1.aliases-where-build-js",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "add2",
+          "--args",
+          "5",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "function.alias.executes",
+            "message": "function alias emits executable JS through definition path",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "15a3a23a396544d456b0b12bc8fa2aafcc66b05a067cd0fe089263fdec91a881"
+      },
+      "id": "reference.psc1.function-alias-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "choose",
+          "--args",
+          "true",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "bif.executes.true",
+            "message": "bif true branch executes through JS backend",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "f58dcbb1ff33bfd2859f14e60e2105f85965d01cd313749ecda00847e4035fbf"
+      },
+      "id": "reference.psc1.bif-run-true",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "choose",
+          "--args",
+          "false",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "bif.executes.false",
+            "message": "bif false branch executes through JS backend",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "76c328c8c5f0adddd6f766fb6097933b140e777383f4434eee5713da08aefe69"
+      },
+      "id": "reference.psc1.bif-run-false",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "chooseMatch",
+          "--args",
+          "true",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "match.executes.true",
+            "message": "match true branch executes through checked recursor and JS backend",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "3694993a6d7602577eb0d0e85fc78ed101205e517cbefc7807fa69214e1ea244"
+      },
+      "id": "reference.psc1.match-run-true",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "chooseMatch",
+          "--args",
+          "false",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "match.executes.false",
+            "message": "match false branch executes through checked recursor and JS backend",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "cb10f76f059b7fb6fe719719f3c3b553d9c0415cbec82fd8852d1fc441f2b89e"
+      },
+      "id": "reference.psc1.match-run-false",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "isZeroMatch",
+          "--args",
+          "0",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "nat.match.executes.zero",
+            "message": "Nat match zero branch executes through checked Nat.rec and JS backend",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "5c53ddcb01c78ac755dadc17f50407c221ccfd99df5a3ac3518764ccde7d8494"
+      },
+      "id": "reference.psc1.nat-match-run-zero",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "isZeroMatch",
+          "--args",
+          "5",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "nat.match.executes.succ",
+            "message": "Nat match successor/catch-all branch executes through checked Nat.rec and JS backend",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "af43c0721720a22457895b443a94dadc2319d0060f50cae856acad652045c0b0"
+      },
+      "id": "reference.psc1.nat-match-run-succ",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "natTagMatch",
+          "--args",
+          "0",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "nat.multi-literal-match.executes.zero",
+            "message": "Nat multi-literal zero branch executes through checked Nat.rec and JS backend",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "d493adec160f83152aff9def6d3cdebd0fca9da6afd087f3a6c98683ce069506"
+      },
+      "id": "reference.psc1.nat-multi-literal-match-run-zero",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "natTagMatch",
+          "--args",
+          "1",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "nat.multi-literal-match.executes.one",
+            "message": "Nat multi-literal one branch executes through checked Nat.rec and JS backend",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "7c675ea29f8a0a139efe08fc6fda9eaddf1edeaec6cb2c6a2beae05ad57a4783"
+      },
+      "id": "reference.psc1.nat-multi-literal-match-run-one",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "natTagMatch",
+          "--args",
+          "2",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "nat.multi-literal-match.executes.two",
+            "message": "Nat multi-literal two branch executes through checked Nat.rec and JS backend",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "286f27943471eaa422df9c9d8379d96289a4f5f202dd960f9e477402c8c588ba"
+      },
+      "id": "reference.psc1.nat-multi-literal-match-run-two",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "natTagMatch",
+          "--args",
+          "5",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "nat.multi-literal-match.executes.catchall",
+            "message": "Nat multi-literal catch-all branch executes through checked Nat.rec and JS backend",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "857a7278b954c2724993388f5da92ce7f1fc1262df10c6c37e3d0d5c57613f97"
+      },
+      "id": "reference.psc1.nat-multi-literal-match-run-catchall",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "predLeanStyle",
+          "--args",
+          "3",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "nat.lean-style-succ-pattern.executes",
+            "message": "Nat.succ k pattern executes through checked Nat.rec and JS backend",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "0bfbe901823f9af47ef90b2133681fe011cc9023e9c8d9351958721e8dd3e6b0"
+      },
+      "id": "reference.psc1.nat-lean-style-succ-pattern-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "predShortSucc",
+          "--args",
+          "3",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "nat.short-succ-pattern.executes",
+            "message": "succ k pattern resolves by scrutinee type and executes through checked Nat.rec and JS backend",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "4e493db0c4115a1f2fe0e862f3dc983dd09b826d65fbe88836df6ce58017d731"
+      },
+      "id": "reference.psc1.nat-short-succ-pattern-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "pointX",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.projection.x.executes",
+            "message": "structure projection x executes through checked constructor/projection JS backend",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "3cbb003f60ccc42b923b10116ae4563a95783dd40d18518c84a29a5078303166"
+      },
+      "id": "reference.psc1.structure-point-x-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "pointY",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.projection.y.executes",
+            "message": "structure projection y executes through checked constructor/projection JS backend",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "c093f8bd9177ad0798013cee65aae5dd0c0c99deb3f734b8bdef3e8321d3bd6c"
+      },
+      "id": "reference.psc1.structure-point-y-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "literalPunnedX",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.literal.punning.x.executes",
+            "message": "literal-punned structure x executes through checked constructor/projection JS backend",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "6981880c41a5dd325db1cd0c0f2ddb04f0dbc5a82c5a4c7476caa4fa09d3a750"
+      },
+      "id": "reference.psc1.structure-literal-punning-x-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "literalPunnedY",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.literal.punning.y.executes",
+            "message": "literal-punned structure y executes through checked constructor/projection JS backend",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "b134303c6f6434a994dfb082264e9de022e5a30f8f71c67c6fefb220f0217331"
+      },
+      "id": "reference.psc1.structure-literal-punning-y-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "pointDotX",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.dot-projection.x.executes",
+            "message": "dotted structure projection x executes through generated checked projection",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "99d82ab6e869635e4566882b8641efe1e7ecb1efd96a5b8ec20f290b00be0deb"
+      },
+      "id": "reference.psc1.structure-dot-point-x-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "pointDotY",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.dot-projection.y.executes",
+            "message": "dotted structure projection y executes through generated checked projection",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "75d0108aa5fb73d761a74f3112899c3d16ddf7f388a7e981b3900430f34d10ae"
+      },
+      "id": "reference.psc1.structure-dot-point-y-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "pointMovedX",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.update.x.executes",
+            "message": "structure update changed field executes through checked constructor/projection lowering",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "9ea385151a9dde8e764b920e6a0b9ae331a6dfa5f5083e6b4a5b4db9dabe3aad"
+      },
+      "id": "reference.psc1.structure-update-point-x-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "pointMovedY",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.update.y.executes",
+            "message": "structure update preserved field executes through checked projection reconstruction",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "f6de4e44cbeebfa8c8a21a1c2ec1e76cedc28379bfb3a737281b907b47348856"
+      },
+      "id": "reference.psc1.structure-update-point-y-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "pointPunnedX",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.update.punning.x.executes",
+            "message": "punned structure update changed field executes through checked constructor/projection lowering",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "37185f31b3ca032ce405e5d6ed12fc1c2c56b23e97d3bdf7c9bba70ba84c5c7b"
+      },
+      "id": "reference.psc1.structure-update-punning-x-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "pointPunnedY",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.update.punning.y.executes",
+            "message": "punned structure update preserved field executes through checked projection reconstruction",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "8969ec5e8a8368b4a020bcf7c15bdc2a0efb42e8fa9080a1d3a88c92c2de8e68"
+      },
+      "id": "reference.psc1.structure-update-punning-y-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "matchedX",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.match.x.executes",
+            "message": "single-constructor structure match first field executes through checked recursor runtime",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "8224a882a729f35e7084e7fc89cacf793d86605f340225bf6f06009dc7f8fb2f"
+      },
+      "id": "reference.psc1.structure-match-x-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "matchedY",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.match.y.executes",
+            "message": "single-constructor structure match second field executes through checked recursor runtime",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "5a0058b05b41774cbb2e530b38b04cb34036d3a4f3e1277afa0a4f485e875da8"
+      },
+      "id": "reference.psc1.structure-match-y-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "redCode",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "inductive.user-multictor.match.red.executes",
+            "message": "multi-constructor user inductive red branch executes through checked recursor runtime",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "97174adfca2931ecb2809dc2bd361223127bf90745a9563c28f90d49b6faf573"
+      },
+      "id": "reference.psc1.user-inductive-color-code-red-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "blueCode",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "inductive.user-multictor.match.blue.executes",
+            "message": "multi-constructor user inductive blue branch executes through checked recursor runtime",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "05da3292793fdf7df637910d04a4f9295dff534c154420877c1f5dcea8e7d187"
+      },
+      "id": "reference.psc1.user-inductive-color-code-blue-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "noneDefault",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "inductive.user-payload.match.none.executes",
+            "message": "zero-field user inductive branch executes through checked recursor runtime",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "4729ad74b7b39db1b41d17f7f9abf722fddcb8879c4d27fd63822cbc54fdeaf0"
+      },
+      "id": "reference.psc1.user-inductive-maybe-none-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "someDefault",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "inductive.user-payload.match.some.executes",
+            "message": "payload field is passed to user inductive branch at runtime",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "8707c5ff1963590f6b9bd1d3070d85cc5474c2cf8700908db75e5c1501f3a5d7"
+      },
+      "id": "reference.psc1.user-inductive-maybe-some-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "parenBaseX",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.update.parenthesized-base.x.executes",
+            "message": "parenthesized structure update base changed field executes",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "6bd9a981bc0f8444d298496ba7adcd42925f64ea5a7a912efcaecea7f4fd9d33"
+      },
+      "id": "reference.psc1.structure-update-paren-base-x-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "parenBaseY",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.update.parenthesized-base.y.executes",
+            "message": "parenthesized structure update base preserves fields",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "a8af4ffb541d2001992ce5d3ffb9a192503df97c786f4cdc39509fccdb4b225a"
+      },
+      "id": "reference.psc1.structure-update-paren-base-y-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "dottedParenBaseX",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.update.dotted-parenthesized-base.x.executes",
+            "message": "dotted parenthesized structure update base preserves fields",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "17132a26e6d8272f1333aa7185acb6fc0d039df951a6c2dc8969b8ac2e6a9378"
+      },
+      "id": "reference.psc1.structure-update-dotted-paren-base-x-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "dottedParenBaseY",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.update.dotted-parenthesized-base.y.executes",
+            "message": "dotted parenthesized structure update base changed field executes",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "054f6d5efa84ea7203b0a92c2dc2cef54e8d2a74e040511ff2ded76f7754c9fa"
+      },
+      "id": "reference.psc1.structure-update-dotted-paren-base-y-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "boxMovedX",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.nested-update.x.executes",
+            "message": "nested structure update changed field executes through checked constructor/projection lowering",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "4defd6d56356fbd38704444718b7a9139c43036f3372671663cf5c7bab51dde2"
+      },
+      "id": "reference.psc1.structure-nested-update-x-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "boxMovedY",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.nested-update.y.executes",
+            "message": "nested structure update preserves sibling nested field",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "32b8b7f4ec9616f17a39f92f040e8c7b8b9caa390b506defe6545970222b288e"
+      },
+      "id": "reference.psc1.structure-nested-update-y-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ReferenceGoverned.ps",
+          "--call",
+          "boxMovedLabel",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "structure.nested-update.label.executes",
+            "message": "nested structure update preserves outer sibling field",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "7a1233f99c40c6c3743bce71fe1bc282549e93cd7db4768bdc937e36ba71ad23"
+      },
+      "id": "reference.psc1.structure-nested-update-label-run",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadStructureFieldType.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "40423e773eafdb9a7bd488f2f1dd5fd6348741bedcac252e324a9294484bdfb3"
+      },
+      "id": "reference.reject-structure-field-type-mismatch",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadStructureMissingField.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "4143af8b53615e775f6fed62bbf6d5feeda748646e3470d1a9338a803ee60891"
+      },
+      "id": "reference.reject-structure-missing-field",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadStructureUnknownField.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "5515000ee567c73404caf93dceea422beec62ebb2cd4e2e566fc2241f833b1ba"
+      },
+      "id": "reference.reject-structure-unknown-field",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadStructureLiteralPunnedMissingValue.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "a29b0232127453fa57b348667f588529a33965cb3297ae568eb3a1414271df17"
+      },
+      "id": "reference.reject-structure-literal-punning-missing-value",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadStructureLiteralPunnedType.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "aa4e5210b88cc9aa8c58ea2966d7e34f5098dd789bd544eb2e8e03986119bc74"
+      },
+      "id": "reference.reject-structure-literal-punning-type-mismatch",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadStructureDotUnknownField.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "a1013723fa289b80168c2b330607db78ec14ac495f596e05ef6abd78cebabb65"
+      },
+      "id": "reference.reject-structure-dot-unknown-field",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadStructureDotNonStructureBase.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "80ebd6fb48ba9db2f077a11e303bb4ff91e515289fc55a4af06c676ba3ce13fb"
+      },
+      "id": "reference.reject-structure-dot-non-structure-base",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadStructureUpdatePunnedMissingValue.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "a29b0232127453fa57b348667f588529a33965cb3297ae568eb3a1414271df17"
+      },
+      "id": "reference.reject-structure-update-punned-missing-value",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadStructureUpdatePunnedUnknownField.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "46157e6b50200740e4607e9eb1e5eea83ec0fb7387cc086afb53244fe3e5f7d2"
+      },
+      "id": "reference.reject-structure-update-punned-unknown-field",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadStructureUpdateUnknownField.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "de8540e47aeb487520e134d3e57ae49eb94f6013f132780ada5085f620a911f4"
+      },
+      "id": "reference.reject-structure-update-unknown-field",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadStructureUpdateDuplicateField.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "12c9d7ec7463d3baf413761896ceaac4daf16478c938c5da56ed16d4c6a1a7bd"
+      },
+      "id": "reference.reject-structure-update-duplicate-field",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadStructureUpdateNonStructureBase.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "1a29ad951a4571a740020dac5933d6505121e49339a45dd667416850fa9e81da"
+      },
+      "id": "reference.reject-structure-update-non-structure-base",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadParenthesizedStructureUpdateNoWith.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "88857c09ab15d7cd7d8fb72ca0edb165c69d80abdef13960d29bfb72fc85a375"
+      },
+      "id": "reference.reject-structure-update-parenthesized-base-with-required",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadParenthesizedStructureUpdateNonStructureBase.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "1a29ad951a4571a740020dac5933d6505121e49339a45dd667416850fa9e81da"
+      },
+      "id": "reference.reject-structure-update-parenthesized-non-structure-base",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadNestedStructureUpdateUnknownField.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "cad6c822abc8b0e170890de8eeb1de9a0e10dc746be91c8327222a5ca62676a5"
+      },
+      "id": "reference.reject-structure-nested-update-unknown-field",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadNestedStructureUpdateConflict.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "2c83b9a4d50be66f6cd8aa6e4d45222d8ab338a2d73e594d0e1d8eddeca29b3b"
+      },
+      "id": "reference.reject-structure-nested-update-direct-conflict",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "build-js",
+          "<reference-governance-tmp>/BadRecursiveUserInductiveRuntime.ps",
+          "--out",
+          "<reference-governance-tmp>/recursive-inductive-chain.js",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "recursive-inductive.js.case-split.emitted",
+            "message": "simple self-recursive inductive case split emits after Core checking",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "3bf0905c33742c2f4bdc05e740e6c88fef273f933371e30dee6086098e3a9d49"
+      },
+      "id": "reference.recursive-user-inductive-build-js",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/BadRecursiveUserInductiveRuntime.ps",
+          "--call",
+          "out",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "recursive-inductive.runtime.case-split.simple",
+            "message": "simple recursive Chain case split observes next branch",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "a2a9e03dfcab23ccebd78b39d6ce3e95367ac681574887a93e6026d1c2a14908"
+      },
+      "id": "reference.recursive-user-inductive-run-case-split",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadLetType.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "73ffd66b48f3cd86325e3f9ce78c6e88cbf6ed0031b4af844c65848bafec4ffa"
+      },
+      "id": "reference.reject-local-let-type-mismatch",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadLetFinalSemicolon.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "f238fed1b4033fef399c2dd831c85c8f85ed53106e84ef0b353b44026bf21807"
+      },
+      "id": "reference.reject-defbody-final-semicolon-after-let",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadComment.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "a90cc9eb3fdf78219966837378af6e25affb54d620864c79b5d6e790f38915b4"
+      },
+      "id": "reference.reject-js-line-comment",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadArrowLambda.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "132457f319d5d1eb5da0dee7f35f912cccd40132bd083bdc43cb681584e9ded7"
+      },
+      "id": "reference.reject-arrow-only-lambda",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadByBlockTerminator.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "94d8464339e2e7ea6a2662f42b5d7d360a484bb4ddf5ba1c3bfb86186ee2fc2e"
+      },
+      "id": "reference.reject-by-block-command-semicolon",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadBoolIfBranch.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "40423e773eafdb9a7bd488f2f1dd5fd6348741bedcac252e324a9294484bdfb3"
+      },
+      "id": "reference.reject-bool-if-branch-type-mismatch",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadBifBranch.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "40423e773eafdb9a7bd488f2f1dd5fd6348741bedcac252e324a9294484bdfb3"
+      },
+      "id": "reference.reject-bif-branch-type-mismatch",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadMatchBranchTerminator.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "0d03d9da07e915e395d19028747b5a2291db1e1bec2775e09165418e443caf43"
+      },
+      "id": "reference.reject-match-branch-semicolon",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadMatchNonExhaustive.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "87178a8d7df036d53df562d5d5f4a60ac4de1defbbba2ac29b4a10c48ca3d5c9"
+      },
+      "id": "reference.reject-match-nonexhaustive",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadNatMatchNonExhaustive.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "f29271325c7f1a2f81dfc0893c0840b8a4ca6b86b2ba4240d1d587e9d900b234"
+      },
+      "id": "reference.reject-nat-match-nonexhaustive",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadNatMatchBranchTerminator.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "820183073a5c9d6283713aa9512981bc168f8797ce95c8d389124402da515fc6"
+      },
+      "id": "reference.reject-nat-match-branch-semicolon",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadNatLiteralMatchDuplicate.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "ce6b3d762620f67abd179b4ca6a4200b73d9dd229a35624a2d07272f9316a74b"
+      },
+      "id": "reference.reject-nat-literal-match-duplicate",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadNatLiteralMatchNoWildcard.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "dc4873d5e0160063805c0ae05ced9c62d5f75947dbca8ddbe2ed3987fdf8e48a"
+      },
+      "id": "reference.reject-nat-literal-match-no-wildcard",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadNatLiteralMatchTooLarge.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "5cbaf6d133dceb515cea5857216199ab749db0549ec72b93cd3603924fa2743c"
+      },
+      "id": "reference.reject-nat-literal-match-too-large",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadSuccPatternDuplicateBinder.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "76d15b703ce52ead4b0770c6de58eaadcc51e8f5d89b5209e41c55543f22f5ec"
+      },
+      "id": "reference.reject-succ-pattern-duplicate-binder",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadSuccPatternArity.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "f6b7a2aaa70ab565a8c5cccef715f3bf7515aa293bc938145ee737b72e711756"
+      },
+      "id": "reference.reject-succ-pattern-arity",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadExactGoal.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "69dcbcca822838f5751cd141ed7b232a9a4ddb1f82b40066aae5d827f8211d2b"
+      },
+      "id": "reference.reject-exact-wrong-goal",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadAssumptionGoal.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "95a6af07fe0598fdc0210cabc1be91ae1bd1fee4d69dbdd5ac9db235a15b921a"
+      },
+      "id": "reference.reject-assumption-wrong-goal",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadApplyGoal.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "9884812cca1d22fbc598d8f7796f3ad24338c9abd11c2663469f0e139281949c"
+      },
+      "id": "reference.reject-apply-unsolved-subgoal",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadApplyPremise.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "95a6af07fe0598fdc0210cabc1be91ae1bd1fee4d69dbdd5ac9db235a15b921a"
+      },
+      "id": "reference.reject-apply-wrong-premise",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadIntroGoal.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "69dcbcca822838f5751cd141ed7b232a9a4ddb1f82b40066aae5d827f8211d2b"
+      },
+      "id": "reference.reject-intro-wrong-goal",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/ConstructorShorthandGovernance.ps",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "constructor-shorthand.zero-arity.accepted",
+            "message": "expected-type-directed red shorthand elaborates to Color.red",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "constructor-shorthand.payload.accepted",
+            "message": "expected-type-directed some(7) shorthand elaborates to MaybeNat.some",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "constructor-partial-shorthand.function.accepted",
+            "message": "expected-function-type some shorthand elaborates to constructor function",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "constructor-shorthand.rfl.red.accepted",
+            "message": "constructor shorthand red result reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "constructor-shorthand.rfl.some.accepted",
+            "message": "constructor shorthand payload result reduces for rfl theorem",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "constructor-partial-shorthand.rfl.some.accepted",
+            "message": "partial constructor shorthand result reduces for rfl theorem",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "e8049448e214b7d44b6de2628581805fd8cf35998f6dc4fffbeee7fd66db9889"
+      },
+      "id": "reference.constructor-shorthand.check",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "build-js",
+          "<reference-governance-tmp>/ConstructorShorthandGovernance.ps",
+          "--out",
+          "<reference-governance-tmp>/constructor-shorthand-governance.js",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "constructor-shorthand.js.red.emitted",
+            "message": "red shorthand value emits after Core checking",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "constructor-shorthand.js.payload.emitted",
+            "message": "payload shorthand result emits after Core checking",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "constructor-partial-shorthand.js.function.emitted",
+            "message": "partial constructor shorthand function emits after Core checking",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "constructor-partial-shorthand.js.result.emitted",
+            "message": "partial constructor shorthand result emits after Core checking",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "b8726a2a81d64994862fe2e6eb62b585cee0e4e541124092abfce13205d9bd79"
+      },
+      "id": "reference.constructor-shorthand.build-js",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ConstructorShorthandGovernance.ps",
+          "--call",
+          "redShortCode",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "constructor-shorthand.runtime.red",
+            "message": "red shorthand runtime value observes branch 1",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "dbb97057734a9c0e388b54c53324fc38c1509add9d9db87ccb3417be327d2144"
+      },
+      "id": "reference.constructor-shorthand.run-red",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ConstructorShorthandGovernance.ps",
+          "--call",
+          "someShortDefault",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "constructor-shorthand.runtime.some",
+            "message": "some shorthand runtime payload observes 7",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "f2eafd95b9128fd2cc5cf679e1e8338eb93d34f14d2bbb665254b28b34b792f7"
+      },
+      "id": "reference.constructor-shorthand.run-some",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/ConstructorShorthandGovernance.ps",
+          "--call",
+          "fromMkSomeShortDefault",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "constructor-partial-shorthand.runtime.some",
+            "message": "partial constructor shorthand runtime payload observes 13",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "f47d98d0320c6d7b0f15cd828fb785ef27ff6c1b74f84e897f528b7c98d54f2e"
+      },
+      "id": "reference.constructor-partial-shorthand.run-some",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/RecursiveInductiveGovernance.ps",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "recursive-inductive.source.accepted",
+            "message": "self-recursive NatList source is accepted by the checked frontend",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "recursive-inductive.length.accepted",
+            "message": "primitive recursive length definition checks",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "recursive-inductive.rfl.accepted",
+            "message": "recursive inductive runtime target also reduces for rfl theorem",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "c7df0e6f2f297e95a3e510ed6c14738627ef1b3be6a586821f490e118e51bea2"
+      },
+      "id": "reference.recursive-inductive.check",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "build-js",
+          "<reference-governance-tmp>/RecursiveInductiveGovernance.ps",
+          "--out",
+          "<reference-governance-tmp>/recursive-inductive-governance.js",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "recursive-inductive.js.length.emitted",
+            "message": "recursive-inductive recursor emits after Core checking",
+            "status": "accepted"
+          },
+          {
+            "details": {},
+            "id": "recursive-inductive.js.result.emitted",
+            "message": "recursive-inductive result emits after Core checking",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "7e47e6aa59036ffbba114f57ad4dae13cd78b694b55a07066fea63c77c07f150"
+      },
+      "id": "reference.recursive-inductive.build-js",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/RecursiveInductiveGovernance.ps",
+          "--call",
+          "len2",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "recursive-inductive.runtime.length",
+            "message": "runtime-computed IHs give NatList length 2",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "b4b3e2a1893744469be2327a87ec5c9b10e5269def9fac2f5b42a36f884aba65"
+      },
+      "id": "reference.recursive-inductive.run-length",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "run",
+          "<reference-governance-tmp>/RecursiveInductiveGovernance.ps",
+          "--call",
+          "l1empty",
+          "--json"
+        ],
+        "checks": [
+          {
+            "details": {},
+            "id": "recursive-inductive.runtime.case-split",
+            "message": "recursive inductive case split observes non-empty list",
+            "status": "accepted"
+          }
+        ],
+        "stdoutSha256": "3c4dd819fec155c24d7634159fce8ca348508684a87fe7c6027386eb359698b7"
+      },
+      "id": "reference.recursive-inductive.run-is-empty",
+      "message": "Command accepted as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadRecursiveFunctionField.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "f9f099bf4647a55705546418a0f62dfc2d01afda22a54112438a42a570c82e08"
+      },
+      "id": "reference.reject-recursive-inductive-function-field",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadConstructorShorthandNoExpected.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "379dbdf0872161fa198cab65c7c3f2b2adf793b33b00772307e9d4bc64b43a0a"
+      },
+      "id": "reference.reject-constructor-shorthand-no-expected-type",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadConstructorShorthandGlobalWins.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "ec45f15bb36747f8ceb29346fa0a872c067df5459b82353bb8881a3ea823da55"
+      },
+      "id": "reference.reject-constructor-shorthand-global-wins",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    },
+    {
+      "details": {
+        "args": [
+          "tools/pslive.ts",
+          "check",
+          "<reference-governance-tmp>/BadConstructorPartialShorthandWrongCodomain.ps",
+          "--json"
+        ],
+        "exitCode": 1,
+        "outputSha256": "0ae1692f6e4ab08686173b6d488fb78967cadaa4e979291d76b5d46e8554cece"
+      },
+      "id": "reference.reject-constructor-partial-shorthand-wrong-codomain",
+      "message": "Command rejected as expected",
+      "status": "accepted"
+    }
+  ],
+  "pinnedLeanRevision": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "policy": "ProofScript v0.6.1 reference-governed PSC-1 language smoke",
+  "requiredFailureCount": 0,
+  "status": "accepted",
+  "trustLabel": "trusted-boundary standalone small subset; not fully formally equivalent to Lean 4 yet",
+  "referenceGovernanceSha256": "1781950cb28cc4fe50d90eacc21fd45697da69441bf9464b906d8a5bda99936c"
+}

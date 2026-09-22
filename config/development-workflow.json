@@ -1,0 +1,1192 @@
+{
+  "schemaVersion": 1,
+  "release": "P5.94",
+  "trustClaim": {
+    "label": "K3-TB trusted-boundary",
+    "fullyFormalK3": false,
+    "lean4Equivalent": false,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "summary": "K3-TB trusted-boundary only; not fully formal K3 and not proven equivalent to Lean 4."
+  },
+  "purpose": "Define and machine-check the required contributor workflow for adding or promoting PSC-1 features from proposal through red tests, checked Core/bootstrap evidence, backend/runtime evidence, proof-obligation linkage, governance, and release report.",
+  "sourceConfigs": [
+    "config/package-classification.json",
+    "config/feature-promotion-gate.json",
+    "config/verification-matrix.json",
+    "config/proof-obligations-ledger.json",
+    "config/production-traceability-bundle.json",
+    "tools/pslive-list-array-length-empty-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_24_LIST_ARRAY_LENGTH_EMPTY_FEATURE_REPORT.md",
+    "tools/pslive-list-array-reverse-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_25_LIST_ARRAY_REVERSE_FEATURE_REPORT.md",
+    "tools/pslive-list-array-any-all-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_26_LIST_ARRAY_ANY_ALL_FEATURE_REPORT.md",
+    "tools/pslive-list-array-last-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_32_LIST_ARRAY_LAST_FEATURE_REPORT.md",
+    "tools/pslive-list-get-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_33_LIST_GET_FEATURE_REPORT.md",
+    "tools/pslive-list-array-take-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_34_LIST_ARRAY_TAKE_FEATURE_REPORT.md",
+    "tools/pslive-list-array-drop-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_35_LIST_ARRAY_DROP_FEATURE_REPORT.md",
+    "tools/pslive-list-array-range-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_36_LIST_ARRAY_RANGE_FEATURE_REPORT.md",
+    "tools/pslive-list-array-takewhile-tests.ts",
+    "tools/pslive-list-array-dropwhile-tests.ts",
+    "tools/pslive-list-array-countp-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_41_LIST_ARRAY_COUNTP_FEATURE_REPORT.md",
+    "tools/pslive-list-array-singleton-tests.ts",
+    "tools/pslive-option-except-orelse-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_45_OPTION_EXCEPT_ORELSE_FEATURE_REPORT.md",
+    "tools/pslive-option-except-convert-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_46_OPTION_EXCEPT_CONVERT_FEATURE_REPORT.md",
+    "tools/pslive-option-except-toexcept-toarray-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_48_OPTION_EXCEPT_TOEXCEPT_TOARRAY_FEATURE_REPORT.md",
+    "tools/pslive-except-maperror-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_49_EXCEPT_MAPERROR_FEATURE_REPORT.md",
+    "tools/pslive-option-filter-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_50_OPTION_FILTER_FEATURE_REPORT.md",
+    "tools/pslive-option-flatten-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_51_OPTION_FLATTEN_FEATURE_REPORT.md",
+    "tools/pslive-except-toerror-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_53_EXCEPT_TOERROR_FEATURE_REPORT.md",
+    "packages/elaborator/src/structureSugarElaboration.ts",
+    "tools/pslive-except-swap-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_56_EXCEPT_SWAP_FEATURE_REPORT.md",
+    "packages/elaborator/src/classElaborator.ts",
+    "tools/pslive-option-any-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_59_OPTION_ANY_FEATURE_REPORT.md",
+    "packages/elaborator/src/programElaboration.ts",
+    "tools/pslive-reference-v061-declaration-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_60_REFERENCE_V061_DECLARATION_FORMS_REPORT.md",
+    "docs/reference/ProofScript_Language_Reference_v0.6.1_authoritative_draft.md",
+    "docs/reference/ProofScript_Feature_Registry_v0.6.1.json",
+    "docs/reference/ProofScript_Parser_Lowering_API_Contract_v0.6.1.md",
+    "docs/reference/proofscript-language-reference-v0.6.1/VERIFICATION.md",
+    "tools/pslive-reference-v061-match-tests.ts",
+    "tools/elaborator-term-dispatch-extraction-tests.ts",
+    "packages/elaborator/src/termElaboration.ts",
+    "docs/reports/p5/PRODUCTION_P5_61_REFERENCE_V061_MATCH_BODY_REPORT.md",
+    "packages/parser/src/patternParser.ts",
+    "tools/pslive-reference-v061-where-tests.ts",
+    "packages/parser/src/whereBodyParser.ts",
+    "docs/reports/p5/PRODUCTION_P5_62_REFERENCE_V061_WHERE_BODY_REPORT.md",
+    "tools/pslive-reference-v061-structure-expr-tests.ts",
+    "packages/parser/src/definitionBodyParser.ts",
+    "docs/reports/p5/PRODUCTION_P5_63_REFERENCE_V061_STRUCTURE_EXPR_REPORT.md"
+  ],
+  "requiredDocs": [
+    "docs/PRODUCTION_DEVELOPMENT_WORKFLOW.md",
+    "docs/PRODUCTION_FEATURE_PROMOTION_GATE.md",
+    "docs/PRODUCTION_PROOF_OBLIGATION_LEDGER.md",
+    "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+    "docs/PRODUCTION_TRACEABILITY_BUNDLE.md",
+    "docs/reports/p5/PRODUCTION_P5_24_LIST_ARRAY_LENGTH_EMPTY_FEATURE_REPORT.md",
+    "tools/pslive-list-array-reverse-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_25_LIST_ARRAY_REVERSE_FEATURE_REPORT.md",
+    "tools/pslive-list-array-any-all-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_26_LIST_ARRAY_ANY_ALL_FEATURE_REPORT.md",
+    "tools/pslive-list-get-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_33_LIST_GET_FEATURE_REPORT.md",
+    "tools/pslive-list-array-drop-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_35_LIST_ARRAY_DROP_FEATURE_REPORT.md",
+    "tools/pslive-list-array-range-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_36_LIST_ARRAY_RANGE_FEATURE_REPORT.md",
+    "tools/pslive-list-array-replicate-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_37_LIST_ARRAY_REPLICATE_FEATURE_REPORT.md",
+    "docs/reports/p5/PRODUCTION_P5_39_LIST_ARRAY_TAKEWHILE_FEATURE_REPORT.md",
+    "docs/reports/p5/PRODUCTION_P5_40_LIST_ARRAY_DROPWHILE_FEATURE_REPORT.md",
+    "docs/reports/p5/PRODUCTION_P5_42_LIST_ARRAY_SINGLETON_FEATURE_REPORT.md",
+    "docs/reports/p5/PRODUCTION_P5_43_OPTION_EXCEPT_PREDICATES_FEATURE_REPORT.md",
+    "tools/pslive-option-except-convert-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_46_OPTION_EXCEPT_CONVERT_FEATURE_REPORT.md",
+    "tools/pslive-option-except-collection-convert-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_47_OPTION_EXCEPT_COLLECTION_CONVERT_FEATURE_REPORT.md",
+    "tools/pslive-except-maperror-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_49_EXCEPT_MAPERROR_FEATURE_REPORT.md",
+    "tools/pslive-option-filter-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_50_OPTION_FILTER_FEATURE_REPORT.md",
+    "tools/pslive-option-flatten-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_51_OPTION_FLATTEN_FEATURE_REPORT.md",
+    "tools/pslive-except-swap-tests.ts",
+    "docs/reports/p5/PRODUCTION_P5_56_EXCEPT_SWAP_FEATURE_REPORT.md",
+    "packages/elaborator/src/classElaborator.ts",
+    "docs/reports/p5/PRODUCTION_P5_59_OPTION_ANY_FEATURE_REPORT.md",
+    "packages/elaborator/src/programElaboration.ts",
+    "docs/reports/p5/PRODUCTION_P5_60_REFERENCE_V061_DECLARATION_FORMS_REPORT.md",
+    "docs/reference/ProofScript_Language_Reference_v0.6.1_authoritative_draft.md",
+    "docs/reference/ProofScript_Parser_Lowering_API_Contract_v0.6.1.md",
+    "docs/reference/proofscript-language-reference-v0.6.1/VERIFICATION.md",
+    "tools/pslive-reference-v061-match-tests.ts",
+    "tools/elaborator-term-dispatch-extraction-tests.ts",
+    "packages/elaborator/src/termElaboration.ts",
+    "docs/reports/p5/PRODUCTION_P5_61_REFERENCE_V061_MATCH_BODY_REPORT.md",
+    "packages/parser/src/patternParser.ts",
+    "tools/pslive-reference-v061-where-tests.ts",
+    "packages/parser/src/whereBodyParser.ts",
+    "docs/reports/p5/PRODUCTION_P5_62_REFERENCE_V061_WHERE_BODY_REPORT.md",
+    "tools/pslive-reference-v061-structure-expr-tests.ts",
+    "packages/parser/src/definitionBodyParser.ts",
+    "docs/reports/p5/PRODUCTION_P5_63_REFERENCE_V061_STRUCTURE_EXPR_REPORT.md"
+  ],
+  "templates": [
+    "templates/feature-implementation-plan.template.md",
+    "templates/feature-regression-test.template.ts",
+    "templates/feature-report.template.md",
+    "templates/feature-promotion-entry.template.json"
+  ],
+  "requiredArchitectureScripts": [
+    "test:feature-promotion",
+    "test:feature-proof-obligation-linkage",
+    "test:proof-obligations",
+    "test:verification-matrix",
+    "test:production-traceability",
+    "test:development-workflow"
+  ],
+  "workflowStages": [
+    {
+      "id": "propose-feature",
+      "title": "Propose Feature",
+      "purpose": "State the user-visible feature, scope, non-goals, and intended lifecycle before touching production code.",
+      "requiredEvidence": [
+        "feature spec or implementation plan",
+        "planned package list",
+        "proof obligation IDs"
+      ],
+      "blocksPromotion": true
+    },
+    {
+      "id": "scope-feature",
+      "title": "Scope Feature Boundary",
+      "purpose": "Decide whether the feature is parser-only, checked bootstrap, existing kernel rule, trusted-kernel change, or execution-only-after-core.",
+      "requiredEvidence": [
+        "trustLevel",
+        "kernelImpact",
+        "production package list"
+      ],
+      "blocksPromotion": true
+    },
+    {
+      "id": "red-tests",
+      "title": "Write Failing Tests First",
+      "purpose": "Add parser/elaborator/runtime/proof negative tests before implementation and confirm the expected failure mode.",
+      "requiredEvidence": [
+        "failing targeted regression",
+        "negative rejection case"
+      ],
+      "blocksPromotion": true
+    },
+    {
+      "id": "implement-parser-elaborator-kernel",
+      "title": "Implement Checked Frontend Path",
+      "purpose": "Route syntax through parser and elaborator into checked Core or checked bootstrap declarations instead of backend shortcuts.",
+      "requiredEvidence": [
+        "parser evidence",
+        "elaborator/kernel evidence",
+        "checked bootstrap or proof obligation story"
+      ],
+      "blocksPromotion": true
+    },
+    {
+      "id": "implement-backend-runtime",
+      "title": "Implement Execution After Core",
+      "purpose": "Add backend/runtime behavior only after checked Core exists and only for executable features.",
+      "requiredEvidence": [
+        "JS execution smoke",
+        "TypeScript compile smoke",
+        "runtime/backend evidence"
+      ],
+      "blocksPromotion": true
+    },
+    {
+      "id": "link-proof-obligations",
+      "title": "Link Proof Obligations",
+      "purpose": "Connect the feature to known proof obligations so formal debt is explicit and machine-checked.",
+      "requiredEvidence": [
+        "proofObligationIds",
+        "non-claim statement"
+      ],
+      "blocksPromotion": true
+    },
+    {
+      "id": "update-governance-traceability",
+      "title": "Update Governance and Traceability",
+      "purpose": "Update feature promotion, verification matrix, production traceability, and documentation before release.",
+      "requiredEvidence": [
+        "feature-promotion entry",
+        "verification claim if needed",
+        "release report"
+      ],
+      "blocksPromotion": true
+    },
+    {
+      "id": "verify-and-report",
+      "title": "Verify and Report",
+      "purpose": "Run the focused matrix and fresh-extract smoke before claiming support.",
+      "requiredEvidence": [
+        "build",
+        "architecture",
+        "language-fast or focused smoke",
+        "kernel status",
+        "archive integrity"
+      ],
+      "blocksPromotion": true
+    }
+  ],
+  "plannedFeatures": [
+    {
+      "id": "psc1-list",
+      "title": "List core feature family",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/parser",
+        "packages/elaborator",
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ],
+      "status": "promoted-in-P5.7",
+      "implementedFeatureId": "psc1-list-nat"
+    },
+    {
+      "id": "psc1-string-library",
+      "title": "Broader String library feature family",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/parser",
+        "packages/elaborator",
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-int",
+      "title": "Minimal Int literal feature",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/parser",
+        "packages/elaborator",
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ],
+      "status": "extended-in-P5.10",
+      "implementedFeatureId": "psc1-int-literals",
+      "description": "Minimal Int literals plus bounded Int.neg/Int.add/Int.sub/Int.beq primitive arithmetic on explicit literal computations.",
+      "currentSlice": "P5.11 supports Int literals, primitive arithmetic, and type-directed +, -, == operators; full Int APIs remain planned"
+    },
+    {
+      "id": "psc1-result",
+      "title": "Except executable feature family",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/parser",
+        "packages/elaborator",
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ],
+      "status": "promoted-in-P5.13"
+    },
+    {
+      "id": "psc1-array-library",
+      "title": "Array size/get feature family",
+      "status": "promoted-in-P5.14",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/parser",
+        "packages/elaborator",
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ],
+      "implementedFeatureId": "psc1-array-access",
+      "description": "P5.14 supports bounded Array.size and Array.get? over checked Array.mk/List payloads; broader Array APIs remain planned."
+    },
+    {
+      "id": "psc1-option-library",
+      "title": "Option.map / Option.bind feature family",
+      "status": "promoted-through-P5.16-explicit-map-and-bind",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/parser",
+        "packages/elaborator",
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ],
+      "implementedFeatureId": "psc1-option-except-bind",
+      "description": "P5.15 supports explicit Option.map and Except.map; P5.16 adds explicit Option.bind and Except.bind. Inferred Functor/Monad syntax and do-notation remain planned."
+    },
+    {
+      "id": "psc1-option-bind",
+      "title": "Option.bind / Except.bind explicit calls",
+      "status": "implemented-in-P5.16",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/kernel",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ],
+      "description": "P5.16 supports explicit Option.bind and Except.bind calls over checked constructor values; do-notation and inferred Monad syntax remain deferred.",
+      "implementedFeatureId": "psc1-option-except-bind"
+    },
+    {
+      "id": "psc1-do-notation-minimal",
+      "title": "Minimal do-notation over Option/Except",
+      "status": "implemented-in-P5.17",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/syntax",
+        "packages/parser",
+        "packages/elaborator",
+        "packages/std",
+        "packages/kernel",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ],
+      "description": "P5.17 lowers minimal explicit do-notation over Option/Except to already checked Option.bind and Except.bind calls. Full Lean do-notation, Monad typeclass elaboration, IO, and generalized statements remain deferred.",
+      "implementedFeatureId": "psc1-do-notation-option-except"
+    },
+    {
+      "id": "psc1-array-map-next-expansion",
+      "title": "Array.map explicit call",
+      "status": "implemented-in-P5.18-as-psc1-array-map",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/kernel",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ],
+      "description": "P5.18 supports explicit Array.map calls over checked finite Array.mk/List payloads. Full Lean Array/Functor/typeclass collection semantics remain deferred.",
+      "implementedFeatureId": "psc1-array-map"
+    },
+    {
+      "id": "psc1-list-map-next-expansion",
+      "title": "List.map explicit call",
+      "status": "implemented-in-P5.19-as-psc1-list-map",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/kernel",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ],
+      "description": "P5.19 supports explicit List.map calls over checked finite List constructor payloads. Full Lean List/Functor/typeclass collection semantics remain deferred.",
+      "implementedFeatureId": "psc1-list-map"
+    },
+    {
+      "id": "psc1-list-foldl-next-expansion",
+      "title": "List.foldl explicit call",
+      "status": "implemented-in-P5.20-as-psc1-list-foldl",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/kernel",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ],
+      "description": "P5.20 supports explicit List.foldl calls over checked finite List constructor payloads. Full Lean List/Foldable/typeclass collection semantics remain deferred.",
+      "implementedFeatureId": "psc1-list-foldl"
+    },
+    {
+      "id": "psc1-array-foldl-next-expansion",
+      "title": "Array.foldl explicit call",
+      "status": "implemented-in-P5.21-as-psc1-array-foldl",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/kernel",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ],
+      "description": "P5.21 supports explicit Array.foldl calls over checked finite Array.mk/List payloads. Full Lean Array/Foldable/typeclass collection semantics remain deferred.",
+      "implementedFeatureId": "psc1-array-foldl"
+    },
+    {
+      "id": "psc1-list-array-filter-next-expansion",
+      "title": "List.filter / Array.filter explicit calls",
+      "status": "implemented-in-P5.22-as-psc1-list-array-filter",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/kernel",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ],
+      "description": "P5.22 supports explicit List.filter and Array.filter calls over checked finite List/Array payloads. Full Lean Filterable/Foldable/typeclass collection semantics remain deferred.",
+      "implementedFeatureId": "psc1-list-array-filter"
+    },
+    {
+      "id": "psc1-list-array-append-next-expansion",
+      "title": "List.append / Array.append explicit calls",
+      "status": "implemented-in-P5.23-as-psc1-list-array-append",
+      "productionGradePath": true,
+      "description": "P5.23 supports explicit List.append and Array.append calls over checked finite List/Array payloads. Full Lean Append/Monoid/typeclass collection semantics remain deferred.",
+      "implementedFeatureId": "psc1-list-array-append",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/kernel",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-list-array-reverse-next-expansion",
+      "title": "List.reverse / Array.reverse explicit calls",
+      "status": "implemented-in-P5.25-as-psc1-list-array-reverse",
+      "description": "P5.25 supports explicit List.reverse and Array.reverse calls over checked finite List/Array payloads. Full Lean collection/typeclass semantics remain deferred.",
+      "implementedFeatureId": "psc1-list-array-reverse",
+      "productionGradePath": true,
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/kernel",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-list-array-last-next-expansion",
+      "title": "List.last? / Array.last? explicit calls",
+      "status": "implemented-in-P5.32-as-psc1-list-array-last",
+      "description": "P5.32 supports explicit List.last? and Array.last? calls over checked finite List/Array payloads. Full Lean collection/typeclass semantics remain deferred.",
+      "implementedFeatureId": "psc1-list-array-last",
+      "productionGradePath": true,
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/kernel",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-list-array-takewhile-next-expansion",
+      "title": "List.takeWhile / Array.takeWhile explicit calls",
+      "status": "implemented-in-P5.39-as-psc1-list-array-takewhile",
+      "description": "P5.39 supports explicit List.takeWhile and Array.takeWhile calls over checked finite List/Array payloads. Full Lean collection/typeclass semantics remain deferred.",
+      "implementedFeatureId": "psc1-list-array-takewhile",
+      "productionGradePath": true,
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/kernel",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-list-array-dropwhile-next-expansion",
+      "title": "List.dropWhile / Array.dropWhile explicit calls",
+      "status": "implemented-in-P5.40-as-psc1-list-array-dropwhile",
+      "description": "P5.40 supports explicit List.dropWhile and Array.dropWhile calls over checked finite List/Array payloads. Full Lean collection/typeclass semantics remain deferred.",
+      "implementedFeatureId": "psc1-list-array-dropwhile",
+      "productionGradePath": true,
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/kernel",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-list-array-countp-next-expansion",
+      "title": "List.countP / Array.countP explicit calls",
+      "status": "implemented-in-P5.41-as-psc1-list-array-countp",
+      "description": "P5.41 supports explicit List.countP and Array.countP calls over checked finite List/Array payloads. Full Lean collection/typeclass semantics remain deferred.",
+      "implementedFeatureId": "psc1-list-array-countp",
+      "productionGradePath": true,
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/kernel",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-list-array-singleton-next-expansion",
+      "title": "List.singleton / Array.singleton checked-bootstrap explicit calls",
+      "status": "implemented-in-P5.42-as-psc1-list-array-singleton",
+      "description": "P5.42 supports explicit List.singleton and Array.singleton calls as checked bootstrap definitions. Full Lean collection/typeclass semantics remain deferred.",
+      "implementedFeatureId": "psc1-list-array-singleton",
+      "productionGradePath": true,
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-option-except-predicates-next-expansion",
+      "title": "Option/Except checked-bootstrap predicates",
+      "status": "implemented-in-P5.43-as-psc1-option-except-predicates",
+      "implementedFeatureId": "psc1-option-except-predicates",
+      "description": "P5.43 supports Option.isSome/Option.isNone and Except.isOk/Except.isError as checked-bootstrap definitions; no kernel refactor.",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-option-except-getd-next-expansion",
+      "title": "Option.getD / Except.getD checked-bootstrap explicit calls",
+      "status": "implemented-in-P5.44-as-psc1-option-except-getd",
+      "implementedFeatureId": "psc1-option-except-getd",
+      "description": "P5.44 supports Option.getD and Except.getD as checked-bootstrap definitions; no kernel refactor.",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-option-except-orelse-next-expansion",
+      "title": "Option.orElse / Except.orElse checked-bootstrap explicit calls",
+      "status": "implemented-in-P5.45-as-psc1-option-except-orelse",
+      "implementedFeatureId": "psc1-option-except-orelse",
+      "description": "P5.45 supports Option.orElse and Except.orElse as checked-bootstrap definitions; no kernel refactor.",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-option-except-convert-next-expansion",
+      "title": "Option.toList / Except.toOption checked-bootstrap explicit calls",
+      "status": "implemented-in-P5.46-as-psc1-option-except-convert",
+      "implementedFeatureId": "psc1-option-except-convert",
+      "description": "P5.46 supports Option.toList and Except.toOption as checked-bootstrap definitions; no kernel refactor.",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-option-except-collection-convert-next-expansion",
+      "title": "Option.toArray / Except.toList checked-bootstrap explicit calls",
+      "status": "implemented-in-P5.47-as-psc1-option-except-collection-convert",
+      "implementedFeatureId": "psc1-option-except-collection-convert",
+      "description": "P5.47 supports Option.toArray and Except.toList as checked-bootstrap definitions; no kernel refactor.",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-option-except-toexcept-toarray-next-expansion",
+      "title": "Option.toExcept / Except.toArray checked-bootstrap explicit calls",
+      "status": "implemented-in-P5.48-as-psc1-option-except-toexcept-toarray",
+      "implementedFeatureId": "psc1-option-except-toexcept-toarray",
+      "description": "P5.48 supports Option.toExcept and Except.toArray as checked-bootstrap definitions; no kernel refactor.",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-except-maperror-next-expansion",
+      "title": "Except.mapError checked-bootstrap explicit calls",
+      "status": "implemented-in-P5.49-as-psc1-except-maperror",
+      "implementedFeatureId": "psc1-except-maperror",
+      "description": "P5.49 supports Except.mapError as a checked-bootstrap definition; no kernel refactor.",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-option-filter-next-expansion",
+      "title": "Option.filter checked-bootstrap explicit calls",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ],
+      "status": "implemented-in-P5.50-as-psc1-option-filter",
+      "implementedFeatureId": "psc1-option-filter",
+      "description": "P5.50 supports Option.filter as a checked-bootstrap definition; no kernel refactor."
+    },
+    {
+      "id": "psc1-option-flatten-next-expansion",
+      "title": "Option.flatten checked-bootstrap explicit calls",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ],
+      "status": "implemented-in-P5.51-as-psc1-option-flatten",
+      "implementedFeatureId": "psc1-option-flatten",
+      "description": "P5.51 supports Option.flatten as a checked-bootstrap definition; no kernel refactor."
+    },
+    {
+      "id": "psc1-except-flatten-next-expansion",
+      "title": "Except.flatten checked-bootstrap explicit calls",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ],
+      "status": "implemented-in-P5.52-as-psc1-except-flatten",
+      "implementedFeatureId": "psc1-except-flatten",
+      "description": "P5.52 supports Except.flatten as a checked-bootstrap definition; no kernel refactor."
+    },
+    {
+      "id": "psc1-except-geterrord-next-expansion",
+      "title": "Except.getErrorD checked-bootstrap explicit calls",
+      "status": "implemented-in-P5.54-as-psc1-except-geterrord",
+      "implementedFeatureId": "psc1-except-geterrord",
+      "description": "P5.54 supports Except.getErrorD as a checked-bootstrap definition; no kernel refactor.",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-option-fold-next-expansion",
+      "title": "Option.fold checked-bootstrap explicit calls",
+      "status": "implemented-in-P5.55-as-psc1-option-fold",
+      "implementedFeatureId": "psc1-option-fold",
+      "description": "P5.55 supports Option.fold as a checked-bootstrap definition; no kernel refactor.",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "stdlib-bootstrap-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "feature-proof-obligation-coverage"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-except-swap-next-expansion",
+      "title": "Except.swap checked-bootstrap explicit calls",
+      "status": "implemented-in-P5.56-as-psc1-except-swap",
+      "implementedFeatureId": "psc1-except-swap",
+      "description": "P5.56 supports Except.swap as a checked-bootstrap definition; no kernel refactor.",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "feature-proof-obligation-coverage",
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "artifact-replay-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "stdlib-bootstrap-soundness"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-except-fold-next-expansion",
+      "title": "Except.fold checked-bootstrap explicit calls",
+      "status": "implemented-in-P5.57-as-psc1-except-fold",
+      "implementedFeatureId": "psc1-except-fold",
+      "description": "P5.57 supports Except.fold as a checked-bootstrap definition; no kernel refactor.",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "feature-proof-obligation-coverage",
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "artifact-replay-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "stdlib-bootstrap-soundness"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-except-bimap-next-expansion",
+      "title": "Except.bimap checked-bootstrap explicit calls",
+      "status": "implemented-in-P5.58-as-psc1-except-bimap",
+      "implementedFeatureId": "psc1-except-bimap",
+      "description": "P5.58 supports Except.bimap as a checked-bootstrap definition; no kernel refactor.",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "feature-proof-obligation-coverage",
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "artifact-replay-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "stdlib-bootstrap-soundness"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-option-any-next-expansion",
+      "title": "Option.any checked-bootstrap explicit calls",
+      "status": "implemented-in-P5.59-as-psc1-option-any",
+      "implementedFeatureId": "psc1-option-any",
+      "description": "P5.59 supports Option.any as a checked-bootstrap definition; no kernel refactor.",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "feature-proof-obligation-coverage",
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "artifact-replay-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics",
+        "stdlib-bootstrap-soundness"
+      ],
+      "mustTouchPackages": [
+        "packages/std",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-reference-v061-declaration-forms-next-expansion",
+      "title": "Reference v0.6.1 declaration forms and conformance package adoption",
+      "status": "implemented-in-P5.60-as-psc1-reference-v061-declaration-forms",
+      "implementedFeatureId": "psc1-reference-v061-declaration-forms",
+      "description": "P5.60 replaces the primary language reference with v0.6.1 and supports expression-bodied const/function/def declarations and braced if; no kernel refactor.",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "feature-proof-obligation-coverage",
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "artifact-replay-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics"
+      ],
+      "mustTouchPackages": [
+        "packages/parser",
+        "packages/frontend",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-reference-v061-match-body-next-expansion",
+      "title": "Reference v0.6.1 match-with brace body support",
+      "status": "implemented-in-P5.61-as-psc1-reference-v061-match-body",
+      "implementedFeatureId": "psc1-reference-v061-match-body",
+      "description": "P5.61 supports v0.6.1 match-with braced alternatives and rejects call-style pattern sugar; no kernel refactor.",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "feature-proof-obligation-coverage",
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "artifact-replay-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics"
+      ],
+      "mustTouchPackages": [
+        "packages/parser",
+        "packages/elaborator",
+        "packages/frontend",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-reference-v061-where-body-next-expansion",
+      "title": "Reference v0.6.1 local where body support",
+      "status": "implemented-in-P5.62-as-psc1-reference-v061-where-body",
+      "implementedFeatureId": "psc1-reference-v061-where-body",
+      "description": "P5.62 supports v0.6.1 non-recursive local where bodies and rejects local recursive/mutual where helper references; no kernel refactor.",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "feature-proof-obligation-coverage",
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "artifact-replay-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics"
+      ],
+      "mustTouchPackages": [
+        "packages/parser",
+        "packages/elaborator",
+        "packages/frontend",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "psc1-reference-v061-structure-expression-bodies-next-expansion",
+      "title": "Reference v0.6.1 structure literal/update expression-body support",
+      "status": "implemented-in-P5.63-as-psc1-reference-v061-structure-expression-bodies",
+      "implementedFeatureId": "psc1-reference-v061-structure-expression-bodies",
+      "description": "P5.63 supports v0.6.1 expression-bodied structure literals and updates after := by lexical disambiguation and existing checked structure elaboration; no kernel refactor.",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "feature-proof-obligation-coverage",
+        "core-type-soundness",
+        "elaborator-elaboration-soundness",
+        "artifact-replay-soundness",
+        "backend-semantic-preservation",
+        "runtime-observable-semantics"
+      ],
+      "mustTouchPackages": [
+        "packages/parser",
+        "packages/elaborator",
+        "packages/frontend",
+        "packages/backend-typescript",
+        "packages/runtime"
+      ]
+    },
+    {
+      "id": "kernel-prelude-gap-closure-after-p5-74",
+      "title": "Post-P5.74 kernel/prelude gap closure",
+      "status": "planned-after-P5.74",
+      "description": "Continue exact-Lean-guided checked prelude or kernel-theory gap closure after Nonempty/Classical.choice activation; avoid new axioms unless Lean exposes them and trust-boundary docs are updated.",
+      "lifecycle": "planned",
+      "mustUseTemplates": true,
+      "mustLinkProofObligations": [
+        "feature-proof-obligation-coverage",
+        "core-type-soundness",
+        "stdlib-bootstrap-soundness",
+        "kernel-lean4-equivalence",
+        "artifact-replay-soundness"
+      ],
+      "mustTouchPackages": [
+        "packages/kernel"
+      ]
+    }
+  ],
+  "rules": {
+    "newProductionFeaturesNeedFailingTestsFirst": true,
+    "supportedFeaturesNeedFeaturePromotionEntry": true,
+    "supportedFeaturesNeedProofObligationIds": true,
+    "executableFeaturesNeedBackendAndRuntimeEvidence": true,
+    "checkedBootstrapFeaturesNeedRegeneratedArtifacts": true,
+    "featureReportsMustStateNonClaims": true,
+    "testArchitectureMustIncludeDevelopmentWorkflow": true
+  },
+  "nonClaims": [
+    "not fully formal K3",
+    "not proven equivalent to Lean 4",
+    "workflow discipline is not itself a formal proof",
+    "planned features are not supported features"
+  ]
+}

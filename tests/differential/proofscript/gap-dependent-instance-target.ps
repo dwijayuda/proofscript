@@ -1,0 +1,15 @@
+class Marker(A: Type) {
+  tag: Nat;
+}
+
+class Key(n: Nat) {
+  value: Nat;
+}
+
+instance natMarker: Marker(Nat) := {
+  tag := 0
+};
+
+instance [m: Marker(Nat)] dependentTarget: Key(Marker.tag(Nat, m)) := {
+  value := 0
+};

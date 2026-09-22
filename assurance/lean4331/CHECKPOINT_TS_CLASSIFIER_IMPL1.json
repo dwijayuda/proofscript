@@ -1,0 +1,59 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "TS_CLASSIFIER_IMPL1",
+  "coreFormat": 71,
+  "profile": "KERNEL-level-instantiation-conformance1",
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "kernelSemanticsChanged": false,
+  "formal": {
+    "effectiveModulesOrContracts": 31,
+    "newModules": ["TypeScriptClassifierImplementationContract.lean"],
+    "reportedSorryAx": 0,
+    "claimBoundary": "implementation-evidence contract, not JavaScript semantics"
+  },
+  "sourceAudit": {
+    "functions": 6,
+    "obligations": 46,
+    "missing": 0,
+    "functionsNamed": [
+      "positiveRecursiveFieldType",
+      "checkConstructorFieldUniverse",
+      "propEliminationMotivePolicy",
+      "checkSimpleInductive",
+      "checkIndexedInductive0",
+      "checkAndAddDeclaration"
+    ]
+  },
+  "runtimeVectors": {
+    "acceptedFamilies": 5,
+    "rejectedFamilies": 4,
+    "atomicRejections": 4,
+    "optionSentinels": 4,
+    "failures": 0
+  },
+  "composedExactBridge": {
+    "classifierComponents": 5,
+    "classifierFailures": 0,
+    "typescriptImplementationFailures": 0
+  },
+  "mandatoryGates": [
+    {"part": 1, "status": "PASS"},
+    {"part": 2, "status": "PASS"},
+    {"part": 3, "status": "PASS"},
+    {"part": 4, "status": "PASS"},
+    {"part": 5, "status": "PASS"},
+    {"part": 6, "status": "PASS"}
+  ],
+  "build": "PASS",
+  "conformance": "PASS",
+  "sourceDifferential": {
+    "passed": 23,
+    "total": 25,
+    "knownNonKernelFailures": ["reduction-recursion", "equation-patterns"]
+  },
+  "k3WholeKernelEquivalence": false,
+  "next": "mutual inductive admission correspondence"
+}

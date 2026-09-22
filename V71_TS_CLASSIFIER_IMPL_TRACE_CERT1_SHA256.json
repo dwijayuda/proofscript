@@ -1,0 +1,13 @@
+{
+  "schema": "proofscript.artifact.sha256/v1",
+  "artifact": "V71_TS_CLASSIFIER_IMPL_TRACE_CERT1",
+  "generatedAtUtc": "2026-09-10T03:48:01.984Z",
+  "files": {
+    "assurance/lean4331/formal/ProofScriptKernelEquivalence/InductiveClassifierImplementationTrace.lean": "b1735f704d3b0343b9938e982eb3fb52c75fde0dac32a4c7127aef37449c5cf9",
+    "assurance/lean4331/evidence/v71-ts-classifier-implementation-trace-formal1.out": "17e65a60015c864eedbbd16681d065f2d948d44a6752e4b9ffc2a694182debe0",
+    "assurance/lean4331/evidence/v71-ts-classifier-implementation-correspondence2.out": "4ebf4e597d6675dff61474b5d466e087b4f8fdb5a292337a0df6bb9042a9567e",
+    "assurance/lean4331/CHECKPOINT_V71_TS_CLASSIFIER_IMPL_TRACE_CERT1.json": "14673ba7e30f7646676aba04bcc01c85d090d9a3459a533e920639a489d8b109",
+    "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_TS_CLASSIFIER_IMPL_TRACE_CERT1.md": "097396befd7959480f3fc2af0ec6de864fb850630abde9b5b2ac4cf3bd620fd7"
+  },
+  "aggregate": "9cbd825e3db8cf582f66d37fbfafdd5e653ef07051dea057d18806a119ac507d"
+}

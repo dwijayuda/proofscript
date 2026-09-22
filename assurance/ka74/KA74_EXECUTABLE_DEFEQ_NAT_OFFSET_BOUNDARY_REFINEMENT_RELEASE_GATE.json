@@ -1,0 +1,138 @@
+{
+  "checkpoint": "proofscript-v1-ka74-executable-defeq-nat-offset-boundary-refinement0",
+  "publicVersion": "1.0.0-pskernel.77",
+  "baseline": "proofscript-v1-ka73-defeq-sorry-boundary-audit0",
+  "releaseKind": "strict-lean4lean-bridge",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanUnblocked": true,
+  "baselineObligations": 219,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA74",
+        "source": "assurance/ka74/executable-defeq-nat-offset-boundary-refinement-bridge.lean",
+        "destination": "PSKernelKA74ExecutableDefEqNatOffsetBoundaryRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 2,
+        "dependencyBuildStatus": "passed",
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka74-executable-defeq-nat-offset-boundary-refinement0",
+    "publicVersion": "1.0.0-pskernel.77",
+    "featureSurfaceBridgeProgressPercent": 88,
+    "executableKernelEquivalenceProofProgressPercent": 55,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 221,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 219,
+      "newFormalLean4LeanBridgeObligations": 2,
+      "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+      "countedNewObligations": [
+        "translated_isNatZero_wf",
+        "translated_isNatSuccOf_wf"
+      ]
+    },
+    "metricPolicy": "KA74 advances the exact formal obligation counter after KA73 sorry-boundary correction; dashboard percentages remain conservative and unchanged pending the next broader coverage audit.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka74Files": [
+      {
+        "path": "tools/pskernel-ka74-executable-defeq-nat-offset-boundary-refinement-tests.ts",
+        "lines": 34,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka74-executable-defeq-nat-offset-boundary-refinement.ts",
+        "lines": 123,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka74/KA74_EXECUTABLE_DEFEQ_NAT_OFFSET_BOUNDARY_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 28,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka74/KA74_EXECUTABLE_DEFEQ_NAT_OFFSET_BOUNDARY_REFINEMENT_RELEASE_GATE.json",
+        "lines": 139,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka74/KA74_EXECUTABLE_DEFEQ_NAT_OFFSET_BOUNDARY_REFINEMENT_REPORT.md",
+        "lines": 35,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka74/KA74_EXECUTABLE_DEFEQ_NAT_OFFSET_BOUNDARY_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 33,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka74/KA74_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 20,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka74/KA74_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka74/executable-defeq-nat-offset-boundary-refinement-bridge.lean",
+        "lines": 25,
+        "ext": ".lean"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-09-20-pskernel-ka74-nat-offset-boundary-refinement.md",
+        "lines": 11,
+        "ext": ".md"
+      }
+    ],
+    "ka74ToolFiles": [
+      {
+        "path": "tools/pskernel-ka74-executable-defeq-nat-offset-boundary-refinement-tests.ts",
+        "lines": 34,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka74-executable-defeq-nat-offset-boundary-refinement.ts",
+        "lines": 123,
+        "ext": ".ts"
+      }
+    ],
+    "newKA74OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWHNFDefEqRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

@@ -1,0 +1,180 @@
+{
+  "checkpoint": "proofscript-v1-ka84-primitive-condition-reflection-refinement0",
+  "publicVersion": "1.0.0-pskernel.87",
+  "baseline": "proofscript-v1-ka83-primitive-type-translation-refinement0",
+  "releaseKind": "strict-lean4lean-primitive-condition-reflection-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA84",
+      "source": "assurance/ka84/primitive-condition-reflection-refinement-bridge.lean",
+      "destination": "PSKernelKA84PrimitiveConditionReflectionRefinementBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 8,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka84-primitive-condition-reflection-refinement0",
+    "publicVersion": "1.0.0-pskernel.87",
+    "featureSurfaceBridgeProgressPercent": 95,
+    "executableKernelEquivalenceProofProgressPercent": 62,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 263,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 255,
+      "newFormalLean4LeanBridgeObligations": 8,
+      "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+      "correctedFormalLean4LeanBridgeObligations": 263,
+      "countedNewObligations": [
+        "translated_boolProp_wf",
+        "translated_propBoolProp_wf",
+        "translated_boolNat3_wf",
+        "translated_natNatProp_wf",
+        "translated_natLE_apply_wf",
+        "translated_natEq_apply_wf",
+        "translated_natLE_apply_zero_wf",
+        "translated_natEq_apply_zero_wf"
+      ]
+    },
+    "metricPolicy": "KA84 adds direct non-sorry-backed primitive condition/reflection type and literal-computation bridge wrappers. Percentages remain conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka84Files": [
+      {
+        "path": "tools/pskernel-ka84-primitive-condition-reflection-refinement-tests.ts",
+        "lines": 42,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka84-primitive-condition-reflection-refinement.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka84/KA84_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 27,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka84/KA84_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka84/KA84_PRIMITIVE_CONDITION_REFLECTION_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 42,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka84/KA84_PRIMITIVE_CONDITION_REFLECTION_REFINEMENT_RELEASE_GATE.json",
+        "lines": 135,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka84/KA84_PRIMITIVE_CONDITION_REFLECTION_REFINEMENT_REPORT.md",
+        "lines": 25,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka84/KA84_PRIMITIVE_CONDITION_REFLECTION_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 24,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka84/primitive-condition-reflection-refinement-bridge.lean",
+        "lines": 76,
+        "ext": ".lean"
+      }
+    ],
+    "ka84ToolFiles": [
+      {
+        "path": "tools/pskernel-ka84-primitive-condition-reflection-refinement-tests.ts",
+        "lines": 42,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka84-primitive-condition-reflection-refinement.ts",
+        "lines": 39,
+        "ext": ".ts"
+      }
+    ],
+    "newKA84OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveConditionReflectionRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false,
+  "boundedReleaseVerification": {
+    "passed": [
+      "npm install --offline --no-audit --no-fund",
+      "npm run build -- --pretty false",
+      "npm run test:pskernel:ka84",
+      "npm run assurance:ka84",
+      "npm run lean:ka84:check",
+      "npm run test:kernel:smoke",
+      "npm run test:standalone-small",
+      "npm run test:psc:kernel-status",
+      "npm run test:psc:conformance-bounded",
+      "npm run arena:corpus-preflight",
+      "npm run test:arena:static-nonperf",
+      "npm run test:arena:tutorial",
+      "npm run verify:arena",
+      "npm pack --workspaces --ignore-scripts",
+      "sha256sum -c package SHA manifest"
+    ],
+    "notCountedAsPassed": []
+  },
+  "npmPackages": {
+    "packed": 36,
+    "sha256Entries": 36,
+    "verification": "passed"
+  },
+  "arenaEvidence": {
+    "corpusPreflight": "passed",
+    "ndjsonFixtures": 190,
+    "staticNonPerf": "26/26 decisive",
+    "tutorial": "140/140 decisive",
+    "verifyArenaWrapper": "passed"
+  },
+  "noWrapperTimeoutCountedAsPassed": true,
+  "freshExtract": {
+    "initialResidue": {
+      "node_modules": 0,
+      "dist": 0,
+      "tsbuildinfo": 0,
+      "tgz": 0,
+      "zip": 0
+    },
+    "install": "passed",
+    "build": "passed",
+    "focusedGate": "passed",
+    "strictLeanCheck": "passed"
+  }
+}

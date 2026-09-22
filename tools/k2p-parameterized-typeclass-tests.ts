@@ -1,0 +1,24 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+import {spawnSync} from "node:child_process";
+import {fileURLToPath} from "node:url";
+import {TypeclassEnvironment} from "../packages/typeclass/dist/index.js";
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
+const cli=path.join(root,"packages/cli/dist/cli.js");
+const out=path.join(root,"artifacts/test/k2p-parameterized-typeclasses.pscore.json");
+const lean=path.join(root,"artifacts/test/k2p-parameterized-typeclasses.lean");
+function run(args,expect=0){const r=spawnSync(process.execPath,[cli,...args],{cwd:root,encoding:"utf8"});if(r.status!==expect){console.error(r.stdout,r.stderr);throw new Error(`${args.join(" ")} expected ${expect}, got ${r.status}`);}return r;}
+run(["check","tests/conformance/positive/k2p-parameterized-typeclasses.ps","--std","--emit-core",out]);
+const artifact=JSON.parse(fs.readFileSync(out,"utf8"));
+assert.equal(artifact.formatVersion,12);assert.equal(artifact.implementationProfile,"K3c-section-vars0");
+assert.equal(artifact.typeclasses.classes.length,1);const cls=artifact.typeclasses.classes[0];assert.equal(cls.name,"Default");assert.equal(cls.numParams,1);assert.deepEqual(cls.params,[{name:"A",binderInfo:"explicit"}]);
+const env=new TypeclassEnvironment(artifact.typeclasses);assert.deepEqual(env.candidates("Default").map(x=>x.name),["boolDefault","natDefaultLater","natDefaultHigh"]);
+const nat=artifact.declarations.find(d=>d.name==="automaticNatDefault");const bool=artifact.declarations.find(d=>d.name==="automaticBoolDefault");assert(nat&&nat.kind==="definition");assert(bool&&bool.kind==="definition");
+assert.match(JSON.stringify(nat.value),/natDefaultLater/);assert.doesNotMatch(JSON.stringify(nat.value),/boolDefault/);assert.match(JSON.stringify(bool.value),/boolDefault/);
+run(["verify",out]);run(["emit-lean",out,"--std","--out",lean]);const lt=fs.readFileSync(lean,"utf8");assert.match(lt,/class Default \(A : Type\) where/);assert.match(lt,/value : A/);assert.match(lt,/@_root_\.getNatDefault _root_\.natDefaultLater/);assert.match(lt,/@_root_\.getBoolDefault _root_\.boolDefault/);
+const missing=run(["check","tests/conformance/negative/k2p-parameterized-instance-missing.ps","--std"],1);assert.match(missing.stderr,/failed to synthesize instance for Default/);
+run(["check","tests/conformance/negative/k2p-instance-target-arity.ps","--std"],1);
+run(["check","tests/conformance/negative/k2p-class-method-sugar-deferred.ps","--std"],2);
+const tampered=structuredClone(artifact);tampered.typeclasses.classes[0].params[0].binderInfo="implicit";const bad=path.join(root,"artifacts/test/k2p-typeclass-tampered.pscore.json");fs.writeFileSync(bad,JSON.stringify(tampered,null,2));run(["verify",bad],1);
+console.log("✓ K2p parameterized class metadata, recursor-backed projection, concrete instance registration/search, parameter-sensitive candidate matching, v10 replay, tamper rejection, and Lean reconstruction passed");

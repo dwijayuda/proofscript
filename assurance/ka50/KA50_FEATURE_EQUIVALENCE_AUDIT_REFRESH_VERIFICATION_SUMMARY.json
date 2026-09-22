@@ -1,0 +1,77 @@
+{
+  "checkpoint": "proofscript-v1-ka50-feature-equivalence-audit-refresh0",
+  "publicVersion": "1.0.0-pskernel.53",
+  "baseline": "proofscript-v1-ka49-checker-pipeline-end-to-end-theorem-skeleton-preflight0",
+  "commands": {
+    "focusedTest": "passed",
+    "assuranceKA50": "passed",
+    "leanKA50Check": "passed",
+    "install": "passed",
+    "build": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "pscConformanceBounded": "passed",
+    "arenaCorpusPreflight": "passed",
+    "arenaStaticNonperf": "passed",
+    "arenaTutorial": "passed",
+    "verifyArena": "passed",
+    "npmPackWorkspaces": "passed",
+    "packageSha256Manifest": "passed"
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA46",
+        "source": "assurance/ka46/projection-reduction-refinement-bridge.lean",
+        "destination": "PSKernelKA46ProjectionReductionRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "stdoutTail": "",
+        "stderrTail": ""
+      },
+      {
+        "ka": "KA47",
+        "source": "assurance/ka47/executable-expression-translator-refinement-bridge.lean",
+        "destination": "PSKernelKA47ExecutableExpressionTranslatorRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": false,
+        "obligations": 0,
+        "stdoutTail": "",
+        "stderrTail": ""
+      },
+      {
+        "ka": "KA48",
+        "source": "assurance/ka48/executable-whnf-defeq-refinement-bridge.lean",
+        "destination": "PSKernelKA48ExecutableWhnfDefEqRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": false,
+        "obligations": 0,
+        "stdoutTail": "",
+        "stderrTail": ""
+      },
+      {
+        "ka": "KA49",
+        "source": "assurance/ka49/checker-pipeline-end-to-end-theorem-skeleton.lean",
+        "destination": "PSKernelKA49CheckerPipelineEndToEndTheoremSkeleton.lean",
+        "status": "passed",
+        "proofBearing": false,
+        "obligations": 0,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA50 gate tool absent before implementation",
+  "npmPackages": {
+    "packed": 36,
+    "sha256Entries": 36,
+    "verification": "passed"
+  }
+}

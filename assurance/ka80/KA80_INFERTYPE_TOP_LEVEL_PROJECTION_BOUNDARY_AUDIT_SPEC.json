@@ -1,0 +1,62 @@
+{
+  "checkpoint": "proofscript-v1-ka80-infertype-top-level-projection-boundary-audit0",
+  "publicVersion": "1.0.0-pskernel.83",
+  "baseline": "proofscript-v1-ka79-executable-infer-loop-refinement0",
+  "referenceKind": "infertype-top-level-projection-boundary-audit-only",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedNewFormalObligations": 0,
+  "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+  "correctedFormalLean4LeanBridgeObligations": 237,
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "dependencyBoundaryPolicy": "do-not-count-top-level-theorems-that-route-through-demoted-direct-sorry-backed-boundaries",
+  "auditFindings": {
+    "rootBlockedDependency": {
+      "name": "translated_inferProj_wf",
+      "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.inferProj.WF",
+      "sourceFile": "Lean4Lean/Verify/TypeChecker/InferType.lean",
+      "status": "demoted-in-KA78",
+      "reason": "upstream_theorem_body_contains_sorry"
+    },
+    "blockedTopLevelInferTypeObligations": [
+      {
+        "name": "translated_inferType_prime_wf",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.inferType'.WF",
+        "sourceFile": "Lean4Lean/Verify/TypeChecker/InferType.lean",
+        "status": "blocked-not-counted",
+        "reason": "theorem body contains a projection branch that calls inferProj.WF, which KA78 demoted as direct-sorry-backed"
+      },
+      {
+        "name": "translated_inferType_wf",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.inferType.WF",
+        "sourceFile": "Lean4Lean/Verify/TypeChecker/Basic.lean",
+        "status": "blocked-not-counted",
+        "reason": "wrapper depends on the state-field/top-level inferType proof surface; do not count until inferType'.WF projection boundary is repaired"
+      },
+      {
+        "name": "translated_checkType_wf",
+        "upstreamTheorem": "Lean4Lean.TypeChecker.Inner.checkType.WF",
+        "sourceFile": "Lean4Lean/Verify/TypeChecker/Basic.lean",
+        "status": "blocked-not-counted",
+        "reason": "wrapper over inferType.WF'; do not count until the top-level InferType projection boundary is repaired"
+      }
+    ],
+    "stillCountedInferSlices": [
+      "KA75 executable Infer atomic refinement",
+      "KA76 executable Infer constant/literal refinement",
+      "KA77 executable Infer structural refinement",
+      "KA79 executable Infer loop refinement"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableInferTypeRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

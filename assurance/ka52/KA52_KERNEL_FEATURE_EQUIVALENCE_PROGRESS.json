@@ -1,0 +1,40 @@
+{
+  "checkpoint": "proofscript-v1-ka52-executable-expression-translator-binder-refinement0",
+  "publicVersion": "1.0.0-pskernel.55",
+  "featureSurfaceBridgeProgressPercent": 74,
+  "executableKernelEquivalenceProofProgressPercent": 39,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 143,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 140,
+    "newFormalLean4LeanBridgeObligations": 3,
+    "countedNewObligations": [
+      "translated_trExprS_lam_binder_constructor_wf",
+      "translated_trExprS_forall_binder_constructor_wf",
+      "translated_trExprS_let_binder_constructor_wf"
+    ]
+  },
+  "groups": [
+    {
+      "id": "expression-tags",
+      "progressPercent": 72,
+      "status": "TrExprS constructor and binder bridge strict-checked for bvar/sort/const/app/lam/forallE/letE; full executable translator incomplete"
+    },
+    {
+      "id": "typechecker-whnf-defeq",
+      "progressPercent": 53,
+      "status": "WHNF/DefEq surface strict-checked; executable checker refinement incomplete"
+    },
+    {
+      "id": "end-to-end-refinement-spine",
+      "progressPercent": 35,
+      "status": "checker pipeline skeleton strict-checked; no end-to-end theorem yet"
+    },
+    {
+      "id": "architecture-health",
+      "progressPercent": 86,
+      "status": "no-spaghetti ratchet plus KA52 semantic-package touch guard"
+    }
+  ],
+  "notAFormalEquivalenceClaim": true
+}

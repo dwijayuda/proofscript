@@ -1,0 +1,64 @@
+inductive Box(A: Type): Type {
+  | mk(x: A);
+}
+
+class Marker(A: Type) {
+  tag: Nat;
+}
+
+instance natMarker: Marker(Nat) := {
+  tag := 3
+};
+
+instance boxMarker {A: Type} [m: Marker(A)]: Marker(Box(A)) := {
+  tag := @Marker.tag(A, m)
+};
+
+def getBoxTag[m: Marker(Box(Nat))](n: Nat): Nat := {
+  @Marker.tag(Box(Nat), m)
+}
+
+def automaticBoxTag: Nat := {
+  getBoxTag(0)
+}
+
+class Choose(A: Type) {
+  choose(x: A, y: A): A;
+}
+
+instance natChoose: Choose(Nat) := {
+  choose := fun (x: Nat) (y: Nat) => x
+};
+
+def pick{A: Type}[c: Choose(A)](x: A, y: A): A := {
+  Choose.choose(x, y)
+}
+
+def picked: Nat := {
+  pick(2, 3)
+}
+
+def pickedAgain: Nat := {
+  pick(7, 9)
+}
+
+class HasA(A: Type) {
+  a(x: A): A;
+}
+
+class HasBoth(A: Type) extends HasA(A) {
+  b(x: A): A;
+}
+
+instance natBoth: HasBoth(Nat) := {
+  a := fun (x: Nat) => x,
+  b := fun (x: Nat) => x
+};
+
+def useA{A: Type}[h: HasA(A)](x: A): A := {
+  HasA.a(x)
+}
+
+def inherited: Nat := {
+  useA(4)
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka29-quot-env-aggregate-bridge0",
+  "publicVersion": "1.0.0-pskernel.32",
+  "baseline": "proofscript-v1-ka28-quot-env-defeq-preservation-bridge0",
+  "referenceKind": "direct-imported-lean4lean-quot-env-aggregate-bridge",
+  "imports": [
+    "Lean4Lean.Theory.Typing.Env",
+    "Lean4Lean.Theory.Typing.QuotLemmas",
+    "PSKernelKA28QuotEnvDefEqPreservationBridge"
+  ],
+  "bridgedRelations": [
+    "Lean4Lean.VDecl.WF",
+    "Lean4Lean.VEnv.WF",
+    "Lean4Lean.VEnv.LE",
+    "Lean4Lean.VEnv.addQuot",
+    "Lean4Lean.VEnv.constants",
+    "Lean4Lean.VEnv.defeqs"
+  ],
+  "coveredPSDeclKinds": [
+    "quot"
+  ],
+  "conditionalBridgeLemmas": [
+    "PSKernelKA29.translated_quot_env_aggregate_bridge"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "quotientSemanticSoundness": false,
+    "formalLean4EquivalenceProvenObligations": 51
+  }
+}

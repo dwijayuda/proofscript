@@ -1,0 +1,26 @@
+{
+  "checkpoint": "proofscript-v1-ka84-primitive-condition-reflection-refinement0",
+  "publicVersion": "1.0.0-pskernel.87",
+  "featureSurfaceBridgeProgressPercent": 95,
+  "executableKernelEquivalenceProofProgressPercent": 62,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 263,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 255,
+    "newFormalLean4LeanBridgeObligations": 8,
+    "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+    "correctedFormalLean4LeanBridgeObligations": 263,
+    "countedNewObligations": [
+      "translated_boolProp_wf",
+      "translated_propBoolProp_wf",
+      "translated_boolNat3_wf",
+      "translated_natNatProp_wf",
+      "translated_natLE_apply_wf",
+      "translated_natEq_apply_wf",
+      "translated_natLE_apply_zero_wf",
+      "translated_natEq_apply_zero_wf"
+    ]
+  },
+  "metricPolicy": "KA84 adds direct non-sorry-backed primitive condition/reflection type and literal-computation bridge wrappers. Percentages remain conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

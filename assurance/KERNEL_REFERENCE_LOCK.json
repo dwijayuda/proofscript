@@ -1,0 +1,21 @@
+{
+  "schema": "proofscript-kernel-reference-lock/v1",
+  "oracle": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "portedSource": {
+    "archive": "pskernel-master(1).zip",
+    "archiveSha256": "295a1f4b23f39be73a27a7617c3fe1c6787892ff799607213b913419819f7383",
+    "toolchain": "leanprover/lean4:v4.33.0-rc2",
+    "files": {
+      "PSKernel/TypeChecker.lean": "32a426fb2cd092d2cc973866ac91adb44b3b91c463891b78c21d95c864fbf808",
+      "PSKernel/Level.lean": "80307669b5ed2e8e7ff00dadd25f4b514cbec1914cff69412ed11967b8e86934",
+      "PSKernel/EquivManager.lean": "d99076acb5b384936133d8c6e28879953cacc31b749b6e6cd938809f00e40aa1",
+      "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "lean-toolchain": "0d3c76ccd8772d8bcbe207241421a760312b71a6aa82f84194391fdf5cb026d6"
+    }
+  },
+  "relationship": "The supplied pskernel source and the native Lean oracle have distinct identities. Neither source similarity nor finite comparison proves version-wide equivalence.",
+  "formalEquivalence": "not-proven"
+}

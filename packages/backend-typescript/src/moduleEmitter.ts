@@ -1,0 +1,188 @@
+import crypto from "node:crypto";
+import path from "node:path";
+import type { CoreArtifact, CoreDeclaration } from "@proofscript/kernel";
+import {
+  PSC1_FAIL_CLOSED_FEATURES,
+  PSC1_IMPLEMENTATION_PROFILE,
+  PSC1_SUPPORTED_FEATURES,
+  PSC1_TRUST_LABEL,
+  psc1RuntimeSource,
+  psc1RuntimeTypeScriptSource,
+} from "@proofscript/runtime";
+import {
+  collectConstructors,
+  collectSimpleProjections,
+  collectSimpleRecursors,
+  isNonExecutableDeclaration,
+  userDeclarations,
+} from "./declarationAnalysis";
+import { buildSanitizedNameMap } from "./names";
+import { emitTerm, flattenPi } from "./termEmitter";
+import type {
+  EmitContext,
+  EmitJavaScriptOptions,
+  EmitJavaScriptResult,
+  EmitTypeScriptResult,
+  EmittedJavaScriptDeclaration,
+  SkippedJavaScriptDeclaration,
+} from "./types";
+
+function sha256Text(text: string): string {
+  return crypto.createHash("sha256").update(text).digest("hex");
+}
+
+function buildEmitContext(decls: readonly CoreDeclaration[], targetName: "JavaScript" | "TypeScript"): EmitContext {
+  return {
+    nameMap: buildSanitizedNameMap(decls, targetName),
+    constructors: collectConstructors(decls),
+    projections: collectSimpleProjections(decls),
+    recursors: collectSimpleRecursors(decls),
+  };
+}
+
+function collectExecutableDeclarations(
+  decls: readonly CoreDeclaration[],
+  ctx: EmitContext,
+  targetName: "JavaScript" | "TypeScript",
+): { emitted: EmittedJavaScriptDeclaration[]; skipped: SkippedJavaScriptDeclaration[] } {
+  const emitted: EmittedJavaScriptDeclaration[] = [];
+  const skipped: SkippedJavaScriptDeclaration[] = [];
+  for (const decl of decls) {
+    if (isNonExecutableDeclaration(decl)) {
+      skipped.push({ name: decl.name, kind: decl.kind, reason: "non-executable declaration" });
+      continue;
+    }
+    if ((decl.kind !== "definition" && decl.kind !== "opaque") || !decl.value) {
+      skipped.push({ name: decl.name, kind: decl.kind, reason: `unsupported declaration kind for ${targetName === "JavaScript" ? "JS" : "TypeScript"} emission` });
+      continue;
+    }
+    if (decl.levelParams?.length) throw new Error(`unsupported executable declaration '${decl.name}': polymorphic ${targetName} emission is not live yet`);
+    const jsName = ctx.nameMap.get(decl.name);
+    if (!jsName) throw new Error(`internal emitter error: missing ${targetName} name for '${decl.name}'`);
+    const typeShape = flattenPi(decl.type);
+    emitted.push({
+      name: decl.name,
+      jsName,
+      kind: decl.kind,
+      arity: typeShape.domains.length,
+      expr: "",
+    });
+  }
+  return { emitted, skipped };
+}
+
+function executableExpression(decl: CoreDeclaration, ctx: EmitContext, target: "js" | "ts"): string {
+  const projection = ctx.projections.get(decl.name);
+  if (projection) {
+    const selfProjection = target === "ts"
+      ? `((x0: PsValue): PsValue => __ps.Struct_proj(x0)(${projection.fieldIndex}))`
+      : `((x0) => __ps.Struct_proj(x0)(${projection.fieldIndex}))`;
+    let expr = selfProjection;
+    for (let i = 0; i < projection.paramArity; i++) expr = target === "ts" ? `((_erased${i}: PsValue): PsValue => ${expr})` : `((_erased${i}) => ${expr})`;
+    return expr;
+  }
+  if ((decl.kind !== "definition" && decl.kind !== "opaque") || !decl.value) {
+    throw new Error(`internal emitter error: executable declaration '${decl.name}' has no value`);
+  }
+  return emitTerm(decl.value, [], ctx, target);
+}
+
+
+function runtimeTypeScriptModuleSource(manifest: Parameters<typeof psc1RuntimeTypeScriptSource>[0]): string {
+  return psc1RuntimeTypeScriptSource(manifest).replace(/^const __ps =/m, "export const __ps =");
+}
+
+function normalizedRuntimeMode(value: EmitJavaScriptOptions["runtimeMode"]): "bundled" | "local" | "package" {
+  return value ?? "bundled";
+}
+
+export function emitJavaScriptModule(artifact: CoreArtifact, options: EmitJavaScriptOptions = {}): EmitJavaScriptResult {
+  const executableDecls = userDeclarations(artifact, options.userDeclarationOffset ?? 0);
+  // Build metadata from the whole checked artifact, including the checked prelude,
+  // while emitting only source/user declarations. This lets executable user code
+  // call checked bootstrap constructors such as Option.none/Option.some without
+  // re-declaring them in every source file.
+  const ctx = buildEmitContext(artifact.declarations, "JavaScript");
+  const { emitted, skipped } = collectExecutableDeclarations(executableDecls, ctx, "JavaScript");
+  for (const item of emitted) {
+    const decl = executableDecls.find(candidate => candidate.name === item.name);
+    if (!decl) throw new Error(`internal emitter error: missing declaration '${item.name}'`);
+    item.expr = executableExpression(decl, ctx, "js");
+  }
+
+  const sourceName = options.sourceFile ? path.basename(options.sourceFile) : "<memory>";
+  const sourceSha256 = sha256Text(options.sourceText ?? "");
+  const lines: string[] = [];
+  lines.push("'use strict';");
+  lines.push("// Generated by ProofScript PSC-1 standalone backend.");
+  lines.push(`// Source: ${sourceName}`);
+  lines.push(`// Trust: ${PSC1_TRUST_LABEL}`);
+  lines.push("// Runtime: Nat/Int are encoded as BigInt for this executable smoke subset.");
+  lines.push(psc1RuntimeSource({
+    implementationProfile: PSC1_IMPLEMENTATION_PROFILE,
+    trustLabel: PSC1_TRUST_LABEL,
+    supported: PSC1_SUPPORTED_FEATURES,
+    failClosed: PSC1_FAIL_CLOSED_FEATURES,
+    sourceSha256,
+  }));
+  for (const item of emitted) lines.push(`const ${item.jsName} = ${item.expr};`);
+  lines.push("module.exports = Object.freeze({");
+  lines.push("  __proofscript,");
+  for (const item of emitted) lines.push(`  ${JSON.stringify(item.name)}: ${item.jsName},`);
+  lines.push("});");
+  lines.push("if (require.main === module) {");
+  lines.push("  const printable = {}; for (const [k,v] of Object.entries(module.exports)) if (k !== '__proofscript') printable[k] = typeof v === 'bigint' ? v.toString() : `[function:${k}]`; console.log(JSON.stringify({ status: 'ok', exports: printable, trust: __proofscript.trustLabel }, null, 2));");
+  lines.push("}");
+  return { js: `${lines.join("\n")}\n`, emitted, skipped };
+}
+
+export function emitTypeScriptModule(artifact: CoreArtifact, options: EmitJavaScriptOptions = {}): EmitTypeScriptResult {
+  const executableDecls = userDeclarations(artifact, options.userDeclarationOffset ?? 0);
+  // Build metadata from the whole checked artifact, including the checked prelude,
+  // while emitting only source/user declarations. This keeps runtime constructor
+  // metadata available for standard-library values such as Option.
+  const ctx = buildEmitContext(artifact.declarations, "TypeScript");
+  const { emitted, skipped } = collectExecutableDeclarations(executableDecls, ctx, "TypeScript");
+  for (const item of emitted) {
+    const decl = executableDecls.find(candidate => candidate.name === item.name);
+    if (!decl) throw new Error(`internal emitter error: missing declaration '${item.name}'`);
+    item.expr = executableExpression(decl, ctx, "ts");
+  }
+
+  const sourceName = options.sourceFile ? path.basename(options.sourceFile) : "<memory>";
+  const sourceSha256 = sha256Text(options.sourceText ?? "");
+  const runtimeMode = normalizedRuntimeMode(options.runtimeMode);
+  const runtimeImport = runtimeMode === "package" ? "@proofscript/runtime" : (options.runtimeImportPath ?? "./proofscript-runtime.js");
+  const manifest = {
+    implementationProfile: PSC1_IMPLEMENTATION_PROFILE,
+    trustLabel: PSC1_TRUST_LABEL,
+    supported: PSC1_SUPPORTED_FEATURES,
+    failClosed: PSC1_FAIL_CLOSED_FEATURES,
+    sourceSha256,
+  };
+  const lines: string[] = [];
+  lines.push("// Generated by ProofScript PSC-1 TypeScript backend.");
+  lines.push(`// Source: ${sourceName}`);
+  lines.push(`// Trust: ${PSC1_TRUST_LABEL}`);
+  lines.push("// Runtime: Nat/Int are encoded as BigInt for this executable smoke subset.");
+  if (runtimeMode === "bundled") {
+    lines.push(psc1RuntimeTypeScriptSource(manifest));
+  } else {
+    lines.push(`import { __ps, __proofscript } from ${JSON.stringify(runtimeImport)};`);
+    lines.push(`import type { PsValue } from ${JSON.stringify(runtimeImport)};`);
+  }
+  for (const item of emitted) lines.push(`export const ${item.jsName}: PsValue = ${item.expr};`);
+  lines.push("const __default = Object.freeze({");
+  lines.push("  __proofscript,");
+  for (const item of emitted) lines.push(`  ${JSON.stringify(item.name)}: ${item.jsName},`);
+  lines.push("});");
+  lines.push("export default __default;");
+  return {
+    ts: `${lines.join("\n")}\n`,
+    emitted,
+    skipped,
+    runtimeMode,
+    runtimeTs: runtimeMode === "local" ? `${runtimeTypeScriptModuleSource(manifest)}\n` : undefined,
+    runtimeImport: runtimeMode === "bundled" ? undefined : runtimeImport,
+  };
+}

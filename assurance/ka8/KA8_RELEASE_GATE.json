@@ -1,0 +1,33 @@
+{
+  "checkpoint": "proofscript-v1-ka8-lean4lean-source-intake0",
+  "publicVersion": "1.0.0-pskernel.10",
+  "createdAtUtc": "2026-09-18T06:35:00Z",
+  "baseline": "proofscript-v1-ka7-real-lean4lean-import0",
+  "targetLeanVersion": "4.33.1",
+  "coreFormat": 71,
+  "kernel": {
+    "name": "PSKernel",
+    "defaultProfile": "KERNEL-level-instantiation-conformance1",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "ka8": {
+    "stableIntakeRoot": "/mnt/data/lean4lean-intake",
+    "archiveIntakeSupported": true,
+    "actualLean4LeanSourcePresentAtRelease": false,
+    "actualLean4LeanImportBound": false,
+    "strictActualImportPassed": false,
+    "blockedReasonAtRelease": "lean4lean_source_missing",
+    "closedByKA8": 5,
+    "stillOpenObligations": 8
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0
+  }
+}

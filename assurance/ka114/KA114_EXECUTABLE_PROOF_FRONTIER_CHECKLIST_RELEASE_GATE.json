@@ -1,0 +1,265 @@
+{
+  "checkpoint": "proofscript-v1-ka114-executable-proof-frontier-checklist0",
+  "publicVersion": "1.0.0-pskernel.117",
+  "baseline": "proofscript-v1-ka113-executable-obligation-ledger0",
+  "releaseKind": "executable-proof-frontier-checklist-audit",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA114",
+      "source": "assurance/ka114/executable-proof-frontier-checklist-bridge.lean",
+      "destination": "KA114ExecutableProofFrontierChecklistBridge.lean",
+      "status": "passed",
+      "proofBearing": false,
+      "obligations": 0,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "progress": {
+    "checkpoint": "proofscript-v1-ka114-executable-proof-frontier-checklist0",
+    "publicVersion": "1.0.0-pskernel.117",
+    "baseline": "proofscript-v1-ka113-executable-obligation-ledger0",
+    "metrics": {
+      "featureSurfaceBridgeProgressPercent": 100,
+      "executableKernelEquivalenceProofProgressPercent": 90,
+      "executableKernelEquivalencePreviousPercent": 89,
+      "executableKernelEquivalenceDeltaPercent": 1,
+      "arenaCorpusRegressionPercent": 100,
+      "releasePackagingVerificationPercent": 100,
+      "executableProofFrontierChecklistPercent": 100,
+      "formalLean4LeanBridgeObligations": 366,
+      "newFormalLean4LeanBridgeObligations": 0,
+      "fullLean4EquivalencePercent": 0,
+      "fullyFormalK3Percent": 0,
+      "overallConservativeProjectProgressPercent": 82,
+      "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+    },
+    "phaseStatus": {
+      "featureSurfaceBridge": "closed",
+      "executableEquivalence": "active-frontier-checklisted",
+      "fullLean4Equivalence": "not-proven",
+      "fullyFormalK3": "not-proven",
+      "claimBoundary": "enforced"
+    },
+    "frontierChecklist": {
+      "checklistPercent": 100,
+      "rows": [
+        {
+          "id": "frontier-ledger-imported-from-ka113",
+          "status": "done",
+          "evidence": "KA113 ledger closed or tracked all buckets",
+          "done": true
+        },
+        {
+          "id": "remaining-proof-frontier-enumerated",
+          "status": "done",
+          "evidence": "remaining executable proof frontier is explicit",
+          "done": true
+        },
+        {
+          "id": "proof-vs-dashboard-boundary-recorded",
+          "status": "done",
+          "evidence": "dashboard progress does not imply executable refinement theorem",
+          "done": true
+        },
+        {
+          "id": "full-equivalence-boundary-recorded",
+          "status": "done",
+          "evidence": "full Lean4 equivalence remains 0%",
+          "done": true
+        },
+        {
+          "id": "formal-k3-boundary-recorded",
+          "status": "done",
+          "evidence": "fully formal K3 remains 0%",
+          "done": true
+        },
+        {
+          "id": "next-proof-targets-ranked",
+          "status": "done",
+          "evidence": "next work should prove theorem families rather than add feature wrappers",
+          "done": true
+        },
+        {
+          "id": "release-artifact-policy-retained",
+          "status": "done",
+          "evidence": "Core 71/cert 2 and trusted packages unchanged",
+          "done": true
+        }
+      ],
+      "counts": {
+        "total": 7,
+        "done": 7,
+        "missing": 0
+      },
+      "evidenceMeaning": "frontier checklist makes proof targets explicit; it is not an executable PSKernel refinement proof"
+    },
+    "percentBoundaries": {
+      "executableProgressIsDashboardEvidenceNotRefinementProof": true,
+      "checklistDoesNotProvePSKernelEquivalence": true,
+      "overallProgressIsDashboardEstimate": true
+    },
+    "claimBoundary": {
+      "fullLean4Equivalence": false,
+      "sameTheoryAsFullLean4": false,
+      "fullyFormalK3": false,
+      "executablePSKernelRefinementProof": false,
+      "trustedKernelSemanticChange": false,
+      "kernelCodecChange": false,
+      "coreFormatChanged": false,
+      "certificateFormatChanged": false
+    }
+  },
+  "frontierChecklist": {
+    "checklistPercent": 100,
+    "rows": [
+      {
+        "id": "frontier-ledger-imported-from-ka113",
+        "status": "done",
+        "evidence": "KA113 ledger closed or tracked all buckets",
+        "done": true
+      },
+      {
+        "id": "remaining-proof-frontier-enumerated",
+        "status": "done",
+        "evidence": "remaining executable proof frontier is explicit",
+        "done": true
+      },
+      {
+        "id": "proof-vs-dashboard-boundary-recorded",
+        "status": "done",
+        "evidence": "dashboard progress does not imply executable refinement theorem",
+        "done": true
+      },
+      {
+        "id": "full-equivalence-boundary-recorded",
+        "status": "done",
+        "evidence": "full Lean4 equivalence remains 0%",
+        "done": true
+      },
+      {
+        "id": "formal-k3-boundary-recorded",
+        "status": "done",
+        "evidence": "fully formal K3 remains 0%",
+        "done": true
+      },
+      {
+        "id": "next-proof-targets-ranked",
+        "status": "done",
+        "evidence": "next work should prove theorem families rather than add feature wrappers",
+        "done": true
+      },
+      {
+        "id": "release-artifact-policy-retained",
+        "status": "done",
+        "evidence": "Core 71/cert 2 and trusted packages unchanged",
+        "done": true
+      }
+    ],
+    "counts": {
+      "total": 7,
+      "done": 7,
+      "missing": 0
+    },
+    "evidenceMeaning": "frontier checklist makes proof targets explicit; it is not an executable PSKernel refinement proof"
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka114Files": [
+      {
+        "path": "tools/pskernel-ka114-executable-proof-frontier-checklist-tests.ts",
+        "lines": 47,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka114-executable-proof-frontier-checklist.ts",
+        "lines": 16,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka114/KA114_EXECUTABLE_PROOF_FRONTIER_CHECKLIST.json",
+        "lines": 96,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka114/KA114_EXECUTABLE_PROOF_FRONTIER_CHECKLIST_BRIDGE_SPEC.json",
+        "lines": 22,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka114/KA114_EXECUTABLE_PROOF_FRONTIER_CHECKLIST_RELEASE_GATE.json",
+        "lines": 266,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka114/KA114_EXECUTABLE_PROOF_FRONTIER_CHECKLIST_REPORT.md",
+        "lines": 19,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka114/KA114_EXECUTABLE_PROOF_FRONTIER_CHECKLIST_ROWS.json",
+        "lines": 54,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka114/KA114_EXECUTABLE_PROOF_FRONTIER_CHECKLIST_VERIFICATION_SUMMARY.json",
+        "lines": 12,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka114/KA114_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 18,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka114/KA114_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 15,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka114/executable-proof-frontier-checklist-bridge.lean",
+        "lines": 14,
+        "ext": ".lean"
+      }
+    ],
+    "ka114ToolFiles": [
+      {
+        "path": "tools/pskernel-ka114-executable-proof-frontier-checklist-tests.ts",
+        "lines": 47,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka114-executable-proof-frontier-checklist.ts",
+        "lines": 16,
+        "ext": ".ts"
+      }
+    ],
+    "newKA114OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

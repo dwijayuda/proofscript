@@ -1,0 +1,18 @@
+{
+  "schema": "proofscript.assurance.ka4.lean4lean-binding-plan/v1",
+  "checkpoint": "proofscript-v1-ka4-lean-toolchain-gate0",
+  "goal": "Replace the self-contained KA-4 reference model with a pinned Lean4Lean import after the Lean 4.33.1 gate is available.",
+  "steps": [
+    "Install or mount exact Lean 4.33.1 toolchain.",
+    "Run npm run lean:ka4:check and require a strict pass.",
+    "Vendor or reference a pinned Lean4Lean revision matching the target Lean version.",
+    "Introduce Lean namespaces that map PSKernel KA-2 translation outputs to Lean4Lean Expr/Level/Decl structures.",
+    "Prove non-inductive declaration translation soundness against Lean4Lean before opening inductive or quotient obligations."
+  ],
+  "blockedUntil": [
+    "lean executable available",
+    "Lean4Lean pinned dependency available",
+    "module import layout chosen"
+  ],
+  "doesNotChangeTrustedKernel": true
+}

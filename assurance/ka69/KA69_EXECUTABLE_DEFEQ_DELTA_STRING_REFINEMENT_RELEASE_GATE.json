@@ -1,0 +1,154 @@
+{
+  "checkpoint": "proofscript-v1-ka69-executable-defeq-delta-string-refinement0",
+  "publicVersion": "1.0.0-pskernel.72",
+  "baseline": "proofscript-v1-ka68-executable-defeq-proof-level-offset-refinement0",
+  "releaseKind": "strict-lean4lean-bridge-old-codebase-ignored",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanUnblocked": true,
+  "baselineObligations": 208,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA69",
+        "source": "assurance/ka69/executable-defeq-delta-string-refinement-bridge.lean",
+        "destination": "PSKernelKA69ExecutableDefEqDeltaStringRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "dependencyBuildStatus": "passed",
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka69-executable-defeq-delta-string-refinement0",
+    "publicVersion": "1.0.0-pskernel.72",
+    "featureSurfaceBridgeProgressPercent": 87,
+    "featureSurfaceBridgeProgressPolicy": "held pending audit",
+    "executableKernelEquivalenceProofProgressPercent": 53,
+    "executableKernelEquivalenceProofProgressPolicy": "held pending audit",
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 212,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 208,
+      "newFormalLean4LeanBridgeObligations": 4,
+      "countedNewObligations": [
+        "translated_tryUnfoldProjApp_wf",
+        "translated_lazyDeltaReductionStep_wf",
+        "translated_lazyDeltaReductionLoop_wf",
+        "translated_tryStringLitExpansion_wf"
+      ]
+    },
+    "metricPolicy": "KA69 advances the exact formal obligation counter only; percentage estimates remain held pending a separate coverage audit.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka69Files": [
+      {
+        "path": "tools/pskernel-ka69-executable-defeq-delta-string-refinement-tests.ts",
+        "lines": 36,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka69-executable-defeq-delta-string-refinement.ts",
+        "lines": 156,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka69/KA69_EXECUTABLE_DEFEQ_DELTA_STRING_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 46,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka69/KA69_EXECUTABLE_DEFEQ_DELTA_STRING_REFINEMENT_RELEASE_GATE.json",
+        "lines": 155,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka69/KA69_EXECUTABLE_DEFEQ_DELTA_STRING_REFINEMENT_REPORT.md",
+        "lines": 43,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka69/KA69_EXECUTABLE_DEFEQ_DELTA_STRING_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 48,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka69/KA69_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 23,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka69/KA69_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka69/executable-defeq-delta-string-refinement-bridge.lean",
+        "lines": 42,
+        "ext": ".lean"
+      }
+    ],
+    "ka69ToolFiles": [
+      {
+        "path": "tools/pskernel-ka69-executable-defeq-delta-string-refinement-tests.ts",
+        "lines": 36,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka69-executable-defeq-delta-string-refinement.ts",
+        "lines": 156,
+        "ext": ".ts"
+      }
+    ],
+    "newKA69OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "baselineArtifactAudit": {
+    "baselineZip": "/mnt/data/proofscript-v1-ka68-executable-defeq-proof-level-offset-refinement0.zip",
+    "baselineShaFile": "/mnt/data/proofscript-v1-ka68-executable-defeq-proof-level-offset-refinement0.zip.sha256",
+    "actualBaselineZipSha256": "03854cb76c75e2aa2b46923e4b1b4c5e4a0f68eb3d9229b7807b44560dd4ac31",
+    "externalShaFileSha256": "03854cb76c75e2aa2b46923e4b1b4c5e4a0f68eb3d9229b7807b44560dd4ac31",
+    "externalShaMatchesActual": true,
+    "internalKA68ReleaseGateSha256": "d305e40e28b9a6583774bea40a2221ab0b4db246871c7ee2269739a3db6efcbc",
+    "internalKA68VerificationSummarySha256": "d305e40e28b9a6583774bea40a2221ab0b4db246871c7ee2269739a3db6efcbc",
+    "internalSelfHashFieldsKnownStale": true,
+    "policy": "External .sha256 file is authoritative for ZIP integrity; KA69 avoids embedding a self ZIP hash inside the ZIP because that creates stale self-reference risk."
+  },
+  "oldCodebasePolicy": {
+    "oldCodebaseRegressionIgnoredByUser": true,
+    "fullNpmTestRequiredForThisCheckpoint": false,
+    "reason": "User requested continuation on the strict Lean4Lean KA lineage. KA69 changes only Lean4Lean bridge wrappers and release metadata; it does not touch trusted PSKernel semantics."
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWHNFDefEqRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false,
+  "externalSha256FileAuthoritative": true,
+  "selfZipSha256EmbeddedInsideZip": false
+}

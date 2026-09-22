@@ -1,0 +1,16 @@
+{
+  "checkpoint": "V71_K3TB_INDEPENDENT_AUDIT_PACK1",
+  "status": "PASS",
+  "progress": {
+    "percent": 99.5,
+    "basisPoints": 9950,
+    "kind": "engineering-track",
+    "note": "Independent audit packaging does not inflate the trusted-boundary K3 progress value."
+  },
+  "boundary": "INDEPENDENT_AUDIT_PACK_NOT_FULLY_FORMAL_K3",
+  "checkpointSha256": "e84dc0133c1bcca81ad55a82a1c96774798274b72fd8edc341899d45b85fa375",
+  "checkpointMarkdownSha256": "1668333d9905a53e83e6e3237c20fdb9c59e9ee182fece78fbc0d9e51162ed92",
+  "auditDocsHash": "9e1b411aea09fbe7770e759b5f82ba4b9b12464e550d56e34c1029b2670c09bb",
+  "checkpointLedgerHash": "23cb8991fe97816068fd8994f3ae82a5c1f4d2740eb1ea3d9ac563168e2d11e8",
+  "formalStackHash": "b9032b47bfd0eab1860921f8f90bce73f283f9cc5c50e3b25f5b1ba2b5ce9757"
+}

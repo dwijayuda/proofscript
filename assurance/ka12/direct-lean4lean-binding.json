@@ -1,0 +1,38 @@
+{
+  "checkpoint": "proofscript-v1-ka12-direct-lean4lean-binding0",
+  "publicVersion": "1.0.0-pskernel.14",
+  "baseline": "proofscript-v1-ka11-offline-lean4lean-deps0",
+  "bindingKind": "direct-imported-lean4lean-theory-types",
+  "imports": ["Lean4Lean.Theory.VDecl"],
+  "targets": {
+    "level": "Lean4Lean.VLevel",
+    "expr": "Lean4Lean.VExpr",
+    "decl": "Lean4Lean.VDecl",
+    "constVal": "Lean4Lean.VConstVal",
+    "defVal": "Lean4Lean.VDefVal"
+  },
+  "coveredPSDeclKinds": ["axiom", "definition", "theorem", "example", "opaque", "quot"],
+  "excludedPSDeclKinds": ["inductive", "mutualInductive"],
+  "blockedPSExprTags": ["letE", "lit", "proj", "fvar", "mvar"],
+  "closedByKA12": [
+    "direct-import-lean4lean-theory-module",
+    "pslevel-to-vlevel-shape",
+    "psexpr-to-vexpr-shape",
+    "psdecl-to-vdecl-noninductive-shape",
+    "mvar-and-fvar-blocking",
+    "metadata-erasure-shape",
+    "strict-lean4lean-theory-build-gate"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "coreFormatChanged": false,
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanTheoryImportChecked": true,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0
+  }
+}

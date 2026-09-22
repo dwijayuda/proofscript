@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka77-executable-infer-structural-refinement0",
+  "publicVersion": "1.0.0-pskernel.80",
+  "featureSurfaceBridgeProgressPercent": 91,
+  "executableKernelEquivalenceProofProgressPercent": 58,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 235,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 230,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+    "countedNewObligations": [
+      "translated_ensureForallCore_wf",
+      "translated_inferLambda_wf",
+      "translated_inferForall_wf",
+      "translated_inferApp_wf",
+      "translated_inferLet_wf"
+    ]
+  },
+  "metricPolicy": "KA77 extends InferType coverage with strict structural inference wrappers for ensure-forall, lambda, forall, application, and let inference. Percentages are conservative dashboard estimates and not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

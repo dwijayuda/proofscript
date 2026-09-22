@@ -1,0 +1,75 @@
+{
+  "checkpoint": "proofscript-v1-ka37-whnf-head-reduction-bridge0",
+  "publicVersion": "1.0.0-pskernel.40",
+  "baseline": "proofscript-v1-ka36-expression-tag-coverage-bridge0",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "directLean4LeanWHNFHeadReductionBridge": {
+    "referenceKind": "direct-imported-lean4lean-whnf-head-reduction-bridge",
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanWHNFHeadReductionBridgeChecked": true,
+    "strictWHNFHeadReductionBridgePassed": true,
+    "headReductionBuildStatus": 0,
+    "directBridgeCheckStatus": 0,
+    "coveredLean4LeanWHNFHeadReductionSurface": [
+      "WHNF.bvar",
+      "WHNF.lam",
+      "WHNF.sort",
+      "WHNF.forallE",
+      "WHRed.beta",
+      "WHRed.app",
+      "WHRedS.app",
+      "WHRedS.determ"
+    ],
+    "formalBridgeLemmas": [
+      "PSKernelKA37.translated_whnf_bvar_head_normal",
+      "PSKernelKA37.translated_whnf_lam_head_normal",
+      "PSKernelKA37.translated_whnf_sort_head_normal",
+      "PSKernelKA37.translated_whnf_forall_head_normal",
+      "PSKernelKA37.translated_whred_beta_step",
+      "PSKernelKA37.translated_whred_app_congruence",
+      "PSKernelKA37.translated_whreds_app_congruence",
+      "PSKernelKA37.translated_whreds_deterministic"
+    ],
+    "stillOpen": [
+      "end-to-end executable PSKernel WHNF refinement is not proven",
+      "recursor reduction/iota refinement is not proven",
+      "projection reduction refinement is not proven",
+      "quotient reduction refinement is not proven",
+      "WHNF cache/refinement relation to PSKernel runtime data structures is not proven",
+      "full Lean4 equivalence remains unproven"
+    ]
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullWHNFRecursorRefinement": false,
+    "formalLean4EquivalenceProvenObligations": 90
+  },
+  "blockedReasons": [],
+  "verificationSummary": {
+    "install": "passed",
+    "build": "passed",
+    "testPskernelKa37": "passed",
+    "assuranceKa37": "passed",
+    "leanKa37Check": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "pscConformanceBounded": "passed",
+    "arenaCorpusPreflight": "passed",
+    "arenaStaticNonperf": "passed",
+    "arenaTutorial": "passed",
+    "verifyArena": "passed",
+    "freshExtract": "passed",
+    "zipIntegrity": "passed"
+  }
+}

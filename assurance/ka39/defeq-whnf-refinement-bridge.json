@@ -1,0 +1,40 @@
+{
+  "checkpoint": "proofscript-v1-ka39-defeq-whnf-refinement-bridge0",
+  "publicVersion": "1.0.0-pskernel.42",
+  "baseline": "proofscript-v1-ka38-whnf-preservation-bridge0",
+  "referenceKind": "direct-imported-lean4lean-defeq-whnf-refinement-bridge",
+  "imports": [
+    "Lean4Lean.Theory.Typing.HeadReduction",
+    "Lean4Lean.Theory.Typing.Lemmas"
+  ],
+  "coveredLean4LeanDefEqSurface": [
+    "IsDefEq.hasType",
+    "IsDefEq.toU",
+    "IsDefEqU.refl",
+    "IsDefEqU.symm",
+    "IsDefEq.mono",
+    "IsDefEqU.mono",
+    "HasType.mono"
+  ],
+  "formalBridgeLemmas": [
+    "PSKernelKA39.translated_defeq_has_type_pair",
+    "PSKernelKA39.translated_defeq_to_untyped",
+    "PSKernelKA39.translated_defeq_untyped_refl",
+    "PSKernelKA39.translated_defeq_untyped_symm",
+    "PSKernelKA39.translated_defeq_mono_env",
+    "PSKernelKA39.translated_defeq_untyped_mono_env",
+    "PSKernelKA39.translated_has_type_mono_env"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "coreFormatChanged": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullDefEqWHNFRefinement": false,
+    "formalLean4EquivalenceProvenObligations": 103
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "checkpoint": "proofscript-v1-ka46-projection-reduction-refinement-preflight0",
+  "publicVersion": "1.0.0-pskernel.49",
+  "requiredCommands": [
+    {
+      "command": "npm install --offline --no-audit --no-fund",
+      "status": "passed"
+    },
+    {
+      "command": "npm run build -- --pretty false",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:pskernel:ka46",
+      "status": "passed"
+    },
+    {
+      "command": "npm run assurance:ka46",
+      "status": "blocked-not-counted"
+    },
+    {
+      "command": "npm run lean:ka46:check",
+      "status": "blocked-not-counted"
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "status": "pending"
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "status": "pending"
+    },
+    {
+      "command": "npm run test:psc:kernel-status",
+      "status": "pending"
+    },
+    {
+      "command": "npm run test:psc:conformance-bounded",
+      "status": "pending"
+    }
+  ],
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "sourceFileCount": 1684,
+    "ka46ToolFiles": [
+      {
+        "path": "tools/pskernel-ka46-projection-reduction-refinement-bridge.ts",
+        "lines": 130,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka46-projection-reduction-refinement-bridge-tests.ts",
+        "lines": 59,
+        "ext": ".ts"
+      }
+    ],
+    "newKA46OversizedFiles": [],
+    "semanticPackageTouched": false
+  },
+  "formalLeanCheckStatus": "blocked",
+  "blockedReasons": [
+    "external_dependency_fetch_failed_or_dependency_unavailable"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullProjectionReductionRefinement": false,
+    "formalLean4LeanBridgeObligations": 132
+  },
+  "finalFreshExtractSmoke": "passed-preflight-formal-blocked"
+}

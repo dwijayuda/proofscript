@@ -1,0 +1,265 @@
+{
+  "checkpoint": "proofscript-v1-ka119-executable-refinement-proof-readiness0",
+  "publicVersion": "1.0.0-pskernel.122",
+  "baseline": "proofscript-v1-ka118-executable-refinement-coverage-map0",
+  "releaseKind": "executable-refinement-proof-readiness-audit",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA119",
+      "source": "assurance/ka119/executable-refinement-proof-readiness-bridge.lean",
+      "destination": "KA119ExecutableRefinementProofReadinessBridge.lean",
+      "status": "passed",
+      "proofBearing": false,
+      "obligations": 0,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "progress": {
+    "checkpoint": "proofscript-v1-ka119-executable-refinement-proof-readiness0",
+    "publicVersion": "1.0.0-pskernel.122",
+    "baseline": "proofscript-v1-ka118-executable-refinement-coverage-map0",
+    "metrics": {
+      "featureSurfaceBridgeProgressPercent": 100,
+      "executableKernelEquivalenceProofProgressPercent": 95,
+      "executableKernelEquivalencePreviousPercent": 94,
+      "executableKernelEquivalenceDeltaPercent": 1,
+      "arenaCorpusRegressionPercent": 100,
+      "releasePackagingVerificationPercent": 100,
+      "executableRefinementProofReadinessPercent": 100,
+      "formalLean4LeanBridgeObligations": 366,
+      "newFormalLean4LeanBridgeObligations": 0,
+      "fullLean4EquivalencePercent": 0,
+      "fullyFormalK3Percent": 0,
+      "overallConservativeProjectProgressPercent": 83.5,
+      "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+    },
+    "phaseStatus": {
+      "featureSurfaceBridge": "closed",
+      "executableEquivalence": "active-proof-readiness-mapped",
+      "fullLean4Equivalence": "not-proven",
+      "fullyFormalK3": "not-proven",
+      "claimBoundary": "enforced"
+    },
+    "proofReadiness": {
+      "readinessPercent": 100,
+      "rows": [
+        {
+          "id": "proof-statement-inventory",
+          "status": "ready",
+          "evidence": "top-level executable refinement theorem skeleton inventory is available from KA115",
+          "ready": true
+        },
+        {
+          "id": "dependency-closure",
+          "status": "ready",
+          "evidence": "proof dependencies are closed/tracked by KA116",
+          "ready": true
+        },
+        {
+          "id": "module-index",
+          "status": "ready",
+          "evidence": "candidate proof modules are indexed by KA117",
+          "ready": true
+        },
+        {
+          "id": "coverage-map",
+          "status": "ready",
+          "evidence": "refinement evidence families are coverage-mapped by KA118",
+          "ready": true
+        },
+        {
+          "id": "claim-boundary",
+          "status": "ready",
+          "evidence": "full Lean4 equivalence, fully formal K3, and executable refinement proof remain explicitly unclaimed",
+          "ready": true
+        },
+        {
+          "id": "release-evidence",
+          "status": "ready",
+          "evidence": "release verification and package/fresh-extract gates are part of the readiness definition",
+          "ready": true
+        },
+        {
+          "id": "remaining-proof-gap",
+          "status": "ready",
+          "evidence": "remaining 5% is reserved for actual theorem discharge, not dashboard preparation",
+          "ready": true
+        }
+      ],
+      "counts": {
+        "total": 7,
+        "ready": 7,
+        "notReady": 0
+      },
+      "evidenceMeaning": "proof-readiness records that prerequisites for the final executable refinement theorem are organized; it is not the theorem itself"
+    },
+    "percentBoundaries": {
+      "executableProgressIsDashboardEvidenceNotRefinementProof": true,
+      "proofReadinessDoesNotProvePSKernelEquivalence": true,
+      "overallProgressIsDashboardEstimate": true
+    },
+    "claimBoundary": {
+      "fullLean4Equivalence": false,
+      "sameTheoryAsFullLean4": false,
+      "fullyFormalK3": false,
+      "executablePSKernelRefinementProof": false,
+      "trustedKernelSemanticChange": false,
+      "kernelCodecChange": false,
+      "coreFormatChanged": false,
+      "certificateFormatChanged": false
+    }
+  },
+  "proofReadiness": {
+    "readinessPercent": 100,
+    "rows": [
+      {
+        "id": "proof-statement-inventory",
+        "status": "ready",
+        "evidence": "top-level executable refinement theorem skeleton inventory is available from KA115",
+        "ready": true
+      },
+      {
+        "id": "dependency-closure",
+        "status": "ready",
+        "evidence": "proof dependencies are closed/tracked by KA116",
+        "ready": true
+      },
+      {
+        "id": "module-index",
+        "status": "ready",
+        "evidence": "candidate proof modules are indexed by KA117",
+        "ready": true
+      },
+      {
+        "id": "coverage-map",
+        "status": "ready",
+        "evidence": "refinement evidence families are coverage-mapped by KA118",
+        "ready": true
+      },
+      {
+        "id": "claim-boundary",
+        "status": "ready",
+        "evidence": "full Lean4 equivalence, fully formal K3, and executable refinement proof remain explicitly unclaimed",
+        "ready": true
+      },
+      {
+        "id": "release-evidence",
+        "status": "ready",
+        "evidence": "release verification and package/fresh-extract gates are part of the readiness definition",
+        "ready": true
+      },
+      {
+        "id": "remaining-proof-gap",
+        "status": "ready",
+        "evidence": "remaining 5% is reserved for actual theorem discharge, not dashboard preparation",
+        "ready": true
+      }
+    ],
+    "counts": {
+      "total": 7,
+      "ready": 7,
+      "notReady": 0
+    },
+    "evidenceMeaning": "proof-readiness records that prerequisites for the final executable refinement theorem are organized; it is not the theorem itself"
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka119Files": [
+      {
+        "path": "tools/pskernel-ka119-executable-refinement-proof-readiness-tests.ts",
+        "lines": 48,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka119-executable-refinement-proof-readiness.ts",
+        "lines": 16,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka119/KA119_EXECUTABLE_REFINEMENT_PROOF_READINESS.json",
+        "lines": 96,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka119/KA119_EXECUTABLE_REFINEMENT_PROOF_READINESS_BRIDGE_SPEC.json",
+        "lines": 22,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka119/KA119_EXECUTABLE_REFINEMENT_PROOF_READINESS_RELEASE_GATE.json",
+        "lines": 266,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka119/KA119_EXECUTABLE_REFINEMENT_PROOF_READINESS_REPORT.md",
+        "lines": 19,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka119/KA119_EXECUTABLE_REFINEMENT_PROOF_READINESS_ROWS.json",
+        "lines": 54,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka119/KA119_EXECUTABLE_REFINEMENT_PROOF_READINESS_VERIFICATION_SUMMARY.json",
+        "lines": 12,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka119/KA119_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 18,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka119/KA119_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 15,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka119/executable-refinement-proof-readiness-bridge.lean",
+        "lines": 22,
+        "ext": ".lean"
+      }
+    ],
+    "ka119ToolFiles": [
+      {
+        "path": "tools/pskernel-ka119-executable-refinement-proof-readiness-tests.ts",
+        "lines": 48,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka119-executable-refinement-proof-readiness.ts",
+        "lines": 16,
+        "ext": ".ts"
+      }
+    ],
+    "newKA119OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

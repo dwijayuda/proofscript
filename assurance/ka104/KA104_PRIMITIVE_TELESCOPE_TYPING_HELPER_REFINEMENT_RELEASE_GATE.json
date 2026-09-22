@@ -1,0 +1,130 @@
+{
+  "checkpoint": "proofscript-v1-ka104-primitive-telescope-typing-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.107",
+  "baseline": "proofscript-v1-ka103-primitive-context-application-helper-refinement0",
+  "releaseKind": "strict-lean4lean-primitive-telescope-typing-helper-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA104",
+      "source": "assurance/ka104/primitive-telescope-typing-helper-refinement-bridge.lean",
+      "destination": "KA104PrimitiveTelescopeTypingHelperBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 5,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka104-primitive-telescope-typing-helper-refinement0",
+    "publicVersion": "1.0.0-pskernel.107",
+    "featureSurfaceBridgeProgressPercent": 99,
+    "executableKernelEquivalenceProofProgressPercent": 82,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 341,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 336,
+      "newFormalLean4LeanBridgeObligations": 5,
+      "correctedFormalLean4LeanBridgeObligations": 341,
+      "countedNewObligations": [
+        "translated_onctx_append_right_wf",
+        "translated_argsTyped_substEq_wf",
+        "translated_vexpr_wf_lams_wf",
+        "translated_hasType_lams_wf",
+        "translated_hasType_appN_forallEs_wf"
+      ]
+    },
+    "metricPolicy": "KA104 adds direct non-sorry-backed primitive telescope typing helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka104Files": [
+      {
+        "path": "tools/pskernel-ka104-primitive-telescope-typing-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka104-primitive-telescope-typing-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka104/KA104_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 23,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka104/KA104_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka104/KA104_PRIMITIVE_TELESCOPE_TYPING_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 36,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka104/KA104_PRIMITIVE_TELESCOPE_TYPING_HELPER_REFINEMENT_RELEASE_GATE.json",
+        "lines": 131,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka104/KA104_PRIMITIVE_TELESCOPE_TYPING_HELPER_REFINEMENT_REPORT.md",
+        "lines": 22,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka104/KA104_PRIMITIVE_TELESCOPE_TYPING_HELPER_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 9,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka104/primitive-telescope-typing-helper-refinement-bridge.lean",
+        "lines": 51,
+        "ext": ".lean"
+      }
+    ],
+    "ka104ToolFiles": [
+      {
+        "path": "tools/pskernel-ka104-primitive-telescope-typing-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka104-primitive-telescope-typing-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      }
+    ],
+    "newKA104OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveTelescopeTypingHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

@@ -1,0 +1,27 @@
+{
+  "checkpoint": "proofscript-v1-ka59-executable-expression-translator-application-refinement0",
+  "publicVersion": "1.0.0-pskernel.62",
+  "baseline": "proofscript-v1-ka58-executable-expression-translator-invariant-refinement0",
+  "referenceKind": "strict-lean4lean-expression-translator-application-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "leanModule": "assurance/ka59/executable-expression-translator-application-refinement-bridge.lean",
+  "countedNewFormalObligations": 4,
+  "countedNewObligationNames": [
+    "translated_fvarsIn_mkAppRevList_wf",
+    "translated_fvarsIn_mkAppList_wf",
+    "translated_fvarsBelow_mkAppList_wf",
+    "translated_fvarsBelow_mkAppRevList_wf"
+  ],
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableExpressionTranslatorRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

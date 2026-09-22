@@ -1,0 +1,15 @@
+def plus{A: Type}[a: Add(A)](x: A, y: A): A := {
+  x + y
+}
+
+def twice{A: Type}[a: Add(A)](x: A): A := {
+  plus(x, x)
+}
+
+def result: Nat := {
+  plus(2, 3)
+}
+
+def doubled: Nat := {
+  twice(4)
+}

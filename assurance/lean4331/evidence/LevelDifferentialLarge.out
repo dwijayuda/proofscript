@@ -1,0 +1,21 @@
+=== LevelDifferentialLarge.00.lean ===
+CHUNK=0 CASES=3000 EQ_FAILURES=0 GE_FAILURES=0
+=== LevelDifferentialLarge.01.lean ===
+CHUNK=1 CASES=3000 EQ_FAILURES=0 GE_FAILURES=0
+=== LevelDifferentialLarge.02.lean ===
+CHUNK=2 CASES=3000 EQ_FAILURES=0 GE_FAILURES=0
+=== LevelDifferentialLarge.03.lean ===
+=== LevelDifferentialLarge.03.lean ===
+CHUNK=3 CASES=3000 EQ_FAILURES=0 GE_FAILURES=0
+=== LevelDifferentialLarge.04.lean ===
+CHUNK=4 CASES=3000 EQ_FAILURES=0 GE_FAILURES=0
+=== LevelDifferentialLarge.05.lean ===
+CHUNK=5 CASES=3000 EQ_FAILURES=0 GE_FAILURES=0
+=== LevelDifferentialLarge.06.lean ===
+CHUNK=6 CASES=3000 EQ_FAILURES=0 GE_FAILURES=0
+=== LevelDifferentialLarge.07.lean ===
+CHUNK=7 CASES=3000 EQ_FAILURES=0 GE_FAILURES=0
+=== LevelDifferentialLarge.08.lean ===
+CHUNK=8 CASES=3000 EQ_FAILURES=0 GE_FAILURES=0
+=== LevelDifferentialLarge.09.lean ===
+CHUNK=9 CASES=3000 EQ_FAILURES=0 GE_FAILURES=0

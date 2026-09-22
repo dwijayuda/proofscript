@@ -1,0 +1,20 @@
+{
+  "checkpoint": "proofscript-v1-ka86-primitive-divmod-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.89",
+  "featureSurfaceBridgeProgressPercent": 97,
+  "executableKernelEquivalenceProofProgressPercent": 64,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 267,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 265,
+    "newFormalLean4LeanBridgeObligations": 2,
+    "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+    "correctedFormalLean4LeanBridgeObligations": 267,
+    "countedNewObligations": [
+      "translated_checkNatMod_wf",
+      "translated_checkNatDiv_wf"
+    ]
+  },
+  "metricPolicy": "KA86 adds direct non-sorry-backed primitive Nat.div/Nat.mod recognizer bridge wrappers. Percentages remain conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

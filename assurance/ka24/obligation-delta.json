@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka24-nondef-env-no-overwrite-bridge0",
+  "baseline": "proofscript-v1-ka23-nondef-env-lookup-bridge0",
+  "formalLean4EquivalenceProvenObligations": 32,
+  "provenLeanTheoremObligations": [
+    "PSKernelKA24.translated_theorem_fresh_before_add",
+    "PSKernelKA24.translated_opaque_fresh_before_add",
+    "PSKernelKA24.translated_theorem_preserves_other_lookup",
+    "PSKernelKA24.translated_opaque_preserves_other_lookup"
+  ],
+  "closedByKA24": [
+    "conditional-freshness-bridge-for-translated-theorem",
+    "conditional-freshness-bridge-for-translated-opaque",
+    "conditional-other-lookup-preservation-bridge-for-translated-theorem",
+    "conditional-other-lookup-preservation-bridge-for-translated-opaque",
+    "preserve-ka12-through-ka23-inductive-blocking",
+    "strict-lean4lean-nondef-env-no-overwrite-bridge-check"
+  ],
+  "stillOpen": [
+    "executable PSKernel refinement against Lean4Lean environment checking",
+    "definitional equality soundness against Lean4Lean.TypeChecker",
+    "inductive and mutual inductive soundness",
+    "quotient semantic soundness",
+    "full Lean 4 equivalence",
+    "same-theory claim for full Lean 4"
+  ]
+}

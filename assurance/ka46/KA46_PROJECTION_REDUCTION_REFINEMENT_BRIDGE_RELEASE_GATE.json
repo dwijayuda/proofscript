@@ -1,0 +1,129 @@
+{
+  "checkpoint": "proofscript-v1-ka46-projection-reduction-refinement-preflight0",
+  "publicVersion": "1.0.0-pskernel.49",
+  "baseline": "proofscript-v1-ka45-inductive-recursor-refinement-bridge0",
+  "releaseKind": "blocked-preflight-not-formal-bridge",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "referenceKind": "source-bound-lean4lean-projection-reduction-refinement-preflight",
+  "actualLean4LeanImportBound": false,
+  "strictProjectionReductionBridgePassed": false,
+  "formalLeanCheckStatus": "blocked",
+  "blockedReasons": [
+    "external_dependency_fetch_failed_or_dependency_unavailable"
+  ],
+  "coveredLean4LeanProjectionSurface": [
+    "TypeChecker.Inner.reduceProjCore.WF",
+    "TypeChecker.Inner.reduceProj.WF",
+    "TypeChecker.Inner.whnfCore'.WF projection path",
+    "TypeChecker.Inner.inferProj.WF"
+  ],
+  "intendedFormalBridgeLemmas": [
+    "Lean4Lean.PSKernelKA46.translated_reduceProjCore_wf",
+    "Lean4Lean.PSKernelKA46.translated_reduceProj_wf",
+    "Lean4Lean.PSKernelKA46.translated_whnfCore_projection_path_wf",
+    "Lean4Lean.PSKernelKA46.translated_inferProj_wf"
+  ],
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "sourceFileCount": 1684,
+    "ka46ToolFiles": [
+      {
+        "path": "tools/pskernel-ka46-projection-reduction-refinement-bridge.ts",
+        "lines": 130,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka46-projection-reduction-refinement-bridge-tests.ts",
+        "lines": 59,
+        "ext": ".ts"
+      }
+    ],
+    "newKA46OversizedFiles": [],
+    "semanticPackageTouched": false
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka46-projection-reduction-refinement-preflight0",
+    "publicVersion": "1.0.0-pskernel.49",
+    "featureSurfaceBridgeProgressPercent": 68,
+    "executableKernelEquivalenceProofProgressPercent": 34,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 132,
+    "groups": [
+      {
+        "id": "ordinary-declarations",
+        "progressPercent": 82,
+        "status": "bridged proof-surface; executable refinement incomplete"
+      },
+      {
+        "id": "quotients",
+        "progressPercent": 74,
+        "status": "environment bridge complete; semantic soundness incomplete"
+      },
+      {
+        "id": "inductives",
+        "progressPercent": 44,
+        "status": "environment bridge plus recursor proof-surface bridge; projection-reduction bridge preflight prepared; generated rule/RHS refinement still open"
+      },
+      {
+        "id": "mutual-definitions",
+        "progressPercent": 43,
+        "status": "initial environment bridge; executable refinement incomplete"
+      },
+      {
+        "id": "expression-tags",
+        "progressPercent": 63,
+        "status": "TrExprS constructor surface covered; executable translator not fully refined"
+      },
+      {
+        "id": "typechecker-whnf-defeq",
+        "progressPercent": 50,
+        "status": "WHNF/defeq proof-surface bridges exist; projection-reduction bridge pending formal Lean check"
+      },
+      {
+        "id": "primitive-literals",
+        "progressPercent": 40,
+        "status": "Nat/Bool/literal proof-surface bridge only"
+      },
+      {
+        "id": "codec-replay",
+        "progressPercent": 36,
+        "status": "Replay surface and PS codec stability gates exist"
+      },
+      {
+        "id": "resource-errors",
+        "progressPercent": 39,
+        "status": "fuel/error conservativity surface bridge only"
+      },
+      {
+        "id": "architecture-health",
+        "progressPercent": 80,
+        "status": "no-spaghetti ratchet plus KA46 semantic-package touch guard"
+      },
+      {
+        "id": "end-to-end-refinement-spine",
+        "progressPercent": 30,
+        "status": "explicit staged checker refinement plan; no end-to-end theorem yet"
+      }
+    ],
+    "notAFormalEquivalenceClaim": true
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullProjectionReductionRefinement": false,
+    "formalLean4LeanBridgeObligations": 132
+  },
+  "fullLean4Equivalence": false,
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

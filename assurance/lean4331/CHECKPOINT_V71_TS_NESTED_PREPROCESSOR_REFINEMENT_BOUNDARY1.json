@@ -1,0 +1,146 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "V71_TS_NESTED_PREPROCESSOR_REFINEMENT_BOUNDARY1",
+  "coreFormat": 71,
+  "profile": "KERNEL-level-instantiation-conformance1",
+  "semanticChange": false,
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+    "executable": "/mnt/data/lean-install/lean-4.33.1-linux/bin/lean",
+    "versionOutput": "Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)"
+  },
+  "progress": {
+    "label": "overall v71 K3 track",
+    "percent": 80,
+    "basis": "conservative engineering ledger, not a mathematical probability",
+    "previousPercent": 75,
+    "completedEvidenceSlices": 8,
+    "outstandingTSNestedPreprocessorObligations": 5,
+    "outstandingWholeK3ObligationsAfterThisCheckpoint": [
+      "mechanized KernelTS semantics for line-by-line implementation refinement",
+      "arbitrary Lean nested preprocessing acceptance iff ProofScript acceptance",
+      "exhaustive nested positivity completeness for every Lean expression form",
+      "arbitrary stored RecursorRule.rhs reconstruction",
+      "final whole-kernel K3 equivalence theorem"
+    ]
+  },
+  "formal": {
+    "newTarget": "ProofScriptKernelEquivalence.KernelV71TSNestedPreprocessorRefinementBoundary",
+    "targetSource": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71TSNestedPreprocessorRefinementBoundary.lean",
+    "targetSourceSha256": "381e78f86a650e4109dd96d268e176285d5776e45f74bd2b5018269462ece139",
+    "targetTheorems": 8,
+    "reportedSorryAx": 0,
+    "log": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-boundary-formal1.out",
+    "totalFormalLeanFiles": 42,
+    "theoremBoundary": "abstract TypeScript nested-preprocessor implementation trace inherits nested-preprocessing boundary soundness and records 80% progress"
+  },
+  "executable": {
+    "tsNestedPreprocessorSourceAudit": {
+      "path": "packages/kernel/src/kernel.ts#tryCheckNestedInductive",
+      "sha256": "03a514a25cab553d3cf38008e299518af06286d4c22f69aed4595f1824821b32",
+      "obligations": 40,
+      "missing": 0,
+      "lineCount": 494
+    },
+    "freshExactLeanNestedSuites": [
+      {
+        "label": "base",
+        "script": "tools/kernel-nested-inductives-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-base-exact-lean1.out",
+        "sha256": "46bb77afe443ca7907e43ebe504d9c7fd1ff98cfcbf5402ecab3e0ebf271d992"
+      },
+      {
+        "label": "parameters",
+        "script": "tools/kernel-nested-parameters-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-parameters-exact-lean1.out",
+        "sha256": "223770d6dbb1890ad72dc9126f1b9a6c87aed9a12a545b74808d7f1f964e3f8a"
+      },
+      {
+        "label": "indices",
+        "script": "tools/kernel-nested-indices-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-indices-exact-lean1.out",
+        "sha256": "f2019d4d34339a1bfd3689b6b3ce3cd0944ee7394990a6e82d38a26ec346fa63"
+      },
+      {
+        "label": "index-expressions",
+        "script": "tools/kernel-nested-index-expressions-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-index-expressions-exact-lean1.out",
+        "sha256": "9b91339b6f549370a3bb03fa2d5821d152a8b2f9fb2ab372e76363196c4fed82"
+      },
+      {
+        "label": "multiple-specializations",
+        "script": "tools/kernel-nested-multiple-specializations-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-multiple-specializations-exact-lean1.out",
+        "sha256": "49571adc3ca0d4d33ad4787437f96f1eaa213cc13ee4134b9851746d4372f4d6"
+      },
+      {
+        "label": "polymorphic",
+        "script": "tools/kernel-nested-polymorphic-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-polymorphic-exact-lean1.out",
+        "sha256": "d2b4908ee90166fbe15775d97eee4d31677d014c341151eb7ed6e2f3eaf35feb"
+      },
+      {
+        "label": "indexed-containers",
+        "script": "tools/kernel-nested-indexed-containers-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-indexed-containers-exact-lean1.out",
+        "sha256": "484ea35cfbdc6431f92521f148c9e28c215ba09570335f7c9a16cda6f2202a52"
+      },
+      {
+        "label": "deeper-generalization",
+        "script": "tools/kernel-nested-deeper-generalization-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-deeper-generalization-exact-lean1.out",
+        "sha256": "1fa3baa2a3377e43e96b906c0b2e770caeaee07e189c31f313073e120cebe99c"
+      },
+      {
+        "label": "deep-multiparam-generalization",
+        "script": "tools/kernel-nested-deeper-multi-parameter-generalization-tests.ts",
+        "log": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-deep-multiparam-generalization-exact-lean1.out",
+        "sha256": "054563bea3010135559ef2f220b06bd2a992262c0badff7739219228132ecb82"
+      }
+    ],
+    "suiteCount": 9,
+    "failures": 0
+  },
+  "inherited": {
+    "nestedPreprocessingBoundary": {
+      "status": "PASS",
+      "progressPercent": 75,
+      "exactLeanSuites": 9
+    },
+    "admissionBoundary": {
+      "status": "PASS",
+      "formalFiles": 40
+    },
+    "mutualAdmissionBoundary": {
+      "status": "PASS",
+      "progressPercent": 70
+    },
+    "mutualNestedRecursorRHS": {
+      "status": "PASS",
+      "exactLeanSuites": 5
+    },
+    "fullLeanGate": {
+      "status": "PASS",
+      "parts": 6
+    }
+  },
+  "scope": {
+    "newlyBoundThisCheckpoint": [
+      "the concrete tryCheckNestedInductive TypeScript source slice is located and hashed",
+      "the nested dispatcher chain through v33 and v37-v45 is audited as part of the refinement boundary",
+      "synthetic mutual-checker reuse and atomic environment replacement are audited in the concrete source slice",
+      "nine exact-Lean nested preprocessing suites are freshly rerun under Lean 4.33.1",
+      "the Lean abstract implementation trace inherits the nested-preprocessing completeness boundary theorem",
+      "overall v71 K3 progress ledger is now recorded as 80%"
+    ],
+    "stillNotProved": [
+      "mechanized KernelTS semantics for line-by-line TypeScript execution",
+      "arbitrary Lean nested preprocessing acceptance iff ProofScript acceptance",
+      "exhaustive nested positivity completeness for every Lean expression form",
+      "arbitrary stored RecursorRule.rhs reconstruction",
+      "final whole-kernel K3 equivalence theorem"
+    ]
+  },
+  "status": "PASS"
+}

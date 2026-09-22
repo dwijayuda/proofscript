@@ -1,0 +1,7 @@
+inductive Nat: Type {
+  | zero;
+  | succ(n: Nat);
+}
+def bad: Nat := {
+  Nat.zero;
+}

@@ -1,0 +1,72 @@
+{
+  "checkpoint": "proofscript-v1-ka12-direct-lean4lean-reference0",
+  "publicVersion": "1.0.0-pskernel.15",
+  "createdAtUtc": "2026-09-18T09:57:00Z",
+  "baseline": "proofscript-v1-ka12-direct-lean4lean-binding0",
+  "kernel": {
+    "name": "PSKernel",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "directLean4LeanReference": {
+    "referenceKind": "direct-imported-lean4lean-reference-types",
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanReferenceChecked": true,
+    "strictReferenceCheckPassed": true,
+    "blockedReasons": [],
+    "targets": {
+      "level": "Lean4Lean.VLevel",
+      "expr": "Lean4Lean.VExpr",
+      "decl": "Lean4Lean.VDecl",
+      "constVal": "Lean4Lean.VConstVal",
+      "defVal": "Lean4Lean.VDefVal"
+    },
+    "coveredPSDeclKinds": [
+      "axiom",
+      "definition",
+      "theorem",
+      "example",
+      "opaque",
+      "quot"
+    ],
+    "excludedPSDeclKinds": [
+      "inductive",
+      "mutualInductive"
+    ],
+    "blockedPSExprTags": [
+      "letE",
+      "lit",
+      "proj",
+      "fvar",
+      "mvar"
+    ],
+    "theoryBuildStatus": 0,
+    "directReferenceCheckStatus": 0
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0
+  },
+  "verificationSummary": {
+    "install": "passed",
+    "build": "passed",
+    "kaTests": "ka1-ka12 passed",
+    "kaAssurance": "ka1-ka12 passed",
+    "leanKA11Import": "passed",
+    "leanKA12Check": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "pscConformanceBounded": "passed",
+    "arenaStaticNonperf": "command passed, corpus not run because /mnt/data/arena-corpus-20260915 missing",
+    "arenaTutorial": "command passed, corpus not run because /mnt/data/arena-corpus-20260915 missing",
+    "verifyArena": "blocked: arena_corpus_missing",
+    "freshExtractSmoke": "passed",
+    "zipIntegrity": "passed"
+  }
+}

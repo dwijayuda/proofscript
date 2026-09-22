@@ -1,0 +1,99 @@
+{
+  "version": "P4.84",
+  "title": "Trust-boundary import guard cleanup",
+  "timestamp_local": "2026-09-12T01:44+07:00",
+  "changes": [
+    "Hardened tools/check-boundaries.ts to detect relative import escapes from trusted packages into runtime/backend/plugin layers.",
+    "Added tools/trust-boundary-relative-import-tests.ts regression fixture.",
+    "Added npm run test:architecture:trust-boundary script.",
+    "Documented P4.84 architecture hardening report."
+  ],
+  "fresh_verification": [
+    {
+      "command": "node tools/trust-boundary-relative-import-tests.ts before implementation",
+      "status": "FAIL_EXPECTED"
+    },
+    {
+      "command": "npm run build -- --pretty false",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:architecture:trust-boundary",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:architecture",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:runtime:extraction",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:backend-typescript:extraction",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:reference-governance:json",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:governance",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "status": "PASS"
+    },
+    {
+      "command": "node tools/pskernel.ts status --json",
+      "status": "PASS",
+      "trust": "trusted-boundary / not-proven"
+    },
+    {
+      "command": "fresh extract: npm run build -- --pretty false",
+      "status": "PASS"
+    },
+    {
+      "command": "fresh extract: npm run test:architecture:trust-boundary",
+      "status": "PASS"
+    },
+    {
+      "command": "fresh extract: npm run test:architecture",
+      "status": "PASS"
+    },
+    {
+      "command": "fresh extract: node tools/pskernel.ts status --json",
+      "status": "PASS",
+      "trust": "trusted-boundary / not-proven"
+    },
+    {
+      "command": "unzip -tq P4.84 archive",
+      "status": "PASS"
+    }
+  ],
+  "not_rerun": [
+    {
+      "command": "npm run verify:k3tb:publish",
+      "reason": "still needs PROOFSCRIPT_LEAN_BIN"
+    },
+    {
+      "command": "full long matrix",
+      "reason": "skipped for fast cleanup iteration"
+    }
+  ],
+  "progress": {
+    "Standalone PSC-1 without Lean4": "~97.3%",
+    "PSC-1 small complete programming language": "~72.0%",
+    "PSC-1 small theorem prover": "~62.1%",
+    "Full ProofScript compiler": "~62.0%",
+    "Full Lean-like ProofScript without Lean4": "~13.8%",
+    "Formal Lean 4 equivalence": "0 proven obligations",
+    "Maintainability / anti-spaghetti score": "~78%"
+  },
+  "trust_boundary": "K3-TB trusted-boundary; not fully formal K3; not proven equivalent to Lean 4"
+}

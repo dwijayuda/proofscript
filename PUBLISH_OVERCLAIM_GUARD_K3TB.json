@@ -1,0 +1,22 @@
+{
+  "status": "ACTIVE",
+  "boundary": "PUBLISH_PREFLIGHT_NOT_FULLY_FORMAL_K3",
+  "allowedReleaseLabels": [
+    "K3-TB",
+    "trusted-boundary practical release candidate",
+    "Lean 4.33.1-backed assurance release"
+  ],
+  "forbiddenStandaloneClaims": [
+    "fully formal K3",
+    "complete Lean kernel equivalence",
+    "verified TypeScript/Node runtime semantics",
+    "arbitrary Lean acceptance completeness"
+  ],
+  "requiredCaveatPhrases": [
+    "not fully formal K3",
+    "trusted-boundary",
+    "Node.js runtime",
+    "TypeScript compiler"
+  ],
+  "releaseShouldRemainPrivateNpmPackage": true
+}

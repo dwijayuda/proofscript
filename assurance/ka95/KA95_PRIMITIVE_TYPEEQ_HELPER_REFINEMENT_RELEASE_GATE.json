@@ -1,0 +1,128 @@
+{
+  "checkpoint": "proofscript-v1-ka95-primitive-typeeq-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.98",
+  "baseline": "proofscript-v1-ka94-primitive-result-helper-refinement0",
+  "releaseKind": "strict-lean4lean-primitive-typeeq-helper-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA95",
+      "source": "assurance/ka95/primitive-typeeq-helper-refinement-bridge.lean",
+      "destination": "KA95PrimitiveTypeEqHelperBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 3,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka95-primitive-typeeq-helper-refinement0",
+    "publicVersion": "1.0.0-pskernel.98",
+    "featureSurfaceBridgeProgressPercent": 99,
+    "executableKernelEquivalenceProofProgressPercent": 73,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 296,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 293,
+      "newFormalLean4LeanBridgeObligations": 3,
+      "correctedFormalLean4LeanBridgeObligations": 296,
+      "countedNewObligations": [
+        "translated_mkTyEqBitwise_wf",
+        "translated_mkTyEq_wf",
+        "translated_mkTyEq1_wf"
+      ]
+    },
+    "metricPolicy": "KA95 adds direct non-sorry-backed primitive type-equation helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka95Files": [
+      {
+        "path": "tools/pskernel-ka95-primitive-typeeq-helper-refinement-tests.ts",
+        "lines": 37,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka95-primitive-typeeq-helper-refinement.ts",
+        "lines": 34,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka95/KA95_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 21,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka95/KA95_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka95/KA95_PRIMITIVE_TYPEEQ_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 32,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka95/KA95_PRIMITIVE_TYPEEQ_HELPER_REFINEMENT_RELEASE_GATE.json",
+        "lines": 129,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka95/KA95_PRIMITIVE_TYPEEQ_HELPER_REFINEMENT_REPORT.md",
+        "lines": 20,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka95/KA95_PRIMITIVE_TYPEEQ_HELPER_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 19,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka95/primitive-typeeq-helper-refinement-bridge.lean",
+        "lines": 40,
+        "ext": ".lean"
+      }
+    ],
+    "ka95ToolFiles": [
+      {
+        "path": "tools/pskernel-ka95-primitive-typeeq-helper-refinement-tests.ts",
+        "lines": 37,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka95-primitive-typeeq-helper-refinement.ts",
+        "lines": 34,
+        "ext": ".ts"
+      }
+    ],
+    "newKA95OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveTypeEqHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

@@ -1,0 +1,64 @@
+{
+  "checkpoint": "proofscript-v1-ka15-env-wf-bridge0",
+  "publicVersion": "1.0.0-pskernel.18",
+  "createdAtUtc": "2026-09-18T11:20:00Z",
+  "baseline": "proofscript-v1-ka14-real-arena-corpus0",
+  "kernel": {
+    "name": "PSKernel",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "directLean4LeanEnvWFBridge": {
+    "referenceKind": "direct-imported-lean4lean-env-wf-bridge",
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanEnvWFBridgeChecked": true,
+    "strictBridgeCheckPassed": true,
+    "blockedReasons": [],
+    "targets": {
+      "relation": "Lean4Lean.VEnv.WF",
+      "dependency": "Lean4Lean.VDecl.WF"
+    },
+    "coveredPSDeclKinds": [
+      "axiom",
+      "definition"
+    ],
+    "excludedPSDeclKinds": [
+      "theorem",
+      "example",
+      "opaque",
+      "quot",
+      "inductive",
+      "mutualInductive"
+    ],
+    "theoryBuildStatus": 0,
+    "bridgeCheckStatus": 0
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 4,
+    "formalObligationMeaning": "KA-13's two conditional VDecl.WF bridge lemmas plus KA-15's two conditional VEnv.WF bridge lemmas, not full Lean equivalence"
+  },
+  "verificationSummary": {
+    "install": "passed: npm install --offline --no-audit --no-fund",
+    "build": "passed: npm run build -- --pretty false",
+    "kaTests": "ka1-ka11 passed before wrapper timeout; ka12-ka15 rerun individually and passed",
+    "kaAssurance": "ka1-ka11 passed; ka12-ka15 rerun individually and passed",
+    "leanKA11Import": "passed individually",
+    "leanKA12Check": "passed individually",
+    "leanKA13Check": "passed individually",
+    "leanKA15Check": "passed individually",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "pscConformanceBounded": "passed",
+    "arenaCorpusPreflight": "passed: 190 NDJSON fixtures",
+    "arenaStaticNonperf": "passed: 26/26 decisive",
+    "arenaTutorial": "passed: 140/140 decisive",
+    "verifyArena": "wrapper timed out near the end after passing all preceding verify:arena components through tutorial; remaining tail components rerun individually and passed"
+  }
+}

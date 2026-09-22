@@ -1,0 +1,20 @@
+{
+  "checkpoint": "proofscript-v1-ka85-primitive-bitwise-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.88",
+  "featureSurfaceBridgeProgressPercent": 96,
+  "executableKernelEquivalenceProofProgressPercent": 63,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 265,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 263,
+    "newFormalLean4LeanBridgeObligations": 2,
+    "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+    "correctedFormalLean4LeanBridgeObligations": 265,
+    "countedNewObligations": [
+      "translated_boolOp2_apply_wf",
+      "translated_checkNatBitwise_wf"
+    ]
+  },
+  "metricPolicy": "KA85 adds direct non-sorry-backed primitive bitwise recognizer bridge wrappers. Percentages remain conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

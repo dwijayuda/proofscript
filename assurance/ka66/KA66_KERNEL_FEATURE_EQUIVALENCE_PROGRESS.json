@@ -1,0 +1,20 @@
+{
+  "checkpoint": "proofscript-v1-ka66-executable-defeq-core-refinement0",
+  "publicVersion": "1.0.0-pskernel.69",
+  "featureSurfaceBridgeProgressPercent": 87,
+  "executableKernelEquivalenceProofProgressPercent": 53,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 200,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 196,
+    "newFormalLean4LeanBridgeObligations": 4,
+    "countedNewObligations": [
+      "translated_isDefEqCore_wf",
+      "translated_isDefEqCore_prime_wf",
+      "translated_quickIsDefEq_wf",
+      "translated_isDefEqArgs_wf"
+    ]
+  },
+  "metricPolicy": "KA66 advances the exact formal obligation counter only; percentage estimates are held at the latest audited KA65 values pending a separate coverage audit.",
+  "notAFormalEquivalenceClaim": true
+}

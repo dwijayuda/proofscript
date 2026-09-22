@@ -1,0 +1,130 @@
+{
+  "checkpoint": "proofscript-v1-ka101-primitive-substitution-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.104",
+  "baseline": "proofscript-v1-ka100-primitive-sequence-helper-refinement0",
+  "releaseKind": "strict-lean4lean-primitive-substitution-helper-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA101",
+      "source": "assurance/ka101/primitive-substitution-helper-refinement-bridge.lean",
+      "destination": "KA101PrimitiveSubstitutionHelperBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 5,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka101-primitive-substitution-helper-refinement0",
+    "publicVersion": "1.0.0-pskernel.104",
+    "featureSurfaceBridgeProgressPercent": 99,
+    "executableKernelEquivalenceProofProgressPercent": 79,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 326,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 321,
+      "newFormalLean4LeanBridgeObligations": 5,
+      "correctedFormalLean4LeanBridgeObligations": 326,
+      "countedNewObligations": [
+        "translated_forall2_rev_wf",
+        "translated_trExpr_fvar_uniq_wf",
+        "translated_forall2_fvars_uniq_wf",
+        "translated_subst_consN_add_wf",
+        "translated_liftN_subst_consN_wf"
+      ]
+    },
+    "metricPolicy": "KA101 adds direct non-sorry-backed primitive substitution/free-variable helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka101Files": [
+      {
+        "path": "tools/pskernel-ka101-primitive-substitution-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka101-primitive-substitution-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka101/KA101_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 23,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka101/KA101_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka101/KA101_PRIMITIVE_SUBSTITUTION_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 36,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka101/KA101_PRIMITIVE_SUBSTITUTION_HELPER_REFINEMENT_RELEASE_GATE.json",
+        "lines": 131,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka101/KA101_PRIMITIVE_SUBSTITUTION_HELPER_REFINEMENT_REPORT.md",
+        "lines": 22,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka101/KA101_PRIMITIVE_SUBSTITUTION_HELPER_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 21,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka101/primitive-substitution-helper-refinement-bridge.lean",
+        "lines": 42,
+        "ext": ".lean"
+      }
+    ],
+    "ka101ToolFiles": [
+      {
+        "path": "tools/pskernel-ka101-primitive-substitution-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka101-primitive-substitution-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      }
+    ],
+    "newKA101OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveSubstitutionHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

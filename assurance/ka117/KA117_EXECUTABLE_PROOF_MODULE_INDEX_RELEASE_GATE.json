@@ -1,0 +1,265 @@
+{
+  "checkpoint": "proofscript-v1-ka117-executable-proof-module-index0",
+  "publicVersion": "1.0.0-pskernel.120",
+  "baseline": "proofscript-v1-ka116-executable-proof-dependency-closure0",
+  "releaseKind": "executable-proof-module-index-audit",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA117",
+      "source": "assurance/ka117/executable-proof-module-index-bridge.lean",
+      "destination": "KA117ExecutableProofModuleIndexBridge.lean",
+      "status": "passed",
+      "proofBearing": false,
+      "obligations": 0,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "progress": {
+    "checkpoint": "proofscript-v1-ka117-executable-proof-module-index0",
+    "publicVersion": "1.0.0-pskernel.120",
+    "baseline": "proofscript-v1-ka116-executable-proof-dependency-closure0",
+    "metrics": {
+      "featureSurfaceBridgeProgressPercent": 100,
+      "executableKernelEquivalenceProofProgressPercent": 93,
+      "executableKernelEquivalencePreviousPercent": 92,
+      "executableKernelEquivalenceDeltaPercent": 1,
+      "arenaCorpusRegressionPercent": 100,
+      "releasePackagingVerificationPercent": 100,
+      "executableProofModuleIndexPercent": 100,
+      "formalLean4LeanBridgeObligations": 366,
+      "newFormalLean4LeanBridgeObligations": 0,
+      "fullLean4EquivalencePercent": 0,
+      "fullyFormalK3Percent": 0,
+      "overallConservativeProjectProgressPercent": 82.9,
+      "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+    },
+    "phaseStatus": {
+      "featureSurfaceBridge": "closed",
+      "executableEquivalence": "active-proof-module-indexed",
+      "fullLean4Equivalence": "not-proven",
+      "fullyFormalK3": "not-proven",
+      "claimBoundary": "enforced"
+    },
+    "proofModuleIndex": {
+      "indexPercent": 100,
+      "rows": [
+        {
+          "id": "kernel-expression-module-indexed",
+          "status": "done",
+          "evidence": "expression/reflection proof-family module slot recorded",
+          "indexed": true
+        },
+        {
+          "id": "checker-soundness-module-indexed",
+          "status": "done",
+          "evidence": "checking/admission proof-family module slot recorded",
+          "indexed": true
+        },
+        {
+          "id": "evaluator-whnf-defeq-module-indexed",
+          "status": "done",
+          "evidence": "WHNF/defeq executable refinement module slot recorded",
+          "indexed": true
+        },
+        {
+          "id": "primitive-recognizer-module-indexed",
+          "status": "done",
+          "evidence": "primitive recognizer helper module slot recorded",
+          "indexed": true
+        },
+        {
+          "id": "certificate-replay-module-indexed",
+          "status": "done",
+          "evidence": "certificate/replay module slot recorded",
+          "indexed": true
+        },
+        {
+          "id": "arena-regression-link-indexed",
+          "status": "done",
+          "evidence": "arena evidence remains separate from proof theorem modules",
+          "indexed": true
+        },
+        {
+          "id": "negative-claim-module-indexed",
+          "status": "done",
+          "evidence": "full Lean4 equivalence and fully formal K3 remain 0%",
+          "indexed": true
+        }
+      ],
+      "counts": {
+        "total": 7,
+        "indexed": 7,
+        "missing": 0
+      },
+      "evidenceMeaning": "proof module index records executable proof-module destinations; it is not an executable PSKernel refinement proof"
+    },
+    "percentBoundaries": {
+      "executableProgressIsDashboardEvidenceNotRefinementProof": true,
+      "proofModuleIndexDoesNotProvePSKernelEquivalence": true,
+      "overallProgressIsDashboardEstimate": true
+    },
+    "claimBoundary": {
+      "fullLean4Equivalence": false,
+      "sameTheoryAsFullLean4": false,
+      "fullyFormalK3": false,
+      "executablePSKernelRefinementProof": false,
+      "trustedKernelSemanticChange": false,
+      "kernelCodecChange": false,
+      "coreFormatChanged": false,
+      "certificateFormatChanged": false
+    }
+  },
+  "proofModuleIndex": {
+    "indexPercent": 100,
+    "rows": [
+      {
+        "id": "kernel-expression-module-indexed",
+        "status": "done",
+        "evidence": "expression/reflection proof-family module slot recorded",
+        "indexed": true
+      },
+      {
+        "id": "checker-soundness-module-indexed",
+        "status": "done",
+        "evidence": "checking/admission proof-family module slot recorded",
+        "indexed": true
+      },
+      {
+        "id": "evaluator-whnf-defeq-module-indexed",
+        "status": "done",
+        "evidence": "WHNF/defeq executable refinement module slot recorded",
+        "indexed": true
+      },
+      {
+        "id": "primitive-recognizer-module-indexed",
+        "status": "done",
+        "evidence": "primitive recognizer helper module slot recorded",
+        "indexed": true
+      },
+      {
+        "id": "certificate-replay-module-indexed",
+        "status": "done",
+        "evidence": "certificate/replay module slot recorded",
+        "indexed": true
+      },
+      {
+        "id": "arena-regression-link-indexed",
+        "status": "done",
+        "evidence": "arena evidence remains separate from proof theorem modules",
+        "indexed": true
+      },
+      {
+        "id": "negative-claim-module-indexed",
+        "status": "done",
+        "evidence": "full Lean4 equivalence and fully formal K3 remain 0%",
+        "indexed": true
+      }
+    ],
+    "counts": {
+      "total": 7,
+      "indexed": 7,
+      "missing": 0
+    },
+    "evidenceMeaning": "proof module index records executable proof-module destinations; it is not an executable PSKernel refinement proof"
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka117Files": [
+      {
+        "path": "tools/pskernel-ka117-executable-proof-module-index-tests.ts",
+        "lines": 48,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka117-executable-proof-module-index.ts",
+        "lines": 16,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka117/KA117_EXECUTABLE_PROOF_MODULE_INDEX.json",
+        "lines": 96,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka117/KA117_EXECUTABLE_PROOF_MODULE_INDEX_BRIDGE_SPEC.json",
+        "lines": 22,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka117/KA117_EXECUTABLE_PROOF_MODULE_INDEX_RELEASE_GATE.json",
+        "lines": 266,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka117/KA117_EXECUTABLE_PROOF_MODULE_INDEX_REPORT.md",
+        "lines": 19,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka117/KA117_EXECUTABLE_PROOF_MODULE_INDEX_ROWS.json",
+        "lines": 54,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka117/KA117_EXECUTABLE_PROOF_MODULE_INDEX_VERIFICATION_SUMMARY.json",
+        "lines": 12,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka117/KA117_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 18,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka117/KA117_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 15,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka117/executable-proof-module-index-bridge.lean",
+        "lines": 18,
+        "ext": ".lean"
+      }
+    ],
+    "ka117ToolFiles": [
+      {
+        "path": "tools/pskernel-ka117-executable-proof-module-index-tests.ts",
+        "lines": 48,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka117-executable-proof-module-index.ts",
+        "lines": 16,
+        "ext": ".ts"
+      }
+    ],
+    "newKA117OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

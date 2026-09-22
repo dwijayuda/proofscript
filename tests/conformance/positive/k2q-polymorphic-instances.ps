@@ -1,0 +1,32 @@
+inductive Box(A: Type): Type {
+  | mk(x: A);
+}
+
+class Marker(A: Type) {
+  tag: Nat;
+}
+
+-- Highest priority, but for a different fully-known class goal.
+instance (priority := 5000) boolMarker: Marker(Bool) := {
+  tag := 9
+};
+
+instance (priority := 2000) {A: Type} boxMarkerHigh: Marker(Box(A)) := {
+  tag := 7
+};
+
+-- Same target and priority as boxMarkerHigh; later declaration wins.
+instance (priority := 2000) {A: Type} boxMarkerLater: Marker(Box(A)) := {
+  tag := 8
+};
+
+def getBoxNat[m: Marker(Box(Nat))](n: Nat): Nat := {
+  Marker.tag(Box(Nat), m)
+}
+
+def automaticBoxTag: Nat := {
+  getBoxNat(0)
+}
+
+theorem automaticBoxTagIsEight: automaticBoxTag = 8 :=
+  Eq.refl.{1}(Nat, 8);

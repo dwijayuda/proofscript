@@ -1,0 +1,32 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "profile": "KERNEL-level-instantiation-conformance1",
+  "coreFormat": 71,
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "checkpoint": "DECL_ENV1",
+  "formal": {
+    "modulesThroughDeclarationEnvironment": 20,
+    "sorryAx": 0,
+    "ordinaryEnvironment": "proved",
+    "formedQuotientEnvironment": "proved"
+  },
+  "nativeDifferential": {
+    "ordinaryStructures": 7,
+    "structuralMismatches": 0,
+    "instantiatedTypeCases": 1000,
+    "instantiatedTypeMismatches": 0,
+    "leanKernelChecks": 1000,
+    "duplicateRejectedBoth": true
+  },
+  "obligation": {
+    "O-DECL": "PARTIAL_PROVED_ORDINARY_PLUS_QUOTIENT_ENVIRONMENT",
+    "remaining": [
+      "quotient Eq/Eq.refl admission + atomic initialization",
+      "inductive/constructor/recursor admission + environment preservation"
+    ]
+  },
+  "next": "quotient admission/atomic initialization bridge, then inductive environment preservation"
+}

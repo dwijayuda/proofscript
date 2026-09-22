@@ -1,0 +1,47 @@
+{
+  "checkpoint": "proofscript-v1-ka16-env-extension-bridge0",
+  "publicVersion": "1.0.0-pskernel.19",
+  "baseline": "proofscript-v1-ka15-env-wf-bridge0",
+  "referenceKind": "direct-imported-lean4lean-env-extension-bridge",
+  "imports": [
+    "Lean4Lean.Theory.Typing.Env",
+    "PSKernelKA15EnvWFBridge"
+  ],
+  "bridgedRelation": "Lean4Lean.VEnv.LE",
+  "dependsOn": [
+    "PSKernelKA13.translated_axiom_vdecl_wf",
+    "PSKernelKA13.translated_definition_vdecl_wf",
+    "PSKernelKA15.translated_axiom_env_wf",
+    "PSKernelKA15.translated_definition_env_wf"
+  ],
+  "conditionalBridgeLemmas": [
+    "PSKernelKA16.translated_axiom_env_extends",
+    "PSKernelKA16.translated_definition_env_extends"
+  ],
+  "helperLemmas": [
+    "PSKernelKA16.addConst_extends",
+    "PSKernelKA16.addDefEq_extends"
+  ],
+  "coveredPSDeclKinds": ["axiom", "definition"],
+  "stillExcludedDeclKinds": ["theorem", "example", "opaque", "quot", "inductive", "mutualInductive"],
+  "closedByKA16": [
+    "direct-import-lean4lean-env-le-relation",
+    "conditional-env-extension-bridge-for-translated-axiom",
+    "conditional-env-extension-bridge-for-translated-definition",
+    "preserve-ka12-ka13-ka15-inductive-blocking",
+    "strict-lean4lean-env-extension-bridge-check"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "coreFormatChanged": false,
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanEnvExtensionBridgeChecked": true,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 6,
+    "formalObligationMeaning": "KA-13's two conditional VDecl.WF lemmas, KA-15's two conditional VEnv.WF lemmas, and KA-16's two conditional VEnv.LE extension lemmas; not executable PSKernel refinement or full Lean equivalence"
+  }
+}

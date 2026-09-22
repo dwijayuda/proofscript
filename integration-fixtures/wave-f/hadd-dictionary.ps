@@ -1,0 +1,15 @@
+def generic{A: Type}[h: HAdd(A,A,A)](x: A, y: A): A := {
+  x + y
+}
+
+def twice{A: Type}[h: HAdd(A,A,A)](x: A): A := {
+  generic(x, x)
+}
+
+def result: Nat := {
+  generic(2, 3)
+}
+
+def doubled: Nat := {
+  twice(4)
+}

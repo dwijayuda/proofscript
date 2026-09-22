@@ -1,0 +1,11 @@
+{
+  "checkpoint": "proofscript-v1-ka122-executable-refinement-theorem-preflight0",
+  "status": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 366,
+  "newFormalLean4LeanBridgeObligations": 0,
+  "featureSurfaceBridgeProgressPercent": 100,
+  "executableKernelEquivalenceProofProgressPercent": 98,
+  "overallConservativeProjectProgressPercent": 84.4,
+  "architectureHealth": true
+}

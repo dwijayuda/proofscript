@@ -1,0 +1,184 @@
+{
+  "checkpoint": "proofscript-v1-ka42-resource-error-conservativity-bridge0",
+  "publicVersion": "1.0.0-pskernel.45",
+  "baseline": "proofscript-v1-ka41-codec-replay-refinement-bridge0",
+  "requiredCommands": [
+    {
+      "command": "npm install --offline --no-audit --no-fund",
+      "status": "passed"
+    },
+    {
+      "command": "npm run build -- --pretty false",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:pskernel:ka41",
+      "status": "passed",
+      "note": "KA41 inherited version gate widened to accept KA42 package version without changing KA41 proof surface."
+    },
+    {
+      "command": "npm run test:pskernel:ka42",
+      "status": "passed"
+    },
+    {
+      "command": "npm run assurance:ka41",
+      "status": "passed"
+    },
+    {
+      "command": "npm run assurance:ka42",
+      "status": "passed"
+    },
+    {
+      "command": "npm run lean:ka41:check",
+      "status": "passed"
+    },
+    {
+      "command": "npm run lean:ka42:check",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:psc:kernel-status",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:psc:conformance-bounded",
+      "status": "passed"
+    },
+    {
+      "command": "npm run arena:corpus-preflight",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:arena:static-nonperf",
+      "status": "passed",
+      "counts": {
+        "total": 26,
+        "acceptedGood": 4,
+        "rejectedBad": 22,
+        "wrongAccepts": 0,
+        "wrongRejects": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "command": "npm run test:arena:tutorial",
+      "status": "passed",
+      "counts": {
+        "total": 140,
+        "acceptedGood": 93,
+        "rejectedBad": 47,
+        "wrongAccepts": 0,
+        "wrongRejects": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "command": "npm run verify:arena",
+      "status": "timed_out_not_counted",
+      "note": "wrapper timed out; direct preflight/static/tutorial gates passed"
+    },
+    {
+      "command": "fresh extract npm install --offline --no-audit --no-fund",
+      "status": "passed"
+    },
+    {
+      "command": "fresh extract npm run build -- --pretty false",
+      "status": "passed"
+    },
+    {
+      "command": "fresh extract npm run test:pskernel:ka42",
+      "status": "passed"
+    },
+    {
+      "command": "fresh extract npm run lean:ka42:check",
+      "status": "passed"
+    },
+    {
+      "command": "unzip -t final ZIP",
+      "status": "passed"
+    },
+    {
+      "command": "sha256sum -c final SHA file",
+      "status": "pending_after_final_repack"
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka42-resource-error-conservativity-bridge0",
+    "featureSurfaceBridgeProgressPercent": 63,
+    "executableKernelEquivalenceProofProgressPercent": 30,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 128,
+    "groups": [
+      {
+        "id": "ordinary-declarations",
+        "progressPercent": 82,
+        "status": "aggregate bridges present; executable refinement still open"
+      },
+      {
+        "id": "quotients",
+        "progressPercent": 68,
+        "status": "environment bridges present; semantic quotient soundness still open"
+      },
+      {
+        "id": "inductives",
+        "progressPercent": 33,
+        "status": "conditional environment bridge present; recursor/positivity/projection refinement open"
+      },
+      {
+        "id": "mutual-definitions",
+        "progressPercent": 45,
+        "status": "conditional environment bridge present; executable mutual recursion refinement open"
+      },
+      {
+        "id": "typechecker",
+        "progressPercent": 36,
+        "status": "proof-surface bridge present; end-to-end executable refinement open"
+      },
+      {
+        "id": "expression-tags",
+        "progressPercent": 60,
+        "status": "TrExprS constructor surface covered; executable translator refinement open"
+      },
+      {
+        "id": "whnf-defeq",
+        "progressPercent": 43,
+        "status": "theory-level bridge present; executable algorithm refinement open"
+      },
+      {
+        "id": "primitive-literals",
+        "progressPercent": 38,
+        "status": "primitive/literal proof-surface bridge present; reflection completeness open"
+      },
+      {
+        "id": "codec-replay",
+        "progressPercent": 36,
+        "status": "Replay surface + codec stability gate present; full replay refinement open"
+      },
+      {
+        "id": "resource-error-conservativity",
+        "progressPercent": 30,
+        "status": "fuel/error proof-surface bridge present; full conservativity open"
+      }
+    ]
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "coreFormatChanged": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullResourceErrorConservativity": false,
+    "formalLean4EquivalenceProvenObligations": 128
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka14-real-arena-corpus0",
+  "publicVersion": "1.0.0-pskernel.17",
+  "baseline": "proofscript-v1-ka13-vdecl-wf-bridge0",
+  "referenceKind": "real-uploaded-lean-kernel-arena-corpus-verification",
+  "arenaResultsMeta": {
+    "timestamp": "2026-09-15 15:36:44 UTC",
+    "git_revision": "a538455e201c1be48a11963cb83058649a36dc0e",
+    "git_revision_short": "a538455e",
+    "github_url": "https://github.com/leanprover/lean-kernel-arena/commit/a538455e201c1be48a11963cb83058649a36dc0e",
+    "github_action_url": "https://github.com/leanprover/lean-kernel-arena/actions/runs/34974976650",
+    "round": null,
+    "doi": null,
+    "zenodo_deposition": null,
+    "github_run_id": "34974976650"
+  },
+  "corpus": {
+    "fixturesDir": "/mnt/data/arena-corpus-20260915",
+    "uploadedArchive": "/mnt/data/lean-arena-tests.tar(5).gz",
+    "uploadedResults": "/mnt/data/results(6).json",
+    "ndjsonCount": 190,
+    "requiredSentinelsAvailable": true
+  },
+  "staticNonperf": {
+    "total": 26,
+    "expectedAccept": 4,
+    "expectedReject": 22,
+    "acceptedGood": 4,
+    "rejectedBad": 22,
+    "declinedUnsupported": 0,
+    "wrongAccepts": 0,
+    "wrongRejects": 0,
+    "checkerCrashes": 0,
+    "notRun": 0,
+    "fullStaticAgreement": true
+  },
+  "tutorial": {
+    "total": 140,
+    "expectedAccept": 93,
+    "expectedReject": 47,
+    "acceptedGood": 93,
+    "rejectedBad": 47,
+    "declinedUnsupported": 0,
+    "wrongAccepts": 0,
+    "wrongRejects": 0,
+    "checkerCrashes": 0,
+    "notRun": 0,
+    "fullArenaTutorial": true
+  },
+  "verifyArenaPassed": true,
+  "trustedKernelSemanticChange": false,
+  "kernelCodecChange": false,
+  "newTrustedComputationRule": false,
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "fullLean4Equivalence": false,
+  "sameTheoryAsFullLean4": false,
+  "fullyFormalK3": false,
+  "formalLean4EquivalenceProvenObligations": 2,
+  "formalObligationMeaning": "KA-13 conditional VDecl.WF bridge lemmas remain the only counted obligations; KA-14 adds Arena execution evidence, not new Lean theorem obligations."
+}

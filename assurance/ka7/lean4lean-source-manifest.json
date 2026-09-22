@@ -1,0 +1,45 @@
+{
+  "schema": "proofscript.assurance.ka7.lean4lean-source-manifest/v1",
+  "checkpoint": "proofscript-v1-ka7-real-lean4lean-import0",
+  "publicVersion": "1.0.0-pskernel.9",
+  "baseline": "proofscript-v1-ka6-lean4lean-binding0",
+  "targetLeanVersion": "4.33.1",
+  "targetLeanCommit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "purpose": "Replace the KA-6 Lean4Lean-compatible interface with a real imported Lean4Lean source tree when a pinned source is mounted.",
+  "sourceDiscoveryCandidates": [
+    "/mnt/data/lean4lean-intake/source",
+    "/mnt/data/lean4lean-intake/lean4lean-master",
+    "/mnt/data/lean4lean-intake/lean4lean",
+    "vendor/lean4lean",
+    "external/lean4lean",
+    "/mnt/data/lean4lean",
+    "/mnt/data/lean4lean-master",
+    "/mnt/data/lean4lean-src",
+    "/mnt/data/lean4lean-test-clone"
+  ],
+  "requiredSourceFiles": [
+    "lean-toolchain",
+    "lakefile.toml",
+    "Lean4Lean.lean",
+    "Lean4Lean/Environment.lean"
+  ],
+  "preferredReferenceModules": [
+    "Lean4Lean",
+    "Lean4Lean.Environment"
+  ],
+  "strictAcceptanceCriteria": [
+    "A source candidate exists and contains requiredSourceFiles.",
+    "The source lean-toolchain targets leanprover/lean4:v4.33.1 unless an explicit compatibility override is recorded.",
+    "Lean 4.33.1 is materialized locally.",
+    "lake env lean can import Lean4Lean from the candidate tree.",
+    "No PSKernel trusted-kernel semantics are changed by the binding gate."
+  ],
+  "claimBoundary": {
+    "actualLean4LeanImportBound": false,
+    "strictImportPassed": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0
+  }
+}

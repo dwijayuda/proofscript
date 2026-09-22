@@ -1,0 +1,22 @@
+{
+  "checkpoint": "proofscript-v1-ka94-primitive-result-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.97",
+  "featureSurfaceBridgeProgressPercent": 99,
+  "executableKernelEquivalenceProofProgressPercent": 72,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 293,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 288,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "correctedFormalLean4LeanBridgeObligations": 293,
+    "countedNewObligations": [
+      "translated_mkResult_wf",
+      "translated_mkResult1_wf",
+      "translated_mkResultBool_wf",
+      "translated_mkResultBitwise_wf",
+      "translated_mkResultTypeEq_wf"
+    ]
+  },
+  "metricPolicy": "KA94 adds direct non-sorry-backed primitive result helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

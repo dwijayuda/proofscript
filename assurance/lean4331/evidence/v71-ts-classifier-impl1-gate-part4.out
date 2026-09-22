@@ -1,0 +1,7 @@
+PASS: Core v71 / KERNEL-level-instantiation-conformance1 / Lean 4.33.1 identity
+PASS: 294 assurance/trusted source fingerprints
+PASS: exact Lean executable 4.33.1/819816b2e0a3
+PASS: eta/proof irrelevance: 1,000 TS + 1,000 exact Lean
+PASS: conversion-dependent typing: 1,000 TS + 1,000 exact Lean
+PASS: projection: 1,000 TS + 1,000 exact Lean + minimized historical regression
+KERNEL v71 ASSURANCE GATE PART 4/6: PASS

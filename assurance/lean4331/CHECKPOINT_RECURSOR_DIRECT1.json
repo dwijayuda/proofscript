@@ -1,0 +1,57 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint-recursor-direct1/v1",
+  "date": "2026-09-10",
+  "proofscript": {
+    "coreFormat": 70,
+    "profile": "KERNEL-projection-conformance1",
+    "certificateFormat": 2
+  },
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "semanticChange": false,
+  "formal": {
+    "recursorMetadataPositions": "proved-under-explicit-correspondence-no-sorryAx",
+    "recursorRuleKeysAndK": "proved-under-explicit-correspondence-no-sorryAx",
+    "directRecursiveIH": "proved-no-sorryAx",
+    "directFieldsFirstIota": "proved-no-sorryAx",
+    "kMajor": "proved-relative-to-sound-type-equality-no-sorryAx",
+    "wholeKernelK3": false
+  },
+  "metadataDifferential": {
+    "shapes": 7,
+    "typescriptFailures": 0,
+    "exactLeanFailures": 0,
+    "normalizedLinesIdentical": true,
+    "leanDeclarationPath": "Lean.addDecl (.inductDecl ...)"
+  },
+  "recursorRegression": {
+    "kExactLean": "passed",
+    "fieldsFirstMinorOrderExactLean": "passed",
+    "indexedRecursorsExactLean": "passed"
+  },
+  "regressions": {
+    "typescriptBuild": "passed",
+    "conformance": "passed",
+    "boundedRunnerFamilies": 89,
+    "boundedRunnerFailures": 0,
+    "boundedRunnerTimeouts": 0,
+    "monolithicRunner": "not-counted-timeout; replaced by explicit bounded groups",
+    "sourceLevelDifferential": {
+      "accepted": 23,
+      "total": 25,
+      "classification": "known-frontend-exporter-boundary"
+    }
+  },
+  "keySha256": {
+    "packages/kernel/src/kernel.ts": "44c6fd4af2cd821976130c551f4769442de054496a6aa4a125fdbf820c221c6c",
+    "packages/kernel/src/inductive.ts": "b06156840066f9c06a5f2264b440be6c6cd555c1f85d84f6fc9cd79fd39c03f6",
+    "assurance/lean4331/formal/ProofScriptKernelEquivalence/RecursorMetadata.lean": "49bd77a23a5e4957b55afc320d66410c64f4bf4d964eaafe8d3c02290604f7e3",
+    "assurance/lean4331/formal/ProofScriptKernelEquivalence/RecursorDirect.lean": "e131f913c1aa4c2fe160cf1e15d54c737b7f5074301ce8450333f39945211b2e",
+    "assurance/lean4331/evidence/RecursorMetadataNativeDifferential.lean": "6f3512af4af9aba2481337621bab203c4d4ed47340a4dd5beace137b21b7d1da",
+    "tools/kernel-recursor-metadata-differential-tests.ts": "b6e096cfa8a81deda7808f17b01cedbaa7d72fc33195aae047919d674aa11b94",
+    "tools/kernel-v70-assurance-gate.ts": "96e80750155a73d702d185d276f2c941d940d44f2e254293e3bfe77f84d28fc6"
+  },
+  "next": "quotient typing/reduction correspondence; then O-DECL environment/declaration bridge and remaining inductive admission/generated-recursors closure"
+}

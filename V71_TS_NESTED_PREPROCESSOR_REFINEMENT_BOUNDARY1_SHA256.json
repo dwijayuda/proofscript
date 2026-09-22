@@ -1,0 +1,60 @@
+{
+  "checkpoint": "V71_TS_NESTED_PREPROCESSOR_REFINEMENT_BOUNDARY1",
+  "progressOverall": 80,
+  "files": [
+    {
+      "file": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71TSNestedPreprocessorRefinementBoundary.lean",
+      "sha256": "381e78f86a650e4109dd96d268e176285d5776e45f74bd2b5018269462ece139"
+    },
+    {
+      "file": "assurance/lean4331/CHECKPOINT_V71_TS_NESTED_PREPROCESSOR_REFINEMENT_BOUNDARY1.json",
+      "sha256": "e1cbd64b5df594b0930ea2b753a46fd8fa440c29b658ec56c51278d8f9f44cd1"
+    },
+    {
+      "file": "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_TS_NESTED_PREPROCESSOR_REFINEMENT_BOUNDARY1.md",
+      "sha256": "03f03d0c894fe15b122c54d1c3fb75aea507e13e6ee83b76ee521430d300829e"
+    },
+    {
+      "file": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-boundary-formal1.out",
+      "sha256": "91da803570ec8f02f677afc082d13880ead840d79ad918f72b74f2894955294e"
+    }
+  ],
+  "nestedSuiteLogs": [
+    {
+      "file": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-base-exact-lean1.out",
+      "sha256": "46bb77afe443ca7907e43ebe504d9c7fd1ff98cfcbf5402ecab3e0ebf271d992"
+    },
+    {
+      "file": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-parameters-exact-lean1.out",
+      "sha256": "223770d6dbb1890ad72dc9126f1b9a6c87aed9a12a545b74808d7f1f964e3f8a"
+    },
+    {
+      "file": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-indices-exact-lean1.out",
+      "sha256": "f2019d4d34339a1bfd3689b6b3ce3cd0944ee7394990a6e82d38a26ec346fa63"
+    },
+    {
+      "file": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-index-expressions-exact-lean1.out",
+      "sha256": "9b91339b6f549370a3bb03fa2d5821d152a8b2f9fb2ab372e76363196c4fed82"
+    },
+    {
+      "file": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-multiple-specializations-exact-lean1.out",
+      "sha256": "49571adc3ca0d4d33ad4787437f96f1eaa213cc13ee4134b9851746d4372f4d6"
+    },
+    {
+      "file": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-polymorphic-exact-lean1.out",
+      "sha256": "d2b4908ee90166fbe15775d97eee4d31677d014c341151eb7ed6e2f3eaf35feb"
+    },
+    {
+      "file": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-indexed-containers-exact-lean1.out",
+      "sha256": "484ea35cfbdc6431f92521f148c9e28c215ba09570335f7c9a16cda6f2202a52"
+    },
+    {
+      "file": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-deeper-generalization-exact-lean1.out",
+      "sha256": "1fa3baa2a3377e43e96b906c0b2e770caeaee07e189c31f313073e120cebe99c"
+    },
+    {
+      "file": "assurance/lean4331/evidence/v71-ts-nested-preprocessor-refinement-deep-multiparam-generalization-exact-lean1.out",
+      "sha256": "054563bea3010135559ef2f220b06bd2a992262c0badff7739219228132ecb82"
+    }
+  ]
+}

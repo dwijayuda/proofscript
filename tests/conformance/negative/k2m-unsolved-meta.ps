@@ -1,0 +1,4 @@
+inductive Box(A: Type): Type { | mk(x: A); }
+def partial{A: Type}{B: Type}(b: Box(A)): Nat := { 0 }
+def mkNatBox(n: Nat): Box(Nat) := { Box.mk(Nat, n) }
+def bad(n: Nat): Nat := { partial(mkNatBox(n)) }

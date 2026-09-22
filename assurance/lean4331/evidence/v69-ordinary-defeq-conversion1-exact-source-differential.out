@@ -1,0 +1,26 @@
+✓ identity [semantic-equivalence]: declaration kind, declaration types
+✓ universes [semantic-equivalence]: universe parameters, declaration types, max/imax normalization
+✓ binder-info [semantic-equivalence]: BinderInfo, declaration types
+✓ proof-irrelevance-eq [semantic-equivalence]: proof irrelevance, Eq behavior
+✗ reduction-recursion: generated Lean rejected with exit 1; generated observation missing expected text: PSDIFF doubleNat3=6
+✓ structure-recursor-projection [semantic-equivalence]: constructor types, recursor types, generated declarations, projection reduction
+✓ typeclass-selection [semantic-equivalence]: typeclass candidate selection, instance BinderInfo, definition reduction
+✓ axiom-dependencies [semantic-equivalence]: axiom dependencies, declaration types
+✓ module-diamond-environment [semantic-equivalence]: module/import environment observations, declaration ownership, definition reduction
+✓ let-zeta [semantic-equivalence]: local binding semantics, zeta reduction, definition reduction
+✓ transparency [semantic-equivalence]: transparency, declaration kind, definition reduction
+✗ equation-patterns: generated Lean rejected with exit 1; generated observation missing expected text: PSDIFF patterns=true,false,true
+✓ structure-update [semantic-equivalence]: structure update lowering, projection reduction, definition reduction
+✓ literals [semantic-equivalence]: literal lowering, definition reduction, Eq behavior
+✓ implicit-unification [semantic-equivalence]: implicit synthesis, first-order unification, BinderInfo, definition reduction
+✓ recursive-typeclass [semantic-equivalence]: typeclass candidate selection, recursive instance prerequisites, instance BinderInfo, definition reduction
+✓ reject-type-mismatch [negative-agreement]: logical rejection, declaration type mismatch
+✓ reject-equality-type-mismatch [negative-agreement]: logical rejection, Eq behavior
+✓ reject-opaque-no-delta [negative-agreement]: logical rejection, transparency
+✓ gap-higher-order-inference [capability-gap]: capability gap, higher-order implicit inference
+✓ gap-dependent-instance-target [capability-gap]: capability gap, dependent instance target
+✓ namespaces [semantic-equivalence]: namespace/name resolution, qualified declaration names, root-qualified resolution
+✓ sections-open [semantic-equivalence]: section environment scope, open namespace resolution, open precedence
+✓ section-vars [semantic-equivalence]: section variable telescope generalization, include/omit theorem policy, BinderInfo
+✓ kernel-universe-equivalence [semantic-equivalence]: universe parameters, declaration types, max/imax normalization
+wrote differential evidence report: artifacts/LEAN_4_33_1_DIFFERENTIAL_REPORT.json

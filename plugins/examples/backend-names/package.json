@@ -1,0 +1,9 @@
+{
+  "name": "example-proofscript-backend-names",
+  "version": "0.0.1",
+  "private": true,
+  "main": "index.cts",
+  "dependencies": {
+    "@proofscript/plugin-api": "0.1.0-dev.0"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "checkpoint": "proofscript-v1-ka120-executable-refinement-discharge-agenda0",
+  "status": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 366,
+  "newFormalLean4LeanBridgeObligations": 0,
+  "featureSurfaceBridgeProgressPercent": 100,
+  "executableKernelEquivalenceProofProgressPercent": 96,
+  "overallConservativeProjectProgressPercent": 83.8,
+  "architectureHealth": true
+}

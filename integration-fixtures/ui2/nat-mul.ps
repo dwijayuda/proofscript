@@ -1,0 +1,32 @@
+def double(n: Nat): Nat := {
+  n * 2
+}
+
+def product(a: Nat, b: Nat): Nat := {
+  a * b
+}
+
+def mixed(a: Nat, b: Nat): Nat := {
+  a + b * 2
+}
+
+def chooseScaled(flag: Bool, n: Nat): Nat := {
+  let scaled: Nat := n * 3;
+  bif(flag) { scaled } else { 0 }
+}
+
+def answer: Nat := {
+  product(6, 7)
+}
+
+theorem answer_eq_42: answer = 42 := by {
+  rfl
+}
+
+theorem mul_zero_closed: 7 * 0 = 0 := by {
+  rfl
+}
+
+theorem mul_succ_closed: 4 * 3 = 12 := by {
+  rfl
+}

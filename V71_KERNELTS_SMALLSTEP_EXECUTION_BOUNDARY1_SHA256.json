@@ -1,0 +1,13 @@
+{
+  "artifact": "V71_KERNELTS_SMALLSTEP_EXECUTION_BOUNDARY1",
+  "checkpoint": "assurance/lean4331/CHECKPOINT_V71_KERNELTS_SMALLSTEP_EXECUTION_BOUNDARY1.json",
+  "checkpointSha256": "d41c033396cf69acf3baf31b954a42aa26cc221d32391afb58a5f2986b474870",
+  "markdown": "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_KERNELTS_SMALLSTEP_EXECUTION_BOUNDARY1.md",
+  "markdownSha256": "bedbc036d537646aced71edb69f87dd58ea6d3211ba770489ebcbd96b753ba03",
+  "formalSource": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71KernelTSSmallStepExecutionBoundary.lean",
+  "formalSourceSha256": "b6fefc1c8dd161f2f923693b41fd63c46a367d5b62ff4b16172e321e3d59818b",
+  "formalLog": "assurance/lean4331/evidence/v71-kernelts-smallstep-execution-boundary-formal1.out",
+  "formalLogSha256": "add11933562214c067bd52f63f81cc0f9fe99e42da5338e1c1e4ebd342c72536",
+  "tcbSourceHash": "59bd57ff628afab1938afedb2faac8556f2bf02d5db97b7c25f37672058d32c1",
+  "branchInventoryHash": "b9d5acc1665a7b1807c9381a377bad4a3074dc6c54ef03446f3bab07129a30f9"
+}

@@ -1,0 +1,23 @@
+{
+  "checkpoint": "proofscript-v1-ka39-defeq-whnf-refinement-bridge0",
+  "baseline": "proofscript-v1-ka38-whnf-preservation-bridge0",
+  "formalLean4EquivalenceProvenObligationsBefore": 96,
+  "newFormalBridgeObligations": 7,
+  "formalLean4EquivalenceProvenObligationsAfter": 103,
+  "closedSinceKA38": [
+    "typed-defeq-exposes-left-and-right-typing-evidence",
+    "typed-defeq-erases-to-untyped-defeq",
+    "untyped-defeq-reflexive-for-wf-expressions",
+    "untyped-defeq-symmetric",
+    "typed-defeq-monotone-under-environment-extension",
+    "untyped-defeq-monotone-under-environment-extension",
+    "typing-monotone-under-environment-extension"
+  ],
+  "stillOpen": [
+    "end-to-end executable PSKernel isDefEq refinement against Lean4Lean TypeChecker.isDefEq",
+    "conversion completeness for all Lean4 WHNF/recursor/projection/quotient cases",
+    "algorithmic transparency-policy equivalence",
+    "fuel/resource/error conservativity for conversion checking",
+    "global theory-wide refinement map from PSKernel runtime artifacts to Lean4Lean judgments"
+  ]
+}

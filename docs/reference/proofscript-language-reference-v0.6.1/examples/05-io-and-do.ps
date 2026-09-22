@@ -1,0 +1,4 @@
+function greet(_ : Unit) : IO Unit := do {
+  let name <- IO.getLine;
+  IO.println(s!"Hello {name}");
+};

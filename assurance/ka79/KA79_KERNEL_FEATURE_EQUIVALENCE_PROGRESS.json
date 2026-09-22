@@ -1,0 +1,23 @@
+{
+  "checkpoint": "proofscript-v1-ka79-executable-infer-loop-refinement0",
+  "publicVersion": "1.0.0-pskernel.82",
+  "featureSurfaceBridgeProgressPercent": 91,
+  "executableKernelEquivalenceProofProgressPercent": 58,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 237,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 232,
+    "newFormalLean4LeanBridgeObligations": 5,
+    "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+    "correctedFormalLean4LeanBridgeObligations": 237,
+    "countedNewObligations": [
+      "translated_ensureForallCore_defeq_transport_wf",
+      "translated_inferLambda_loop_wf",
+      "translated_inferForall_loop_wf",
+      "translated_inferApp_loop_wf",
+      "translated_inferLet_loop_wf"
+    ]
+  },
+  "metricPolicy": "KA79 adds direct non-sorry-backed InferType loop bridge wrappers. Percentages remain conservative dashboard estimates, not equivalence theorems.",
+  "notAFormalEquivalenceClaim": true
+}

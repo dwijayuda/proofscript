@@ -1,0 +1,66 @@
+{
+  "checkpoint": "proofscript-v1-ka41-codec-replay-refinement-bridge0",
+  "baseline": "proofscript-v1-ka40-primitive-literal-policy-bridge0",
+  "featureSurfaceBridgeProgressPercent": 61,
+  "executableKernelEquivalenceProofProgressPercent": 28,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 120,
+  "groups": [
+    {
+      "id": "ordinary-declarations",
+      "progressPercent": 78,
+      "status": "aggregate bridges complete for ordinary declaration surface"
+    },
+    {
+      "id": "quotient-declarations",
+      "progressPercent": 72,
+      "status": "environment/lookup/defeq bridges complete; semantic soundness still open"
+    },
+    {
+      "id": "inductive-declarations",
+      "progressPercent": 35,
+      "status": "first conditional env bridge only"
+    },
+    {
+      "id": "mutual-definitions",
+      "progressPercent": 40,
+      "status": "first conditional env bridge only"
+    },
+    {
+      "id": "typechecker-executable-surface",
+      "progressPercent": 35,
+      "status": "TypeChecker proof-surface wrappers present; executable refinement open"
+    },
+    {
+      "id": "expression-translation",
+      "progressPercent": 55,
+      "status": "TrExprS constructor surface covered; executable translator open"
+    },
+    {
+      "id": "whnf-defeq",
+      "progressPercent": 38,
+      "status": "theory-level WHNF/defeq bridges partial"
+    },
+    {
+      "id": "primitive-literal-policy",
+      "progressPercent": 32,
+      "status": "primitive/literal proof-surface bridge started"
+    },
+    {
+      "id": "codec-replay",
+      "progressPercent": 24,
+      "status": "replay/context and codec stability gates started"
+    },
+    {
+      "id": "resource-error-conservativity",
+      "progressPercent": 12,
+      "status": "mostly open"
+    }
+  ],
+  "nextHighestImpactMilestones": [
+    "KA42-resource-error-conservativity",
+    "KA43-theory-wide-refinement-map",
+    "KA44-executable-expression-translator-refinement",
+    "KA45-replay-certificate-bundle-refinement"
+  ]
+}

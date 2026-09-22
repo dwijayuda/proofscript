@@ -1,0 +1,20 @@
+{
+  "checkpoint": "proofscript-v1-ka79-executable-infer-loop-refinement0",
+  "publicVersion": "1.0.0-pskernel.82",
+  "baseline": "proofscript-v1-ka78-recursor-projection-sorry-boundary-audit0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 237,
+  "newFormalLean4LeanBridgeObligations": 5,
+  "baselineObligations": 232,
+  "countedObligations": [
+    "translated_ensureForallCore_defeq_transport_wf",
+    "translated_inferLambda_loop_wf",
+    "translated_inferForall_loop_wf",
+    "translated_inferApp_loop_wf",
+    "translated_inferLet_loop_wf"
+  ],
+  "redTestObserved": true,
+  "redTestReason": "KA79 test failed first on missing KA79 gate tool",
+  "noWrapperTimeoutCountedAsPassed": true
+}

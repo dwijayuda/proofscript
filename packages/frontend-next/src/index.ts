@@ -1,0 +1,42 @@
+export { checkSource, compileProgram, compileSource, emitLean, checkProject } from "./core/compiler.js";
+export { moduleInterfaceHash, moduleSnapshot, createIncrementalSnapshot } from "./core/incremental.js";
+export type { ProjectCheckResult, CheckedProjectModule } from "./core/compiler.js";
+export { Registry } from "./core/registry.js";
+export type { IRProgram, IRDeclaration, IRDef, IRExtensionDecl, IRExpr, IRType, IRParam, BinderInfo } from "./core/model.js";
+export { default as defFeature } from "./plugins/features/def.js";
+export { default as typeFeature } from "./plugins/features/type.js";
+export { default as natFeature } from "./plugins/features/nat.js";
+export { default as natArithmeticFeature } from "./plugins/features/nat-add.js";
+export { default as typescriptBackend } from "./plugins/backends/typescript.js";
+export { default as leanProver } from "./plugins/provers/lean.js";
+export { default as propEqFeature } from "./plugins/features/prop-eq.js";
+export { default as theoremFeature } from "./plugins/features/theorem.js";
+export { default as declarationsFeature } from "./plugins/features/declarations.js";
+export { default as environmentFeature } from "./plugins/features/environment.js";
+export { default as boolFeature } from "./plugins/features/bool.js";
+export { default as beqFeature } from "./plugins/features/beq.js";
+export { default as conditionalsFeature } from "./plugins/features/conditionals.js";
+export { default as localBindingFeature } from "./plugins/features/local-binding.js";
+export { default as typescriptBoolBeqBackendFeature } from "./plugins/backend-features/typescript-bool-beq.js";
+export { default as typescriptConditionalsBackendFeature } from "./plugins/backend-features/typescript-conditionals.js";
+
+export { default as typeclassFeature } from "./plugins/features/typeclass.js";
+export { default as orderFeature } from "./plugins/features/order.js";
+export { default as typescriptOrderBackendFeature } from "./plugins/backend-features/typescript-order.js";
+
+export { default as structureFeature } from "./plugins/features/structure.js";
+export { default as typescriptStructureClassBackendFeature } from "./plugins/backend-features/typescript-structure-class.js";
+export { default as adtFeature } from "./plugins/features/adt.js";
+export { default as matchFeature } from "./plugins/features/match.js";
+export { default as typescriptAdtBackendFeature } from "./plugins/backend-features/typescript-adt.js";
+
+export { default as optionFeature } from "./plugins/features/option.js";
+export { default as typescriptOptionBackendFeature } from "./plugins/backend-features/typescript-option.js";
+export { default as exceptFeature } from "./plugins/features/except.js";
+export { default as typescriptExceptBackendFeature } from "./plugins/backend-features/typescript-except.js";
+export { default as intFeature } from "./plugins/features/int.js";
+export { default as typescriptIntBackendFeature } from "./plugins/backend-features/typescript-int.js";
+export { default as stringFeature } from "./plugins/features/string.js";
+export { default as typescriptStringBackendFeature } from "./plugins/backend-features/typescript-string.js";
+export { default as listFeature } from "./plugins/features/list.js";
+export { default as typescriptListBackendFeature } from "./plugins/backend-features/typescript-list.js";

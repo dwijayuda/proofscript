@@ -1,0 +1,20 @@
+{
+  "schema": "proofscript.artifact.sha256/v1",
+  "artifact": "V71_NESTED_FORMED_ENV_CERT1",
+  "generatedAtUtc": "2026-09-10T03:58:09.264Z",
+  "files": {
+    "assurance/lean4331/formal/ProofScriptKernelEquivalence/InductiveNestedFormedEnvironment.lean": "e092194ea961944d53443a433dbfef46216378618c12f2a9cb6f465be7f3a6c4",
+    "assurance/lean4331/evidence/v71-nested-formed-env-formal1.out": "bd0ef2cf87caa8b944f2417de8c225871723a86a8236feef33e647217c1a3fdc",
+    "assurance/lean4331/CHECKPOINT_V71_NESTED_FORMED_ENV_CERT1.json": "0c7d33a15d59fb9ba30687044a42f91efed9517a9009d33f9c5423865dbf80ae",
+    "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_NESTED_FORMED_ENV_CERT1.md": "6d761ca4701f760a2deb353f519ceb5402c9da87e8925aee657a4289b8a946ae",
+    "assurance/lean4331/evidence/v71-nested-base-exact-lean1.out": "d4427c00d29aad268209a90fbd62532785fa3fb43a723c9b3c92f9ac86a394bf",
+    "assurance/lean4331/evidence/v71-nested-parameters-exact-lean1.out": "38b4d77219b800122ed12d4c692ea753935fa5fd9760a3402c818231d1de4f60",
+    "assurance/lean4331/evidence/v71-nested-indices-exact-lean1.out": "2f899cbed4bfc702a3218f316e4b51823bc6a016372b563bb2939457299ebe95",
+    "assurance/lean4331/evidence/v71-nested-index-expressions-exact-lean1.out": "b87be9ece0a689c9587d5a9313b0e4c995dd9bdd6768d26de272318dcded0bcf",
+    "assurance/lean4331/evidence/v71-nested-multiple-specializations-exact-lean1.out": "b44d46979e16c8a1abe620953ce0f21ec31fede3718f36425e7a60222e10e536",
+    "assurance/lean4331/evidence/v71-nested-polymorphic-exact-lean1.out": "fe948a5b360e49e181014df03a47fee4279639c615db21b842ce8c510c1de8b3",
+    "assurance/lean4331/evidence/v71-nested-indexed-containers-exact-lean1.out": "0a7d49f8e04be5d15af119903757126338bd93963014e30dead6342a49cfbc74",
+    "assurance/lean4331/evidence/v71-nested-deeper-generalization-exact-lean1.out": "8a1c7c2f8432f5fc5174c4ea5f9642a6f90d30781da1dbc6ab21a26d255e03f8",
+    "assurance/lean4331/evidence/v71-nested-deep-multiparam-generalization-exact-lean1.out": "ca46b7d647e939391d848e99bcc255af991e15f118d91dedb4c92ec76be1ec57"
+  }
+}

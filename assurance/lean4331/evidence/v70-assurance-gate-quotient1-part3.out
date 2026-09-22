@@ -1,0 +1,6 @@
+=== recursor K ===
+✓ kernel v20 Lean 4.33.1 RecursorVal.k classification, K-major reconstruction, context-sensitive reduction, replay, and historical gating passed with exact Lean differential
+=== recursor minor order ===
+✓ kernel v36 Lean fields-first recursive minor ordering across simple/parameterized/indexed/mutual/nested recursors, iota, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+=== indexed recursors ===
+✓ kernel v17 direct+higher-order indexed recursors, dependent local indices/motive/minors, recursive index iota, historical gating, and exact Lean observations passed

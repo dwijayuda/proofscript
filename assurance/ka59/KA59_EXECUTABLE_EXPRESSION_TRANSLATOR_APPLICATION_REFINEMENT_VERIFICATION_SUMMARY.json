@@ -1,0 +1,60 @@
+{
+  "checkpoint": "proofscript-v1-ka59-executable-expression-translator-application-refinement0",
+  "publicVersion": "1.0.0-pskernel.62",
+  "baseline": "proofscript-v1-ka58-executable-expression-translator-invariant-refinement0",
+  "commands": {
+    "focusedTest": "passed",
+    "assuranceKA59": "passed",
+    "leanKA59Check": "passed",
+    "npmInstallOffline": "passed",
+    "buildPrettyFalse": "passed",
+    "kernelSmoke": "passed_individual_after_combined_timeout",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "pscConformanceBounded": "passed",
+    "arenaCorpusPreflight": "passed",
+    "arenaStaticNonperf": "passed",
+    "arenaTutorial": "passed_individual",
+    "verifyArenaWrapper": "timed_out_not_counted",
+    "arenaTutorialHarness": "passed_individual",
+    "arenaTailCommands": "passed_individual",
+    "npmPackWorkspaces": "passed",
+    "packageSha256Manifest": "passed"
+  },
+  "strictLean4LeanUnblocked": true,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA59",
+        "source": "assurance/ka59/executable-expression-translator-application-refinement-bridge.lean",
+        "destination": "PSKernelKA59ExecutableExpressionTranslatorApplicationRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA59 gate tool absent before implementation",
+  "wrapperTimeouts": [
+    {
+      "command": "TERM=xterm timeout 600s npm run verify:arena",
+      "status": "timed_out_not_counted",
+      "lastStage": "test:arena:tutorial-harness",
+      "log": "/mnt/data/ka59-verify-arena.log"
+    }
+  ],
+  "packageSha256Entries": 36,
+  "freshExtractSmoke": {
+    "residueCount": 0,
+    "npmInstallOffline": "passed",
+    "buildPrettyFalse": "passed",
+    "testPskernelKA59": "passed",
+    "leanKA59Check": "passed"
+  }
+}

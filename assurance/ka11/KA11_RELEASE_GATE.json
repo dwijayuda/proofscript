@@ -1,0 +1,49 @@
+{
+  "checkpoint": "proofscript-v1-ka11-offline-lean4lean-deps0",
+  "publicVersion": "1.0.0-pskernel.13",
+  "createdAtUtc": "2026-09-18T08:23:00Z",
+  "baseline": "proofscript-v1-ka10-lean-target-policy0",
+  "kernel": {
+    "name": "PSKernel",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "offlineDependencyBundle": {
+    "lean4leanArchive": {
+      "path": "/mnt/data/lean4lean-master(8).zip",
+      "name": "lean4lean-master(8).zip",
+      "sizeBytes": 650114,
+      "mtimeMs": 1789719849596.3086,
+      "sha256": "295a1f4b23f39be73a27a7617c3fe1c6787892ff799607213b913419819f7383"
+    },
+    "batteriesArchive": {
+      "path": "/mnt/data/batteries-4.33.0-rc2.zip",
+      "name": "batteries-4.33.0-rc2.zip",
+      "sizeBytes": 488713,
+      "mtimeMs": 1789719848556.3088,
+      "sha256": "fce734c8d1b18a617cdcbd8ee864e6db26fdc4015102888487241c5900e3c2d6"
+    },
+    "lean4leanToolchain": "leanprover/lean4:v4.33.0-rc2",
+    "batteriesToolchain": "leanprover/lean4:v4.33.0-rc2",
+    "lean4leanToolchainAccepted": true,
+    "batteriesExactRev": true
+  },
+  "strictImport": {
+    "actualLean4LeanSourcePresent": true,
+    "exactBatteriesDependencyPresent": true,
+    "actualLean4LeanImportBound": true,
+    "strictActualImportPassed": true,
+    "blockedReasons": [],
+    "buildStatus": 0,
+    "importCheckStatus": 0
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0
+  }
+}

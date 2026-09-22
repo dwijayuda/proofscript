@@ -1,0 +1,160 @@
+{
+  "checkpoint": "proofscript-v1-ka86-primitive-divmod-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.89",
+  "baseline": "proofscript-v1-ka85-primitive-bitwise-recognizer-refinement0",
+  "releaseKind": "strict-lean4lean-primitive-divmod-recognizer-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA86",
+      "source": "assurance/ka86/primitive-divmod-recognizer-refinement-bridge.lean",
+      "destination": "PSKernelKA86PrimitiveDivModRecognizerRefinementBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 2,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka86-primitive-divmod-recognizer-refinement0",
+    "publicVersion": "1.0.0-pskernel.89",
+    "featureSurfaceBridgeProgressPercent": 97,
+    "executableKernelEquivalenceProofProgressPercent": 64,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 267,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 265,
+      "newFormalLean4LeanBridgeObligations": 2,
+      "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+      "correctedFormalLean4LeanBridgeObligations": 267,
+      "countedNewObligations": [
+        "translated_checkNatMod_wf",
+        "translated_checkNatDiv_wf"
+      ]
+    },
+    "metricPolicy": "KA86 adds direct non-sorry-backed primitive Nat.div/Nat.mod recognizer bridge wrappers. Percentages remain conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka86Files": [
+      {
+        "path": "tools/pskernel-ka86-primitive-divmod-recognizer-refinement-tests.ts",
+        "lines": 23,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka86-primitive-divmod-recognizer-refinement.ts",
+        "lines": 26,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka86/KA86_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 21,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka86/KA86_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka86/KA86_PRIMITIVE_DIVMOD_RECOGNIZER_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 30,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka86/KA86_PRIMITIVE_DIVMOD_RECOGNIZER_REFINEMENT_RELEASE_GATE.json",
+        "lines": 129,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka86/KA86_PRIMITIVE_DIVMOD_RECOGNIZER_REFINEMENT_REPORT.md",
+        "lines": 19,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka86/KA86_PRIMITIVE_DIVMOD_RECOGNIZER_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 18,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka86/primitive-divmod-recognizer-refinement-bridge.lean",
+        "lines": 31,
+        "ext": ".lean"
+      }
+    ],
+    "ka86ToolFiles": [
+      {
+        "path": "tools/pskernel-ka86-primitive-divmod-recognizer-refinement-tests.ts",
+        "lines": 23,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka86-primitive-divmod-recognizer-refinement.ts",
+        "lines": 26,
+        "ext": ".ts"
+      }
+    ],
+    "newKA86OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveDivModRecognizerRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false,
+  "boundedReleaseVerification": {
+    "passed": [
+      "npm install --offline --no-audit --no-fund",
+      "npm run build -- --pretty false",
+      "npm run test:pskernel:ka86",
+      "npm run assurance:ka86",
+      "npm run lean:ka86:check",
+      "npm run test:kernel:smoke",
+      "npm run test:standalone-small",
+      "npm run test:psc:kernel-status",
+      "npm run test:psc:conformance-bounded",
+      "npm run arena:corpus-preflight",
+      "npm run test:arena:static-nonperf",
+      "npm run test:arena:tutorial",
+      "npm run verify:arena",
+      "npm pack --workspaces --ignore-scripts",
+      "sha256sum -c package SHA manifest"
+    ],
+    "notCountedAsPassed": []
+  },
+  "npmPackages": {
+    "packed": 36,
+    "sha256Entries": 36,
+    "verification": "passed"
+  },
+  "arenaEvidence": {
+    "corpusPreflight": "passed",
+    "ndjsonFixtures": 190,
+    "staticNonPerf": "26/26 decisive",
+    "tutorial": "140/140 decisive",
+    "verifyArenaWrapper": "passed"
+  }
+}

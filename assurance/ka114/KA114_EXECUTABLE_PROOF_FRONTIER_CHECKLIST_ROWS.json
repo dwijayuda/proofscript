@@ -1,0 +1,53 @@
+{
+  "checklistPercent": 100,
+  "rows": [
+    {
+      "id": "frontier-ledger-imported-from-ka113",
+      "status": "done",
+      "evidence": "KA113 ledger closed or tracked all buckets",
+      "done": true
+    },
+    {
+      "id": "remaining-proof-frontier-enumerated",
+      "status": "done",
+      "evidence": "remaining executable proof frontier is explicit",
+      "done": true
+    },
+    {
+      "id": "proof-vs-dashboard-boundary-recorded",
+      "status": "done",
+      "evidence": "dashboard progress does not imply executable refinement theorem",
+      "done": true
+    },
+    {
+      "id": "full-equivalence-boundary-recorded",
+      "status": "done",
+      "evidence": "full Lean4 equivalence remains 0%",
+      "done": true
+    },
+    {
+      "id": "formal-k3-boundary-recorded",
+      "status": "done",
+      "evidence": "fully formal K3 remains 0%",
+      "done": true
+    },
+    {
+      "id": "next-proof-targets-ranked",
+      "status": "done",
+      "evidence": "next work should prove theorem families rather than add feature wrappers",
+      "done": true
+    },
+    {
+      "id": "release-artifact-policy-retained",
+      "status": "done",
+      "evidence": "Core 71/cert 2 and trusted packages unchanged",
+      "done": true
+    }
+  ],
+  "counts": {
+    "total": 7,
+    "done": 7,
+    "missing": 0
+  },
+  "evidenceMeaning": "frontier checklist makes proof targets explicit; it is not an executable PSKernel refinement proof"
+}

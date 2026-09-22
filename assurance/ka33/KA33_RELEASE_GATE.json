@@ -1,0 +1,54 @@
+{
+  "checkpoint": "proofscript-v1-ka33-inductive-env-bridge0",
+  "publicVersion": "1.0.0-pskernel.36",
+  "baseline": "proofscript-v1-ka32-feature-equivalence-audit0",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "directLean4LeanInductiveEnvBridge": {
+    "referenceKind": "direct-imported-lean4lean-inductive-env-bridge",
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanInductiveEnvBridgeChecked": true,
+    "strictInductiveEnvBridgePassed": true,
+    "theoryBuildStatus": 0,
+    "directBridgeCheckStatus": 0,
+    "coveredPSDeclKinds": [
+      "inductive"
+    ],
+    "formalBridgeLemmas": [
+      "PSKernelKA33.translated_inductive_is_real_vdecl",
+      "PSKernelKA33.translated_inductive_vdecl_wf",
+      "PSKernelKA33.translated_inductive_env_wf",
+      "PSKernelKA33.translated_inductive_env_ordered"
+    ],
+    "stillOpen": [
+      "no executable PSKernel inductive translator refinement proof",
+      "no positivity checker refinement proof",
+      "no recursor generation/refinement proof",
+      "no projection/reduction/iota semantic soundness proof",
+      "mutual and nested inductive feature parity remains open",
+      "full Lean 4 equivalence remains false"
+    ]
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "inductiveSemanticSoundness": false,
+    "formalLean4EquivalenceProvenObligations": 60
+  },
+  "blockedReasons": [],
+  "verificationSummary": {
+    "mainWorktreeCoreGates": "passed",
+    "arenaTutorial": "timed_out_not_counted",
+    "freshExtract": "passed",
+    "unzipIntegrity": "passed",
+    "sha256Check": "passed"
+  }
+}

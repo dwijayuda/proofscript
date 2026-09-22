@@ -1,0 +1,53 @@
+{
+  "readinessPercent": 100,
+  "rows": [
+    {
+      "id": "proof-statement-inventory",
+      "status": "ready",
+      "evidence": "top-level executable refinement theorem skeleton inventory is available from KA115",
+      "ready": true
+    },
+    {
+      "id": "dependency-closure",
+      "status": "ready",
+      "evidence": "proof dependencies are closed/tracked by KA116",
+      "ready": true
+    },
+    {
+      "id": "module-index",
+      "status": "ready",
+      "evidence": "candidate proof modules are indexed by KA117",
+      "ready": true
+    },
+    {
+      "id": "coverage-map",
+      "status": "ready",
+      "evidence": "refinement evidence families are coverage-mapped by KA118",
+      "ready": true
+    },
+    {
+      "id": "claim-boundary",
+      "status": "ready",
+      "evidence": "full Lean4 equivalence, fully formal K3, and executable refinement proof remain explicitly unclaimed",
+      "ready": true
+    },
+    {
+      "id": "release-evidence",
+      "status": "ready",
+      "evidence": "release verification and package/fresh-extract gates are part of the readiness definition",
+      "ready": true
+    },
+    {
+      "id": "remaining-proof-gap",
+      "status": "ready",
+      "evidence": "remaining 5% is reserved for actual theorem discharge, not dashboard preparation",
+      "ready": true
+    }
+  ],
+  "counts": {
+    "total": 7,
+    "ready": 7,
+    "notReady": 0
+  },
+  "evidenceMeaning": "proof-readiness records that prerequisites for the final executable refinement theorem are organized; it is not the theorem itself"
+}

@@ -1,0 +1,21 @@
+{
+  "checkpoint": "proofscript-v1-ka43-theory-wide-refinement-map0",
+  "policy": "no-spaghetti ratchet: no new trusted semantic code, no Core/codec changes, new KA43 source must stay small and focused, preexisting large files are inventoried instead of hidden",
+  "thresholds": {
+    "newKa43SourceMaxLines": 500,
+    "reportLargeFileThresholdLines": 900,
+    "forbiddenGeneratedSemanticPackagePrefixes": [
+      "packages/kernel/src/PSKernel",
+      "packages/kernel-codec/src"
+    ]
+  },
+  "requiredGates": [
+    "test:pskernel:ka43",
+    "assurance:ka43",
+    "build",
+    "smoke",
+    "standalone",
+    "psc status",
+    "arena preflight/static"
+  ]
+}

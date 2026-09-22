@@ -1,0 +1,116 @@
+{
+  "checkpoint": "proofscript-v1-ka35-typechecker-refinement-bridge0",
+  "publicVersion": "1.0.0-pskernel.38",
+  "baseline": "proofscript-v1-ka34-mutual-def-env-bridge0",
+  "generatedAtUtc": "2026-09-19T02:17:00Z",
+  "formalLean4LeanBridgeObligations": 71,
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "typeCheckerSemanticCompleteness": false
+  },
+  "requiredCommands": [
+    {
+      "command": "npm install --offline --no-audit --no-fund",
+      "status": "passed"
+    },
+    {
+      "command": "npm run build -- --pretty false",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:pskernel:ka35",
+      "status": "passed"
+    },
+    {
+      "command": "npm run assurance:ka35",
+      "status": "passed"
+    },
+    {
+      "command": "npm run lean:ka35:check",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:psc:kernel-status",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:psc:conformance-bounded",
+      "status": "passed"
+    },
+    {
+      "command": "npm run arena:corpus-preflight",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:arena:static-nonperf",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:arena:tutorial",
+      "status": "passed"
+    },
+    {
+      "command": "npm run verify:arena",
+      "status": "timed_out_at_test_arena_tutorial_wrapper_not_counted"
+    },
+    {
+      "command": "fresh extract npm install --offline --no-audit --no-fund",
+      "status": "passed"
+    },
+    {
+      "command": "fresh extract npm run build -- --pretty false",
+      "status": "passed"
+    },
+    {
+      "command": "fresh extract npm run test:pskernel:ka35",
+      "status": "passed"
+    },
+    {
+      "command": "fresh extract npm run lean:ka35:check",
+      "status": "passed"
+    },
+    {
+      "command": "unzip -t final ZIP",
+      "status": "passed"
+    },
+    {
+      "command": "sha256sum final ZIP",
+      "status": "passed"
+    }
+  ],
+  "arenaEvidence": {
+    "corpusNdjsonCount": 190,
+    "staticNonPerf": {
+      "total": 26,
+      "expectedAccept": 4,
+      "expectedReject": 22,
+      "acceptedGood": 4,
+      "rejectedBad": 22,
+      "wrong": 0,
+      "notRun": 0
+    },
+    "tutorial": {
+      "total": 140,
+      "expectedAccept": 93,
+      "expectedReject": 47,
+      "acceptedGood": 93,
+      "rejectedBad": 47,
+      "wrong": 0,
+      "notRun": 0
+    }
+  }
+}

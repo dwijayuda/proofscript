@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka23-nondef-env-lookup-bridge0",
+  "publicVersion": "1.0.0-pskernel.26",
+  "baseline": "proofscript-v1-ka22-nondef-env-extension-bridge0",
+  "coreArtifactFormat": 71,
+  "certificateFormat": 2,
+  "formalLean4EquivalenceProvenObligations": 28,
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinement": false
+  },
+  "commands": [
+    {
+      "command": "npm install --offline --no-audit --no-fund",
+      "status": "passed",
+      "log": "/mnt/data/ka23-npm-install.log"
+    },
+    {
+      "command": "npm run build -- --pretty false",
+      "status": "passed",
+      "log": "/mnt/data/ka23-build-final.log"
+    },
+    {
+      "command": "npm run test:pskernel:ka20",
+      "status": "passed",
+      "log": "/mnt/data/ka23-npm-run-test-pskernel-ka20.log"
+    },
+    {
+      "command": "npm run test:pskernel:ka21",
+      "status": "passed",
+      "log": "/mnt/data/ka23-npm-run-test-pskernel-ka21.log"
+    },
+    {
+      "command": "npm run test:pskernel:ka22",
+      "status": "passed",
+      "log": "/mnt/data/ka23-test-ka22-after-patch2.log"
+    },
+    {
+      "command": "npm run test:pskernel:ka23",
+      "status": "passed",
+      "log": "/mnt/data/ka23-test-ka23-final.log"
+    },
+    {
+      "command": "npm run assurance:ka22",
+      "status": "passed",
+      "log": "/mnt/data/ka23-npm-run-assurance-ka22.log"
+    },
+    {
+      "command": "npm run assurance:ka23",
+      "status": "passed",
+      "log": "/mnt/data/ka23-npm-run-assurance-ka23.log"
+    },
+    {
+      "command": "npm run lean:ka22:check",
+      "status": "passed",
+      "log": "/mnt/data/ka23-npm-run-lean-ka22-check.log"
+    },
+    {
+      "command": "npm run lean:ka23:check",
+      "status": "passed",
+      "log": "/mnt/data/ka23-lean-ka23-final.log"
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "status": "passed",
+      "log": "/mnt/data/ka23-test-kernel-smoke.log"
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "status": "passed",
+      "log": "/mnt/data/ka23-test-standalone-small.log"
+    },
+    {
+      "command": "npm run test:psc:kernel-status",
+      "status": "passed",
+      "log": "/mnt/data/ka23-test-psc-kernel-status.log"
+    },
+    {
+      "command": "npm run test:psc:conformance-bounded",
+      "status": "passed",
+      "log": "/mnt/data/ka23-test-psc-conformance-bounded.log"
+    },
+    {
+      "command": "npm run arena:corpus-preflight",
+      "status": "passed",
+      "log": "/mnt/data/ka23-arena-corpus-preflight.log"
+    },
+    {
+      "command": "npm run test:arena:static-nonperf",
+      "status": "passed",
+      "log": "/mnt/data/ka23-test-arena-static-nonperf.log"
+    },
+    {
+      "command": "npm run test:arena:tutorial",
+      "status": "passed",
+      "log": "/mnt/data/ka23-test-arena-tutorial.log"
+    },
+    {
+      "command": "npm run verify:arena",
+      "status": "passed",
+      "log": "/mnt/data/ka23-verify-arena-final.log"
+    }
+  ],
+  "arenaEvidence": {
+    "fixturesDir": "/mnt/data/arena-corpus-20260915",
+    "ndjsonCount": 190,
+    "staticNonPerf": {
+      "total": 26,
+      "expectedAccept": 4,
+      "expectedReject": 22,
+      "acceptedGood": 4,
+      "rejectedBad": 22,
+      "wrongAccepts": 0,
+      "wrongRejects": 0,
+      "checkerCrashes": 0,
+      "notRun": 0
+    },
+    "tutorial": {
+      "total": 140,
+      "expectedAccept": 93,
+      "expectedReject": 47,
+      "acceptedGood": 93,
+      "rejectedBad": 47,
+      "wrongAccepts": 0,
+      "wrongRejects": 0,
+      "checkerCrashes": 0,
+      "notRun": 0
+    }
+  },
+  "freshExtract": {
+    "status": "passed",
+    "commands": [
+      {
+        "command": "npm install --offline --no-audit --no-fund",
+        "status": "passed",
+        "log": "/mnt/data/ka23-fresh-install.log"
+      },
+      {
+        "command": "npm run build -- --pretty false",
+        "status": "passed",
+        "log": "/mnt/data/ka23-fresh-build.log"
+      },
+      {
+        "command": "npm run test:pskernel:ka23",
+        "status": "passed",
+        "log": "/mnt/data/ka23-fresh-test-ka23.log"
+      },
+      {
+        "command": "npm run lean:ka23:check",
+        "status": "passed",
+        "log": "/mnt/data/ka23-fresh-lean-ka23-final.log"
+      }
+    ],
+    "residue": {
+      "node_modules": 0,
+      "tgz": 0,
+      "zip": 0,
+      "tsbuildinfo": 0
+    }
+  },
+  "zipIntegrity": {
+    "status": "passed",
+    "log": "/mnt/data/ka23-unzip-test.log"
+  }
+}

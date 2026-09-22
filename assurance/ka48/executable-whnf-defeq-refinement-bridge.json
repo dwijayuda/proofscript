@@ -1,0 +1,48 @@
+{
+  "checkpoint": "proofscript-v1-ka48-executable-whnf-defeq-refinement-preflight0",
+  "publicVersion": "1.0.0-pskernel.51",
+  "baseline": "proofscript-v1-ka47-executable-expression-translator-refinement-preflight0",
+  "referenceKind": "source-bound-lean4lean-executable-whnf-defeq-refinement-preflight",
+  "imports": [
+    "Lean4Lean.Verify.TypeChecker.WHNF",
+    "Lean4Lean.Verify.TypeChecker.IsDefEq",
+    "Lean4Lean.Verify.TypeChecker.Basic"
+  ],
+  "coveredLean4LeanWhnfDefEqSurface": [
+    "TypeChecker.Inner.whnf.WF",
+    "TypeChecker.Inner.whnfCore.WF",
+    "TypeChecker.Inner.whnf'.WF",
+    "TypeChecker.Inner.isDefEqCore.WF",
+    "TypeChecker.Inner.isDefEqCore'.WF",
+    "TypeChecker.Inner.quickIsDefEq.WF",
+    "TypeChecker.Inner.isDefEqLambda.WF",
+    "TypeChecker.Inner.isDefEqForall.WF"
+  ],
+  "intendedFormalBridgeLemmas": [
+    "Lean4Lean.PSKernelKA48.translated_whnf_surface_available",
+    "Lean4Lean.PSKernelKA48.translated_whnfCore_surface_available",
+    "Lean4Lean.PSKernelKA48.translated_isDefEqCore_surface_available",
+    "Lean4Lean.PSKernelKA48.translated_whnf_defeq_trExprS_surface_available"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWhnfDefEqRefinement": false,
+    "formalLean4LeanBridgeObligations": 132
+  },
+  "antiSpaghettiPolicy": {
+    "maxNewKA48SourceLines": 360,
+    "maxNewKA48ToolFiles": 2,
+    "forbiddenGeneratedSemanticPackagePrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  }
+}

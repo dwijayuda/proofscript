@@ -1,0 +1,21 @@
+{
+  "checkpoint": "proofscript-v1-ka116-executable-proof-dependency-closure0",
+  "publicVersion": "1.0.0-pskernel.119",
+  "baseline": "proofscript-v1-ka115-executable-refinement-theorem-skeleton0",
+  "referenceKind": "executable-proof-dependency-closure-audit",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 0,
+  "countedObligations": [],
+  "sourceTheorems": [],
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

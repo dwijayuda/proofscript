@@ -1,0 +1,41 @@
+{
+  "checkpoint": "V71_MUTUAL_NESTED_RECURSOR_RHS_CERT1",
+  "files": [
+    {
+      "file": "assurance/lean4331/formal/ProofScriptKernelEquivalence/RecursorMutualNestedRHSCorrespondence.lean",
+      "sha256": "4b4c4dc111c12259d1f6b020b36b39d3353cbcebdf30634e1409e4c112e9b201"
+    },
+    {
+      "file": "assurance/lean4331/CHECKPOINT_V71_MUTUAL_NESTED_RECURSOR_RHS_CERT1.json",
+      "sha256": "b16594d53846cad86335e3f9b48c9b8e29087a4fe883646d30d734ad2b4ebb99"
+    },
+    {
+      "file": "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_MUTUAL_NESTED_RECURSOR_RHS_CERT1.md",
+      "sha256": "ef42403be3d24e12248eec3ad97361170c6e5df67b10189d1b695d612d4e10ac"
+    },
+    {
+      "file": "assurance/lean4331/evidence/v71-mutual-nested-recursor-rhs-formal1.out",
+      "sha256": "523a0b6ae3c79310b38b2d19487fee608b267e6c7411475dc48870482da82d48"
+    },
+    {
+      "file": "assurance/lean4331/evidence/v71-mutual-nested-recursor-rhs-minor-order-exact-lean1.out",
+      "sha256": "a625430190284891a99616e9279b7bf291e6a7477ac42824128b5ce09dc3f6f3"
+    },
+    {
+      "file": "assurance/lean4331/evidence/v71-mutual-nested-recursor-rhs-mutual-nested-generalization-exact-lean1.out",
+      "sha256": "efc7e4f767a3ff70c4b8e337927465a1d40aa46d41e21a79869e220df43825ad"
+    },
+    {
+      "file": "assurance/lean4331/evidence/v71-mutual-nested-recursor-rhs-mutual-nested-deeper-exact-lean1.out",
+      "sha256": "1cee5736e49d7b19afd075a4fbd9d489164c69f67f8a26f289d7553a383c0901"
+    },
+    {
+      "file": "assurance/lean4331/evidence/v71-mutual-nested-recursor-rhs-mutual-nested-deeper-indexed-containers-exact-lean1.out",
+      "sha256": "9dd70a0af8422a8a0641c381ae80cae1cb131f23458493d7aa390e02a15d7fb1"
+    },
+    {
+      "file": "assurance/lean4331/evidence/v71-mutual-nested-recursor-rhs-mutual-nested-final-generalization-audit-exact-lean1.out",
+      "sha256": "62292ca8db95fefc842c26903b6e4e4912c2a76781005d2ecc8c76ee914d65ff"
+    }
+  ]
+}

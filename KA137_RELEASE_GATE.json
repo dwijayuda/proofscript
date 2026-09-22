@@ -1,0 +1,11 @@
+{
+  "status": "accepted",
+  "checkpoint": "proofscript-v1-ka137-cli-language-workflow0",
+  "version": "1.0.0-pskernel.140",
+  "npmPack": "accepted",
+  "npmPublishDryRun": "accepted",
+  "freshInstallTarball": "accepted",
+  "freshInstalledPscWorkflow": "accepted",
+  "fullLean4Equivalence": false,
+  "semanticContractProofChecking": false
+}

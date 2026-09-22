@@ -1,0 +1,2011 @@
+{
+  "schema": 2,
+  "proofscriptReference": "v0.1",
+  "leanSemanticBaseline": "4.33.1",
+  "requiredDimensions": [
+    "declaration kind",
+    "universe parameters",
+    "declaration types",
+    "constructor types",
+    "recursor types",
+    "BinderInfo",
+    "transparency",
+    "generated declarations",
+    "definition reduction",
+    "recursor reduction",
+    "proof irrelevance",
+    "Eq behavior",
+    "typeclass candidate selection",
+    "module/import environment observations",
+    "axiom dependencies"
+  ],
+  "cases": [
+    {
+      "id": "identity",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "declaration kind",
+        "declaration types"
+      ],
+      "proofscript": "tests/differential/proofscript/identity.ps",
+      "leanReference": "tests/differential/lean/identity.lean",
+      "std": false,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#print identity",
+        "#check @identity",
+        "example (P : Prop) (h : P) : P := identity P h",
+        "#eval IO.println \"PSDIFF identity=ok\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "identity-kind",
+          "kind": "declarationField",
+          "name": "identity",
+          "field": "kind",
+          "op": "equals",
+          "expected": "theorem"
+        },
+        {
+          "id": "identity-type",
+          "kind": "declarationField",
+          "name": "identity",
+          "field": "type",
+          "op": "equals",
+          "expected": "(Pi (Prop) -> (Pi (#0) -> #1))"
+        }
+      ],
+      "evidence": {
+        "declaration kind": {
+          "proofscript": [
+            "identity-kind"
+          ],
+          "lean": [
+            0,
+            2
+          ]
+        },
+        "declaration types": {
+          "proofscript": [
+            "identity-type"
+          ],
+          "lean": [
+            1,
+            2
+          ]
+        }
+      },
+      "expectedContains": [
+        "PSDIFF identity=ok",
+        "theorem identity"
+      ]
+    },
+    {
+      "id": "universes",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "universe parameters",
+        "declaration types",
+        "max/imax normalization"
+      ],
+      "proofscript": "tests/differential/proofscript/universes.ps",
+      "leanReference": "tests/differential/lean/universes.lean",
+      "std": false,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#check @polymorphicProof",
+        "#check @maxZero",
+        "#check @imaxZero",
+        "#check @imaxSucc",
+        "example (A : Type u) (P : A \u2192 Prop) (x : A) (h : P x) : P x := polymorphicProof A P x h",
+        "example (P : Sort (max u 0) \u2192 Prop) (x : Sort u) (h : P x) : P x := maxZero P x h",
+        "example (P : Sort (imax u 0)) (h : P) : P := imaxZero P h",
+        "example (P : Sort (imax u (v + 1)) \u2192 Prop) (x : Sort (max u (v + 1))) (h : P x) : P x := @imaxSucc.{u, v} P x h",
+        "#eval IO.println \"PSDIFF universes=ok\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "poly-universes",
+          "kind": "declarationField",
+          "name": "polymorphicProof",
+          "field": "universes",
+          "op": "equals",
+          "expected": [
+            "u"
+          ]
+        },
+        {
+          "id": "imaxsucc-universes",
+          "kind": "declarationField",
+          "name": "imaxSucc",
+          "field": "universes",
+          "op": "equals",
+          "expected": [
+            "u",
+            "v"
+          ]
+        },
+        {
+          "id": "maxzero-type",
+          "kind": "declarationField",
+          "name": "maxZero",
+          "field": "type",
+          "op": "equals",
+          "expected": "(Pi ((Pi (max(u, Prop)) -> Prop)) -> (Pi (u) -> (Pi ((#1 #0)) -> (#2 #1))))"
+        },
+        {
+          "id": "imaxzero-type",
+          "kind": "declarationField",
+          "name": "imaxZero",
+          "field": "type",
+          "op": "equals",
+          "expected": "(Pi (Prop) -> (Pi (#0) -> #1))"
+        }
+      ],
+      "evidence": {
+        "universe parameters": {
+          "proofscript": [
+            "poly-universes",
+            "imaxsucc-universes"
+          ],
+          "lean": [
+            0,
+            3,
+            4
+          ]
+        },
+        "declaration types": {
+          "proofscript": [
+            "maxzero-type"
+          ],
+          "lean": [
+            1,
+            4,
+            5
+          ]
+        },
+        "max/imax normalization": {
+          "proofscript": [
+            "maxzero-type",
+            "imaxzero-type"
+          ],
+          "lean": [
+            1,
+            2,
+            3,
+            5,
+            6,
+            7
+          ]
+        }
+      },
+      "expectedContains": [
+        "PSDIFF universes=ok"
+      ]
+    },
+    {
+      "id": "binder-info",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "BinderInfo",
+        "declaration types"
+      ],
+      "proofscript": "tests/differential/proofscript/binder-info.ps",
+      "leanReference": "tests/differential/lean/binder-info.lean",
+      "std": false,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#print iid",
+        "#print sid",
+        "#check @iid",
+        "#check @sid",
+        "example (A : Type) (x : A) : A := iid x",
+        "example (A : Type) (x : A) : A := sid x",
+        "#eval IO.println \"PSDIFF binders=ok\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "iid-binders",
+          "kind": "declarationField",
+          "name": "iid",
+          "field": "binders",
+          "op": "equals",
+          "expected": [
+            "implicit",
+            "explicit"
+          ]
+        },
+        {
+          "id": "sid-binders",
+          "kind": "declarationField",
+          "name": "sid",
+          "field": "binders",
+          "op": "equals",
+          "expected": [
+            "strictImplicit",
+            "explicit"
+          ]
+        },
+        {
+          "id": "iid-type",
+          "kind": "declarationField",
+          "name": "iid",
+          "field": "type",
+          "op": "contains",
+          "expected": "(Pi (Type 0) ->"
+        }
+      ],
+      "evidence": {
+        "BinderInfo": {
+          "proofscript": [
+            "iid-binders",
+            "sid-binders"
+          ],
+          "lean": [
+            0,
+            1,
+            4,
+            5
+          ]
+        },
+        "declaration types": {
+          "proofscript": [
+            "iid-type"
+          ],
+          "lean": [
+            2,
+            4
+          ]
+        }
+      },
+      "expectedContains": [
+        "PSDIFF binders=ok"
+      ]
+    },
+    {
+      "id": "proof-irrelevance-eq",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "proof irrelevance",
+        "Eq behavior"
+      ],
+      "proofscript": "tests/differential/proofscript/proof-irrelevance.ps",
+      "leanReference": "tests/differential/lean/proof-irrelevance.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#check @proofIrrel",
+        "example (P : Prop) (h1 h2 : P) : h1 = h2 := proofIrrel P h1 h2",
+        "#eval IO.println \"PSDIFF proofIrrel=ok\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "proofirrel-type",
+          "kind": "declarationField",
+          "name": "proofIrrel",
+          "field": "type",
+          "op": "contains",
+          "expected": "Eq"
+        },
+        {
+          "id": "proofirrel-uses-refl",
+          "kind": "definitionUsesConst",
+          "name": "proofIrrel",
+          "constName": "Eq.refl",
+          "expected": true
+        }
+      ],
+      "evidence": {
+        "proof irrelevance": {
+          "proofscript": [
+            "proofirrel-type",
+            "proofirrel-uses-refl"
+          ],
+          "lean": [
+            1
+          ]
+        },
+        "Eq behavior": {
+          "proofscript": [
+            "proofirrel-type",
+            "proofirrel-uses-refl"
+          ],
+          "lean": [
+            0,
+            1
+          ]
+        }
+      },
+      "expectedContains": [
+        "PSDIFF proofIrrel=ok"
+      ]
+    },
+    {
+      "id": "reduction-recursion",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "generated declarations",
+        "recursor reduction",
+        "definition reduction"
+      ],
+      "proofscript": "tests/differential/proofscript/reduction.ps",
+      "leanReference": "tests/differential/lean/reduction.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#check @doubleNat",
+        "#reduce doubleNat 3",
+        "example : doubleNat 3 = 6 := rfl"
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "double-eq1-kind",
+          "kind": "declarationField",
+          "name": "doubleNat.eq_1",
+          "field": "kind",
+          "op": "equals",
+          "expected": "theorem"
+        },
+        {
+          "id": "double-eq2-kind",
+          "kind": "declarationField",
+          "name": "doubleNat.eq_2",
+          "field": "kind",
+          "op": "equals",
+          "expected": "theorem"
+        },
+        {
+          "id": "double-uses-rec",
+          "kind": "definitionUsesConst",
+          "name": "doubleNat",
+          "constName": "Nat.rec",
+          "expected": true
+        }
+      ],
+      "evidence": {
+        "generated declarations": {
+          "proofscript": [
+            "double-eq1-kind",
+            "double-eq2-kind"
+          ],
+          "lean": [
+            0,
+            2
+          ]
+        },
+        "recursor reduction": {
+          "proofscript": [
+            "double-uses-rec"
+          ],
+          "lean": [
+            1,
+            2
+          ]
+        },
+        "definition reduction": {
+          "proofscript": [
+            "double-uses-rec"
+          ],
+          "lean": [
+            1,
+            2
+          ]
+        }
+      },
+      "expectedContains": []
+    },
+    {
+      "id": "structure-recursor-projection",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "constructor types",
+        "recursor types",
+        "generated declarations",
+        "projection reduction"
+      ],
+      "proofscript": "tests/differential/proofscript/structure.ps",
+      "leanReference": "tests/differential/lean/structure.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#check @PairNat.mk",
+        "#check @PairNat.rec",
+        "#check @PairNat.fst",
+        "example : PairNat.fst pairValue = 3 := rfl",
+        "example : PairNat.snd pairValue = 4 := rfl",
+        "#reduce PairNat.fst pairValue",
+        "#reduce PairNat.snd pairValue",
+        "#eval IO.println \"PSDIFF pair=3,4\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "pair-mk-type",
+          "kind": "environmentField",
+          "name": "PairNat.mk",
+          "field": "type",
+          "op": "equals",
+          "expected": "(Pi (Nat) -> (Pi (Nat) -> PairNat))"
+        },
+        {
+          "id": "pair-rec-type",
+          "kind": "environmentField",
+          "name": "PairNat.rec",
+          "field": "type",
+          "op": "contains",
+          "expected": "(Pi ((Pi (PairNat) -> u_motive))"
+        },
+        {
+          "id": "pair-generated",
+          "kind": "declarationField",
+          "name": "PairNat",
+          "field": "generated",
+          "op": "equals",
+          "expected": [
+            "PairNat.mk",
+            "PairNat.rec"
+          ]
+        },
+        {
+          "id": "pair-fst-uses-rec",
+          "kind": "definitionUsesConst",
+          "name": "PairNat.fst",
+          "constName": "PairNat.rec",
+          "expected": true
+        }
+      ],
+      "evidence": {
+        "constructor types": {
+          "proofscript": [
+            "pair-mk-type"
+          ],
+          "lean": [
+            0
+          ]
+        },
+        "recursor types": {
+          "proofscript": [
+            "pair-rec-type"
+          ],
+          "lean": [
+            1
+          ]
+        },
+        "generated declarations": {
+          "proofscript": [
+            "pair-generated"
+          ],
+          "lean": [
+            0,
+            1
+          ]
+        },
+        "projection reduction": {
+          "proofscript": [
+            "pair-fst-uses-rec"
+          ],
+          "lean": [
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        }
+      },
+      "expectedContains": [
+        "PSDIFF pair=3,4"
+      ]
+    },
+    {
+      "id": "typeclass-selection",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "typeclass candidate selection",
+        "instance BinderInfo",
+        "definition reduction"
+      ],
+      "proofscript": "tests/differential/proofscript/typeclass.ps",
+      "leanReference": "tests/differential/lean/typeclass.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#check @boxMarkerLater",
+        "#check @getBoxNat",
+        "example : automaticBoxTag = 8 := rfl",
+        "#eval IO.println s!\"PSDIFF automaticBoxTag={automaticBoxTag}\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "selection-later",
+          "kind": "definitionUsesConst",
+          "name": "automaticBoxTag",
+          "constName": "boxMarkerLater",
+          "expected": true
+        },
+        {
+          "id": "getbox-binders",
+          "kind": "declarationField",
+          "name": "getBoxNat",
+          "field": "binders",
+          "op": "equals",
+          "expected": [
+            "instImplicit",
+            "explicit"
+          ]
+        },
+        {
+          "id": "instance-order",
+          "kind": "typeclassInstances",
+          "expected": [
+            "boxMarkerHigh",
+            "boxMarkerLater"
+          ]
+        }
+      ],
+      "evidence": {
+        "typeclass candidate selection": {
+          "proofscript": [
+            "selection-later",
+            "instance-order"
+          ],
+          "lean": [
+            0,
+            2,
+            3
+          ]
+        },
+        "instance BinderInfo": {
+          "proofscript": [
+            "getbox-binders"
+          ],
+          "lean": [
+            1
+          ]
+        },
+        "definition reduction": {
+          "proofscript": [
+            "selection-later"
+          ],
+          "lean": [
+            2,
+            3
+          ]
+        }
+      },
+      "expectedContains": [
+        "PSDIFF automaticBoxTag=8"
+      ]
+    },
+    {
+      "id": "axiom-dependencies",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "axiom dependencies",
+        "declaration types"
+      ],
+      "proofscript": "tests/differential/proofscript/axioms.ps",
+      "leanReference": "tests/differential/lean/axioms.lean",
+      "std": false,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#print axioms usesAxiom",
+        "#check @usesAxiom",
+        "example : P := usesAxiom",
+        "#eval IO.println \"PSDIFF axioms=ok\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "uses-axioms",
+          "kind": "declarationField",
+          "name": "usesAxiom",
+          "field": "assumptions",
+          "op": "equals",
+          "expected": [
+            "P",
+            "h"
+          ]
+        },
+        {
+          "id": "uses-type",
+          "kind": "declarationField",
+          "name": "usesAxiom",
+          "field": "type",
+          "op": "equals",
+          "expected": "P"
+        }
+      ],
+      "evidence": {
+        "axiom dependencies": {
+          "proofscript": [
+            "uses-axioms"
+          ],
+          "lean": [
+            0,
+            2
+          ]
+        },
+        "declaration types": {
+          "proofscript": [
+            "uses-type"
+          ],
+          "lean": [
+            1,
+            2
+          ]
+        }
+      },
+      "expectedContains": [
+        "PSDIFF axioms=ok",
+        "usesAxiom"
+      ]
+    },
+    {
+      "id": "module-diamond-environment",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "module/import environment observations",
+        "declaration ownership",
+        "definition reduction"
+      ],
+      "proofscript": "tests/differential/proofscript/modules-diamond/src/Main.ps",
+      "leanReference": "tests/differential/lean/modules-diamond.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#check @sharedZero",
+        "#check @aZero",
+        "#check @bZero",
+        "#check @mainZero",
+        "example : mainZero = 0 := rfl",
+        "example : mainZeroB = 0 := rfl",
+        "#eval IO.println s!\"PSDIFF modules={mainZero},{mainZeroB}\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "owner-common",
+          "kind": "moduleOwner",
+          "declaration": "sharedZero",
+          "expected": [
+            "Lib.Common"
+          ]
+        },
+        {
+          "id": "owner-main",
+          "kind": "moduleOwner",
+          "declaration": "mainZero",
+          "expected": [
+            "Main"
+          ]
+        },
+        {
+          "id": "main-imports",
+          "kind": "moduleImports",
+          "module": "Main",
+          "expected": [
+            "Lib.A",
+            "Lib.B"
+          ]
+        },
+        {
+          "id": "a-imports",
+          "kind": "moduleImports",
+          "module": "Lib.A",
+          "expected": [
+            "Lib.Common"
+          ]
+        }
+      ],
+      "evidence": {
+        "module/import environment observations": {
+          "proofscript": [
+            "main-imports",
+            "a-imports"
+          ],
+          "lean": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        "declaration ownership": {
+          "proofscript": [
+            "owner-common",
+            "owner-main"
+          ],
+          "lean": [
+            0,
+            3
+          ]
+        },
+        "definition reduction": {
+          "proofscript": [
+            "owner-main"
+          ],
+          "lean": [
+            4,
+            5,
+            6
+          ]
+        }
+      },
+      "expectedContains": [
+        "PSDIFF modules=0,0"
+      ]
+    },
+    {
+      "id": "let-zeta",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "local binding semantics",
+        "zeta reduction",
+        "definition reduction"
+      ],
+      "proofscript": "tests/differential/proofscript/let-zeta.ps",
+      "leanReference": "tests/differential/lean/let-zeta.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#check @letProof",
+        "#check @nestedLet",
+        "#check @haveProof",
+        "example (P : Prop) (h : P) : P := letProof P h",
+        "example (P : Prop) (h : P) : P := nestedLet P h",
+        "example (P : Prop) (h : P) : P := haveProof P h",
+        "#eval IO.println \"PSDIFF let-zeta=ok\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "let-kind",
+          "kind": "declarationField",
+          "name": "letProof",
+          "field": "kind",
+          "op": "equals",
+          "expected": "definition"
+        },
+        {
+          "id": "nested-kind",
+          "kind": "declarationField",
+          "name": "nestedLet",
+          "field": "kind",
+          "op": "equals",
+          "expected": "definition"
+        },
+        {
+          "id": "have-kind",
+          "kind": "declarationField",
+          "name": "haveProof",
+          "field": "kind",
+          "op": "equals",
+          "expected": "definition"
+        }
+      ],
+      "evidence": {
+        "local binding semantics": {
+          "proofscript": [
+            "let-kind",
+            "have-kind"
+          ],
+          "lean": [
+            0,
+            2,
+            3,
+            5
+          ]
+        },
+        "zeta reduction": {
+          "proofscript": [
+            "nested-kind"
+          ],
+          "lean": [
+            4
+          ]
+        },
+        "definition reduction": {
+          "proofscript": [
+            "let-kind"
+          ],
+          "lean": [
+            3,
+            4,
+            5
+          ]
+        }
+      },
+      "expectedContains": [
+        "PSDIFF let-zeta=ok"
+      ]
+    },
+    {
+      "id": "transparency",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "transparency",
+        "declaration kind",
+        "definition reduction"
+      ],
+      "proofscript": "tests/differential/proofscript/transparency.ps",
+      "leanReference": "tests/differential/lean/transparency.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#print AliasP",
+        "#print HiddenP",
+        "example : AliasP := h",
+        "#eval IO.println \"PSDIFF transparency=ok\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "alias-reducibility",
+          "kind": "declarationField",
+          "name": "AliasP",
+          "field": "reducibility",
+          "op": "equals",
+          "expected": "abbrev"
+        },
+        {
+          "id": "hidden-kind",
+          "kind": "declarationField",
+          "name": "HiddenP",
+          "field": "kind",
+          "op": "equals",
+          "expected": "opaque"
+        },
+        {
+          "id": "alias-kind",
+          "kind": "declarationField",
+          "name": "AliasP",
+          "field": "kind",
+          "op": "equals",
+          "expected": "definition"
+        }
+      ],
+      "evidence": {
+        "transparency": {
+          "proofscript": [
+            "alias-reducibility",
+            "hidden-kind"
+          ],
+          "lean": [
+            0,
+            1,
+            2
+          ]
+        },
+        "declaration kind": {
+          "proofscript": [
+            "alias-kind",
+            "hidden-kind"
+          ],
+          "lean": [
+            0,
+            1
+          ]
+        },
+        "definition reduction": {
+          "proofscript": [
+            "alias-reducibility"
+          ],
+          "lean": [
+            2
+          ]
+        }
+      },
+      "expectedContains": [
+        "PSDIFF transparency=ok"
+      ]
+    },
+    {
+      "id": "equation-patterns",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "generated declarations",
+        "pattern lowering",
+        "definition reduction",
+        "recursor reduction"
+      ],
+      "proofscript": "tests/differential/proofscript/equation-patterns.ps",
+      "leanReference": "tests/differential/lean/equation-patterns.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#check @isZeroPattern",
+        "#check @isZeroMatch",
+        "example : isZeroPattern 0 = true := rfl",
+        "example : isZeroPattern 1 = false := rfl",
+        "example : isZeroMatch 0 = true := rfl"
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "pattern-eq1",
+          "kind": "declarationField",
+          "name": "isZeroPattern.eq_1",
+          "field": "kind",
+          "op": "equals",
+          "expected": "theorem"
+        },
+        {
+          "id": "pattern-eq2",
+          "kind": "declarationField",
+          "name": "isZeroPattern.eq_2",
+          "field": "kind",
+          "op": "equals",
+          "expected": "theorem"
+        },
+        {
+          "id": "pattern-rec",
+          "kind": "definitionUsesConst",
+          "name": "isZeroPattern",
+          "constName": "Nat.rec",
+          "expected": true
+        }
+      ],
+      "evidence": {
+        "generated declarations": {
+          "proofscript": [
+            "pattern-eq1",
+            "pattern-eq2"
+          ],
+          "lean": [
+            0,
+            2,
+            3
+          ]
+        },
+        "pattern lowering": {
+          "proofscript": [
+            "pattern-rec"
+          ],
+          "lean": [
+            2,
+            3,
+            4
+          ]
+        },
+        "definition reduction": {
+          "proofscript": [
+            "pattern-rec"
+          ],
+          "lean": [
+            2,
+            3,
+            4
+          ]
+        },
+        "recursor reduction": {
+          "proofscript": [
+            "pattern-rec"
+          ],
+          "lean": [
+            2,
+            3,
+            4
+          ]
+        }
+      },
+      "expectedContains": []
+    },
+    {
+      "id": "structure-update",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "structure update lowering",
+        "projection reduction",
+        "definition reduction"
+      ],
+      "proofscript": "tests/differential/proofscript/structure-update.ps",
+      "leanReference": "tests/differential/lean/structure-update.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#check @updateLeft",
+        "#check @updateBoth",
+        "example (p : PairNat) (left : Nat) : PairNat.left (updateLeft p left) = left := rfl",
+        "example (p : PairNat) (left : Nat) : PairNat.right (updateLeft p left) = PairNat.right p := rfl",
+        "#eval IO.println \"PSDIFF structure-update=ok\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "update-uses-mk",
+          "kind": "definitionUsesConst",
+          "name": "updateLeft",
+          "constName": "PairNat.mk",
+          "expected": true
+        },
+        {
+          "id": "update-uses-right",
+          "kind": "definitionUsesConst",
+          "name": "updateLeft",
+          "constName": "PairNat.right",
+          "expected": true
+        },
+        {
+          "id": "update-kind",
+          "kind": "declarationField",
+          "name": "updateBoth",
+          "field": "kind",
+          "op": "equals",
+          "expected": "definition"
+        }
+      ],
+      "evidence": {
+        "structure update lowering": {
+          "proofscript": [
+            "update-uses-mk",
+            "update-uses-right"
+          ],
+          "lean": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        "projection reduction": {
+          "proofscript": [
+            "update-uses-right"
+          ],
+          "lean": [
+            2,
+            3
+          ]
+        },
+        "definition reduction": {
+          "proofscript": [
+            "update-kind"
+          ],
+          "lean": [
+            2,
+            3
+          ]
+        }
+      },
+      "expectedContains": [
+        "PSDIFF structure-update=ok"
+      ]
+    },
+    {
+      "id": "literals",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "literal lowering",
+        "definition reduction",
+        "Eq behavior"
+      ],
+      "proofscript": "tests/differential/proofscript/literals.ps",
+      "leanReference": "tests/differential/lean/literals.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "example : threeLit = 3 := rfl",
+        "example : yesLit = true := rfl",
+        "example : noLit = false := rfl",
+        "example : localLiteral = 3 := rfl",
+        "#eval IO.println s!\"PSDIFF literals={threeLit},{yesLit},{noLit},{localLiteral}\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "three-succ",
+          "kind": "definitionUsesConst",
+          "name": "threeLit",
+          "constName": "Nat.succ",
+          "expected": true
+        },
+        {
+          "id": "yes-true",
+          "kind": "definitionUsesConst",
+          "name": "yesLit",
+          "constName": "Bool.true",
+          "expected": true
+        },
+        {
+          "id": "no-false",
+          "kind": "definitionUsesConst",
+          "name": "noLit",
+          "constName": "Bool.false",
+          "expected": true
+        },
+        {
+          "id": "three-proof",
+          "kind": "declarationField",
+          "name": "threeLiteralComputes",
+          "field": "kind",
+          "op": "equals",
+          "expected": "theorem"
+        }
+      ],
+      "evidence": {
+        "literal lowering": {
+          "proofscript": [
+            "three-succ",
+            "yes-true",
+            "no-false"
+          ],
+          "lean": [
+            0,
+            1,
+            2,
+            4
+          ]
+        },
+        "definition reduction": {
+          "proofscript": [
+            "three-succ"
+          ],
+          "lean": [
+            0,
+            3,
+            4
+          ]
+        },
+        "Eq behavior": {
+          "proofscript": [
+            "three-proof"
+          ],
+          "lean": [
+            0,
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      "expectedContains": [
+        "PSDIFF literals=3,true,false,3"
+      ]
+    },
+    {
+      "id": "implicit-unification",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "implicit synthesis",
+        "first-order unification",
+        "BinderInfo",
+        "definition reduction"
+      ],
+      "proofscript": "tests/differential/proofscript/implicit-unification.ps",
+      "leanReference": "tests/differential/lean/implicit-unification.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#check @keepBoxType",
+        "#check @keepPairTypes",
+        "example (n : Nat) : useBox n = 0 := rfl",
+        "example (n : Nat) (b : Bool) : usePair n b = 0 := rfl",
+        "#eval IO.println s!\"PSDIFF implicit-unification={useBox 4},{usePair 4 true}\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "keepbox-binders",
+          "kind": "declarationField",
+          "name": "keepBoxType",
+          "field": "binders",
+          "op": "equals",
+          "expected": [
+            "implicit",
+            "explicit"
+          ]
+        },
+        {
+          "id": "keeppair-binders",
+          "kind": "declarationField",
+          "name": "keepPairTypes",
+          "field": "binders",
+          "op": "equals",
+          "expected": [
+            "implicit",
+            "implicit",
+            "explicit"
+          ]
+        },
+        {
+          "id": "usebox-uses-keep",
+          "kind": "definitionUsesConst",
+          "name": "useBox",
+          "constName": "keepBoxType",
+          "expected": true
+        },
+        {
+          "id": "usepair-uses-keep",
+          "kind": "definitionUsesConst",
+          "name": "usePair",
+          "constName": "keepPairTypes",
+          "expected": true
+        }
+      ],
+      "evidence": {
+        "implicit synthesis": {
+          "proofscript": [
+            "keepbox-binders",
+            "usebox-uses-keep"
+          ],
+          "lean": [
+            0,
+            2
+          ]
+        },
+        "first-order unification": {
+          "proofscript": [
+            "keeppair-binders",
+            "usepair-uses-keep"
+          ],
+          "lean": [
+            1,
+            3
+          ]
+        },
+        "BinderInfo": {
+          "proofscript": [
+            "keepbox-binders",
+            "keeppair-binders"
+          ],
+          "lean": [
+            0,
+            1
+          ]
+        },
+        "definition reduction": {
+          "proofscript": [
+            "usebox-uses-keep",
+            "usepair-uses-keep"
+          ],
+          "lean": [
+            2,
+            3,
+            4
+          ]
+        }
+      },
+      "expectedContains": [
+        "PSDIFF implicit-unification=0,0"
+      ]
+    },
+    {
+      "id": "recursive-typeclass",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "typeclass candidate selection",
+        "recursive instance prerequisites",
+        "instance BinderInfo",
+        "definition reduction"
+      ],
+      "proofscript": "tests/differential/proofscript/recursive-typeclass.ps",
+      "leanReference": "tests/differential/lean/recursive-typeclass.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#check @natMarker",
+        "#check @boxMarker",
+        "#check @getBoxNat",
+        "example : automaticBoxTag = 3 := rfl",
+        "#eval IO.println s!\"PSDIFF recursive-instance={automaticBoxTag}\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "recursive-uses-box",
+          "kind": "definitionUsesConst",
+          "name": "automaticBoxTag",
+          "constName": "boxMarker",
+          "expected": true
+        },
+        {
+          "id": "recursive-box-uses-nat",
+          "kind": "definitionUsesConst",
+          "name": "boxMarker",
+          "constName": "Marker.tag",
+          "expected": true
+        },
+        {
+          "id": "recursive-get-binders",
+          "kind": "declarationField",
+          "name": "getBoxNat",
+          "field": "binders",
+          "op": "equals",
+          "expected": [
+            "instImplicit",
+            "explicit"
+          ]
+        },
+        {
+          "id": "recursive-instance-order",
+          "kind": "typeclassInstances",
+          "expected": [
+            "natMarker",
+            "boxMarker"
+          ]
+        }
+      ],
+      "evidence": {
+        "typeclass candidate selection": {
+          "proofscript": [
+            "recursive-uses-box",
+            "recursive-instance-order"
+          ],
+          "lean": [
+            1,
+            3,
+            4
+          ]
+        },
+        "recursive instance prerequisites": {
+          "proofscript": [
+            "recursive-uses-box",
+            "recursive-box-uses-nat"
+          ],
+          "lean": [
+            0,
+            1,
+            3
+          ]
+        },
+        "instance BinderInfo": {
+          "proofscript": [
+            "recursive-get-binders"
+          ],
+          "lean": [
+            2
+          ]
+        },
+        "definition reduction": {
+          "proofscript": [
+            "recursive-uses-box"
+          ],
+          "lean": [
+            3,
+            4
+          ]
+        }
+      },
+      "expectedContains": [
+        "PSDIFF recursive-instance=3"
+      ]
+    },
+    {
+      "id": "reject-type-mismatch",
+      "classification": "negative-agreement",
+      "dimensions": [
+        "logical rejection",
+        "declaration type mismatch"
+      ],
+      "proofscript": "tests/differential/proofscript/reject-type-mismatch.ps",
+      "leanReference": "tests/differential/lean/reject-type-mismatch.lean",
+      "std": false,
+      "proofscriptExpectedStatus": "rejected",
+      "leanReferenceExpectedStatus": "rejected",
+      "probes": [],
+      "proofscriptChecks": [
+        {
+          "id": "reject-type-diagnostic",
+          "kind": "diagnostic",
+          "op": "contains",
+          "expected": "type mismatch"
+        }
+      ],
+      "evidence": {
+        "logical rejection": {
+          "proofscript": [
+            "reject-type-diagnostic"
+          ],
+          "lean": []
+        },
+        "declaration type mismatch": {
+          "proofscript": [
+            "reject-type-diagnostic"
+          ],
+          "lean": []
+        }
+      }
+    },
+    {
+      "id": "reject-equality-type-mismatch",
+      "classification": "negative-agreement",
+      "dimensions": [
+        "logical rejection",
+        "Eq behavior"
+      ],
+      "proofscript": "tests/differential/proofscript/reject-equality-type-mismatch.ps",
+      "leanReference": "tests/differential/lean/reject-equality-type-mismatch.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "rejected",
+      "leanReferenceExpectedStatus": "rejected",
+      "probes": [],
+      "proofscriptChecks": [
+        {
+          "id": "reject-eq-diagnostic",
+          "kind": "diagnostic",
+          "op": "contains",
+          "expected": "equality operands"
+        }
+      ],
+      "evidence": {
+        "logical rejection": {
+          "proofscript": [
+            "reject-eq-diagnostic"
+          ],
+          "lean": []
+        },
+        "Eq behavior": {
+          "proofscript": [
+            "reject-eq-diagnostic"
+          ],
+          "lean": []
+        }
+      }
+    },
+    {
+      "id": "reject-opaque-no-delta",
+      "classification": "negative-agreement",
+      "dimensions": [
+        "logical rejection",
+        "transparency"
+      ],
+      "proofscript": "tests/differential/proofscript/reject-opaque-no-delta.ps",
+      "leanReference": "tests/differential/lean/reject-opaque-no-delta.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "rejected",
+      "leanReferenceExpectedStatus": "rejected",
+      "probes": [],
+      "proofscriptChecks": [
+        {
+          "id": "reject-opaque-diagnostic",
+          "kind": "diagnostic",
+          "op": "contains",
+          "expected": "expected HiddenP"
+        }
+      ],
+      "evidence": {
+        "logical rejection": {
+          "proofscript": [
+            "reject-opaque-diagnostic"
+          ],
+          "lean": []
+        },
+        "transparency": {
+          "proofscript": [
+            "reject-opaque-diagnostic"
+          ],
+          "lean": []
+        }
+      }
+    },
+    {
+      "id": "gap-higher-order-inference",
+      "classification": "capability-gap",
+      "dimensions": [
+        "capability gap",
+        "higher-order implicit inference"
+      ],
+      "proofscript": "tests/differential/proofscript/gap-higher-order-inference.ps",
+      "leanReference": "tests/differential/lean/gap-higher-order-inference.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "unsupported",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#check @higher",
+        "#check @good",
+        "example : good = 0 := rfl",
+        "#eval IO.println s!\"PSDIFF gap-higher-order={good}\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "gap-ho-diagnostic",
+          "kind": "diagnostic",
+          "op": "contains",
+          "expected": "cannot solve omitted implicit"
+        }
+      ],
+      "evidence": {
+        "capability gap": {
+          "proofscript": [
+            "gap-ho-diagnostic"
+          ],
+          "lean": []
+        },
+        "higher-order implicit inference": {
+          "proofscript": [
+            "gap-ho-diagnostic"
+          ],
+          "lean": []
+        }
+      },
+      "referenceExpectedContains": [
+        "PSDIFF gap-higher-order=0"
+      ]
+    },
+    {
+      "id": "gap-dependent-instance-target",
+      "classification": "capability-gap",
+      "dimensions": [
+        "capability gap",
+        "dependent instance target"
+      ],
+      "proofscript": "tests/differential/proofscript/gap-dependent-instance-target.ps",
+      "leanReference": "tests/differential/lean/gap-dependent-instance-target.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "unsupported",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#check @dependentTarget",
+        "#eval IO.println \"PSDIFF gap-dependent-instance=accepted\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "gap-dependent-diagnostic",
+          "kind": "diagnostic",
+          "op": "contains",
+          "expected": "depend on prerequisite values"
+        }
+      ],
+      "evidence": {
+        "capability gap": {
+          "proofscript": [
+            "gap-dependent-diagnostic"
+          ],
+          "lean": []
+        },
+        "dependent instance target": {
+          "proofscript": [
+            "gap-dependent-diagnostic"
+          ],
+          "lean": []
+        }
+      },
+      "referenceExpectedContains": [
+        "PSDIFF gap-dependent-instance=accepted"
+      ]
+    },
+    {
+      "id": "namespaces",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "namespace/name resolution",
+        "qualified declaration names",
+        "root-qualified resolution"
+      ],
+      "proofscript": "tests/differential/proofscript/namespaces.ps",
+      "leanReference": "tests/differential/lean/namespaces.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#check @A.rootNat",
+        "#check @A.localBool",
+        "#check @A.B.nested",
+        "#check @A.B.parent",
+        "example : A.rootNat = _root_.x := rfl",
+        "example : A.localBool = A.x := rfl",
+        "example : A.B.nested = A.x := rfl",
+        "#eval IO.println \"PSDIFF namespaces=ok\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "namespace-root-ref",
+          "kind": "definitionUsesConst",
+          "name": "A.rootNat",
+          "constName": "x",
+          "expected": true
+        },
+        {
+          "id": "namespace-local-ref",
+          "kind": "definitionUsesConst",
+          "name": "A.localBool",
+          "constName": "A.x",
+          "expected": true
+        },
+        {
+          "id": "namespace-nested-ref",
+          "kind": "definitionUsesConst",
+          "name": "A.B.nested",
+          "constName": "A.x",
+          "expected": true
+        },
+        {
+          "id": "namespace-parent-ref",
+          "kind": "definitionUsesConst",
+          "name": "A.B.parent",
+          "constName": "A.x",
+          "expected": true
+        }
+      ],
+      "evidence": {
+        "namespace/name resolution": {
+          "proofscript": [
+            "namespace-local-ref",
+            "namespace-nested-ref",
+            "namespace-parent-ref"
+          ],
+          "lean": [
+            0,
+            1,
+            2,
+            3,
+            5,
+            6
+          ]
+        },
+        "qualified declaration names": {
+          "proofscript": [
+            "namespace-local-ref",
+            "namespace-nested-ref",
+            "namespace-parent-ref"
+          ],
+          "lean": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        "root-qualified resolution": {
+          "proofscript": [
+            "namespace-root-ref"
+          ],
+          "lean": [
+            0,
+            4
+          ]
+        }
+      },
+      "expectedContains": [
+        "PSDIFF namespaces=ok",
+        "A.rootNat",
+        "A.B.nested"
+      ]
+    },
+    {
+      "id": "sections-open",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "section environment scope",
+        "open namespace resolution",
+        "open precedence"
+      ],
+      "proofscript": "tests/differential/proofscript/sections-open.ps",
+      "leanReference": "tests/differential/lean/sections-open.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#check @openedFirst",
+        "#check @Outer.Inner.parentWins",
+        "#check @inside",
+        "#check @after",
+        "example : openedFirst = A.x := rfl",
+        "example : Outer.Inner.parentWins = Outer.x := rfl",
+        "example : inside = Local.y := rfl",
+        "#eval IO.println \"PSDIFF sections-open=ok\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "open-first",
+          "kind": "definitionUsesConst",
+          "name": "openedFirst",
+          "constName": "A.x",
+          "expected": true
+        },
+        {
+          "id": "parent-before-open",
+          "kind": "definitionUsesConst",
+          "name": "Outer.Inner.parentWins",
+          "constName": "Outer.x",
+          "expected": true
+        },
+        {
+          "id": "section-open",
+          "kind": "definitionUsesConst",
+          "name": "inside",
+          "constName": "Local.y",
+          "expected": true
+        },
+        {
+          "id": "after-qualified",
+          "kind": "definitionUsesConst",
+          "name": "after",
+          "constName": "Local.y",
+          "expected": true
+        }
+      ],
+      "evidence": {
+        "section environment scope": {
+          "proofscript": [
+            "section-open",
+            "after-qualified"
+          ],
+          "lean": [
+            2,
+            3,
+            6
+          ]
+        },
+        "open namespace resolution": {
+          "proofscript": [
+            "open-first",
+            "section-open"
+          ],
+          "lean": [
+            0,
+            2,
+            4,
+            6
+          ]
+        },
+        "open precedence": {
+          "proofscript": [
+            "open-first",
+            "parent-before-open"
+          ],
+          "lean": [
+            0,
+            1,
+            4,
+            5
+          ]
+        }
+      },
+      "expectedContains": [
+        "PSDIFF sections-open=ok",
+        "openedFirst",
+        "Outer.Inner.parentWins"
+      ]
+    },
+    {
+      "id": "section-vars",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "section variable telescope generalization",
+        "include/omit theorem policy",
+        "BinderInfo"
+      ],
+      "proofscript": "tests/differential/proofscript/section-vars.ps",
+      "leanReference": "tests/differential/lean/section-vars.lean",
+      "std": true,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#check @keep",
+        "#check @bodyOnly",
+        "#check @headerUse",
+        "#check @forced",
+        "#check @afterOmit",
+        "example {A : Type u} (x : A) : @keep A x = x := rfl",
+        "#eval IO.println \"PSDIFF section-vars=ok\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "keep-binders",
+          "kind": "declarationField",
+          "name": "keep",
+          "field": "binders",
+          "op": "equals",
+          "expected": [
+            "implicit",
+            "explicit"
+          ]
+        },
+        {
+          "id": "body-only-binders",
+          "kind": "declarationField",
+          "name": "bodyOnly",
+          "field": "binders",
+          "op": "equals",
+          "expected": [
+            "explicit"
+          ]
+        },
+        {
+          "id": "header-use-binders",
+          "kind": "declarationField",
+          "name": "headerUse",
+          "field": "binders",
+          "op": "equals",
+          "expected": [
+            "implicit",
+            "explicit"
+          ]
+        },
+        {
+          "id": "forced-binders",
+          "kind": "declarationField",
+          "name": "forced",
+          "field": "binders",
+          "op": "equals",
+          "expected": [
+            "implicit",
+            "explicit"
+          ]
+        },
+        {
+          "id": "after-omit-binders",
+          "kind": "declarationField",
+          "name": "afterOmit",
+          "field": "binders",
+          "op": "equals",
+          "expected": []
+        }
+      ],
+      "evidence": {
+        "section variable telescope generalization": {
+          "proofscript": [
+            "keep-binders",
+            "body-only-binders",
+            "header-use-binders"
+          ],
+          "lean": [
+            0,
+            1,
+            2,
+            5,
+            6
+          ]
+        },
+        "include/omit theorem policy": {
+          "proofscript": [
+            "forced-binders",
+            "after-omit-binders"
+          ],
+          "lean": [
+            3,
+            4,
+            6
+          ]
+        },
+        "BinderInfo": {
+          "proofscript": [
+            "keep-binders",
+            "forced-binders"
+          ],
+          "lean": [
+            0,
+            3,
+            5
+          ]
+        }
+      },
+      "expectedContains": [
+        "PSDIFF section-vars=ok",
+        "keep",
+        "forced"
+      ]
+    },
+    {
+      "id": "kernel-universe-equivalence",
+      "classification": "semantic-equivalence",
+      "dimensions": [
+        "universe parameters",
+        "declaration types",
+        "max/imax normalization"
+      ],
+      "proofscript": "tests/differential/proofscript/kernel-universe-equivalence.ps",
+      "leanReference": "tests/differential/lean/kernel-universe-equivalence.lean",
+      "std": false,
+      "proofscriptExpectedStatus": "accepted",
+      "leanReferenceExpectedStatus": "accepted",
+      "probes": [
+        "#check @imaxOne",
+        "#check @imaxSelf",
+        "#check @maxOffset",
+        "#check @maxAbsorbExplicit",
+        "#check @maxComm",
+        "example (A : Sort (imax 1 u)) : Sort u := imaxOne A",
+        "example (A : Sort (imax u u)) : Sort u := imaxSelf A",
+        "example (A : Sort (max u (u + 1))) : Sort (u + 1) := maxOffset A",
+        "example (A : Sort (max 1 (u + 1))) : Sort (u + 1) := maxAbsorbExplicit A",
+        "example (A : Sort (max u v)) : Sort (max v u) := @maxComm.{u, v} A",
+        "#eval IO.println \"PSDIFF kernel-universe-equivalence=ok\""
+      ],
+      "proofscriptChecks": [
+        {
+          "id": "imax-one-type",
+          "kind": "declarationField",
+          "name": "imaxOne",
+          "field": "type",
+          "op": "equals",
+          "expected": "(Pi (imax(Type 0, u)) -> u)"
+        },
+        {
+          "id": "imax-self-type",
+          "kind": "declarationField",
+          "name": "imaxSelf",
+          "field": "type",
+          "op": "equals",
+          "expected": "(Pi (imax(u, u)) -> u)"
+        },
+        {
+          "id": "max-offset-type",
+          "kind": "declarationField",
+          "name": "maxOffset",
+          "field": "type",
+          "op": "equals",
+          "expected": "(Pi (max(u, succ(u))) -> succ(u))"
+        },
+        {
+          "id": "max-explicit-type",
+          "kind": "declarationField",
+          "name": "maxAbsorbExplicit",
+          "field": "type",
+          "op": "equals",
+          "expected": "(Pi (max(Type 0, succ(u))) -> succ(u))"
+        },
+        {
+          "id": "max-comm-universes",
+          "kind": "declarationField",
+          "name": "maxComm",
+          "field": "universes",
+          "op": "equals",
+          "expected": [
+            "u",
+            "v"
+          ]
+        }
+      ],
+      "evidence": {
+        "universe parameters": {
+          "proofscript": [
+            "max-comm-universes"
+          ],
+          "lean": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        "declaration types": {
+          "proofscript": [
+            "imax-one-type",
+            "imax-self-type",
+            "max-offset-type",
+            "max-explicit-type"
+          ],
+          "lean": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        "max/imax normalization": {
+          "proofscript": [
+            "imax-one-type",
+            "imax-self-type",
+            "max-offset-type",
+            "max-explicit-type"
+          ],
+          "lean": [
+            5,
+            6,
+            7,
+            8,
+            9
+          ]
+        }
+      },
+      "expectedContains": [
+        "PSDIFF kernel-universe-equivalence=ok"
+      ]
+    }
+  ]
+}

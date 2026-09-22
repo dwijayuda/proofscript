@@ -1,0 +1,207 @@
+{
+  "schema_version": "0.6.1",
+  "semantic_baseline": {
+    "lean_version": "4.33.1",
+    "lean_commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "claim_ceiling": "S1-specified",
+  "features": [
+    {
+      "id": "L-CORE-LEAN",
+      "class": "L",
+      "status": "inherited-S1",
+      "surface": "inherited Lean syntax",
+      "canonical_lean": "same Lean syntax",
+      "lowering": "defer/preserve through pinned Lean categories",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "inherited_source_compatible_for_pinned_cases",
+        "defer_preserves_lean_parse"
+      ],
+      "dx_rationale": "Keeps Lean vocabulary and semantics visible."
+    },
+    {
+      "id": "D-CALL",
+      "class": "D",
+      "status": "admitted-S1",
+      "surface": "f(x, y)",
+      "canonical_lean": "f x y",
+      "lowering": "left-associated Lean application; f() lowers to f ()",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "parse_adjacent_call",
+        "parse_spaced_defer",
+        "parse_comment_breaks_adjacency",
+        "lower_call_append",
+        "protected_tuple_application"
+      ],
+      "dx_rationale": "Highest-value TypeScript familiarity with minimal semantic risk."
+    },
+    {
+      "id": "D-EXPLICIT-PARAMS",
+      "class": "D",
+      "status": "admitted-S1",
+      "surface": "(x : A, y : B) in registered declaration headers",
+      "canonical_lean": "(x : A) (y : B)",
+      "lowering": "ordered sequence of explicit Lean binders",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "parse_explicit_param_groups",
+        "preserve_order",
+        "preserve_dependencies",
+        "reject_crossing_binder_categories"
+      ],
+      "dx_rationale": "Makes function/declaration headers familiar without TypeScript generics."
+    },
+    {
+      "id": "D-DECL-SEMI",
+      "class": "D",
+      "status": "admitted-S1",
+      "surface": "; after supported expression-bodied declarations or as separator in registered bodies",
+      "canonical_lean": "declaration/member boundary",
+      "lowering": "category-specific terminator/separator only",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "semicolon_category_scoped",
+        "tactic_semicolons_protected",
+        "do_semicolons_protected"
+      ],
+      "dx_rationale": "Improves editability and familiar statement endings where safe."
+    },
+    {
+      "id": "D-CONST-ALIAS",
+      "class": "D",
+      "status": "admitted-S1",
+      "surface": "const name : T := e;",
+      "canonical_lean": "def name : T := e",
+      "lowering": "contextual declaration-head alias to Lean def with no explicit declaration parameter group",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "parse_const_alias",
+        "reject_const_with_explicit_params",
+        "const_function_typed_value_allowed",
+        "no_js_const_semantics"
+      ],
+      "dx_rationale": "Immediately recognizable value declaration for TypeScript developers."
+    },
+    {
+      "id": "D-FUNCTION-ALIAS",
+      "class": "D",
+      "status": "admitted-S1",
+      "surface": "function f(x : A) : B := e;",
+      "canonical_lean": "def f (x : A) : B := e",
+      "lowering": "contextual declaration-head alias to Lean def with at least one explicit declaration parameter group",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "parse_function_alias",
+        "reject_function_without_explicit_params",
+        "no_hoisting_this_or_prototype",
+        "lower_to_def"
+      ],
+      "dx_rationale": "Recognizable named function declaration while preserving Lean def semantics."
+    },
+    {
+      "id": "E-IF-BRACE",
+      "class": "E",
+      "status": "admitted-S1",
+      "surface": "if (c) { t } else { e }",
+      "canonical_lean": "if c then t else e",
+      "lowering": "E-class braced conditional with one term per branch",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "parse_e_if_brace",
+        "require_parenthesized_condition",
+        "branch_is_single_term",
+        "native_if_still_accepted",
+        "lower_e_if_brace"
+      ],
+      "compatibility_cost": "The same braces can be Lean term syntax elsewhere; .ps owns this exact if context.",
+      "dx_rationale": "Very high TypeScript familiarity."
+    },
+    {
+      "id": "E-STRUCT-BODY",
+      "class": "E",
+      "status": "admitted-S1",
+      "surface": "structure S where { members }",
+      "canonical_lean": "structure S where members",
+      "lowering": "outer braces and member semicolons lower to native structure body layout",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "parse_e_structure_body",
+        "preserve_field_order",
+        "preserve_binder_categories",
+        "nested_implicit_fields_unambiguous",
+        "lower_e_structure_body"
+      ],
+      "compatibility_cost": "Lean uses braces for implicit structure fields; .ps owns only the outer body delimiter after where.",
+      "dx_rationale": "Makes datatype declarations much more familiar."
+    },
+    {
+      "id": "E-CLASS-BODY",
+      "class": "E",
+      "status": "admitted-S1",
+      "surface": "class C where { members }",
+      "canonical_lean": "class C where members",
+      "lowering": "outer braces and member semicolons lower to native class/structure body layout",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "parse_e_class_body",
+        "preserve_instance_field_semantics",
+        "lower_e_class_body"
+      ],
+      "compatibility_cost": "Same brace family as structures.",
+      "dx_rationale": "Consistent structural declarations."
+    },
+    {
+      "id": "E-INDUCTIVE-BODY",
+      "class": "E",
+      "status": "admitted-S1",
+      "surface": "inductive T where { | ctor; }",
+      "canonical_lean": "inductive T where | ctor",
+      "lowering": "outer braces and constructor semicolons lower to native constructor sequence",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "parse_e_inductive_body",
+        "preserve_constructor_order",
+        "preserve_indices_and_results",
+        "lower_e_inductive_body"
+      ],
+      "compatibility_cost": ".ps owns a braced constructor list in this context.",
+      "dx_rationale": "Clear ADT-like shape without changing Lean inductives."
+    },
+    {
+      "id": "E-MATCH-BODY",
+      "class": "E",
+      "status": "admitted-S1",
+      "surface": "match x with { | p => rhs; }",
+      "canonical_lean": "match x with | p => rhs",
+      "lowering": "outer braces and alternative semicolons lower to native match alternative sequence",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "parse_e_match_body",
+        "patterns_remain_native",
+        "rhs_uses_ps_term",
+        "lower_match_alt_order"
+      ],
+      "compatibility_cost": "Brace/semicolon presentation differs from Lean source.",
+      "dx_rationale": "Familiar block around alternatives while preserving Lean match vocabulary."
+    },
+    {
+      "id": "E-WHERE-BODY",
+      "class": "E",
+      "status": "admitted-S1",
+      "surface": "where { localDecls }",
+      "canonical_lean": "where localDecls",
+      "lowering": "outer braces and declaration semicolons lower to native local where declarations",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "parse_e_where_body",
+        "preserve_local_scope",
+        "preserve_local_recursion",
+        "lower_e_where_body"
+      ],
+      "compatibility_cost": "Explicit delimiters around local declarations differ from Lean layout.",
+      "dx_rationale": "Makes local definitions easier for TypeScript-oriented developers."
+    }
+  ]
+}

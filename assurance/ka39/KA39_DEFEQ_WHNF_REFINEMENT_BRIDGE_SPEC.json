@@ -1,0 +1,25 @@
+{
+  "checkpoint": "proofscript-v1-ka39-defeq-whnf-refinement-bridge0",
+  "goal": "Bridge Lean4Lean definitional equality and WHNF-related conversion surface without claiming executable PSKernel isDefEq equivalence.",
+  "imports": [
+    "Lean4Lean.Theory.Typing.HeadReduction",
+    "Lean4Lean.Theory.Typing.Lemmas"
+  ],
+  "coveredSurface": [
+    "IsDefEq.hasType",
+    "IsDefEq.toU",
+    "IsDefEqU.refl",
+    "IsDefEqU.symm",
+    "IsDefEq.mono",
+    "IsDefEqU.mono",
+    "HasType.mono"
+  ],
+  "nonGoals": [
+    "full Lean4 equivalence",
+    "same theory as Lean4",
+    "executable PSKernel isDefEq refinement",
+    "conversion completeness",
+    "recursor/projection/iota refinement"
+  ],
+  "formalLean4LeanBridgeObligations": 103
+}

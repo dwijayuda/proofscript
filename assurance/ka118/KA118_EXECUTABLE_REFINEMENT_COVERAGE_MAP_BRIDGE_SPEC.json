@@ -1,0 +1,21 @@
+{
+  "checkpoint": "proofscript-v1-ka118-executable-refinement-coverage-map0",
+  "publicVersion": "1.0.0-pskernel.121",
+  "baseline": "proofscript-v1-ka117-executable-proof-module-index0",
+  "referenceKind": "executable-refinement-coverage-map-audit",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 0,
+  "countedObligations": [],
+  "sourceTheorems": [],
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

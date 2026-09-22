@@ -1,0 +1,225 @@
+{
+  "checkpoint": "proofscript-v1-ka45-inductive-recursor-refinement-bridge0",
+  "publicVersion": "1.0.0-pskernel.48",
+  "requiredCommands": [
+    {
+      "command": "npm install --offline --no-audit --no-fund",
+      "status": "passed"
+    },
+    {
+      "command": "npm run build -- --pretty false",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:pskernel:ka45",
+      "status": "passed"
+    },
+    {
+      "command": "npm run assurance:ka45",
+      "status": "passed"
+    },
+    {
+      "command": "npm run lean:ka45:check",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:psc:kernel-status",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:psc:conformance-bounded",
+      "status": "passed"
+    },
+    {
+      "command": "npm run arena:corpus-preflight",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:arena:static-nonperf",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:arena:tutorial",
+      "status": "timed-out-not-counted"
+    },
+    {
+      "command": "fresh extract install/build/test:pskernel:ka45/lean:ka45:check",
+      "status": "passed"
+    },
+    {
+      "command": "unzip -t final ZIP",
+      "status": "passed"
+    },
+    {
+      "command": "sha256sum -c final SHA file",
+      "status": "passed"
+    }
+  ],
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "sourceFileCount": 1673,
+    "ka45SourceFiles": [
+      {
+        "path": "tools/pskernel-ka45-inductive-recursor-refinement-bridge.ts",
+        "lines": 237,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka45/KA45_INDUCTIVE_RECURSOR_REFINEMENT_BRIDGE_RELEASE_GATE.json",
+        "lines": 198,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka45/KA45_INDUCTIVE_RECURSOR_REFINEMENT_BRIDGE_VERIFICATION_SUMMARY.json",
+        "lines": 174,
+        "ext": ".json"
+      },
+      {
+        "path": "tools/pskernel-ka45-inductive-recursor-refinement-bridge-tests.ts",
+        "lines": 58,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka45/inductive-recursor-refinement-bridge.json",
+        "lines": 45,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka45/KA45_INDUCTIVE_RECURSOR_REFINEMENT_BRIDGE_REPORT.md",
+        "lines": 43,
+        "ext": ".md"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-09-19-pskernel-ka45-inductive-recursor-refinement-bridge.md",
+        "lines": 43,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka45/inductive-recursor-refinement-bridge.lean",
+        "lines": 41,
+        "ext": ".lean"
+      },
+      {
+        "path": "assurance/ka45/KA45_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 25,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka45/kernel-feature-equivalence-progress.json",
+        "lines": 23,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka45/obligation-delta.json",
+        "lines": 23,
+        "ext": ".json"
+      }
+    ],
+    "ka45ToolFiles": [
+      {
+        "path": "tools/pskernel-ka45-inductive-recursor-refinement-bridge.ts",
+        "lines": 237,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka45-inductive-recursor-refinement-bridge-tests.ts",
+        "lines": 58,
+        "ext": ".ts"
+      }
+    ],
+    "newKA45OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenGeneratedSemanticPackagePrefixes": [
+      "packages/kernel/src/PSKernel",
+      "packages/kernel-codec/src",
+      "packages/frontend-next/src/core",
+      "packages/unified-bridge/src"
+    ],
+    "note": "KA-45 fails on new oversized KA-45 files, generated semantic-package edits, or too many KA-45 tool files."
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka45-inductive-recursor-refinement-bridge0",
+    "publicVersion": "1.0.0-pskernel.48",
+    "featureSurfaceBridgeProgressPercent": 68,
+    "executableKernelEquivalenceProofProgressPercent": 34,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 132,
+    "groups": [
+      {
+        "id": "ordinary-declarations",
+        "progressPercent": 82,
+        "status": "bridged proof-surface; executable refinement incomplete"
+      },
+      {
+        "id": "quotients",
+        "progressPercent": 74,
+        "status": "environment bridge complete; semantic soundness incomplete"
+      },
+      {
+        "id": "inductives",
+        "progressPercent": 44,
+        "status": "environment bridge plus recursor proof-surface bridge; generated rule/RHS refinement still open"
+      },
+      {
+        "id": "mutual-definitions",
+        "progressPercent": 43,
+        "status": "initial environment bridge; executable refinement incomplete"
+      },
+      {
+        "id": "expression-tags",
+        "progressPercent": 63,
+        "status": "TrExprS constructor surface covered; executable translator not fully refined"
+      },
+      {
+        "id": "typechecker-whnf-defeq",
+        "progressPercent": 50,
+        "status": "WHNF/defeq proof-surface bridges exist; executable checker refinement incomplete"
+      },
+      {
+        "id": "primitive-literals",
+        "progressPercent": 40,
+        "status": "Nat/Bool/literal proof-surface bridge only"
+      },
+      {
+        "id": "codec-replay",
+        "progressPercent": 36,
+        "status": "Replay surface and PS codec stability gates exist"
+      },
+      {
+        "id": "resource-errors",
+        "progressPercent": 39,
+        "status": "fuel/error conservativity surface bridge only"
+      },
+      {
+        "id": "architecture-health",
+        "progressPercent": 80,
+        "status": "no-spaghetti ratchet plus KA45 semantic-package touch guard"
+      },
+      {
+        "id": "end-to-end-refinement-spine",
+        "progressPercent": 30,
+        "status": "explicit staged checker refinement plan; no end-to-end theorem yet"
+      }
+    ],
+    "notAFormalEquivalenceClaim": true
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullInductiveRecursorRefinement": false,
+    "formalLean4EquivalenceProvenObligations": 132
+  }
+}

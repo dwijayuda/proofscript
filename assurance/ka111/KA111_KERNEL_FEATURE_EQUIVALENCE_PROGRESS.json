@@ -1,0 +1,17 @@
+{
+  "checkpoint": "proofscript-v1-ka111-progress-dashboard0",
+  "publicVersion": "1.0.0-pskernel.114",
+  "featureSurfaceBridgeProgressPercent": 100,
+  "executableKernelEquivalenceProofProgressPercent": 87,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 366,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 366,
+    "newFormalLean4LeanBridgeObligations": 0,
+    "correctedFormalLean4LeanBridgeObligations": 366,
+    "countedNewObligations": []
+  },
+  "metricPolicy": "KA111 is a progress-dashboard checkpoint: percentages are dashboard estimates and release/audit evidence, not full Lean 4 equivalence theorems.",
+  "notAFullLean4EquivalenceClaim": true,
+  "notAFormalEquivalenceClaim": true
+}

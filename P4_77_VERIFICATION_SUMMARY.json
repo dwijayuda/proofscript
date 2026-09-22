@@ -1,0 +1,57 @@
+{
+  "version": "P4.77",
+  "title": "Parser cursor extraction cleanup",
+  "trust_label": "K3-TB trusted-boundary; not fully formal K3; not proven equivalent to Lean 4",
+  "changes": [
+    "Added packages/parser/src/tokenCursor.ts",
+    "Moved token cursor state and expectation helpers out of packages/parser/src/index.ts",
+    "Parser now extends TokenCursor",
+    "Added parser cursor structural/behavior regression test",
+    "Added npm script test:parser:cursor"
+  ],
+  "verification": [
+    {
+      "command": "npm run build -- --pretty false",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:parser:cursor",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:parser:tokenize",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:standalone-small",
+      "status": "PASS"
+    },
+    {
+      "command": "npm run test:kernel:smoke",
+      "status": "PASS"
+    },
+    {
+      "command": "node tools/pskernel.ts status --json",
+      "status": "PASS",
+      "proofStatus": "not-proven"
+    },
+    {
+      "command": "unzip -tq proofscript-standalone-kernel-maturity-replacement-p4-77.zip",
+      "status": "PASS"
+    }
+  ],
+  "not_rerun": [
+    "npm run verify:k3tb:publish; still requires PROOFSCRIPT_LEAN_BIN",
+    "full long matrix; skipped for fast cleanup iteration"
+  ],
+  "progress_estimate": {
+    "Standalone PSC-1 without Lean4": "~97.3%",
+    "PSC-1 small complete programming language": "~72.0%",
+    "PSC-1 small theorem prover": "~62.1%",
+    "Full ProofScript compiler": "~60.7%",
+    "Full Lean-like ProofScript without Lean4": "~13.8%",
+    "Formal Lean 4 equivalence": "0 proven obligations",
+    "Maintainability / anti-spaghetti score": "~63%"
+  },
+  "archive_sha256": "recorded in external sidecar after packaging"
+}

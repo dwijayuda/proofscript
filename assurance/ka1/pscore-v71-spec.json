@@ -1,0 +1,86 @@
+{
+  "schema": "proofscript.assurance.ka1.pscore-v71-spec/v1",
+  "status": "specification-and-trust-classification-not-equivalence-proof",
+  "core": {
+    "formatVersion": 71,
+    "implementationProfile": "KERNEL-level-instantiation-conformance1",
+    "certificateFormat": 2,
+    "kernelName": "PSKernel"
+  },
+  "trustBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "standaloneRequiresLean": false,
+    "fullLean4Equivalence": false,
+    "formalLean4EquivalenceProvenObligations": 0
+  },
+  "artifactFieldClassification": [
+    {
+      "field": "formatVersion",
+      "classification": "checked",
+      "rule": "must equal 71 for this line"
+    },
+    {
+      "field": "implementationProfile",
+      "classification": "checked",
+      "rule": "must equal KERNEL-level-instantiation-conformance1 or be explicitly rejected/unsupported"
+    },
+    {
+      "field": "certificateFormat",
+      "classification": "checked",
+      "rule": "must equal certificate format 2"
+    },
+    {
+      "field": "declarations",
+      "classification": "trusted",
+      "rule": "kernel checks declaration bodies/types and derived declarations before accepting replay"
+    },
+    {
+      "field": "levels",
+      "classification": "trusted",
+      "rule": "level expressions participate in type checking and definitional equality"
+    },
+    {
+      "field": "expressions",
+      "classification": "trusted",
+      "rule": "terms are checked by typechecker/defeq/WHNF"
+    },
+    {
+      "field": "recursorMetadata",
+      "classification": "checked",
+      "rule": "metadata may guide reconstruction only after independent validation; it may not assert new computation rules"
+    },
+    {
+      "field": "sourceSpans",
+      "classification": "ignored",
+      "rule": "debug/source-location information is semantically inert"
+    },
+    {
+      "field": "frontendHints",
+      "classification": "advisory",
+      "rule": "may improve diagnostics but cannot affect trusted acceptance"
+    },
+    {
+      "field": "unsafeRuntimeCode",
+      "classification": "forbidden",
+      "rule": "unsafe/partial executable runtime declarations cannot enter proof-validating Core"
+    },
+    {
+      "field": "metavariables",
+      "classification": "forbidden",
+      "rule": "unresolved expression/universe metavariables must be solved before trusted Core"
+    },
+    {
+      "field": "nativeOpaqueHostCallbacks",
+      "classification": "forbidden",
+      "rule": "host callbacks cannot affect logical kernel checking"
+    }
+  ],
+  "supportedCoreContract": [
+    "all accepted declarations must be translated to Lean 4.33.1 kernel declarations",
+    "resource_exhausted and implementation_error are non-semantic outcomes",
+    "unsupported/out-of-scope syntax must not be accepted by replay",
+    "serialized metadata may never bypass derivation/validation of recursors, projections, universes, or quotient rules"
+  ]
+}

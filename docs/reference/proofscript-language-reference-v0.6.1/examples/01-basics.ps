@@ -1,0 +1,10 @@
+const answer : Nat := 42;
+
+function add(x : Nat, y : Nat) : Nat :=
+  x + y;
+
+const increment : Nat -> Nat :=
+  fun x => x + 1;
+
+function mainValue(x : Nat) : Nat :=
+  increment(add(x, answer));

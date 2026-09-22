@@ -1,0 +1,19 @@
+{
+  "checkpoint": "proofscript-v1-ka42-resource-error-conservativity-bridge0",
+  "featureSurfaceBridgeProgressPercent": 63,
+  "executableKernelEquivalenceProofProgressPercent": 30,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 128,
+  "groups": [
+    { "id": "ordinary-declarations", "progressPercent": 82, "status": "aggregate bridges present; executable refinement still open" },
+    { "id": "quotients", "progressPercent": 68, "status": "environment bridges present; semantic quotient soundness still open" },
+    { "id": "inductives", "progressPercent": 33, "status": "conditional environment bridge present; recursor/positivity/projection refinement open" },
+    { "id": "mutual-definitions", "progressPercent": 45, "status": "conditional environment bridge present; executable mutual recursion refinement open" },
+    { "id": "typechecker", "progressPercent": 36, "status": "proof-surface bridge present; end-to-end executable refinement open" },
+    { "id": "expression-tags", "progressPercent": 60, "status": "TrExprS constructor surface covered; executable translator refinement open" },
+    { "id": "whnf-defeq", "progressPercent": 43, "status": "theory-level bridge present; executable algorithm refinement open" },
+    { "id": "primitive-literals", "progressPercent": 38, "status": "primitive/literal proof-surface bridge present; reflection completeness open" },
+    { "id": "codec-replay", "progressPercent": 36, "status": "Replay surface + codec stability gate present; full replay refinement open" },
+    { "id": "resource-error-conservativity", "progressPercent": 30, "status": "fuel/error proof-surface bridge present; full conservativity open" }
+  ]
+}

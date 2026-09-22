@@ -1,0 +1,190 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "V71_CONDITIONAL_K3_THEOREM_SCAFFOLD1",
+  "coreFormat": 71,
+  "status": "PASS",
+  "leanSemanticBaseline": "4.33.1",
+  "leanReleaseCommit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "progress": {
+    "percent": 99,
+    "previousPercent": 98,
+    "label": "v71 K3-track conservative engineering progress",
+    "note": "Progress is a project ledger, not a probability and not a formal K3 theorem."
+  },
+  "formal": {
+    "target": "ProofScriptKernelEquivalence.KernelV71ConditionalK3TheoremScaffold",
+    "source": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71ConditionalK3TheoremScaffold.lean",
+    "targetSourceSha256": "fc04becbe0af49e571ca63894f73bf8c7ae47762c3218e55cf4ee54b918c2f6e",
+    "log": "assurance/lean4331/evidence/v71-conditional-k3-theorem-scaffold-formal1.out",
+    "logSha256": "ae4c50e0ee494d3935c92057829293f5a2ec3a885f8f61efcaa41dbaedcaae76",
+    "targetTheorems": 6,
+    "reportedSorryAx": 0,
+    "effectiveFormalStackFiles": 48,
+    "formalStackHash": "7581e57cae8f4d6733fca1cca6e0bf95e179f509b7e2e2a66e2336c66c6d1078"
+  },
+  "executable": {
+    "inheritedCheckpointCount": 17,
+    "inheritedCheckpointFailures": 0,
+    "finalLeanGatePartCount": 6,
+    "finalLeanGateFailures": 0,
+    "checkpointLedgerHash": "f8dc0056fbb1fc5554a7331d508699b5b4df20af36c0ba3bb85680c77a63fd0c"
+  },
+  "inherited": [
+    {
+      "path": "assurance/lean4331/FINAL_VALIDATION_V71_FULL_LEAN_GATE.json",
+      "checkpoint": "FINAL_VALIDATION_V71_FULL_LEAN_GATE",
+      "status": "PASS",
+      "progress": null,
+      "sha256": "e43f8e36d9fd348a266ea860168d80eaf8f1bd15a913db848edc2ccee8b9a9f4"
+    },
+    {
+      "path": "assurance/lean4331/CHECKPOINT_V71_NONMUTUAL_DECL_ENV_CERT1.json",
+      "checkpoint": "V71_NONMUTUAL_DECL_ENV_CERT1",
+      "status": "PASS",
+      "progress": null,
+      "sha256": "69eb922c23e9a49c06f31ba0fbf175271994b0b4fc405ce2d430d9b446e3239a"
+    },
+    {
+      "path": "assurance/lean4331/CHECKPOINT_V71_TS_CLASSIFIER_IMPL_TRACE_CERT1.json",
+      "checkpoint": "V71_TS_CLASSIFIER_IMPL_TRACE_CERT1",
+      "status": "PASS",
+      "progress": null,
+      "sha256": "14673ba7e30f7646676aba04bcc01c85d090d9a3459a533e920639a489d8b109"
+    },
+    {
+      "path": "assurance/lean4331/CHECKPOINT_V71_MUTUAL_FORMED_ENV_CERT1.json",
+      "checkpoint": "V71_MUTUAL_FORMED_ENV_CERT1",
+      "status": "PASS",
+      "progress": null,
+      "sha256": "a7a47f7b83d255bb067986209db6335d78af7654dc17676c8fabe831b6b85f48"
+    },
+    {
+      "path": "assurance/lean4331/CHECKPOINT_V71_NESTED_FORMED_ENV_CERT1.json",
+      "checkpoint": "V71_NESTED_FORMED_ENV_CERT1",
+      "status": "PASS",
+      "progress": null,
+      "sha256": "0c7d33a15d59fb9ba30687044a42f91efed9517a9009d33f9c5423865dbf80ae"
+    },
+    {
+      "path": "assurance/lean4331/CHECKPOINT_V71_FORMED_ENV_GENERALIZATION_CERT1.json",
+      "checkpoint": "V71_FORMED_ENV_GENERALIZATION_CERT1",
+      "status": "PASS",
+      "progress": null,
+      "sha256": "ef076a9a38c93b65d4cd5808f704fe499819a7ffad0cdbfcd4828cfd131294c8"
+    },
+    {
+      "path": "assurance/lean4331/CHECKPOINT_V71_MUTUAL_NESTED_RECURSOR_RHS_CERT1.json",
+      "checkpoint": "V71_MUTUAL_NESTED_RECURSOR_RHS_CERT1",
+      "status": "PASS",
+      "progress": null,
+      "sha256": "b16594d53846cad86335e3f9b48c9b8e29087a4fe883646d30d734ad2b4ebb99"
+    },
+    {
+      "path": "assurance/lean4331/CHECKPOINT_V71_ADMISSION_BOUNDARY_CERT1.json",
+      "checkpoint": "V71_ADMISSION_BOUNDARY_CERT1",
+      "status": "PASS",
+      "progress": null,
+      "sha256": "28c1aabada8bb802aefd7e31a61d7015a310de4684903c3a193812b1a3212f94"
+    },
+    {
+      "path": "assurance/lean4331/CHECKPOINT_V71_MUTUAL_ADMISSION_COMPLETENESS_BOUNDARY1.json",
+      "checkpoint": "V71_MUTUAL_ADMISSION_COMPLETENESS_BOUNDARY1",
+      "status": "PASS",
+      "progress": 70,
+      "sha256": "7b866f0310254e43cd9daca37ad2ad9f2fac9b86856e16d5e0b2ee4650c7c4c5"
+    },
+    {
+      "path": "assurance/lean4331/CHECKPOINT_V71_NESTED_PREPROCESSING_COMPLETENESS_BOUNDARY1.json",
+      "checkpoint": "V71_NESTED_PREPROCESSING_COMPLETENESS_BOUNDARY1",
+      "status": "PASS",
+      "progress": 75,
+      "sha256": "dc29ce0c03d30e1483722479c9f5c67dad7835d94e59efb79370935eecfb84ec"
+    },
+    {
+      "path": "assurance/lean4331/CHECKPOINT_V71_TS_NESTED_PREPROCESSOR_REFINEMENT_BOUNDARY1.json",
+      "checkpoint": "V71_TS_NESTED_PREPROCESSOR_REFINEMENT_BOUNDARY1",
+      "status": "PASS",
+      "progress": 80,
+      "sha256": "e1cbd64b5df594b0930ea2b753a46fd8fa440c29b658ec56c51278d8f9f44cd1"
+    },
+    {
+      "path": "assurance/lean4331/CHECKPOINT_V71_POSITIVITY_COMPLETENESS_BOUNDARY1.json",
+      "checkpoint": "V71_POSITIVITY_COMPLETENESS_BOUNDARY1",
+      "status": "PASS",
+      "progress": 85,
+      "sha256": "8551400a4e4f7bd7d753dcabb5c709bd69a26ce8b8bdb6cc0e29e0c174c26d75"
+    },
+    {
+      "path": "assurance/lean4331/CHECKPOINT_V71_STORED_RECURSOR_RHS_RECONSTRUCTION_BOUNDARY1.json",
+      "checkpoint": "V71_STORED_RECURSOR_RHS_RECONSTRUCTION_BOUNDARY1",
+      "status": "PASS",
+      "progress": 90,
+      "sha256": "04c062446a0535d2ad0bfeccf6010a09b4cfb7704852ae2d2859d9980ce7be0a"
+    },
+    {
+      "path": "assurance/lean4331/CHECKPOINT_V71_KERNELTS_SEMANTICS_BOUNDARY1.json",
+      "checkpoint": "V71_KERNELTS_SEMANTICS_BOUNDARY1",
+      "status": "PASS",
+      "progress": 93,
+      "sha256": "c82c86da286ac27cdc101073d529a3be914d5ccd005a5c1899c16ca3ddc45187"
+    },
+    {
+      "path": "assurance/lean4331/CHECKPOINT_V71_KERNELTS_SMALLSTEP_EXECUTION_BOUNDARY1.json",
+      "checkpoint": "V71_KERNELTS_SMALLSTEP_EXECUTION_BOUNDARY1",
+      "status": "PASS",
+      "progress": 95,
+      "sha256": "d41c033396cf69acf3baf31b954a42aa26cc221d32391afb58a5f2986b474870"
+    },
+    {
+      "path": "assurance/lean4331/CHECKPOINT_V71_RUNTIME_EXTRACTION_TRUST_BOUNDARY1.json",
+      "checkpoint": "V71_RUNTIME_EXTRACTION_TRUST_BOUNDARY1",
+      "status": "PASS",
+      "progress": 97,
+      "sha256": "e7ccde036e08af693b72f32451bfb092638b7f2c1a8d59bccfc209b8e618b888"
+    },
+    {
+      "path": "assurance/lean4331/CHECKPOINT_V71_WHOLE_K3_READINESS_BOUNDARY1.json",
+      "checkpoint": "V71_WHOLE_K3_READINESS_BOUNDARY1",
+      "status": "PASS",
+      "progress": 98,
+      "sha256": "50e77e80d2afbec1cd8bb4b8cc87f6b396f67440d342c42814270a7ef4abe811"
+    }
+  ],
+  "completedSlices": [
+    "full six-part Lean 4.33.1 executable gate",
+    "non-mutual declaration environment certificate",
+    "TypeScript classifier implementation trace certificate",
+    "mutual formed-environment certificate",
+    "nested formed-environment certificate",
+    "mixed formed-environment generalization certificate",
+    "mutual/nested linked recursor RHS certificate",
+    "admission-boundary certificate",
+    "mutual admission completeness-boundary certificate",
+    "nested preprocessing completeness-boundary certificate",
+    "TypeScript nested preprocessor refinement-boundary certificate",
+    "positivity completeness-boundary certificate",
+    "stored RecursorRule.rhs reconstruction-boundary certificate",
+    "KernelTS semantics-boundary certificate",
+    "KernelTS small-step execution-boundary certificate",
+    "runtime/extraction trust-boundary certificate",
+    "whole-K3 readiness-boundary certificate",
+    "conditional final-K3 theorem scaffold"
+  ],
+  "outstandingK3Obligations": [
+    "verified TypeScript compiler or extraction path",
+    "full ECMAScript or Node runtime model",
+    "arbitrary Lean acceptance completeness iff ProofScript acceptance",
+    "exhaustive all-Lean reduction-path completeness",
+    "instantiate conditional theorem with concrete proofs"
+  ],
+  "theoremShape": {
+    "conclusion": "runtimeAccepts(j) iff Lean4331Accepts(translateJudgment(j)); reductions and stored recursor RHS agree on translated shared-domain objects",
+    "requiredPremises": [
+      "runtimeRefinesProofScriptSpec",
+      "proofScriptSpecLeanAcceptanceIff",
+      "reductionPathCompletenessIff",
+      "storedRecursorRHSRoundTripIff"
+    ]
+  },
+  "boundary": "CONDITIONAL_THEOREM_SCAFFOLD_NOT_FINAL_K3_EQUIVALENCE"
+}

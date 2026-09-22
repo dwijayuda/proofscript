@@ -1,0 +1,49 @@
+{
+  "schema": "proofscript.kernel-assurance.checkpoint/v1",
+  "checkpoint": "v69-expr-ops1",
+  "profile": "KERNEL-universe-conformance1",
+  "coreFormat": 69,
+  "certificateFormat": 2,
+  "lean": {
+    "version": "4.33.1",
+    "commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "historicalV68": {
+    "status": "superseded-for-trusted-use",
+    "reason": "confirmed universe-conformance defect: historical v68 can accept a constructor-field universe relation rejected by exact Lean 4.33.1"
+  },
+  "currentEvidence": {
+    "universePairs": 30000,
+    "universePredicateComparisons": 60000,
+    "universeMismatches": 0,
+    "asciiNameOrderCases": 5000,
+    "asciiNameOrderMismatches": 0,
+    "exprLiftCases": 500,
+    "exprLiftFailures": 0,
+    "exprInstantiate1Cases": 500,
+    "exprInstantiate1Failures": 0,
+    "assuranceGate": "passed",
+    "typescriptBuild": "passed",
+    "universeKernelRegression": "passed",
+    "conformanceSmoke": "passed"
+  },
+  "formal": {
+    "noSorryAxGate": "passed",
+    "newlyClosedSlice": "Core\u2192Lean structural correspondence for positive de Bruijn lift and outer-binder instantiate1",
+    "wholeKernelEquivalence": "IN_PROGRESS_NOT_K3"
+  },
+  "knownNonKernelAggregateIssue": {
+    "sourceDifferentialAccepted": 23,
+    "sourceDifferentialTotal": 25,
+    "knownFrontendExporterRejections": [
+      "reduction-recursion",
+      "equation-patterns"
+    ],
+    "classification": "frontend exporter cases; not used as kernel-equivalence evidence"
+  },
+  "nextFormalPriority": [
+    "basic shared-Core typing correspondence for Sort/BVar/Const/App/Lam/Pi/Let",
+    "definitional equality correspondence for beta/zeta/delta/eta/proof irrelevance",
+    "native universe normalize/isEquiv/geq bridge closure or explicitly specified trusted native assumptions"
+  ]
+}

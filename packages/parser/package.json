@@ -1,0 +1,16 @@
+{
+  "name": "@proofscript/parser",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "Incremental parser architecture bootstrap, K1-inductives0 source slice",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "@proofscript/syntax": "0.1.0-dev.0"
+  }
+}

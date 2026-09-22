@@ -1,0 +1,17 @@
+{
+  "checkpoint": "proofscript-v1-ka123-executable-refinement-final-audit-harness0",
+  "publicVersion": "1.0.0-pskernel.126",
+  "featureSurfaceBridgeProgressPercent": 100,
+  "executableKernelEquivalenceProofProgressPercent": 99,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 366,
+  "obligationAccounting": {
+    "previousFormalLean4LeanBridgeObligations": 366,
+    "newFormalLean4LeanBridgeObligations": 0,
+    "correctedFormalLean4LeanBridgeObligations": 366,
+    "countedNewObligations": []
+  },
+  "metricPolicy": "KA123 increments executable-equivalence dashboard progress through final audit harness audit; it is not a full executable refinement proof or full Lean4 equivalence theorem.",
+  "notAFullLean4EquivalenceClaim": true,
+  "notAFormalEquivalenceClaim": true
+}

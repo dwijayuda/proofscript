@@ -1,0 +1,32 @@
+def subtract(a: Nat, b: Nat): Nat := {
+  a - b
+}
+
+def underflow: Nat := {
+  5 - 8
+}
+
+def mixedSub(a: Nat, b: Nat): Nat := {
+  a * 3 - b
+}
+
+def chooseDifference(flag: Bool, a: Nat, b: Nat): Nat := {
+  let d: Nat := a - b;
+  bif(flag) { d } else { 0 }
+}
+
+def answer: Nat := {
+  50 - 8
+}
+
+theorem answer_eq_42: answer = 42 := by {
+  rfl
+}
+
+theorem sub_underflow_zero: 5 - 8 = 0 := by {
+  rfl
+}
+
+theorem sub_regular_closed: 12 - 5 = 7 := by {
+  rfl
+}

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka30-ordinary-env-aggregate-bridge0",
+  "publicVersion": "1.0.0-pskernel.33",
+  "baseline": "proofscript-v1-ka29-quot-env-aggregate-bridge0",
+  "referenceKind": "direct-imported-lean4lean-ordinary-env-aggregate-bridge",
+  "actualLean4LeanImportBound": true,
+  "bridgedRelations": [
+    "Lean4Lean.VDecl.WF",
+    "Lean4Lean.VEnv.WF",
+    "Lean4Lean.VEnv.LE",
+    "Lean4Lean.VEnv.addConst",
+    "Lean4Lean.VEnv.addDefEq",
+    "Lean4Lean.VEnv.constants",
+    "Lean4Lean.VEnv.defeqs"
+  ],
+  "coveredPSDeclKinds": ["axiom", "definition", "theorem", "opaque"],
+  "explicitlyNotReopenedHere": ["example", "quot", "inductive", "mutualInductive"],
+  "conditionalBridgeLemmas": [
+    "PSKernelKA30.translated_axiom_env_aggregate_bridge",
+    "PSKernelKA30.translated_definition_env_aggregate_bridge",
+    "PSKernelKA30.translated_theorem_env_aggregate_bridge",
+    "PSKernelKA30.translated_opaque_env_aggregate_bridge"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "quotientSemanticSoundness": false,
+    "formalLean4EquivalenceProvenObligations": 55
+  }
+}

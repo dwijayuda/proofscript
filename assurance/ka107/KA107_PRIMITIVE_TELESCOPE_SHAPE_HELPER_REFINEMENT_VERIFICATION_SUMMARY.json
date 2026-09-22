@@ -1,0 +1,8 @@
+{
+  "checkpoint": "proofscript-v1-ka107-primitive-telescope-shape-helper-refinement0",
+  "status": "passed",
+  "strictLean4LeanStatus": "passed",
+  "newFormalLean4LeanBridgeObligations": 5,
+  "formalLean4LeanBridgeObligations": 356,
+  "architectureHealth": true
+}

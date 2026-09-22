@@ -1,0 +1,325 @@
+{
+  "checkpoint": "proofscript-v1-ka113-executable-obligation-ledger0",
+  "publicVersion": "1.0.0-pskernel.116",
+  "baseline": "proofscript-v1-ka112-executable-equivalence-progress0",
+  "releaseKind": "executable-obligation-ledger-audit",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA113",
+      "source": "assurance/ka113/executable-obligation-ledger-bridge.lean",
+      "destination": "KA113ExecutableObligationLedgerBridge.lean",
+      "status": "passed",
+      "proofBearing": false,
+      "obligations": 0,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "progress": {
+    "checkpoint": "proofscript-v1-ka113-executable-obligation-ledger0",
+    "publicVersion": "1.0.0-pskernel.116",
+    "baseline": "proofscript-v1-ka112-executable-equivalence-progress0",
+    "metrics": {
+      "featureSurfaceBridgeProgressPercent": 100,
+      "executableKernelEquivalenceProofProgressPercent": 89,
+      "executableKernelEquivalencePreviousPercent": 88,
+      "executableKernelEquivalenceDeltaPercent": 1,
+      "arenaCorpusRegressionPercent": 100,
+      "releasePackagingVerificationPercent": 100,
+      "executableObligationLedgerPercent": 100,
+      "formalLean4LeanBridgeObligations": 366,
+      "newFormalLean4LeanBridgeObligations": 0,
+      "fullLean4EquivalencePercent": 0,
+      "fullyFormalK3Percent": 0,
+      "overallConservativeProjectProgressPercent": 81.7,
+      "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+    },
+    "phaseStatus": {
+      "featureSurfaceBridge": "closed",
+      "executableEquivalence": "active-obligation-ledgered",
+      "fullLean4Equivalence": "not-proven",
+      "fullyFormalK3": "not-proven",
+      "claimBoundary": "enforced"
+    },
+    "ledgerSummary": {
+      "executableObligationLedgerPercent": 100,
+      "rows": [
+        {
+          "id": "expression-translation-refinement",
+          "evidence": "closed-by-ka51-ka64",
+          "status": "closed",
+          "closedOrTracked": true
+        },
+        {
+          "id": "whnf-refinement",
+          "evidence": "closed-by-ka65",
+          "status": "closed",
+          "closedOrTracked": true
+        },
+        {
+          "id": "defeq-core-refinement",
+          "evidence": "closed-by-ka66-ka74",
+          "status": "closed",
+          "closedOrTracked": true
+        },
+        {
+          "id": "infer-type-frontier",
+          "evidence": "closed-by-ka75-ka79",
+          "status": "closed",
+          "closedOrTracked": true
+        },
+        {
+          "id": "primitive-surface-reflection",
+          "evidence": "closed-by-ka81-ka92",
+          "status": "closed",
+          "closedOrTracked": true
+        },
+        {
+          "id": "primitive-helper-surface",
+          "evidence": "closed-by-ka93-ka109",
+          "status": "closed",
+          "closedOrTracked": true
+        },
+        {
+          "id": "feature-surface-dashboard",
+          "evidence": "closed-by-ka110",
+          "status": "closed",
+          "closedOrTracked": true
+        },
+        {
+          "id": "progress-dashboard",
+          "evidence": "closed-by-ka111",
+          "status": "closed",
+          "closedOrTracked": true
+        },
+        {
+          "id": "frontier-map",
+          "evidence": "closed-by-ka112",
+          "status": "closed",
+          "closedOrTracked": true
+        },
+        {
+          "id": "executable-obligation-ledger",
+          "evidence": "closed-by-ka113",
+          "status": "closed",
+          "closedOrTracked": true
+        },
+        {
+          "id": "remaining-executable-refinement-theorem",
+          "evidence": "tracked-not-proven",
+          "status": "tracked",
+          "closedOrTracked": true
+        },
+        {
+          "id": "full-lean4-equivalence-theorem",
+          "evidence": "tracked-not-proven",
+          "status": "tracked",
+          "closedOrTracked": true
+        }
+      ],
+      "counts": {
+        "expected": 12,
+        "closedOrTracked": 12,
+        "missing": 0
+      },
+      "evidenceMeaning": "ledger requires every executable-equivalence frontier bucket to be closed or explicitly tracked; it is not an executable PSKernel refinement proof"
+    },
+    "percentBoundaries": {
+      "executableProgressIsDashboardEvidenceNotRefinementProof": true,
+      "ledgerDoesNotProvePSKernelEquivalence": true,
+      "overallProgressIsDashboardEstimate": true
+    },
+    "claimBoundary": {
+      "fullLean4Equivalence": false,
+      "sameTheoryAsFullLean4": false,
+      "fullyFormalK3": false,
+      "executablePSKernelRefinementProof": false,
+      "trustedKernelSemanticChange": false,
+      "kernelCodecChange": false,
+      "coreFormatChanged": false,
+      "certificateFormatChanged": false
+    }
+  },
+  "ledgerSummary": {
+    "executableObligationLedgerPercent": 100,
+    "rows": [
+      {
+        "id": "expression-translation-refinement",
+        "evidence": "closed-by-ka51-ka64",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "whnf-refinement",
+        "evidence": "closed-by-ka65",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "defeq-core-refinement",
+        "evidence": "closed-by-ka66-ka74",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "infer-type-frontier",
+        "evidence": "closed-by-ka75-ka79",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "primitive-surface-reflection",
+        "evidence": "closed-by-ka81-ka92",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "primitive-helper-surface",
+        "evidence": "closed-by-ka93-ka109",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "feature-surface-dashboard",
+        "evidence": "closed-by-ka110",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "progress-dashboard",
+        "evidence": "closed-by-ka111",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "frontier-map",
+        "evidence": "closed-by-ka112",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "executable-obligation-ledger",
+        "evidence": "closed-by-ka113",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "remaining-executable-refinement-theorem",
+        "evidence": "tracked-not-proven",
+        "status": "tracked",
+        "closedOrTracked": true
+      },
+      {
+        "id": "full-lean4-equivalence-theorem",
+        "evidence": "tracked-not-proven",
+        "status": "tracked",
+        "closedOrTracked": true
+      }
+    ],
+    "counts": {
+      "expected": 12,
+      "closedOrTracked": 12,
+      "missing": 0
+    },
+    "evidenceMeaning": "ledger requires every executable-equivalence frontier bucket to be closed or explicitly tracked; it is not an executable PSKernel refinement proof"
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka113Files": [
+      {
+        "path": "tools/pskernel-ka113-executable-obligation-ledger-tests.ts",
+        "lines": 44,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka113-executable-obligation-ledger.ts",
+        "lines": 17,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka113/KA113_EXECUTABLE_OBLIGATION_LEDGER.json",
+        "lines": 126,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka113/KA113_EXECUTABLE_OBLIGATION_LEDGER_BRIDGE_SPEC.json",
+        "lines": 22,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka113/KA113_EXECUTABLE_OBLIGATION_LEDGER_RELEASE_GATE.json",
+        "lines": 326,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka113/KA113_EXECUTABLE_OBLIGATION_LEDGER_REPORT.md",
+        "lines": 19,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka113/KA113_EXECUTABLE_OBLIGATION_LEDGER_ROWS.json",
+        "lines": 84,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka113/KA113_EXECUTABLE_OBLIGATION_LEDGER_VERIFICATION_SUMMARY.json",
+        "lines": 12,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka113/KA113_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 18,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka113/KA113_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 15,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka113/executable-obligation-ledger-bridge.lean",
+        "lines": 10,
+        "ext": ".lean"
+      }
+    ],
+    "ka113ToolFiles": [
+      {
+        "path": "tools/pskernel-ka113-executable-obligation-ledger-tests.ts",
+        "lines": 44,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka113-executable-obligation-ledger.ts",
+        "lines": 17,
+        "ext": ".ts"
+      }
+    ],
+    "newKA113OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

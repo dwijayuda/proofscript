@@ -1,0 +1,18 @@
+{
+  "checkpoint": "proofscript-v1-ka36-expression-tag-coverage-bridge0",
+  "baseline": "proofscript-v1-ka35-typechecker-refinement-bridge0",
+  "formalLean4EquivalenceProvenObligationsBefore": 71,
+  "newFormalLean4LeanBridgeObligations": 11,
+  "formalLean4EquivalenceProvenObligationsAfter": 82,
+  "closedSinceKA35": [
+    "direct Lean4Lean TrExprS constructor-surface bridge for bvar/fvar/sort/const/app/lam/forallE/letE/lit/mdata/proj",
+    "explicit no-overclaim boundary for raw Lean.Expr mvar coverage"
+  ],
+  "stillOpen": [
+    "raw Lean.Expr mvar executable policy remains unsupported/outside this bridge",
+    "end-to-end executable PSKernel expression translator refinement remains unproven",
+    "literal primitive semantic completeness remains separate from constructor-surface coverage",
+    "projection semantic completeness remains separate from constructor-surface coverage",
+    "full Lean4 equivalence remains unproven"
+  ]
+}

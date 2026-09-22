@@ -1,0 +1,13 @@
+{
+  "name": "@proofscript/syntax",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "ProofScript source syntax bootstrap types",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}

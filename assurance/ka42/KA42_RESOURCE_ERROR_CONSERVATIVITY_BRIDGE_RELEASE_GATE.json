@@ -1,0 +1,125 @@
+{
+  "checkpoint": "proofscript-v1-ka42-resource-error-conservativity-bridge0",
+  "publicVersion": "1.0.0-pskernel.45",
+  "baseline": "proofscript-v1-ka41-codec-replay-refinement-bridge0",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "directLean4LeanResourceErrorBridge": {
+    "referenceKind": "direct-imported-lean4lean-resource-error-conservativity-bridge",
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanResourceErrorBridgeChecked": true,
+    "strictResourceErrorBridgePassed": true,
+    "typeCheckerBuildStatus": 0,
+    "directBridgeCheckStatus": 0,
+    "coveredLean4LeanSurface": [
+      "Lean4Lean.FuelConfig.recDepth",
+      "Lean4Lean.FuelConfig.whnf",
+      "Lean4Lean.FuelConfig.lazyDelta",
+      "Lean4Lean.TypeChecker.Methods.withFuel",
+      "Lean4Lean.TypeChecker.Methods.whnf",
+      "Lean4Lean.TypeChecker.Methods.whnfCore",
+      "Lean4Lean.TypeChecker.Methods.inferType",
+      "Lean4Lean.TypeChecker.Methods.isDefEqCore",
+      "Except.error conservativity"
+    ],
+    "formalBridgeLemmas": [
+      "PSKernelKA42.translated_default_rec_depth_policy",
+      "PSKernelKA42.translated_default_whnf_policy",
+      "PSKernelKA42.translated_default_lazy_delta_policy",
+      "PSKernelKA42.translated_zero_fuel_whnf_deep_recursion",
+      "PSKernelKA42.translated_zero_fuel_whnfCore_deep_recursion",
+      "PSKernelKA42.translated_zero_fuel_inferType_deep_recursion",
+      "PSKernelKA42.translated_zero_fuel_isDefEqCore_deep_recursion",
+      "PSKernelKA42.translated_except_error_not_success"
+    ],
+    "stillOpen": [
+      "full executable PSKernel checker resource/error refinement against Lean4Lean TypeChecker.M.run",
+      "full deterministicTimeout coverage for whnf unfold loops and lazyDelta loops",
+      "memory-exhaustion and interruption conservativity",
+      "resource/error equivalence for importer/replay/codec parsing failures",
+      "proof that PSKernel never maps Lean4Lean resource exhaustion to acceptance",
+      "end-to-end Arena runner crash/timeout/decline policy refinement"
+    ]
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka42-resource-error-conservativity-bridge0",
+    "featureSurfaceBridgeProgressPercent": 63,
+    "executableKernelEquivalenceProofProgressPercent": 30,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 128,
+    "groups": [
+      {
+        "id": "ordinary-declarations",
+        "progressPercent": 82,
+        "status": "aggregate bridges present; executable refinement still open"
+      },
+      {
+        "id": "quotients",
+        "progressPercent": 68,
+        "status": "environment bridges present; semantic quotient soundness still open"
+      },
+      {
+        "id": "inductives",
+        "progressPercent": 33,
+        "status": "conditional environment bridge present; recursor/positivity/projection refinement open"
+      },
+      {
+        "id": "mutual-definitions",
+        "progressPercent": 45,
+        "status": "conditional environment bridge present; executable mutual recursion refinement open"
+      },
+      {
+        "id": "typechecker",
+        "progressPercent": 36,
+        "status": "proof-surface bridge present; end-to-end executable refinement open"
+      },
+      {
+        "id": "expression-tags",
+        "progressPercent": 60,
+        "status": "TrExprS constructor surface covered; executable translator refinement open"
+      },
+      {
+        "id": "whnf-defeq",
+        "progressPercent": 43,
+        "status": "theory-level bridge present; executable algorithm refinement open"
+      },
+      {
+        "id": "primitive-literals",
+        "progressPercent": 38,
+        "status": "primitive/literal proof-surface bridge present; reflection completeness open"
+      },
+      {
+        "id": "codec-replay",
+        "progressPercent": 36,
+        "status": "Replay surface + codec stability gate present; full replay refinement open"
+      },
+      {
+        "id": "resource-error-conservativity",
+        "progressPercent": 30,
+        "status": "fuel/error proof-surface bridge present; full conservativity open"
+      }
+    ]
+  },
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullResourceErrorConservativity": false,
+    "formalLean4EquivalenceProvenObligations": 128
+  },
+  "blockedReasons": [],
+  "verificationSummary": {
+    "installBuildFocusedGates": "passed",
+    "arenaDirectGates": "passed",
+    "verifyArenaWrapper": "timed_out_not_counted",
+    "freshExtract": "passed",
+    "zipIntegrity": "passed_before_final_repack"
+  }
+}

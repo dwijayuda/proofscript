@@ -1,0 +1,23 @@
+{
+  "checkpoint": "proofscript-v1-ka34-mutual-def-env-bridge0",
+  "baseline": "proofscript-v1-ka33-inductive-env-bridge0",
+  "formalLean4EquivalenceProvenObligationsBefore": 60,
+  "formalLean4EquivalenceProvenObligationsAdded": 6,
+  "formalLean4EquivalenceProvenObligationsAfter": 66,
+  "closedByKA34": [
+    "direct bridge to real Lean4Lean VDecl.mutualDef constructor",
+    "conditional VDecl.WF.mutualDef bridge",
+    "conditional VEnv.WF preservation for mutual definition blocks",
+    "conditional VEnv.Ordered preservation via imported Lean4Lean EnvLemmas",
+    "conditional mutual-block constants membership after addConsts",
+    "conditional mutual-block defeq membership after addDefEqs"
+  ],
+  "stillOpen": [
+    "no executable PSKernel mutual-recursion checker refinement proof",
+    "no termination/recursive-safety refinement proof for mutual definitions",
+    "no frontend syntax or Core codec change for mutual definitions",
+    "no WHNF/defeq refinement for mutually recursive unfolding",
+    "no full Lean 4 equivalence",
+    "same-theory claim remains false"
+  ]
+}

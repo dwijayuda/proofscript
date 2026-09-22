@@ -1,0 +1,25 @@
+{
+  "name": "proofscript-crud-app-example",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "psc check",
+    "build": "psc build",
+    "compile": "psc compile",
+    "clean": "psc clean",
+    "doctor": "psc doctor",
+    "build:ts": "psc build --target ts",
+    "build:standalone": "psc build --bundle-runtime",
+    "build:generated-js": "tsc -p tsconfig.generated.json",
+    "start": "node dist-js/Main.js",
+    "run:host": "npm run start:host",
+    "build:host": "tsc -p tsconfig.host.json",
+    "start:host": "node dist-host/imperative-demo.js",
+    "demo": "npm run build && npm run build:generated-js && npm run build:host && npm run start:host"
+  },
+  "devDependencies": {
+    "proofscript": "file:../../..",
+    "typescript": "file:../../../vendor/npm/typescript-5.8.3.tgz"
+  }
+}

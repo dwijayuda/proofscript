@@ -1,0 +1,24 @@
+structure PairNat {
+  left: Nat;
+  right: Nat;
+}
+
+def updateLeft(p: PairNat, left: Nat): PairNat := {
+  { p with left := left }
+}
+
+def updateBoth(p: PairNat, left: Nat, right: Nat): PairNat := {
+  { p with left := left, right := right }
+}
+
+theorem updateLeftChanged(p: PairNat, left: Nat):
+  Eq.{1}(Nat, PairNat.left(updateLeft(p, left)), left) :=
+  Eq.refl.{1}(Nat, left);
+
+theorem updateLeftPreservesRight(p: PairNat, left: Nat):
+  Eq.{1}(Nat, PairNat.right(updateLeft(p, left)), PairNat.right(p)) :=
+  Eq.refl.{1}(Nat, PairNat.right(p));
+
+theorem updateBothRight(p: PairNat, left: Nat, right: Nat):
+  Eq.{1}(Nat, PairNat.right(updateBoth(p, left, right)), right) :=
+  Eq.refl.{1}(Nat, right);

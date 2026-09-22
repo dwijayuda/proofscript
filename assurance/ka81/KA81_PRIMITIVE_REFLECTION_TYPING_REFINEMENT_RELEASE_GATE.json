@@ -1,0 +1,131 @@
+{
+  "checkpoint": "proofscript-v1-ka81-primitive-reflection-typing-refinement0",
+  "publicVersion": "1.0.0-pskernel.84",
+  "baseline": "proofscript-v1-ka80-infertype-top-level-projection-boundary-audit0",
+  "releaseKind": "strict-lean4lean-primitive-reflection-typing-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA81",
+      "source": "assurance/ka81/primitive-reflection-typing-refinement-bridge.lean",
+      "destination": "PSKernelKA81PrimitiveReflectionTypingRefinementBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 5,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka81-primitive-reflection-typing-refinement0",
+    "publicVersion": "1.0.0-pskernel.84",
+    "featureSurfaceBridgeProgressPercent": 92,
+    "executableKernelEquivalenceProofProgressPercent": 59,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 242,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 237,
+      "newFormalLean4LeanBridgeObligations": 5,
+      "ledgerCorrectionFormalLean4LeanBridgeObligations": 0,
+      "correctedFormalLean4LeanBridgeObligations": 242,
+      "countedNewObligations": [
+        "translated_natZeroT_wf",
+        "translated_natSuccT_wf",
+        "translated_natPredT_wf",
+        "translated_natLitT_wf",
+        "translated_boolLitT_wf"
+      ]
+    },
+    "metricPolicy": "KA81 adds direct non-sorry-backed primitive reflection typing bridge wrappers. Percentages remain conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka81Files": [
+      {
+        "path": "tools/pskernel-ka81-primitive-reflection-typing-refinement-tests.ts",
+        "lines": 38,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka81-primitive-reflection-typing-refinement.ts",
+        "lines": 127,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka81/KA81_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 24,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka81/KA81_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka81/KA81_PRIMITIVE_REFLECTION_TYPING_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 36,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka81/KA81_PRIMITIVE_REFLECTION_TYPING_REFINEMENT_RELEASE_GATE.json",
+        "lines": 132,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka81/KA81_PRIMITIVE_REFLECTION_TYPING_REFINEMENT_REPORT.md",
+        "lines": 22,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka81/KA81_PRIMITIVE_REFLECTION_TYPING_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 21,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka81/primitive-reflection-typing-refinement-bridge.lean",
+        "lines": 38,
+        "ext": ".lean"
+      }
+    ],
+    "ka81ToolFiles": [
+      {
+        "path": "tools/pskernel-ka81-primitive-reflection-typing-refinement-tests.ts",
+        "lines": 38,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka81-primitive-reflection-typing-refinement.ts",
+        "lines": 127,
+        "ext": ".ts"
+      }
+    ],
+    "newKA81OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveReflectionRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

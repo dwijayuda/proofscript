@@ -1,0 +1,21 @@
+{
+  "checkpoint": "proofscript-v1-ka111-progress-dashboard0",
+  "publicVersion": "1.0.0-pskernel.114",
+  "baseline": "proofscript-v1-ka110-feature-surface-closeout-audit0",
+  "referenceKind": "progress-dashboard-audit",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 0,
+  "countedObligations": [],
+  "sourceTheorems": [],
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

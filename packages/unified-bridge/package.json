@@ -1,0 +1,17 @@
+{
+  "name": "@proofscript/unified-bridge",
+  "version": "0.1.0-production-p6.1",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "dependencies": {
+    "@proofscript/environment": "0.1.0-dev.0",
+    "@proofscript/frontend-next": "0.91.0-production-p6.1",
+    "@proofscript/kernel": "0.1.0-dev.0",
+    "@proofscript/kernel-codec": "0.1.0-dev.0"
+  }
+}

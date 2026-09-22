@@ -1,0 +1,144 @@
+{
+  "checkpoint": "proofscript-v1-ka68-executable-defeq-proof-level-offset-refinement0",
+  "publicVersion": "1.0.0-pskernel.71",
+  "baseline": "proofscript-v1-ka67-executable-defeq-binder-app-eta-refinement0",
+  "releaseKind": "strict-lean4lean-bridge-old-codebase-ignored",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanUnblocked": true,
+  "baselineObligations": 204,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA68",
+        "source": "assurance/ka68/executable-defeq-proof-level-offset-refinement-bridge.lean",
+        "destination": "PSKernelKA68ExecutableDefEqProofLevelOffsetRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "dependencyBuildStatus": "passed",
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka68-executable-defeq-proof-level-offset-refinement0",
+    "publicVersion": "1.0.0-pskernel.71",
+    "featureSurfaceBridgeProgressPercent": 87,
+    "executableKernelEquivalenceProofProgressPercent": 53,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 208,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 204,
+      "newFormalLean4LeanBridgeObligations": 4,
+      "countedNewObligations": [
+        "translated_getSortLevel_wf",
+        "translated_isProp_wf",
+        "translated_isDefEqProofIrrel_wf",
+        "translated_isDefEqOffset_wf"
+      ]
+    },
+    "metricPolicy": "KA68 advances the exact formal obligation counter only; percentage estimates remain held pending a separate coverage audit.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka68Files": [
+      {
+        "path": "tools/pskernel-ka68-executable-defeq-proof-level-offset-refinement-tests.ts",
+        "lines": 34,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka68-executable-defeq-proof-level-offset-refinement.ts",
+        "lines": 100,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka68/KA68_EXECUTABLE_DEFEQ_PROOF_LEVEL_OFFSET_REFINEMENT_RELEASE_GATE.json",
+        "lines": 140,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka68/KA68_EXECUTABLE_DEFEQ_PROOF_LEVEL_OFFSET_REFINEMENT_REPORT.md",
+        "lines": 37,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka68/KA68_EXECUTABLE_DEFEQ_PROOF_LEVEL_OFFSET_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 35,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka68/KA68_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 21,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka68/KA68_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka68/executable-defeq-proof-level-offset-refinement-bridge-spec.json",
+        "lines": 35,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka68/executable-defeq-proof-level-offset-refinement-bridge.lean",
+        "lines": 42,
+        "ext": ".lean"
+      }
+    ],
+    "ka68ToolFiles": [
+      {
+        "path": "tools/pskernel-ka68-executable-defeq-proof-level-offset-refinement-tests.ts",
+        "lines": 34,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka68-executable-defeq-proof-level-offset-refinement.ts",
+        "lines": 100,
+        "ext": ".ts"
+      }
+    ],
+    "newKA68OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "oldCodebasePolicy": {
+    "oldCodebaseRegressionIgnoredByUser": true,
+    "fullNpmTestRequiredForThisCheckpoint": false,
+    "reason": "User requested continuing with KA66/KA67 lineage and ignoring old codebase; KA68 changes only strict Lean4Lean bridge wrappers and release metadata."
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWHNFDefEqRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false,
+  "finalFreshExtractBoundedChecks": "passed-before-zip",
+  "finalZipStatus": "passed",
+  "finalZipSha256": "d305e40e28b9a6583774bea40a2221ab0b4db246871c7ee2269739a3db6efcbc",
+  "finalZipUnzipTest": "passed",
+  "finalZipSha256Check": "passed"
+}

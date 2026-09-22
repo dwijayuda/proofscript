@@ -1,0 +1,29 @@
+{
+  "checkpoint": "proofscript-v1-ka66-executable-defeq-core-refinement0",
+  "publicVersion": "1.0.0-pskernel.69",
+  "baseline": "proofscript-v1-ka65-executable-whnf-refinement0",
+  "referenceKind": "strict-lean4lean-executable-defeq-core-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "leanModule": "assurance/ka66/executable-defeq-core-refinement-bridge.lean",
+  "baselineFormalObligations": 196,
+  "countedNewFormalObligations": 4,
+  "countedNewObligationNames": [
+    "translated_isDefEqCore_wf",
+    "translated_isDefEqCore_prime_wf",
+    "translated_quickIsDefEq_wf",
+    "translated_isDefEqArgs_wf"
+  ],
+  "metricPolicy": "KA66 advances the exact formal obligation counter only; percentage estimates are held at the latest audited KA65 values pending a separate coverage audit.",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWHNFDefEqRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

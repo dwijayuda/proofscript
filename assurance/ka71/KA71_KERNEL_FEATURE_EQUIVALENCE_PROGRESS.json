@@ -1,0 +1,15 @@
+{
+  "checkpoint": "proofscript-v1-ka71-feature-equivalence-coverage-audit0",
+  "publicVersion": "1.0.0-pskernel.74",
+  "auditedFeatureSurfaceBridgeProgressPercent": 88,
+  "auditedExecutableKernelEquivalenceProofProgressPercent": 54,
+  "arenaCorpusRegressionPercent": 100,
+  "formalLean4LeanBridgeObligations": 216,
+  "obligationAccounting": {
+    "initialBaselineObligations": 132,
+    "auditedNewFormalLean4LeanBridgeObligations": 84,
+    "checkpointNewFormalLean4LeanBridgeObligations": 0
+  },
+  "metricPolicy": "KA71 is a coverage audit. It unlocks KA70 held-pending-audit percentages as audited conservative dashboard estimates, not formal theorem percentages.",
+  "notAFormalEquivalenceClaim": true
+}

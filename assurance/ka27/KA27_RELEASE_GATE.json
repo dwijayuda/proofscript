@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka27-quot-env-no-overwrite-bridge0",
+  "publicVersion": "1.0.0-pskernel.30",
+  "baseline": "proofscript-v1-ka26-quot-env-bridge0",
+  "createdAtUtc": "2026-09-19T00:30:00Z",
+  "kernel": {
+    "name": "PSKernel",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "directLean4LeanQuotEnvNoOverwriteBridge": {
+    "referenceKind": "direct-imported-lean4lean-quot-env-no-overwrite-bridge",
+    "actualLean4LeanImportBound": true,
+    "bridgedRelations": [
+      "Lean4Lean.VEnv.addQuot",
+      "Lean4Lean.VEnv.addConst",
+      "Lean4Lean.VEnv.constants"
+    ],
+    "directLean4LeanQuotEnvNoOverwriteBridgeChecked": true,
+    "strictBridgeCheckPassed": true,
+    "blockedReasons": [],
+    "coveredPSDeclKinds": [
+      "quot"
+    ],
+    "conditionalBridgeLemmas": [
+      "PSKernelKA27.translated_quot_fresh_quot_before_add",
+      "PSKernelKA27.translated_quot_fresh_quot_mk_before_add",
+      "PSKernelKA27.translated_quot_fresh_quot_lift_before_add",
+      "PSKernelKA27.translated_quot_fresh_quot_ind_before_add",
+      "PSKernelKA27.translated_quot_preserves_other_lookup"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "quotientSemanticSoundness": false,
+    "formalLean4EquivalenceProvenObligations": 48
+  },
+  "verificationSummary": {
+    "passed": [
+      "npm install --offline --no-audit --no-fund",
+      "npm run build -- --pretty false",
+      "npm run test:pskernel:ka26",
+      "npm run test:pskernel:ka27",
+      "npm run assurance:ka26",
+      "npm run assurance:ka27",
+      "npm run lean:ka26:check",
+      "npm run lean:ka27:check",
+      "npm run test:kernel:smoke",
+      "npm run test:standalone-small",
+      "npm run test:psc:kernel-status",
+      "npm run test:psc:conformance-bounded",
+      "npm run arena:corpus-preflight",
+      "npm run test:arena:static-nonperf",
+      "fresh extract npm install --offline --no-audit --no-fund",
+      "fresh extract npm run build -- --pretty false",
+      "fresh extract npm run test:pskernel:ka27",
+      "unzip -t final ZIP",
+      "sha256sum -c final SHA file"
+    ],
+    "notCounted": [
+      "combined verification batch timed out at lean:ka26:check; the timed-out Lean gates and remaining tail were rerun individually except tutorial",
+      "npm run test:arena:tutorial timed out while checking /mnt/data/arena-corpus-20260915/good/tutorial/120_rTreeRec.ndjson; not counted for KA-27",
+      "npm run verify:arena was not counted for KA-27 because tutorial wrapper did not complete in this turn",
+      "fresh extract npm run lean:ka27:check timed out after fresh test:pskernel:ka27 had already completed the same strict gate; not counted separately"
+    ],
+    "arenaEvidence": {
+      "corpusNdjsonFixtures": 190,
+      "staticNonPerf": {
+        "total": 26,
+        "acceptedGood": 4,
+        "rejectedBad": 22,
+        "wrong": 0,
+        "notRun": 0
+      },
+      "tutorial": {
+        "total": 140,
+        "acceptedGood": 93,
+        "rejectedBad": 47,
+        "wrong": 0,
+        "notRun": 0
+      }
+    }
+  }
+}

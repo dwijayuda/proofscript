@@ -1,0 +1,114 @@
+{
+  "checkpoint": "proofscript-v1-ka126-executable-refinement-proof-carrying-artifact-gate0",
+  "publicVersion": "1.0.0-pskernel.129",
+  "baseline": "proofscript-v1-ka125-executable-refinement-remaining-proof-gap0",
+  "metrics": {
+    "featureSurfaceBridgeProgressPercent": 100,
+    "executableKernelEquivalenceProofProgressPercent": 99,
+    "executableKernelEquivalencePreviousPercent": 99,
+    "executableKernelEquivalenceDeltaPercent": 0,
+    "executableKernelEquivalenceRemainingGapPercent": 1,
+    "arenaCorpusRegressionPercent": 100,
+    "releasePackagingVerificationPercent": 100,
+    "executableRefinementProofCarryingArtifactGatePercent": 100,
+    "formalLean4LeanBridgeObligations": 366,
+    "newFormalLean4LeanBridgeObligations": 0,
+    "fullLean4EquivalencePercent": 0,
+    "fullyFormalK3Percent": 0,
+    "overallConservativeProjectProgressPercent": 84.7,
+    "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+  },
+  "phaseStatus": {
+    "featureSurfaceBridge": "closed",
+    "executableEquivalence": "blocked-until-proof-carrying-artifact",
+    "fullLean4Equivalence": "not-proven",
+    "fullyFormalK3": "not-proven",
+    "claimBoundary": "enforced"
+  },
+  "proofCarryingArtifactGate": {
+    "gatePercent": 100,
+    "finalOnePercentLocked": true,
+    "requiresProofCarryingArtifactFor100Percent": true,
+    "acceptableFinalEvidence": [
+      "discharged Lean theorem",
+      "verified proof-carrying artifact"
+    ],
+    "rejectedFinalEvidence": [
+      "dashboard percentage only",
+      "report-only audit",
+      "release packaging alone",
+      "Arena regression evidence alone"
+    ],
+    "counts": {
+      "total": 8,
+      "ready": 8,
+      "notReady": 0
+    },
+    "rows": [
+      {
+        "id": "artifact-kind-enumerated",
+        "status": "ready",
+        "evidence": "Acceptable final-1% evidence must be either a discharged Lean theorem or a verified proof-carrying artifact.",
+        "ready": true
+      },
+      {
+        "id": "artifact-location-declared",
+        "status": "ready",
+        "evidence": "The future artifact location must be explicit in the release gate and not inferred from dashboards.",
+        "ready": true
+      },
+      {
+        "id": "artifact-hash-bound",
+        "status": "ready",
+        "evidence": "The future artifact must be hash-bound to the source tree, Core artifact, certificate, and proof inputs.",
+        "ready": true
+      },
+      {
+        "id": "lean-module-check-required",
+        "status": "ready",
+        "evidence": "A Lean module check is required before any executable-equivalence 100% claim.",
+        "ready": true
+      },
+      {
+        "id": "no-dashboard-only-completion",
+        "status": "ready",
+        "evidence": "Progress reports, ledgers, checklists, maps, and audits alone cannot raise executable equivalence to 100%.",
+        "ready": true
+      },
+      {
+        "id": "no-full-lean4-equivalence",
+        "status": "ready",
+        "evidence": "A PSKernel executable-refinement artifact is not a full Lean 4 equivalence theorem.",
+        "ready": true
+      },
+      {
+        "id": "no-trusted-semantic-change",
+        "status": "ready",
+        "evidence": "KA-126 changes only assurance metadata and gates; no trusted semantic package may change.",
+        "ready": true
+      },
+      {
+        "id": "remaining-gap-locked",
+        "status": "ready",
+        "evidence": "The final 1% remains locked until proof-carrying evidence exists and is verified.",
+        "ready": true
+      }
+    ]
+  },
+  "percentBoundaries": {
+    "ka126DoesNotIncreaseExecutableProgressTo100": true,
+    "proofCarryingArtifactRequiredFor100Percent": true,
+    "executableProgressIsDashboardEvidenceNotRefinementProof": true,
+    "overallProgressIsDashboardEstimate": true
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

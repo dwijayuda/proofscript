@@ -1,0 +1,13 @@
+{
+  "name": "@proofscript/std",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "ProofScript standard library bootstrap sources and checked artifacts",
+  "license": "MIT",
+  "files": [
+    "README.md",
+    "src",
+    "core",
+    "bootstrap-manifest.json"
+  ]
+}

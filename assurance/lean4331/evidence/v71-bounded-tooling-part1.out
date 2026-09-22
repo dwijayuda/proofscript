@@ -1,0 +1,49 @@
+RUN[58] tools/k1-universe-tests.ts
+✓ K1 universe kernel tests passed
+PASS[58] tools/k1-universe-tests.ts
+RUN[59] tools/k1-recursor-tests.ts
+✓ K1 restricted recursor typing and computation rules passed
+PASS[59] tools/k1-recursor-tests.ts
+RUN[60] tools/k1c-indexed-tests.ts
+✓ K1c indexed admission, singleton recursor, and Eq bootstrap tests passed
+PASS[60] tools/k1c-indexed-tests.ts
+RUN[61] tools/k1d-foundation-tests.ts
+✓ K1d Eq/Nat/Bool bootstrap, transparent def, delta reduction, and addZero theorem passed
+PASS[61] tools/k1d-foundation-tests.ts
+RUN[62] tools/k1d-prelude-tests.ts
+✓ standard bootstrap prelude loads without redeclaration and isolated replay succeeds
+PASS[62] tools/k1d-prelude-tests.ts
+RUN[63] tools/k2a-let-tests.ts
+✓ K2a let/have core bindings, zeta reduction, def-body sequencing, inference, and artifact gating passed
+PASS[63] tools/k2a-let-tests.ts
+RUN[64] tools/k2b-transparency-tests.ts
+✓ K2b abbrev/opaque/example declaration transparency slice passed
+PASS[64] tools/k2b-transparency-tests.ts
+RUN[65] tools/k2c-structure-match-tests.ts
+✓ K2c structure lowering, recursor-backed projections, exhaustive match lowering, computation, and replay passed
+PASS[65] tools/k2c-structure-match-tests.ts
+RUN[66] tools/k2d-structural-recursion-tests.ts
+✓ K2d structural recursion lowers to recursors, generates equation theorems, rejects non-structural recursion, and independently replays
+PASS[66] tools/k2d-structural-recursion-tests.ts
+RUN[67] tools/k2e-equation-clauses-tests.ts
+✓ K2e equation-clause definitions lower to match/recursors, generate reusable equations, reject malformed coverage/arity, and independently replay
+PASS[67] tools/k2e-equation-clauses-tests.ts
+RUN[68] tools/k2f-pattern-tests.ts
+✓ K2f wildcard/Nat-zero patterns lower to recursors, generate equations, reject unsupported overlaps, and independently replay
+PASS[68] tools/k2f-pattern-tests.ts
+RUN[69] tools/k2g-structure-instance-tests.ts
+✓ K2g structure construction/punning lower to generated constructors, reject invalid fields, and independently replay
+PASS[69] tools/k2g-structure-instance-tests.ts
+RUN[70] tools/k2h-structure-update-tests.ts
+✓ K2h structure update lowers to constructor + projections, computes definitionally, rejects invalid updates, and independently replays
+PASS[70] tools/k2h-structure-update-tests.ts
+RUN[71] tools/k2i-literal-tests.ts
+✓ K2i Nat/Bool literals lower to checked constructors, Pi-domain expected types drive application arguments, mismatched/oversized literals are unsupported, and isolated replay succeeds
+PASS[71] tools/k2i-literal-tests.ts
+RUN[72] tools/k2j-equality-tests.ts
+✓ K2j propositional '=' lowers to checked Eq with inferred universe/type, binds tighter than implication, preserves '==' separation, and independently replays
+PASS[72] tools/k2j-equality-tests.ts
+RUN[73] tools/k2k-binder-info-tests.ts
+✓ K2k implicit/strict/instance BinderInfo survives source→Core→artifact→Lean; @ supplies hidden args explicitly while direct type-parameter synthesis is now supported and instance/default binders remain unsupported
+PASS[73] tools/k2k-binder-info-tests.ts
+BOUNDED_TOOLING_PART1=16/16 PASS

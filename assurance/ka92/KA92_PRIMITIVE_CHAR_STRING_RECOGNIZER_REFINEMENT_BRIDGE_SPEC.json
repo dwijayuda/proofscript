@@ -1,0 +1,29 @@
+{
+  "checkpoint": "proofscript-v1-ka92-primitive-char-string-recognizer-refinement0",
+  "publicVersion": "1.0.0-pskernel.95",
+  "baseline": "proofscript-v1-ka91-primitive-logical-bitwise-recognizer-refinement0",
+  "referenceKind": "primitive-char-string-recognizer-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 2,
+  "countedObligations": [
+    "translated_checkCharOfNat_wf",
+    "translated_checkStringOfList_wf"
+  ],
+  "sourceTheorems": [
+    "checkCharOfNat.WF",
+    "checkStringOfList.WF"
+  ],
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveCharStringRecognizerRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

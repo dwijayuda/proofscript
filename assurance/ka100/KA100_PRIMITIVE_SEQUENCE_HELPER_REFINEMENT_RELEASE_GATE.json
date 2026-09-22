@@ -1,0 +1,130 @@
+{
+  "checkpoint": "proofscript-v1-ka100-primitive-sequence-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.103",
+  "baseline": "proofscript-v1-ka99-primitive-closure-helper-refinement0",
+  "releaseKind": "strict-lean4lean-primitive-sequence-helper-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA100",
+      "source": "assurance/ka100/primitive-sequence-helper-refinement-bridge.lean",
+      "destination": "KA100PrimitiveSequenceHelperBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 5,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka100-primitive-sequence-helper-refinement0",
+    "publicVersion": "1.0.0-pskernel.103",
+    "featureSurfaceBridgeProgressPercent": 99,
+    "executableKernelEquivalenceProofProgressPercent": 78,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 321,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 316,
+      "newFormalLean4LeanBridgeObligations": 5,
+      "correctedFormalLean4LeanBridgeObligations": 321,
+      "countedNewObligations": [
+        "translated_trExpr_underBV_wf",
+        "translated_forall2_append_inv_wf",
+        "translated_vexpr_appN_append_wf",
+        "translated_forall_mem_pair_wf",
+        "translated_forall2_snoc_wf"
+      ]
+    },
+    "metricPolicy": "KA100 adds direct non-sorry-backed primitive sequence/application-list helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka100Files": [
+      {
+        "path": "tools/pskernel-ka100-primitive-sequence-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka100-primitive-sequence-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka100/KA100_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 23,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka100/KA100_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka100/KA100_PRIMITIVE_SEQUENCE_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 36,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka100/KA100_PRIMITIVE_SEQUENCE_HELPER_REFINEMENT_RELEASE_GATE.json",
+        "lines": 131,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka100/KA100_PRIMITIVE_SEQUENCE_HELPER_REFINEMENT_REPORT.md",
+        "lines": 22,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka100/KA100_PRIMITIVE_SEQUENCE_HELPER_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 21,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka100/primitive-sequence-helper-refinement-bridge.lean",
+        "lines": 41,
+        "ext": ".lean"
+      }
+    ],
+    "ka100ToolFiles": [
+      {
+        "path": "tools/pskernel-ka100-primitive-sequence-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka100-primitive-sequence-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      }
+    ],
+    "newKA100OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveSequenceHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

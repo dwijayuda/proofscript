@@ -1,0 +1,53 @@
+{
+  "checkpoint": "proofscript-v1-ka49-checker-pipeline-end-to-end-theorem-skeleton-preflight0",
+  "publicVersion": "1.0.0-pskernel.52",
+  "baseline": "proofscript-v1-ka48-executable-whnf-defeq-refinement-preflight0",
+  "referenceKind": "source-bound-lean4lean-checker-pipeline-end-to-end-theorem-skeleton-preflight",
+  "imports": [
+    "Lean4Lean.Verify.Environment",
+    "Lean4Lean.Verify.Environment.Checker",
+    "Lean4Lean.Verify.TypeChecker",
+    "Lean4Lean.Verify.TypeChecker.WHNF",
+    "Lean4Lean.Verify.TypeChecker.IsDefEq"
+  ],
+  "coveredLean4LeanCheckerPipelineSurface": [
+    "Environment.addDecl.WF",
+    "Environment.addDefinition.WF",
+    "Environment.addTheorem.WF",
+    "Environment.addOpaque.WF",
+    "Environment.addMutual.WF",
+    "Environment.addQuot.WF",
+    "Environment.Checker.checkConstantValBody.WF",
+    "Environment.Checker.checkNoMVarNoFVar.WF",
+    "TypeChecker.checkType.WF",
+    "TypeChecker.Inner.whnf.WF",
+    "TypeChecker.Inner.isDefEqCore.WF"
+  ],
+  "intendedFormalBridgeLemmas": [
+    "Lean4Lean.PSKernelKA49.translated_checkConstantValBody_surface_available",
+    "Lean4Lean.PSKernelKA49.translated_addDecl_pipeline_surface_available",
+    "Lean4Lean.PSKernelKA49.translated_checker_pipeline_spine_surface_available",
+    "Lean4Lean.PSKernelKA49.translated_checker_pipeline_refinement_not_claimed"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "endToEndCheckerPipelineTheorem": false,
+    "formalLean4LeanBridgeObligations": 132
+  },
+  "antiSpaghettiPolicy": {
+    "maxNewKA49SourceLines": 360,
+    "maxNewKA49ToolFiles": 2,
+    "forbiddenGeneratedSemanticPackagePrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  }
+}

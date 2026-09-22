@@ -1,0 +1,12 @@
+K3TB_LEAN_ENV_STATUS=READY
+K3TB_LEAN_ENV_BOUNDARY=K3TB_NOT_FULLY_FORMAL_K3
+K3TB_LEAN_ENV_CLAIM_GUARD=trusted-boundary K3-TB; not fully formal K3
+K3TB_LEAN_ENV_EXPECTED_VERSION=4.33.1
+K3TB_LEAN_ENV_EXPECTED_COMMIT=819816b2e0a3bf405af45ae5c7af2491d8f5bee6
+K3TB_LEAN_ENV_BINARY=/mnt/data/lean-check-toolchain/lean-4.33.1-linux/bin/lean
+K3TB_LEAN_ENV_ACTUAL_VERSION=4.33.1
+K3TB_LEAN_ENV_ACTUAL_COMMIT=819816b2e0a3bf405af45ae5c7af2491d8f5bee6
+K3TB_LEAN_ENV_LAKE_FOUND=true
+K3TB_LEAN_ENV_LAKE=/mnt/data/lean-check-toolchain/lean-4.33.1-linux/bin/lake
+K3TB_LEAN_ENV_PUBLISH_PREFLIGHT_CAN_RUN=true
+K3TB_LEAN_ENV_NEXT_ACTION=Run npm run verify:k3tb:publish. Continue labeling this release trusted-boundary K3-TB, not fully formal K3.

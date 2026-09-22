@@ -1,0 +1,78 @@
+{
+  "checkpoint": "proofscript-v1-ka3-noninductive-soundness0",
+  "publicVersion": "1.0.0-pskernel.5",
+  "createdAtUtc": "2026-09-18T04:42:00Z",
+  "baseline": "proofscript-v1-ka2-translation-relation0",
+  "kernel": {
+    "name": "PSKernel",
+    "defaultProfile": "KERNEL-level-instantiation-conformance1",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "ka3": {
+    "scope": "first ordinary non-inductive declaration soundness skeleton",
+    "supportedDeclarationKinds": [
+      "axiom",
+      "definition",
+      "theorem",
+      "example",
+      "opaque"
+    ],
+    "excludedDeclarationKinds": [
+      "quot",
+      "inductive",
+      "mutualInductive"
+    ],
+    "sampleSuite": {
+      "total": 8,
+      "supportedNonInductive": 5,
+      "excludedOrBlocked": 3,
+      "wronglyTranslated": 0
+    },
+    "closedObligations": [
+      "ka3.soundness.noninductive.classifier-totality",
+      "ka3.soundness.noninductive.translation-shape",
+      "ka3.soundness.noninductive.metadata-erasure-inert",
+      "ka3.soundness.noninductive.metavariable-exclusion",
+      "ka3.soundness.noninductive.no-trusted-kernel-change"
+    ],
+    "stillOpen": [
+      "soundness.checkDecl",
+      "soundness.defEq",
+      "soundness.whnf",
+      "soundness.environment-extension",
+      "soundness.quotient-primitives",
+      "soundness.inductive-admission",
+      "soundness.recursor-iota",
+      "soundness.supported-core-completeness",
+      "soundness.imported-Lean4Lean-binding"
+    ],
+    "leanCheckedHere": false,
+    "reasonLeanNotCheckedHere": "lean executable is not available in the execution environment"
+  },
+  "verification": {
+    "npmInstallOffline": "passed",
+    "build": "passed",
+    "testKA1": "passed",
+    "testKA2": "passed",
+    "testKA3": "passed",
+    "assuranceKA1": "passed",
+    "assuranceKA2": "passed",
+    "assuranceKA3": "passed",
+    "verifyArena": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "conformanceBounded": "passed"
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "machineCheckedLeanProofInThisCheckpoint": false
+  }
+}

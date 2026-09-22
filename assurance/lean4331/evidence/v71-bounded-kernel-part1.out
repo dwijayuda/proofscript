@@ -1,0 +1,59 @@
+RUN[0] tools/check-boundaries.ts
+✓ architecture dependency boundaries hold
+PASS[0] tools/check-boundaries.ts
+RUN[1] tools/kernel-universe-completeness-tests.ts
+✓ exact Lean 4.33.1 universe-equivalence kernel tests passed
+PASS[1] tools/kernel-universe-completeness-tests.ts
+RUN[2] tools/kernel-quotient-tests.ts
+✓ exact Lean 4.33.1 quotient primitive/type/computation evidence passed
+✓ trusted kernel quotient tests passed
+PASS[2] tools/kernel-quotient-tests.ts
+RUN[3] tools/kernel-empty-inductive-tests.ts
+✓ kernel v14 empty inductives, exact empty elimination, recursor BinderInfo/universe order, historical artifact gating, replay, and adversarial checks passed
+PASS[3] tools/kernel-empty-inductive-tests.ts
+RUN[4] tools/kernel-structure-eta-tests.ts
+✓ kernel v15 raw projections, iota reduction, nonrecursive structure eta, profile gating, replay, adversarial checks, and exact Lean observations passed
+PASS[4] tools/kernel-structure-eta-tests.ts
+RUN[5] tools/kernel-inductive-positivity-tests.ts
+✓ kernel v16 higher-order strict positivity, pointwise recursor IH/iota, profile gating, replay, negative checks, and exact Lean observations passed
+PASS[5] tools/kernel-inductive-positivity-tests.ts
+RUN[6] tools/kernel-indexed-recursors-tests.ts
+✓ kernel v17 direct+higher-order indexed recursors, dependent local indices/motive/minors, recursive index iota, historical gating, and exact Lean observations passed
+PASS[6] tools/kernel-indexed-recursors-tests.ts
+RUN[7] tools/kernel-indexed-projections-tests.ts
+✓ kernel v18 indexed projections, dependent fields, Prop safety, eta recursion hardening, malformed terms, replay, and historical gating passed
+PASS[7] tools/kernel-indexed-projections-tests.ts
+RUN[8] tools/kernel-prop-elimination-tests.ts
+✓ kernel v19 Lean-shaped Prop elimination classification, recursor universes, iota, replay, and historical gating passed with exact Lean 4.33.1 differential
+PASS[8] tools/kernel-prop-elimination-tests.ts
+RUN[9] tools/kernel-recursor-k-tests.ts
+✓ kernel v20 Lean 4.33.1 RecursorVal.k classification, K-major reconstruction, context-sensitive reduction, replay, and historical gating passed with exact Lean differential
+PASS[9] tools/kernel-recursor-k-tests.ts
+RUN[10] tools/kernel-inductive-universe-tests.ts
+✓ kernel v21 Lean 4.33.1 constructor-field universe ceilings, Prop exception, uniform-parameter exemption, polymorphic/max cases, indexed admission, replay, and historical isolation passed with exact Lean differential
+PASS[10] tools/kernel-inductive-universe-tests.ts
+RUN[11] tools/kernel-dependent-fields-tests.ts
+✓ kernel v22 dependent simple constructor fields, dependent higher-order recursion, recursor/iota, indexed regression, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[11] tools/kernel-dependent-fields-tests.ts
+RUN[12] tools/kernel-telescope-terms-tests.ts
+✓ kernel v23 recursor telescope lambda/let terms, binder capture, recursive/indexed paths, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[12] tools/kernel-telescope-terms-tests.ts
+RUN[13] tools/kernel-mutual-inductives-tests.ts
+✓ kernel v24 bounded direct mutual inductives, mutual recursors/iota, atomic rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[13] tools/kernel-mutual-inductives-tests.ts
+RUN[14] tools/kernel-mutual-parameters-tests.ts
+✓ kernel v25 shared/dependent mutual parameters, parameter-aware recursors/iota, atomic rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[14] tools/kernel-mutual-parameters-tests.ts
+RUN[15] tools/kernel-mutual-indices-tests.ts
+✓ kernel v26 mutual indices, per-family motives, cross-family indexed iota, mixed index counts, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[15] tools/kernel-mutual-indices-tests.ts
+RUN[16] tools/kernel-mutual-higher-order-tests.ts
+✓ kernel v27 higher-order positive mutual recursion, pointwise cross-family IH/iota, indexed target indices, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[16] tools/kernel-mutual-higher-order-tests.ts
+RUN[17] tools/kernel-mutual-prop-tests.ts
+✓ kernel v28 mutual Prop admission, shared Prop-only recursor universes, empty/data-field cases, mutual-K disablement, potential-Prop universe hardening, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[17] tools/kernel-mutual-prop-tests.ts
+RUN[18] tools/kernel-nested-inductives-tests.ts
+✓ kernel v29 nested preprocessing, linked helper recursors/iota, recursive-container traversal, variance rejection, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+PASS[18] tools/kernel-nested-inductives-tests.ts
+BOUNDED_KERNEL_PART1=19/19 PASS

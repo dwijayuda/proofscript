@@ -1,0 +1,37 @@
+{
+  "checkpoint": "proofscript-v1-ka13-vdecl-wf-bridge0",
+  "publicVersion": "1.0.0-pskernel.16",
+  "baseline": "proofscript-v1-ka12-direct-lean4lean-reference0",
+  "referenceKind": "direct-imported-lean4lean-vdecl-wf-bridge",
+  "imports": [
+    "Lean4Lean.Theory.Typing.Env",
+    "PSKernelKA12DirectReference"
+  ],
+  "bridgedRelation": "Lean4Lean.VDecl.WF",
+  "bridgedDeclKinds": ["axiom", "definition"],
+  "conditionalBridgeLemmas": [
+    "PSKernelKA13.translated_axiom_vdecl_wf",
+    "PSKernelKA13.translated_definition_vdecl_wf"
+  ],
+  "stillExcludedDeclKinds": ["theorem", "example", "opaque", "quot", "inductive", "mutualInductive"],
+  "closedByKA13": [
+    "direct-import-lean4lean-typing-env-module",
+    "conditional-vdecl-wf-bridge-for-translated-axiom",
+    "conditional-vdecl-wf-bridge-for-translated-definition",
+    "preserve-ka12-inductive-blocking",
+    "strict-lean4lean-vdecl-wf-bridge-check"
+  ],
+  "claimBoundary": {
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false,
+    "coreFormatChanged": false,
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanVDeclWFBridgeChecked": true,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 2,
+    "formalObligationMeaning": "two conditional Lean4Lean VDecl.WF bridge lemmas, not executable PSKernel refinement or full Lean equivalence"
+  }
+}

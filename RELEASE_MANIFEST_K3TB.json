@@ -1,0 +1,30 @@
+{
+  "schema": "proofscript.release-manifest/k3tb/v1",
+  "release": "proofscript-kernel-v71-k3tb-release-candidate1",
+  "label": "K3-TB",
+  "status": "TRUSTED_BOUNDARY_RELEASE_CANDIDATE_NOT_FULLY_FORMAL_K3",
+  "coreFormat": 71,
+  "progress": {
+    "percent": 99.5,
+    "basisPoints": 9950,
+    "note": "Engineering-track progress under explicit trusted infrastructure assumptions; not full formal K3."
+  },
+  "lean": {
+    "semanticBaseline": "4.33.1",
+    "releaseCommit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6"
+  },
+  "trustedInfrastructureAssumptions": [
+    "Lean 4.33.1 kernel is the pinned reference implementation",
+    "Node runtime correctly executes audited JavaScript for the kernel subset",
+    "vendored TypeScript compiler preserves the audited KernelTS subset",
+    "offline npm dependency set is fixed and unchanged during certification",
+    "host filesystem/process environment is benign for gate execution"
+  ],
+  "fullyFormalRemainingObligations": [
+    "verified TypeScript compiler or Lean extraction path",
+    "full ECMAScript or Node runtime semantics",
+    "arbitrary Lean acceptance completeness iff ProofScript acceptance",
+    "exhaustive Lean reduction-path completeness",
+    "instantiate conditional K3 theorem without trusted runtime assumptions"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "checkpoint": "proofscript-v1-ka49-checker-pipeline-end-to-end-theorem-skeleton-preflight0",
+  "publicVersion": "1.0.0-pskernel.52",
+  "baseline": "proofscript-v1-ka48-executable-whnf-defeq-refinement-preflight0",
+  "commands": {
+    "focusedTest": "passed",
+    "softAssurance": "passed",
+    "softLeanCheck": "passed",
+    "strictLeanCheck": "passed"
+  },
+  "formalLeanCheckStatus": "passed",
+  "blockedReasons": [],
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA49 tool absent before implementation"
+}

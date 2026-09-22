@@ -1,0 +1,20 @@
+{
+  "checkpoint": "proofscript-v1-ka103-primitive-context-application-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.106",
+  "baseline": "proofscript-v1-ka102-primitive-substitution-composition-helper-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 336,
+  "newFormalLean4LeanBridgeObligations": 5,
+  "baselineObligations": 331,
+  "countedObligations": [
+    "translated_onctx_of_append_wf",
+    "translated_vexpr_wf_app_inv2_wf",
+    "translated_vexpr_wf_appN_inv_wf",
+    "translated_isDefEqU_appN_wf",
+    "translated_argsTyped_natTelescope_wf"
+  ],
+  "redTestObserved": true,
+  "redTestReason": "KA103 test failed first on missing KA103 gate tool",
+  "noWrapperTimeoutCountedAsPassed": true
+}

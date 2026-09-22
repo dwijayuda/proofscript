@@ -1,0 +1,1354 @@
+{
+  "schema": "proofscript-pskernel-ts-kernel-preflight/v1",
+  "status": "accepted",
+  "proofStatus": "not-proven",
+  "trustLabel": "trusted-boundary standalone kernel; not fully formally equivalent to Lean 4 yet",
+  "semanticBaseline": "Lean 4.33.1",
+  "pinnedLeanRevision": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "checkCount": 29,
+  "requiredFailureCount": 0,
+  "warningCount": 0,
+  "checks": [
+    {
+      "id": "mirror.porting-map.count",
+      "status": "accepted",
+      "message": "Porting map has the expected 112 pskernel source rows",
+      "details": {
+        "rows": 112
+      }
+    },
+    {
+      "id": "mirror.porting-map.unique-source",
+      "status": "accepted",
+      "message": "Porting map source Lean files are unique",
+      "details": {}
+    },
+    {
+      "id": "mirror.porting-map.unique-target",
+      "status": "accepted",
+      "message": "Porting map target TypeScript files are unique",
+      "details": {}
+    },
+    {
+      "id": "mirror.targets.exist",
+      "status": "accepted",
+      "message": "Every pskernel source row has a TypeScript target file",
+      "details": {}
+    },
+    {
+      "id": "mirror.targets.port-status",
+      "status": "accepted",
+      "message": "Every mirrored target declares portStatus metadata",
+      "details": {}
+    },
+    {
+      "id": "mirror.targets.not-proven",
+      "status": "accepted",
+      "message": "Every mirrored target keeps proofStatus not-proven",
+      "details": {}
+    },
+    {
+      "id": "mirror.targets.source-link",
+      "status": "accepted",
+      "message": "Target portStatus source links match the porting map",
+      "details": {}
+    },
+    {
+      "id": "mirror.targets.status-drift",
+      "status": "accepted",
+      "message": "File statuses match the porting-map snapshot",
+      "details": {}
+    },
+    {
+      "id": "package.name",
+      "status": "accepted",
+      "message": "Active package name remains @proofscript/kernel",
+      "details": {}
+    },
+    {
+      "id": "package.entrypoints",
+      "status": "accepted",
+      "message": "Package entrypoints target built dist output",
+      "details": {}
+    },
+    {
+      "id": "dist.no-legacy.core.js",
+      "status": "accepted",
+      "message": "Legacy compact-kernel dist file core.js is absent",
+      "details": {}
+    },
+    {
+      "id": "dist.no-legacy.core.d.ts",
+      "status": "accepted",
+      "message": "Legacy compact-kernel dist file core.d.ts is absent",
+      "details": {}
+    },
+    {
+      "id": "dist.no-legacy.kernel.js",
+      "status": "accepted",
+      "message": "Legacy compact-kernel dist file kernel.js is absent",
+      "details": {}
+    },
+    {
+      "id": "dist.no-legacy.kernel.d.ts",
+      "status": "accepted",
+      "message": "Legacy compact-kernel dist file kernel.d.ts is absent",
+      "details": {}
+    },
+    {
+      "id": "dist.no-legacy.level.js",
+      "status": "accepted",
+      "message": "Legacy compact-kernel dist file level.js is absent",
+      "details": {}
+    },
+    {
+      "id": "dist.no-legacy.level.d.ts",
+      "status": "accepted",
+      "message": "Legacy compact-kernel dist file level.d.ts is absent",
+      "details": {}
+    },
+    {
+      "id": "dist.no-legacy.runner.js",
+      "status": "accepted",
+      "message": "Legacy compact-kernel dist file runner.js is absent",
+      "details": {}
+    },
+    {
+      "id": "dist.no-legacy.runner.d.ts",
+      "status": "accepted",
+      "message": "Legacy compact-kernel dist file runner.d.ts is absent",
+      "details": {}
+    },
+    {
+      "id": "status.trust-boundary",
+      "status": "accepted",
+      "message": "Status report keeps trusted-boundary / not-proven wording",
+      "details": {}
+    },
+    {
+      "id": "status.fail-closed-slices",
+      "status": "accepted",
+      "message": "Status report exposes fail-closed slices",
+      "details": {}
+    },
+    {
+      "id": "obligations.catalog",
+      "status": "accepted",
+      "message": "Proof-obligation catalog validates and covers the current trusted-boundary slices",
+      "details": {
+        "total": 46
+      }
+    },
+    {
+      "id": "obligations.no-proven-overclaim",
+      "status": "accepted",
+      "message": "Proof-obligation catalog contains no proven overclaim",
+      "details": {}
+    },
+    {
+      "id": "audit.accepted",
+      "status": "accepted",
+      "message": "Standalone audit accepts the smoke artifact and verifies its certificate",
+      "details": {
+        "auditSha256": "1d5adf8272342c29bd9bdaa0919de4515733be36a224eb4a6218268ec3747472"
+      }
+    },
+    {
+      "id": "audit.deterministic",
+      "status": "accepted",
+      "message": "Standalone audit bundle is deterministic across repeated runs",
+      "details": {
+        "auditSha256": "1d5adf8272342c29bd9bdaa0919de4515733be36a224eb4a6218268ec3747472"
+      }
+    },
+    {
+      "id": "package.audit",
+      "status": "accepted",
+      "message": "Package audit accepts dry-run npm package contents",
+      "details": {
+        "packageAuditSha256": "e9e389e12cb1522abc6ac6a2e6c2f9ab1fdba0cf0846f10d47dac3b4a8489ea6",
+        "checkCount": 26
+      }
+    },
+    {
+      "id": "governance.check",
+      "status": "accepted",
+      "message": "Governance/constitution compliance smoke gate accepts the current package layout",
+      "details": {
+        "governanceSha256": "8db495e146210a87efd82c37a7235fa627c40376e41cfa2ac111d6cb54fb95db",
+        "checkCount": 27
+      }
+    },
+    {
+      "id": "reference.language-governance",
+      "status": "accepted",
+      "message": "ProofScript v0.2.x reference-governed language smoke accepts current PSC-1 slice",
+      "details": {
+        "referenceGovernanceSha256": "c9aec8ec741bc2d8cc8101c9fae413eee322b36bc0b4a78ad6d4b7a3f8b02751",
+        "checkCount": 25
+      }
+    },
+    {
+      "id": "package.tarball-smoke",
+      "status": "accepted",
+      "message": "Packed tarball installs into a fresh project and passes runtime API smoke",
+      "details": {
+        "tarballSmokeSha256": "2706d905e9afeaf19af63fad8a67d0657cc80835f250447227a97b60425b4ceb",
+        "checkCount": 8
+      }
+    },
+    {
+      "id": "standalone-small.live-smoke",
+      "status": "accepted",
+      "message": "Standalone .ps small subset checks with the new kernel and emits/runs JS without Lean4",
+      "details": {
+        "emittedDeclarations": [
+          "two",
+          "inc",
+          "add2",
+          "choose",
+          "not",
+          "chooseMatch",
+          "four",
+          "six",
+          "inferredLet",
+          "haveValue",
+          "chooseTrue",
+          "chooseFalse",
+          "chooseMatchTrue",
+          "chooseMatchFalse",
+          "notTrue"
+        ],
+        "outputSha256": "f3f2f5506a53ea03d3f321f5ecd08b52bcefb95296ee8c2e7e4d9913b3970900"
+      }
+    }
+  ],
+  "mirror": {
+    "expectedLeanSourceRows": 112,
+    "entries": [
+      {
+        "sourceLeanFile": "PSKernel.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "3c37f281f6ccb425e764921cfb8e8d0a1931df8a41a9c9537f1b5bc5b966e205",
+        "bytes": 1216
+      },
+      {
+        "sourceLeanFile": "PSKernel/Declaration.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Declaration.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "d847453341bc9fbc07134853cff4ee8b6f0a7722a0900a6ceb3c315d17393338",
+        "bytes": 20425
+      },
+      {
+        "sourceLeanFile": "PSKernel/Environment.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Environment.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "0b0826bab624e4106a02ea23f9a3f6a5414348c7f62479936a9156529566b2bc",
+        "bytes": 29720
+      },
+      {
+        "sourceLeanFile": "PSKernel/Environment/Basic.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Environment/Basic.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "407db18be4a508a7f42745b737a92ca5a6ab6853b1a8953ebdf4edb0a7d3c08c",
+        "bytes": 8531
+      },
+      {
+        "sourceLeanFile": "PSKernel/EquivManager.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/EquivManager.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "08f1150fdcdd39c7c2f69063143db75666f30d1fac726f3d10f2b9296c22b636",
+        "bytes": 658
+      },
+      {
+        "sourceLeanFile": "PSKernel/Experimental/CoinductiveLogRel.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Experimental/CoinductiveLogRel.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "91b6e99d4f4360b50d393c994029ec7d799ad02f5270b41954455a7ba4a75c5f",
+        "bytes": 688
+      },
+      {
+        "sourceLeanFile": "PSKernel/Experimental/DomainTheory.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Experimental/DomainTheory.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "c4cc999a8b689c3a8a31eba3f17d5fd38081e9e065636ba548e442fbf131f51a",
+        "bytes": 658
+      },
+      {
+        "sourceLeanFile": "PSKernel/Experimental/LogRel.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Experimental/LogRel.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "3c8e72811702d53c85f66f2a9e85a49b163234ede7592fd5012a1bb179c158ae",
+        "bytes": 622
+      },
+      {
+        "sourceLeanFile": "PSKernel/Experimental/MoreStepIndexed.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Experimental/MoreStepIndexed.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "161fa374a3b16f88cd16dc1bb683edfd964b3567d8f76ac38fc732ad5c521f24",
+        "bytes": 676
+      },
+      {
+        "sourceLeanFile": "PSKernel/Experimental/NormalEq.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Experimental/NormalEq.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "e0427b09b948edb929b75a5550d2d92e901a3b9e4f9ab671d47f65f89a9510fe",
+        "bytes": 634
+      },
+      {
+        "sourceLeanFile": "PSKernel/Experimental/ParallelReduction.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Experimental/ParallelReduction.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "6ed1aca1333a61c4dfea729c1ffe6de144e2d408da4c5a4621891c8f6de265ee",
+        "bytes": 688
+      },
+      {
+        "sourceLeanFile": "PSKernel/Experimental/SExpr.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Experimental/SExpr.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "44a1c1a3602bbafecc202635fd8b5eafe7d571f18d50d524e42449b092b4241d",
+        "bytes": 616
+      },
+      {
+        "sourceLeanFile": "PSKernel/Experimental/ShapeLogRel.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Experimental/ShapeLogRel.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "e24df620a497bf2a8ab5fc9550a23c54b0d1e2d1a0f9f0ad5ad3247f0514ce02",
+        "bytes": 652
+      },
+      {
+        "sourceLeanFile": "PSKernel/Experimental/ShapeLogRelAdequacy.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Experimental/ShapeLogRelAdequacy.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "7a3cb08f3e830b464863e783fc7b3013f1752cf019b626b237140426d9023dd3",
+        "bytes": 700
+      },
+      {
+        "sourceLeanFile": "PSKernel/Experimental/StepIndexed.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Experimental/StepIndexed.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "f10aa8ce0f628ccfc356798a62c09960dc81f2deee0801f2e303bb660acb0440",
+        "bytes": 652
+      },
+      {
+        "sourceLeanFile": "PSKernel/Experimental/Stratified.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Experimental/Stratified.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "b2c5e376b19dbfdaec1fc9f5892a63b74b73d2189d01d473eb6b004158317659",
+        "bytes": 646
+      },
+      {
+        "sourceLeanFile": "PSKernel/Experimental/StratifiedUntyped.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Experimental/StratifiedUntyped.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "67d8bb378a77fc5f8ef779453cfb026b88308e43fa4053084203c9515e8e57eb",
+        "bytes": 688
+      },
+      {
+        "sourceLeanFile": "PSKernel/Experimental/Stronger.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Experimental/Stronger.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "fd4fe38774c2efd1a04f89cf33bf68fc1555759c17ef87fec8643a6c4fba84f8",
+        "bytes": 634
+      },
+      {
+        "sourceLeanFile": "PSKernel/Experimental/Thierry.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Experimental/Thierry.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "1e66517c8b15fad3357c949b58476d33902b8c2dc3f5772bbf98c173736a736d",
+        "bytes": 628
+      },
+      {
+        "sourceLeanFile": "PSKernel/Experimental/Thierry2.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Experimental/Thierry2.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "270bf8e3f3953aa0dbb00fd01ea880fff928457cfc6bbd8a7dc10519cc34bec6",
+        "bytes": 634
+      },
+      {
+        "sourceLeanFile": "PSKernel/Experimental/UniqueTyping.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Experimental/UniqueTyping.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "2a05e49c3ef9ddb97f414d7b5969da7cd8411dc30c237edf376d0c82fd36629b",
+        "bytes": 658
+      },
+      {
+        "sourceLeanFile": "PSKernel/Expr.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Expr.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "8de29f1330ddc8732ed3be9194ac56d191b414b742a72eebe76b5cf7a06d1be0",
+        "bytes": 16648
+      },
+      {
+        "sourceLeanFile": "PSKernel/ForEachExprV.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/ForEachExprV.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "fbbcc4f7886c00bc47452a64e4d8fd51bf21e663f70a2f665c2bbec34063a880",
+        "bytes": 815
+      },
+      {
+        "sourceLeanFile": "PSKernel/FuelConfig.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/FuelConfig.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "daffed5fd899d767b09a03654cf088ba8728f39d9ecb1a8565ac44d42d78d503",
+        "bytes": 899
+      },
+      {
+        "sourceLeanFile": "PSKernel/Inductive/Add.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Inductive/Add.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "cd01db598339a163720104af321fe0a163f2faf3f8237d50f4fd4815ed91ccac",
+        "bytes": 535
+      },
+      {
+        "sourceLeanFile": "PSKernel/Inductive/Reduce.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Inductive/Reduce.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "29dc37ada2f93f3e301d874d3cf73c9236d546e6c300402edefa8a73b37f1467",
+        "bytes": 5704
+      },
+      {
+        "sourceLeanFile": "PSKernel/Instantiate.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Instantiate.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "b800add3346398a8515afa7730cbab4b0142b48a3e731d5b9f7492d1d6f6a9ef",
+        "bytes": 367
+      },
+      {
+        "sourceLeanFile": "PSKernel/Level.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Level.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "617e6eeeb552a8ff63fd93634dbbddd7e9acfd423d16b1d048b2f9408069035b",
+        "bytes": 10756
+      },
+      {
+        "sourceLeanFile": "PSKernel/List.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/List.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "a6f4aaf35f1730874bd604ba95dcfe74d3fb964001afbca498059c4ab295eeb7",
+        "bytes": 406
+      },
+      {
+        "sourceLeanFile": "PSKernel/LocalContext.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/LocalContext.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "46ac635e47d4f12cecccecdaaff1ae9b8f535cc09ee33088686380ccd5918106",
+        "bytes": 891
+      },
+      {
+        "sourceLeanFile": "PSKernel/Primitive.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Primitive.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "a135c90f2631dcf8ac9c20dcc8b4699cdcaf06872e5f040950c307227efe244d",
+        "bytes": 5201
+      },
+      {
+        "sourceLeanFile": "PSKernel/PtrEq.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/PtrEq.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "f58616b9ab1d592188404b83aa0cabe1c451ed2ffe9e08a0e49c5d5bb00915d0",
+        "bytes": 306
+      },
+      {
+        "sourceLeanFile": "PSKernel/Quot.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Quot.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "fc34cbeaedc394ee1e924c55bed6dfac5206acc373f389af7f080742cd369107",
+        "bytes": 8247
+      },
+      {
+        "sourceLeanFile": "PSKernel/Replay.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Replay.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "86ee1e833731f886a26ac01eae175dc42e428362e69de7b065005f1c1cb0ad4e",
+        "bytes": 29770
+      },
+      {
+        "sourceLeanFile": "PSKernel/Std/Basic.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Std/Basic.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "0a42766c6b62376da947314b9924180ea069125df72e95b565c92fddc582d256",
+        "bytes": 562
+      },
+      {
+        "sourceLeanFile": "PSKernel/Std/Control.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Std/Control.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "b2c55b96d5bc1b54b61d900c9ef9cb27b069145f0c9d458c0882021a98cc0ec4",
+        "bytes": 574
+      },
+      {
+        "sourceLeanFile": "PSKernel/Std/HashMap.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Std/HashMap.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "621604b5b0ede3b0a9095da3e089054282495e4e9f9518813a899bb1944635aa",
+        "bytes": 574
+      },
+      {
+        "sourceLeanFile": "PSKernel/Std/NodupKeys.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Std/NodupKeys.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "01e0aeb073c380141151adbb08e3bd03fc9b24706885e90b39f39df599f364d9",
+        "bytes": 586
+      },
+      {
+        "sourceLeanFile": "PSKernel/Std/Ord.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Std/Ord.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "730eb349b996523413e51ab3c204a338ca16ced56282c69326f2989819a254e0",
+        "bytes": 550
+      },
+      {
+        "sourceLeanFile": "PSKernel/Std/PersistentHashMap.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Std/PersistentHashMap.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "13073dbd2fa3504456ba2a4e9bcf30824204a2612cdef4e6fb0d25e9aee59d99",
+        "bytes": 634
+      },
+      {
+        "sourceLeanFile": "PSKernel/Std/SMap.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Std/SMap.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "81a1616832cda6c7698dc933c8e4931a0ab2ca811a06319b5373e15578656dd8",
+        "bytes": 556
+      },
+      {
+        "sourceLeanFile": "PSKernel/Std/ToExpr.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Std/ToExpr.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "46fdcae67af327b27e0fd0083898eb2d22808739980f1e7b33278581d22487dd",
+        "bytes": 568
+      },
+      {
+        "sourceLeanFile": "PSKernel/Std/VariableBang.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Std/VariableBang.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "15db173cea353640de8a1808cddd2adf09af3bab33b7b4e4dc7649ab81501a1b",
+        "bytes": 604
+      },
+      {
+        "sourceLeanFile": "PSKernel/Tests.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Tests.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "f2a509c160fd6d30fa750d9d11524358b65b47ad0f3f142e0a363562a00e0162",
+        "bytes": 538
+      },
+      {
+        "sourceLeanFile": "PSKernel/Tests/DeclFVar.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Tests/DeclFVar.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "0d4d243ff5d765e8d01c1e6830f2ea621a8aa0f38ef1d74121baa134f6072828",
+        "bytes": 592
+      },
+      {
+        "sourceLeanFile": "PSKernel/Tests/Environment.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Tests/Environment.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "3c1dbd8303178cd301ab5b323c2c8ceca2f41d98aece2c057d2daef3cbcdbd51",
+        "bytes": 610
+      },
+      {
+        "sourceLeanFile": "PSKernel/Tests/KernelHardening.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Tests/KernelHardening.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "5f9e48f97858d8ee2c44011a59891940d949ac3fadcdac75b50cc2615c25324a",
+        "bytes": 634
+      },
+      {
+        "sourceLeanFile": "PSKernel/Tests/Level.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Tests/Level.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "66bc57a89d9f0f3ee1a681ca315fa3f15666b10d3d84ef4c0881dde8057290e1",
+        "bytes": 574
+      },
+      {
+        "sourceLeanFile": "PSKernel/Tests/LevelStd.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Tests/LevelStd.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "598232af89c4d4f6732fabaeaf15e0e4fe64ed11811b4d68700b6afba8d7b404",
+        "bytes": 592
+      },
+      {
+        "sourceLeanFile": "PSKernel/Tests/NestedInductive.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Tests/NestedInductive.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "ab0232059b01c56f146b75a3ed306f67b56735254fb471a5c27ed7c484d8b103",
+        "bytes": 634
+      },
+      {
+        "sourceLeanFile": "PSKernel/Tests/Toolchain.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Tests/Toolchain.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "37c831e85ec12ead085315ff13cf503545a32e2c0d40e23983a47c24ccaca08d",
+        "bytes": 598
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "aa86fa5935274c289d68a80ffcd456d02d1ee69ea003611e9743b95c6f5044e4",
+        "bytes": 544
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/Inductive.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/Inductive.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "814fda0d4aa52f4a10b2b077e89c7961d604e5bc92c464de617c72e960de0a9c",
+        "bytes": 604
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/LevelSat.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/LevelSat.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "78cc304d252ed2b4e7ae74ddc0458286c75dab5633ced7ff4d7b7dd6ac477294",
+        "bytes": 598
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/Meta.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/Meta.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "0ccde2ec9a08a417595da584322990ba10996756f940edd4b9de7bba92ae143e",
+        "bytes": 574
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/Quot.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/Quot.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "3dad6318d84186dded674c68a0a60276c351d1f4f6fb4a5743e32111b4060887",
+        "bytes": 574
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/Typing/Basic.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/Typing/Basic.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "22a08ed321c7583f33e1d30daf3b3e6f58534ae07eca077840500a79f98ce897",
+        "bytes": 622
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/Typing/ChurchRosser.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/Typing/ChurchRosser.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "ee289b8422e374be7d7a218ebed2c3c777bb75086d53728eee664a23219e5e2b",
+        "bytes": 664
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/Typing/Env.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/Typing/Env.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "d63fc134920780cca0dd86becf678ba14affd336727265fc54658bedd6f21e66",
+        "bytes": 610
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/Typing/EnvLemmas.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/Typing/EnvLemmas.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "77931e1dbf686bdf01e428501364e080d1e08e121050a9666d22a3254acdea2e",
+        "bytes": 646
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/Typing/HeadReduction.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/Typing/HeadReduction.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "03b37fb7625d966fbc6570e9dbdeca20e11ed3700a2f4593aaf6f99220f2f018",
+        "bytes": 670
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/Typing/InductiveLemmas.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/Typing/InductiveLemmas.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "cf6d8c951951ddbbdb106ac2dd0f01072ccb772103cababa16239e66b53253e4",
+        "bytes": 682
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/Typing/Injectivity.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/Typing/Injectivity.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "eb2e18500d955c6e843e1336bb84c4cb615309070adc641413ec67296980c801",
+        "bytes": 658
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/Typing/Lemmas.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/Typing/Lemmas.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "a6a29dd24e58dd71a75454a5ee1b205a275fee1e718bf18c14e58880006633fc",
+        "bytes": 628
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/Typing/Meta.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/Typing/Meta.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "ee835dedb06aff160015dabd9368de558ebaac02bf76feaf7b23aa9afb34b5eb",
+        "bytes": 616
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/Typing/Pattern.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/Typing/Pattern.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "0fca0d59848169f649addaf03f982afb30d1d647caaa82127da1b905c9b71514",
+        "bytes": 634
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/Typing/QuotLemmas.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/Typing/QuotLemmas.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "1bf0b70242c58e761dced9848bef1d342669e6e9ff6e600450183b06a4193dca",
+        "bytes": 652
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/Typing/Strong.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/Typing/Strong.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "74dfd5c766a861b32d553d20119fbcd9e4f9fa8481d35871a1ec6fc6bc0ae91b",
+        "bytes": 628
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/Typing/UniqueTyping.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/Typing/UniqueTyping.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "bdcf24439fc50f7ea623259f184c116e289d9a025838727a116f6a44edffffe8",
+        "bytes": 664
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/VDecl.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/VDecl.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "22e05bb9a6c3805cb3c194f6bc6712baec1a1dfa141f37f49e5ab9567423d507",
+        "bytes": 580
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/VEnv.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/VEnv.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "da9574eaa086e194bf457a0ad7d9ceffedeba3b32fdba16d84807cd8d566e6d1",
+        "bytes": 574
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/VExpr.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/VExpr.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "722959b830b6cf9d45d6c89fb6e9a062d2b8c73cedc91893c24553d9127ddd03",
+        "bytes": 580
+      },
+      {
+        "sourceLeanFile": "PSKernel/Theory/VLevel.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Theory/VLevel.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "1a2296ea4b556b2f7566921ac1cefca5eee7115ba57816d61a7701bc0f035ac1",
+        "bytes": 586
+      },
+      {
+        "sourceLeanFile": "PSKernel/TypeChecker.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "c2d5fff73a82f8ef421b969d8140947c1bf3b3a4684ef7e8044921495962af58",
+        "bytes": 25769
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "be4c5cf1e7e9706b56d08e6ccf7ce2aaf3594cc806edfd8e041f2dd70f633122",
+        "bytes": 544
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Axioms.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Axioms.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "e5b27d2a18854c78a4c5a946b879445fac177489d616ae3105d1b3ab48579784",
+        "bytes": 586
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Environment.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Environment.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "e5d550d0ea755b5c8cc420b447e79ff0f69cbae579fd077dcb5904ff51954f8c",
+        "bytes": 616
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Environment/Basic.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Environment/Basic.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "b9c5bf26207647c4feced0c7bca2a48ed394605b30d4912c2fc7cca328741882",
+        "bytes": 652
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Environment/Checker.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Environment/Checker.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "0351c836484c9ca0a4533d1a26c264250bb12e8104256aa399908f83302102fe",
+        "bytes": 664
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Environment/Extension.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Environment/Extension.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "1ac9e7c690050d9b5bb46abec7b627d18c8c9b7d459f985226b3bf9a1f50b9d2",
+        "bytes": 676
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Environment/Lemmas.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Environment/Lemmas.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "7c58926d2285dbad4ed568dba584a6aa71788b816979849aae5d9dd874907ece",
+        "bytes": 658
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Environment/Primitive.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Environment/Primitive.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "f3a3bd4b276362a0fb8dd22ff5bc72d00f94e7ed6154f98978beaf2ba0a82fd0",
+        "bytes": 676
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Environment/Primitive/Basic.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Environment/Primitive/Basic.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "67dc24fd0c29d9e3d1d54b5f30a18fdde04e0d06fd2560c95c0a349520fd73a6",
+        "bytes": 712
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Environment/Primitive/Bitwise.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Environment/Primitive/Bitwise.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "290b95627899983b3246c5a29df52e3990cd1b226240e2a06b2b7756729fd3bf",
+        "bytes": 724
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Environment/Primitive/Clauses.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Environment/Primitive/Clauses.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "f820627492049dd14382caf316615eae553ad0964a4b72c85e977ee0d9533b30",
+        "bytes": 724
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Environment/Primitive/Condition.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Environment/Primitive/Condition.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "5fa5a4b5e02239c53bd5522ad719c9af2644cd355b397145e20f6103b516a7e4",
+        "bytes": 736
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Environment/Primitive/DivMod.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Environment/Primitive/DivMod.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "b1ace8b1fb3b97385680efdeefb727833edbffec291b45deb0d196f3e3f133af",
+        "bytes": 718
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Environment/Primitive/Gcd.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Environment/Primitive/Gcd.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "6aeda5460239b374d5c3c34da54b4a697e08604f3df5232090fdd4f068d52343",
+        "bytes": 700
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Environment/Primitive/Recursion.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Environment/Primitive/Recursion.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "c1f80402a97ee6edda8da47804f75f2f66610f939ae08c0468a8e4fce4844ae0",
+        "bytes": 736
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/EquivManager.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/EquivManager.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "574f40e0e6020ae365851e7fb9f003e64c95fea7829847690f049df3c7f806ca",
+        "bytes": 622
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Expr.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Expr.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "e965a8b924e70a938850b7951a9c7978db13f80eb2d3a7a8369b1f3b83057ceb",
+        "bytes": 574
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Level.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Level.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "2e7c3df1bb9d3edbad7a4b08c571792dd9c5c29884eb4e42a2d5b3cfc1a63514",
+        "bytes": 580
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/LevelStd.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/LevelStd.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "0fa1485fbb032b34c9289f5f8b55ab7d643c21835a2c92570baa9e9cabbb3e04",
+        "bytes": 598
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/LocalContext.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/LocalContext.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "e319ab7f91711c51dce126e8024520a08b88a2cd264bd044b11eeb3c6cd7ec69",
+        "bytes": 622
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Name.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Name.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "9001c202cb477fdcae4d55ee0d91ccf44833c593e13bb950346a59ece294d6f6",
+        "bytes": 574
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/NameGenerator.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/NameGenerator.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "51779d876f92a87810c647545aabe7150b9c1bdc91607c284f99b78d259f74df",
+        "bytes": 628
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/NormLt.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/NormLt.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "12856f96ec1eae830abde87d861f089a561cf818dee1b96683118dd3a27f4b1a",
+        "bytes": 586
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Primitive.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Primitive.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "a95482a033897e8c4d7add44476a27c05f3c561cc232ec93d1f0538b57141f70",
+        "bytes": 604
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/QSort.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/QSort.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "0dbffa8790f083b4241334b7c99b25f738bc85972bb23d1080c779a8af6b65c8",
+        "bytes": 580
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/TypeChecker.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/TypeChecker.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "fc2abd839cd4fcafb8ec1cea608799144ef02725447b3f6c0d77c4aa9a50ce0d",
+        "bytes": 616
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/TypeChecker/Basic.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/TypeChecker/Basic.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "8194f7ddcb1e9a909cff27dcecdef2e3d60629573dd2ffede6dc4f015188150b",
+        "bytes": 652
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/TypeChecker/InferType.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/TypeChecker/InferType.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "bf5ce2352b232687dc3e3c764c9878cf6090dd030ce8fff7b4a0059ea08c1574",
+        "bytes": 676
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/TypeChecker/IsDefEq.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/TypeChecker/IsDefEq.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "caff5031deeb40f6be1a25de6144f1edd25b773e716182034c9150564988db94",
+        "bytes": 664
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/TypeChecker/Reduce.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/TypeChecker/Reduce.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "d01884c4e014e8f33d8a72a63cd5ab3294fd1cb5418408537b2038e6cea0eb37",
+        "bytes": 658
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/TypeChecker/WHNF.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/TypeChecker/WHNF.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "fcb8b9bec4891a55421fa5b9e6c782148868afbdaf5528d607b3902fe4a04976",
+        "bytes": 646
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Typing/ConditionallyTyped.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Typing/ConditionallyTyped.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "6a03a3751bebafa71b94036d47538305722e0b12dc44422cc058f37c99b65525",
+        "bytes": 700
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Typing/Expr.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Typing/Expr.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "c9f7bded1165558a6c232b3f00d006520a0750f1bbe022663b89d4846d4b2a74",
+        "bytes": 616
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Typing/Lemmas.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Typing/Lemmas.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "c062e2db7198af60bb043cbb84026ba918261d4e309fad564948bc31f191a3ff",
+        "bytes": 628
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Typing/PrimSpec.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Typing/PrimSpec.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "a6184d084a981c092cbd00c9e96e271114d8b9d82ce09c01f323635805219d6e",
+        "bytes": 640
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/Typing/TrTerm.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/Typing/TrTerm.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "500b1eecf0293d01a202f374b53b5e87235537ab2f28f7f36d1d5ed873aa3a11",
+        "bytes": 628
+      },
+      {
+        "sourceLeanFile": "PSKernel/Verify/VLCtx.lean",
+        "targetTypeScriptFile": "packages/kernel/src/PSKernel/Verify/VLCtx.ts",
+        "portingMapStatus": "stubbed",
+        "exists": true,
+        "filePortStatus": "stubbed",
+        "fileProofStatus": "not-proven",
+        "sha256": "255558f81b4d8daac771cfb2e7f23eadf0d81886d558fdc3afe209c1ccbd2988",
+        "bytes": 580
+      },
+      {
+        "sourceLeanFile": "Main.lean",
+        "targetTypeScriptFile": "packages/kernel/src/Main.ts",
+        "portingMapStatus": "partial",
+        "exists": true,
+        "filePortStatus": "partial",
+        "fileProofStatus": "not-proven",
+        "sha256": "e5fe68653f5bc7a27a89a74a8c7016fcabea30579da6bc270c351f2fcb99e1e0",
+        "bytes": 3854
+      }
+    ],
+    "entryCount": 112
+  },
+  "preflightSha256": "4273ee885f3c58750be5ba7d605d7fcb75263531c07086108700bc56aebc79a7"
+}

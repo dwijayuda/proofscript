@@ -1,0 +1,47 @@
+{
+  "checkpoint": "proofscript-v1-ka70-executable-defeq-unit-proj-refinement0",
+  "publicVersion": "1.0.0-pskernel.73",
+  "baseline": "proofscript-v1-ka69-executable-defeq-delta-string-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "baselineObligations": 212,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA70",
+        "source": "assurance/ka70/executable-defeq-unit-proj-refinement-bridge.lean",
+        "destination": "PSKernelKA70ExecutableDefEqUnitProjRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "dependencyBuildStatus": "passed",
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "baselineArtifactAudit": {
+    "baselineZip": "/mnt/data/proofscript-v1-ka69-executable-defeq-delta-string-refinement0.zip",
+    "baselineShaFile": "/mnt/data/proofscript-v1-ka69-executable-defeq-delta-string-refinement0.zip.sha256",
+    "actualBaselineZipSha256": "b14644fecf44ba8a1199c89358530fc6b0b954cc5576c9116627c9533b6a5e3f",
+    "externalShaFileSha256": "b14644fecf44ba8a1199c89358530fc6b0b954cc5576c9116627c9533b6a5e3f",
+    "externalShaMatchesActual": true,
+    "internalKA68ReleaseGateSha256": null,
+    "internalKA68VerificationSummarySha256": null,
+    "internalSelfHashFieldsKnownStale": false,
+    "policy": "External .sha256 file is authoritative for ZIP integrity; KA70 avoids embedding a self ZIP hash inside the ZIP because that creates stale self-reference risk."
+  },
+  "oldCodebasePolicy": {
+    "oldCodebaseRegressionIgnoredByUser": true,
+    "fullNpmTestRequiredForThisCheckpoint": false,
+    "reason": "User requested continuation on the strict Lean4Lean KA lineage. KA70 changes only Lean4Lean bridge wrappers and release metadata; it does not touch trusted PSKernel semantics."
+  },
+  "fullNpmTestStatus": "not-run-old-codebase-ignored-by-user",
+  "noWrapperTimeoutCountedAsPassed": true,
+  "redTestObserved": true,
+  "redTestReason": "KA70 gate tool absent before implementation",
+  "externalSha256FileAuthoritative": true,
+  "selfZipSha256EmbeddedInsideZip": false
+}

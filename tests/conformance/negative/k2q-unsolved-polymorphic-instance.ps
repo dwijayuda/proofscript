@@ -1,0 +1,15 @@
+inductive Box(A: Type): Type {
+  | mk(x: A);
+}
+class Marker(A: Type) {
+  tag: Nat;
+}
+instance {A: Type}{B: Type} partialMarker: Marker(Box(A)) := {
+  tag := 4
+};
+def need[m: Marker(Box(Nat))](n: Nat): Nat := {
+  Marker.tag(Box(Nat), m)
+}
+def bad: Nat := {
+  need(0)
+}

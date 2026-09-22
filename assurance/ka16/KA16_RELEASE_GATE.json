@@ -1,0 +1,88 @@
+{
+  "checkpoint": "proofscript-v1-ka16-env-extension-bridge0",
+  "publicVersion": "1.0.0-pskernel.19",
+  "createdAtUtc": "2026-09-18T12:10:00Z",
+  "baseline": "proofscript-v1-ka15-env-wf-bridge0",
+  "kernel": {
+    "name": "PSKernel",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "directLean4LeanEnvExtensionBridge": {
+    "referenceKind": "direct-imported-lean4lean-env-extension-bridge",
+    "actualLean4LeanImportBound": true,
+    "directLean4LeanEnvExtensionBridgeChecked": true,
+    "strictBridgeCheckPassed": true,
+    "blockedReasons": [],
+    "targets": {
+      "relation": "Lean4Lean.VEnv.LE",
+      "dependencies": [
+        "Lean4Lean.VDecl.WF",
+        "Lean4Lean.VEnv.WF"
+      ]
+    },
+    "coveredPSDeclKinds": [
+      "axiom",
+      "definition"
+    ],
+    "excludedPSDeclKinds": [
+      "theorem",
+      "example",
+      "opaque",
+      "quot",
+      "inductive",
+      "mutualInductive"
+    ],
+    "theoryBuildStatus": 0,
+    "bridgeCheckStatus": 0
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 6,
+    "formalObligationMeaning": "KA-13 VDecl.WF + KA-15 VEnv.WF + KA-16 VEnv.LE conditional bridge lemmas only; not full Lean equivalence"
+  },
+  "verificationSummary": {
+    "npm install --offline --no-audit --no-fund": "passed",
+    "npm run build -- --pretty false": "passed",
+    "npm run test:pskernel:ka1..ka16": "passed; aggregate loops timed out around expensive gates, KA11-KA16 rerun individually and passed",
+    "npm run assurance:ka1..ka16": "passed; aggregate loop timed out at KA11, KA11-KA16 rerun individually and passed",
+    "npm run lean:ka11:import": "passed",
+    "npm run lean:ka12:check": "passed",
+    "npm run lean:ka13:check": "passed",
+    "npm run lean:ka15:check": "passed",
+    "npm run lean:ka16:check": "passed",
+    "npm run test:kernel:smoke": "passed",
+    "npm run test:standalone-small": "passed",
+    "npm run test:psc:kernel-status": "passed",
+    "npm run test:psc:conformance-bounded": "passed",
+    "npm run arena:corpus-preflight": "passed: 190 NDJSON fixtures",
+    "npm run test:arena:static-nonperf": "passed: 26/26 decisive",
+    "npm run test:arena:tutorial": "passed: 140/140 decisive",
+    "npm run verify:arena": "passed"
+  },
+  "arenaSummary": {
+    "corpusPath": "/mnt/data/arena-corpus-20260915",
+    "ndjsonFixtures": 190,
+    "staticNonperf": {
+      "total": 26,
+      "decisive": 26,
+      "acceptedGood": 4,
+      "rejectedBad": 22,
+      "wrong": 0,
+      "notRun": 0
+    },
+    "tutorial": {
+      "total": 140,
+      "decisive": 140,
+      "acceptedGood": 93,
+      "rejectedBad": 47,
+      "wrong": 0,
+      "notRun": 0
+    }
+  }
+}

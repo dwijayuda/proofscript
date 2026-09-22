@@ -1,0 +1,42 @@
+{
+  "schema": "proofscript.assurance.ka6.lean4lean-reference-binding/v1",
+  "checkpoint": "proofscript-v1-ka6-lean4lean-binding0",
+  "publicVersion": "1.0.0-pskernel.8",
+  "baseline": "proofscript-v1-ka5-lean4331-strict-check0",
+  "targetLeanVersion": "4.33.1",
+  "bindingKind": "lean4lean-compatible-reference-interface",
+  "pinnedLean4LeanDependency": null,
+  "actualLean4LeanImportBound": false,
+  "machineCheckedLeanFiles": [
+    "assurance/ka6/lean4lean-compatible-binding.lean"
+  ],
+  "closedByKA6": [
+    "ka6.reference-interface.lean4lean-compatible-shape",
+    "ka6.soundness.noninductive-reference-shape",
+    "ka6.policy.metadata-erasure-preserved",
+    "ka6.policy.metavariables-and-freevars-blocked",
+    "ka6.no-trusted-kernel-change"
+  ],
+  "stillOpen": [
+    "soundness.imported-Lean4Lean-binding",
+    "soundness.checkDecl-against-Lean4Lean",
+    "soundness.defEq",
+    "soundness.whnf",
+    "soundness.environment-extension",
+    "soundness.quotient-primitives",
+    "soundness.inductive-admission",
+    "soundness.recursor-iota",
+    "soundness.supported-core-completeness"
+  ],
+  "claimBoundary": {
+    "leanCheckedHere": true,
+    "actualLean4LeanImportBound": false,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  }
+}

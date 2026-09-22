@@ -1,0 +1,35 @@
+{
+  "checkpoint": "proofscript-v1-ka107-primitive-telescope-shape-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.110",
+  "baseline": "proofscript-v1-ka106-primitive-extension-helper-refinement0",
+  "referenceKind": "primitive-telescope-shape-helper-refinement",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 5,
+  "countedObligations": [
+    "translated_mlctx_dropN_toCtx_length_wf",
+    "translated_mlctx_head_vlam_wf",
+    "translated_mlctx_mkLambda_eq_lams_wf",
+    "translated_expr_natBinderTypes_of_abstract1_wf",
+    "translated_mlctx_mkLambda_natBinderTypes_wf"
+  ],
+  "sourceTheorems": [
+    "MLCtx.dropN_toCtx_length",
+    "MLCtx.head_vlam",
+    "MLCtx.mkLambda'_eq_lams",
+    "_root_.Lean.Expr.natBinderTypes_of_abstract1",
+    "MLCtx.mkLambda_natBinderTypes"
+  ],
+  "directSorryPolicy": "do-not-count-upstream-theorems-whose-own-body-is-sorry",
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveTelescopeShapeHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

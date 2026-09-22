@@ -1,0 +1,20 @@
+{
+  "checkpoint": "proofscript-v1-ka99-primitive-closure-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.102",
+  "baseline": "proofscript-v1-ka98-primitive-fuel-helper-refinement0",
+  "focusedGateStatus": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 316,
+  "newFormalLean4LeanBridgeObligations": 5,
+  "baselineObligations": 311,
+  "countedObligations": [
+    "translated_fvarsIn_appN_wf",
+    "translated_trExpr_appN_inv_wf",
+    "translated_trExpr_app2_inv_wf",
+    "translated_trExpr_closedN_nil_wf",
+    "translated_trExpr_fvar_lift_uniq_wf"
+  ],
+  "redTestObserved": true,
+  "redTestReason": "KA99 test failed first on missing KA99 gate tool",
+  "noWrapperTimeoutCountedAsPassed": true
+}

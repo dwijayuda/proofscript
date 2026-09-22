@@ -1,0 +1,125 @@
+{
+  "checkpoint": "proofscript-v1-ka113-executable-obligation-ledger0",
+  "publicVersion": "1.0.0-pskernel.116",
+  "baseline": "proofscript-v1-ka112-executable-equivalence-progress0",
+  "metrics": {
+    "featureSurfaceBridgeProgressPercent": 100,
+    "executableKernelEquivalenceProofProgressPercent": 89,
+    "executableKernelEquivalencePreviousPercent": 88,
+    "executableKernelEquivalenceDeltaPercent": 1,
+    "arenaCorpusRegressionPercent": 100,
+    "releasePackagingVerificationPercent": 100,
+    "executableObligationLedgerPercent": 100,
+    "formalLean4LeanBridgeObligations": 366,
+    "newFormalLean4LeanBridgeObligations": 0,
+    "fullLean4EquivalencePercent": 0,
+    "fullyFormalK3Percent": 0,
+    "overallConservativeProjectProgressPercent": 81.7,
+    "overallFormula": "20% feature surface + 30% executable equivalence + 10% arena regression + 15% release packaging + 10% claim-boundary honesty + 15% full-equivalence theorem"
+  },
+  "phaseStatus": {
+    "featureSurfaceBridge": "closed",
+    "executableEquivalence": "active-obligation-ledgered",
+    "fullLean4Equivalence": "not-proven",
+    "fullyFormalK3": "not-proven",
+    "claimBoundary": "enforced"
+  },
+  "ledgerSummary": {
+    "executableObligationLedgerPercent": 100,
+    "rows": [
+      {
+        "id": "expression-translation-refinement",
+        "evidence": "closed-by-ka51-ka64",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "whnf-refinement",
+        "evidence": "closed-by-ka65",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "defeq-core-refinement",
+        "evidence": "closed-by-ka66-ka74",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "infer-type-frontier",
+        "evidence": "closed-by-ka75-ka79",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "primitive-surface-reflection",
+        "evidence": "closed-by-ka81-ka92",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "primitive-helper-surface",
+        "evidence": "closed-by-ka93-ka109",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "feature-surface-dashboard",
+        "evidence": "closed-by-ka110",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "progress-dashboard",
+        "evidence": "closed-by-ka111",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "frontier-map",
+        "evidence": "closed-by-ka112",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "executable-obligation-ledger",
+        "evidence": "closed-by-ka113",
+        "status": "closed",
+        "closedOrTracked": true
+      },
+      {
+        "id": "remaining-executable-refinement-theorem",
+        "evidence": "tracked-not-proven",
+        "status": "tracked",
+        "closedOrTracked": true
+      },
+      {
+        "id": "full-lean4-equivalence-theorem",
+        "evidence": "tracked-not-proven",
+        "status": "tracked",
+        "closedOrTracked": true
+      }
+    ],
+    "counts": {
+      "expected": 12,
+      "closedOrTracked": 12,
+      "missing": 0
+    },
+    "evidenceMeaning": "ledger requires every executable-equivalence frontier bucket to be closed or explicitly tracked; it is not an executable PSKernel refinement proof"
+  },
+  "percentBoundaries": {
+    "executableProgressIsDashboardEvidenceNotRefinementProof": true,
+    "ledgerDoesNotProvePSKernelEquivalence": true,
+    "overallProgressIsDashboardEstimate": true
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

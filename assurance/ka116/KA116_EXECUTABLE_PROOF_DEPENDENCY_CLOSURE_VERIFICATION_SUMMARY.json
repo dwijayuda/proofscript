@@ -1,0 +1,11 @@
+{
+  "checkpoint": "proofscript-v1-ka116-executable-proof-dependency-closure0",
+  "status": "passed",
+  "strictLean4LeanStatus": "passed",
+  "formalLean4LeanBridgeObligations": 366,
+  "newFormalLean4LeanBridgeObligations": 0,
+  "featureSurfaceBridgeProgressPercent": 100,
+  "executableKernelEquivalenceProofProgressPercent": 92,
+  "overallConservativeProjectProgressPercent": 82.6,
+  "architectureHealth": true
+}

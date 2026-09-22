@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka24-nondef-env-no-overwrite-bridge0",
+  "publicVersion": "1.0.0-pskernel.27",
+  "baseline": "proofscript-v1-ka23-nondef-env-lookup-bridge0",
+  "kernel": {
+    "name": "PSKernel",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "directLean4LeanNonDefEnvNoOverwriteBridge": {
+    "referenceKind": "direct-imported-lean4lean-nondef-env-no-overwrite-bridge",
+    "actualLean4LeanImportBound": true,
+    "bridgedRelations": [
+      "Lean4Lean.VEnv.addConst",
+      "Lean4Lean.VEnv.constants"
+    ],
+    "directLean4LeanNonDefEnvNoOverwriteBridgeChecked": true,
+    "strictBridgeCheckPassed": true,
+    "blockedReasons": [],
+    "coveredPSDeclKinds": [
+      "theorem",
+      "opaque"
+    ],
+    "nonAddingPSDeclKinds": [
+      "example"
+    ],
+    "alreadyCoveredPSDeclKinds": [
+      "axiom",
+      "definition"
+    ],
+    "conditionalBridgeLemmas": [
+      "PSKernelKA24.translated_theorem_fresh_before_add",
+      "PSKernelKA24.translated_opaque_fresh_before_add",
+      "PSKernelKA24.translated_theorem_preserves_other_lookup",
+      "PSKernelKA24.translated_opaque_preserves_other_lookup"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 32,
+    "formalObligationMeaning": "KA-13 through KA-24 conditional Lean4Lean bridge lemmas only; not executable PSKernel refinement or full Lean equivalence"
+  },
+  "verificationSummary": {
+    "npmInstallOffline": "passed",
+    "build": "passed",
+    "focusedTests": {
+      "test:pskernel:ka20": "passed",
+      "test:pskernel:ka21": "passed",
+      "test:pskernel:ka22": "passed",
+      "test:pskernel:ka23": "passed",
+      "test:pskernel:ka24": "passed",
+      "assurance:ka22": "passed",
+      "assurance:ka23": "passed",
+      "assurance:ka24": "passed",
+      "lean:ka22:check": "passed",
+      "lean:ka23:check": "passed",
+      "lean:ka24:check": "passed"
+    },
+    "runtimeAndCliGates": {
+      "test:kernel:smoke": "passed",
+      "test:standalone-small": "passed",
+      "test:psc:kernel-status": "passed",
+      "test:psc:conformance-bounded": "passed"
+    },
+    "arena": {
+      "arena:corpus-preflight": "passed",
+      "test:arena:static-nonperf": "passed",
+      "test:arena:tutorial": "passed",
+      "verify:arena": "passed",
+      "corpusNdjsonFixtures": 190,
+      "staticNonPerf": {
+        "total": 26,
+        "expectedAccept": 4,
+        "expectedReject": 22,
+        "acceptedGood": 4,
+        "rejectedBad": 22,
+        "wrongAccepts": 0,
+        "wrongRejects": 0,
+        "checkerCrashes": 0,
+        "notRun": 0
+      },
+      "tutorial": {
+        "total": 140,
+        "expectedAccept": 93,
+        "expectedReject": 47,
+        "acceptedGood": 93,
+        "rejectedBad": 47,
+        "wrongAccepts": 0,
+        "wrongRejects": 0,
+        "checkerCrashes": 0,
+        "notRun": 0
+      }
+    },
+    "finalArtifact": {
+      "freshExtractSmoke": "passed",
+      "freshExtractCommands": {
+        "npm install --offline --no-audit --no-fund": "passed",
+        "npm run build -- --pretty false": "passed",
+        "npm run test:pskernel:ka24": "passed",
+        "npm run lean:ka24:check": "passed"
+      },
+      "zipIntegrity": "passed",
+      "residue": {
+        "node_modules": 0,
+        "tgz": 0,
+        "zip": 0,
+        "tsbuildinfo": 0
+      },
+      "sha256": "provided in external .sha256 file"
+    },
+    "notes": [
+      "KA-22 and KA-23 inherited forward-version assertions were widened to include KA-24 public version 1.0.0-pskernel.27; no PSKernel semantic or codec behavior changed.",
+      "Aggregate loops are not used as release evidence when they time out; final evidence is from individual completed commands and explicit exit-code checks."
+    ]
+  }
+}

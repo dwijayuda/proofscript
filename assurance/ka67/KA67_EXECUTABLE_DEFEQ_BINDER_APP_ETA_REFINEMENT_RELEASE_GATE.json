@@ -1,0 +1,139 @@
+{
+  "checkpoint": "proofscript-v1-ka67-executable-defeq-binder-app-eta-refinement0",
+  "publicVersion": "1.0.0-pskernel.70",
+  "baseline": "proofscript-v1-ka66-executable-defeq-core-refinement0",
+  "releaseKind": "strict-lean4lean-bridge-old-codebase-ignored",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanUnblocked": true,
+  "baselineObligations": 200,
+  "strictLean4LeanModules": {
+    "status": "passed",
+    "reason": null,
+    "modules": [
+      {
+        "ka": "KA67",
+        "source": "assurance/ka67/executable-defeq-binder-app-eta-refinement-bridge.lean",
+        "destination": "PSKernelKA67ExecutableDefEqBinderAppEtaRefinementBridge.lean",
+        "status": "passed",
+        "proofBearing": true,
+        "obligations": 4,
+        "dependencyBuildStatus": "passed",
+        "stdoutTail": "",
+        "stderrTail": ""
+      }
+    ]
+  },
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka67-executable-defeq-binder-app-eta-refinement0",
+    "publicVersion": "1.0.0-pskernel.70",
+    "featureSurfaceBridgeProgressPercent": 87,
+    "executableKernelEquivalenceProofProgressPercent": 53,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 204,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 200,
+      "newFormalLean4LeanBridgeObligations": 4,
+      "countedNewObligations": [
+        "translated_isDefEqLambda_wf",
+        "translated_isDefEqForall_wf",
+        "translated_isDefEqApp_wf",
+        "translated_tryEtaExpansion_wf"
+      ]
+    },
+    "metricPolicy": "KA67 advances the exact formal obligation counter only; percentage estimates remain held at the latest audited KA65/KA66 values pending a separate coverage audit.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka67Files": [
+      {
+        "path": "tools/pskernel-ka67-executable-defeq-binder-app-eta-refinement-tests.ts",
+        "lines": 34,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka67-executable-defeq-binder-app-eta-refinement.ts",
+        "lines": 96,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka67/KA67_EXECUTABLE_DEFEQ_BINDER_APP_ETA_REFINEMENT_RELEASE_GATE.json",
+        "lines": 140,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka67/KA67_EXECUTABLE_DEFEQ_BINDER_APP_ETA_REFINEMENT_REPORT.md",
+        "lines": 37,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka67/KA67_EXECUTABLE_DEFEQ_BINDER_APP_ETA_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 35,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka67/KA67_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 21,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka67/KA67_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 13,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka67/executable-defeq-binder-app-eta-refinement-bridge-spec.json",
+        "lines": 35,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka67/executable-defeq-binder-app-eta-refinement-bridge.lean",
+        "lines": 50,
+        "ext": ".lean"
+      }
+    ],
+    "ka67ToolFiles": [
+      {
+        "path": "tools/pskernel-ka67-executable-defeq-binder-app-eta-refinement-tests.ts",
+        "lines": 34,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka67-executable-defeq-binder-app-eta-refinement.ts",
+        "lines": 96,
+        "ext": ".ts"
+      }
+    ],
+    "newKA67OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "oldCodebasePolicy": {
+    "oldCodebaseRegressionIgnoredByUser": true,
+    "fullNpmTestRequiredForThisCheckpoint": false,
+    "reason": "User explicitly requested continuing with KA66 and ignoring old codebase; KA67 changes only strict Lean4Lean bridge wrappers and release metadata."
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutableWHNFDefEqRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

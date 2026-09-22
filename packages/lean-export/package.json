@@ -1,0 +1,16 @@
+{
+  "name": "@proofscript/lean-export",
+  "version": "0.1.0-production-p3.1",
+  "private": false,
+  "description": "Lean source exporter for oracle/differential testing",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "@proofscript/kernel": "0.1.0-dev.0"
+  }
+}

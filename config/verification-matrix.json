@@ -1,0 +1,2182 @@
+{
+  "schemaVersion": 1,
+  "release": "P5.94",
+  "trustClaim": {
+    "label": "K3-TB trusted-boundary",
+    "fullyFormalK3": false,
+    "lean4Equivalent": false,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "summary": "K3-TB trusted-boundary only; not fully formal K3 and not proven equivalent to Lean 4."
+  },
+  "purpose": "Machine-check the command evidence required before ProofScript production, feature-support, and trust-boundary claims can be made.",
+  "requiredDocs": [
+    "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+    "docs/PRODUCTION_ARCHITECTURE_STATUS.md",
+    "docs/PRODUCTION_PACKAGE_CLASSIFICATION.md",
+    "docs/PRODUCTION_FEATURE_PROMOTION_GATE.md",
+    "docs/PRODUCTION_READINESS_STATUS.md",
+    "docs/PRODUCTION_CANONICAL_PACKAGE_GUIDE.md",
+    "docs/PRODUCTION_PROOF_OBLIGATION_LEDGER.md",
+    "docs/PRODUCTION_TRACEABILITY_BUNDLE.md",
+    "docs/PRODUCTION_DEVELOPMENT_WORKFLOW.md"
+  ],
+  "rules": {
+    "requiredClaimsNeedCommands": true,
+    "commandsMustExistInPackageJsonOrBeAllowlistedRawCommands": true,
+    "releaseClaimsMustNotUseExperimentalOnlyScripts": true,
+    "formalLeanEquivalenceMustRemainZeroUntilActuallyProven": true,
+    "allowedRawCommandPrefixes": [
+      "node tools/pskernel.ts status --json",
+      "unzip -tq "
+    ]
+  },
+  "claimTypes": [
+    "build",
+    "architecture",
+    "feature-support",
+    "language-smoke",
+    "governance",
+    "kernel-trust-boundary",
+    "artifact-integrity",
+    "release",
+    "oracle-optional"
+  ],
+  "claims": [
+    {
+      "id": "build-integrity",
+      "title": "TypeScript workspace builds",
+      "claimType": "build",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "build"
+      ],
+      "evidenceFiles": [
+        "package.json",
+        "tsconfig.json"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md"
+      ]
+    },
+    {
+      "id": "trust-boundary-architecture",
+      "title": "Trusted packages stay separated from runtime/backend/plugin layers",
+      "claimType": "architecture",
+      "requiredForRelease": true,
+      "trustImpact": "trusted-boundary-enforcement",
+      "commands": [
+        "test:architecture:trust-boundary",
+        "test:architecture"
+      ],
+      "evidenceFiles": [
+        "tools/check-boundaries.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_ARCHITECTURE_STATUS.md",
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md"
+      ]
+    },
+    {
+      "id": "package-classification-enforced",
+      "title": "Canonical, experimental, bridge, and trusted packages are classified",
+      "claimType": "architecture",
+      "requiredForRelease": true,
+      "trustImpact": "explainability-and-boundary-discipline",
+      "commands": [
+        "test:package-classification",
+        "test:architecture:package-classification"
+      ],
+      "evidenceFiles": [
+        "config/package-classification.json",
+        "tools/check-package-classification.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_PACKAGE_CLASSIFICATION.md"
+      ]
+    },
+    {
+      "id": "feature-promotion-enforced",
+      "title": "Supported PSC-1 feature families carry required evidence",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "feature-promotion-discipline",
+      "commands": [
+        "test:feature-promotion",
+        "test:architecture:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "config/feature-promotion-gate.json",
+        "tools/check-feature-promotion.ts",
+        "templates/feature-promotion-entry.template.json"
+      ],
+      "docs": [
+        "docs/PRODUCTION_FEATURE_PROMOTION_GATE.md"
+      ]
+    },
+    {
+      "id": "feature-proof-obligation-linkage-enforced",
+      "title": "Supported PSC-1 feature families link to formal proof obligations",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "feature-promotion-discipline",
+      "commands": [
+        "test:feature-proof-obligation-linkage",
+        "test:architecture:feature-proof-obligation-linkage"
+      ],
+      "evidenceFiles": [
+        "config/feature-promotion-gate.json",
+        "config/proof-obligations-ledger.json",
+        "tools/check-feature-promotion.ts",
+        "tools/feature-proof-obligation-linkage-tests.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_FEATURE_PROMOTION_GATE.md",
+        "docs/PRODUCTION_PROOF_OBLIGATION_LEDGER.md"
+      ]
+    },
+    {
+      "id": "verification-matrix-enforced",
+      "title": "Production claims are mapped to concrete verification commands",
+      "claimType": "release",
+      "requiredForRelease": true,
+      "trustImpact": "claim-to-evidence-discipline",
+      "commands": [
+        "test:verification-matrix",
+        "test:architecture:verification-matrix"
+      ],
+      "evidenceFiles": [
+        "config/verification-matrix.json",
+        "tools/check-verification-matrix.ts",
+        "tools/verification-matrix-tests.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md"
+      ]
+    },
+    {
+      "id": "psc1-language-fast-smoke",
+      "title": "Current supported PSC-1 language slices pass live source-to-execution smoke",
+      "claimType": "language-smoke",
+      "requiredForRelease": true,
+      "trustImpact": "end-to-end-regression-evidence",
+      "commands": [
+        "test:pslive:language-fast",
+        "test:standalone-small"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-smoke-lib.ts",
+        "tools/pslive-test-harness.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_FEATURE_PROMOTION_GATE.md",
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md"
+      ]
+    },
+    {
+      "id": "reference-governance-smoke",
+      "title": "Reference-governed PSC-1 examples and rejection checks pass",
+      "claimType": "governance",
+      "requiredForRelease": true,
+      "trustImpact": "language-reference-discipline",
+      "commands": [
+        "test:reference-governance:json",
+        "test:governance"
+      ],
+      "evidenceFiles": [
+        "tools/reference-language-governance-smoke.ts",
+        "tools/governance-check.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_ARCHITECTURE_STATUS.md",
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md"
+      ]
+    },
+    {
+      "id": "kernel-smoke-and-status",
+      "title": "K3-TB kernel smoke and status remain trusted-boundary / not-proven",
+      "claimType": "kernel-trust-boundary",
+      "requiredForRelease": true,
+      "trustImpact": "trusted-boundary-kernel-evidence",
+      "commands": [
+        "test:kernel:smoke"
+      ],
+      "rawCommands": [
+        "node tools/pskernel.ts status --json"
+      ],
+      "evidenceFiles": [
+        "tools/pskernel.ts",
+        "packages/kernel/src/index.ts",
+        "AUDIT_TRUST_BOUNDARY_MATRIX_K3TB.md"
+      ],
+      "docs": [
+        "VERIFY_K3TB.md",
+        "SECURITY_TRUST_BOUNDARY_K3TB.md",
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md"
+      ]
+    },
+    {
+      "id": "backend-runtime-smoke",
+      "title": "Executable JS/TS backend and runtime helpers remain compatible with checked Core output",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "execution-after-core-evidence",
+      "commands": [
+        "test:backend-typescript:extraction",
+        "test:runtime:extraction",
+        "test:pslive:build-ts"
+      ],
+      "evidenceFiles": [
+        "packages/backend-typescript/src/index.ts",
+        "packages/runtime/src/index.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_ARCHITECTURE_STATUS.md",
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md"
+      ]
+    },
+    {
+      "id": "production-readiness-status",
+      "title": "Production readiness status summarizes canonical path, feature gate, verification matrix, and K3-TB trust state",
+      "claimType": "release",
+      "requiredForRelease": true,
+      "trustImpact": "claim-to-evidence-discipline",
+      "commands": [
+        "production:status",
+        "production:status:json",
+        "test:production-readiness",
+        "test:architecture:production-readiness"
+      ],
+      "evidenceFiles": [
+        "tools/production-status.ts",
+        "tools/production-status-tests.ts",
+        "config/package-classification.json",
+        "config/feature-promotion-gate.json",
+        "config/verification-matrix.json"
+      ],
+      "docs": [
+        "docs/PRODUCTION_READINESS_STATUS.md",
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md"
+      ]
+    },
+    {
+      "id": "production-traceability-enforced",
+      "title": "Production traceability bundle connects packages, features, claims, and proof obligations",
+      "claimType": "architecture",
+      "requiredForRelease": true,
+      "trustImpact": "explainability-and-boundary-discipline",
+      "commands": [
+        "test:production-traceability",
+        "test:architecture:production-traceability"
+      ],
+      "evidenceFiles": [
+        "config/production-traceability-bundle.json",
+        "tools/check-production-traceability.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_TRACEABILITY_BUNDLE.md",
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md"
+      ]
+    },
+    {
+      "id": "archive-integrity",
+      "title": "Delivered archives must pass archive-integrity checks after packaging",
+      "claimType": "artifact-integrity",
+      "requiredForRelease": false,
+      "trustImpact": "delivery-integrity-evidence",
+      "commands": [],
+      "rawCommands": [
+        "unzip -tq /mnt/data/proofscript-standalone-kernel-maturity-replacement-p5-4.zip"
+      ],
+      "evidenceFiles": [],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md"
+      ]
+    },
+    {
+      "id": "proof-obligation-ledger-enforced",
+      "title": "Formal proof obligations are explicit and overclaim-checked",
+      "claimType": "architecture",
+      "requiredForRelease": true,
+      "trustImpact": "claim-to-evidence-discipline",
+      "commands": [
+        "test:proof-obligations",
+        "test:architecture:proof-obligations"
+      ],
+      "rawCommands": [],
+      "evidenceFiles": [
+        "config/proof-obligations-ledger.json",
+        "tools/check-proof-obligations.ts",
+        "tools/proof-obligation-ledger-tests.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_PROOF_OBLIGATION_LEDGER.md",
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md"
+      ],
+      "summary": "The ledger records open/evidence-only/proved formal proof obligations and prevents K3-TB from being upgraded without checked formal artifacts."
+    },
+    {
+      "id": "psc1-option-feature-supported",
+      "title": "PSC-1 Option feature is supported through parser, elaborator, checked bootstrap, backend, runtime, and smoke tests",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "feature-promotion-discipline",
+      "commands": [
+        "test:pslive:option",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "config/feature-promotion-gate.json",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/std/bootstrap-manifest.json",
+        "packages/elaborator/src/matchElaborator.ts",
+        "packages/backend-typescript/src/declarationAnalysis.ts",
+        "packages/backend-typescript/src/moduleEmitter.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "tools/pslive-option-tests.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_FEATURE_PROMOTION_GATE.md",
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_6_OPTION_FEATURE_REPORT.md"
+      ],
+      "summary": "Option(A) is a checked-bootstrap non-indexed inductive with explicit erased type arguments in PSC-1 source; exhaustive Option matches execute through checked recursors and JS/TS runtime structures."
+    },
+    {
+      "id": "lean-oracle-optional",
+      "title": "Lean oracle / publish verification is optional until PROOFSCRIPT_LEAN_BIN is available",
+      "claimType": "oracle-optional",
+      "requiredForRelease": false,
+      "trustImpact": "optional-external-oracle-evidence",
+      "commands": [
+        "verify:k3tb:publish",
+        "test:kernel:reference:if-available",
+        "test:differential:if-available"
+      ],
+      "evidenceFiles": [
+        "tools/kernel-v71-k3tb-publish-verify.ts"
+      ],
+      "docs": [
+        "VERIFY_K3TB.md",
+        "PUBLISH_PREFLIGHT_K3TB.md",
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md"
+      ]
+    },
+    {
+      "id": "canonical-package-docs-enforced",
+      "title": "Canonical package docs are enforced",
+      "claimType": "architecture",
+      "requiredForRelease": true,
+      "trustImpact": "explainability-and-boundary-discipline",
+      "commands": [
+        "test:canonical-package-docs",
+        "test:architecture:package-docs"
+      ],
+      "rawCommands": [],
+      "evidenceFiles": [
+        "config/package-classification.json"
+      ],
+      "docs": [
+        "docs/PRODUCTION_CANONICAL_PACKAGE_GUIDE.md",
+        "docs/PRODUCTION_PACKAGE_CLASSIFICATION.md"
+      ],
+      "summary": "Every canonical PSC-1 package README documents its production role, trust boundary, extension points, verification command, and non-claims."
+    },
+    {
+      "id": "development-workflow-enforced",
+      "title": "Feature implementation workflow and templates are enforced",
+      "claimType": "architecture",
+      "requiredForRelease": true,
+      "trustImpact": "feature-promotion-discipline",
+      "commands": [
+        "test:development-workflow",
+        "test:architecture:development-workflow"
+      ],
+      "evidenceFiles": [
+        "config/development-workflow.json",
+        "tools/check-development-workflow.ts",
+        "tools/development-workflow-tests.ts",
+        "templates/feature-implementation-plan.template.md",
+        "templates/feature-regression-test.template.ts",
+        "templates/feature-report.template.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_DEVELOPMENT_WORKFLOW.md",
+        "docs/PRODUCTION_FEATURE_PROMOTION_GATE.md",
+        "docs/PRODUCTION_PROOF_OBLIGATION_LEDGER.md"
+      ]
+    },
+    {
+      "id": "psc1-list-nat-feature-supported",
+      "title": "PSC-1 List(Nat) feature is checked, executable, and fail-closed for the supported subset",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "feature-promotion-discipline",
+      "commands": [
+        "test:pslive:list",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/elaborator/src/matchElaborator.ts",
+        "packages/backend-typescript/src/declarationAnalysis.ts",
+        "packages/runtime/src/profile.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/PRODUCTION_FEATURE_PROMOTION_GATE.md"
+      ]
+    },
+    {
+      "id": "psc1-string-literals-feature-supported",
+      "title": "PSC-1 minimal String literal feature is checked, executable, and fail-closed for the supported subset",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "trusted-boundary-kernel-evidence",
+      "commands": [
+        "test:pslive:string",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-string-tests.ts",
+        "packages/syntax/src/index.ts",
+        "packages/parser/src/tokenize.ts",
+        "packages/elaborator/src/index.ts",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/profile.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/PRODUCTION_FEATURE_PROMOTION_GATE.md"
+      ]
+    },
+    {
+      "id": "psc1-int-literals-feature-supported",
+      "title": "PSC-1 minimal Int literals and bounded primitive arithmetic are checked, executable, and fail-closed for the supported subset",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "trusted-boundary-kernel-evidence",
+      "commands": [
+        "test:pslive:int",
+        "test:pslive:language-fast",
+        "test:feature-promotion",
+        "test:pslive:int-arith"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-int-tests.ts",
+        "packages/syntax/src/index.ts",
+        "packages/parser/src/expressionParser.ts",
+        "packages/elaborator/src/index.ts",
+        "packages/kernel/src/PSKernel/Expr.ts",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/kernel/src/PSKernel/Environment.ts",
+        "packages/kernel/src/PSKernel/Replay.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/profile.ts",
+        "tools/pslive-int-arith-tests.ts",
+        "packages/runtime/src/int.ts",
+        "packages/runtime/src/source.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/PRODUCTION_FEATURE_PROMOTION_GATE.md",
+        "docs/reports/p5/PRODUCTION_P5_10_INT_ARITHMETIC_FEATURE_REPORT.md"
+      ]
+    },
+    {
+      "id": "psc1-int-operators-feature-supported",
+      "title": "PSC-1 type-directed Int operators are supported",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "feature-promotion-discipline",
+      "commands": [
+        "test:pslive:int-operators",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "packages/syntax/src/index.ts",
+        "packages/parser/src/expressionParser.ts",
+        "packages/parser/src/sugar.ts",
+        "packages/elaborator/src/index.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/profile.ts",
+        "tools/pslive-int-operator-tests.ts"
+      ],
+      "docs": [
+        "docs/reports/p5/PRODUCTION_P5_11_INT_OPERATORS_FEATURE_REPORT.md"
+      ]
+    },
+    {
+      "id": "psc1-array-nat-feature-supported",
+      "title": "PSC-1 Array(Nat) literals are supported",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "feature-promotion-discipline",
+      "commands": [
+        "test:pslive:array",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "packages/syntax/src/index.ts",
+        "packages/parser/src/index.ts",
+        "packages/elaborator/src/index.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/profile.ts",
+        "tools/pslive-array-tests.ts"
+      ],
+      "docs": [
+        "docs/reports/p5/PRODUCTION_P5_12_ARRAY_NAT_FEATURE_REPORT.md"
+      ]
+    },
+    {
+      "id": "psc1-except-feature-supported",
+      "title": "PSC-1 Except(E, A) feature support is verified",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:except",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "docs": [
+        "docs/reports/p5/PRODUCTION_P5_13_EXCEPT_FEATURE_REPORT.md",
+        "docs/PRODUCTION_FEATURE_PROMOTION_GATE.md"
+      ],
+      "trustImpact": "feature-promotion-discipline",
+      "evidenceFiles": [
+        "packages/syntax/src/index.ts",
+        "packages/parser/src/index.ts",
+        "packages/elaborator/src/index.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/profile.ts",
+        "tools/pslive-except-tests.ts"
+      ]
+    },
+    {
+      "id": "psc1-array-access-feature-supported",
+      "title": "PSC-1 Array.size and Array.get? are supported for checked Array(A) payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "execution-after-core-evidence",
+      "commands": [
+        "test:pslive:array-access",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-array-access-tests.ts",
+        "packages/parser/src/tokenize.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_14_ARRAY_ACCESS_FEATURE_REPORT.md"
+      ]
+    },
+    {
+      "id": "psc1-option-except-map-feature-supported",
+      "title": "PSC-1 Option.map and Except.map are supported for checked constructor values",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:option-except-map",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-option-except-map-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_15_OPTION_EXCEPT_MAP_FEATURE_REPORT.md"
+      ]
+    },
+    {
+      "id": "psc1-option-except-bind-feature-supported",
+      "title": "PSC-1 Option.bind and Except.bind are supported for checked constructor values",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:option-except-bind",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-option-except-bind-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_16_OPTION_EXCEPT_BIND_FEATURE_REPORT.md"
+      ]
+    },
+    {
+      "id": "psc1-do-notation-feature-supported",
+      "title": "PSC-1 minimal do-notation is supported over checked Option.bind and Except.bind",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:do-notation",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-do-notation-tests.ts",
+        "packages/syntax/src/index.ts",
+        "packages/parser/src/index.ts",
+        "packages/elaborator/src/index.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_17_DO_NOTATION_FEATURE_REPORT.md"
+      ]
+    },
+    {
+      "id": "psc1-array-map-feature-supported",
+      "title": "PSC-1 Array.map is supported over checked finite Array payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:array-map",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-array-map-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_18_ARRAY_MAP_FEATURE_REPORT.md"
+      ]
+    },
+    {
+      "id": "psc1-list-map-feature-supported",
+      "title": "PSC-1 List.map is supported over checked finite List payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-map",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-map-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_19_LIST_MAP_FEATURE_REPORT.md"
+      ]
+    },
+    {
+      "id": "psc1-list-foldl-feature-supported",
+      "title": "PSC-1 List.foldl is supported over checked finite List payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-foldl",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-foldl-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_20_LIST_FOLDL_FEATURE_REPORT.md"
+      ]
+    },
+    {
+      "id": "psc1-array-foldl-feature-supported",
+      "title": "PSC-1 Array.foldl is supported over checked finite Array payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:array-foldl",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-array-foldl-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_21_ARRAY_FOLDL_FEATURE_REPORT.md"
+      ]
+    },
+    {
+      "id": "psc1-list-array-filter-feature-supported",
+      "title": "PSC-1 List.filter and Array.filter are supported over checked finite payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-array-filter",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-array-filter-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_22_LIST_ARRAY_FILTER_FEATURE_REPORT.md"
+      ]
+    },
+    {
+      "id": "psc1-list-array-append-feature-supported",
+      "title": "PSC-1 List.append and Array.append are supported over checked finite payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-array-append",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-array-append-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_23_LIST_ARRAY_APPEND_FEATURE_REPORT.md"
+      ]
+    },
+    {
+      "id": "psc1-list-array-length-empty-feature-supported",
+      "title": "PSC-1 List.length and Array.isEmpty are supported over checked finite payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-array-length-empty",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-array-length-empty-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_24_LIST_ARRAY_LENGTH_EMPTY_FEATURE_REPORT.md"
+      ]
+    },
+    {
+      "id": "psc1-list-array-reverse-feature-supported",
+      "title": "PSC-1 List.reverse and Array.reverse are supported over checked finite payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-array-reverse",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-array-reverse-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_25_LIST_ARRAY_REVERSE_FEATURE_REPORT.md"
+      ]
+    },
+    {
+      "id": "psc1-list-array-any-all-feature-supported",
+      "title": "PSC-1 List.any/List.all and Array.any/Array.all are supported over checked finite payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-array-any-all",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-array-any-all-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_26_LIST_ARRAY_ANY_ALL_FEATURE_REPORT.md"
+      ]
+    },
+    {
+      "id": "psc1-list-array-find-feature-supported",
+      "title": "PSC-1 List.find? and Array.find? are supported over checked finite payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-array-find",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-array-find-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_28_LIST_ARRAY_FIND_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_26_LIST_ARRAY_ANY_ALL_FEATURE_REPORT.md"
+      ],
+      "limitations": "Explicit checked calls only; no full Lean collection/typeclass/library equivalence."
+    },
+    {
+      "id": "psc1-list-array-head-feature-supported",
+      "title": "PSC-1 List.head? and Array.head? are supported over checked finite payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-array-head",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-array-head-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_29_LIST_ARRAY_HEAD_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_29_LIST_ARRAY_HEAD_FEATURE_REPORT.md"
+      ],
+      "limitations": "Explicit checked calls only; no full Lean collection/typeclass/library equivalence."
+    },
+    {
+      "id": "psc1-list-array-tail-feature-supported",
+      "title": "PSC-1 List.tail? and Array.tail? are supported over checked finite payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-array-tail",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-array-tail-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_30_LIST_ARRAY_TAIL_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_30_LIST_ARRAY_TAIL_FEATURE_REPORT.md"
+      ],
+      "limitations": "Explicit checked calls only; no full Lean collection/typeclass/library equivalence."
+    },
+    {
+      "id": "psc1-list-isempty-feature-supported",
+      "title": "PSC-1 List.isEmpty is supported over checked finite payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-isempty",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-isempty-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_31_LIST_ISEMPTY_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_31_LIST_ISEMPTY_FEATURE_REPORT.md"
+      ],
+      "limitations": "Explicit checked calls only; no full Lean collection/typeclass/library equivalence."
+    },
+    {
+      "id": "psc1-list-array-last-feature-supported",
+      "title": "PSC-1 List.last? and Array.last? are supported over checked finite payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-array-last",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-array-last-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_32_LIST_ARRAY_LAST_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_32_LIST_ARRAY_LAST_FEATURE_REPORT.md"
+      ],
+      "limitations": "Explicit checked calls only; no full Lean collection/typeclass/library equivalence."
+    },
+    {
+      "id": "psc1-list-get-feature-supported",
+      "title": "PSC-1 List.get? is supported over checked finite List payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-get",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-get-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_33_LIST_GET_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_33_LIST_GET_FEATURE_REPORT.md"
+      ],
+      "limitations": "Explicit checked calls only over finite checked List payloads and Nat indices; no full Lean collection/typeclass/library equivalence."
+    },
+    {
+      "id": "psc1-list-array-take-feature-supported",
+      "title": "PSC-1 List.take and Array.take are supported over checked finite payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-array-take",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-array-take-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_34_LIST_ARRAY_TAKE_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_34_LIST_ARRAY_TAKE_FEATURE_REPORT.md"
+      ],
+      "limitations": "Explicit checked calls only over finite checked List payloads or Array.mk/List payloads and Nat counts; no full Lean collection/typeclass/library equivalence."
+    },
+    {
+      "id": "psc1-list-array-drop-feature-supported",
+      "title": "PSC-1 List.drop and Array.drop are supported over checked finite payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-array-drop",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-array-drop-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_35_LIST_ARRAY_DROP_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_35_LIST_ARRAY_DROP_FEATURE_REPORT.md"
+      ],
+      "limitations": "Explicit checked calls only over finite checked List payloads or Array.mk/List payloads and Nat counts; no full Lean collection/typeclass/library equivalence."
+    },
+    {
+      "id": "psc1-list-array-range-feature-supported",
+      "title": "PSC-1 List.range and Array.range are supported over checked Nat counts",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-array-range",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-array-range-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_36_LIST_ARRAY_RANGE_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_36_LIST_ARRAY_RANGE_FEATURE_REPORT.md"
+      ],
+      "limitations": "Explicit checked calls only over Nat counts that reduce in the bounded PSC-1 finite payload limit; no full Lean collection/typeclass/library equivalence."
+    },
+    {
+      "id": "psc1-list-array-replicate-feature-supported",
+      "title": "PSC-1 List.replicate and Array.replicate are supported over checked Nat counts and checked values",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-array-replicate",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-array-replicate-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_37_LIST_ARRAY_REPLICATE_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_37_LIST_ARRAY_REPLICATE_FEATURE_REPORT.md"
+      ],
+      "limitations": "Explicit checked calls only over Nat counts that reduce in the bounded PSC-1 finite payload limit and checked values of the declared element type; no full Lean collection/typeclass/library equivalence."
+    },
+    {
+      "id": "psc1-list-array-convert-feature-supported",
+      "title": "PSC-1 List.toArray and Array.toList are supported over checked finite collection payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-array-convert",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-array-convert-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_38_LIST_ARRAY_CONVERT_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_38_LIST_ARRAY_CONVERT_FEATURE_REPORT.md"
+      ],
+      "limitations": "Explicit checked conversions only over finite List(A) and Array(A) payloads; no full Lean collection/typeclass/library equivalence."
+    },
+    {
+      "id": "psc1-list-array-takewhile-feature-supported",
+      "title": "PSC-1 List.takeWhile and Array.takeWhile are supported over checked finite collection payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-array-takewhile",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-array-takewhile-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_39_LIST_ARRAY_TAKEWHILE_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_39_LIST_ARRAY_TAKEWHILE_FEATURE_REPORT.md"
+      ],
+      "limitations": "Explicit checked calls only over finite checked List payloads or Array.mk/List payloads and predicates that reduce to Bool; no full Lean collection/typeclass/library equivalence."
+    },
+    {
+      "id": "psc1-list-array-dropwhile-feature-supported",
+      "title": "PSC-1 List.dropWhile and Array.dropWhile are supported over checked finite collection payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-array-dropwhile",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-array-dropwhile-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_40_LIST_ARRAY_DROPWHILE_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_40_LIST_ARRAY_DROPWHILE_FEATURE_REPORT.md"
+      ],
+      "limitations": "Explicit checked calls only over finite checked List payloads or Array.mk/List payloads and predicates that reduce to Bool; no full Lean collection/typeclass/library equivalence."
+    },
+    {
+      "id": "psc1-list-array-countp-feature-supported",
+      "title": "PSC-1 List.countP and Array.countP are supported over checked finite collection payloads",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-array-countp",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-array-countp-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_41_LIST_ARRAY_COUNTP_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_41_LIST_ARRAY_COUNTP_FEATURE_REPORT.md"
+      ],
+      "limitations": "Explicit checked calls only over finite checked List payloads or Array.mk/List payloads and predicates that reduce to Bool; no full Lean collection/typeclass/library equivalence."
+    },
+    {
+      "id": "psc1-list-array-singleton-feature-supported",
+      "title": "PSC-1 List.singleton and Array.singleton are supported as checked bootstrap finite constructors",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:list-array-singleton",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-list-array-singleton-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_42_LIST_ARRAY_SINGLETON_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_42_LIST_ARRAY_SINGLETON_FEATURE_REPORT.md"
+      ],
+      "limitations": "Explicit checked bootstrap definitions only; JS/TypeScript helpers execute after Core checking; no full Lean collection/typeclass/library equivalence and no kernel refactor."
+    },
+    {
+      "id": "psc1-option-except-predicates-feature-supported",
+      "title": "PSC-1 Option/Except predicate helpers are supported as checked bootstrap definitions",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "engineering-evidence",
+      "commands": [
+        "test:pslive:option-except-predicates",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-option-except-predicates-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_43_OPTION_EXCEPT_PREDICATES_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_43_OPTION_EXCEPT_PREDICATES_FEATURE_REPORT.md"
+      ],
+      "limitations": "Explicit checked calls only; definitions are checked-bootstrap Option.rec/Except.rec helpers; JS/TypeScript helpers execute after Core checking; no full Lean library/typeclass equivalence and no kernel refactor."
+    },
+    {
+      "id": "psc1-option-except-getd-feature-supported",
+      "title": "PSC-1 Option.getD and Except.getD are supported as checked bootstrap definitions",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:option-except-getd",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-option-except-getd-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_44_OPTION_EXCEPT_GETD_FEATURE_REPORT.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "Explicit checked calls only; definitions are checked-bootstrap Option.rec/Except.rec helpers; JS/TypeScript helpers execute after Core checking; no full Lean library/typeclass equivalence and no kernel refactor."
+    },
+    {
+      "id": "psc1-option-except-orelse-feature-supported",
+      "title": "PSC-1 Option.orElse and Except.orElse are supported as checked bootstrap definitions",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:option-except-orelse",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-option-except-orelse-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_45_OPTION_EXCEPT_ORELSE_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_45_OPTION_EXCEPT_ORELSE_FEATURE_REPORT.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "Explicit checked calls only; definitions are checked-bootstrap Option.rec/Except.rec helpers; JS/TypeScript helpers execute after Core checking; no full Lean library/typeclass equivalence and no kernel refactor."
+    },
+    {
+      "id": "psc1-option-except-convert-feature-supported",
+      "title": "PSC-1 Option.toList and Except.toOption are supported as checked bootstrap definitions",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:option-except-convert",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-option-except-convert-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_46_OPTION_EXCEPT_CONVERT_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_46_OPTION_EXCEPT_CONVERT_FEATURE_REPORT.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "Explicit checked calls only; definitions are checked-bootstrap Option.rec/Except.rec helpers; JS/TypeScript helpers execute after Core checking; no full Lean library/typeclass equivalence and no kernel refactor."
+    },
+    {
+      "id": "psc1-option-except-collection-convert-feature-supported",
+      "title": "PSC-1 Option.toArray and Except.toList are supported as checked bootstrap definitions",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:option-except-collection-convert",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-option-except-collection-convert-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_47_OPTION_EXCEPT_COLLECTION_CONVERT_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_47_OPTION_EXCEPT_COLLECTION_CONVERT_FEATURE_REPORT.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "Explicit checked calls only; definitions are checked-bootstrap helpers over existing Option.toList, Array.mk, and Except.toOption; JS/TypeScript helpers execute after Core checking; no full Lean library/typeclass equivalence and no kernel refactor."
+    },
+    {
+      "id": "psc1-option-except-toexcept-toarray-feature-supported",
+      "title": "PSC-1 Option.toExcept and Except.toArray are supported as checked bootstrap definitions",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:option-except-toexcept-toarray",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-option-except-toexcept-toarray-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_48_OPTION_EXCEPT_TOEXCEPT_TOARRAY_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_48_OPTION_EXCEPT_TOEXCEPT_TOARRAY_FEATURE_REPORT.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "Explicit checked calls only; definitions are checked-bootstrap helpers over existing Option.rec, Except.toOption, and Option.toArray; JS/TypeScript helpers execute after Core checking; no full Lean library/typeclass equivalence and no kernel refactor."
+    },
+    {
+      "id": "psc1-except-maperror-feature-supported",
+      "title": "PSC-1 Except.mapError is supported as a checked bootstrap definition",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:except-maperror",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-except-maperror-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_49_EXCEPT_MAPERROR_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_49_EXCEPT_MAPERROR_FEATURE_REPORT.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "Explicit checked calls only; definition is a checked-bootstrap helper over existing Except.rec; JS/TypeScript helper executes after Core checking; no full Lean library/typeclass equivalence and no kernel refactor."
+    },
+    {
+      "id": "psc1-option-filter-feature-supported",
+      "title": "PSC-1 Option.filter is supported as a checked bootstrap definition",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:option-filter",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-option-filter-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_50_OPTION_FILTER_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_50_OPTION_FILTER_FEATURE_REPORT.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "Explicit checked calls only; definition is a checked-bootstrap helper over existing Option.rec and Bool.rec; JS/TypeScript helper executes after Core checking; no full Lean library/typeclass equivalence and no kernel refactor."
+    },
+    {
+      "id": "psc1-option-flatten-feature-supported",
+      "title": "PSC-1 Option.flatten is supported as a checked bootstrap definition",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:option-flatten",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-option-flatten-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_51_OPTION_FLATTEN_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_51_OPTION_FLATTEN_FEATURE_REPORT.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "Explicit checked calls only; definition is a checked-bootstrap helper over existing Option.rec; JS/TypeScript helper executes after Core checking; no full Lean library/typeclass equivalence and no kernel refactor."
+    },
+    {
+      "id": "psc1-except-flatten-feature-supported",
+      "title": "PSC-1 Except.flatten is supported as a checked bootstrap definition",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:except-flatten",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-except-flatten-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "docs/reports/p5/PRODUCTION_P5_52_EXCEPT_FLATTEN_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_52_EXCEPT_FLATTEN_FEATURE_REPORT.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "Explicit checked calls only; definition is a checked-bootstrap helper over existing Except.rec; JS/TypeScript helper executes after Core checking; no full Lean library/typeclass equivalence and no kernel refactor."
+    },
+    {
+      "id": "psc1-except-toerror-feature-supported",
+      "title": "Except.toError checked-bootstrap feature is supported and executable",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:except-toerror",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-except-toerror-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts",
+        "docs/reports/p5/PRODUCTION_P5_53_EXCEPT_TOERROR_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_53_EXCEPT_TOERROR_FEATURE_REPORT.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "No new formal Lean 4 equivalence proof is added; the feature remains K3-TB checked-bootstrap/runtime-correspondence evidence.",
+      "summary": "Except.toError extracts the error payload from Except.error as Option.some and maps Except.ok to Option.none using existing checked bootstrap recursor semantics."
+    },
+    {
+      "id": "psc1-except-geterrord-feature-supported",
+      "title": "Except.getErrorD checked-bootstrap feature is supported and executable",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:except-geterrord",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-except-geterrord-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts",
+        "docs/reports/p5/PRODUCTION_P5_54_EXCEPT_GETERRORD_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_54_EXCEPT_GETERRORD_FEATURE_REPORT.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "No new formal Lean 4 equivalence proof is added; the feature remains K3-TB checked-bootstrap/runtime-correspondence evidence.",
+      "summary": "Except.getErrorD extracts the error payload from Except.error and returns the fallback for Except.ok using existing checked bootstrap recursor semantics."
+    },
+    {
+      "id": "psc1-option-fold-feature-supported",
+      "title": "Option.fold checked-bootstrap feature is supported and executable",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:option-fold",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-option-fold-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts",
+        "docs/reports/p5/PRODUCTION_P5_55_OPTION_FOLD_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_55_OPTION_FOLD_FEATURE_REPORT.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "No new formal Lean 4 equivalence proof is added; the feature remains K3-TB checked-bootstrap/runtime-correspondence evidence.",
+      "summary": "Option.fold selects the none branch for Option.none and applies the supplied function to the payload for Option.some using existing checked bootstrap recursor semantics."
+    },
+    {
+      "id": "psc1-except-swap-feature-supported",
+      "title": "Except.swap checked-bootstrap feature is supported and executable",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:except-swap",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-except-swap-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts",
+        "docs/reports/p5/PRODUCTION_P5_56_EXCEPT_SWAP_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_56_EXCEPT_SWAP_FEATURE_REPORT.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "No new formal Lean 4 equivalence proof is added; the feature remains K3-TB checked-bootstrap/runtime-correspondence evidence.",
+      "summary": "Except.swap exchanges Except error/ok branches using existing checked bootstrap Except.rec semantics and emits executable JS/TS only after Core checking."
+    },
+    {
+      "id": "psc1-except-fold-feature-supported",
+      "title": "Except.fold checked-bootstrap feature is supported and executable",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:except-fold",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-except-fold-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts",
+        "docs/reports/p5/PRODUCTION_P5_57_EXCEPT_FOLD_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_57_EXCEPT_FOLD_FEATURE_REPORT.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "No new formal Lean 4 equivalence proof is added; the feature remains K3-TB checked-bootstrap/runtime-correspondence evidence.",
+      "summary": "Except.fold eliminates Except error/ok branches using existing checked bootstrap Except.rec semantics and emits executable JS/TS only after Core checking."
+    },
+    {
+      "id": "psc1-except-bimap-feature-supported",
+      "title": "Except.bimap checked-bootstrap feature is supported and executable",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:except-bimap",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-except-bimap-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts",
+        "docs/reports/p5/PRODUCTION_P5_58_EXCEPT_BIMAP_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_58_EXCEPT_BIMAP_FEATURE_REPORT.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "No new formal Lean 4 equivalence proof is added; the feature remains K3-TB checked-bootstrap/runtime-correspondence evidence.",
+      "summary": "Except.bimap maps Except error and ok branches through separate functions using existing checked bootstrap Except.rec semantics and emits executable JS/TS only after Core checking."
+    },
+    {
+      "id": "psc1-option-any-feature-supported",
+      "title": "Option.any checked-bootstrap feature is supported and executable",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:option-any",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-option-any-tests.ts",
+        "packages/std/src/Bootstrap/Foundation.ps",
+        "packages/std/core/bootstrap.pscore.json",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/source.ts",
+        "packages/runtime/src/profile.ts",
+        "docs/reports/p5/PRODUCTION_P5_59_OPTION_ANY_FEATURE_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_59_OPTION_ANY_FEATURE_REPORT.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "No new formal Lean 4 equivalence proof is added; the feature remains K3-TB checked-bootstrap/runtime-correspondence evidence.",
+      "summary": "Option.any returns false for none and applies an A -> Bool predicate to the payload for some using existing checked bootstrap Option.rec semantics and emits executable JS/TS only after Core checking."
+    },
+    {
+      "id": "psc1-reference-v061-declaration-forms-feature-supported",
+      "title": "Reference v0.6.1 declaration forms are supported and executable",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:reference-v061-declarations",
+        "test:reference-governance",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-reference-v061-declaration-tests.ts",
+        "packages/parser/src/index.ts",
+        "docs/reference/ProofScript_Language_Reference_v0.6.1_authoritative_draft.md",
+        "docs/reference/ProofScript_Feature_Registry_v0.6.1.json",
+        "docs/reference/ProofScript_Parser_Lowering_API_Contract_v0.6.1.md",
+        "packages/backend-typescript/src/termEmitter.ts",
+        "packages/runtime/src/profile.ts",
+        "docs/reports/p5/PRODUCTION_P5_60_REFERENCE_V061_DECLARATION_FORMS_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_60_REFERENCE_V061_DECLARATION_FORMS_REPORT.md",
+        "docs/reference/ProofScript_Language_Reference_v0.6.1_authoritative_draft.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "No new formal Lean 4 equivalence proof is added; the feature remains parser/lowering and execution evidence under K3-TB.",
+      "summary": "P5.60 adopts the v0.6.1 compiler-ready language reference and accepts the admitted expression-bodied const/function/def declaration forms plus braced if, lowering them to existing checked Core and emitting executable JS/TS only after Core checking."
+    },
+    {
+      "id": "psc1-reference-v061-match-body-feature-supported",
+      "title": "Reference v0.6.1 match bodies are supported and executable",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:reference-v061-match",
+        "test:reference-governance",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-reference-v061-match-tests.ts",
+        "packages/parser/src/index.ts",
+        "packages/parser/src/patternParser.ts",
+        "packages/elaborator/src/termElaboration.ts",
+        "packages/elaborator/src/matchElaborator.ts",
+        "docs/reference/ProofScript_Language_Reference_v0.6.1_authoritative_draft.md",
+        "docs/reference/ProofScript_Feature_Registry_v0.6.1.json",
+        "docs/reference/ProofScript_Parser_Lowering_API_Contract_v0.6.1.md",
+        "packages/runtime/src/profile.ts",
+        "docs/reports/p5/PRODUCTION_P5_61_REFERENCE_V061_MATCH_BODY_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_61_REFERENCE_V061_MATCH_BODY_REPORT.md",
+        "docs/reference/ProofScript_Language_Reference_v0.6.1_authoritative_draft.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "No new formal Lean 4 equivalence proof is added; the feature remains parser/elaborator lowering and execution evidence under K3-TB.",
+      "summary": "P5.61 accepts the v0.6.1 match-with braced alternative spelling, rejects constructor-call pattern sugar, and routes executable matches through the existing checked recursor-backed Core elaboration before JS/TS emission."
+    },
+    {
+      "id": "psc1-reference-v061-where-body-feature-supported",
+      "title": "Reference v0.6.1 local where bodies are supported and executable",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:reference-v061-where",
+        "test:reference-governance",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-reference-v061-where-tests.ts",
+        "packages/parser/src/index.ts",
+        "packages/parser/src/whereBodyParser.ts",
+        "packages/elaborator/src/termElaboration.ts",
+        "packages/elaborator/src/coreTermElaboration.ts",
+        "docs/reference/ProofScript_Language_Reference_v0.6.1_authoritative_draft.md",
+        "docs/reference/ProofScript_Feature_Registry_v0.6.1.json",
+        "docs/reference/ProofScript_Parser_Lowering_API_Contract_v0.6.1.md",
+        "packages/runtime/src/profile.ts",
+        "docs/reports/p5/PRODUCTION_P5_62_REFERENCE_V061_WHERE_BODY_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_62_REFERENCE_V061_WHERE_BODY_REPORT.md",
+        "docs/reference/ProofScript_Language_Reference_v0.6.1_authoritative_draft.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "No new formal Lean 4 equivalence proof is added; recursive/mutual local where helpers remain deferred. The feature remains parser/lowering and execution evidence under K3-TB.",
+      "summary": "P5.62 accepts the v0.6.1 local where-body spelling for non-recursive helper declarations, lowers it to checked local let/lambda terms, rejects recursive/mutual helper references, and emits executable JS/TS only after Core checking."
+    },
+    {
+      "id": "psc1-reference-v061-structure-expression-bodies-feature-supported",
+      "title": "Reference v0.6.1 structure expression bodies are supported and executable",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "commands": [
+        "test:pslive:reference-v061-structure-expr",
+        "test:reference-governance",
+        "test:pslive:language-fast",
+        "test:feature-promotion"
+      ],
+      "evidenceFiles": [
+        "tools/pslive-reference-v061-structure-expr-tests.ts",
+        "packages/parser/src/index.ts",
+        "packages/parser/src/definitionBodyParser.ts",
+        "packages/elaborator/src/structureSugarElaboration.ts",
+        "packages/elaborator/src/termElaboration.ts",
+        "docs/reference/ProofScript_Language_Reference_v0.6.1_authoritative_draft.md",
+        "docs/reference/ProofScript_Feature_Registry_v0.6.1.json",
+        "docs/reference/ProofScript_Parser_Lowering_API_Contract_v0.6.1.md",
+        "packages/runtime/src/profile.ts",
+        "docs/reports/p5/PRODUCTION_P5_63_REFERENCE_V061_STRUCTURE_EXPR_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_63_REFERENCE_V061_STRUCTURE_EXPR_REPORT.md",
+        "docs/reference/ProofScript_Language_Reference_v0.6.1_authoritative_draft.md"
+      ],
+      "trustImpact": "engineering-evidence",
+      "limitations": "No new formal Lean 4 equivalence proof is added; parameterized/dependent structure runtime forms remain deferred. The feature remains parser/lowering and execution evidence under K3-TB.",
+      "summary": "P5.63 accepts v0.6.1 expression-bodied structure literals and structure updates after :=, preserves legacy checked blocks, and emits executable JS/TS only after existing Core structure elaboration and checking."
+    },
+    {
+      "id": "kernel-nonmutual-recursor-defeq0",
+      "title": "Typed non-mutual recursor synthesis/reduction for defEq-normalized recursive parameters is supported in the active kernel slice",
+      "claimType": "kernel-trust-boundary",
+      "requiredForRelease": true,
+      "commands": [
+        "test:kernel:nonmutual-recursor-defeq0",
+        "test:v71:local-merged",
+        "test:differential"
+      ],
+      "evidenceFiles": [
+        "tools/kernel-nonmutual-recursor-defeq0-tests.ts",
+        "tools/kernel-inductive-nonmutual-ts-implementation-correspondence-tests.ts",
+        "packages/kernel/src/PSKernel/Declaration.ts",
+        "packages/kernel/src/PSKernel/Environment.ts",
+        "packages/kernel/src/PSKernel/Inductive/Reduce.ts",
+        "docs/reports/p5/PRODUCTION_P5_65_KERNEL_NONMUTUAL_RECURSOR_DEFEQ0_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_65_KERNEL_NONMUTUAL_RECURSOR_DEFEQ0_REPORT.md"
+      ],
+      "trustImpact": "trusted-boundary-kernel-evidence",
+      "limitations": "This is a bounded trusted-boundary kernel improvement. It does not prove full Lean 4 equivalence, does not make K3 fully formal, and adds zero formal Lean 4 equivalence proofs.",
+      "summary": "P5.65 implements typed non-mutual recursor synthesis/reduction for the admitted direct/indexed/higher-order positive slice when recursive uniform parameters are definitionally equal through let/zeta normalization, and validates the behavior against exact Lean 4.33.1."
+    },
+    {
+      "id": "kernel-recursor-k-active0",
+      "title": "Active PSKernel-derived kernel implements RecursorVal.k K-like reduction slice",
+      "claimType": "kernel-trust-boundary",
+      "requiredForRelease": true,
+      "trustImpact": "trusted-boundary-kernel-evidence",
+      "commands": [
+        "test:kernel:recursor-k",
+        "test:differential",
+        "verify:k3tb:audit",
+        "test:v71:k3tb-practical-release"
+      ],
+      "evidenceFiles": [
+        "packages/kernel/src/PSKernel/Inductive/Reduce.ts",
+        "packages/kernel/src/PSKernel/Environment.ts",
+        "tools/kernel-recursor-k-tests.ts"
+      ],
+      "docs": [
+        "docs/reports/p5/PRODUCTION_P5_66_KERNEL_RECURSOR_K_ACTIVE0_REPORT.md",
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md"
+      ],
+      "limitations": "This implements the active-kernel RecursorVal.k slice only. It does not prove full Lean 4 equivalence, does not make K3 fully formal, and adds zero formal Lean 4 equivalence proofs. Exact K3-TB publish preflight is verified outside the required matrix because required matrix commands intentionally exclude publish-only command names.",
+      "summary": "P5.66 activates Lean 4.33.1 RecursorVal.k K-like reduction in the PSKernel-derived TypeScript kernel for eligible nullary singleton Prop recursors, including arbitrary proof majors, Eq-like index compatibility, definitional-index equality, replay, and historical-profile isolation."
+    },
+    {
+      "id": "kernel-heq-primitive0",
+      "title": "Active kernel primitive prelude installs Lean HEq and validates HEq.rec K-reduction",
+      "claimType": "kernel-trust-boundary",
+      "requiredForRelease": true,
+      "trustImpact": "trusted-boundary-kernel-evidence",
+      "commands": [
+        "test:kernel:heq-primitive",
+        "test:kernel:recursor-k",
+        "test:differential"
+      ],
+      "evidenceFiles": [
+        "packages/kernel/src/PSKernel/Primitive.ts",
+        "tools/kernel-heq-primitive-tests.ts",
+        "packages/kernel/src/PSKernel/Inductive/Reduce.ts",
+        "docs/reports/p5/PRODUCTION_P5_67_KERNEL_HEQ_PRIMITIVE0_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_67_KERNEL_HEQ_PRIMITIVE0_REPORT.md"
+      ],
+      "limitations": "This adds the HEq primitive-prelude and HEq.rec K-reduction slice only. It does not prove full Lean 4 equivalence, does not make K3 fully formal, and adds zero formal Lean 4 equivalence proofs.",
+      "summary": "P5.67 installs Lean-style heterogeneous equality as an ordinary checked primitive inductive family and verifies generated HEq.rec K-like reduction against exact Lean 4.33.1."
+    },
+    {
+      "id": "kernel-mutual-recursor-active0",
+      "title": "Active kernel supports typed mutual recursor synthesis and iota reduction for audited Lean 4.33.1 slices",
+      "claimType": "kernel-trust-boundary",
+      "requiredForRelease": true,
+      "trustImpact": "trusted-boundary-kernel-evidence",
+      "commands": [
+        "test:kernel:mutual-recursor-active0",
+        "test:differential",
+        "test:kernel:smoke"
+      ],
+      "evidenceFiles": [
+        "tools/kernel-mutual-inductives-tests.ts",
+        "tools/kernel-mutual-parameters-tests.ts",
+        "tools/kernel-mutual-indices-tests.ts",
+        "tools/kernel-mutual-higher-order-tests.ts",
+        "tools/kernel-mutual-prop-tests.ts",
+        "packages/kernel/src/PSKernel/Declaration.ts",
+        "packages/kernel/src/PSKernel/Environment.ts",
+        "packages/kernel/src/PSKernel/Inductive/Reduce.ts",
+        "docs/reports/p5/PRODUCTION_P5_68_KERNEL_MUTUAL_RECURSOR_ACTIVE0_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_68_KERNEL_MUTUAL_RECURSOR_ACTIVE0_REPORT.md"
+      ],
+      "limitations": "This adds bounded trusted-boundary mutual recursor evidence only. It does not prove full Lean 4 equivalence, does not make K3 fully formal, and adds zero formal Lean 4 equivalence proofs.",
+      "summary": "P5.68 implements active typed mutual recursor synthesis/reduction for audited direct, parameterized, indexed, higher-order positive, and Prop mutual inductive slices and validates them against exact Lean 4.33.1 observations."
+    },
+    {
+      "id": "kernel-quotient-defeq0",
+      "title": "Active kernel reduces quotient eliminators when Quot.mk arguments match by definitional equality",
+      "claimType": "kernel-trust-boundary",
+      "requiredForRelease": true,
+      "trustImpact": "trusted-boundary-kernel-evidence",
+      "commands": [
+        "test:kernel:quotient-defeq0",
+        "test:differential",
+        "test:kernel:smoke"
+      ],
+      "evidenceFiles": [
+        "tools/kernel-quotient-defeq0-tests.ts",
+        "tools/kernel-quotient-tests.ts",
+        "tools/kernel-quotient-differential-tests.ts",
+        "tools/kernel-quotient-admission-differential-tests.ts",
+        "packages/kernel/src/PSKernel/Quot.ts",
+        "packages/kernel/src/PSKernel/TypeChecker.ts",
+        "docs/reports/p5/PRODUCTION_P5_69_KERNEL_QUOTIENT_DEFEQ0_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_69_KERNEL_QUOTIENT_DEFEQ0_REPORT.md"
+      ],
+      "limitations": "This adds a bounded trusted-boundary quotient-reduction improvement only. It does not prove full Lean 4 equivalence, does not make K3 fully formal, and adds zero formal Lean 4 equivalence proofs.",
+      "summary": "P5.69 makes Quot.lift/Quot.ind over Quot.mk use checked definitional equality for quotient type/relation argument matching, matching the exact Lean 4.33.1 alias-relation computation probe."
+    },
+    {
+      "id": "kernel-quot-sound-active0",
+      "title": "Canonical quotient initialization installs Lean-style Quot.sound as trusted primitive axiom",
+      "claimType": "kernel-trust-boundary",
+      "requiredForRelease": true,
+      "trustImpact": "trusted-boundary-kernel-evidence",
+      "commands": [
+        "test:kernel:quot-sound-active0",
+        "test:kernel:quotient-defeq0",
+        "test:differential",
+        "test:kernel:smoke"
+      ],
+      "evidenceFiles": [
+        "tools/kernel-quot-sound-active0-tests.ts",
+        "tools/kernel-quotient-tests.ts",
+        "packages/kernel/src/PSKernel/Quot.ts",
+        "packages/kernel/src/PSKernel/Environment.ts",
+        "docs/reports/p5/PRODUCTION_P5_70_KERNEL_QUOT_SOUND_ACTIVE0_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_70_KERNEL_QUOT_SOUND_ACTIVE0_REPORT.md"
+      ],
+      "limitations": "This adds canonical Quot.sound support as part of the trusted quotient-theory primitive slice only. It does not prove full Lean 4 equivalence, does not make K3 fully formal, and adds zero formal Lean 4 equivalence proofs.",
+      "summary": "P5.70 installs Quot.sound with the pinned Lean 4.33.1 axiom type during canonical quotient initialization, making quotient equality theory closer to Lean while preserving K3-TB trust-boundary labeling."
+    },
+    {
+      "id": "kernel-propext-active0",
+      "title": "Canonical propositional extensionality prelude installs Lean-style Iff/propext",
+      "claimType": "kernel-trust-boundary",
+      "requiredForRelease": true,
+      "trustImpact": "trusted-boundary-kernel-evidence",
+      "commands": [
+        "test:kernel:propext-active0",
+        "test:differential",
+        "test:kernel:smoke"
+      ],
+      "evidenceFiles": [
+        "tools/kernel-propext-active0-tests.ts",
+        "packages/kernel/src/PSKernel/Primitive.ts",
+        "docs/reports/p5/PRODUCTION_P5_71_KERNEL_PROPEXT_ACTIVE0_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_71_KERNEL_PROPEXT_ACTIVE0_REPORT.md"
+      ],
+      "limitations": "This adds canonical Iff/propext support as a trusted propositional-extensionality primitive slice only. It does not prove full Lean 4 equivalence, does not make K3 fully formal, and adds zero formal Lean 4 equivalence proofs.",
+      "summary": "P5.71 installs Iff and propext with the pinned Lean 4.33.1 axiom type when requested, making propositional-extensionality theory closer to Lean while preserving K3-TB trust-boundary labeling."
+    },
+    {
+      "id": "kernel-iff-eliminators-active0",
+      "title": "Canonical propositional-equivalence prelude installs checked Iff.mp/Iff.mpr eliminators",
+      "claimType": "kernel-trust-boundary",
+      "requiredForRelease": true,
+      "trustImpact": "trusted-boundary-kernel-evidence",
+      "commands": [
+        "test:kernel:iff-eliminators-active0",
+        "test:kernel:propext-active0",
+        "test:differential",
+        "test:kernel:smoke"
+      ],
+      "evidenceFiles": [
+        "tools/kernel-iff-eliminators-active0-tests.ts",
+        "tools/kernel-propext-active0-tests.ts",
+        "packages/kernel/src/PSKernel/Primitive.ts",
+        "docs/reports/p5/PRODUCTION_P5_72_KERNEL_IFF_ELIMINATORS_ACTIVE0_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_72_KERNEL_IFF_ELIMINATORS_ACTIVE0_REPORT.md"
+      ],
+      "limitations": "This adds checked Iff.mp/Iff.mpr theorem-definition support to the trusted prelude slice only. It does not prove full Lean 4 equivalence, does not make K3 fully formal, and adds zero formal Lean 4 equivalence proofs.",
+      "summary": "P5.72 installs Iff.mp and Iff.mpr with pinned Lean 4.33.1 theorem types, checked from generated Iff.rec rather than added as new axioms, preserving K3-TB trust-boundary labeling."
+    },
+    {
+      "id": "kernel-iff-basic-theorems-active0",
+      "title": "Canonical propositional-equivalence prelude installs checked Iff.refl/Iff.symm/Iff.trans",
+      "claimType": "kernel-trust-boundary",
+      "requiredForRelease": true,
+      "trustImpact": "trusted-boundary-kernel-evidence",
+      "commands": [
+        "test:kernel:iff-basic-theorems-active0",
+        "test:kernel:iff-eliminators-active0",
+        "test:kernel:propext-active0",
+        "test:differential",
+        "test:kernel:smoke"
+      ],
+      "evidenceFiles": [
+        "tools/kernel-iff-basic-theorems-active0-tests.ts",
+        "tools/kernel-iff-eliminators-active0-tests.ts",
+        "tools/kernel-propext-active0-tests.ts",
+        "packages/kernel/src/PSKernel/Primitive.ts",
+        "docs/reports/p5/PRODUCTION_P5_73_KERNEL_IFF_BASIC_THEOREMS_ACTIVE0_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_73_KERNEL_IFF_BASIC_THEOREMS_ACTIVE0_REPORT.md"
+      ],
+      "limitations": "This adds checked Iff.refl/Iff.symm/Iff.trans theorem-definition support to the trusted prelude slice only. It does not prove full Lean 4 equivalence, does not make K3 fully formal, and adds zero formal Lean 4 equivalence proofs.",
+      "summary": "P5.73 installs Iff.refl, Iff.symm, and Iff.trans with pinned Lean 4.33.1 theorem types, checked from existing Iff.intro/Iff.mp/Iff.mpr rather than added as new axioms, preserving K3-TB trust-boundary labeling."
+    },
+    {
+      "id": "kernel-classical-choice-active0",
+      "title": "Canonical classical prelude installs Lean-style Nonempty and Classical.choice",
+      "claimType": "kernel-trust-boundary",
+      "requiredForRelease": true,
+      "trustImpact": "trusted-boundary-kernel-evidence",
+      "commands": [
+        "test:kernel:classical-choice-active0",
+        "test:kernel:propext-active0",
+        "test:differential",
+        "test:kernel:smoke"
+      ],
+      "evidenceFiles": [
+        "tools/kernel-classical-choice-active0-tests.ts",
+        "packages/kernel/src/PSKernel/Primitive.ts",
+        "docs/reports/p5/PRODUCTION_P5_74_KERNEL_CLASSICAL_CHOICE_ACTIVE0_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_74_KERNEL_CLASSICAL_CHOICE_ACTIVE0_REPORT.md"
+      ],
+      "limitations": "This adds canonical Nonempty/Classical.choice support as an explicit trusted classical primitive slice only. It does not prove full Lean 4 equivalence, does not make K3 fully formal, and adds zero formal Lean 4 equivalence proofs.",
+      "summary": "P5.74 installs Nonempty with generated Nonempty.rec and Classical.choice with the pinned Lean 4.33.1 axiom type when classical support is requested, preserving K3-TB trust-boundary labeling."
+    },
+    {
+      "id": "metadata-claim-separation0",
+      "title": "K3-TB checklist completion is separated from full Lean 4 kernel/equivalence claims",
+      "claimType": "governance",
+      "requiredForRelease": true,
+      "trustImpact": "claim-to-evidence-discipline",
+      "commands": [
+        "test:kernel:metadata-claim-separation0",
+        "test:architecture"
+      ],
+      "evidenceFiles": [
+        "tools/kernel-metadata-claim-separation0-tests.ts",
+        "kernel-status.json",
+        "implementation-status.json",
+        "docs/reports/p5/PRODUCTION_P5_75_METADATA_CLAIM_SEPARATION0_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_75_METADATA_CLAIM_SEPARATION0_REPORT.md"
+      ],
+      "limitations": "This is a metadata/governance hardening claim. It does not add a kernel rule, does not increase exact-Lean coverage, and does not prove full Lean 4 equivalence.",
+      "summary": "P5.75 requires fullKernelComplete=false/deprecated while auditedK3TBChecklistComplete names the bounded internal K3-TB checklist status explicitly."
+    },
+    {
+      "id": "kernel-false-elim-active0",
+      "title": "Canonical empty proposition prelude installs checked False.elim",
+      "claimType": "kernel-trust-boundary",
+      "requiredForRelease": true,
+      "trustImpact": "trusted-boundary-kernel-evidence",
+      "commands": [
+        "test:kernel:false-elim-active0",
+        "test:differential",
+        "test:kernel:smoke"
+      ],
+      "evidenceFiles": [
+        "tools/kernel-false-elim-active0-tests.ts",
+        "packages/kernel/src/PSKernel/Primitive.ts",
+        "docs/reports/p5/PRODUCTION_P5_76_KERNEL_FALSE_ELIM_ACTIVE0_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PRODUCTION_P5_76_KERNEL_FALSE_ELIM_ACTIVE0_REPORT.md"
+      ],
+      "limitations": "This adds checked False/False.elim prelude support for the audited kernel slice only. It does not prove full Lean 4 equivalence, does not make K3 fully formal, and adds zero formal Lean 4 equivalence proofs.",
+      "summary": "P5.76 installs False and False.elim with pinned Lean 4.33.1 theorem/recursor behavior, deriving False.elim from generated False.rec instead of adding a new axiom, preserving K3-TB trust-boundary labeling."
+    },
+    {
+      "id": "arena-transparent-recursive-field0-smoke",
+      "title": "Lean Kernel Arena adapter skeleton handles accepted/rejected/unsupported smoke fixtures",
+      "claimType": "feature-support",
+      "requiredForRelease": true,
+      "trustImpact": "execution-after-core-evidence",
+      "commands": [
+        "test:arena:smoke",
+        "verify:arena",
+        "test:kernel:smoke"
+      ],
+      "evidenceFiles": [
+        "packages/arena-checker/src/main.ts",
+        "packages/arena-checker/src/ndjson.ts",
+        "packages/arena-checker/src/translate.ts",
+        "packages/arena-checker/src/classify.ts",
+        "tools/arena-checker-smoke.ts",
+        "docs/reports/p5/PROGRESS_P5_79_ARENA_INDUCTIVE_IMPORTER0_REPORT.md"
+      ],
+      "docs": [
+        "docs/PRODUCTION_VERIFICATION_MATRIX.md",
+        "docs/reports/p5/PROGRESS_P5_79_ARENA_INDUCTIVE_IMPORTER0_REPORT.md"
+      ],
+      "limitations": "Smoke-only Arena adapter skeleton. It does not run or pass the 140-test tutorial suite, does not implement inductive/quotient import, and does not prove full Lean 4 equivalence.",
+      "summary": "P5.83 adds a tiny lean4export NDJSON reader/translator/checker CLI with Arena exit-code discipline: accept valid translated Core, reject malformed/invalid input, and decline unsupported well-formed records."
+    }
+  ]
+}

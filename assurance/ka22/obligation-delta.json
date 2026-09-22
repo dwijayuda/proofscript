@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "proofscript-v1-ka22-nondef-env-extension-bridge0",
+  "baseline": "proofscript-v1-ka21-nondef-env-wf-bridge0",
+  "previousFormalLean4EquivalenceProvenObligations": 22,
+  "newFormalLean4EquivalenceProvenObligations": 3,
+  "formalLean4EquivalenceProvenObligations": 25,
+  "provenLeanTheoremObligations": [
+    "PSKernelKA22.translated_theorem_env_extends",
+    "PSKernelKA22.translated_example_env_extends",
+    "PSKernelKA22.translated_opaque_env_extends"
+  ],
+  "newObligationMeaning": "Conditional Lean4Lean VEnv.LE bridge lemmas for translated theorem, example, and opaque declarations using real imported Lean4Lean environment-extension relation.",
+  "stillOpen": [
+    "Executable PSKernel checker refinement to Lean4Lean typing",
+    "Definition/theorem/opaque body soundness beyond conditional VDefVal.WF premises",
+    "Environment lookup/no-overwrite/defeq-preservation bridges for theorem/example/opaque where applicable",
+    "Quotient/inductive/mutual-inductive translation bridges",
+    "Full Lean 4 equivalence",
+    "Same-theory claim with full Lean 4"
+  ]
+}

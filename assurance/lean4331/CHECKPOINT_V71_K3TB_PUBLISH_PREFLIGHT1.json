@@ -1,0 +1,260 @@
+{
+  "checkpoint": "V71_K3TB_PUBLISH_PREFLIGHT1",
+  "status": "PASS",
+  "release": {
+    "docCount": 8,
+    "docs": [
+      {
+        "path": "PUBLISH_PREFLIGHT_K3TB.md",
+        "sha256": "b87c779d08119e5fda099bdf258dc4f14524dbb65ff493dff23da9c22b11a6bb",
+        "bytes": 1539
+      },
+      {
+        "path": "PRACTICAL_RELEASE_K3TB.md",
+        "sha256": "4d151943bc5ec2cd4ad1a830762ea53605bae9707c42fade002ef67f8d23e04f",
+        "bytes": 2457
+      },
+      {
+        "path": "RELEASE_NOTES_V71_K3TB.md",
+        "sha256": "0ebf8eb3098866d0f5b862254571a1fd9b65056ad5d767ab006aa4492abb55bd",
+        "bytes": 1481
+      },
+      {
+        "path": "TRUSTED_INFRASTRUCTURE_K3TB.md",
+        "sha256": "656f0e61d770cd2be6adcfdf1c4e052c08727b90d4d6e62f9212eedda732e9dd",
+        "bytes": 1408
+      },
+      {
+        "path": "FINAL_RELEASE_MANIFEST_K3TB.json",
+        "sha256": "d80da03309af25490686e119fd92f43b23c96556698809d5eb0a261f8dcffb14",
+        "bytes": 1945
+      },
+      {
+        "path": "RELEASE_PROVENANCE_K3TB.json",
+        "sha256": "f536073d7331942648bd19fbd117702d9ed3dd6867287eaf676a1c79398c619f",
+        "bytes": 1703
+      },
+      {
+        "path": "SBOM_K3TB.json",
+        "sha256": "2d6b88732d7b8151ded7d2f45637c5220b62ad891e8ddb59b63ca571904fc8ac",
+        "bytes": 1229
+      },
+      {
+        "path": "PUBLISH_OVERCLAIM_GUARD_K3TB.json",
+        "sha256": "4da334f5e69e7bd049de8a1ca5c27b7109c579bc6915ab45fde852387bd125d0",
+        "bytes": 599
+      }
+    ],
+    "provenanceManifest": {
+      "path": "RELEASE_PROVENANCE_K3TB.json",
+      "sha256": "f536073d7331942648bd19fbd117702d9ed3dd6867287eaf676a1c79398c619f"
+    },
+    "sbomManifest": {
+      "path": "SBOM_K3TB.json",
+      "packageCount": 3,
+      "sha256": "2d6b88732d7b8151ded7d2f45637c5220b62ad891e8ddb59b63ca571904fc8ac"
+    },
+    "overclaimGuard": {
+      "path": "PUBLISH_OVERCLAIM_GUARD_K3TB.json",
+      "status": "ACTIVE",
+      "sha256": "4da334f5e69e7bd049de8a1ca5c27b7109c579bc6915ab45fde852387bd125d0"
+    },
+    "packagePrivate": true
+  },
+  "boundary": "PUBLISH_PREFLIGHT_NOT_FULLY_FORMAL_K3",
+  "progress": {
+    "percent": 99.5,
+    "basisPoints": 9950,
+    "kind": "engineering-track",
+    "note": "Publish-preflight readiness under explicit trusted-boundary assumptions; not fully formal K3."
+  },
+  "lean": {
+    "semanticBaseline": "4.33.1",
+    "releaseCommit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+    "observedVersion": "Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)"
+  },
+  "formal": {
+    "target": "ProofScriptKernelEquivalence.KernelV71K3TBPublishPreflight",
+    "source": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71K3TBPublishPreflight.lean",
+    "sourceSha256": "6e7cf0065a94473565a72cd8a664440ba8c8efbf6007990ca0e411af490b150c",
+    "log": "assurance/lean4331/evidence/v71-k3tb-publish-preflight-formal1.out",
+    "theoremCount": 7,
+    "reportedSorryAx": 0,
+    "formalFileCount": 54
+  },
+  "inherited": {
+    "checkpointCount": 23,
+    "failures": 0,
+    "fullLeanGateParts": 6,
+    "checkpoints": [
+      {
+        "path": "assurance/lean4331/FINAL_VALIDATION_V71_FULL_LEAN_GATE.json",
+        "checkpoint": "FINAL_VALIDATION_V71_FULL_LEAN_GATE",
+        "status": "PASS",
+        "progress": null,
+        "sha256": "88cb6bd102664e0483d3f726ccff0d5c24d2fa28a696eff17e66990e3648ef6f"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_NONMUTUAL_DECL_ENV_CERT1.json",
+        "checkpoint": "V71_NONMUTUAL_DECL_ENV_CERT1",
+        "status": "PASS",
+        "progress": null,
+        "sha256": "69eb922c23e9a49c06f31ba0fbf175271994b0b4fc405ce2d430d9b446e3239a"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_TS_CLASSIFIER_IMPL_TRACE_CERT1.json",
+        "checkpoint": "V71_TS_CLASSIFIER_IMPL_TRACE_CERT1",
+        "status": "PASS",
+        "progress": null,
+        "sha256": "14673ba7e30f7646676aba04bcc01c85d090d9a3459a533e920639a489d8b109"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_MUTUAL_FORMED_ENV_CERT1.json",
+        "checkpoint": "V71_MUTUAL_FORMED_ENV_CERT1",
+        "status": "PASS",
+        "progress": null,
+        "sha256": "baf28beaf8f048de5224ebc71acc3afb02d39eb97da0ce9e86f30c668cf8c7c5"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_NESTED_FORMED_ENV_CERT1.json",
+        "checkpoint": "V71_NESTED_FORMED_ENV_CERT1",
+        "status": "PASS",
+        "progress": null,
+        "sha256": "34f3f8fab86e0cd267bb6bce4c5e7bf08d512daffb52be627c7527ff2387cb82"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_FORMED_ENV_GENERALIZATION_CERT1.json",
+        "checkpoint": "V71_FORMED_ENV_GENERALIZATION_CERT1",
+        "status": "PASS",
+        "progress": null,
+        "sha256": "ef076a9a38c93b65d4cd5808f704fe499819a7ffad0cdbfcd4828cfd131294c8"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_MUTUAL_NESTED_RECURSOR_RHS_CERT1.json",
+        "checkpoint": "V71_MUTUAL_NESTED_RECURSOR_RHS_CERT1",
+        "status": "PASS",
+        "progress": null,
+        "sha256": "052a82884833a8e920fe515659fd16a97eb165353dfbdb0a3b085aee0302dfba"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_ADMISSION_BOUNDARY_CERT1.json",
+        "checkpoint": "V71_ADMISSION_BOUNDARY_CERT1",
+        "status": "PASS",
+        "progress": null,
+        "sha256": "28c1aabada8bb802aefd7e31a61d7015a310de4684903c3a193812b1a3212f94"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_MUTUAL_ADMISSION_COMPLETENESS_BOUNDARY1.json",
+        "checkpoint": "V71_MUTUAL_ADMISSION_COMPLETENESS_BOUNDARY1",
+        "status": "PASS",
+        "progress": 70,
+        "sha256": "92b6759ff27c6917eed244fea0186902b0b1fd030059356bce4ccd6d66f0fccf"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_NESTED_PREPROCESSING_COMPLETENESS_BOUNDARY1.json",
+        "checkpoint": "V71_NESTED_PREPROCESSING_COMPLETENESS_BOUNDARY1",
+        "status": "PASS",
+        "progress": 75,
+        "sha256": "c051b2aada27772e434090f2c137dd66b396484da150d81429813bd03690f858"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_TS_NESTED_PREPROCESSOR_REFINEMENT_BOUNDARY1.json",
+        "checkpoint": "V71_TS_NESTED_PREPROCESSOR_REFINEMENT_BOUNDARY1",
+        "status": "PASS",
+        "progress": 80,
+        "sha256": "79934394d464c3d88a02055a52a4b968fa357bd0abbbefa2f42e24b7cd7e7444"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_POSITIVITY_COMPLETENESS_BOUNDARY1.json",
+        "checkpoint": "V71_POSITIVITY_COMPLETENESS_BOUNDARY1",
+        "status": "PASS",
+        "progress": 85,
+        "sha256": "151537a6b044fd8987a138a158e9faea6c0e07dc270b0e61c959904b664538aa"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_STORED_RECURSOR_RHS_RECONSTRUCTION_BOUNDARY1.json",
+        "checkpoint": "V71_STORED_RECURSOR_RHS_RECONSTRUCTION_BOUNDARY1",
+        "status": "PASS",
+        "progress": 90,
+        "sha256": "50df3bcd05907983139e7059c847cf99587348f68a49a1aaed86aef6fc93c72b"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_KERNELTS_SEMANTICS_BOUNDARY1.json",
+        "checkpoint": "V71_KERNELTS_SEMANTICS_BOUNDARY1",
+        "status": "PASS",
+        "progress": 93,
+        "sha256": "c82c86da286ac27cdc101073d529a3be914d5ccd005a5c1899c16ca3ddc45187"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_KERNELTS_SMALLSTEP_EXECUTION_BOUNDARY1.json",
+        "checkpoint": "V71_KERNELTS_SMALLSTEP_EXECUTION_BOUNDARY1",
+        "status": "PASS",
+        "progress": 95,
+        "sha256": "d41c033396cf69acf3baf31b954a42aa26cc221d32391afb58a5f2986b474870"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_RUNTIME_EXTRACTION_TRUST_BOUNDARY1.json",
+        "checkpoint": "V71_RUNTIME_EXTRACTION_TRUST_BOUNDARY1",
+        "status": "PASS",
+        "progress": 97,
+        "sha256": "e7ccde036e08af693b72f32451bfb092638b7f2c1a8d59bccfc209b8e618b888"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_WHOLE_K3_READINESS_BOUNDARY1.json",
+        "checkpoint": "V71_WHOLE_K3_READINESS_BOUNDARY1",
+        "status": "PASS",
+        "progress": 98,
+        "sha256": "09ed32321a1f0fabefe505516ed36417606b5dcde552f101078c06b160fa175f"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_CONDITIONAL_K3_THEOREM_SCAFFOLD1.json",
+        "checkpoint": "V71_CONDITIONAL_K3_THEOREM_SCAFFOLD1",
+        "status": "PASS",
+        "progress": 99,
+        "sha256": "15c8233da93b9c4baaf868fd8d7be61a95185d16fac0c84dd7f079a08e15bd1f"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_TRUSTED_BOUNDARY_K3_DECISION1.json",
+        "checkpoint": "V71_TRUSTED_BOUNDARY_K3_DECISION1",
+        "status": "PASS",
+        "progress": 99.5,
+        "sha256": "48b72544ac83cc6746925a32e118076c015f28567865d39690e037e14f0fec0a"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_K3TB_RELEASE_CANDIDATE1.json",
+        "checkpoint": "V71_K3TB_RELEASE_CANDIDATE1",
+        "status": "PASS",
+        "progress": 99.5,
+        "sha256": "61e772b16161c25f5b42ebaa3e5f016c083e9e24c04c4b18689ceede55a17632"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_K3TB_VERIFICATION_BUNDLE1.json",
+        "checkpoint": "V71_K3TB_VERIFICATION_BUNDLE1",
+        "status": "PASS",
+        "progress": 99.5,
+        "sha256": "4356a0f017cc166d027cc737707fdf27321d6892a006d1f83a58ddf7471e2094"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_K3TB_INDEPENDENT_AUDIT_PACK1.json",
+        "checkpoint": "V71_K3TB_INDEPENDENT_AUDIT_PACK1",
+        "status": "PASS",
+        "progress": 99.5,
+        "sha256": "e84dc0133c1bcca81ad55a82a1c96774798274b72fd8edc341899d45b85fa375"
+      },
+      {
+        "path": "assurance/lean4331/CHECKPOINT_V71_K3TB_PRACTICAL_RELEASE1.json",
+        "checkpoint": "V71_K3TB_PRACTICAL_RELEASE1",
+        "status": "PASS",
+        "progress": 99.5,
+        "sha256": "a5b807be654fcad9e6ca8783fb2f1cf3585978d17f3d576cc20eecf992306bea"
+      }
+    ]
+  },
+  "allowedClaims": [
+    "Do not claim fully formal K3",
+    "Do not claim complete Lean kernel equivalence",
+    "Do not claim verified TypeScript/Node runtime semantics",
+    "Do not claim arbitrary Lean acceptance completeness"
+  ],
+  "next": "Publish as K3-TB trusted-boundary source/reviewer archive, not full formal K3."
+}

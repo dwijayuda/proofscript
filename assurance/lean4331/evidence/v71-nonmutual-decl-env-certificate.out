@@ -1,0 +1,5 @@
+/mnt/data/psv71_k3next/proofscript-kernel-v71-merged-odecl-ts-classifier1/assurance/lean4331/formal/ProofScriptKernelEquivalence/V71NonMutualDeclarationEnvironmentCertificate.lean:1:0: error: unknown module prefix 'ProofScriptKernelEquivalence'
+
+No directory 'ProofScriptKernelEquivalence' or file 'ProofScriptKernelEquivalence.olean' in the search path entries:
+/mnt/data/lean-install/lean-4.33.1-linux/lib/lean
+

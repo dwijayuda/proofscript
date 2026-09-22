@@ -1,0 +1,12 @@
+{
+  "artifact": "V71_KERNELTS_SEMANTICS_BOUNDARY1",
+  "checkpoint": "assurance/lean4331/CHECKPOINT_V71_KERNELTS_SEMANTICS_BOUNDARY1.json",
+  "checkpointSha256": "c82c86da286ac27cdc101073d529a3be914d5ccd005a5c1899c16ca3ddc45187",
+  "markdown": "assurance/lean4331/KERNEL_V71_ASSURANCE_CHECKPOINT_KERNELTS_SEMANTICS_BOUNDARY1.md",
+  "markdownSha256": "fead2660c92f5c40342229ccfc83c6e2e461f5e801828547be916f981f2c6e27",
+  "formalSource": "assurance/lean4331/formal/ProofScriptKernelEquivalence/KernelV71KernelTSSemanticsBoundary.lean",
+  "formalSourceSha256": "5662d5f67edc323aadbf7a4fb5f1a07a83873aeab268e4e3e9ddf4c9f6fc75ae",
+  "formalLog": "assurance/lean4331/evidence/v71-kernelts-semantics-boundary-formal1.out",
+  "formalLogSha256": "5f2374c968fb20758fd42c5734c7bd700cf081f869af9bda801575991090ecef",
+  "tcbSourceHash": "59bd57ff628afab1938afedb2faac8556f2bf02d5db97b7c25f37672058d32c1"
+}

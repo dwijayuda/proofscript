@@ -1,0 +1,19 @@
+def optionMap{A: Type, B: Type}(f: A -> B, o: Option(A)): Option(B) := {
+  match (o) {
+    | .none => .none
+    | .some(x) => .some(f(x))
+  }
+}
+
+def unwrap(o: Option(Nat)): Nat := {
+  match (o) {
+    | .none => 0
+    | .some(x) => x
+  }
+}
+
+def mappedSome: Nat := { unwrap(optionMap(fun (x : Nat) => x + 1, .some(8))) }
+def mappedNone: Nat := { unwrap(optionMap(fun (x : Nat) => x + 1, .none)) }
+
+def plusOne(x: Nat): Nat := { x + 1 }
+def mappedNamed: Nat := { unwrap(optionMap(plusOne, .some(10))) }

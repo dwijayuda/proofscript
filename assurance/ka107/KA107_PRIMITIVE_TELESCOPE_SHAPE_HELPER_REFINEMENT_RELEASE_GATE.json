@@ -1,0 +1,130 @@
+{
+  "checkpoint": "proofscript-v1-ka107-primitive-telescope-shape-helper-refinement0",
+  "publicVersion": "1.0.0-pskernel.110",
+  "baseline": "proofscript-v1-ka106-primitive-extension-helper-refinement0",
+  "releaseKind": "strict-lean4lean-primitive-telescope-shape-helper-refinement",
+  "kernel": {
+    "activeKernel": "PSKernel",
+    "coreFormat": 71,
+    "certificateFormat": 2
+  },
+  "strictLean4LeanStatus": "passed",
+  "strictLean4LeanModules": [
+    {
+      "ka": "KA107",
+      "source": "assurance/ka107/primitive-telescope-shape-helper-refinement-bridge.lean",
+      "destination": "KA107PrimitiveTelescopeShapeHelperBridge.lean",
+      "status": "passed",
+      "proofBearing": true,
+      "obligations": 5,
+      "stdoutTail": "",
+      "stderrTail": ""
+    }
+  ],
+  "featureEquivalenceProgress": {
+    "checkpoint": "proofscript-v1-ka107-primitive-telescope-shape-helper-refinement0",
+    "publicVersion": "1.0.0-pskernel.110",
+    "featureSurfaceBridgeProgressPercent": 99,
+    "executableKernelEquivalenceProofProgressPercent": 85,
+    "arenaCorpusRegressionPercent": 100,
+    "formalLean4LeanBridgeObligations": 356,
+    "obligationAccounting": {
+      "previousFormalLean4LeanBridgeObligations": 351,
+      "newFormalLean4LeanBridgeObligations": 5,
+      "correctedFormalLean4LeanBridgeObligations": 356,
+      "countedNewObligations": [
+        "translated_mlctx_dropN_toCtx_length_wf",
+        "translated_mlctx_head_vlam_wf",
+        "translated_mlctx_mkLambda_eq_lams_wf",
+        "translated_expr_natBinderTypes_of_abstract1_wf",
+        "translated_mlctx_mkLambda_natBinderTypes_wf"
+      ]
+    },
+    "metricPolicy": "KA107 adds direct non-sorry-backed primitive telescope-shape helper bridge wrappers. Percentages are conservative dashboard estimates, not equivalence theorems.",
+    "notAFormalEquivalenceClaim": true
+  },
+  "architectureHealth": {
+    "antiSpaghettiGatePassed": true,
+    "ka107Files": [
+      {
+        "path": "tools/pskernel-ka107-primitive-telescope-shape-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka107-primitive-telescope-shape-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      },
+      {
+        "path": "assurance/ka107/KA107_KERNEL_FEATURE_EQUIVALENCE_PROGRESS.json",
+        "lines": 23,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka107/KA107_KERNEL_FEATURE_EQUIVALENCE_PROGRESS_REPORT.md",
+        "lines": 11,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka107/KA107_PRIMITIVE_TELESCOPE_SHAPE_HELPER_REFINEMENT_BRIDGE_SPEC.json",
+        "lines": 36,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka107/KA107_PRIMITIVE_TELESCOPE_SHAPE_HELPER_REFINEMENT_RELEASE_GATE.json",
+        "lines": 131,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka107/KA107_PRIMITIVE_TELESCOPE_SHAPE_HELPER_REFINEMENT_REPORT.md",
+        "lines": 22,
+        "ext": ".md"
+      },
+      {
+        "path": "assurance/ka107/KA107_PRIMITIVE_TELESCOPE_SHAPE_HELPER_REFINEMENT_VERIFICATION_SUMMARY.json",
+        "lines": 9,
+        "ext": ".json"
+      },
+      {
+        "path": "assurance/ka107/primitive-telescope-shape-helper-refinement-bridge.lean",
+        "lines": 44,
+        "ext": ".lean"
+      }
+    ],
+    "ka107ToolFiles": [
+      {
+        "path": "tools/pskernel-ka107-primitive-telescope-shape-helper-refinement-tests.ts",
+        "lines": 39,
+        "ext": ".ts"
+      },
+      {
+        "path": "tools/pskernel-ka107-primitive-telescope-shape-helper-refinement.ts",
+        "lines": 18,
+        "ext": ".ts"
+      }
+    ],
+    "newKA107OversizedFiles": [],
+    "semanticPackageTouched": false,
+    "forbiddenPrefixes": [
+      "packages/kernel/src/PSKernel/",
+      "packages/kernel-codec/src/",
+      "packages/frontend-next/src/core/",
+      "packages/unified-bridge/src/"
+    ]
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "fullExecutablePrimitiveTelescopeShapeHelperRefinement": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  },
+  "trustedSemanticPackageChange": false,
+  "coreFormatChanged": false,
+  "certificateFormatChanged": false
+}

@@ -1,0 +1,21 @@
+{
+  "checkpoint": "proofscript-v1-ka120-executable-refinement-discharge-agenda0",
+  "publicVersion": "1.0.0-pskernel.123",
+  "baseline": "proofscript-v1-ka119-executable-refinement-proof-readiness0",
+  "referenceKind": "executable-refinement-discharge-agenda-audit",
+  "coreFormat": 71,
+  "certificateFormat": 2,
+  "countedFormalObligations": 0,
+  "countedObligations": [],
+  "sourceTheorems": [],
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "executablePSKernelRefinementProof": false,
+    "trustedKernelSemanticChange": false,
+    "kernelCodecChange": false,
+    "coreFormatChanged": false,
+    "certificateFormatChanged": false
+  }
+}

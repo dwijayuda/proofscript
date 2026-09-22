@@ -1,0 +1,85 @@
+{
+  "checkpoint": "P5.103-crud-template-host0",
+  "status": "PROFILE_CLI_CRUD_TEMPLATE_HOST_CHECKPOINT_FROZEN",
+  "baseline": {
+    "artifact": "proofscript-software-profile-v0-p5-102-runtime-import-crud0.zip",
+    "sha256": "263ea3f268ad21e0c3b382683acbbb3a9eb5fbece974a0c373cda1bf4ec1f3b0"
+  },
+  "scope": {
+    "kernelChanged": false,
+    "kernelCodecChanged": false,
+    "arenaImporterChanged": false,
+    "trustedComputationChanged": false,
+    "leanRequiredByRuntime": false,
+    "fullLean4EquivalenceClaimed": false,
+    "backendExecutionCorrespondenceProofClaimed": false,
+    "contractsImplemented": false
+  },
+  "features": {
+    "crudInitTemplate": true,
+    "imperativeTypescriptHostDemo": true,
+    "hostBuildConfig": true,
+    "demoCommand": true,
+    "separatedRuntimeOutputRetained": true
+  },
+  "verification": {
+    "developmentTree": [
+      "npm install --offline --no-audit --no-fund",
+      "npm run setup -- --pretty false",
+      "npm run build -- --pretty false",
+      "npm run test:psc:crud-template",
+      "npm run test:psc:runtime-import-crud",
+      "npm run verify:profile:software:full",
+      "npm run test:psc:conformance-bounded",
+      "npm run test:standalone-small",
+      "npm run test:typescript-migration",
+      "npm run test:kernel:smoke"
+    ],
+    "cleanSource": {
+      "initialResidue": {
+        "node_modules": 0,
+        "dist": 0,
+        "dist-js": 0,
+        "dist-host": 0,
+        "tsbuildinfo": 0,
+        "nestedZip": 0,
+        "intentionalVendoredTgz": 3
+      },
+      "passed": [
+        "npm install --offline --no-audit --no-fund",
+        "npm run setup -- --pretty false",
+        "npm run build -- --pretty false",
+        "npm run test:psc:crud-template",
+        "npm run test:psc:runtime-import-crud",
+        "npm run test:psc:adapter",
+        "npm run test:psc:init",
+        "npm run test:psc:simple",
+        "npm run test:psc:professional-build",
+        "npm run test:psc:windows-simple-setup",
+        "npm run test:psc:conformance-bounded",
+        "npm run test:standalone-small",
+        "npm run test:typescript-migration",
+        "npm run test:kernel:smoke",
+        "npm link",
+        "psc doctor",
+        "psc doctor --json",
+        "psc init smoke-app --template crud --json",
+        "psc check",
+        "psc build",
+        "tsc -p tsconfig.generated.json",
+        "tsc -p tsconfig.host.json",
+        "node dist-host/imperative-demo.js",
+        "psc compile src --out-dir dist"
+      ]
+    }
+  },
+  "demoOutput": {
+    "nextId": "4",
+    "totalEstimate": "11",
+    "foundTask3": true,
+    "taskTitles": [
+      "Ship demo",
+      "Write spec"
+    ]
+  }
+}

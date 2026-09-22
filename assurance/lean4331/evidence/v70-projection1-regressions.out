@@ -1,0 +1,24 @@
+=== kernel-indexed-projections-tests.ts ===
+✓ kernel v18 indexed projections, dependent fields, Prop safety, eta recursion hardening, malformed terms, replay, and historical gating passed
+=== kernel-structure-eta-tests.ts ===
+✓ kernel v15 raw projections, iota reduction, nonrecursive structure eta, profile gating, replay, adversarial checks, and exact Lean observations passed
+=== kernel-prop-elimination-tests.ts ===
+✓ kernel v19 Lean-shaped Prop elimination classification, recursor universes, iota, replay, and historical gating passed (exact Lean binary unavailable: differential pending)
+=== kernel-dependent-fields-tests.ts ===
+✓ kernel v22 dependent simple constructor fields, dependent higher-order recursion, recursor/iota, indexed regression, replay, historical isolation, and exact Lean observations passed (exact Lean binary unavailable: differential pending)
+=== kernel-indexed-recursors-tests.ts ===
+✓ kernel v17 direct+higher-order indexed recursors, dependent local indices/motive/minors, recursive index iota, historical gating, and exact Lean observations passed
+=== kernel-recursor-k-tests.ts ===
+✓ kernel v20 Lean 4.33.1 RecursorVal.k classification, K-major reconstruction, context-sensitive reduction, replay, and historical gating passed (exact Lean binary unavailable: differential pending)
+=== kernel-conversion-final-audit-tests.ts ===
+○ exact Lean v67 conversion oracle unavailable (standalone tests passed; differential pending)
+=== kernel-resource-bounds-tests.ts ===
+✓ kernel v68 deterministic typed resource bounds, direct-Core preflight, stack-safe codec, verifier taxonomy, CLI exit code, and historical v67 isolation passed
+=== exact kernel-prop-elimination-tests.ts ===
+✓ kernel v19 Lean-shaped Prop elimination classification, recursor universes, iota, replay, and historical gating passed with exact Lean 4.33.1 differential
+=== exact kernel-dependent-fields-tests.ts ===
+✓ kernel v22 dependent simple constructor fields, dependent higher-order recursion, recursor/iota, indexed regression, replay, historical isolation, and exact Lean observations passed with exact Lean differential
+=== exact kernel-recursor-k-tests.ts ===
+✓ kernel v20 Lean 4.33.1 RecursorVal.k classification, K-major reconstruction, context-sensitive reduction, replay, and historical gating passed with exact Lean differential
+=== exact kernel-conversion-final-audit-tests.ts ===
+✓ kernel v67 final conversion/WHNF audit cross-product, transparent-head recursor/quotient re-flattening, opacity, replay, v66 isolation, and exact Lean observations passed

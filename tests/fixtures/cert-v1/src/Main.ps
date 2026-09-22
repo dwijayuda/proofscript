@@ -1,0 +1,12 @@
+theorem identity(P: Prop, h: P): P := h;
+
+theorem compose(P: Prop, Q: Prop, R: Prop, f: P → Q, g: Q → R, p: P): R :=
+  g(f(p));
+
+theorem proofIrrelTransport(P: Prop, h1: P, h2: P, F: P → Prop, k: F(h1)): F(h2) :=
+  k;
+
+
+theorem polymorphicProof(A: Type, P: A → Prop, x: A, h: P(x)): P(x) := h;
+
+theorem etaDefEq(P: Prop, Q: Prop, f: P → Q, F: (P → Q) → Prop, k: F(f)): F(fun (p: P) => f(p)) := k;

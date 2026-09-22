@@ -1,0 +1,58 @@
+{
+  "checkpoint": "proofscript-v1-ka4-lean-toolchain-gate0",
+  "publicVersion": "1.0.0-pskernel.6",
+  "createdAtUtc": "2026-09-18T04:58:00Z",
+  "baseline": "proofscript-v1-ka3-noninductive-soundness0",
+  "kernel": {
+    "name": "PSKernel",
+    "defaultProfile": "KERNEL-level-instantiation-conformance1",
+    "coreArtifactFormat": 71,
+    "certificateFormat": 2,
+    "trustedSemanticChange": false,
+    "kernelCodecChange": false,
+    "newTrustedComputationRule": false
+  },
+  "ka4": {
+    "scope": "Lean 4.33.1 strict/soft machine-check gate for KA-3 non-inductive skeleton",
+    "proofFiles": [
+      "assurance/ka4/noninductive-soundness-machine-check.lean"
+    ],
+    "leanCheckedHere": false,
+    "strictLeanCheckPassed": false,
+    "reasonLeanNotCheckedHere": "lean executable is not available in the execution environment; strict gate has been added but not satisfied here",
+    "lean4leanBinding": "planned, not imported yet",
+    "discovery": {
+      "leanPath": null,
+      "lakeOnPath": false,
+      "sevenZipOnPath": false,
+      "archivePartsPresent": true,
+      "reason": "lean executable not found on PATH or LEAN_BIN"
+    }
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "machineCheckedLeanProofInThisCheckpoint": false
+  },
+  "verification": {
+    "npmInstallOffline": "passed",
+    "build": "passed",
+    "testKA1": "passed",
+    "testKA2": "passed",
+    "testKA3": "passed",
+    "testKA4": "passed",
+    "assuranceKA1": "passed",
+    "assuranceKA2": "passed",
+    "assuranceKA3": "passed",
+    "assuranceKA4": "passed-soft-lean-unavailable",
+    "leanKA4CheckSoft": "passed-soft-lean-unavailable",
+    "leanKA4CheckStrict": "failed-as-designed-lean-unavailable",
+    "verifyArena": "passed",
+    "kernelSmoke": "passed",
+    "standaloneSmall": "passed",
+    "pscKernelStatus": "passed",
+    "conformanceBounded": "passed"
+  }
+}

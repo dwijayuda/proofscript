@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "P5.95-profile-plan0",
+  "profileId": "proofscript-software-v0",
+  "status": "PROFILE_CHECKPOINT_FROZEN",
+  "kernelSemanticsRelease": false,
+  "baseline": {
+    "release": "P5.94",
+    "checkpoint": "arena-nested-helper-target-validation0",
+    "sha256": "8994a1e4317b82b07a032004eda9a66255cab76e63ee0923cb0ebee40f9d873c",
+    "releaseGate": "P5_94_FINAL_RELEASE_GATE.json",
+    "finalBuildReport": "P5_94_FINAL_BUILD_REPORT.md"
+  },
+  "profileSmallnessBudget": {
+    "minCoreConstructs": 20,
+    "maxCoreConstructs": 35,
+    "rule": "Every ordinary source feature must be core, sugar over core, deferred, or forbidden."
+  },
+  "coreConstructCount": 30,
+  "currentImplementationFeatureCount": 32,
+  "deferredFeatureCount": 10,
+  "gates": {
+    "workingTreeOfflineInstall": "PASS",
+    "workingTreeBuild": "PASS",
+    "workingTreeSoftwareProfile": "PASS",
+    "workingTreeConformance": "PASS",
+    "workingTreeStandaloneSmall": "PASS",
+    "workingTreeTypescriptMigration": "PASS",
+    "workingTreeKernelSmoke": "PASS",
+    "cleanSourceSoftwareProfile": "PASS"
+  },
+  "inheritedP5_94Evidence": {
+    "arenaTutorialCounts": {
+      "total": 140,
+      "expectedAccept": 93,
+      "expectedReject": 47,
+      "acceptedGood": 93,
+      "rejectedBad": 47,
+      "declinedUnsupported": 0,
+      "wrongAccepts": 0,
+      "wrongRejects": 0,
+      "checkerCrashes": 0,
+      "notRun": 0
+    },
+    "arenaStaticCounts": {
+      "total": 26,
+      "expectedAccept": 4,
+      "expectedReject": 22,
+      "acceptedGood": 4,
+      "rejectedBad": 22,
+      "declinedUnsupported": 0,
+      "wrongAccepts": 0,
+      "wrongRejects": 0,
+      "checkerCrashes": 0,
+      "notRun": 0
+    },
+    "exactLeanDifferentialSummary": {
+      "total": 25,
+      "semanticEquivalence": 20,
+      "negativeAgreement": 3,
+      "capabilityGaps": 2,
+      "accepted": 25,
+      "rejected": 0,
+      "unsupported": 0
+    },
+    "externalConsumer": {
+      "packages": 36,
+      "arenaGoodFixture": "good/tutorial/001_basicDef.ndjson",
+      "arenaGoodStatus": 0,
+      "arenaBadFixture": "bad/tutorial/002_badDef.ndjson",
+      "arenaBadStatus": 1,
+      "initPreludeFixture": "good/init-prelude.ndjson",
+      "initPreludeStatus": 2,
+      "expectedInitPreludeUnsupportedKind": "inductive.nested.helper-iota",
+      "leanRequired": false,
+      "projectPluginsLoaded": false
+    }
+  },
+  "trustBoundary": {
+    "fullLean4Equivalence": false,
+    "sameTheoryAsFullLean4": false,
+    "fullyFormalK3": false,
+    "formalLean4EquivalenceProvenObligations": 0,
+    "arenaAgreementIsFormalEquivalence": false
+  },
+  "changed": {
+    "kernelSourceChanged": false,
+    "arenaImporterChanged": false,
+    "kernelCodecChanged": false,
+    "newTrustedComputationRule": false,
+    "profileDocsAndManifestChanged": true
+  }
+}
