@@ -48,6 +48,18 @@ for (const item of positive) {
   assert.ok(artifact.statefulPostconditionIR.clauses.every((clause: any) =>
     clause.oldReferences.length === 0 && clause.resultReferences.length === 0
   ), item.id);
+  assert.equal(artifact.statefulPostconditionIR.observationBindingStatus, "descriptor-bound", item.id);
+  assert.ok(artifact.statefulPostconditionIR.modelObservations.some((observation: any) => observation.name === "balanceOf"), item.id);
+  if (item.expected.final_state_observations !== undefined) {
+    const clause = artifact.statefulPostconditionIR.clauses[0];
+    assert.equal(clause.finalStateObservationReferences.length, item.expected.final_state_observations, item.id);
+    assert.equal(
+      clause.oldReferences.reduce((count: number, oldRef: any) => count + oldRef.observationReferences.length, 0),
+      item.expected.entry_state_observations,
+      item.id,
+    );
+    assert.ok(clause.finalStateObservationReferences.every((ref: any) => ref.stateRole === "final-state"), item.id);
+  }
 
   assert.deepEqual(contract.operations.map((op: any) => op.operation), item.expected.operations, item.id);
   assert.equal(contract.obligations.length, item.expected.obligations, item.id);
@@ -142,6 +154,17 @@ for (const item of negative) {
     assert.equal(clause.resultReferences.length, item.expected_ir.result_references, item.id);
     if (item.expected_ir.old_expression) {
       assert.equal(clause.oldReferences[0]?.expression, item.expected_ir.old_expression, item.id);
+    }
+    if (item.expected_ir.entry_state_observations !== undefined) {
+      const entryRefs = clause.oldReferences.flatMap((oldRef: any) => oldRef.observationReferences ?? []);
+      assert.equal(entryRefs.length, item.expected_ir.entry_state_observations, item.id);
+      assert.equal(clause.finalStateObservationReferences.length, item.expected_ir.final_state_observations, item.id);
+      assert.ok(entryRefs.every((ref: any) => ref.stateRole === "entry-state"), item.id);
+      assert.ok(clause.finalStateObservationReferences.every((ref: any) => ref.stateRole === "final-state"), item.id);
+      if (item.expected_ir.observation_name) {
+        assert.equal(entryRefs[0]?.name, item.expected_ir.observation_name, item.id);
+        assert.equal(clause.finalStateObservationReferences[0]?.name, item.expected_ir.observation_name, item.id);
+      }
     }
     const lowering = createMonadicLoweringArtifact({
       contractArtifact: artifact,
