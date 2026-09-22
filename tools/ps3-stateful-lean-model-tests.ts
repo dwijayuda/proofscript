@@ -64,6 +64,7 @@ assert.match(leanModel, /^namespace BankStateModel/mu);
 assert.match(leanModel, /abbrev Bank := AccountId → Nat/u);
 assert.match(leanModel, /def debit .*: StateM Bank Unit/u);
 assert.match(leanModel, /MonadStateOf\.modifyGet fun state => \(\(\), debitState account amount state\)/u);
+assert.match(leanModel, /MonadStateOf\.modifyGet fun state : Bank => \(\(\), state\)/u);
 assert.match(leanModel, /@\[spec\][\s\S]*theorem debit_triple/u);
 assert.match(leanModel, /Std\.Do\.Spec\.modifyGet_StateT/u);
 assert.match(leanModel, /def runBankState .*:=\s*\n\s*StateT\.run program initial/u);
