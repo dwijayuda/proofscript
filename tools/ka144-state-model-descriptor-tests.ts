@@ -70,7 +70,7 @@ fs.writeFileSync(modelFile, JSON.stringify({
   laws: [
     { name: 'debit_credit_preserve_total', statement: 'transfer preserves total bank balance' }
   ],
-  vcgen: { status: 'not-connected', tactic: 'vcgen' }
+  vcgen: { status: 'not-connected', tactic: 'mvcgen' }
 }, null, 2));
 
 const modelValidation = jsonFrom(runOk(node, [psc, 'state-model', 'validate', modelFile, '--json'], app));
@@ -98,6 +98,16 @@ fs.writeFileSync(invalidTacticFile, JSON.stringify({
 }, null, 2));
 const invalidTactic = jsonFromAny(runFail(node, [psc, 'state-model', 'validate', invalidTacticFile, '--json'], app));
 assert.ok(invalidTactic.errors.some((e: any) => e.field === 'vcgen.tactic'));
+
+const incompatibleTacticFile = path.join(app, 'src', 'IncompatibleTactic.model.json');
+fs.writeFileSync(incompatibleTacticFile, JSON.stringify({
+  ...validDescriptor,
+  vcgen: { status: 'planned', tactic: 'vcgen' },
+}, null, 2));
+const incompatibleTactic = jsonFromAny(runFail(node, [psc, 'state-model', 'validate', incompatibleTacticFile, '--json'], app));
+assert.ok(incompatibleTactic.errors.some((e: any) =>
+  e.field === 'vcgen.tactic' && /Std\.Do\.Triple requires mvcgen/u.test(e.message)
+));
 
 const invalidLeanFile = path.join(app, 'src', 'InvalidLean.model.json');
 fs.writeFileSync(invalidLeanFile, JSON.stringify({
