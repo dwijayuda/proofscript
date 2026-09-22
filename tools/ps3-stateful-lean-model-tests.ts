@@ -143,6 +143,11 @@ assert.deepEqual(request.tactic.invocationDefinitions, ["withdraw"]);
 assert.deepEqual(request.tactic.invocationItems, ["withdraw"]);
 assert.equal(request.tactic.specificationDiscovery, "registered-attribute");
 assert.equal(request.tactic.programDefinitionHandling, "explicit-unfold-list");
+assert.deepEqual(request.tactic.finisher, {
+  tactic: "simp_all",
+  scope: "all-goals",
+  checkedInLean: false,
+});
 assert.equal(request.environment.bindingsDeclared, true);
 assert.equal(request.environment.resolvedInLean, false);
 assert.equal(request.leanEnvironmentResolved, false);
@@ -157,6 +162,7 @@ assert.match(request.request.source, /def withdraw .*: StateM Bank Unit := do/u)
 assert.match(request.request.source, /\(«from» : AccountId\)/u);
 assert.match(request.request.source, /withdraw «from» amount/u);
 assert.match(request.request.source, /mvcgen \[withdraw\]/u);
+assert.match(request.request.source, /all_goals simp_all/u);
 assert.doesNotMatch(request.request.source, /mvcgen \[BankStateModel\.debit_triple\]/u);
 assert.doesNotMatch(request.request.source, /\b(?:sorry|admit)\b/u);
 assert.doesNotMatch(
