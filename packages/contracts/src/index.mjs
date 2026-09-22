@@ -84,7 +84,14 @@ export function scanOldReferences(text) {
     const end = i;
     const expression = normalizeSpaces(source.slice(open + 1, end - 1));
     if (!expression) throw new Error("old(...) requires a non-empty expression");
-    out.push({ expression, startOffset: match.index, endOffset: end, stateRole: 'entry-state' });
+    out.push({
+      expression,
+      startOffset: match.index,
+      endOffset: end,
+      expressionStartOffset: open + 1,
+      expressionEndOffset: end - 1,
+      stateRole: 'entry-state',
+    });
     re.lastIndex = end;
   }
   return out;
@@ -98,7 +105,56 @@ export function scanResultReferences(text) {
   }));
 }
 
-export function statefulPostconditionIRForContract(contract) {
+function escapeRegExp(text) {
+  return String(text).replace(/[.*+?^${}()|[\]\\]/g, '\\export function scanResultReferences(text) {
+  return [...String(text).matchAll(/\bresult\b/g)].map(match => ({
+    startOffset: match.index,
+    endOffset: match.index + match[0].length,
+    binderRole: 'result',
+  }));
+}
+
+');
+}
+
+export function scanStateObservationReferences(text, observations, stateRole, offsetBase = 0) {
+  const source = String(text);
+  const out = [];
+  for (const observation of observations ?? []) {
+    if (!observation?.name) continue;
+    const re = new RegExp(`\\b${escapeRegExp(observation.name)}\\s*\\(`, 'g');
+    let match;
+    while ((match = re.exec(source)) !== null) {
+      const open = source.indexOf('(', match.index);
+      let depth = 1;
+      let i = open + 1;
+      for (; i < source.length && depth > 0; i += 1) {
+        if (source[i] === '(') depth += 1;
+        else if (source[i] === ')') depth -= 1;
+      }
+      if (depth !== 0) throw new Error(`unterminated state observation call '${observation.name}(...)'`);
+      const end = i;
+      out.push({
+        name: observation.name,
+        arguments: normalizeSpaces(source.slice(open + 1, end - 1)),
+        type: observation.type,
+        stateArgument: observation.stateArgument ?? 'last',
+        stateRole,
+        startOffset: offsetBase + match.index,
+        endOffset: offsetBase + end,
+      });
+      re.lastIndex = end;
+    }
+  }
+  return out.sort((a, b) => a.startOffset - b.startOffset || a.endOffset - b.endOffset);
+}
+
+function rangeIsInside(range, outer) {
+  return range.startOffset >= outer.startOffset && range.endOffset <= outer.endOffset;
+}
+
+export function statefulPostconditionIRForContract(contract, stateModel = contract.stateModel) {
+  const observations = stateModel?.observations ?? [];
   return {
     schema: 'proofscript.stateful-postcondition-ir/v1',
     binders: {
@@ -107,16 +163,36 @@ export function statefulPostconditionIRForContract(contract) {
       finalState: { role: 'final-state', suggestedName: '__ps_final' },
     },
     defaultExpressionState: 'final-state',
+    modelObservations: observations.map(observation => ({
+      name: observation.name,
+      type: observation.type,
+      stateArgument: observation.stateArgument ?? 'last',
+    })),
     clauses: (contract.ensures ?? []).map(ensure => {
       const source = ensure.rawProposition ?? ensure.proposition ?? '';
+      const oldReferences = scanOldReferences(source).map(oldReference => ({
+        ...oldReference,
+        observationReferences: scanStateObservationReferences(
+          oldReference.expression,
+          observations,
+          'entry-state',
+          oldReference.expressionStartOffset,
+        ),
+      }));
+      const allFinalObservations = scanStateObservationReferences(source, observations, 'final-state');
+      const finalStateObservationReferences = allFinalObservations.filter(
+        observationReference => !oldReferences.some(oldReference => rangeIsInside(observationReference, oldReference)),
+      );
       return {
         name: ensure.name,
         source,
-        oldReferences: scanOldReferences(source),
+        oldReferences,
         resultReferences: scanResultReferences(source),
+        finalStateObservationReferences,
       };
     }),
-    loweringStatus: 'source-normalized-binder-roles-only',
+    observationBindingStatus: observations.length > 0 ? 'descriptor-bound' : 'none-declared',
+    loweringStatus: 'source-normalized-binder-roles-and-observations',
     semanticElaborationComplete: false,
   };
 }
@@ -572,7 +648,7 @@ export function leanForMonadicContract(contract) {
   const obligations = (contract.obligations ?? []).map(o => `-- monadic obligation ${o.name}\n${o.exactTheoremStatement ?? o.theoremStatement} := by\n  -- status: unproved; vcgen/mvcgen not connected in KA-144\n  admit`).join('\n\n');
   return `/- ProofScript KA-144 monadic/stateful contract skeleton.\n   Bound state model ${stateModel}. This is structural until vcgen/mvcgen is connected. -/\n\ndef ${contract.name}${params ? ` ${params}` : ''} : ${contract.returnType} := by\n  -- ProofScript monadic do body placeholder.\n  admit\n\n-- state model ${stateModel}\n${operations ? operations + '\n' : ''}${oldSnapshots ? oldSnapshots + '\n' : ''}${obligations}\n`;
 }
-export function monadicVerificationProfile(contract, stateModel, postconditionIR = statefulPostconditionIRForContract(contract)) {
+export function monadicVerificationProfile(contract, stateModel, postconditionIR = statefulPostconditionIRForContract(contract, stateModel)) {
   const declaredOperations = new Set((stateModel.operations ?? []).map(op => op.name));
   const unknownOperations = (contract.operations ?? [])
     .filter(op => !declaredOperations.has(op.operation))
@@ -620,7 +696,7 @@ export function assertVerificationProfile(artifact, requestedProfile) {
 
 export function makeMonadicContractsArtifact({ sourceText, sourcePath, sourceSha256, packageVersion, checkpoint = 'KA-144 state-model descriptor workflow', stateModel }) {
   const contract = parseMonadicContractSource(sourceText, sourcePath, stateModel);
-  const statefulPostconditionIR = statefulPostconditionIRForContract(contract);
+  const statefulPostconditionIR = statefulPostconditionIRForContract(contract, stateModel);
   const verification = monadicVerificationProfile(contract, stateModel, statefulPostconditionIR);
   return {
     artifact: {
@@ -632,7 +708,7 @@ export function makeMonadicContractsArtifact({ sourceText, sourcePath, sourceSha
       sourceSha256,
       verification,
       statefulPostconditionIR,
-      stateModel: { name: stateModel.name, path: stateModel.path, sha256: stateModel.sha256, stateType: stateModel.stateType, monad: stateModel.monad, wp: stateModel.wp, semantics: stateModel.semantics, operations: stateModel.operations, laws: stateModel.laws, vcgen: stateModel.vcgen },
+      stateModel: { name: stateModel.name, path: stateModel.path, sha256: stateModel.sha256, stateType: stateModel.stateType, monad: stateModel.monad, wp: stateModel.wp, semantics: stateModel.semantics, operations: stateModel.operations, observations: stateModel.observations ?? [], laws: stateModel.laws, vcgen: stateModel.vcgen },
       functions: [{ name: contract.name, contractKind: contract.contractKind, params: contract.params, returnType: contract.returnType, requirements: contract.requirements, modelRequirements: contract.modelRequirements, ensures: contract.ensures, oldSnapshots: contract.oldSnapshots, operations: contract.operations, body: contract.body, stateModel: { name: stateModel.name, stateType: stateModel.stateType, monad: stateModel.monad } }],
       operations: contract.operations,
       oldSnapshots: contract.oldSnapshots,
