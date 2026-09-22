@@ -12,6 +12,12 @@ import {
   createStatefulVcGoalArtifact,
   firstStatefulVcFailedStage,
 } from './stateful-vc-execution.mjs';
+import {
+  MINIMUM_STATEFUL_LEAN_VERSION,
+  classifyLeanCompatibilityOutput,
+  compareLeanCompatibilityVersions,
+  parseLeanCompatibilityVersion,
+} from './lean-compatibility.mjs';
 
 export {
   createStatefulWpBinding,
@@ -23,6 +29,10 @@ export {
   classifyLeanResidualGoals,
   createStatefulVcGoalArtifact,
   firstStatefulVcFailedStage,
+  MINIMUM_STATEFUL_LEAN_VERSION,
+  classifyLeanCompatibilityOutput,
+  compareLeanCompatibilityVersions,
+  parseLeanCompatibilityVersion,
 };
 
 export function sha256Text(text) {
