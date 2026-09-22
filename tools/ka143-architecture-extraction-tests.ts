@@ -32,7 +32,7 @@ for (const packageName of ['contracts', 'obligations', 'proof-status']) {
   const expectedName = packageName === 'contracts' ? '@proofscript/contracts-workflow' : `@proofscript/${packageName}`;
   assert.equal(packageJson.name, expectedName);
   assert.equal(packageJson.type, 'module');
-  assert.ok(fs.existsSync(path.join(ROOT, 'packages', packageName, 'src', 'index.mjs')));
+  assert.ok(fs.existsSync(path.join(ROOT, 'packages', packageName, 'src', 'index.ts')));
 }
 
 const cliText = fs.readFileSync(psc, 'utf8');

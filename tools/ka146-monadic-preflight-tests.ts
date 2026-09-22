@@ -32,8 +32,8 @@ function jsonFromAny(r: ReturnType<typeof run>) {
 const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
 assert.equal(pkg.version, '1.0.0-pskernel.149');
 assert.equal(pkg.scripts?.['test:ka146'], 'node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ka146-monadic-preflight-tests.ts');
-assert.ok(fs.existsSync(path.join(ROOT, 'packages', 'monadic-lowering', 'src', 'index.mjs')));
-const moduleText = fs.readFileSync(path.join(ROOT, 'packages', 'monadic-lowering', 'src', 'index.mjs'), 'utf8');
+assert.ok(fs.existsSync(path.join(ROOT, 'packages', 'monadic-lowering', 'src', 'index.ts')));
+const moduleText = fs.readFileSync(path.join(ROOT, 'packages', 'monadic-lowering', 'src', 'index.ts'), 'utf8');
 assert.ok(moduleText.includes('leanPreflightForMonadicLoweringArtifact'));
 assert.ok(moduleText.includes('proofscript.monadic-preflight.v1'));
 const cliText = fs.readFileSync(psc, 'utf8');

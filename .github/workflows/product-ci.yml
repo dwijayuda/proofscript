@@ -19,6 +19,7 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run build
+      - run: npm run check:package-source-policy
       - run: npm run test:architecture:package-classification
       - run: npm run test:ps1:compiler-facade
       - run: npm run test:ps1:language-service
