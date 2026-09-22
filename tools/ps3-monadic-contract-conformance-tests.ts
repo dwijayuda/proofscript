@@ -205,6 +205,24 @@ for (const item of negative) {
   }
 }
 
+const invalidObservationPlacement = JSON.parse(JSON.stringify(positive[0].state_model));
+invalidObservationPlacement.observations[0].stateArgument = "first";
+assert.throws(
+  () => binding(invalidObservationPlacement, "invalid-observation-placement"),
+  (error: any) => error instanceof Error
+    && error.validation?.errors?.some((item: any) => item.field === "observations[0].stateArgument"),
+  "state observations must use the supported last-argument state convention",
+);
+
+const duplicateObservation = JSON.parse(JSON.stringify(positive[0].state_model));
+duplicateObservation.observations.push({ ...duplicateObservation.observations[0] });
+assert.throws(
+  () => binding(duplicateObservation, "duplicate-observation"),
+  (error: any) => error instanceof Error
+    && error.validation?.errors?.some((item: any) => item.field === "observations[1].name"),
+  "duplicate state observation names must fail closed",
+);
+
 console.log(JSON.stringify({
   status: "PASS",
   profile: registry.profile,
