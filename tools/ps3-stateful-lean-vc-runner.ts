@@ -56,14 +56,43 @@ function writeReport(report: any) {
 function classifyResidualGoals(output: string) {
   const text = String(output);
   const unsolved = /unsolved goals?/iu.test(text);
-  const goalLines = text.split(/\r?\n/u)
+  const lines = text.split(/\r?\n/u);
+  const goalLines = lines
     .map(line => line.trimEnd())
     .filter(line => /(?:^|\s)⊢\s/u.test(line));
+  const traceBlocks: string[] = [];
+  let current: string[] = [];
+  let collecting = false;
+  for (const line of lines) {
+    if (/^case\s+\S+/u.test(line.trim()) || /(?:^|\s)⊢\s/u.test(line)) {
+      collecting = true;
+    }
+    if (collecting) current.push(line);
+    if (collecting && line.trim() === "") {
+      const block = current.join("\n").trim();
+      if (block) traceBlocks.push(block);
+      current = [];
+      collecting = false;
+    }
+  }
+  const tail = current.join("\n").trim();
+  if (tail) traceBlocks.push(tail);
   return {
-    detected: unsolved || goalLines.length > 0,
+    detected: unsolved || goalLines.length > 0 || traceBlocks.length > 0,
     unsolvedMarker: unsolved,
     goalLines,
+    traceBlocks,
+    rawOutputSha256: sha256(text),
   };
+}
+
+function firstFailedStage(checks: Record<string, any>, residual: any) {
+  if (checks.modelBuild.exitCode !== 0) return "lean-model-build";
+  if (checks.programCheck.exitCode !== 0) return "lean-program-typecheck";
+  if (checks.tripleCheck.exitCode !== 0) return "lean-triple-target-typecheck";
+  if (checks.requestRun.exitCode === 0) return null;
+  if (residual.detected) return "vc-residual-goals";
+  return "vc-request-execution";
 }
 
 function leanPreamble(request: any) {
@@ -183,12 +212,21 @@ const semanticVcDerivationComplete = tacticReached;
 const realVerificationConditionsGenerated = tacticReached;
 const semanticProofDischarge = requestRun.exitCode === 0;
 
+const checks = {
+  modelBuild,
+  programCheck,
+  tripleCheck,
+  requestRun,
+};
+const failedStage = firstFailedStage(checks, residual);
+
 const report = {
   schema: "proofscript.stateful-vc-run/v1",
   status: semanticProofDischarge
     ? "proved"
     : (realVerificationConditionsGenerated ? "vcs-generated" : "failed"),
   scope: "examples/software/07-bank-debit-stateful-vc.ps",
+  failedStage,
   lean: leanProbe,
   provenance: {
     sourceSha256: sha256(sourceText),
@@ -200,11 +238,12 @@ const report = {
     generatedTripleTargetSha256: sha256(lowering.statefulLeanSemanticEncoding.tripleTarget),
     generatedRequestSha256: sha256(request.request.source),
   },
-  checks: {
-    modelBuild,
-    programCheck,
-    tripleCheck,
-    requestRun,
+  checks,
+  generated: {
+    programLeanDefinition: lowering.statefulProgramLowering.leanDefinition,
+    tripleTarget: lowering.statefulLeanSemanticEncoding.tripleTarget,
+    requestTheoremName: request.request.theoremName,
+    requestTarget: request.request.target,
   },
   residualGoals: residual,
   claims: {
