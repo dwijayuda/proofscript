@@ -109,7 +109,7 @@ export function verifyProofStatusArtifact({ artifact, artifactPath }) {
     const error = new Error('obligations hash mismatch; proof-status is stale');
     error.expected = artifact.obligationsArtifact.sha256; error.actual = actualObligations; throw error;
   }
-  const result = { source: { path: sourcePath, sha256: actualSource }, obligationsArtifact: { path: obligationsPath, sha256: actualObligations }, summary: artifact.summary };
+  const result = { source: { path: sourcePath, sha256: actualSource }, obligationsArtifact: { path: obligationsPath, sha256: actualObligations }, verification: artifact.verification, summary: artifact.summary };
   if (artifact.leanCheck?.file && artifact.leanCheck?.sha256) {
     const leanCheckPath = path.resolve(path.dirname(artifactPath), artifact.leanCheck.file);
     if (!fs.existsSync(leanCheckPath)) throw new Error('bound Lean check file is missing or unreadable');
