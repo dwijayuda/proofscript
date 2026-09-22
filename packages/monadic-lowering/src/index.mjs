@@ -2,8 +2,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { createStatefulWpBinding } from './stateful-wp-binding.mjs';
+import { createStatefulVcPlan } from './stateful-vc-plan.mjs';
 
-export { createStatefulWpBinding };
+export { createStatefulWpBinding, createStatefulVcPlan };
 
 export function sha256Text(text) {
   return createHash('sha256').update(String(text)).digest('hex');
@@ -82,6 +83,15 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
   const monad = monadNameFromStateModel(stateModel);
   const programName = safeLeanName(fn.name);
   const statement = `theorem ${theoremName}${binders ? ` ${binders}` : ''} : ${triple} (${programName}${(fn.params ?? []).map(p => ` ${p.name}`).join(' ')}) (${precondition}) (${postcondition})`;
+  const statefulVcPlan = createStatefulVcPlan({
+    contractArtifact,
+    wpBinding: statefulWpBinding,
+    tripleTheoremName: theoremName,
+    tripleTheoremStatement: statement,
+  });
+  if (contractArtifact.verification?.profile === 'ps3-monadic-contracts0' && statefulVcPlan.planningReady !== true) {
+    throw new Error('strict monadic profile invariant violated: stateful VC planning inputs are incomplete');
+  }
   const operations = operationSkeletons(fn, stateModel);
   const obligations = (contractArtifact.obligations ?? []).map(o => ({
     id: o.id,
@@ -104,6 +114,7 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
     statefulPredicateElaboration: contractArtifact.statefulPredicateElaboration,
     statefulPredicateAST: contractArtifact.statefulPredicateAST,
     statefulWpBinding,
+    statefulVcPlan,
     contractKind: 'monadic-stateful',
     function: { name: fn.name, params: fn.params ?? [], returnType: fn.returnType, body: fn.body },
     stateModel: {
@@ -147,6 +158,9 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
       statefulReferenceTypingComplete: contractArtifact.statefulPredicateElaboration?.referenceTypingComplete === true,
       normalizedPredicateAstTypeCheckingComplete: contractArtifact.statefulPredicateAST?.typeCheckingComplete === true,
       statefulWpIdentityBindingReady: statefulWpBinding.bindingReady === true,
+      statefulVcPlanningReady: statefulVcPlan.planningReady === true,
+      semanticVcDerivationComplete: false,
+      realVerificationConditionsGenerated: false,
       wholePredicateTypeCheckingComplete: false,
       vcgenConnected: false,
       semanticProofDischarge: false,
@@ -161,6 +175,9 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
       statefulReferenceTypingComplete: contractArtifact.statefulPredicateElaboration?.referenceTypingComplete === true,
       normalizedPredicateAstTypeCheckingComplete: contractArtifact.statefulPredicateAST?.typeCheckingComplete === true,
       wpTripleIdentityBindingComplete: statefulWpBinding.wpTripleIdentityBindingComplete === true,
+      statefulVcPlanningReady: statefulVcPlan.planningReady === true,
+      semanticVcDerivationComplete: false,
+      realVerificationConditionsGenerated: false,
       wpTripleSemanticEquivalenceChecked: false,
       stateModelAdequacyChecked: false,
       wholePredicateTypeCheckingComplete: false,
@@ -340,6 +357,7 @@ export function createMonadicLeanPreflightArtifact({ loweringArtifact, loweringA
     statefulPredicateElaboration: loweringArtifact.statefulPredicateElaboration,
     statefulPredicateAST: loweringArtifact.statefulPredicateAST,
     statefulWpBinding: loweringArtifact.statefulWpBinding,
+    statefulVcPlan: loweringArtifact.statefulVcPlan,
     function: loweringArtifact.function?.name,
     stateModel: loweringArtifact.stateModel?.name,
     originalTripleSkeleton: {
@@ -359,6 +377,10 @@ export function createMonadicLeanPreflightArtifact({ loweringArtifact, loweringA
       normalizedPredicateAstTypeCheckingComplete: loweringArtifact.statefulPredicateAST?.typeCheckingComplete === true,
       hasStatefulWpBinding: Boolean(loweringArtifact.statefulWpBinding),
       statefulWpIdentityBindingReady: loweringArtifact.statefulWpBinding?.bindingReady === true,
+      hasStatefulVcPlan: Boolean(loweringArtifact.statefulVcPlan),
+      statefulVcPlanningReady: loweringArtifact.statefulVcPlan?.planningReady === true,
+      semanticVcDerivationComplete: loweringArtifact.statefulVcPlan?.semanticVcDerivationComplete === true,
+      realVerificationConditionsGenerated: loweringArtifact.statefulVcPlan?.realVerificationConditionsGenerated === true,
       wholePredicateTypeCheckingComplete: loweringArtifact.statefulPredicateElaboration?.wholePredicateTypeCheckingComplete === true,
       statefulPostconditionSemanticElaborationComplete: loweringArtifact.statefulPostconditionIR?.semanticElaborationComplete === true,
       hasExplicitStubBoundary: true,
@@ -381,6 +403,9 @@ export function createMonadicLeanPreflightArtifact({ loweringArtifact, loweringA
       statefulReferenceTypingComplete: loweringArtifact.statefulPredicateElaboration?.referenceTypingComplete === true,
       normalizedPredicateAstTypeCheckingComplete: loweringArtifact.statefulPredicateAST?.typeCheckingComplete === true,
       wpTripleIdentityBindingComplete: loweringArtifact.statefulWpBinding?.wpTripleIdentityBindingComplete === true,
+      statefulVcPlanningReady: loweringArtifact.statefulVcPlan?.planningReady === true,
+      semanticVcDerivationComplete: false,
+      realVerificationConditionsGenerated: false,
       wpTripleSemanticEquivalenceChecked: false,
       stateModelAdequacyChecked: false,
       wholePredicateTypeCheckingComplete: false,
