@@ -5,7 +5,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
 import { createHash } from 'node:crypto';
-import { makeContractsArtifact, makeMonadicContractsArtifact, leanForContract, leanForMonadicContract, parsePureContractSource, isMonadicContractSource } from '../packages/contracts/src/index.mjs';
+import { assertVerificationProfile, makeContractsArtifact, makeMonadicContractsArtifact, leanForContract, leanForMonadicContract, parsePureContractSource, isMonadicContractSource } from '../packages/contracts/src/index.mjs';
 import { normalizeObligationsForWorkflow } from '../packages/obligations/src/index.mjs';
 import { readProofClaims, createProofStatusArtifact, verifyProofStatusArtifact } from '../packages/proof-status/src/index.mjs';
 import { readStateModelDescriptor, validateStateModelDescriptor, buildStateModelBinding } from '../packages/state-models/src/index.mjs';
@@ -28,7 +28,7 @@ const NODE_TS_FLAGS = [
 ];
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OPTIONS_WITH_VALUES = new Set([
-  '--args', '--call', '--core', '--emit-core', '--emit-lean', '--emit-lean-check', '--lean-cmd', '--name', '--out', '--out-dir', '--proofs', '--runtime', '--state-model', '--suffix', '--target', '--template',
+  '--args', '--call', '--core', '--emit-core', '--emit-lean', '--emit-lean-check', '--lean-cmd', '--name', '--out', '--out-dir', '--proofs', '--runtime', '--state-model', '--suffix', '--target', '--template', '--verification-profile',
 ]);
 
 function has(args, name) { return args.includes(name); }
@@ -1370,6 +1370,7 @@ function contractsCommand(args) {
           packageVersion: VERSION,
           checkpoint: 'KA-146 Lean-checkable monadic skeleton preflight',
         });
+    assertVerificationProfile(artifact, opt(args, '--verification-profile'));
     if (resolvedOut) writeJsonFile(resolvedOut, artifact);
     let leanPath;
     if (emitLean) {
@@ -1377,7 +1378,7 @@ function contractsCommand(args) {
       fs.mkdirSync(path.dirname(leanPath), { recursive: true });
       fs.writeFileSync(leanPath, leanText);
     }
-    jsonOut({ status: 'accepted', command: 'contracts', out: resolvedOut, emitLean: leanPath, contractKind: artifact.contractKind ?? 'pure', stateModel: artifact.stateModel, operations: artifact.operations, loops: artifact.loops ?? [], ghosts: artifact.ghosts ?? [], assertions: artifact.assertions ?? [], oldSnapshots: artifact.oldSnapshots ?? [], obligations: artifact.obligations, trustBoundary: artifact.trustBoundary }, json);
+    jsonOut({ status: 'accepted', command: 'contracts', out: resolvedOut, emitLean: leanPath, verification: artifact.verification, contractKind: artifact.contractKind ?? 'pure', stateModel: artifact.stateModel, operations: artifact.operations, loops: artifact.loops ?? [], ghosts: artifact.ghosts ?? [], assertions: artifact.assertions ?? [], oldSnapshots: artifact.oldSnapshots ?? [], obligations: artifact.obligations, trustBoundary: artifact.trustBoundary }, json);
   } catch (error) {
     { const message = error instanceof Error ? error.message : String(error); const unsupported = /ghost.*runtime|runtime.*ghost|state model|monadic.*require|^unsupported/i.test(message); jsonOut({ status: unsupported ? 'unsupported' : 'rejected', command: 'contracts', message }, json); process.exit(unsupported ? 2 : 1); }
   }
@@ -1422,6 +1423,7 @@ function obligationsCommand(args) {
       contractArtifact = readJsonPath(resolvedInput);
       contractArtifactPath = resolvedInput;
     }
+    assertVerificationProfile(contractArtifact, opt(args, '--verification-profile'));
     contractArtifact.contractsSha256 = fs.existsSync(contractArtifactPath) ? sha256File(contractArtifactPath) : undefined;
     const normalized = normalizeObligationsForWorkflow(contractArtifact, path.relative(path.dirname(resolvedOut), contractArtifactPath).replace(/\\/g, '/'), { packageVersion: VERSION, checkpoint: 'KA-146 Lean-checkable monadic skeleton preflight' });
     writeJsonFile(resolvedOut, normalized);
@@ -1497,10 +1499,12 @@ function verifyCommand(args) {
       process.exit(1);
     }
     result.leanPreflightStub = { path: stubPath, sha256: actual };
+    if (artifact.verification) result.verification = artifact.verification;
     result.summary = artifact.summary;
     result.trustBoundary = { ...result.trustBoundary, ...artifact.trustBoundary };
   } else if (artifact.schema === 'proofscript.contracts.v0' || artifact.schema === 'proofscript.contracts.v1') {
     result.artifactKind = 'contracts';
+    if (artifact.verification) result.verification = artifact.verification;
     result.trustBoundary.semanticProofChecking = false;
   } else if (artifact.format === 'proofscript-certificate') {
     result.artifactKind = 'certificate';
