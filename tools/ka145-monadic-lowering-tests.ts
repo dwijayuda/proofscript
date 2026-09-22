@@ -37,8 +37,11 @@ const mlPkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'packages', 'monadic-lo
 assert.equal(mlPkg.name, '@proofscript/monadic-lowering');
 
 const cliText = fs.readFileSync(psc, 'utf8');
-assert.ok(cliText.includes('../packages/monadic-lowering/src/index.mjs'));
+const monadicCommands = fs.readFileSync(path.join(ROOT, 'bin', 'monadic-commands.mjs'), 'utf8');
+assert.ok(cliText.includes('./monadic-commands.mjs'));
+assert.ok(monadicCommands.includes('../packages/monadic-lowering/src/index.mjs'));
 assert.ok(cliText.includes('psc monadic-lowering <contracts.json>'));
+assert.ok(cliText.includes('psc monadic-vc-request <monadic-lowering.json>'));
 assert.ok(cliText.split('\n').length < 1900, 'psc should remain a router, not absorb all monadic lowering logic');
 
 const version = runOk(node, [psc, '--version']);
@@ -56,6 +59,11 @@ fs.writeFileSync(modelFile, JSON.stringify({
   monad: { name: 'State Bank', typeConstructor: 'State Bank α' },
   wp: { triple: 'Std.Do.Triple', precondition: 'Bank -> Prop', postcondition: 'α -> Bank -> Prop' },
   semantics: { runner: 'runBankState', adequacyTheorem: 'runBankState_adequate' },
+  lean: {
+    imports: ['ProofScript.Test.BankStateModel'],
+    openNamespaces: ['BankStateModel'],
+    monadTypeConstructor: 'StateM Bank'
+  },
   operations: [
     { name: 'debit', type: 'AccountId -> Nat -> State Bank Unit', spec: 'decreases source balance by amount', verification: { tripleTheorem: 'BankStateModel.debit_triple' } },
     { name: 'credit', type: 'AccountId -> Nat -> State Bank Unit', spec: 'increases destination balance by amount', verification: { tripleTheorem: 'BankStateModel.credit_triple' } }
@@ -125,6 +133,16 @@ assert.equal(loweringArtifact.statefulVcPlan.schema, 'proofscript.stateful-vc-pl
 assert.equal(loweringArtifact.statefulVcPlan.planningReady, true);
 assert.equal(loweringArtifact.statefulVcPlan.summary.programLoweringReady, true);
 assert.equal(loweringArtifact.statefulVcPlan.realVerificationConditionsGenerated, false);
+assert.equal(loweringArtifact.statefulLeanSemanticEncoding.schema, 'proofscript.stateful-lean-semantic-encoding/v1');
+assert.equal(loweringArtifact.statefulLeanSemanticEncoding.encodingReady, true);
+assert.equal(loweringArtifact.statefulLeanSemanticEncoding.monad.lean, 'StateM Bank');
+assert.match(loweringArtifact.statefulLeanSemanticEncoding.precondition.leanSource, /⌜/u);
+assert.match(loweringArtifact.statefulLeanSemanticEncoding.postcondition.leanSource, /^⇓ /u);
+assert.equal(loweringArtifact.statefulVcRequest.schema, 'proofscript.stateful-vc-request/v1');
+assert.equal(loweringArtifact.statefulVcRequest.requestSourceReady, true);
+assert.equal(loweringArtifact.statefulVcRequest.leanEnvironmentResolved, false);
+assert.equal(loweringArtifact.statefulVcRequest.tacticExecuted, false);
+assert.equal(loweringArtifact.statefulVcRequest.realVerificationConditionsGenerated, false);
 assert.equal(loweringArtifact.tripleSkeleton.precondition, loweringArtifact.statefulWpBinding.precondition.functionSource);
 assert.equal(loweringArtifact.tripleSkeleton.postcondition, loweringArtifact.statefulWpBinding.postcondition.functionSource);
 assert.equal(loweringArtifact.summary.semanticProofDischarge, false);
@@ -138,6 +156,34 @@ assert.match(leanText, /debit from amount/);
 assert.match(leanText, /credit to amount/);
 assert.doesNotMatch(leanText, /Source program placeholder/);
 assert.match(leanText, /admit/); // Triple theorem is still intentionally unproved.
+
+const vcRequestFile = path.join(app, 'dist', 'Transfer.vc-request.json');
+const vcRequestLean = path.join(app, 'dist', 'Transfer.vc-request.lean');
+const vcRequest = jsonFrom(runOk(node, [
+  psc, 'monadic-vc-request', loweringFile,
+  '--out', vcRequestFile,
+  '--emit-lean', vcRequestLean,
+  '--json',
+], app));
+assert.equal(vcRequest.status, 'accepted');
+assert.equal(vcRequest.schema, 'proofscript.stateful-vc-request/v1');
+assert.equal(vcRequest.requestSourceReady, true);
+assert.equal(vcRequest.leanEnvironmentResolved, false);
+assert.equal(vcRequest.tacticExecuted, false);
+assert.equal(vcRequest.realVerificationConditionsGenerated, false);
+assert.equal(vcRequest.semanticProofDischarge, false);
+const vcRequestArtifact = JSON.parse(fs.readFileSync(vcRequestFile, 'utf8'));
+assert.equal(vcRequestArtifact.executionStatus, 'not-run');
+assert.equal(vcRequestArtifact.environment.resolvedInLean, false);
+const vcRequestText = fs.readFileSync(vcRequestLean, 'utf8');
+assert.match(vcRequestText, /import Std\.Tactic\.Do/u);
+assert.match(vcRequestText, /import ProofScript\.Test\.BankStateModel/u);
+assert.match(vcRequestText, /open Std\.Do/u);
+assert.match(vcRequestText, /StateM Bank Unit/u);
+assert.match(vcRequestText, /⌜/u);
+assert.match(vcRequestText, /⇓ __ps_result __ps_final => ⌜/u);
+assert.match(vcRequestText, /vcgen \[BankStateModel\.debit_triple, BankStateModel\.credit_triple\]/u);
+assert.doesNotMatch(vcRequestText, /\b(?:admit|sorry)\b/u);
 
 const badLowering = jsonFromAny(runFail(node, [psc, 'monadic-lowering', transfer, '--out', path.join(app, 'dist', 'bad.json'), '--json'], app));
 assert.equal(badLowering.status, 'rejected');
@@ -163,6 +209,13 @@ const language = jsonFrom(runOk(node, [psc, 'language', 'status', '--json']));
 assert.ok(['monadic-lowering-skeleton-alpha', 'monadic-preflight-alpha'].includes(language.layers.formalVerification.status));
 assert.ok(language.features.formalVerification.includes('Std.Do.Triple-style monadic lowering skeleton'));
 assert.ok(language.commands.includes('monadic-lowering'));
+assert.ok(language.commands.includes('monadic-vc-request'));
+assert.ok(language.features.formalVerification.includes('typed StateM monadic program lowering'));
+assert.ok(language.features.formalVerification.includes('Std.Do StateM semantic encoding'));
+assert.ok(language.features.formalVerification.includes('Lean VC derivation request artifact'));
+assert.equal(language.trustBoundary.statefulVcRequestArtifacts, true);
+assert.equal(language.trustBoundary.leanVcEnvironmentResolved, false);
+assert.equal(language.trustBoundary.vcgenExecuted, false);
 assert.equal(language.trustBoundary.monadicProofDischarge, false);
 assert.equal(language.trustBoundary.monadicLoweringSkeletons, true);
 
