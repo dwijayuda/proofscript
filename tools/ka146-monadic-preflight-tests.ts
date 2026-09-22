@@ -37,8 +37,10 @@ const moduleText = fs.readFileSync(path.join(ROOT, 'packages', 'monadic-lowering
 assert.ok(moduleText.includes('leanPreflightForMonadicLoweringArtifact'));
 assert.ok(moduleText.includes('proofscript.monadic-preflight.v1'));
 const cliText = fs.readFileSync(psc, 'utf8');
+const monadicCommands = fs.readFileSync(path.join(ROOT, 'bin', 'monadic-commands.mjs'), 'utf8');
 assert.ok(cliText.includes('psc monadic-preflight <monadic-lowering.json>'));
-assert.ok(cliText.includes('createMonadicLeanPreflightBundle'));
+assert.ok(cliText.includes('./monadic-commands.mjs'));
+assert.ok(monadicCommands.includes('createMonadicLeanPreflightBundle'));
 assert.ok(cliText.split('\n').length < 1950, 'psc should remain a router, not absorb all preflight logic');
 
 const version = runOk(node, [psc, '--version']);
