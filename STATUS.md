@@ -196,13 +196,15 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - `V-MONADIC-CONTRACT` — specified structural alpha
 - `V-OLD` — specified structural alpha when entry-state meaning is structurally modeled
 - `V-RESULT` — specified structural alpha when confined to the explicit postcondition result binder
-- monadic corpus — **6 positive / 8 negative-or-prototype-boundary PASS**
+- monadic corpus — **6 positive / 10 negative-or-prototype-boundary cases**
 - explicit entry-state / result / final-state binder roles — PASS
 - descriptor-bound state-observation normalization — PASS
 - typed binder + state-observation reference elaboration (`proofscript.stateful-predicate-elaboration/v1`) — PASS
+- bounded typed normalized predicate AST (`proofscript.stateful-predicate-ast/v1`, `stateful-predicate-expressions0`) — implemented with executable gates
 - state observation descriptor state-input type validation — PASS
 - definite state-observation argument type mismatches downgrade to prototype/fail closed — PASS
-- whole-predicate typechecking — **false by design**
+- unsupported bounded predicate AST syntax and definite AST type mismatches downgrade to prototype/fail closed — implemented with executable gates
+- arbitrary ProofScript/Lean predicate elaboration outside the bounded AST — **not claimed**
 - modeled `old(...)` observations rewrite against entry state; ordinary modeled observations rewrite against final state — PASS
 - call-free `old(x)` structural admission — PASS
 - unclassified calls inside `old(...)` fail closed to prototype — PASS
@@ -220,8 +222,8 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 
 ## Next engineering target
 
-1. Extend the typed binder/reference layer into a real typed predicate AST for the supported stateful expression subset.
-2. Bind that typed predicate AST explicitly to the selected state model's WP/Triple semantics and adequacy theorem before making any stronger semantic claim.
+1. Bind the bounded typed stateful predicate AST explicitly to the selected state model's WP/Triple semantics and adequacy theorem identity.
+2. Define inspectable semantic pre/post predicate artifacts from that binding before generating verification conditions.
 3. Generate real inspectable verification conditions before connecting vcgen/mvcgen; keep semantic proof discharge false until checked proof artifacts exist.
 4. Keep recursive-definition termination in the Lean-compatible language layer; keep loop `decreases` with the later invariant/stateful milestone.
 5. Continue CLI convergence at the orchestration layer; both current check paths already share `@proofscript/compiler`.
