@@ -235,7 +235,7 @@
       "path": "packages/cli",
       "npmName": "@proofscript/cli",
       "tier": "product",
-      "lifecycle": "internal",
+      "lifecycle": "supported",
       "trustBoundary": "Internal modular CLI orchestration/reference package; the root proofscript package is the sole public psc entrypoint.",
       "productionRole": "Keeps modular CLI orchestration available for convergence/testing without owning the published psc executable.",
       "allowedDependencies": [
