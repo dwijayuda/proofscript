@@ -196,7 +196,7 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - `V-MONADIC-CONTRACT` — specified structural alpha
 - `V-OLD` — specified structural alpha when entry-state meaning is structurally modeled
 - `V-RESULT` — specified structural alpha when confined to the explicit postcondition result binder
-- monadic corpus — **6 positive / 13 negative-or-prototype-boundary cases**
+- monadic corpus — **6 positive / 14 negative-or-prototype-boundary cases**
 - explicit entry-state / result / final-state binder roles — PASS
 - descriptor-bound state-observation normalization — PASS
 - typed binder + state-observation reference elaboration (`proofscript.stateful-predicate-elaboration/v1`) — PASS
@@ -206,8 +206,12 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - typed operation-call elaboration (`proofscript.stateful-operation-elaboration/v1`) — implemented/fail closed
 - deterministic bounded stateful program lowering (`proofscript.stateful-program-lowering/v1`) — implemented; emitted semantic program uses Lean `StateM`
 - inspectable stateful VC planning (`proofscript.stateful-vc-plan/v1`) with stable source-obligation + program provenance — implemented
-- concrete `Std.Do` / `StateM` assertion encoding (`proofscript.stateful-lean-semantic-encoding/v1`) — implemented structurally
-- Lean VC derivation request blueprint (`proofscript.stateful-vc-request/v1`) — implemented; blocked unless model Lean imports are declared
+- concrete `Std.Do` / `StateM` assertion encoding (`proofscript.stateful-lean-semantic-encoding/v1`) — implemented structurally; Lean predicates are rendered from the typed AST rather than copied source strings
+- real pinned Lean bank model module (`ProofScript.Verification.BankStateModel`) — added under the v0.7 verification Lake project with no `sorry`/`admit`
+- canonical bank descriptor now binds its Lean import/namespace and `StateM Bank` constructor
+- provable debit-only end-to-end example (`07-bank-debit-stateful-vc.ps`) — added as the first semantic execution target
+- Lean VC derivation request blueprint (`proofscript.stateful-vc-request/v1`) — implemented; canonical bank model now has request-source provenance
+- pinned Lean 4.33.1 VC execution runner (`proofscript.stateful-vc-run/v1`) + dedicated `stateful-lean-ci` workflow — implemented; execution evidence pending hosted runner availability
 - Triple skeleton pre/post functions sourced from the WP binding artifact — implemented
 - state observation descriptor state-input type validation — PASS
 - definite state-observation argument type mismatches downgrade to prototype/fail closed — PASS
@@ -233,13 +237,14 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - state-model adequacy theorem checking — **false**
 - semantic proof discharge — **false by design**
 - vcgen/mvcgen connected — **false**
-- public CLI router — 1,927 lines (KA146 ceiling 1,950)
+- public CLI router — 1,816 lines (below the 1,900-line KA145 architecture guard and 1,950-line KA146 ceiling)
 
 ## Next engineering target
 
-1. Add a real Lean state-model module/import binding for the promoted bank example so `proofscript.stateful-vc-request/v1` can resolve its types, operations, specs, and Triple target.
-2. Execute the request with pinned Lean 4.33.1, capture the goals produced by `vcgen` as a separate inspectable artifact, and only then set `realVerificationConditionsGenerated = true`.
-3. Keep exceptional/abrupt-path coverage, state-model adequacy checking, source-to-Lean program equivalence, and semantic proof discharge false until separately modeled and checked.
+1. Run the new `stateful-lean-ci` lane on pinned Lean 4.33.1 and fix any real Lean elaboration/spec/tactic errors exposed by `ProofScript.Verification.BankStateModel` or the generated debit request.
+2. Capture the strict runner's `proofscript.stateful-vc-run/v1` evidence; only actual Lean execution may set environment/program/Triple/vcgen claims true.
+3. If residual VCs remain, promote them into stable inspectable goal artifacts and discharge the debit-only example before widening to transfer semantics.
+4. Keep exceptional/abrupt-path coverage, state-model adequacy use, source-to-Lean program equivalence, and project-wide semantic proof discharge false until separately modeled and checked.
 4. Keep recursive-definition termination in the Lean-compatible language layer; keep loop `decreases` with the later invariant/stateful milestone.
 5. Continue CLI convergence at the orchestration layer; both current check paths already share `@proofscript/compiler`.
 6. Continue extracting useful incremental/module-interface infrastructure from `frontend-next` behind canonical compiler/project APIs.
