@@ -1,6 +1,6 @@
 # Appendix D — TypeScript Runtime Profile
 
-Status: **Design appendix v0.6.1**
+Status: **Design appendix v0.7.0**
 
 The TypeScript backend is not the semantic foundation. It is an executable artifact whose correctness is measured against the Lean executable meaning for a supported subset.
 

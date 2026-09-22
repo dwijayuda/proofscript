@@ -1,6 +1,6 @@
 # Appendix A — Complete Surface Feature Registry
 
-Status: **Normative registry draft v0.6.1**
+Status: **Normative registry draft v0.7.0**
 
 Every surface feature must be registered before it is implemented in the Lean-verified profile.
 

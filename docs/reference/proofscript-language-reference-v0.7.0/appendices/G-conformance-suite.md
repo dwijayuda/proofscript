@@ -1,6 +1,6 @@
 # Appendix G — Conformance Suite Specification
 
-Status: **Normative test-corpus contract v0.6.1**
+Status: **Normative test-corpus contract v0.7.0**
 
 The ProofScript Language Reference must be executable as a specification. This appendix defines the minimum conformance artifacts that bridge the prose reference and implementation work.
 

@@ -1,6 +1,6 @@
 # Appendix I — Parser and Lowering API Contract
 
-Status: **Implementation-facing contract v0.6.1**
+Status: **Implementation-facing contract v0.7.0**
 
 This appendix defines the minimum interfaces an implementation should expose so the reference, tests, and production compiler can be compared.
 

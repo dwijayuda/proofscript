@@ -1,49 +1,43 @@
-# Appendix B — Lean Reference Coverage Map
+# Appendix B — Lean 4.34 reference coverage map
 
-Status: **Planning/audit appendix v0.6.1**
+Normative baseline:
 
-This map records how major Lean Language Reference areas should appear in the ProofScript Language Reference.
+```text
+Lean 4.34.0
+293d5d0c0c3f3dded4688b3ccd6a33939ac5102b
+```
 
-| Lean reference area | ProofScript treatment | Notes |
-|---|---|---|
-| Introduction | Rewritten as ProofScript purpose/philosophy | Do not copy Lean prose; define ProofScript's goal. |
-| Elaboration and Compilation | Core processing/trust-boundary chapter | ProofScript must preserve parser → syntax → macro/elab → kernel model. |
-| The Type System | Inherited Lean semantics | ProofScript does not define a second calculus. |
-| Source Files and Modules | Mostly inherited | Add `.ps`, `.psx`, emitted `.lean`, emitted `.ts`, manifest conventions. |
-| Namespaces and Sections | L-class inherited | No `namespace {}` in v0.6.1. |
-| Definitions | Partly inherited, partly D decoration | Add `const`/`function` aliases and explicit parameter grouping. |
-| Axioms | Inherited with stronger reporting policy | Axiom dependencies must be visible in trust manifests. |
-| Attributes | Inherited initially | Future DX aliases require separate registry entries. |
-| Type Classes | Inherited Lean | Do not map to TypeScript interfaces semantically. |
-| Coercions | Inherited Lean | Backend runtime may implement representations but not semantics. |
-| Run-Time Code | Separate executable profile | TS backend correspondence is not logical soundness by itself. |
-| Terms | Lean terms plus D/E term overlays | D-CALL and E-IF/E-MATCH are primary differences. |
-| Function Application | D-CALL flagship | `f(x,y)` lowers to curried Lean application. |
-| Conditionals | Native Lean + E-IF-BRACE | Branches are one term, not JS blocks. |
-| Structures and Constructors | E-STRUCT-BODY plus inherited values/updates | Outer declaration braces are PS; value braces are Lean. |
-| Pattern Matching | E-MATCH-BODY; patterns native | No `.some(x)` patterns in v0.6.1. |
-| Tactic Proofs | Inherited Lean | No generic semicolon stripping in tactics. |
-| Functors, Monads, do-Notation | Inherited/guarded | Bracketed `do` requires exact-version confirmation. |
-| Basic Propositions | Inherited Lean | `Prop` and equality remain Lean. |
-| Basic Types | Inherited names | Preserve `Nat`, `Int`, `Bool`, `String`, `Unit`, etc. |
-| IO | Inherited Lean meaning | TS runtime has separate correspondence obligations. |
-| Iterators | Future profile item | Do not over-specify before runtime profile is mature. |
-| Notations and Macros | Critical extension/collision chapter | ProofScript must define ownership and defer behavior. |
-| Build Tools and Distribution | ProofScript-specific chapter | Define `psc`, manifests, package artifacts. |
-| Validating Proofs | Trust chapter | Define S1–S5, axiom policy, checker use. |
-| Error Explanations | Diagnostics appendix | Map Lean errors back to `.ps` where possible. |
-| Releases / Platforms | Version manifest appendix | Separate documentation source track and semantic baseline. |
+Non-normative compatibility watch:
 
-## B.1 Version note
+```text
+Lean 4.35.0-rc2
+11acb17ec6b07a8f9e9173e6845197929540936b
+```
 
-The uploaded Lean reference archive appears to follow a latest-track manual, while ProofScript v0.6.1 pins Lean 4.33.1 for semantic claims. The reference may learn from the latest manual, but machine-checked claims require the exact pinned toolchain/source.
+This is a study/coverage map, not a claim that ProofScript exposes every Lean feature.
 
-## B.2 Immediate chapters to prioritize
+| Lean area | ProofScript relevance |
+|---|---|
+| lexical syntax/parser categories | inherited syntax and D/E ownership |
+| macros/syntax extensions | imported syntax, hygiene, collision policy |
+| terms/binders/application | core terms and D-CALL |
+| commands/declarations | defs, theorems, structures, classes, inductives |
+| metavariables/elaboration | implicit args, holes, expected types |
+| typeclass synthesis/coercions | standalone meta/elab compatibility |
+| universes/dependent types | logical semantics |
+| definitional equality/WHNF | kernel compatibility |
+| inductives/recursors/quotients | declaration/reduction semantics |
+| pattern matching | E-MATCH-BODY and recursor semantics |
+| recursion/termination/positivity | accepted programs/declarations |
+| tactics/proof terms | proof construction outside the kernel TCB |
+| simplifier/rewriting | theorem-prover frontend capability |
+| Grind/automation | future tactic capability, not current core syntax |
+| MVCGen/verification conditions | future verification-extension track |
+| do/effects/iterators | executable/software profile |
+| compiler IR/native reduction | compiler semantics and optional NativeEvaluator TCB |
+| environment/modules | portable module/npm distribution |
+| proof validation/axioms | assurance/claim reporting |
+| language/server | incremental language service and LSP |
+| release/platform notes | future semantic rebase impact |
 
-1. Processing model and trust boundary.
-2. Declarations and aliases.
-3. Function application and tuple distinction.
-4. Parser integration and surface classes.
-5. Structures/inductives/match as E-class syntax.
-6. Trust, axioms, and validation.
-7. TypeScript executable profile.
+A Lean semantic-baseline rebase MUST review the relevant rows and regenerate compatibility evidence before becoming normative.

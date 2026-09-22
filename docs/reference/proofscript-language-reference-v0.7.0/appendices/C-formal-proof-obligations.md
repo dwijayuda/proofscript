@@ -1,6 +1,6 @@
 # Appendix C — Formal Proof Obligations
 
-Status: **Formal plan appendix v0.6.1**
+Status: **Formal plan appendix v0.7.0**
 
 The central S2/S3 theorem targets must begin from source and must not hide Lean acceptance inside parser definitions.
 
@@ -133,7 +133,7 @@ The release must state the exact relation used.
 
 ## Conformance artifact obligations
 
-v0.6.1 adds the following non-theorem but implementation-critical obligations:
+v0.7.0 adds the following non-theorem but implementation-critical obligations:
 
 ```text
 RegistryWellFormed
