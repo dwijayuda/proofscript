@@ -799,7 +799,9 @@
     "test:ps3:stateful-vc-run-cli": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-stateful-vc-run-cli-tests.ts",
     "test:ps3:lean-version-compatibility": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-lean-version-compatibility-tests.ts",
     "assurance:ps3:stateful-lean-transfer-vc": "npm run assurance:ps3:stateful-lean-vc -- --source examples/software/06-bank-transfer-monadic-contract.ps --model examples/software/06-bank-state.model.json",
-    "assurance:ps3:stateful-lean-transfer-vc:strict": "npm run assurance:ps3:stateful-lean-transfer-vc -- --strict"
+    "assurance:ps3:stateful-lean-transfer-vc:strict": "npm run assurance:ps3:stateful-lean-transfer-vc -- --strict",
+    "assurance:ps3:stateful-lean-vc:proof": "npm run assurance:ps3:stateful-lean-vc -- --require-proof",
+    "assurance:ps3:stateful-lean-transfer-vc:proof": "npm run assurance:ps3:stateful-lean-transfer-vc -- --require-proof"
   },
   "engines": {
     "node": ">=20"
