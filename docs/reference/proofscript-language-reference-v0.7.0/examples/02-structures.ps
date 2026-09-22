@@ -1,0 +1,16 @@
+structure Point where {
+  x : Float;
+  y : Float;
+}
+
+const origin : Point :=
+  { x := 0.0, y := 0.0 };
+
+function translate(p : Point, dx : Float, dy : Float) : Point :=
+  { p with x := p.x + dx, y := p.y + dy };
+
+structure Box where {
+  {α : Type};
+  [showα : ToString α];
+  value : α;
+}

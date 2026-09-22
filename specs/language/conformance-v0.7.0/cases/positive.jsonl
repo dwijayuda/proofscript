@@ -1,0 +1,12 @@
+{"id": "const-value", "feature": "D-CONST-ALIAS", "source": "const answer : Nat := 42;", "expected_lean": "def answer : Nat := 42", "status": "specified"}
+{"id": "const-function-value", "feature": "D-CONST-ALIAS", "source": "const increment : Nat -> Nat := fun x => x + 1;", "expected_lean": "def increment : Nat -> Nat := fun x => x + 1", "status": "specified"}
+{"id": "function-add", "feature": "D-FUNCTION-ALIAS", "source": "function add(x : Nat, y : Nat) : Nat := x + y;", "expected_lean": "def add (x : Nat) (y : Nat) : Nat := x + y", "status": "specified"}
+{"id": "def-general", "feature": "D-EXPLICIT-PARAMS", "source": "def mul(x : Nat, y : Nat) : Nat := x * y;", "expected_lean": "def mul (x : Nat) (y : Nat) : Nat := x * y", "status": "specified"}
+{"id": "adjacent-call-two", "feature": "D-CALL", "source": "add(1, 2)", "expected_lean": "add 1 2", "status": "specified"}
+{"id": "tuple-argument", "feature": "D-CALL", "source": "f((x, y))", "expected_lean": "f (x, y)", "status": "specified"}
+{"id": "braced-if", "feature": "E-IF-BRACE", "source": "if (x > y) { x } else { y }", "expected_lean": "if x > y then x else y", "status": "specified"}
+{"id": "structure-body", "feature": "E-STRUCT-BODY", "source": "structure Point where { x : Float; y : Float; }", "expected_lean": "structure Point where\n  x : Float\n  y : Float", "status": "specified"}
+{"id": "structure-implicit-field", "feature": "E-STRUCT-BODY", "source": "structure Box where { {α : Type}; value : α; }", "expected_lean": "structure Box where\n  {α : Type}\n  value : α", "status": "specified"}
+{"id": "inductive-body", "feature": "E-INDUCTIVE-BODY", "source": "inductive Option(α : Type) where { | none; | some(value : α); }", "expected_lean": "inductive Option (α : Type) where\n  | none\n  | some (value : α)", "status": "specified"}
+{"id": "match-body", "feature": "E-MATCH-BODY", "source": "match value with { | .none => 0; | .some x => f(x); }", "expected_lean": "match value with\n  | .none => 0\n  | .some x => f x", "status": "specified"}
+{"id": "where-body", "feature": "E-WHERE-BODY", "source": "def f(x : Nat) : Nat := helper(x) where { helper(y : Nat) : Nat := y + 1; }", "expected_lean": "def f (x : Nat) : Nat := helper x where\n  helper (y : Nat) : Nat := y + 1", "status": "specified"}

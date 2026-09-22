@@ -20,6 +20,17 @@ The v0.6.1 reference is versioned and immutable as a released/reference baseline
 
 Older v0.1/v0.1.x language references are historical/legacy material only unless a specific assurance artifact explicitly identifies them.
 
+## 1.1 v0.7.0 candidate
+
+The next candidate reference is available at:
+
+```text
+docs/reference/proofscript-language-reference-v0.7.0/
+specs/language/ProofScript_Language_Reference_v0.7.0.md
+```
+
+It rebases compatible semantics to Lean 4.34.0 stable and specifies reference-Lean plus standalone-pskernel implementation profiles. It is **not yet active production authority**. Activation follows `docs/reference/REFERENCE_MIGRATION_v0.6.1_to_v0.7.0.md`.
+
 ## 2. v0.6.1 compiler-ready conformance package
 
 The compiler-ready v0.6.1 package defines more than prose. Its authority includes:
