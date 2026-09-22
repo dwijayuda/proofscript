@@ -8,3 +8,8 @@
 {"id":"duplicate-assert-name","feature":"V-ASSERT","source":"function f(x: Nat): Nat\n  ensures post: result = x\n:= {\n  assert h: x = x;\n  assert h: x = x;\n  x\n}","error":"duplicate assert name 'h'"}
 {"id":"malformed-assert","feature":"V-ASSERT","source":"function f(x: Nat): Nat\n  ensures post: result = x\n:= {\n  assert x = x;\n  x\n}","error":"unsupported assert syntax"}
 {"id":"result-in-assert","feature":"V-ASSERT","source":"function f(x: Nat): Nat\n  ensures post: result = x\n:= {\n  assert h: result = x;\n  x\n}","error":"'result' is only valid in ensures clauses"}
+{"id":"ghost-runtime-use","feature":"V-GHOST","source":"function f(x: Nat): Nat\n  ghost before: Nat := x\n  ensures post: result = x\n:= {\n  before\n}","error":"ghost value 'before' is used in runtime body"}
+{"id":"duplicate-ghost-name","feature":"V-GHOST","source":"function f(x: Nat): Nat\n  ghost g: Nat := x\n  ghost g: Nat := x\n  ensures post: result = x\n:= {\n  x\n}","error":"duplicate ghost name 'g'"}
+{"id":"ghost-parameter-collision","feature":"V-GHOST","source":"function f(x: Nat): Nat\n  ghost x: Nat := x\n  ensures post: result = x\n:= {\n  x\n}","error":"ghost name 'x' collides"}
+{"id":"ghost-result-expression","feature":"V-GHOST","source":"function f(x: Nat): Nat\n  ghost g: Nat := result\n  ensures post: result = x\n:= {\n  x\n}","error":"'result' is not valid in ghost expressions"}
+{"id":"ghost-depends-on-ghost","feature":"V-GHOST","source":"function f(x: Nat): Nat\n  ghost a: Nat := x\n  ghost b: Nat := a\n  ensures post: result = x\n:= {\n  x\n}","error":"ghost expression 'b' may not depend on ghost 'a'"}
