@@ -24,12 +24,14 @@ C3 is deliberately corpus-bounded. It is not a proof of full language equivalenc
 
 ### Registry ownership
 
-The v0.6.1 registry now distinguishes:
+The v0.6.1 registry now contains 15 explicit entries:
 
-- inherited/admitted language overlays;
-- explicitly registered `X-*` exclusions that must stay outside the production-owned feature set.
+- 1 inherited L entry;
+- 5 admitted D entries;
+- 6 admitted E entries;
+- 3 registered `X-*` exclusions used by the negative corpus.
 
-The production owned-feature set is mechanically checked against the admitted registry.
+The production-owned D/E set is mechanically checked against the admitted registry, and C0 also requires every negative corpus feature/exclusion ID to be registered.
 
 Where the released corpus does not have a dedicated primary case:
 
@@ -141,14 +143,19 @@ PS2 does **not** establish:
 
 Those claims remain separate assurance/product milestones.
 
-## Next milestone
+## Handoff to PS3
 
-PS3 begins with the smallest useful verification layer:
+The first specified v0.7 verification profile is `ps3-pure-contracts0`.
 
-1. pure `requires`;
-2. pure `ensures`;
-3. reserved postcondition-only `result`;
-4. canonical compiler validation of the executable runtime function;
-5. stable obligation IDs and explicit unproved status.
+Currently specified and gated:
 
-Ghost/old/assert/loops and monadic verification remain later subphases until the pure layer is converged.
+- `V-REQUIRES`
+- `V-ENSURES`
+- `V-RESULT`
+- `V-ASSERT`
+- `V-GHOST`
+- `V-OLD`
+
+Its executable corpus currently has **6 positive / 20 negative cases**, stable obligation IDs plus content hashes, and explicit verification-profile provenance carried through contract, obligation, proof-status, and verification artifacts.
+
+KA142 loop `invariant/decreases` syntax remains explicitly `ka142-loop-prototype` and cannot claim `ps3-pure-contracts0`. See `specs/verification/v0.7/DECREASES_BOUNDARY.md`.
