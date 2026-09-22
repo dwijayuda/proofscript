@@ -130,6 +130,36 @@ assert.equal(stableA.id, "stable.ensures.post");
 assert.equal(stableB.id, stableA.id, "obligation ID must remain stable when only the proposition changes");
 assert.notEqual(stableB.statementSha256, stableA.statementSha256, "statement hash must detect changed obligation content");
 
+const loopPrototypeSource = `function sumTo(n: Nat): Nat
+  ensures closed_form: result = n * (n + 1) / 2
+:= {
+  let mut i: Nat := 0;
+  let mut acc: Nat := 0;
+  while (i <= n)
+    invariant inv_acc: acc = i * (i - 1) / 2
+    decreases dec: n - i
+  {
+    acc := acc + i;
+    i := i + 1;
+  }
+  acc
+}`;
+const loopPrototypeArtifact = makeContractsArtifact({
+  sourceText: loopPrototypeSource,
+  sourcePath: "<loop-prototype>",
+  sourceSha256: "0".repeat(64),
+  packageVersion: "test",
+}).artifact;
+assert.equal(loopPrototypeArtifact.verification.profile, "ka142-loop-prototype");
+assert.equal(loopPrototypeArtifact.verification.reference, null);
+assert.equal(loopPrototypeArtifact.verification.claim, "prototype-only");
+assert.deepEqual(
+  loopPrototypeArtifact.verification.prototypeFeatures,
+  ["KA142-INVARIANT", "KA142-DECREASES"],
+);
+assert.ok(!loopPrototypeArtifact.verification.features.includes("V-INVARIANT"));
+assert.ok(!loopPrototypeArtifact.verification.features.includes("V-DECREASES"));
+
 const preconditionRegression = parsePureContractSource(
   "function f(x: Nat): Nat\n  requires hx: x >= 0\n  ensures post: result = x\n:= {\n  x\n}",
 );
