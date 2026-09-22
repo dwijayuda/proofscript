@@ -134,6 +134,14 @@ for (const item of positive) {
   assert.equal(lowering.statefulWpBinding.wp.triple, "Std.Do.Triple", item.id);
   assert.equal(lowering.statefulWpBinding.semantics.runner, "runBankState", item.id);
   assert.equal(lowering.statefulWpBinding.semantics.adequacyTheorem, item.expected.model_adequacy_theorem, item.id);
+  assert.equal(lowering.statefulWpBinding.operationTripleTheoremIdentitiesBound, true, item.id);
+  assert.equal(lowering.statefulWpBinding.operations.length, contract.operations.length, item.id);
+  assert.ok(lowering.statefulWpBinding.operations.every((operation: any) =>
+    operation.identityBound === true
+    && operation.theoremChecked === false
+    && typeof operation.tripleTheorem === "string"
+    && operation.tripleTheorem.length > 0
+  ), item.id);
   assert.equal(lowering.statefulWpBinding.typedRequirementsReady, true, item.id);
   assert.equal(lowering.statefulWpBinding.typedPostconditionsReady, true, item.id);
   assert.equal(lowering.statefulWpBinding.typedPredicateReady, true, item.id);
@@ -335,6 +343,20 @@ for (const item of negative) {
     assert.deepEqual(preflight.statefulPredicateAST, ast, item.id);
     assert.deepEqual(preflight.statefulWpBinding, lowering.statefulWpBinding, item.id);
     assert.equal(preflight.staticChecks.statefulWpIdentityBindingReady, false, item.id);
+  }
+  if (item.missing_operation_triple_theorem) {
+    assert.ok(
+      artifact.verification.operationsMissingTripleTheorem.includes(item.missing_operation_triple_theorem),
+      item.id,
+    );
+    const lowering = createMonadicLoweringArtifact({
+      contractArtifact: artifact,
+      contractArtifactPath: `<${item.id}.contracts.json>`,
+      contractArtifactSha256: "a".repeat(64),
+      packageVersion: "test",
+    });
+    assert.equal(lowering.statefulWpBinding.operationTripleTheoremIdentitiesBound, false, item.id);
+    assert.equal(lowering.statefulWpBinding.bindingReady, false, item.id);
   }
   if (item.unknown_operation) {
     assert.ok(artifact.verification.unknownOperations.includes(item.unknown_operation), item.id);
