@@ -176,6 +176,7 @@ export function parsePureContractSource(text, sourcePath = '<memory>') {
   if (!match) throw new Error('unsupported contract syntax: expected function name(params): ReturnType ... := { body }');
   const name = match[1];
   const params = parseParams(match[2]);
+  if (params.some(p => p.name === 'result')) throw new Error("contract parameter name 'result' is reserved for postconditions");
   const returnType = normalizeSpaces(match[3]);
   const spec = match[4];
   let body = match[5].trim();
@@ -185,7 +186,12 @@ export function parsePureContractSource(text, sourcePath = '<memory>') {
   const oldSnapshots = [];
   for (const line of spec.split(/\r?\n/).map(x => x.trim()).filter(Boolean)) {
     let m = line.match(/^requires\s+([A-Za-z_][A-Za-z0-9_]*)\s*:\s*(.+)$/);
-    if (m) { requirements.push({ name: m[1], proposition: normalizeSpaces(m[2]), kind: 'requires' }); continue; }
+    if (m) {
+      const proposition = normalizeSpaces(m[2]);
+      if (/\bresult\b/.test(proposition)) throw new Error("'result' is only valid in ensures clauses");
+      requirements.push({ name: m[1], proposition, kind: 'requires' });
+      continue;
+    }
     m = line.match(/^ensures\s+([A-Za-z_][A-Za-z0-9_]*)\s*:\s*(.+)$/);
     if (m) { ensures.push({ name: m[1], proposition: rewriteOldSnapshots(normalizeSpaces(m[2]), oldSnapshots), rawProposition: normalizeSpaces(m[2]), kind: 'ensures' }); continue; }
     m = line.match(/^ensures\s+(.+)$/);
@@ -198,6 +204,7 @@ export function parsePureContractSource(text, sourcePath = '<memory>') {
     const bodyWithoutGhostDecls = body.replace(new RegExp(`ghost\\s+${ghost.name}\\b[^;]*;`, 'g'), '');
     if (new RegExp(`\\b${ghost.name}\\b`).test(bodyWithoutGhostDecls)) throw new Error(`ghost value '${ghost.name}' is used in runtime body; ghost erasure cannot be certified`);
   }
+  if (/\bresult\b/.test(body)) throw new Error("'result' is only valid in ensures clauses");
   const { assertions, bodyWithoutAssertions } = parseAssertionsFromBody(body);
   const loops = parseLoopSpecsFromBody(bodyWithoutAssertions);
   const runtimeBody = normalizeSpaces(bodyWithoutAssertions.replace(/while\s*\([^)]*\)\s*[\s\S]*?\s*\{[\s\S]*?\}/g, ''));
