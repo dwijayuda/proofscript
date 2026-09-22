@@ -10,6 +10,14 @@ import { normalizeObligationsForWorkflow } from '../packages/obligations/src/ind
 import { readProofClaims, createProofStatusArtifact, verifyProofStatusArtifact } from '../packages/proof-status/src/index.mjs';
 import { readStateModelDescriptor, validateStateModelDescriptor, buildStateModelBinding } from '../packages/state-models/src/index.mjs';
 import { createMonadicLoweringBundle, createMonadicLeanPreflightBundle, readMonadicLoweringArtifact } from '../packages/monadic-lowering/src/index.mjs';
+import {
+  CURRENT_PRODUCT_PROFILE,
+  CURRENT_PROOFSCRIPT_REFERENCE,
+  certificateMetadataForCore,
+  readCurrentProductProfile,
+  validateCliProjectProfile,
+  verifyCertificateMetadataAgainstCore,
+} from '../packages/product-profile/src/index.mjs';
 const require = createRequire(import.meta.url);
 
 const VERSION = '1.0.0-pskernel.149';
@@ -204,13 +212,7 @@ function readProjectConfig() {
   if (!fs.existsSync(file)) return { projectRoot: process.cwd(), sourceDir: 'src', outDir: 'dist', build: { target: 'ts', outDir: 'dist' }, diagnostics: { sourceLocations: true } };
   try {
     const cfg = JSON.parse(fs.readFileSync(file, 'utf8'));
-    const product = currentProductProfile();
-    if (cfg.proofscriptReference !== undefined && cfg.proofscriptReference !== product.proofscriptReference) {
-      throw new Error(`unsupported ProofScript reference in proofscript.config.json: ${String(cfg.proofscriptReference)}`);
-    }
-    if (cfg.productProfile !== undefined && cfg.productProfile !== product.productProfile) {
-      throw new Error(`unsupported ProofScript product profile in proofscript.config.json: ${String(cfg.productProfile)}`);
-    }
+    const product = validateCliProjectProfile(ROOT, cfg);
     return {
       projectRoot: root,
       proofscriptReference: cfg.proofscriptReference ?? product.proofscriptReference,
@@ -393,8 +395,8 @@ the generated ProofScript module.
     writeFileChecked(path.join(targetDir, '.gitignore'), `node_modules/\ndist/\ndist-js/\ndist-host/\n*.pscore.json\n`, force, written);
     writeFileChecked(path.join(targetDir, 'proofscript.config.json'), JSON.stringify({
       "schemaVersion": 1,
-      "proofscriptReference": "v0.6.1",
-      "productProfile": "ps1-v061",
+      "proofscriptReference": CURRENT_PROOFSCRIPT_REFERENCE,
+      "productProfile": CURRENT_PRODUCT_PROFILE,
       "profile": "proofscript-software-v0",
       "entry": "src/Main.ps",
       "sourceDir": "src",
@@ -757,8 +759,8 @@ console.log(JSON.stringify(summary, null, 2));
   writeFileChecked(path.join(targetDir, '.gitignore'), `node_modules/\ndist/\ndist/\n*.pscore.json\n`, force, written);
   writeFileChecked(path.join(targetDir, 'proofscript.config.json'), JSON.stringify({
     schemaVersion: 1,
-    proofscriptReference: 'v0.6.1',
-    productProfile: 'ps1-v061',
+    proofscriptReference: CURRENT_PROOFSCRIPT_REFERENCE,
+    productProfile: CURRENT_PRODUCT_PROFILE,
     profile: 'proofscript-software-v0',
     entry: 'src/Main.ps',
     sourceDir: 'src',
@@ -1067,43 +1069,6 @@ function readJsonFile(relativePath, fallback = undefined) {
   }
 }
 
-function currentProductProfile() {
-  const profile = readJsonFile('config/product-profile.json');
-  if (profile?.schema !== 1 || profile?.proofscriptReference !== 'v0.6.1' || profile?.productProfile !== 'ps1-v061') {
-    throw new Error('invalid current ProofScript product profile metadata');
-  }
-  return profile;
-}
-function certificateMetadataForCore(artifact) {
-  const product = currentProductProfile();
-  return {
-    proofscriptReference: product.proofscriptReference,
-    productProfile: product.productProfile,
-    referenceConformance: product.conformance,
-    coreCompatibility: {
-      format: artifact?.format ?? null,
-      formatVersion: artifact?.formatVersion ?? null,
-      proofscriptReference: artifact?.proofscriptReference ?? null,
-      leanSemanticBaseline: artifact?.leanSemanticBaseline ?? null,
-      implementationProfile: artifact?.implementationProfile ?? null,
-    },
-  };
-}
-function verifyCertificateMetadataAgainstCore(certificate, coreArtifact) {
-  if (!certificate?.proofscriptReference && !certificate?.productProfile && !certificate?.coreCompatibility) return;
-  const product = currentProductProfile();
-  if (certificate.proofscriptReference !== product.proofscriptReference) {
-    throw new Error(`certificate ProofScript reference mismatch: expected ${product.proofscriptReference}, got ${String(certificate.proofscriptReference)}`);
-  }
-  if (certificate.productProfile !== product.productProfile) {
-    throw new Error(`certificate product profile mismatch: expected ${product.productProfile}, got ${String(certificate.productProfile)}`);
-  }
-  const expected = certificateMetadataForCore(coreArtifact).coreCompatibility;
-  const actual = certificate.coreCompatibility;
-  if (!actual || JSON.stringify(actual) !== JSON.stringify(expected)) {
-    throw new Error('certificate Core compatibility metadata does not match the bound Core artifact');
-  }
-}
 function kernelFeatureCounts(kernelStatus) {
   const features = Array.isArray(kernelStatus?.features) ? kernelStatus.features : [];
   const counts = { implemented: 0, partially_implemented: 0, unsupported: 0, blocked: 0, needs_validation: 0, other: 0 };
@@ -1331,7 +1296,7 @@ function certifyCommand(args) {
     version: 4,
     checkpoint: 'KA-146 Lean-checkable monadic skeleton preflight',
     packageVersion: VERSION,
-    ...certificateMetadataForCore(artifact),
+    ...certificateMetadataForCore(ROOT, artifact),
     source: { path: path.relative(path.dirname(resolvedOut), source).replace(/\\/g, '/'), sha256: sha256File(source) },
     core: { path: path.relative(path.dirname(resolvedOut), resolvedCore).replace(/\\/g, '/'), sha256: sha256File(resolvedCore), declarations },
     checker: { command: 'psc certify', structuralOnly: true, semanticPSKernelReplay: true },
@@ -1549,7 +1514,7 @@ function verifyCommand(args) {
       process.exit(1);
     }
     try {
-      verifyCertificateMetadataAgainstCore(artifact, readJsonPath(corePath));
+      verifyCertificateMetadataAgainstCore(ROOT, artifact, readJsonPath(corePath));
     } catch (error) {
       jsonOut({ status: 'rejected', command: 'verify', artifactKind: 'certificate', message: error instanceof Error ? error.message : String(error) }, json);
       process.exit(1);
@@ -1572,7 +1537,7 @@ function createStructuralCertificate(source, core, out) {
     version: 4,
     checkpoint: 'KA-146 Lean-checkable monadic skeleton preflight',
     packageVersion: VERSION,
-    ...certificateMetadataForCore(artifact),
+    ...certificateMetadataForCore(ROOT, artifact),
     source: { path: path.relative(path.dirname(resolvedOut), resolvedSource).replace(/\\/g, '/'), sha256: sha256File(resolvedSource) },
     core: { path: path.relative(path.dirname(resolvedOut), resolvedCore).replace(/\\/g, '/'), sha256: sha256File(resolvedCore), declarations },
     checker: { command: 'psc certify', structuralOnly: true, semanticPSKernelReplay: true },
