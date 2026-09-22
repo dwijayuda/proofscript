@@ -124,7 +124,10 @@ end ProofScript.Generated.VCRequest
       tripleIdentity: stateModel.wp?.triple ?? null,
       specificationTheorems: specTheorems,
       invocationTheorems,
+      invocationDefinitions,
+      invocationItems,
       specificationDiscovery: tactic === 'mvcgen' ? 'registered-attribute' : 'explicit-list',
+      programDefinitionHandling: tactic === 'mvcgen' ? 'explicit-unfold-list' : 'tactic-native',
       checkedAvailableInLean: false,
     },
     request: {
