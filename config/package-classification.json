@@ -464,6 +464,51 @@
       "allowedDependencies": [
         "packages/kernel"
       ]
+    },
+    {
+      "path": "packages/contracts",
+      "npmName": "@proofscript/contracts-workflow",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Contract extraction/workflow prototype; generates verification metadata and obligations but is not kernel proof authority.",
+      "productionRole": "KA138+ verification workflow prototype for requires/ensures/assert/ghost/old contract extraction.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/obligations",
+      "npmName": "@proofscript/obligations",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Proof-obligation workflow metadata only; obligation status does not bypass kernel/oracle proof checking.",
+      "productionRole": "Tracks generated verification obligations and stable workflow identifiers.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/proof-status",
+      "npmName": "@proofscript/proof-status",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Proof-status/provenance workflow metadata only; does not establish theorem validity by itself.",
+      "productionRole": "Aggregates verification workflow status for KA-era contract/proof tooling.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/state-models",
+      "npmName": "@proofscript/state-models",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "State-model descriptor prototype outside the trusted kernel; semantic adequacy must be established separately.",
+      "productionRole": "Describes state/effect models used by experimental stateful verification workflows.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/monadic-lowering",
+      "npmName": "@proofscript/monadic-lowering",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Experimental monadic verification lowering; cannot create proof authority or alter native kernel acceptance.",
+      "productionRole": "KA-era lowering/preflight prototype for stateful and monadic verification.",
+      "allowedDependencies": []
     }
   ]
 }
