@@ -19,7 +19,7 @@
     {
       "name": "debit",
       "type": "AccountId -> Nat -> State Bank Unit",
-      "spec": "decreases the source account balance by amount when funds are sufficient",
+      "spec": "sets the source account balance to its previous balance minus amount using Nat subtraction (saturating at zero)",
       "verification": {
         "tripleTheorem": "BankStateModel.debit_triple"
       }
