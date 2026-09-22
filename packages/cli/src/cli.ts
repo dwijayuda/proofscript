@@ -3,14 +3,13 @@ import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { createRequire } from "node:module";
-import { checkProjectFile } from "@proofscript/frontend";
 import { loadStandardBootstrap, stripStandardBootstrap } from "@proofscript/environment";
 import { UnsupportedFeature, ResourceExhausted } from "@proofscript/syntax";
 import { decodeArtifact } from "@proofscript/kernel-codec";
 import { relativeBinding } from "@proofscript/certificates";
 import { findProjectRoot } from "@proofscript/project";
 import { loadConfiguredPlugins, PluginHost } from "@proofscript/plugin-host";
-import { runBackend } from "@proofscript/compiler";
+import { checkProjectFile, runBackend } from "@proofscript/compiler";
 import { emitLeanArtifact } from "@proofscript/lean-export";
 
 function usage():never{console.error(`usage:
