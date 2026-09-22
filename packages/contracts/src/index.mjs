@@ -387,11 +387,26 @@ export function verificationFeaturesForContract(contract) {
 }
 
 export function verificationProfileForContract(contract) {
+  const features = verificationFeaturesForContract(contract);
+  if ((contract.loops ?? []).length > 0) {
+    const prototypeFeatures = ['KA142-INVARIANT'];
+    if ((contract.loops ?? []).some(loop => (loop.decreases ?? []).length > 0)) prototypeFeatures.push('KA142-DECREASES');
+    return {
+      schema: 'proofscript.verification-profile/v1',
+      reference: null,
+      profile: 'ka142-loop-prototype',
+      features,
+      prototypeFeatures,
+      claim: 'prototype-only',
+    };
+  }
   return {
     schema: 'proofscript.verification-profile/v1',
     reference: PURE_VERIFICATION_REFERENCE,
     profile: PURE_VERIFICATION_PROFILE,
-    features: verificationFeaturesForContract(contract),
+    features,
+    prototypeFeatures: [],
+    claim: 'specified-alpha',
   };
 }
 
