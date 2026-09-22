@@ -1,0 +1,17 @@
+{
+  "name": "@proofscript/language-worker",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "type": "module",
+  "description": "Worker-thread isolation and cancellation for the ProofScript language service",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "@proofscript/language-service": "0.1.0-dev.0"
+  }
+}
