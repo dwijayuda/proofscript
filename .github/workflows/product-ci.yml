@@ -33,6 +33,7 @@ jobs:
       - run: npm run test:reference:v061:c1-c2
       - run: npm run test:reference:v061:production-surface
       - run: npm run test:reference:v061:production-reference-parity
+      - run: npm run test:ps3:pure-contracts
       - run: npm run test:ka137
       - run: npm run test:ka140
       - run: npm run test:ka146
