@@ -42,7 +42,9 @@ function logicalPrecondition(fn) {
   const reqs = (fn.requirements ?? []).map(r => r.proposition).filter(Boolean);
   return normalizeSpaces(reqs.join(' ∧ ') || 'True');
 }
-function logicalPostcondition(fn) {
+function logicalPostcondition(fn, postconditionIR) {
+  const normalized = (postconditionIR?.clauses ?? []).map(clause => clause.normalizedPredicate).filter(Boolean);
+  if (normalized.length > 0) return normalizeSpaces(normalized.join(' ∧ '));
   const ensures = (fn.ensures ?? []).map(e => e.proposition ?? e.rawProposition).filter(Boolean);
   return normalizeSpaces(ensures.join(' ∧ ') || 'True');
 }
@@ -61,14 +63,20 @@ function operationSkeletons(fn, stateModel) {
 export function createMonadicLoweringArtifact({ contractArtifact, contractArtifactPath, contractArtifactSha256, packageVersion, checkpoint = 'KA-145 monadic contract lowering skeleton' } = {}) {
   const fn = contractFunctionFromArtifact(contractArtifact);
   const stateModel = stateModelFromArtifact(contractArtifact);
-  const binders = programParameterBinderText(fn.params ?? []);
+  const parameterBinders = programParameterBinderText(fn.params ?? []);
+  const entryStateBinder = `(__ps_entry : ${stateModel.stateType})`;
+  const binders = [parameterBinders, entryStateBinder].filter(Boolean).join(' ');
   const theoremName = `${safeLeanName(fn.name)}_triple`;
   const triple = tripleNameFromStateModel(stateModel);
-  const pre = logicalPrecondition(fn);
-  const post = logicalPostcondition(fn);
+  const preconditionBody = logicalPrecondition(fn);
+  const precondition = preconditionBody === 'True'
+    ? `fun __ps_initial : ${stateModel.stateType} => __ps_initial = __ps_entry`
+    : `fun __ps_initial : ${stateModel.stateType} => __ps_initial = __ps_entry ∧ (${preconditionBody})`;
+  const postconditionBody = logicalPostcondition(fn, contractArtifact.statefulPostconditionIR);
+  const postcondition = `fun __ps_result __ps_final => ${postconditionBody}`;
   const monad = monadNameFromStateModel(stateModel);
   const programName = safeLeanName(fn.name);
-  const statement = `theorem ${theoremName}${binders ? ` ${binders}` : ''} : ${triple} (${programName}${(fn.params ?? []).map(p => ` ${p.name}`).join(' ')}) (${pre}) (${post})`;
+  const statement = `theorem ${theoremName}${binders ? ` ${binders}` : ''} : ${triple} (${programName}${(fn.params ?? []).map(p => ` ${p.name}`).join(' ')}) (${precondition}) (${postcondition})`;
   const operations = operationSkeletons(fn, stateModel);
   const obligations = (contractArtifact.obligations ?? []).map(o => ({
     id: o.id,
@@ -109,8 +117,11 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
       theoremSha256: sha256Text(statement),
       triple,
       monad,
-      precondition: pre,
-      postcondition: post,
+      entryStateBinder: { name: '__ps_entry', type: stateModel.stateType },
+      preconditionBody,
+      postconditionBody,
+      precondition,
+      postcondition,
       preconditionKind: preconditionFromStateModel(stateModel),
       postconditionKind: postconditionFromStateModel(stateModel),
       modelAdequacyTheorem: stateModel?.semantics?.adequacyTheorem ?? null,
