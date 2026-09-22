@@ -49,10 +49,24 @@ export function validateStateModelDescriptor(descriptor, { descriptorPath, descr
     if (!nonEmptyString(law?.statement)) errors.push({ field: `laws[${i}].statement`, message: 'law statement is required' });
   }
   const operations = asArray(descriptor.operations);
+  const operationNames = new Set();
   for (const [i, op] of operations.entries()) {
     if (!nonEmptyString(op?.name)) errors.push({ field: `operations[${i}].name`, message: 'operation name is required' });
+    else if (operationNames.has(op.name)) errors.push({ field: `operations[${i}].name`, message: `duplicate operation name '${op.name}'` });
+    else operationNames.add(op.name);
     if (!nonEmptyString(op?.type)) errors.push({ field: `operations[${i}].type`, message: 'operation type is required' });
     if (!nonEmptyString(op?.spec)) errors.push({ field: `operations[${i}].spec`, message: 'operation spec is required' });
+  }
+  const observations = asArray(descriptor.observations);
+  const observationNames = new Set();
+  for (const [i, observation] of observations.entries()) {
+    if (!nonEmptyString(observation?.name)) errors.push({ field: `observations[${i}].name`, message: 'observation name is required' });
+    else if (observationNames.has(observation.name)) errors.push({ field: `observations[${i}].name`, message: `duplicate observation name '${observation.name}'` });
+    else observationNames.add(observation.name);
+    if (!nonEmptyString(observation?.type)) errors.push({ field: `observations[${i}].type`, message: 'observation type is required' });
+    if (!nonEmptyString(observation?.spec)) errors.push({ field: `observations[${i}].spec`, message: 'observation spec is required' });
+    const stateArgument = observation?.stateArgument ?? 'last';
+    if (stateArgument !== 'last') errors.push({ field: `observations[${i}].stateArgument`, message: "stateArgument must be 'last' in this alpha" });
   }
   const vcgenStatus = descriptor.vcgen?.status ?? 'not-connected';
   if (!['not-connected', 'planned', 'connected'].includes(vcgenStatus)) errors.push({ field: 'vcgen.status', message: 'vcgen.status must be not-connected, planned, or connected' });
@@ -82,6 +96,7 @@ export function validateStateModelDescriptor(descriptor, { descriptorPath, descr
       semantics: descriptor.semantics,
       laws: laws.map(l => ({ name: l.name, statementSha256: nonEmptyString(l.statement) ? sha256Text(normalizeSpaces(l.statement)) : undefined })),
       operations: operations.map(o => ({ name: o.name, type: o.type, specSha256: nonEmptyString(o.spec) ? sha256Text(normalizeSpaces(o.spec)) : undefined })),
+      observations: observations.map(o => ({ name: o.name, type: o.type, stateArgument: o.stateArgument ?? 'last', specSha256: nonEmptyString(o.spec) ? sha256Text(normalizeSpaces(o.spec)) : undefined })),
     },
     errors,
     trustBoundary: {
@@ -123,6 +138,7 @@ export function buildStateModelBinding(descriptor, { descriptorPath, descriptorS
     semantics: descriptor.semantics,
     laws: descriptor.laws ?? [],
     operations: descriptor.operations ?? [],
+    observations: descriptor.observations ?? [],
     vcgen: descriptor.vcgen ?? { status: 'not-connected' },
     validation,
   };
