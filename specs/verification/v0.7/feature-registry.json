@@ -47,6 +47,22 @@
         "result is reserved as a contract parameter name",
         "result is rejected in the runtime body"
       ]
+    },
+    {
+      "id": "V-ASSERT",
+      "class": "V",
+      "status": "specified-alpha",
+      "surface": "assert <name>: <proposition>;",
+      "scope": "pure function contract body",
+      "semantics": "Introduces a named proof obligation at the assertion point under the function parameters and requires hypotheses.",
+      "obligations": "One stable assert obligation per assertion.",
+      "runtime": "proof-only and removed from the extracted contract runtime body; erasure alone is not a runtime-correctness proof",
+      "diagnostics": [
+        "assert must be named",
+        "assert names must be unique",
+        "malformed assert syntax is rejected",
+        "result is not valid in assert"
+      ]
     }
   ]
 }
