@@ -2,14 +2,15 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
-import { parseSource } from "@proofscript/parser";
-import { referenceParse } from "../reference/v061/frontend.ts";
+import { lowerOwnedSourceToCanonicalLean, parseSource } from "@proofscript/parser";
+import { referenceLower, referenceParse } from "../reference/v061/frontend.ts";
 
 const root = path.resolve(import.meta.dirname, "..");
 const conformanceDir = path.join(root, "docs", "reference", "proofscript-language-reference-v0.6.1", "conformance");
 const harness = JSON.parse(fs.readFileSync(path.join(root, "specs", "language", "conformance-v0.6.1", "production-harness.json"), "utf8"));
 const positive = readJsonl(path.join(conformanceDir, "cases", "positive.jsonl"));
 const negative = readJsonl(path.join(conformanceDir, "cases", "negative.jsonl"));
+const lowering = readJsonl(path.join(conformanceDir, "cases", "lowering.jsonl"));
 const termCases = new Set(harness.term_cases);
 
 const failures: unknown[] = [];
@@ -60,20 +61,50 @@ for (const item of [...positive, ...negative]) {
   }
 }
 
+const loweringFailures: unknown[] = [];
+for (const item of lowering) {
+  try {
+    const reference = referenceLower(item.source);
+    const production = lowerOwnedSourceToCanonicalLean(item.source, item.feature);
+    if (production !== reference.leanText || production !== item.canonical_lean) {
+      loweringFailures.push({
+        id: item.id,
+        feature: item.feature,
+        corpus: item.canonical_lean,
+        reference: reference.leanText,
+        production,
+      });
+    }
+  } catch (error) {
+    loweringFailures.push({
+      id: item.id,
+      feature: item.feature,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+}
+
 assert.deepEqual(
   failures,
   [],
-  `v0.6.1 production/reference acceptance differential failures:\n${JSON.stringify(failures, null, 2)}`,
+  `v0.6.1 production/reference decision/ownership differential failures:\n${JSON.stringify(failures, null, 2)}`,
+);
+assert.deepEqual(
+  loweringFailures,
+  [],
+  `v0.6.1 production/reference canonical lowering differential failures:\n${JSON.stringify(loweringFailures, null, 2)}`,
 );
 
 console.log(JSON.stringify({
   status: "PASS",
   reference: "ProofScript v0.6.1",
-  claim: "C3-prerequisite-acceptance-and-feature-ownership-parity",
+  conformance: "C3",
+  claim: "production-reference-corpus-parity",
   compared: positive.length + negative.length,
   positive: positive.length,
   negative: negative.length,
-  note: "This does not claim full normative C3 because canonical production surface lowering is not yet compared.",
+  canonicalLoweringsMatched: lowering.length,
+  note: "C3 is bounded to the normative v0.6.1 conformance corpus and does not imply S2/S3 proof claims or full Lean equivalence.",
 }, null, 2));
 
 function productionDecision(item: any): {
