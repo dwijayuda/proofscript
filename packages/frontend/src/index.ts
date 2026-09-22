@@ -12,7 +12,7 @@ import {
 import { CoreModulesBuildMetadata, makeArtifact } from "@proofscript/kernel-codec";
 import { prepareCoreEnvironment } from "@proofscript/environment";
 import { buildModuleGraph, ProjectModuleGraph, ProjectModuleSource, type ProjectSourceProvider } from "@proofscript/project";
-import { UnsupportedFeature } from "@proofscript/syntax";
+import { UnsupportedFeature, type SurfaceFeatureUse } from "@proofscript/syntax";
 
 export interface FrontendOptions {
   prelude?:CoreArtifact;
@@ -25,12 +25,15 @@ export interface FrontendResult {
   artifact: ReturnType<typeof makeArtifact>;
   summary: CheckSummary;
   parserState: ReturnType<typeof parseSource>["finalState"];
+  /** ProofScript-owned surface feature occurrences with source offsets. */
+  ownedFeatures: SurfaceFeatureUse[];
 }
 
 export interface CheckedProjectModule {
   source:ProjectModuleSource;
   declarations:CoreDeclaration[];
   typeclasses:TypeclassEnvironmentMetadata;
+  ownedFeatures:SurfaceFeatureUse[];
 }
 export interface FrontendProjectResult {
   artifact:ReturnType<typeof makeArtifact>;
@@ -51,7 +54,7 @@ export function checkSource(source:string,options:FrontendOptions={}):FrontendRe
   const modules:CoreModulesBuildMetadata={entry:"__single__",modules:[{name:"__single__",sourceSha256:sha256Text(source),imports:[],declarations:elaborated.declarations.map(d=>d.name)}]};
   // The project driver supplies the complete graph after every dependency has been checked.
   // Intermediate per-module artifacts intentionally carry no partial module metadata.
-  return{artifact:makeArtifact(all,elaborated.typeclasses,options.allowResolvedImports?undefined:modules),summary,parserState:parsed.finalState};
+  return{artifact:makeArtifact(all,elaborated.typeclasses,options.allowResolvedImports?undefined:modules),summary,parserState:parsed.finalState,ownedFeatures:[...parsed.ownedFeatures]};
 }
 
 /**
@@ -79,7 +82,7 @@ export function checkProjectFile(entryFile:string,options:FrontendOptions={}):Fr
       classes:checked.artifact.typeclasses.classes.filter(c=>owned.has(c.name)).map(cloneClass),
       instances:checked.artifact.typeclasses.instances.filter(i=>owned.has(i.name)).map(i=>({...i})),
     };
-    compiled.set(sourceModule.name,{source:sourceModule,declarations,typeclasses});
+    compiled.set(sourceModule.name,{source:sourceModule,declarations,typeclasses,ownedFeatures:[...checked.ownedFeatures]});
   }
 
   const checkedModules=graph.modules.map(m=>compiled.get(m.name)!);
