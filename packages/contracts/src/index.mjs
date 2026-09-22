@@ -1,5 +1,16 @@
 import { createHash } from 'node:crypto';
 
+export const PURE_VERIFICATION_REFERENCE = 'v0.7.0-alpha.2-draft';
+export const PURE_VERIFICATION_PROFILE = 'ps3-pure-contracts0';
+export const PURE_VERIFICATION_FEATURE_ORDER = Object.freeze([
+  'V-REQUIRES',
+  'V-ENSURES',
+  'V-RESULT',
+  'V-ASSERT',
+  'V-GHOST',
+  'V-OLD',
+]);
+
 export function sha256Text(text) {
   return createHash('sha256').update(String(text)).digest('hex');
 }
@@ -364,6 +375,26 @@ export function leanForContract(contract) {
   }).join('\n\n');
   return `${defLine}\n\n${ghosts ? ghosts + '\n' : ''}${oldSnapshots ? oldSnapshots + '\n' : ''}${loopNotes ? loopNotes + '\n' : ''}${obligations}\n`;
 }
+export function verificationFeaturesForContract(contract) {
+  const used = new Set();
+  if ((contract.requirements ?? []).length) used.add('V-REQUIRES');
+  if ((contract.ensures ?? []).length) used.add('V-ENSURES');
+  if ((contract.ensures ?? []).some(ensure => /\bresult\b/.test(ensure.rawProposition ?? ensure.proposition ?? ''))) used.add('V-RESULT');
+  if ((contract.assertions ?? []).length) used.add('V-ASSERT');
+  if ((contract.ghosts ?? []).length) used.add('V-GHOST');
+  if ((contract.oldSnapshots ?? []).length) used.add('V-OLD');
+  return PURE_VERIFICATION_FEATURE_ORDER.filter(feature => used.has(feature));
+}
+
+export function verificationProfileForContract(contract) {
+  return {
+    schema: 'proofscript.verification-profile/v1',
+    reference: PURE_VERIFICATION_REFERENCE,
+    profile: PURE_VERIFICATION_PROFILE,
+    features: verificationFeaturesForContract(contract),
+  };
+}
+
 export function makeContractsArtifact({ sourceText, sourcePath, sourceSha256, packageVersion, checkpoint = 'KA-143 verification package extraction' }) {
   const contract = parsePureContractSource(sourceText, sourcePath);
   const obligations = contract.obligations ?? [];
@@ -374,6 +405,7 @@ export function makeContractsArtifact({ sourceText, sourcePath, sourceSha256, pa
       packageVersion,
       source: sourcePath,
       sourceSha256,
+      verification: verificationProfileForContract(contract),
       functions: [{ name: contract.name, params: contract.params, returnType: contract.returnType, requirements: contract.requirements, ghosts: contract.ghosts, ensures: contract.ensures, assertions: contract.assertions, oldSnapshots: contract.oldSnapshots, loops: contract.loops, body: contract.body }],
       loops: contract.loops,
       ghosts: contract.ghosts,
