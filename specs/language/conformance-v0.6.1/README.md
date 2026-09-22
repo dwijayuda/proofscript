@@ -24,3 +24,15 @@ This directory retains the machine-readable part of the compiler-ready package s
 These assets retain their original v0.6.1 metadata, including the historical Lean 4.33.1 semantic/reference baseline and S1 claim ceiling. Importing them into the repository does **not** upgrade the implementation to C1/C2/C3 automatically.
 
 PS2 must run the corpus against the production frontend and record actual conformance evidence.
+
+## Normative conformance levels
+
+Per Appendix G:
+
+- C0 — static corpus well formed;
+- C1 — reference frontend accepts/rejects all corpus cases;
+- C2 — reference frontend emits canonical Lean matching the corpus;
+- C3 — production frontend matches the reference frontend;
+- C4 — corpus properties have machine-checked reference theorems.
+
+The production parser currently has its own strict **surface-corpus parity** gate. That gate is a prerequisite/evidence input for eventual C3; it is not C1 by itself.
