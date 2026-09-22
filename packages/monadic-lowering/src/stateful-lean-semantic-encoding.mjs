@@ -1,22 +1,14 @@
+import { leanIdentifier, leanPath } from './lean-syntax.mjs';
+
 function normalizeSpaces(value) {
   return String(value ?? '').replace(/\s+/g, ' ').trim();
 }
 
-function safeLeanName(name) {
-  return String(name ?? 'x').replace(/[^A-Za-z0-9_]+/g, '_').replace(/^([0-9])/, '_$1') || 'x';
-}
 
 function programApplication(fn) {
-  return [safeLeanName(fn?.name ?? 'program'), ...(fn?.params ?? []).map(param => safeLeanName(param.name))].join(' ');
+  return [leanIdentifier(fn?.name ?? 'program'), ...(fn?.params ?? []).map(param => leanIdentifier(param.name))].join(' ');
 }
 
-function safeLeanPath(name) {
-  return String(name ?? '')
-    .split('.')
-    .filter(Boolean)
-    .map(segment => safeLeanName(segment))
-    .join('.');
-}
 
 function renderLeanPredicateNode(node) {
   if (!node || typeof node !== 'object') {
@@ -27,11 +19,11 @@ function renderLeanPredicateNode(node) {
     case 'literal':
       return String(node.value);
     case 'identifier':
-      return safeLeanPath(node.name);
+      return leanPath(node.name);
     case 'group':
       return `(${renderLeanPredicateNode(node.expression)})`;
     case 'call': {
-      const callee = safeLeanPath(node.callee);
+      const callee = leanPath(node.callee);
       const args = (node.args ?? []).map(renderLeanPredicateNode);
       return args.length > 0 ? `${callee} ${args.map(arg => `(${arg})`).join(' ')}` : callee;
     }
