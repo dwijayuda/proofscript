@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { checkProjectFile, checkSource } from "@proofscript/compiler";
+import { IncrementalCompilerSession, checkSource } from "@proofscript/compiler";
 
 export interface Position {
   readonly line: number;
@@ -76,6 +76,10 @@ export interface Analysis {
   }[];
   readonly assumptions: readonly string[];
   readonly surfaceFeatures: readonly SurfaceFeatureOccurrence[];
+  readonly moduleReuse?: {
+    readonly reused: readonly string[];
+    readonly rebuilt: readonly string[];
+  };
   readonly diagnostics: readonly Diagnostic[];
   readonly resultId: string;
 }
@@ -120,6 +124,7 @@ export class CancellationSource {
 export class ProofScriptLanguageService {
   private readonly documents = new Map<string, TextDocumentSnapshot>();
   private readonly analyses = new Map<string, Analysis>();
+  private readonly incrementalProjects = new Map<string, IncrementalCompilerSession>();
   private generation = 0;
 
   openDocument(uri: string, version: number, text: string, filePath?: string): TextDocumentSnapshot {
@@ -149,8 +154,10 @@ export class ProofScriptLanguageService {
   }
 
   closeDocument(uri: string): void {
+    const document = this.documents.get(uri);
     this.documents.delete(uri);
     this.analyses.delete(uri);
+    if (document?.filePath) this.incrementalProjects.delete(normalizePath(document.filePath));
   }
 
   getDocument(uri: string): TextDocumentSnapshot | undefined {
@@ -167,14 +174,21 @@ export class ProofScriptLanguageService {
     let declarations: Analysis["declarations"] = [];
     let assumptions: readonly string[] = [];
     let surfaceFeatures: readonly SurfaceFeatureOccurrence[] = [];
+    let moduleReuse: Analysis["moduleReuse"];
     let diagnostics: readonly Diagnostic[] = [];
 
     try {
       let summary;
       let rawFeatures: readonly { readonly feature: string; readonly startOffset: number; readonly endOffset: number }[] = [];
       if (document.filePath) {
-        const checked = checkProjectFile(document.filePath, { sourceProvider: this.sourceProvider() });
+        const checked = this.incrementalSession(document.filePath).checkProjectFile(document.filePath, {
+          sourceProvider: this.sourceProvider(),
+        });
         summary = checked.summary;
+        moduleReuse = {
+          reused: [...checked.moduleReuse.reused],
+          rebuilt: [...checked.moduleReuse.rebuilt],
+        };
         const currentModule = checked.modules.find((module) =>
           normalizePath(module.source.filePath) === normalizePath(document.filePath!));
         rawFeatures = currentModule?.ownedFeatures ?? [];
@@ -220,6 +234,7 @@ export class ProofScriptLanguageService {
       declarations,
       assumptions,
       surfaceFeatures,
+      ...(moduleReuse ? { moduleReuse } : {}),
       diagnostics,
       resultId,
     };
@@ -263,6 +278,16 @@ export class ProofScriptLanguageService {
     this.documents.set(uri, snapshot);
     this.analyses.delete(uri);
     return snapshot;
+  }
+
+  private incrementalSession(filePath: string): IncrementalCompilerSession {
+    const key = normalizePath(filePath);
+    let session = this.incrementalProjects.get(key);
+    if (!session) {
+      session = new IncrementalCompilerSession();
+      this.incrementalProjects.set(key, session);
+    }
+    return session;
   }
 
   private sourceProvider(): (filePath: string) => string | undefined {
