@@ -796,7 +796,8 @@
     "assurance:ps3:stateful-lean-vc": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-stateful-lean-vc-runner.ts",
     "assurance:ps3:stateful-lean-vc:strict": "npm run assurance:ps3:stateful-lean-vc -- --strict",
     "test:ps3:stateful-vc-evidence": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-stateful-vc-evidence-tests.ts",
-    "test:ps3:stateful-vc-run-cli": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-stateful-vc-run-cli-tests.ts"
+    "test:ps3:stateful-vc-run-cli": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-stateful-vc-run-cli-tests.ts",
+    "test:ps3:lean-version-compatibility": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-lean-version-compatibility-tests.ts"
   },
   "engines": {
     "node": ">=20"
