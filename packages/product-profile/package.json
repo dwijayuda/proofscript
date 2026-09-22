@@ -1,0 +1,13 @@
+{
+  "name": "@proofscript/product-profile",
+  "version": "0.1.0-dev.0",
+  "private": true,
+  "description": "Current ProofScript product identity and compatibility metadata helpers.",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/index.mjs",
+  "files": [
+    "src",
+    "README.md"
+  ]
+}
