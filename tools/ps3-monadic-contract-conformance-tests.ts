@@ -142,7 +142,26 @@ for (const item of positive) {
   assert.equal(lowering.statefulProgramLowering.programLoweringReady, true, item.id);
   assert.equal(lowering.statefulProgramLowering.leanProgramTypechecked, false, item.id);
   assert.equal(lowering.statefulProgramLowering.sourceToLeanProgramEquivalenceChecked, false, item.id);
-  assert.match(lowering.statefulProgramLowering.leanDefinition, /:= do\n/u, item.id);
+  assert.match(lowering.statefulProgramLowering.leanDefinition, /: StateM Bank Unit := do\n/u, item.id);
+  assert.equal(lowering.statefulProgramLowering.stateModel.leanMonad, "StateM Bank", item.id);
+  assert.equal(lowering.statefulProgramLowering.stateModel.monadMappingComplete, true, item.id);
+  assert.equal(lowering.statefulLeanSemanticEncoding.schema, "proofscript.stateful-lean-semantic-encoding/v1", item.id);
+  assert.equal(lowering.statefulLeanSemanticEncoding.profile, "std-do-statem-pure-predicate0", item.id);
+  assert.equal(lowering.statefulLeanSemanticEncoding.encodingReady, true, item.id);
+  assert.equal(lowering.statefulLeanSemanticEncoding.monad.lean, "StateM Bank", item.id);
+  assert.match(lowering.statefulLeanSemanticEncoding.precondition.leanSource, /⌜/u, item.id);
+  assert.match(lowering.statefulLeanSemanticEncoding.postcondition.leanSource, /^⇓ __ps_result __ps_final => ⌜/u, item.id);
+  assert.match(lowering.statefulLeanSemanticEncoding.tripleTarget, /^Std\.Do\.Triple /u, item.id);
+  assert.equal(lowering.statefulLeanSemanticEncoding.tripleTargetTypechecked, false, item.id);
+  assert.equal(lowering.statefulVcRequest.schema, "proofscript.stateful-vc-request/v1", item.id);
+  assert.equal(lowering.statefulVcRequest.requestSourceReady, false, item.id);
+  assert.ok(lowering.statefulVcRequest.diagnostics.some((diagnostic: any) =>
+    diagnostic.code === "stateful-vc-request-model-imports-unbound"
+  ), item.id);
+  assert.equal(lowering.statefulVcRequest.request.source, null, item.id);
+  assert.equal(lowering.statefulVcRequest.leanEnvironmentResolved, false, item.id);
+  assert.equal(lowering.statefulVcRequest.tacticExecuted, false, item.id);
+  assert.equal(lowering.statefulVcRequest.realVerificationConditionsGenerated, false, item.id);
   assert.equal(lowering.summary.statefulReferenceTypingComplete, true, item.id);
   assert.equal(lowering.summary.stateOperationTypingComplete, true, item.id);
   assert.equal(lowering.summary.statefulProgramLoweringReady, true, item.id);
@@ -242,6 +261,8 @@ for (const item of positive) {
   assert.deepEqual(preflight.statefulWpBinding, lowering.statefulWpBinding, item.id);
   assert.deepEqual(preflight.statefulProgramLowering, lowering.statefulProgramLowering, item.id);
   assert.deepEqual(preflight.statefulVcPlan, lowering.statefulVcPlan, item.id);
+  assert.deepEqual(preflight.statefulLeanSemanticEncoding, lowering.statefulLeanSemanticEncoding, item.id);
+  assert.deepEqual(preflight.statefulVcRequest, lowering.statefulVcRequest, item.id);
   assert.equal(preflight.staticChecks.hasStatefulPostconditionIR, true, item.id);
   assert.equal(preflight.staticChecks.hasStatefulPredicateElaboration, true, item.id);
   assert.equal(preflight.staticChecks.hasStatefulPredicateAST, true, item.id);
@@ -256,6 +277,13 @@ for (const item of positive) {
   assert.equal(preflight.staticChecks.statefulWpIdentityBindingReady, true, item.id);
   assert.equal(preflight.staticChecks.hasStatefulVcPlan, true, item.id);
   assert.equal(preflight.staticChecks.statefulVcPlanningReady, true, item.id);
+  assert.equal(preflight.staticChecks.hasStatefulLeanSemanticEncoding, true, item.id);
+  assert.equal(preflight.staticChecks.statefulLeanSemanticEncodingReady, true, item.id);
+  assert.equal(preflight.staticChecks.tripleTargetTypecheckedInLean, false, item.id);
+  assert.equal(preflight.staticChecks.hasStatefulVcRequest, true, item.id);
+  assert.equal(preflight.staticChecks.statefulVcRequestSourceReady, false, item.id);
+  assert.equal(preflight.staticChecks.leanVcEnvironmentResolved, false, item.id);
+  assert.equal(preflight.staticChecks.vcgenExecuted, false, item.id);
   assert.equal(preflight.staticChecks.semanticVcDerivationComplete, false, item.id);
   assert.equal(preflight.staticChecks.realVerificationConditionsGenerated, false, item.id);
   assert.equal(preflight.staticChecks.wholePredicateTypeCheckingComplete, false, item.id);
@@ -267,6 +295,11 @@ for (const item of positive) {
   assert.equal(preflight.trustBoundary.leanProgramTypechecked, false, item.id);
   assert.equal(preflight.trustBoundary.wpTripleIdentityBindingComplete, true, item.id);
   assert.equal(preflight.trustBoundary.statefulVcPlanningReady, true, item.id);
+  assert.equal(preflight.trustBoundary.statefulLeanSemanticEncodingReady, true, item.id);
+  assert.equal(preflight.trustBoundary.tripleTargetTypecheckedInLean, false, item.id);
+  assert.equal(preflight.trustBoundary.statefulVcRequestSourceReady, false, item.id);
+  assert.equal(preflight.trustBoundary.leanVcEnvironmentResolved, false, item.id);
+  assert.equal(preflight.trustBoundary.vcgenExecuted, false, item.id);
   assert.equal(preflight.trustBoundary.semanticVcDerivationComplete, false, item.id);
   assert.equal(preflight.trustBoundary.realVerificationConditionsGenerated, false, item.id);
   assert.equal(preflight.trustBoundary.wpTripleSemanticEquivalenceChecked, false, item.id);
@@ -275,6 +308,41 @@ for (const item of positive) {
   assert.equal(preflight.trustBoundary.checkableAsCompleteSemanticProof, false, item.id);
   assert.equal(preflight.summary.semanticProofDischarge, false, item.id);
 }
+
+const declaredLeanModel = binding({
+  ...positive[0].state_model,
+  lean: {
+    imports: ["ProofScript.Test.BankStateModel"],
+    openNamespaces: ["BankStateModel"],
+  },
+}, "declared-lean-vc-request");
+const declaredLeanBuilt = makeMonadicContractsArtifact({
+  sourceText: positive[0].source,
+  sourcePath: "<declared-lean-vc-request>",
+  sourceSha256: "a".repeat(64),
+  packageVersion: "test",
+  stateModel: declaredLeanModel,
+});
+assert.equal(declaredLeanBuilt.artifact.verification.profile, "ps3-monadic-contracts0");
+const declaredLeanLowering = createMonadicLoweringArtifact({
+  contractArtifact: declaredLeanBuilt.artifact,
+  contractArtifactPath: "<declared-lean-vc-request.contracts.json>",
+  contractArtifactSha256: "b".repeat(64),
+  packageVersion: "test",
+});
+assert.equal(declaredLeanLowering.statefulVcRequest.requestSourceReady, true);
+assert.equal(declaredLeanLowering.statefulVcRequest.environment.bindingsDeclared, true);
+assert.equal(declaredLeanLowering.statefulVcRequest.environment.resolvedInLean, false);
+assert.equal(declaredLeanLowering.statefulVcRequest.leanEnvironmentResolved, false);
+assert.equal(declaredLeanLowering.statefulVcRequest.tacticExecuted, false);
+assert.equal(declaredLeanLowering.statefulVcRequest.realVerificationConditionsGenerated, false);
+assert.match(declaredLeanLowering.statefulVcRequest.request.source, /import Std\.Tactic\.Do/u);
+assert.match(declaredLeanLowering.statefulVcRequest.request.source, /import ProofScript\.Test\.BankStateModel/u);
+assert.match(declaredLeanLowering.statefulVcRequest.request.source, /open Std\.Do/u);
+assert.match(declaredLeanLowering.statefulVcRequest.request.source, /StateM Bank Unit/u);
+assert.match(declaredLeanLowering.statefulVcRequest.request.source, /⌜/u);
+assert.match(declaredLeanLowering.statefulVcRequest.request.source, /⇓ __ps_result __ps_final => ⌜/u);
+assert.match(declaredLeanLowering.statefulVcRequest.request.source, /vcgen \[/u);
 
 for (const item of negative) {
   if (item.expected === "reject") {
