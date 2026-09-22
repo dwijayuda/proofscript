@@ -12,10 +12,8 @@ function normalizeSpaces(s) { return String(s ?? '').replace(/\s+/g, ' ').trim()
 function safeLeanName(name) {
   return String(name ?? 'x').replace(/[^A-Za-z0-9_]+/g, '_').replace(/^([0-9])/, '_$1') || 'x';
 }
-function theoremBinderText(params, requirements) {
-  const p = (params ?? []).map(x => `(${x.name} : ${x.type})`);
-  const r = (requirements ?? []).map(x => `(${x.name} : ${x.proposition})`);
-  return [...p, ...r].join(' ');
+function programParameterBinderText(params) {
+  return (params ?? []).map(x => `(${x.name} : ${x.type})`).join(' ');
 }
 function monadNameFromStateModel(stateModel) {
   return stateModel?.monad?.name ?? stateModel?.monad?.typeConstructor ?? 'State';
@@ -40,10 +38,9 @@ function contractFunctionFromArtifact(artifact) {
   if (!Array.isArray(artifact.functions) || artifact.functions.length !== 1) throw new Error('monadic lowering expects exactly one function in this alpha');
   return artifact.functions[0];
 }
-function logicalPrecondition(fn, stateModel) {
-  const reqs = (fn.requirements ?? []).map(r => r.proposition);
-  const adequate = stateModel?.semantics?.adequacyTheorem ?? `${stateModel?.name ?? 'StateModel'} adequacy theorem`;
-  return normalizeSpaces([...reqs, adequate].filter(Boolean).join(' ∧ ') || 'True');
+function logicalPrecondition(fn) {
+  const reqs = (fn.requirements ?? []).map(r => r.proposition).filter(Boolean);
+  return normalizeSpaces(reqs.join(' ∧ ') || 'True');
 }
 function logicalPostcondition(fn) {
   const ensures = (fn.ensures ?? []).map(e => e.proposition ?? e.rawProposition).filter(Boolean);
@@ -64,10 +61,10 @@ function operationSkeletons(fn, stateModel) {
 export function createMonadicLoweringArtifact({ contractArtifact, contractArtifactPath, contractArtifactSha256, packageVersion, checkpoint = 'KA-145 monadic contract lowering skeleton' } = {}) {
   const fn = contractFunctionFromArtifact(contractArtifact);
   const stateModel = stateModelFromArtifact(contractArtifact);
-  const binders = theoremBinderText(fn.params ?? [], fn.requirements ?? []);
+  const binders = programParameterBinderText(fn.params ?? []);
   const theoremName = `${safeLeanName(fn.name)}_triple`;
   const triple = tripleNameFromStateModel(stateModel);
-  const pre = logicalPrecondition(fn, stateModel);
+  const pre = logicalPrecondition(fn);
   const post = logicalPostcondition(fn);
   const monad = monadNameFromStateModel(stateModel);
   const programName = safeLeanName(fn.name);
@@ -115,6 +112,8 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
       postcondition: post,
       preconditionKind: preconditionFromStateModel(stateModel),
       postconditionKind: postconditionFromStateModel(stateModel),
+      modelAdequacyTheorem: stateModel?.semantics?.adequacyTheorem ?? null,
+      modelAdequacyChecked: false,
       loweringStatus: 'std-do-triple-skeleton',
       vcgenLoweringStatus: 'not-connected',
       leanCheckable: false,
@@ -130,6 +129,8 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
     },
     trustBoundary: {
       descriptorBound: true,
+      modelAdequacyTheoremBound: Boolean(stateModel?.semantics?.adequacyTheorem),
+      modelAdequacyChecked: false,
       verificationProfile: contractArtifact.verification?.profile ?? null,
       specifiedStructuralProfile: contractArtifact.verification?.profile === 'ps3-monadic-contracts0',
       stdDoTripleSkeletonGenerated: true,
