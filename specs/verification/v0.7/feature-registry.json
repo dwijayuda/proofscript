@@ -39,7 +39,7 @@
       "status": "specified-alpha",
       "surface": "result",
       "scope": "ensures propositions only",
-      "semantics": "Rewrites to an application of the contracted function to program parameters only. Requires hypotheses are theorem assumptions and are never passed as function arguments.",
+      "semantics": "Rewrites to a parenthesized application of the contracted function to program parameters only. Requires hypotheses are theorem assumptions and are never passed as function arguments.",
       "obligations": "Participates in the enclosing ensures obligation.",
       "runtime": "no runtime binding",
       "diagnostics": [
@@ -79,6 +79,23 @@
         "ghost expressions may not depend on result",
         "ghost expressions are nonrecursive and may not depend on ghost names in ps3-pure-contracts0",
         "runtime ghost references are rejected"
+      ]
+    },
+    {
+      "id": "V-OLD",
+      "class": "V",
+      "status": "specified-alpha",
+      "surface": "old(<entry-expression>)",
+      "scope": "pure ensures propositions only",
+      "semantics": "Refers to the pure function entry value of the expression. Because ps3-pure-contracts0 has no mutable state, lowering records snapshot provenance and inlines the entry expression as a parenthesized proposition term.",
+      "obligations": "Participates in the enclosing ensures obligation.",
+      "runtime": "no runtime binding; snapshot metadata is proof/provenance-only",
+      "diagnostics": [
+        "old is rejected in requires",
+        "old is rejected in runtime/assert bodies in ps3-pure-contracts0",
+        "old is rejected in ghost expressions",
+        "result is rejected inside old",
+        "nested-parenthesis old expressions are deferred in this alpha"
       ]
     }
   ]
