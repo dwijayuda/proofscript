@@ -211,7 +211,8 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - canonical bank descriptor now binds its Lean import/namespace and `StateM Bank` constructor
 - provable debit-only end-to-end example (`07-bank-debit-stateful-vc.ps`) — added as the first semantic execution target
 - Lean VC derivation request blueprint (`proofscript.stateful-vc-request/v1`) — implemented; canonical bank model now has request-source provenance
-- pinned Lean 4.33.1 VC execution runner (`proofscript.stateful-vc-run/v1`) + dedicated `stateful-lean-ci` workflow — implemented; execution evidence pending hosted runner availability
+- Lean >=4.33.1 VC execution runner (`proofscript.stateful-vc-run/v1`) + dedicated `stateful-lean-ci` compatibility workflow — implemented; execution evidence pending hosted runner availability
+- Lean >=4.33.1 stateful compatibility policy — executable gate added; default developer toolchain is 4.34.0, while CI dynamically tracks latest stable and RC
 - public `psc monadic-vc-run` command — implemented; emits the same evidence schema and treats residual Lean VCs as an accepted `vcs-generated` run, not as a proof
 - stable Lean-derived residual-goal artifact (`proofscript.stateful-vc-goals/v1`) — implemented with deterministic IDs/hashes
 - evidence-based claim promotion is centralized in `@proofscript/monadic-lowering` and covered by synthetic fail-closed stage tests
@@ -244,7 +245,7 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 
 ## Next engineering target
 
-1. Run the new `stateful-lean-ci` lane on pinned Lean 4.33.1 and fix any real Lean elaboration/spec/tactic errors exposed by `ProofScript.Verification.BankStateModel` or the generated debit request.
+1. Run the `stateful-lean-ci` compatibility matrix (Lean 4.33.1 floor + latest stable + latest RC) and fix any real Lean elaboration/spec/tactic errors exposed by `ProofScript.Verification.BankStateModel` or the generated debit request.
 2. Capture `proofscript.stateful-vc-run/v1` evidence through either the strict runner or public `psc monadic-vc-run`; only actual Lean execution may set environment/program/Triple/vcgen claims true.
 3. If residual VCs remain, use their stable `proofscript.stateful-vc-goals/v1` IDs/hashes and discharge the debit-only example before widening to transfer semantics.
 4. Keep exceptional/abrupt-path coverage, state-model adequacy use, source-to-Lean program equivalence, and project-wide semantic proof discharge false until separately modeled and checked.
