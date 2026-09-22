@@ -14,12 +14,27 @@ import { prepareCoreEnvironment } from "@proofscript/environment";
 import { buildModuleGraph, ProjectModuleGraph, ProjectModuleSource, type ProjectSourceProvider } from "@proofscript/project";
 import { UnsupportedFeature, type SurfaceFeatureUse } from "@proofscript/syntax";
 
+export interface FrontendModuleCacheEntry {
+  readonly sourceSha256:string;
+  readonly visibleEnvironmentSha256:string;
+  readonly declarations:CoreDeclaration[];
+  readonly typeclasses:TypeclassEnvironmentMetadata;
+  readonly ownedFeatures:SurfaceFeatureUse[];
+}
+export interface FrontendModuleCache {
+  get(moduleName:string):FrontendModuleCacheEntry|undefined;
+  set(moduleName:string,entry:FrontendModuleCacheEntry):unknown;
+  delete?(moduleName:string):unknown;
+  keys?():IterableIterator<string>;
+}
 export interface FrontendOptions {
   prelude?:CoreArtifact;
   /** Internal module-driver switch: imports were already resolved by the project graph. */
   allowResolvedImports?:boolean;
   /** Optional source overlay for unsaved/editor buffers during project checks. */
   sourceProvider?:ProjectSourceProvider;
+  /** Optional in-process cache of previously checked modules. Entries are revalidated before reuse. */
+  moduleCache?:FrontendModuleCache;
 }
 export interface FrontendResult {
   artifact: ReturnType<typeof makeArtifact>;
@@ -40,6 +55,7 @@ export interface FrontendProjectResult {
   summary:CheckSummary;
   graph:ProjectModuleGraph;
   modules:CheckedProjectModule[];
+  moduleReuse:{reused:string[];rebuilt:string[]};
 }
 
 /** Check one already-loaded source unit. Filesystem imports require checkProjectFile. */
@@ -68,12 +84,27 @@ export function checkProjectFile(entryFile:string,options:FrontendOptions={}):Fr
   const baseTypeclasses=cloneTypeclasses(options.prelude?.typeclasses??emptyTypeclassEnvironment());
   const compiled=new Map<string,CheckedProjectModule>();
   const graphByName=new Map(graph.modules.map(m=>[m.name,m] as const));
+  const reused:string[]=[];
+  const rebuilt:string[]=[];
 
   for(const sourceModule of graph.modules){
     const visible=dependencyClosure(sourceModule,graphByName);
     const visibleModules=graph.modules.filter(m=>visible.has(m.name)).map(m=>compiled.get(m.name)!).filter(Boolean);
     const visibleDecls=[...baseDecls,...visibleModules.flatMap(m=>m.declarations)];
     const visibleTypeclasses=normalizeTypeclassOrder(visibleDecls,mergeTypeclasses(baseTypeclasses,...visibleModules.map(m=>m.typeclasses)));
+    const visibleEnvironmentSha256=checkedEnvironmentSha256(visibleDecls,visibleTypeclasses);
+    const cached=options.moduleCache?.get(sourceModule.name);
+    if(cached&&cached.sourceSha256===sourceModule.sourceSha256&&cached.visibleEnvironmentSha256===visibleEnvironmentSha256){
+      compiled.set(sourceModule.name,{
+        source:sourceModule,
+        declarations:cached.declarations,
+        typeclasses:cloneTypeclasses(cached.typeclasses),
+        ownedFeatures:cached.ownedFeatures.map(item=>({...item})),
+      });
+      reused.push(sourceModule.name);
+      continue;
+    }
+
     const envArtifact=makeArtifact(visibleDecls,visibleTypeclasses);
     const checked=checkSource(sourceModule.source,{prelude:envArtifact,allowResolvedImports:true});
     const declarations=checked.artifact.declarations.slice(visibleDecls.length);
@@ -82,7 +113,16 @@ export function checkProjectFile(entryFile:string,options:FrontendOptions={}):Fr
       classes:checked.artifact.typeclasses.classes.filter(c=>owned.has(c.name)).map(cloneClass),
       instances:checked.artifact.typeclasses.instances.filter(i=>owned.has(i.name)).map(i=>({...i})),
     };
-    compiled.set(sourceModule.name,{source:sourceModule,declarations,typeclasses,ownedFeatures:[...checked.ownedFeatures]});
+    const moduleResult:CheckedProjectModule={source:sourceModule,declarations,typeclasses,ownedFeatures:[...checked.ownedFeatures]};
+    compiled.set(sourceModule.name,moduleResult);
+    options.moduleCache?.set(sourceModule.name,{
+      sourceSha256:sourceModule.sourceSha256,
+      visibleEnvironmentSha256,
+      declarations,
+      typeclasses:cloneTypeclasses(typeclasses),
+      ownedFeatures:checked.ownedFeatures.map(item=>({...item})),
+    });
+    rebuilt.push(sourceModule.name);
   }
 
   const checkedModules=graph.modules.map(m=>compiled.get(m.name)!);
@@ -98,7 +138,7 @@ export function checkProjectFile(entryFile:string,options:FrontendOptions={}):Fr
       declarations:m.declarations.map(d=>d.name),
     })),
   };
-  return{artifact:makeArtifact(declarations,typeclasses,modules),summary,graph,modules:checkedModules};
+  return{artifact:makeArtifact(declarations,typeclasses,modules),summary,graph,modules:checkedModules,moduleReuse:{reused,rebuilt}};
 }
 
 function dependencyClosure(module:ProjectModuleSource,all:Map<string,ProjectModuleSource>):Set<string>{
@@ -128,4 +168,16 @@ function normalizeTypeclassOrder(declarations:readonly CoreDeclaration[],metadat
 }
 function cloneClass(c:TypeclassEnvironmentMetadata["classes"][number]):TypeclassEnvironmentMetadata["classes"][number]{return{...c,params:c.params.map(p=>({...p})),fields:c.fields.map(f=>({...f}))};}
 function cloneTypeclasses(x:TypeclassEnvironmentMetadata):TypeclassEnvironmentMetadata{return{classes:x.classes.map(cloneClass),instances:x.instances.map(i=>({...i}))};}
+function stableValue(value:unknown):unknown{
+  if(Array.isArray(value))return value.map(stableValue);
+  if(value&&typeof value==="object"){
+    const input=value as Record<string,unknown>;const output:Record<string,unknown>={};
+    for(const key of Object.keys(input).sort()){const item=input[key];if(item!==undefined)output[key]=stableValue(item);}
+    return output;
+  }
+  return value;
+}
+function checkedEnvironmentSha256(declarations:readonly CoreDeclaration[],typeclasses:TypeclassEnvironmentMetadata):string{
+  return sha256Text(JSON.stringify(stableValue({declarations,typeclasses})));
+}
 function sha256Text(text:string):string{return crypto.createHash("sha256").update(text).digest("hex");}
