@@ -145,3 +145,34 @@ Stateful `old` / `result` can be promoted only after a model-specific elaborator
 8. preserves all profile/provenance hashes through artifacts.
 
 Until then, this IR is an explicit semantic staging boundary, not a proof claim.
+
+
+## Normalized predicate form
+
+When a descriptor declares a state observation with `stateArgument: "last"`, the current structural normalizer makes binder roles explicit in ProofScript-form predicates.
+
+Example:
+
+```text
+balanceOf(from) = old(balanceOf(from)) - amount
+```
+
+normalizes to:
+
+```text
+balanceOf(from, __ps_final) = (balanceOf(from, __ps_entry)) - amount
+```
+
+and:
+
+```text
+result = result
+```
+
+normalizes to:
+
+```text
+__ps_result = __ps_result
+```
+
+The Triple skeleton wraps these bodies as a postcondition function over `__ps_result` and `__ps_final`, while `__ps_entry` is an outer captured theorem binder constrained by the precondition. This is still structural source normalization; it is not yet Lean elaboration or proof discharge.
