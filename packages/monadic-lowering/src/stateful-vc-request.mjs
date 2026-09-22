@@ -27,7 +27,8 @@ export function createStatefulVcRequest(loweringArtifact) {
   const openNamespaces = uniqueStrings(['Std.Do', ...(stateModel.lean?.openNamespaces ?? [])]);
   const standardImports = ['Std.Tactic.Do'];
   const allImports = uniqueStrings([...standardImports, ...declaredImports]);
-  const tactic = stateModel.vcgen?.tactic === 'mvcgen' ? 'mvcgen' : 'vcgen';
+  const requestedTactic = stateModel.vcgen?.tactic ?? null;
+  const tactic = requestedTactic ?? (stateModel.wp?.triple === 'Std.Do.Triple' ? 'mvcgen' : 'vcgen');
   const specTheorems = uniqueStrings((vcPlan.operationGoals ?? []).map(goal => goal.tripleTheorem));
   const invocationTheorems = tactic === 'vcgen' ? specTheorems : [];
   const diagnostics = [];
@@ -115,6 +116,9 @@ end ProofScript.Generated.VCRequest
     },
     tactic: {
       name: tactic,
+      requestedName: requestedTactic,
+      selectedFromTriple: requestedTactic === null,
+      tripleIdentity: stateModel.wp?.triple ?? null,
       specificationTheorems: specTheorems,
       invocationTheorems,
       specificationDiscovery: tactic === 'mvcgen' ? 'registered-attribute' : 'explicit-list',
