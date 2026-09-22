@@ -46,8 +46,23 @@ for (const item of positive) {
   assert.equal(artifact.statefulPostconditionIR.defaultExpressionState, "final-state", item.id);
   assert.equal(artifact.statefulPostconditionIR.predicateNormalizationComplete, true, item.id);
   assert.equal(artifact.statefulPostconditionIR.semanticElaborationComplete, false, item.id);
+  assert.equal(artifact.statefulPostconditionIR.binders.entryState.role, "entry-state", item.id);
+  assert.equal(artifact.statefulPostconditionIR.binders.result.role, "result", item.id);
+  assert.equal(artifact.statefulPostconditionIR.binders.finalState.role, "final-state", item.id);
+  const oldReferenceCount = artifact.statefulPostconditionIR.clauses.reduce(
+    (count: number, clause: any) => count + clause.oldReferences.length,
+    0,
+  );
+  const resultReferenceCount = artifact.statefulPostconditionIR.clauses.reduce(
+    (count: number, clause: any) => count + clause.resultReferences.length,
+    0,
+  );
+  assert.equal(oldReferenceCount, item.expected.old_references ?? 0, item.id);
+  assert.equal(resultReferenceCount, item.expected.result_references ?? 0, item.id);
   assert.ok(artifact.statefulPostconditionIR.clauses.every((clause: any) =>
-    clause.oldReferences.length === 0 && clause.resultReferences.length === 0
+    clause.oldReferences.every((oldRef: any) => oldRef.stateRole === "entry-state")
+    && clause.resultReferences.every((resultRef: any) => resultRef.binderRole === "result")
+    && clause.finalStateObservationReferences.every((ref: any) => ref.stateRole === "final-state")
   ), item.id);
   assert.equal(artifact.statefulPostconditionIR.observationBindingStatus, "descriptor-bound", item.id);
   assert.ok(artifact.statefulPostconditionIR.modelObservations.some((observation: any) => observation.name === "balanceOf"), item.id);
