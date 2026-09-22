@@ -1,12 +1,15 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import {
   leanForContract,
   makeContractsArtifact,
   parsePureContractSource,
 } from "../packages/contracts/src/index.mjs";
+import { normalizeObligationsForWorkflow } from "../packages/obligations/src/index.mjs";
+import { createProofStatusArtifact } from "../packages/proof-status/src/index.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
 const specDir = path.join(root, "specs", "verification", "v0.7");
@@ -84,6 +87,37 @@ for (const item of negative) {
     (error: unknown) => error instanceof Error && error.message.includes(item.error),
     item.id,
   );
+}
+
+const manifestCase = positive.find((item: any) => item.id === "ghost-proof-only-substitution")!;
+const manifestBuilt = makeContractsArtifact({
+  sourceText: manifestCase.source,
+  sourcePath: "Ghost.ps",
+  sourceSha256: "1".repeat(64),
+  packageVersion: "test",
+});
+const manifestObligations = normalizeObligationsForWorkflow(
+  { ...manifestBuilt.artifact, contractsSha256: "2".repeat(64) },
+  "Ghost.contracts.json",
+  { packageVersion: "test", checkpoint: "ps3-test" },
+);
+assert.deepEqual(manifestObligations.verification, manifestBuilt.artifact.verification);
+
+const manifestTmp = fs.mkdtempSync(path.join(os.tmpdir(), "proofscript-ps3-manifest-"));
+try {
+  const obligationsPath = path.join(manifestTmp, "Ghost.obligations.json");
+  const proofStatusPath = path.join(manifestTmp, "Ghost.proofstatus.json");
+  fs.writeFileSync(obligationsPath, JSON.stringify(manifestObligations, null, 2) + "\n");
+  const proofStatus = createProofStatusArtifact({
+    obligations: manifestObligations,
+    obligationsPath,
+    outPath: proofStatusPath,
+    proofsArtifact: { schema: "proofscript.lean-proofs.v1", proofs: [] },
+    packageVersion: "test",
+  });
+  assert.deepEqual(proofStatus.verification, manifestBuilt.artifact.verification);
+} finally {
+  fs.rmSync(manifestTmp, { recursive: true, force: true });
 }
 
 const stableA = parsePureContractSource(
