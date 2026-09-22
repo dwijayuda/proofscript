@@ -1,4 +1,4 @@
-import {ParseError,UnsupportedFeature,Token,SurfaceBinder,SurfaceDeclaration,SurfaceLevel,SurfacePattern,SurfaceTerm} from "@proofscript/syntax";
+import {ParseError,UnsupportedFeature,Token,SurfaceBinder,SurfaceDeclaration,SurfaceLevel,SurfacePattern,SurfaceTerm,type SurfaceFeatureId,type SurfaceFeatureUse} from "@proofscript/syntax";
 import {TokenCursor} from "./tokenCursor";
 import {makeBoolIf} from "./sugar";
 import {parseDeclaration} from "./declarationParser";
@@ -16,7 +16,7 @@ type SectionVariablePolicy="default"|"include"|"omit";
 interface SectionVariableEntry{binder:SurfaceBinder;dependencies:string[];policy:SectionVariablePolicy;}
 export interface ParserState{commandIndex:number;grammarRevision:number;universeParams:string[];}
 export interface ParseOptions{knownGlobalNames?:readonly string[];validateOpenNamespaces?:boolean;}
-export interface ParseResult{imports:string[];declarations:SurfaceDeclaration[];finalState:ParserState;}
+export interface ParseResult{imports:string[];declarations:SurfaceDeclaration[];finalState:ParserState;ownedFeatures:SurfaceFeatureUse[];}
 export function parseSource(source:string,initial:ParserState={commandIndex:0,grammarRevision:0,universeParams:[]},options:ParseOptions={}):ParseResult{return new Parser(tokenize(source),initial,options).parseFile();}
 
 export {tokenize} from "./tokenize";
@@ -27,7 +27,7 @@ import {tokenize} from "./tokenize";
 function countLeadingSurfacePis(term:SurfaceTerm):number{let n=0,cur=term;while(cur.tag==="pi"){n++;cur=cur.body;}return n;}
 
 class Parser extends TokenCursor{
-  private state:ParserState;private namespaceStack:string[]=[];private openedNamespaces:string[]=[];private knownNamespaces=new Set<string>();private sectionVariables:SectionVariableEntry[]=[];private readonly validateOpenNamespaces:boolean;
+  private state:ParserState;private namespaceStack:string[]=[];private openedNamespaces:string[]=[];private knownNamespaces=new Set<string>();private sectionVariables:SectionVariableEntry[]=[];private ownedFeatures:SurfaceFeatureUse[]=[];private readonly validateOpenNamespaces:boolean;
   constructor(tokens:Token[],initial:ParserState,options:ParseOptions){
     super(tokens);
     this.state={...initial,universeParams:[...initial.universeParams]};
@@ -47,7 +47,7 @@ class Parser extends TokenCursor{
         bodyStarted=true;this.parseNonImportCommand(declarations);
       }
     }
-    return{imports,declarations,finalState:this.state};
+    return{imports,declarations,finalState:this.state,ownedFeatures:[...this.ownedFeatures]};
   }
   private parseNonImportCommand(declarations:SurfaceDeclaration[]):void{
     if(this.atId("import"))throw new ParseError(`import declarations must appear before all non-import commands (offset ${this.peek().offset})`);
@@ -173,6 +173,12 @@ class Parser extends TokenCursor{
   private currentNamespace():string[]{return[...this.namespaceStack];}
   private currentOpenNamespaces():string[]{return[...this.openedNamespaces];}
   private bumpCommand():void{this.state={...this.state,commandIndex:this.state.commandIndex+1};}
+  private markOwnedFeature(feature:SurfaceFeatureId,startOffset:number,endOffset:number=this.peek().offset):void{
+    const start=Math.max(0,startOffset);
+    const end=Math.max(start,endOffset);
+    const duplicate=this.ownedFeatures.some(item=>item.feature===feature&&item.startOffset===start&&item.endOffset===end);
+    if(!duplicate)this.ownedFeatures.push({feature,startOffset:start,endOffset:end});
+  }
 
   private makeScopeCommandHost():ScopeCommandHost<SectionVariableEntry[]>{return{
     at:(text)=>this.at(text),
@@ -242,10 +248,11 @@ class Parser extends TokenCursor{
     peek:()=>this.peek()
   });}
   private parseDefinition():SurfaceDeclaration{
-    this.expectId("def");const name=this.expectKind("id","definition name").text;const binders:SurfaceBinder[]=[];while(this.canStartValueBinder())binders.push(...this.parseValueBinderGroup());
+    const featureStart=this.peek().offset;this.expectId("def");const name=this.expectKind("id","definition name").text;const binders:SurfaceBinder[]=[];while(this.canStartValueBinder())binders.push(...this.parseValueBinderGroup());
     if(!this.at(":"))throw new UnsupportedFeature("K3c-section-vars0 requires an explicit result type on def");this.expect(":");const type=this.parseTerm();
     if(this.at(":=")){
       this.next();const value=this.parseDefinitionValueAfterAssign();
+      if(binders.length)this.markOwnedFeature("D-EXPLICIT-PARAMS",featureStart,this.peek().offset);
       return{kind:"definition",name,binders,type,value,availableLevels:[...this.state.universeParams]};
     }
     if(this.at("|")){
@@ -254,35 +261,38 @@ class Parser extends TokenCursor{
       if(this.at(";"))this.next();
       if(equations.length===0)throw new ParseError("equation definition requires at least one clause");
       if(equations.some((c,i)=>c.pattern.tag==="wildcard"&&i!==equations.length-1))throw new UnsupportedFeature("K3c-section-vars0 currently requires wildcard equation pattern '_' to be the final clause");
+      if(binders.length)this.markOwnedFeature("D-EXPLICIT-PARAMS",featureStart,this.peek().offset);
       return{kind:"equationDefinition",name,binders,type,equations,availableLevels:[...this.state.universeParams]};
     }
     throw new ParseError(`expected ':=' or equation clause '|' after definition type at offset ${this.peek().offset}`);
   }
   private parseFunctionAliasDeclaration():SurfaceDeclaration{
-    this.expectId("function");const name=this.expectKind("id","function name").text;const binders:SurfaceBinder[]=[];while(this.canStartValueBinder())binders.push(...this.parseValueBinderGroup());
+    const featureStart=this.peek().offset;this.expectId("function");const name=this.expectKind("id","function name").text;const binders:SurfaceBinder[]=[];while(this.canStartValueBinder())binders.push(...this.parseValueBinderGroup());
     if(binders.length===0)throw new ParseError("ProofScript function alias requires at least one typed binder and expands to def");
     if(!this.at(":"))throw new UnsupportedFeature("PSC-1 function alias currently requires an explicit result type before expansion to def");this.expect(":");const type=this.parseTerm();
     this.expect(":=");const value=this.parseDefinitionValueAfterAssign();
+    this.markOwnedFeature("D-FUNCTION-ALIAS",featureStart,this.peek().offset);this.markOwnedFeature("D-EXPLICIT-PARAMS",featureStart,this.peek().offset);
     return{kind:"definition",name,binders,type,value,availableLevels:[...this.state.universeParams]};
   }
   private parseConstAliasDeclaration():SurfaceDeclaration{
-    this.expectId("const");const name=this.expectKind("id","const name").text;
+    const featureStart=this.peek().offset;this.expectId("const");const name=this.expectKind("id","const name").text;
     if(this.canStartValueBinder())throw new ParseError("ProofScript const alias is binderless at top level; use def/function for functions");
     if(!this.at(":"))throw new UnsupportedFeature("PSC-1 const alias currently requires an explicit result type before expansion to def");this.expect(":");const type=this.parseTerm();
     this.expect(":=");const value=this.parseDefinitionValueAfterAssign();
+    this.markOwnedFeature("D-CONST-ALIAS",featureStart,this.peek().offset);
     return{kind:"definition",name,binders:[],type,value,availableLevels:[...this.state.universeParams]};
   }
   private parseDefinitionValueAfterAssign():SurfaceTerm{
     if(this.at("{")&&shouldParseBracedDefinitionBodyAsTerm(this.tokens,this.i)){
       const value=this.parseTerm();
-      if(this.atId("where"))return parseWhereBodyFromHost(this.makeWhereBodyParserHost(),value);
+      if(this.atId("where")){const featureStart=this.peek().offset;const out=parseWhereBodyFromHost(this.makeWhereBodyParserHost(),value);this.markOwnedFeature("E-WHERE-BODY",featureStart,this.peek().offset);return out;}
       this.expect(";");
       return value;
     }
     if(this.at("{")){this.next();const value=this.parseDefBodySequence();this.expect("}");if(this.at(";"))this.next();return value;}
     if(this.atId("let")||this.atId("have"))throw new UnsupportedFeature("PSC-1 v0.6.1 expression-bodied declarations use one term; wrap local let/have sequences in the current checked block form");
     const value=this.parseTerm();
-    if(this.atId("where"))return parseWhereBodyFromHost(this.makeWhereBodyParserHost(),value);
+    if(this.atId("where")){const featureStart=this.peek().offset;const out=parseWhereBodyFromHost(this.makeWhereBodyParserHost(),value);this.markOwnedFeature("E-WHERE-BODY",featureStart,this.peek().offset);return out;}
     this.expect(";");return value;
   }
   private parseDefBodySequence():SurfaceTerm{
@@ -318,7 +328,7 @@ class Parser extends TokenCursor{
 
 
   private parseClassDeclaration():SurfaceDeclaration{
-    this.expectId("class");const name=this.expectKind("id","class name").text;
+    const featureStart=this.peek().offset;this.expectId("class");const name=this.expectKind("id","class name").text;
     const params:SurfaceBinder[]=[];while(this.at("("))params.push(...this.parseExplicitBinderGroup());
     if(this.at(":")){this.next();const declaredType=this.parseTerm();if(declaredType.tag!=="sort")throw new UnsupportedFeature("PSC-1 class result type must be Type/Sort in the current reference-governed slice");}
     if(this.atId("where"))this.next();
@@ -326,6 +336,7 @@ class Parser extends TokenCursor{
     this.expect("{");const fields:{name:string;type:SurfaceTerm}[]=[];
     while(!this.at("}")){const fieldName=this.expectKind("id","class field name").text;if(this.at("("))throw new UnsupportedFeature("K3c-section-vars0 does not yet implement class method binder sugar; write an explicit function type after ':'");this.expect(":");const type=this.parseTerm();this.expect(";");if(fields.some(f=>f.name===fieldName))throw new ParseError(`duplicate class field '${fieldName}'`);fields.push({name:fieldName,type});}
     this.expect("}");if(this.at(";"))this.next();if(fields.length===0)throw new UnsupportedFeature("K3c-section-vars0 does not yet implement empty classes");
+    this.markOwnedFeature("E-CLASS-BODY",featureStart,this.peek().offset);if(params.length)this.markOwnedFeature("D-EXPLICIT-PARAMS",featureStart,this.peek().offset);
     return{kind:"class",name,params,fields,availableLevels:[...this.state.universeParams]};
   }
   private parseInstanceDeclaration():SurfaceDeclaration{
@@ -341,7 +352,7 @@ class Parser extends TokenCursor{
   }
 
   private parseStructureDeclaration():SurfaceDeclaration{
-    this.expectId("structure");const name=this.expectKind("id","structure name").text;
+    const featureStart=this.peek().offset;this.expectId("structure");const name=this.expectKind("id","structure name").text;
     if(this.at("("))throw new UnsupportedFeature("K3c-section-vars0 does not yet implement structure parameters");
     if(this.at(":")){this.next();const declaredType=this.parseTerm();if(declaredType.tag!=="sort")throw new UnsupportedFeature("PSC-1 structure result type must be Type/Sort in the current reference-governed slice");}
     if(this.atId("where"))this.next();
@@ -364,10 +375,11 @@ class Parser extends TokenCursor{
     }
     this.expect("}");if(this.at(";"))this.next();
     if(fields.length===0)throw new UnsupportedFeature("K3c-section-vars0 does not yet implement empty structures");
+    this.markOwnedFeature("E-STRUCT-BODY",featureStart,this.peek().offset);
     return{kind:"structure",name,fields,availableLevels:[...this.state.universeParams]};
   }
   private parseInductiveDeclaration():SurfaceDeclaration{
-    this.expectId("inductive");const name=this.expectKind("id","inductive name").text;
+    const featureStart=this.peek().offset;this.expectId("inductive");const name=this.expectKind("id","inductive name").text;
     const params:SurfaceBinder[]=[];while(this.at("("))params.push(...this.parseExplicitBinderGroup());
     if(this.at("{")||this.at("⦃")||this.at("["))throw new UnsupportedFeature("K3c-section-vars0 currently implements explicit inductive parameters only");
     let type:SurfaceTerm={tag:"sort",level:{tag:"succ",of:{tag:"zero"}}};if(this.at(":")){this.next();type=this.parseTerm();}
@@ -382,6 +394,7 @@ class Parser extends TokenCursor{
       constructors.push({name:ctorName,binders,result});
     }
     this.expect("}");if(this.at(";"))this.next();if(constructors.length===0)throw new UnsupportedFeature("K3c-section-vars0 does not yet implement empty inductives");
+    this.markOwnedFeature("E-INDUCTIVE-BODY",featureStart,this.peek().offset);if(params.length)this.markOwnedFeature("D-EXPLICIT-PARAMS",featureStart,this.peek().offset);
     return{kind:"inductive",name,params,type,constructors,availableLevels:[...this.state.universeParams]};
   }
   private makeBinderParserHost():BinderParserHost{return{
@@ -415,7 +428,8 @@ class Parser extends TokenCursor{
       if(this.at("∀")||this.atId("forall"))return this.parseForall();
       return undefined;
     },
-    parseAtom:()=>this.parseAtom()
+    parseAtom:()=>this.parseAtom(),
+    markOwnedFeature:(feature,startOffset,endOffset)=>this.markOwnedFeature(feature,startOffset,endOffset)
   };}
 
   private parseDoBlock():SurfaceTerm{
@@ -435,14 +449,14 @@ class Parser extends TokenCursor{
   }
 
   private parseBoolIf():SurfaceTerm{
-    this.expectId("if");
+    const featureStart=this.peek().offset;this.expectId("if");
     if(this.at("(")){
       this.next();const condition=this.parseTerm();this.expect(")");
       if(this.at("{")){
         this.next();const thenBranch=this.parseDefBodySequence();this.expect("}");
         if(!this.atId("else"))throw new ParseError("PSC-1 v0.6.1 braced if requires `else` after the then branch");
         this.expectId("else");this.expect("{");const elseBranch=this.parseDefBodySequence();this.expect("}");
-        return makeBoolIf(condition,thenBranch,elseBranch);
+        this.markOwnedFeature("E-IF-BRACE",featureStart,this.peek().offset);return makeBoolIf(condition,thenBranch,elseBranch);
       }
       if(!this.atId("then"))throw new ParseError("PSC-1 Boolean if requires `then` after a parenthesized condition unless using `if (c) { t } else { e }`");
       this.expectId("then");const thenBranch=this.parseTerm();
@@ -465,7 +479,7 @@ class Parser extends TokenCursor{
     return makeBoolIf(condition,thenBranch,elseBranch);
   }
   private parseMatch():SurfaceTerm{
-    this.expectId("match");
+    const featureStart=this.peek().offset;this.expectId("match");
     let scrutinee:SurfaceTerm;
     if(this.at("(")){
       this.next();scrutinee=this.parseTerm();this.expect(")");
@@ -484,7 +498,7 @@ class Parser extends TokenCursor{
     }
     this.expect("}");if(cases.length===0)throw new ParseError("match requires at least one alternative");
     if(cases.some((c,i)=>c.pattern.tag==="wildcard"&&i!==cases.length-1))throw new UnsupportedFeature("K3c-section-vars0 currently requires wildcard match pattern '_' to be the final alternative");
-    return{tag:"match",scrutinee,cases};
+    this.markOwnedFeature("E-MATCH-BODY",featureStart,this.peek().offset);return{tag:"match",scrutinee,cases};
   }
   private parsePattern(where:"match"|"equation"):SurfacePattern{return parsePatternFromHost(this.makePatternParserHost(),where);}
   private makePatternParserHost():PatternParserHost{return{
