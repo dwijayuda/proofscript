@@ -12,6 +12,7 @@ import { buildStateModelBinding } from "../packages/state-models/src/index.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
 const sourcePath = path.join(root, "examples", "software", "07-bank-debit-stateful-vc.ps");
+const transferSourcePath = path.join(root, "examples", "software", "06-bank-transfer-monadic-contract.ps");
 const modelPath = path.join(root, "examples", "software", "06-bank-state.model.json");
 const leanProjectRoot = path.join(root, "specs", "verification", "v0.7", "lean");
 const leanModelPath = path.join(
@@ -25,6 +26,7 @@ const lakefilePath = path.join(leanProjectRoot, "lakefile.lean");
 const leanLibraryRootPath = path.join(leanProjectRoot, "ProofScript.lean");
 
 const sourceText = fs.readFileSync(sourcePath, "utf8");
+const transferSourceText = fs.readFileSync(transferSourcePath, "utf8");
 const descriptorText = fs.readFileSync(modelPath, "utf8");
 const descriptor = JSON.parse(descriptorText);
 const leanModel = fs.readFileSync(leanModelPath, "utf8");
@@ -68,6 +70,8 @@ assert.match(leanModel, /MonadStateOf\.modifyGet fun state => \(\(\), debitState
 assert.match(leanModel, /MonadStateOf\.modifyGet fun state : Bank => \(\(\), state\)/u);
 assert.match(leanModel, /@\[spec\][\s\S]*theorem debit_triple/u);
 assert.match(leanModel, /Std\.Do\.Spec\.modifyGet_StateT/u);
+assert.match(leanModel, /@\[simp\][\s\S]*theorem balanceOf_debitState_other/u);
+assert.match(leanModel, /@\[simp\][\s\S]*theorem balanceOf_creditState_other/u);
 assert.match(leanModel, /def runBankState .*:=\s*\n\s*StateT\.run program initial/u);
 assert.match(leanModel, /Std\.Do\.StateM\.of_wp_run_eq/u);
 assert.match(leanModel, /theorem runBankState_adequate/u);
@@ -170,5 +174,55 @@ assert.doesNotMatch(
   /balanceOf\s*\([^)]*,/u,
   "VC request must not contain comma-style ProofScript calls",
 );
+
+const transferBuilt = makeMonadicContractsArtifact({
+  sourceText: transferSourceText,
+  sourcePath: "examples/software/06-bank-transfer-monadic-contract.ps",
+  sourceSha256: sha256(transferSourceText),
+  packageVersion: "test",
+  stateModel,
+});
+assert.equal(transferBuilt.artifact.verification.profile, "ps3-monadic-contracts0");
+assert.equal(transferBuilt.artifact.statefulPredicateAST.typeCheckingComplete, true);
+assert.equal(transferBuilt.artifact.statefulPredicateAST.requirements.length, 2);
+const distinctRequirement = transferBuilt.artifact.statefulPredicateAST.requirements.find(
+  (item: any) => item.name === "distinct",
+);
+assert.ok(distinctRequirement);
+assert.equal(distinctRequirement.root.kind, "relation");
+assert.equal(distinctRequirement.root.operator, "!=");
+assert.equal(distinctRequirement.root.type, "Prop");
+
+const transferLowering = createMonadicLoweringArtifact({
+  contractArtifact: transferBuilt.artifact,
+  contractArtifactPath: "dist/06-bank-transfer.contracts.json",
+  contractArtifactSha256: "c".repeat(64),
+  packageVersion: "test",
+});
+assert.equal(transferLowering.statefulProgramLowering.programLoweringReady, true);
+assert.match(
+  transferLowering.statefulProgramLowering.leanDefinition,
+  /def transfer \(«from» : AccountId\) \(to : AccountId\) \(amount : Nat\) : StateM Bank Unit := do/u,
+);
+assert.match(transferLowering.statefulProgramLowering.leanDefinition, /debit «from» amount/u);
+assert.match(transferLowering.statefulProgramLowering.leanDefinition, /credit to amount/u);
+assert.equal(transferLowering.statefulLeanSemanticEncoding.encodingReady, true);
+assert.match(
+  transferLowering.statefulLeanSemanticEncoding.precondition.leanSource,
+  /«from» ≠ to/u,
+);
+assert.match(
+  transferLowering.statefulLeanSemanticEncoding.postcondition.leanSource,
+  /balanceOf \(«from»\) \(__ps_final\)/u,
+);
+assert.match(
+  transferLowering.statefulLeanSemanticEncoding.postcondition.leanSource,
+  /balanceOf \(to\) \(__ps_final\)/u,
+);
+assert.equal(transferLowering.statefulVcRequest.tactic.name, "mvcgen");
+assert.deepEqual(transferLowering.statefulVcRequest.tactic.invocationDefinitions, ["transfer"]);
+assert.match(transferLowering.statefulVcRequest.request.source, /mvcgen \[transfer\]/u);
+assert.match(transferLowering.statefulVcRequest.request.source, /all_goals simp_all/u);
+assert.doesNotMatch(transferLowering.statefulVcRequest.request.source, /\b(?:sorry|admit)\b/u);
 
 console.log("PS3_STATEFUL_LEAN_MODEL_TESTS=PASS");
