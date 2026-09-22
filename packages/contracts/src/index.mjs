@@ -67,6 +67,60 @@ export function rewritePureOldSnapshots(text, snapshots) {
   return normalizeSpaces(rewritten);
 }
 
+export function scanOldReferences(text) {
+  const source = String(text);
+  const out = [];
+  const re = /\bold\s*\(/g;
+  let match;
+  while ((match = re.exec(source)) !== null) {
+    const open = source.indexOf('(', match.index);
+    let depth = 1;
+    let i = open + 1;
+    for (; i < source.length && depth > 0; i += 1) {
+      if (source[i] === '(') depth += 1;
+      else if (source[i] === ')') depth -= 1;
+    }
+    if (depth !== 0) throw new Error("unterminated old(...) expression");
+    const end = i;
+    const expression = normalizeSpaces(source.slice(open + 1, end - 1));
+    if (!expression) throw new Error("old(...) requires a non-empty expression");
+    out.push({ expression, startOffset: match.index, endOffset: end, stateRole: 'entry-state' });
+    re.lastIndex = end;
+  }
+  return out;
+}
+
+export function scanResultReferences(text) {
+  return [...String(text).matchAll(/\bresult\b/g)].map(match => ({
+    startOffset: match.index,
+    endOffset: match.index + match[0].length,
+    binderRole: 'result',
+  }));
+}
+
+export function statefulPostconditionIRForContract(contract) {
+  return {
+    schema: 'proofscript.stateful-postcondition-ir/v1',
+    binders: {
+      entryState: { role: 'entry-state', suggestedName: '__ps_entry' },
+      result: { role: 'result', suggestedName: '__ps_result' },
+      finalState: { role: 'final-state', suggestedName: '__ps_final' },
+    },
+    defaultExpressionState: 'final-state',
+    clauses: (contract.ensures ?? []).map(ensure => {
+      const source = ensure.rawProposition ?? ensure.proposition ?? '';
+      return {
+        name: ensure.name,
+        source,
+        oldReferences: scanOldReferences(source),
+        resultReferences: scanResultReferences(source),
+      };
+    }),
+    loweringStatus: 'source-normalized-binder-roles-only',
+    semanticElaborationComplete: false,
+  };
+}
+
 export function rewriteGhostReferences(text, ghosts) {
   let out = String(text);
   for (const ghost of ghosts) {
@@ -518,14 +572,15 @@ export function leanForMonadicContract(contract) {
   const obligations = (contract.obligations ?? []).map(o => `-- monadic obligation ${o.name}\n${o.exactTheoremStatement ?? o.theoremStatement} := by\n  -- status: unproved; vcgen/mvcgen not connected in KA-144\n  admit`).join('\n\n');
   return `/- ProofScript KA-144 monadic/stateful contract skeleton.\n   Bound state model ${stateModel}. This is structural until vcgen/mvcgen is connected. -/\n\ndef ${contract.name}${params ? ` ${params}` : ''} : ${contract.returnType} := by\n  -- ProofScript monadic do body placeholder.\n  admit\n\n-- state model ${stateModel}\n${operations ? operations + '\n' : ''}${oldSnapshots ? oldSnapshots + '\n' : ''}${obligations}\n`;
 }
-export function monadicVerificationProfile(contract, stateModel) {
+export function monadicVerificationProfile(contract, stateModel, postconditionIR = statefulPostconditionIRForContract(contract)) {
   const declaredOperations = new Set((stateModel.operations ?? []).map(op => op.name));
   const unknownOperations = (contract.operations ?? [])
     .filter(op => !declaredOperations.has(op.operation))
     .map(op => op.operation);
   const unsupported = [];
-  if ((contract.oldSnapshots ?? []).length > 0) unsupported.push('stateful-old-not-modeled');
-  if ((contract.ensures ?? []).some(e => /\bresult\b/.test(e.rawProposition ?? e.proposition ?? ''))) unsupported.push('stateful-result-not-modeled');
+  if (postconditionIR.clauses.some(clause => clause.oldReferences.length > 0)) unsupported.push('stateful-old-not-modeled');
+  if (postconditionIR.clauses.some(clause => clause.resultReferences.length > 0)) unsupported.push('stateful-result-not-modeled');
+  if ((contract.requirements ?? []).some(r => /\bold\s*\(/.test(r.proposition ?? ''))) unsupported.push('old-in-requires');
   if ((contract.requirements ?? []).some(r => /\bresult\b/.test(r.proposition ?? ''))) unsupported.push('result-in-requires');
   if (unknownOperations.length > 0) unsupported.push('undeclared-state-operation');
 
@@ -565,7 +620,8 @@ export function assertVerificationProfile(artifact, requestedProfile) {
 
 export function makeMonadicContractsArtifact({ sourceText, sourcePath, sourceSha256, packageVersion, checkpoint = 'KA-144 state-model descriptor workflow', stateModel }) {
   const contract = parseMonadicContractSource(sourceText, sourcePath, stateModel);
-  const verification = monadicVerificationProfile(contract, stateModel);
+  const statefulPostconditionIR = statefulPostconditionIRForContract(contract);
+  const verification = monadicVerificationProfile(contract, stateModel, statefulPostconditionIR);
   return {
     artifact: {
       schema: 'proofscript.contracts.v1',
@@ -575,6 +631,7 @@ export function makeMonadicContractsArtifact({ sourceText, sourcePath, sourceSha
       source: sourcePath,
       sourceSha256,
       verification,
+      statefulPostconditionIR,
       stateModel: { name: stateModel.name, path: stateModel.path, sha256: stateModel.sha256, stateType: stateModel.stateType, monad: stateModel.monad, wp: stateModel.wp, semantics: stateModel.semantics, operations: stateModel.operations, laws: stateModel.laws, vcgen: stateModel.vcgen },
       functions: [{ name: contract.name, contractKind: contract.contractKind, params: contract.params, returnType: contract.returnType, requirements: contract.requirements, modelRequirements: contract.modelRequirements, ensures: contract.ensures, oldSnapshots: contract.oldSnapshots, operations: contract.operations, body: contract.body, stateModel: { name: stateModel.name, stateType: stateModel.stateType, monad: stateModel.monad } }],
       operations: contract.operations,
