@@ -1,14 +1,15 @@
-name: ps1-cleanup
+name: product-ci
 
 on:
   pull_request:
     branches: [main]
   push:
     branches:
+      - main
       - cleanup/ps1-architecture
 
 jobs:
-  ps1-regression:
+  product-regression:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
