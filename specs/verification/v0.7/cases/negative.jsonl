@@ -1,0 +1,4 @@
+{"id":"result-in-requires","feature":"V-RESULT","source":"function f(x: Nat): Nat\n  requires bad: result = x\n  ensures post: result = x\n:= {\n  x\n}","error":"'result' is only valid in ensures clauses"}
+{"id":"result-parameter-name","feature":"V-RESULT","source":"function f(result: Nat): Nat\n  ensures post: result = result\n:= {\n  result\n}","error":"parameter name 'result' is reserved"}
+{"id":"result-in-runtime-body","feature":"V-RESULT","source":"function f(x: Nat): Nat\n  ensures post: result = x\n:= {\n  result\n}","error":"'result' is only valid in ensures clauses"}
+{"id":"anonymous-requires-not-admitted","feature":"V-REQUIRES","source":"function f(x: Nat): Nat\n  requires x >= 0\n  ensures post: result = x\n:= {\n  x\n}","error":"unsupported contract clause"}
