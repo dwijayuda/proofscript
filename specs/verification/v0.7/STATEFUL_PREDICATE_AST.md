@@ -25,7 +25,8 @@ The bounded profile currently covers the forms needed by the promoted monadic co
 - natural-number, boolean, and string literals;
 - grouping parentheses;
 - arithmetic `+`, `-`, `*` over matching supported numeric types;
-- proposition equality `=`;
+- proposition equality `=` and `==`;
+- proposition inequality `!=`;
 - ordering `>`, `>=`, `<`, `<=` over matching supported numeric types.
 
 Unsupported tokens or forms fail closed for the strict structural profile instead of falling through to an untyped string.
@@ -41,7 +42,7 @@ descriptor: balanceOf : AccountId -> Bank -> Nat
 normalized call: balanceOf(from, __ps_final)
 ```
 
-The AST checks arity and argument types. Equality operands must have matching types. Ordering and arithmetic require compatible numeric operands. A successfully checked postcondition root must have type `Prop`.
+The AST checks arity and argument types. Equality/inequality operands must have matching types. Ordering and arithmetic require compatible numeric operands. Lean emission normalizes `==` to `=` and `!=` to `≠`. A successfully checked postcondition root must have type `Prop`.
 
 ## Profile boundary
 
