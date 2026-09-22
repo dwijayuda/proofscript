@@ -152,6 +152,33 @@ for (const item of positive) {
   assert.equal(lowering.statefulWpBinding.verificationConditionsGenerated, false, item.id);
   assert.equal(lowering.statefulWpBinding.semanticProofDischarge, false, item.id);
   assert.equal(lowering.summary.statefulWpIdentityBindingReady, true, item.id);
+  assert.equal(lowering.statefulVcPlan.schema, "proofscript.stateful-vc-plan/v1", item.id);
+  assert.equal(lowering.statefulVcPlan.planningReady, true, item.id);
+  assert.equal(lowering.statefulVcPlan.summary.operationGoals, contract.operations.length, item.id);
+  assert.equal(lowering.statefulVcPlan.summary.postconditionGoals, contract.ensures.length, item.id);
+  assert.equal(lowering.statefulVcPlan.summary.operationTheoremIdentitiesBound, true, item.id);
+  assert.equal(lowering.statefulVcPlan.summary.typedGoalsReady, true, item.id);
+  assert.equal(lowering.statefulVcPlan.summary.sourceObligationsBound, true, item.id);
+  assert.ok(lowering.statefulVcPlan.operationGoals.every((goal: any) =>
+    goal.theoremIdentityBound === true
+    && goal.theoremChecked === false
+    && goal.semanticDerivationComplete === false
+    && goal.discharged === false
+  ), item.id);
+  assert.ok(lowering.statefulVcPlan.postconditionGoals.every((goal: any) =>
+    goal.inferredType === "Prop"
+    && goal.typeCheckingComplete === true
+    && goal.semanticDerivationComplete === false
+    && goal.discharged === false
+  ), item.id);
+  assert.equal(lowering.statefulVcPlan.tripleGoal.theoremStatement, lowering.tripleSkeleton.theoremStatement, item.id);
+  assert.equal(lowering.statefulVcPlan.semanticVcDerivationComplete, false, item.id);
+  assert.equal(lowering.statefulVcPlan.realVerificationConditionsGenerated, false, item.id);
+  assert.equal(lowering.statefulVcPlan.vcgenConnected, false, item.id);
+  assert.equal(lowering.statefulVcPlan.semanticProofDischarge, false, item.id);
+  assert.equal(lowering.summary.statefulVcPlanningReady, true, item.id);
+  assert.equal(lowering.summary.semanticVcDerivationComplete, false, item.id);
+  assert.equal(lowering.summary.realVerificationConditionsGenerated, false, item.id);
   assert.equal(lowering.summary.wholePredicateTypeCheckingComplete, false, item.id);
   assert.equal(lowering.trustBoundary.specifiedStructuralProfile, true, item.id);
   assert.equal(lowering.summary.semanticProofDischarge, false, item.id);
@@ -193,6 +220,7 @@ for (const item of positive) {
   assert.deepEqual(preflight.statefulPredicateElaboration, artifact.statefulPredicateElaboration, item.id);
   assert.deepEqual(preflight.statefulPredicateAST, artifact.statefulPredicateAST, item.id);
   assert.deepEqual(preflight.statefulWpBinding, lowering.statefulWpBinding, item.id);
+  assert.deepEqual(preflight.statefulVcPlan, lowering.statefulVcPlan, item.id);
   assert.equal(preflight.staticChecks.hasStatefulPostconditionIR, true, item.id);
   assert.equal(preflight.staticChecks.hasStatefulPredicateElaboration, true, item.id);
   assert.equal(preflight.staticChecks.hasStatefulPredicateAST, true, item.id);
@@ -200,10 +228,17 @@ for (const item of positive) {
   assert.equal(preflight.staticChecks.normalizedPredicateAstTypeCheckingComplete, true, item.id);
   assert.equal(preflight.staticChecks.hasStatefulWpBinding, true, item.id);
   assert.equal(preflight.staticChecks.statefulWpIdentityBindingReady, true, item.id);
+  assert.equal(preflight.staticChecks.hasStatefulVcPlan, true, item.id);
+  assert.equal(preflight.staticChecks.statefulVcPlanningReady, true, item.id);
+  assert.equal(preflight.staticChecks.semanticVcDerivationComplete, false, item.id);
+  assert.equal(preflight.staticChecks.realVerificationConditionsGenerated, false, item.id);
   assert.equal(preflight.staticChecks.wholePredicateTypeCheckingComplete, false, item.id);
   assert.equal(preflight.staticChecks.statefulPostconditionSemanticElaborationComplete, false, item.id);
   assert.equal(preflight.trustBoundary.specifiedStructuralProfile, true, item.id);
   assert.equal(preflight.trustBoundary.wpTripleIdentityBindingComplete, true, item.id);
+  assert.equal(preflight.trustBoundary.statefulVcPlanningReady, true, item.id);
+  assert.equal(preflight.trustBoundary.semanticVcDerivationComplete, false, item.id);
+  assert.equal(preflight.trustBoundary.realVerificationConditionsGenerated, false, item.id);
   assert.equal(preflight.trustBoundary.wpTripleSemanticEquivalenceChecked, false, item.id);
   assert.equal(preflight.trustBoundary.stateModelAdequacyChecked, false, item.id);
   assert.equal(preflight.trustBoundary.preflightOnly, true, item.id);
@@ -331,6 +366,8 @@ for (const item of negative) {
     assert.deepEqual(lowering.statefulPredicateAST, ast, item.id);
     assert.equal(lowering.statefulWpBinding.bindingReady, false, item.id);
     assert.equal(lowering.statefulWpBinding.wpTripleIdentityBindingComplete, false, item.id);
+    assert.equal(lowering.statefulVcPlan.planningReady, false, item.id);
+    assert.equal(lowering.statefulVcPlan.realVerificationConditionsGenerated, false, item.id);
     const preflight = createMonadicLeanPreflightArtifact({
       loweringArtifact: lowering,
       loweringArtifactPath: `<${item.id}.monadic-lowering.json>`,
@@ -342,7 +379,10 @@ for (const item of negative) {
     });
     assert.deepEqual(preflight.statefulPredicateAST, ast, item.id);
     assert.deepEqual(preflight.statefulWpBinding, lowering.statefulWpBinding, item.id);
+    assert.deepEqual(preflight.statefulVcPlan, lowering.statefulVcPlan, item.id);
     assert.equal(preflight.staticChecks.statefulWpIdentityBindingReady, false, item.id);
+    assert.equal(preflight.staticChecks.statefulVcPlanningReady, false, item.id);
+    assert.equal(preflight.staticChecks.realVerificationConditionsGenerated, false, item.id);
   }
   if (item.missing_operation_triple_theorem) {
     assert.ok(
@@ -357,6 +397,8 @@ for (const item of negative) {
     });
     assert.equal(lowering.statefulWpBinding.operationTripleTheoremIdentitiesBound, false, item.id);
     assert.equal(lowering.statefulWpBinding.bindingReady, false, item.id);
+    assert.equal(lowering.statefulVcPlan.planningReady, false, item.id);
+    assert.equal(lowering.statefulVcPlan.summary.operationTheoremIdentitiesBound, false, item.id);
   }
   if (item.unknown_operation) {
     assert.ok(artifact.verification.unknownOperations.includes(item.unknown_operation), item.id);
