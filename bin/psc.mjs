@@ -9,7 +9,13 @@ import { assertVerificationProfile, makeContractsArtifact, makeMonadicContractsA
 import { normalizeObligationsForWorkflow } from '../packages/obligations/src/index.mjs';
 import { readProofClaims, createProofStatusArtifact, verifyProofStatusArtifact } from '../packages/proof-status/src/index.mjs';
 import { readStateModelDescriptor, validateStateModelDescriptor, buildStateModelBinding } from '../packages/state-models/src/index.mjs';
-import { monadicLoweringCommand, monadicVcRequestCommand, monadicPreflightCommand } from './monadic-commands.mjs';
+import {
+  monadicLoweringCommand,
+  monadicVcRequestCommand,
+  monadicPreflightCommand,
+  createMonadicLoweringBundle,
+  createMonadicLeanPreflightBundle,
+} from './monadic-commands.mjs';
 import {
   CURRENT_PRODUCT_PROFILE,
   CURRENT_PROOFSCRIPT_REFERENCE,
