@@ -10,6 +10,8 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - run: npm ci --ignore-scripts
+      - name: Pin repository-compatible TypeScript for legacy K3-TB build
+        run: npm install --no-save --ignore-scripts typescript@5.9.3
       - run: npm run build
       - run: npm run verify:production:no-build
 
@@ -21,6 +23,8 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - run: npm ci --ignore-scripts
+      - name: Pin repository-compatible TypeScript for legacy K3-TB build
+        run: npm install --no-save --ignore-scripts typescript@5.9.3
       - run: npm run build
       - name: Install exact pinned Lean 4.33.1 for trusted-boundary K3-TB
         shell: bash
