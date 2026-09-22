@@ -96,7 +96,7 @@ The runner is expected to invoke ${tactic}, capture any generated goals, and
 record the result separately. Unsolved goals are expected at this stage.
 -/
 theorem ${requestName}${binders ? ` ${binders}` : ''} : ${target} := by
-  ${tactic}${invocationTheorems.length ? ` [${invocationTheorems.join(', ')}]` : ''}
+  ${tactic}${invocationItems.length ? ` [${invocationItems.join(', ')}]` : ''}
   all_goals trace_state
 
 end ProofScript.Generated.VCRequest
