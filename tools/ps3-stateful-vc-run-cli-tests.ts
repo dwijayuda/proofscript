@@ -93,7 +93,6 @@ fs.writeFileSync(model, JSON.stringify({
   }],
   vcgen: {
     status: "planned",
-    tactic: "vcgen",
   },
 }, null, 2) + "\n");
 
@@ -118,6 +117,12 @@ assert.equal(loweringResult.status, "accepted");
 
 const loweringArtifact = JSON.parse(fs.readFileSync(lowering, "utf8"));
 assert.equal(loweringArtifact.statefulVcRequest.requestSourceReady, true);
+assert.equal(loweringArtifact.statefulVcRequest.tactic.name, "mvcgen");
+assert.equal(loweringArtifact.statefulVcRequest.tactic.requestedName, null);
+assert.equal(loweringArtifact.statefulVcRequest.tactic.selectedFromTriple, true);
+assert.equal(loweringArtifact.statefulVcRequest.tactic.tripleIdentity, "Std.Do.Triple");
+assert.match(loweringArtifact.statefulVcRequest.request.source, /\bmvcgen\b/u);
+assert.doesNotMatch(loweringArtifact.statefulVcRequest.request.source, /mvcgen\s*\[/u);
 assert.equal(loweringArtifact.statefulVcRequest.leanEnvironmentResolved, false);
 assert.equal(loweringArtifact.statefulVcRequest.tacticExecuted, false);
 assert.equal(loweringArtifact.statefulVcRequest.realVerificationConditionsGenerated, false);
