@@ -57,8 +57,11 @@ fs.writeFileSync(modelFile, JSON.stringify({
   wp: { triple: 'Std.Do.Triple', precondition: 'Bank -> Prop', postcondition: 'α -> Bank -> Prop' },
   semantics: { runner: 'runBankState', adequacyTheorem: 'runBankState_adequate' },
   operations: [
-    { name: 'debit', type: 'AccountId -> Nat -> State Bank Unit', spec: 'decreases source balance by amount' },
-    { name: 'credit', type: 'AccountId -> Nat -> State Bank Unit', spec: 'increases destination balance by amount' }
+    { name: 'debit', type: 'AccountId -> Nat -> State Bank Unit', spec: 'decreases source balance by amount', verification: { tripleTheorem: 'BankStateModel.debit_triple' } },
+    { name: 'credit', type: 'AccountId -> Nat -> State Bank Unit', spec: 'increases destination balance by amount', verification: { tripleTheorem: 'BankStateModel.credit_triple' } }
+  ],
+  observations: [
+    { name: 'balanceOf', type: 'AccountId -> Bank -> Nat', stateArgument: 'last', spec: 'reads account balance' }
   ],
   laws: [{ name: 'debit_credit_preserve_total', statement: 'transfer preserves total bank balance' }],
   vcgen: { status: 'planned', tactic: 'vcgen' }
@@ -77,9 +80,14 @@ fs.writeFileSync(transfer, `function transfer(from: AccountId, to: AccountId, am
 
 jsonFrom(runOk(node, [psc, 'state-model', 'validate', modelFile, '--json'], app));
 const contractsFile = path.join(app, 'dist', 'Transfer.contracts.json');
-jsonFrom(runOk(node, [psc, 'contracts', transfer, '--state-model', modelFile, '--out', contractsFile, '--emit-lean', path.join(app, 'dist', 'Transfer.contracts.lean'), '--json'], app));
+const contracts = jsonFrom(runOk(node, [psc, 'contracts', transfer, '--state-model', modelFile, '--out', contractsFile, '--emit-lean', path.join(app, 'dist', 'Transfer.contracts.lean'), '--json'], app));
+assert.equal(contracts.verification.profile, 'ps3-monadic-contracts0');
+assert.equal(contracts.statefulPredicateAST.typeCheckingComplete, true);
 const loweringFile = path.join(app, 'dist', 'Transfer.monadic-lowering.json');
-jsonFrom(runOk(node, [psc, 'monadic-lowering', contractsFile, '--out', loweringFile, '--emit-lean', path.join(app, 'dist', 'Transfer.monadic-triple.lean'), '--json'], app));
+const lowering = jsonFrom(runOk(node, [psc, 'monadic-lowering', contractsFile, '--out', loweringFile, '--emit-lean', path.join(app, 'dist', 'Transfer.monadic-triple.lean'), '--json'], app));
+assert.equal(lowering.statefulWpBinding.bindingReady, true);
+assert.equal(lowering.statefulVcPlan.planningReady, true);
+assert.equal(lowering.statefulVcPlan.realVerificationConditionsGenerated, false);
 
 const fakeLean = path.join(app, 'fake-lean.mjs');
 fs.writeFileSync(fakeLean, `#!/usr/bin/env node
