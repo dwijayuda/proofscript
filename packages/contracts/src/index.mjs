@@ -29,6 +29,36 @@ export function rewriteOldSnapshots(text, snapshots) {
     return name;
   });
 }
+
+export function rewriteGhostReferences(text, ghosts) {
+  let out = String(text);
+  for (const ghost of ghosts) {
+    out = out.replace(new RegExp(`\\b${ghost.name}\\b`, 'g'), `(${ghost.expression})`);
+  }
+  return normalizeSpaces(out);
+}
+
+export function assertValidGhostDefinitions(params, requirements, ghosts) {
+  const reserved = new Set([
+    "result",
+    ...params.map(param => param.name),
+    ...requirements.map(requirement => requirement.name),
+  ]);
+  const names = new Set();
+  for (const ghost of ghosts) {
+    if (reserved.has(ghost.name)) throw new Error(`ghost name '${ghost.name}' collides with a reserved, parameter, or requires name`);
+    if (names.has(ghost.name)) throw new Error(`duplicate ghost name '${ghost.name}'`);
+    names.add(ghost.name);
+  }
+  for (const ghost of ghosts) {
+    if (/\bresult\b/.test(ghost.expression)) throw new Error("'result' is not valid in ghost expressions");
+    for (const name of names) {
+      if (new RegExp(`\\b${name}\\b`).test(ghost.expression)) {
+        throw new Error(`ghost expression '${ghost.name}' may not depend on ghost '${name}' in ps3-pure-contracts0`);
+      }
+    }
+  }
+}
 export function parseAssertionsFromBody(bodyRaw) {
   const assertions = [];
   const names = new Set();
@@ -240,12 +270,25 @@ export function parsePureContractSource(text, sourcePath = '<memory>') {
     throw new Error(`unsupported contract clause: ${line}`);
   }
   assertUniqueContractNames(params, requirements, ensures);
-    for (const ghost of ghosts) {
-    const bodyWithoutGhostDecls = body.replace(new RegExp(`ghost\\s+${ghost.name}\\b[^;]*;`, 'g'), '');
-    if (new RegExp(`\\b${ghost.name}\\b`).test(bodyWithoutGhostDecls)) throw new Error(`ghost value '${ghost.name}' is used in runtime body; ghost erasure cannot be certified`);
-  }
+  assertValidGhostDefinitions(params, requirements, ghosts);
   if (/\bresult\b/.test(body)) throw new Error("'result' is only valid in ensures clauses");
   const { assertions, bodyWithoutAssertions } = parseAssertionsFromBody(body);
+
+  for (const requirement of requirements) {
+    requirement.proposition = rewriteGhostReferences(requirement.proposition, ghosts);
+  }
+  for (const ensure of ensures) {
+    ensure.proposition = rewriteGhostReferences(ensure.proposition, ghosts);
+  }
+  for (const assertion of assertions) {
+    assertion.proposition = rewriteGhostReferences(assertion.proposition, ghosts);
+  }
+
+  for (const ghost of ghosts) {
+    if (new RegExp(`\\b${ghost.name}\\b`).test(bodyWithoutAssertions)) {
+      throw new Error(`ghost value '${ghost.name}' is used in runtime body; ghost erasure cannot be certified`);
+    }
+  }
   const loops = parseLoopSpecsFromBody(bodyWithoutAssertions);
   const runtimeBody = normalizeSpaces(bodyWithoutAssertions.replace(/while\s*\([^)]*\)\s*[\s\S]*?\s*\{[\s\S]*?\}/g, ''));
   const assertObligations = assertions.map(a => ({
