@@ -10,6 +10,7 @@ on:
       - "packages/monadic-lowering/**"
       - "specs/verification/v0.7/**"
       - "examples/software/06-bank-state.model.json"
+      - "examples/software/06-bank-transfer-monadic-contract.ps"
       - "examples/software/07-bank-debit-stateful-vc.ps"
       - "tools/ps3-stateful-lean-*.ts"
       - ".github/workflows/stateful-lean-ci.yml"
@@ -23,6 +24,7 @@ on:
       - "packages/monadic-lowering/**"
       - "specs/verification/v0.7/**"
       - "examples/software/06-bank-state.model.json"
+      - "examples/software/06-bank-transfer-monadic-contract.ps"
       - "examples/software/07-bank-debit-stateful-vc.ps"
       - "tools/ps3-stateful-lean-*.ts"
       - ".github/workflows/stateful-lean-ci.yml"
@@ -113,8 +115,11 @@ jobs:
         run: |
           lake env lean --version
 
-      - name: Execute generated stateful VC request
+      - name: Execute generated debit stateful VC request
         run: npm run assurance:ps3:stateful-lean-vc -- --strict --out stateful-vc-run-${{ matrix.lean }}.json
+
+      - name: Execute generated transfer stateful VC request
+        run: npm run assurance:ps3:stateful-lean-transfer-vc -- --strict --out stateful-transfer-vc-run-${{ matrix.lean }}.json
 
       - name: Upload stateful VC evidence
         if: always()
@@ -122,4 +127,12 @@ jobs:
         with:
           name: stateful-vc-run-${{ matrix.lean }}
           path: stateful-vc-run-${{ matrix.lean }}.json
+          if-no-files-found: warn
+
+      - name: Upload transfer stateful VC evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stateful-transfer-vc-run-${{ matrix.lean }}
+          path: stateful-transfer-vc-run-${{ matrix.lean }}.json
           if-no-files-found: warn

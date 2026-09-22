@@ -212,6 +212,15 @@ assert.match(
   /«from» ≠ to/u,
 );
 assert.match(
+  transferLowering.statefulLeanSemanticEncoding.precondition.leanSource,
+  /amount > 0/u,
+);
+assert.doesNotMatch(
+  transferLowering.statefulLeanSemanticEncoding.precondition.leanSource,
+  /!=/u,
+  "Lean semantic precondition must normalize ProofScript != to Lean ≠",
+);
+assert.match(
   transferLowering.statefulLeanSemanticEncoding.postcondition.leanSource,
   /balanceOf \(«from»\) \(__ps_final\)/u,
 );
@@ -220,9 +229,47 @@ assert.match(
   /balanceOf \(to\) \(__ps_final\)/u,
 );
 assert.equal(transferLowering.statefulVcRequest.tactic.name, "mvcgen");
+assert.deepEqual(
+  transferLowering.statefulVcRequest.tactic.specificationTheorems,
+  ["BankStateModel.debit_triple", "BankStateModel.credit_triple"],
+);
 assert.deepEqual(transferLowering.statefulVcRequest.tactic.invocationDefinitions, ["transfer"]);
 assert.match(transferLowering.statefulVcRequest.request.source, /mvcgen \[transfer\]/u);
 assert.match(transferLowering.statefulVcRequest.request.source, /all_goals simp_all/u);
 assert.doesNotMatch(transferLowering.statefulVcRequest.request.source, /\b(?:sorry|admit)\b/u);
+assert.doesNotMatch(
+  transferLowering.statefulVcRequest.request.source,
+  /!=/u,
+  "generated Lean request must not retain ProofScript != syntax",
+);
+
+const inequalityMismatchSourceText = `function invalidDistinct(from: AccountId, flag: Bool): State Bank Unit
+  requires distinct: from != flag
+  ensures stable: balanceOf(from) = old(balanceOf(from))
+:= do {
+  debit(from, 0);
+}
+`;
+const inequalityMismatchBuilt = makeMonadicContractsArtifact({
+  sourceText: inequalityMismatchSourceText,
+  sourcePath: "<stateful-inequality-type-mismatch>",
+  sourceSha256: sha256(inequalityMismatchSourceText),
+  packageVersion: "test",
+  stateModel,
+});
+assert.equal(inequalityMismatchBuilt.artifact.verification.profile, "ka144-monadic-prototype");
+assert.ok(
+  inequalityMismatchBuilt.artifact.verification.prototypeFeatures.includes(
+    "stateful-predicate-ast-type-mismatch",
+  ),
+);
+assert.equal(inequalityMismatchBuilt.artifact.statefulPredicateAST.typeCheckingComplete, false);
+assert.ok(
+  inequalityMismatchBuilt.artifact.statefulPredicateAST.diagnostics.some(
+    (diagnostic: any) =>
+      diagnostic.code === "stateful-predicate-ast-type-mismatch"
+      && /relation '!=' compares AccountId with Bool/u.test(diagnostic.message),
+  ),
+);
 
 console.log("PS3_STATEFUL_LEAN_MODEL_TESTS=PASS");
