@@ -220,7 +220,9 @@ The `proofscript.stateful-vc-run/v1` runner separately checks the model module, 
 
 When Lean reaches the tactic but leaves residual goals, `proofscript.stateful-vc-goals/v1` assigns those goals stable IDs and trace hashes. A `vcs-generated` run is useful semantic evidence but is still distinct from `proved`.
 
-A real Lean 4.34.0 run has now crossed the semantic boundary: the bank model, emitted `StateM` program, and concrete `Std.Do.Triple` target all typecheck; `mvcgen` executes and has produced a stable Lean-derived residual VC. The next increment is to unfold the generated local wrapper with `mvcgen [withdraw]` and discharge that debit-only theorem, then repeat across the 4.33.1 floor/current-stable/current-RC matrix before widening to two-account transfer and later loop/frame reasoning. Exceptional/abrupt paths remain explicitly uncovered until modeled.
+A real Lean 4.34.0 run has now completed the first stateful semantic vertical slice. The bank model, emitted `StateM` program, and concrete `Std.Do.Triple` target all typecheck; `mvcgen [withdraw]` plus the checked `simp_all` finisher closes the theorem with zero residual goals. The resulting `proofscript.stateful-vc-run/v1` reports `status = proved` and `semanticProofDischarge = true` for that concrete debit theorem only.
+
+The next target is the corrected two-account transfer contract. It now requires distinct accounts (`from != to`, emitted as Lean `≠`) so its debit and credit postconditions are semantically valid. The generalized VC runner can execute either source through the same evidence pipeline. After transfer is proved, repeat debit/transfer across the 4.33.1 floor/current-stable/current-RC matrix before widening to loop/frame reasoning. Exceptional/abrupt paths, state-model adequacy use, and source-to-Lean program equivalence remain explicitly unclaimed. Exceptional/abrupt paths remain explicitly uncovered until modeled.
 
 ---
 
