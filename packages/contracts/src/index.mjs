@@ -106,15 +106,7 @@ export function scanResultReferences(text) {
 }
 
 function escapeRegExp(text) {
-  return String(text).replace(/[.*+?^${}()|[\]\\]/g, '\\export function scanResultReferences(text) {
-  return [...String(text).matchAll(/\bresult\b/g)].map(match => ({
-    startOffset: match.index,
-    endOffset: match.index + match[0].length,
-    binderRole: 'result',
-  }));
-}
-
-');
+  return String(text).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 export function scanStateObservationReferences(text, observations, stateRole, offsetBase = 0) {
@@ -152,7 +144,6 @@ export function scanStateObservationReferences(text, observations, stateRole, of
 function rangeIsInside(range, outer) {
   return range.startOffset >= outer.startOffset && range.endOffset <= outer.endOffset;
 }
-
 export function statefulPostconditionIRForContract(contract, stateModel = contract.stateModel) {
   const observations = stateModel?.observations ?? [];
   return {
