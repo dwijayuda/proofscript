@@ -1,0 +1,26 @@
+name: product-ci
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches:
+      - main
+      - cleanup/ps1-architecture
+
+jobs:
+  product-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - run: npm run test:ps1:compiler-facade
+      - run: npm run test:reference:v061:c0
+      - run: npm run test:ka137
+      - run: npm run test:ka140
+      - run: npm run test:ka146
