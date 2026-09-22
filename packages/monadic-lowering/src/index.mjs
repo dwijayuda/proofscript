@@ -250,7 +250,12 @@ export function leanForMonadicLoweringArtifact(artifact) {
   const stateModel = artifact.stateModel;
   const triple = artifact.tripleSkeleton;
   const programLowering = artifact.statefulProgramLowering;
+  const semanticEncoding = artifact.statefulLeanSemanticEncoding;
   const params = leanParameterBinders(fn.params ?? []);
+  const entryStateBinder = `(__ps_entry : ${stateModel.stateType})`;
+  const theoremBinders = [params, entryStateBinder].filter(Boolean).join(' ');
+  const theoremName = leanGeneratedIdentifier(fn.name ?? 'program', '_triple');
+  const theoremTarget = semanticEncoding?.tripleTarget ?? null;
   const operations = (artifact.operations ?? []).map(op => `-- operation ${op.index}: ${op.text}\n--   model spec: ${op.stateModelOperation?.spec ?? 'not found in descriptor'}`).join('\n');
   const obligations = (artifact.obligations ?? []).map(o => `-- obligation ${o.name}\n--   kind: ${o.kind}\n--   statement: ${o.statement}`).join('\n');
   return `/-
@@ -279,9 +284,12 @@ namespace ProofScript.Generated
 ${programLowering?.leanDefinition ?? `-- stateful program lowering unavailable for ${leanIdentifier(fn.name)}`}
 
 /-- Planned Hoare/Triple skeleton. Not checked as a completed proof in KA-145. -/
-${triple.theoremStatement} := by
+${theoremTarget
+  ? `theorem ${theoremName}${theoremBinders ? ` ${theoremBinders}` : ''} : ${theoremTarget}`
+  : triple.theoremStatement} := by
   -- precondition kind: ${triple.preconditionKind}
   -- postcondition kind: ${triple.postconditionKind}
+  -- concrete Std.Do target: ${theoremTarget ? 'yes' : 'fallback structural skeleton'}
   -- vcgen/mvcgen connection: not connected in KA-145
   admit
 
