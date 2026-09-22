@@ -157,6 +157,7 @@ function surfaceMentionsInt(term: SurfaceTerm): boolean {
     case "structInst":
       return term.fields.some(f => surfaceMentionsInt(f.value));
     case "arrayLit":
+    case "tuple":
       return term.items.some(surfaceMentionsInt);
     case "do":
       return term.binds.some(b => surfaceMentionsInt(b.value)) || surfaceMentionsInt(term.body);
