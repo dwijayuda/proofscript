@@ -831,7 +831,7 @@ export function makeMonadicContractsArtifact({ sourceText, sourcePath, sourceSha
       statefulPredicateElaboration,
       statefulPredicateAST,
       statefulOperationElaboration,
-      stateModel: { name: stateModel.name, path: stateModel.path, sha256: stateModel.sha256, stateType: stateModel.stateType, monad: stateModel.monad, wp: stateModel.wp, semantics: stateModel.semantics, operations: stateModel.operations, observations: stateModel.observations ?? [], laws: stateModel.laws, vcgen: stateModel.vcgen },
+      stateModel: { name: stateModel.name, path: stateModel.path, sha256: stateModel.sha256, stateType: stateModel.stateType, monad: stateModel.monad, wp: stateModel.wp, semantics: stateModel.semantics, lean: stateModel.lean, operations: stateModel.operations, observations: stateModel.observations ?? [], laws: stateModel.laws, vcgen: stateModel.vcgen },
       functions: [{ name: contract.name, contractKind: contract.contractKind, params: contract.params, returnType: contract.returnType, requirements: contract.requirements, modelRequirements: contract.modelRequirements, ensures: contract.ensures, oldSnapshots: contract.oldSnapshots, operations: contract.operations, body: contract.body, stateModel: { name: stateModel.name, stateType: stateModel.stateType, monad: stateModel.monad } }],
       operations: contract.operations,
       oldSnapshots: contract.oldSnapshots,
