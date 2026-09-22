@@ -220,21 +220,16 @@ Owns editor-facing semantic queries and document/project overlays.
 
 Owns cancellation/process isolation/async transport, not language semantics.
 
-## I — Deferred scaffold packages
+## I — Retired empty scaffolds
 
-Current tree indicates these contain package metadata/README scaffolding but no active TypeScript implementation:
+The following metadata-only placeholder workspaces were audited in PS2 and removed because they had no implementation and no consumers:
 
 - `@proofscript/diagnostics`
 - `@proofscript/formatter`
 - `@proofscript/macro`
 - `@proofscript/tactics-core`
 
-**Policy:** keep untouched until dependency/reference audit is complete. Then either:
-
-- remove from active workspaces and recreate when needed; or
-- activate with a concrete milestone and tests.
-
-Do not keep placeholder packages merely to make the architecture look future-complete.
+Their future capabilities remain roadmap items and should be recreated as packages only when a milestone has concrete semantics, implementation, and tests.
 
 ## Root/tooling classification
 
