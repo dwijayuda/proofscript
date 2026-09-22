@@ -1,4 +1,4 @@
-import {ParseError,UnsupportedFeature,Token,SurfaceTerm} from "@proofscript/syntax";
+import {ParseError,UnsupportedFeature,Token,SurfaceTerm,type SurfaceFeatureId} from "@proofscript/syntax";
 import {makeApp,makeBoolAnd,makeBoolNot,makeBoolOr,makeBinaryOp} from "./sugar";
 
 /**
@@ -17,6 +17,7 @@ export interface ExpressionParserHost{
   cursorIndex():number;
   parseSpecialTerm():SurfaceTerm|undefined;
   parseAtom():SurfaceTerm;
+  markOwnedFeature(feature:SurfaceFeatureId,startOffset:number,endOffset:number):void;
 }
 
 export function parseTermFromHost(host:ExpressionParserHost):SurfaceTerm{
@@ -169,6 +170,7 @@ function parseCallPostfix(host:ExpressionParserHost):SurfaceTerm{
   let term=host.parseAtom();
   let applied=false;
   while(host.at("(")){
+    const callStart=host.peek().offset;
     host.next();
     if(host.at(")"))throw new ParseError("ProofScript v0.1 rejects empty source calls f()");
     const args:SurfaceTerm[]=[];
@@ -180,6 +182,7 @@ function parseCallPostfix(host:ExpressionParserHost):SurfaceTerm{
       if(host.at(")"))break;
     }
     host.expect(")");
+    host.markOwnedFeature("D-CALL",callStart,host.peek().offset);
     term=makeApp(term,args,explicit);
     explicit=false;
     applied=true;
