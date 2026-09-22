@@ -202,6 +202,48 @@
       ],
       "compatibility_cost": "Explicit delimiters around local declarations differ from Lean layout.",
       "dx_rationale": "Makes local definitions easier for TypeScript-oriented developers."
+    },
+    {
+      "id": "X-TYPESCRIPT-GENERICS",
+      "class": "X",
+      "status": "rejected-S1",
+      "surface": "TypeScript-style <T> generic parameter lists",
+      "canonical_lean": "none",
+      "lowering": "reject; Lean implicit/dependent binders remain explicit language constructs",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "reject_typescript_generics",
+        "preserve_lean_dependent_binders"
+      ],
+      "dx_rationale": "Avoids pretending TypeScript generics are equivalent to Lean implicit/dependent parameters."
+    },
+    {
+      "id": "X-RETURN",
+      "class": "X",
+      "status": "rejected-S1",
+      "surface": "unrestricted JavaScript-style return in function bodies",
+      "canonical_lean": "none",
+      "lowering": "reject; expression/term semantics remain explicit",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "reject_unrestricted_return",
+        "preserve_term_or_effect_semantics"
+      ],
+      "dx_rationale": "Prevents JavaScript control-flow semantics from silently replacing Lean term/effect semantics."
+    },
+    {
+      "id": "X-GLOBAL-BLOCK",
+      "class": "X",
+      "status": "rejected-S1",
+      "surface": "universal JavaScript-style { statement; block; } term",
+      "canonical_lean": "none",
+      "lowering": "reject; braces remain category-specific ProofScript/Lean syntax",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "reject_global_block",
+        "preserve_category_specific_braces"
+      ],
+      "dx_rationale": "Keeps brace ownership local and prevents an untyped statement-block semantics from entering the verified profile."
     }
   ]
 }
