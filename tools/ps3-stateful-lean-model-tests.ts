@@ -104,7 +104,8 @@ const lowering = createMonadicLoweringArtifact({
 
 assert.equal(lowering.statefulProgramLowering.programLoweringReady, true);
 assert.equal(lowering.statefulProgramLowering.function.leanReturnType, "StateM Bank Unit");
-assert.match(lowering.statefulProgramLowering.leanDefinition, /: StateM Bank Unit := do\n  debit from amount/u);
+assert.match(lowering.statefulProgramLowering.leanDefinition, /: StateM Bank Unit := do\n  debit «from» amount/u);
+assert.match(lowering.statefulProgramLowering.leanDefinition, /\(«from» : AccountId\)/u);
 assert.equal(lowering.statefulProgramLowering.leanProgramTypechecked, false);
 
 assert.equal(lowering.statefulWpBinding.bindingReady, true);
@@ -122,9 +123,13 @@ assert.equal(encoding.postcondition.renderedFromTypedAst, true);
 assert.match(encoding.precondition.leanSource, /⌜__ps_initial = __ps_entry⌝/u);
 assert.match(
   encoding.postcondition.leanSource,
-  /balanceOf \(from\) \(__ps_final\).*balanceOf \(from\) \(__ps_entry\).* - amount/u,
+  /balanceOf \(«from»\) \(__ps_final\).*balanceOf \(«from»\) \(__ps_entry\).* - amount/u,
 );
-assert.doesNotMatch(encoding.postcondition.leanSource, /balanceOf\s*\(/u);
+assert.doesNotMatch(
+  encoding.postcondition.leanSource,
+  /balanceOf\s*\([^)]*,/u,
+  "semantic Lean must not contain comma-style ProofScript calls",
+);
 assert.equal(encoding.tripleTargetTypechecked, false);
 
 const request = lowering.statefulVcRequest;
@@ -141,8 +146,14 @@ assert.match(request.request.source, /import Std\.Tactic\.Do/u);
 assert.match(request.request.source, /import ProofScript\.Verification\.BankStateModel/u);
 assert.match(request.request.source, /open BankStateModel/u);
 assert.match(request.request.source, /def withdraw .*: StateM Bank Unit := do/u);
+assert.match(request.request.source, /\(«from» : AccountId\)/u);
+assert.match(request.request.source, /withdraw «from» amount/u);
 assert.match(request.request.source, /vcgen \[BankStateModel\.debit_triple\]/u);
 assert.doesNotMatch(request.request.source, /\b(?:sorry|admit)\b/u);
-assert.doesNotMatch(request.request.source, /balanceOf\s*\(/u);
+assert.doesNotMatch(
+  request.request.source,
+  /balanceOf\s*\([^)]*,/u,
+  "VC request must not contain comma-style ProofScript calls",
+);
 
 console.log("PS3_STATEFUL_LEAN_MODEL_TESTS=PASS");
