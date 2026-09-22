@@ -95,6 +95,49 @@ function firstFailedStage(checks: Record<string, any>, residual: any) {
   return "vc-request-execution";
 }
 
+function createGoalArtifact({
+  functionName,
+  request,
+  residual,
+  tacticReached,
+  semanticProofDischarge,
+}: {
+  functionName: string;
+  request: any;
+  residual: any;
+  tacticReached: boolean;
+  semanticProofDischarge: boolean;
+}) {
+  const traceBlocks = residual.traceBlocks ?? [];
+  const goals = traceBlocks.map((trace: string, index: number) => {
+    const traceSha256 = sha256(trace);
+    return {
+      id: `${functionName}.stateful.vc.${String(index + 1).padStart(3, "0")}.${traceSha256.slice(0, 12)}`,
+      index,
+      trace,
+      traceSha256,
+      discharged: false,
+    };
+  });
+  return {
+    schema: "proofscript.stateful-vc-goals/v1",
+    function: functionName,
+    requestTheoremName: request.request.theoremName,
+    requestTarget: request.request.target,
+    tactic: request.tactic.name,
+    tacticReached,
+    sourceOutputSha256: residual.rawOutputSha256,
+    goals,
+    summary: {
+      goalCount: goals.length,
+      residualGoalsPresent: goals.length > 0,
+      semanticProofDischarge,
+    },
+    generatedFromLeanExecution: tacticReached,
+    semanticProofDischarge,
+  };
+}
+
 function leanPreamble(request: any) {
   return [
     ...request.environment.allImports.map((moduleName: string) => `import ${moduleName}`),
@@ -211,6 +254,13 @@ const tacticReached = tripleCheck.exitCode === 0
 const semanticVcDerivationComplete = tacticReached;
 const realVerificationConditionsGenerated = tacticReached;
 const semanticProofDischarge = requestRun.exitCode === 0;
+const goalArtifact = createGoalArtifact({
+  functionName: lowering.function.name,
+  request,
+  residual,
+  tacticReached,
+  semanticProofDischarge,
+});
 
 const checks = {
   modelBuild,
@@ -246,6 +296,7 @@ const report = {
     requestTarget: request.request.target,
   },
   residualGoals: residual,
+  goalArtifact,
   claims: {
     leanEnvironmentResolved: modelBuild.exitCode === 0,
     leanModelTypechecked: modelBuild.exitCode === 0,
