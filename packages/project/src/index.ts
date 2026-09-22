@@ -6,7 +6,11 @@ import { parseSource } from "@proofscript/parser";
 
 export interface PluginConfigEntry { use:string; options?:unknown; }
 export interface ProjectConfig {
-  language?:"0.1";
+  /** Current product language profile; "0.1" is retained for legacy project compatibility. */
+  language?:"0.6.1"|"0.1";
+  /** Current product profile. Do not use this field on legacy 0.1 configs. */
+  productProfile?:"ps1-v061";
+  /** Legacy project compatibility field. Current 0.6.1 configs must not use it. */
   semanticBaseline?:"lean-4.33.1";
   plugins?:Array<string|PluginConfigEntry>;
   /** Ordered project-relative roots used only to locate ProofScript source modules. */
@@ -63,8 +67,11 @@ export function loadProjectConfig(root:string):ProjectConfig{
   const req=createRequire(path.join(root,"package.json"));
   const loaded=req(file);const cfg=(loaded.default??loaded) as ProjectConfig;
   if(!cfg||typeof cfg!=="object"||Array.isArray(cfg))throw new ProjectError("proofscript.config.cts must export an object");
-  if(cfg.language&&cfg.language!=="0.1")throw new ProjectError(`unsupported ProofScript language ${cfg.language}`);
+  if(cfg.language&&cfg.language!=="0.6.1"&&cfg.language!=="0.1")throw new ProjectError(`unsupported ProofScript language ${cfg.language}`);
+  if(cfg.productProfile&&cfg.productProfile!=="ps1-v061")throw new ProjectError(`unsupported ProofScript product profile ${cfg.productProfile}`);
   if(cfg.semanticBaseline&&cfg.semanticBaseline!=="lean-4.33.1")throw new ProjectError(`semantic baseline mismatch ${cfg.semanticBaseline}`);
+  if(cfg.language==="0.6.1"&&cfg.semanticBaseline!==undefined)throw new ProjectError("current ProofScript project config must not present a Lean/Core compatibility baseline as the product semantic version");
+  if(cfg.language==="0.1"&&cfg.productProfile!==undefined)throw new ProjectError("legacy ProofScript 0.1 project config must not use the current productProfile field");
   if(cfg.sourceRoots!==undefined){
     if(!Array.isArray(cfg.sourceRoots)||cfg.sourceRoots.length===0||!cfg.sourceRoots.every(x=>typeof x==="string"&&x.length>0))throw new ProjectError("sourceRoots must be a non-empty string array");
   }
