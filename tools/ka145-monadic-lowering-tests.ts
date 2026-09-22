@@ -133,7 +133,7 @@ assert.ok(loweringArtifact.obligations.length >= 2);
 const leanText = fs.readFileSync(loweringLean, 'utf8');
 assert.match(leanText, /Std\.Do\.Triple/);
 assert.match(leanText, /vcgen\/mvcgen connection: not connected/);
-assert.match(leanText, /def transfer .*: State Bank Unit := do/);
+assert.match(leanText, /def transfer .*: StateM Bank Unit := do/);
 assert.match(leanText, /debit from amount/);
 assert.match(leanText, /credit to amount/);
 assert.doesNotMatch(leanText, /Source program placeholder/);
