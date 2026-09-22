@@ -1,0 +1,5 @@
+function withdraw(from: AccountId, amount: Nat): State Bank Unit
+  ensures debit: balanceOf(from) = old(balanceOf(from)) - amount
+:= do {
+  debit(from, amount);
+}
