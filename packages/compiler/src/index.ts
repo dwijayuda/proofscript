@@ -5,6 +5,7 @@ import { toCheckedModuleSnapshot } from "@proofscript/semantic-ir";
 import {
   checkProjectFile as checkProjectFileFrontend,
   checkSource as checkSourceFrontend,
+  type FrontendModuleCacheEntry,
   type FrontendOptions,
   type FrontendProjectResult,
   type FrontendResult,
@@ -26,6 +27,42 @@ export function checkSource(source: string, options: FrontendOptions = {}): Fron
  */
 export function checkProjectFile(entryFile: string, options: FrontendOptions = {}): FrontendProjectResult {
   return checkProjectFileFrontend(entryFile, options);
+}
+
+/**
+ * In-process incremental project checker over the canonical frontend.
+ *
+ * Cached modules are never trusted by source name alone: the frontend reuses an
+ * entry only when both its source hash and the complete checked dependency
+ * environment hash match. This remains a performance optimization, not a new
+ * proof authority or alternate frontend.
+ */
+export class IncrementalCompilerSession {
+  private readonly moduleCache = new Map<string, FrontendModuleCacheEntry>();
+
+  checkProjectFile(entryFile: string, options: FrontendOptions = {}): FrontendProjectResult {
+    const project = checkProjectFileFrontend(entryFile, { ...options, moduleCache: this.moduleCache });
+    this.prune(project);
+    return project;
+  }
+
+  checkProjectSnapshot(entryFile: string, options: FrontendOptions = {}): CheckedProjectResult {
+    const project = this.checkProjectFile(entryFile, options);
+    return { project, snapshot: createCheckedProjectSnapshot(project) };
+  }
+
+  clear(): void {
+    this.moduleCache.clear();
+  }
+
+  cachedModules(): readonly string[] {
+    return [...this.moduleCache.keys()].sort();
+  }
+
+  private prune(project: FrontendProjectResult): void {
+    const active = new Set(project.graph.modules.map((module) => module.name));
+    for (const name of this.moduleCache.keys()) if (!active.has(name)) this.moduleCache.delete(name);
+  }
 }
 
 
@@ -115,6 +152,7 @@ export async function runBackend(
 }
 
 export type {
+  FrontendModuleCacheEntry,
   FrontendOptions,
   FrontendProjectResult,
   FrontendResult,
