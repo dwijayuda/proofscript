@@ -1475,6 +1475,7 @@ function verifyCommand(args) {
       const verified = verifyProofStatusArtifact({ artifact, artifactPath: resolved });
       result.source = verified.source;
       result.obligationsArtifact = verified.obligationsArtifact;
+      if (verified.verification) result.verification = verified.verification;
       result.summary = verified.summary;
       if (verified.leanCheck) result.leanCheck = verified.leanCheck;
       result.trustBoundary.semanticProofChecking = Boolean(artifact.trustBoundary?.semanticProofChecking);
