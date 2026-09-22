@@ -42,6 +42,12 @@ for (const item of positive) {
   assert.equal(artifact.trustBoundary.semanticProofChecking, false, item.id);
   assert.equal(artifact.trustBoundary.monadicProofDischarge, false, item.id);
   assert.equal(artifact.trustBoundary.vcgenConnected, false, item.id);
+  assert.equal(artifact.statefulPostconditionIR.schema, "proofscript.stateful-postcondition-ir/v1", item.id);
+  assert.equal(artifact.statefulPostconditionIR.defaultExpressionState, "final-state", item.id);
+  assert.equal(artifact.statefulPostconditionIR.semanticElaborationComplete, false, item.id);
+  assert.ok(artifact.statefulPostconditionIR.clauses.every((clause: any) =>
+    clause.oldReferences.length === 0 && clause.resultReferences.length === 0
+  ), item.id);
 
   assert.deepEqual(contract.operations.map((op: any) => op.operation), item.expected.operations, item.id);
   assert.equal(contract.obligations.length, item.expected.obligations, item.id);
@@ -61,6 +67,7 @@ for (const item of positive) {
     packageVersion: "test",
   });
   assert.deepEqual(lowering.verification, artifact.verification, item.id);
+  assert.deepEqual(lowering.statefulPostconditionIR, artifact.statefulPostconditionIR, item.id);
   assert.equal(lowering.trustBoundary.specifiedStructuralProfile, true, item.id);
   assert.equal(lowering.summary.semanticProofDischarge, false, item.id);
   assert.equal(lowering.tripleSkeleton.leanCheckable, false, item.id);
@@ -76,6 +83,9 @@ for (const item of positive) {
     packageVersion: "test",
   });
   assert.deepEqual(preflight.verification, artifact.verification, item.id);
+  assert.deepEqual(preflight.statefulPostconditionIR, artifact.statefulPostconditionIR, item.id);
+  assert.equal(preflight.staticChecks.hasStatefulPostconditionIR, true, item.id);
+  assert.equal(preflight.staticChecks.statefulPostconditionSemanticElaborationComplete, false, item.id);
   assert.equal(preflight.trustBoundary.specifiedStructuralProfile, true, item.id);
   assert.equal(preflight.trustBoundary.preflightOnly, true, item.id);
   assert.equal(preflight.trustBoundary.checkableAsCompleteSemanticProof, false, item.id);
@@ -111,6 +121,36 @@ for (const item of negative) {
   assert.equal(artifact.verification.claim, "prototype-only", item.id);
   assert.ok(artifact.verification.prototypeFeatures.includes(item.prototype_feature), item.id);
   assert.equal(artifact.trustBoundary.specifiedStructuralProfile, false, item.id);
+  if (item.expected_ir) {
+    const ir = artifact.statefulPostconditionIR;
+    assert.equal(ir.schema, "proofscript.stateful-postcondition-ir/v1", item.id);
+    assert.equal(ir.defaultExpressionState, item.expected_ir.default_expression_state, item.id);
+    assert.equal(ir.semanticElaborationComplete, item.expected_ir.semantic_elaboration_complete, item.id);
+    const clause = ir.clauses[0];
+    assert.equal(clause.oldReferences.length, item.expected_ir.old_references, item.id);
+    assert.equal(clause.resultReferences.length, item.expected_ir.result_references, item.id);
+    if (item.expected_ir.old_expression) {
+      assert.equal(clause.oldReferences[0]?.expression, item.expected_ir.old_expression, item.id);
+    }
+    const lowering = createMonadicLoweringArtifact({
+      contractArtifact: artifact,
+      contractArtifactPath: `<${item.id}.contracts.json>`,
+      contractArtifactSha256: "7".repeat(64),
+      packageVersion: "test",
+    });
+    assert.deepEqual(lowering.statefulPostconditionIR, ir, item.id);
+    const preflight = createMonadicLeanPreflightArtifact({
+      loweringArtifact: lowering,
+      loweringArtifactPath: `<${item.id}.monadic-lowering.json>`,
+      loweringArtifactSha256: "8".repeat(64),
+      preflightLeanPath: `<${item.id}.preflight.lean>`,
+      preflightLeanSha256: "9".repeat(64),
+      leanRun: { status: "skipped", reason: "prototype conformance fixture" },
+      packageVersion: "test",
+    });
+    assert.deepEqual(preflight.statefulPostconditionIR, ir, item.id);
+    assert.equal(preflight.staticChecks.statefulPostconditionSemanticElaborationComplete, false, item.id);
+  }
   if (item.unknown_operation) {
     assert.ok(artifact.verification.unknownOperations.includes(item.unknown_operation), item.id);
   }
