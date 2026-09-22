@@ -5,3 +5,6 @@
 {"id":"duplicate-requires-name","feature":"V-REQUIRES","source":"function f(x: Nat): Nat\n  requires h: x >= 0\n  requires h: x = x\n  ensures post: result = x\n:= {\n  x\n}","error":"duplicate requires name 'h'"}
 {"id":"requires-parameter-name-collision","feature":"V-REQUIRES","source":"function f(x: Nat): Nat\n  requires x: x >= 0\n  ensures post: result = x\n:= {\n  x\n}","error":"requires name 'x' collides with a function parameter"}
 {"id":"duplicate-ensures-name","feature":"V-ENSURES","source":"function f(x: Nat): Nat\n  ensures post: result = x\n  ensures post: result = x\n:= {\n  x\n}","error":"duplicate ensures name 'post'"}
+{"id":"duplicate-assert-name","feature":"V-ASSERT","source":"function f(x: Nat): Nat\n  ensures post: result = x\n:= {\n  assert h: x = x;\n  assert h: x = x;\n  x\n}","error":"duplicate assert name 'h'"}
+{"id":"malformed-assert","feature":"V-ASSERT","source":"function f(x: Nat): Nat\n  ensures post: result = x\n:= {\n  assert x = x;\n  x\n}","error":"unsupported assert syntax"}
+{"id":"result-in-assert","feature":"V-ASSERT","source":"function f(x: Nat): Nat\n  ensures post: result = x\n:= {\n  assert h: result = x;\n  x\n}","error":"'result' is only valid in ensures clauses"}
