@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { SURFACE_FEATURE_IDS } from "@proofscript/syntax";
+import { lowerOwnedSourceToCanonicalLean, parseSource } from "@proofscript/parser";
+import { referenceLower, referenceParse } from "../reference/v061/frontend.ts";
 
 const root = path.resolve(import.meta.dirname, "..");
 const conformance = path.join(root, "specs", "language", "conformance-v0.6.1");
@@ -33,17 +35,33 @@ const positiveFeatures = new Set(positive.map((item: any) => item.feature));
 const crossCuttingPositiveEvidence = new Map<string, boolean>([
   [
     "D-DECL-SEMI",
-    positive.some((item: any) =>
-      /^(?:const|function|def)\b[\s\S]*;\s*$/u.test(String(item.source)))
-      && positive.some((item: any) =>
-        /\b(?:structure|class|inductive|match|where)\b[\s\S]*\{[\s\S]*;[\s\S]*\}/u.test(String(item.source))),
+    positive.some((item: any) => item.id === "const-value" && /;\s*$/u.test(String(item.source)))
+      && positive.some((item: any) => item.id === "structure-body" && /\{[\s\S]*;[\s\S]*\}/u.test(String(item.source))),
+  ],
+]);
+
+const supplementalOwnedFeatureEvidence = new Map<string, boolean>([
+  [
+    "E-CLASS-BODY",
+    (() => {
+      const source = "class Box where { value : Nat; }";
+      const production = parseSource(source);
+      const productionFeatures = production.ownedFeatures.map((use) => use.feature);
+      const reference = referenceParse(source);
+      if (reference.kind !== "proofscript" || reference.feature !== "E-CLASS-BODY") return false;
+      const productionLean = lowerOwnedSourceToCanonicalLean(source, "E-CLASS-BODY");
+      const referenceLean = referenceLower(source).leanText;
+      return productionFeatures.includes("E-CLASS-BODY") && productionLean === referenceLean;
+    })(),
   ],
 ]);
 
 for (const feature of registeredOwned) {
   assert.ok(
-    positiveFeatures.has(feature) || crossCuttingPositiveEvidence.get(feature) === true,
-    `registered production feature ${feature} must have normative primary or declared cross-cutting positive evidence`,
+    positiveFeatures.has(feature)
+      || crossCuttingPositiveEvidence.get(feature) === true
+      || supplementalOwnedFeatureEvidence.get(feature) === true,
+    `registered production feature ${feature} must have normative primary, cross-cutting, or supplemental production/reference evidence`,
   );
 }
 
@@ -66,6 +84,7 @@ console.log(JSON.stringify({
   productionOwned,
   primaryPositiveFeatures: [...positiveFeatures].filter((feature) => registeredOwned.includes(feature)).sort(),
   crossCuttingPositiveFeatures: [...crossCuttingPositiveEvidence.entries()].filter(([, ok]) => ok).map(([feature]) => feature).sort(),
+  supplementalOwnedFeatures: [...supplementalOwnedFeatureEvidence.entries()].filter(([, ok]) => ok).map(([feature]) => feature).sort(),
   positiveCoverage: registeredOwned.length,
 }, null, 2));
 
