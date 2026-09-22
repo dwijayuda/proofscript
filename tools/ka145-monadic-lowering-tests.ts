@@ -183,7 +183,8 @@ assert.match(vcRequestText, /open Std\.Do/u);
 assert.match(vcRequestText, /StateM Bank Unit/u);
 assert.match(vcRequestText, /⌜/u);
 assert.match(vcRequestText, /⇓ __ps_result __ps_final => ⌜/u);
-assert.match(vcRequestText, /vcgen \[BankStateModel\.debit_triple, BankStateModel\.credit_triple\]/u);
+assert.match(vcRequestText, /mvcgen \[transfer\]/u);
+assert.doesNotMatch(vcRequestText, /mvcgen \[BankStateModel\.debit_triple/u);
 assert.doesNotMatch(vcRequestText, /\b(?:admit|sorry)\b/u);
 
 const badLowering = jsonFromAny(runFail(node, [psc, 'monadic-lowering', transfer, '--out', path.join(app, 'dist', 'bad.json'), '--json'], app));
