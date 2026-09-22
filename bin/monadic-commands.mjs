@@ -1,8 +1,10 @@
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
+  analyzeStatefulVcExecution,
   createMonadicLoweringBundle,
   createMonadicLeanPreflightBundle,
   readMonadicLoweringArtifact,
@@ -18,7 +20,7 @@ function opt(args, name) {
   return index >= 0 ? args[index + 1] : undefined;
 }
 function positional(args) {
-  const optionsWithValues = new Set(['--out', '--emit-lean', '--lean-cmd']);
+  const optionsWithValues = new Set(['--out', '--emit-lean', '--lean-cmd', '--lean-project', '--lake-cmd']);
   const out = [];
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i];
@@ -33,6 +35,36 @@ function positional(args) {
 }
 function sha256File(file) {
   return createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+}
+function sha256Text(text) {
+  return createHash('sha256').update(String(text)).digest('hex');
+}
+function runProcess(command, args, cwd) {
+  const result = spawnSync(command, args, {
+    cwd,
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+    maxBuffer: 32 * 1024 * 1024,
+  });
+  return {
+    command,
+    args,
+    exitCode: result.status ?? 1,
+    stdout: result.stdout ?? '',
+    stderr: result.stderr ?? '',
+    error: result.error?.message ?? null,
+  };
+}
+function skippedProcess(command, args, reason) {
+  return { command, args, exitCode: 1, stdout: '', stderr: reason, error: null, skipped: true };
+}
+function vcRequestPreamble(request) {
+  return [
+    ...(request.environment?.allImports ?? []).map(moduleName => `import ${moduleName}`),
+    '',
+    ...(request.environment?.openNamespaces ?? []).map(namespaceName => `open ${namespaceName}`),
+    '',
+  ].join('\n');
 }
 function writeJsonFile(file, value) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
@@ -158,6 +190,196 @@ export function monadicVcRequestCommand(args, { cwd = process.cwd() } = {}) {
     }, json);
   } catch (error) {
     jsonOut({ status: 'rejected', command: 'monadic-vc-request', message: error instanceof Error ? error.message : String(error) }, json);
+    process.exit(1);
+  }
+}
+
+export function monadicVcRunCommand(args, { cwd = process.cwd() } = {}) {
+  const json = has(args, '--json');
+  const pos = positional(args);
+  const input = pos[0] ? path.resolve(cwd, pos[0]) : undefined;
+  const out = opt(args, '--out');
+  const leanProject = opt(args, '--lean-project');
+  const lakeCmd = opt(args, '--lake-cmd') ?? 'lake';
+  if (!input || !out || !leanProject) {
+    rejectUsage(
+      'monadic-vc-run',
+      'psc monadic-vc-run <monadic-lowering.json> --lean-project <dir> --out <run.json> [--lake-cmd <lake>]',
+      json,
+    );
+  }
+
+  const resolvedProject = path.resolve(cwd, leanProject);
+  const resolvedOut = path.resolve(cwd, out);
+
+  try {
+    if (!fs.existsSync(resolvedProject) || !fs.statSync(resolvedProject).isDirectory()) {
+      throw new Error(`Lean project directory does not exist: ${resolvedProject}`);
+    }
+
+    const { loweringArtifact, loweringArtifactSha256 } = readMonadicLoweringArtifact(input);
+    const request = loweringArtifact.statefulVcRequest;
+    const program = loweringArtifact.statefulProgramLowering;
+    const encoding = loweringArtifact.statefulLeanSemanticEncoding;
+
+    if (!request || request.schema !== 'proofscript.stateful-vc-request/v1') {
+      throw new Error('monadic lowering artifact does not contain proofscript.stateful-vc-request/v1');
+    }
+    if (request.requestSourceReady !== true || !request.request?.source) {
+      const reasons = (request.diagnostics ?? []).map(item => item.code).join(', ') || 'request source not ready';
+      throw new Error(`Lean VC request source is not ready: ${reasons}`);
+    }
+    if (!program || program.schema !== 'proofscript.stateful-program-lowering/v1' || !program.leanDefinition) {
+      throw new Error('monadic lowering artifact does not contain a ready stateful Lean program lowering');
+    }
+    if (!encoding || encoding.schema !== 'proofscript.stateful-lean-semantic-encoding/v1' || !encoding.tripleTarget) {
+      throw new Error('monadic lowering artifact does not contain a ready Std.Do/StateM semantic encoding');
+    }
+
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'proofscript-vc-run-'));
+    const modelCheckPath = path.join(tmp, 'ModelCheck.lean');
+    const programCheckPath = path.join(tmp, 'ProgramCheck.lean');
+    const tripleCheckPath = path.join(tmp, 'TripleCheck.lean');
+    const requestPath = path.join(tmp, 'Request.lean');
+    const preamble = vcRequestPreamble(request);
+    const specificationTheorems = request.tactic?.specificationTheorems ?? [];
+    const adequacyTheorem = loweringArtifact.statefulWpBinding?.semantics?.adequacyTheorem;
+
+    fs.writeFileSync(modelCheckPath, `${preamble}
+namespace ProofScript.Generated.VCRun.Model
+
+${specificationTheorems.map(name => `#check ${name}`).join('\n')}
+${adequacyTheorem ? `#check ${adequacyTheorem}` : ''}
+
+end ProofScript.Generated.VCRun.Model
+`);
+
+    fs.writeFileSync(programCheckPath, `${preamble}
+namespace ProofScript.Generated.VCRun.Program
+
+${program.leanDefinition}
+
+#check ${program.function.name}
+
+end ProofScript.Generated.VCRun.Program
+`);
+
+    fs.writeFileSync(tripleCheckPath, `${preamble}
+namespace ProofScript.Generated.VCRun.Triple
+
+${program.leanDefinition}
+
+variable ${request.request.binders}
+
+#check (${encoding.tripleTarget})
+
+end ProofScript.Generated.VCRun.Triple
+`);
+    fs.writeFileSync(requestPath, request.request.source);
+
+    const leanProbe = runProcess(lakeCmd, ['env', 'lean', '--version'], resolvedProject);
+    const modelBuild = leanProbe.exitCode === 0
+      ? runProcess(lakeCmd, ['env', 'lean', modelCheckPath], resolvedProject)
+      : skippedProcess(lakeCmd, ['env', 'lean', modelCheckPath], 'Lean environment probe failed');
+    const programCheck = modelBuild.exitCode === 0
+      ? runProcess(lakeCmd, ['env', 'lean', programCheckPath], resolvedProject)
+      : skippedProcess(lakeCmd, ['env', 'lean', programCheckPath], 'model/import check failed');
+    const tripleCheck = programCheck.exitCode === 0
+      ? runProcess(lakeCmd, ['env', 'lean', tripleCheckPath], resolvedProject)
+      : skippedProcess(lakeCmd, ['env', 'lean', tripleCheckPath], 'program typecheck failed');
+    const requestRun = tripleCheck.exitCode === 0
+      ? runProcess(lakeCmd, ['env', 'lean', requestPath], resolvedProject)
+      : skippedProcess(lakeCmd, ['env', 'lean', requestPath], 'Triple target typecheck failed');
+
+    const checks = { modelBuild, programCheck, tripleCheck, requestRun };
+    const execution = analyzeStatefulVcExecution({
+      functionName: loweringArtifact.function?.name ?? request.function ?? 'program',
+      request,
+      checks,
+    });
+
+    const report = {
+      schema: 'proofscript.stateful-vc-run/v1',
+      status: execution.status,
+      failedStage: execution.failedStage,
+      input: {
+        loweringArtifactPath: path.relative(cwd, input).replace(/\\/g, '/'),
+        loweringArtifactSha256,
+        leanProject: path.relative(cwd, resolvedProject).replace(/\\/g, '/') || '.',
+      },
+      lean: {
+        command: lakeCmd,
+        probe: leanProbe,
+      },
+      provenance: {
+        generatedProgramSha256: sha256Text(program.leanDefinition),
+        generatedTripleTargetSha256: sha256Text(encoding.tripleTarget),
+        generatedRequestSha256: sha256Text(request.request.source),
+      },
+      checks,
+      generated: {
+        programLeanDefinition: program.leanDefinition,
+        tripleTarget: encoding.tripleTarget,
+        requestTheoremName: request.request.theoremName,
+        requestTarget: request.request.target,
+      },
+      residualGoals: execution.residualGoals,
+      goalArtifact: execution.goalArtifact,
+      claims: execution.claims,
+    };
+    writeJsonFile(resolvedOut, report);
+
+    const accepted = execution.status !== 'failed';
+    jsonOut({
+      status: accepted ? 'accepted' : 'rejected',
+      command: 'monadic-vc-run',
+      verificationStatus: execution.status,
+      failedStage: execution.failedStage,
+      out: resolvedOut,
+      outSha256: sha256File(resolvedOut),
+      claims: execution.claims,
+      residualGoals: execution.goalArtifact.summary.goalCount,
+      message: accepted
+        ? (execution.status === 'proved' ? 'Lean accepted the generated Triple proof request.' : 'Lean generated residual verification conditions.')
+        : 'Lean verification did not reach a valid VC result.',
+    }, json);
+    if (!accepted) process.exit(1);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    const report = {
+      schema: 'proofscript.stateful-vc-run/v1',
+      status: 'failed',
+      failedStage: 'setup',
+      input: {
+        loweringArtifactPath: input ? path.relative(cwd, input).replace(/\\/g, '/') : null,
+        leanProject: path.relative(cwd, resolvedProject).replace(/\\/g, '/') || '.',
+      },
+      claims: {
+        leanEnvironmentResolved: false,
+        leanModelTypechecked: false,
+        leanProgramTypechecked: false,
+        tripleTargetTypechecked: false,
+        tacticExecuted: false,
+        semanticVcDerivationComplete: false,
+        realVerificationConditionsGenerated: false,
+        stateModelAdequacyChecked: false,
+        sourceToLeanProgramEquivalenceChecked: false,
+        exceptionalPathsCovered: false,
+        semanticProofDischarge: false,
+      },
+      message,
+    };
+    writeJsonFile(resolvedOut, report);
+    jsonOut({
+      status: 'rejected',
+      command: 'monadic-vc-run',
+      verificationStatus: 'failed',
+      failedStage: 'setup',
+      out: resolvedOut,
+      outSha256: sha256File(resolvedOut),
+      claims: report.claims,
+      message,
+    }, json);
     process.exit(1);
   }
 }
