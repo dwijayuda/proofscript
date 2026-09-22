@@ -124,7 +124,13 @@ assert.equal(loweringArtifact.statefulVcRequest.tactic.tripleIdentity, "Std.Do.T
 assert.deepEqual(loweringArtifact.statefulVcRequest.tactic.invocationDefinitions, ["auditTransfer"]);
 assert.deepEqual(loweringArtifact.statefulVcRequest.tactic.invocationItems, ["auditTransfer"]);
 assert.equal(loweringArtifact.statefulVcRequest.tactic.programDefinitionHandling, "explicit-unfold-list");
+assert.deepEqual(loweringArtifact.statefulVcRequest.tactic.finisher, {
+  tactic: "simp_all",
+  scope: "all-goals",
+  checkedInLean: false,
+});
 assert.match(loweringArtifact.statefulVcRequest.request.source, /mvcgen \[auditTransfer\]/u);
+assert.match(loweringArtifact.statefulVcRequest.request.source, /all_goals simp_all/u);
 assert.doesNotMatch(
   loweringArtifact.statefulVcRequest.request.source,
   /mvcgen \[BankStateModel\.audit_triple\]/u,
