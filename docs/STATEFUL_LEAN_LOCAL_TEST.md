@@ -20,7 +20,9 @@ leanprover/lean4:v4.34.0
 
 The evidence report records the exact Lean version selected by Lake.
 
-The runner's `--strict` flag is a **semantic-result flag**, not an exact-version pin: it fails when the run does not reach real Lean-generated verification conditions. It still accepts any compatible Lean version at or above 4.33.1.
+The runner's `--strict` flag is a **VC-generation flag**, not an exact-version pin: it fails when the run does not reach real Lean-generated verification conditions, but it can still accept a run with residual goals.
+
+Use `--require-proof` when you need the generated theorem to close completely with zero residual goals. Both modes accept any compatible Lean version at or above 4.33.1.
 
 ## Windows / PowerShell: default toolchain
 
@@ -94,3 +96,26 @@ git restore specs/verification/v0.7/lean/lean-toolchain
 ```
 
 Do not relabel historical 4.33.1 assurance artifacts based on a newer successful run. The stateful run is new compatibility evidence and records its own exact toolchain identity.
+
+
+## Two-account transfer proof
+
+The canonical transfer contract requires distinct accounts:
+
+```text
+requires distinct: from != to
+```
+
+The bounded verification AST lowers this to Lean `≠`.
+
+Run the proof-required transfer lane with:
+
+```powershell
+npm run assurance:ps3:stateful-lean-transfer-vc:proof -- --out stateful-transfer-vc-run.local.json
+```
+
+If it leaves real residual VCs, rerun without `:proof` if you want a successful command exit while inspecting the generated-goal artifact:
+
+```powershell
+npm run assurance:ps3:stateful-lean-transfer-vc -- --strict --out stateful-transfer-vc-run.local.json
+```
