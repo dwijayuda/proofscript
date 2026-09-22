@@ -353,7 +353,7 @@ export function makeContractsArtifact({ sourceText, sourcePath, sourceSha256, pa
       assertions: contract.assertions,
       oldSnapshots: contract.oldSnapshots,
       obligations,
-      trustBoundary: { semanticProofChecking: false, hiddenAxioms: false, ghostErasureVerified: false, oldIsLogicalSnapshot: true, runtimeAssertionTrust: false, loopInvariantChecking: obligations.some(o => String(o.kind).startsWith('loop.')) ? 'structural-obligations-only' : undefined, vcgenConnected: false, fullLean4Equivalence: false },
+      trustBoundary: { semanticProofChecking: false, hiddenAxioms: false, ghostErasureChecked: true, ghostNonInterference: 'syntactic-no-runtime-reference', ghostErasureVerified: false, oldIsLogicalSnapshot: true, runtimeAssertionTrust: false, loopInvariantChecking: obligations.some(o => String(o.kind).startsWith('loop.')) ? 'structural-obligations-only' : undefined, vcgenConnected: false, fullLean4Equivalence: false },
     },
     contract,
     leanText: leanForContract(contract),
