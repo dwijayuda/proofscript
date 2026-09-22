@@ -220,7 +220,7 @@ The `proofscript.stateful-vc-run/v1` runner separately checks the model module, 
 
 When Lean reaches the tactic but leaves residual goals, `proofscript.stateful-vc-goals/v1` assigns those goals stable IDs and trace hashes. A `vcs-generated` run is useful semantic evidence but is still distinct from `proved`.
 
-The next stateful verification increment is to obtain a successful compatible-Lean run (or capture real residual VCs) for the debit-only example across the 4.33.1 floor/current-stable/current-RC matrix, then stabilize/discharge those goals before widening the semantic example to two-account transfer and later loop/frame reasoning. Exceptional/abrupt paths remain explicitly uncovered until modeled.
+A real Lean 4.34.0 run has now crossed the semantic boundary: the bank model, emitted `StateM` program, and concrete `Std.Do.Triple` target all typecheck; `mvcgen` executes and has produced a stable Lean-derived residual VC. The next increment is to unfold the generated local wrapper with `mvcgen [withdraw]` and discharge that debit-only theorem, then repeat across the 4.33.1 floor/current-stable/current-RC matrix before widening to two-account transfer and later loop/frame reasoning. Exceptional/abrupt paths remain explicitly uncovered until modeled.
 
 ---
 
