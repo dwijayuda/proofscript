@@ -552,6 +552,17 @@ export function monadicVerificationProfile(contract, stateModel) {
   };
 }
 
+export function assertVerificationProfile(artifact, requestedProfile) {
+  if (!requestedProfile) return artifact;
+  const actualProfile = artifact?.verification?.profile ?? null;
+  if (actualProfile !== requestedProfile) {
+    const reasons = artifact?.verification?.prototypeFeatures ?? [];
+    const suffix = reasons.length ? `; prototype reasons: ${reasons.join(', ')}` : '';
+    throw new Error(`verification profile mismatch: requested '${requestedProfile}', classified as '${actualProfile ?? 'none'}'${suffix}`);
+  }
+  return artifact;
+}
+
 export function makeMonadicContractsArtifact({ sourceText, sourcePath, sourceSha256, packageVersion, checkpoint = 'KA-144 state-model descriptor workflow', stateModel }) {
   const contract = parseMonadicContractSource(sourceText, sourcePath, stateModel);
   const verification = monadicVerificationProfile(contract, stateModel);
