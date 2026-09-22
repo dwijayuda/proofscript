@@ -92,9 +92,9 @@ namespace ProofScript.Generated.VCRequest
 ${semanticEncoding.program.leanDefinition}
 
 /-
-This theorem is a VC-derivation request, not a completed proof artifact.
-The runner is expected to invoke ${tactic}, capture any generated goals, and
-record the result separately. Unsolved goals are expected at this stage.
+This theorem is a Lean-checked VC/proof request.
+The runner invokes ${tactic}, applies the configured checked finisher when present,
+and records either successful proof discharge or any remaining generated goals.
 -/
 theorem ${requestName}${binders ? ` ${binders}` : ''} : ${target} := by
   ${tactic}${invocationItems.length ? ` [${invocationItems.join(', ')}]` : ''}
