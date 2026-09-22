@@ -20,6 +20,7 @@ export interface ParseResult{imports:string[];declarations:SurfaceDeclaration[];
 export function parseSource(source:string,initial:ParserState={commandIndex:0,grammarRevision:0,universeParams:[]},options:ParseOptions={}):ParseResult{return new Parser(tokenize(source),initial,options).parseFile();}
 
 export {tokenize} from "./tokenize";
+export {lowerOwnedSourceToCanonicalLean} from "./canonicalLean";
 import {tokenize} from "./tokenize";
 
 
