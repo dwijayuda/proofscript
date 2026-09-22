@@ -58,7 +58,7 @@ export function elabTerm(
     case "app":
       return elabAppTerm(term, locals, localTypes, globals, available, kernelEnv, elabTerm, expectedType);
     case "lam":
-      return elabLambdaTerm(term, locals, localTypes, globals, available, kernelEnv, elabTerm);
+      return elabLambdaTerm(term, locals, localTypes, globals, available, kernelEnv, elabTerm, expectedType);
     case "pi":
       return elabPiTerm(term, locals, localTypes, globals, available, kernelEnv, elabTerm);
     case "structUpdate": {
