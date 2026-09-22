@@ -204,3 +204,35 @@ __ps_result = __ps_result
 ```
 
 The Triple skeleton wraps these bodies as a postcondition function over `__ps_result` and `__ps_final`, while `__ps_entry` is an outer captured theorem binder constrained by the precondition. This is still structural source normalization; it is not yet Lean elaboration or proof discharge.
+
+
+## Downstream typed reference elaboration
+
+The next staging layer is:
+
+```text
+proofscript.stateful-predicate-elaboration/v1
+```
+
+It consumes this normalized IR plus the selected `proofscript.state-model.v1` descriptor and binds:
+
+- `__ps_entry` and `__ps_final` to the descriptor's state type;
+- `__ps_result` to the result type extracted from the selected state monad return type;
+- descriptor-declared observation signatures to explicit non-state input types, state input type, and result type;
+- simple observation arguments to program-parameter or primitive-literal type evidence.
+
+Definite arity/type mismatches are errors and prevent admission to the strict structural profile.
+
+This layer still deliberately records:
+
+```text
+wholePredicateTypeCheckingComplete = false
+wpTripleSemanticBindingComplete = false
+stateModelAdequacyChecked = false
+verificationConditionsGenerated = false
+semanticElaborationComplete = false
+vcgenConnected = false
+semanticProofDischarge = false
+```
+
+Therefore typed reference binding is not a completed typed AST, a Hoare proof, or vcgen/mvcgen discharge.
