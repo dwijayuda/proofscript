@@ -17,12 +17,16 @@ export function createStatefulVcRequest(loweringArtifact) {
 
   const vcPlan = loweringArtifact.statefulVcPlan;
   const programLowering = loweringArtifact.statefulProgramLowering;
+  const semanticEncoding = loweringArtifact.statefulLeanSemanticEncoding;
   const stateModel = loweringArtifact.stateModel ?? {};
   if (!vcPlan || vcPlan.schema !== 'proofscript.stateful-vc-plan/v1') {
     throw new Error('stateful VC request requires proofscript.stateful-vc-plan/v1');
   }
   if (!programLowering || programLowering.schema !== 'proofscript.stateful-program-lowering/v1') {
     throw new Error('stateful VC request requires proofscript.stateful-program-lowering/v1');
+  }
+  if (!semanticEncoding || semanticEncoding.schema !== 'proofscript.stateful-lean-semantic-encoding/v1') {
+    throw new Error('stateful VC request requires proofscript.stateful-lean-semantic-encoding/v1');
   }
 
   const declaredImports = uniqueStrings(stateModel.lean?.imports);
@@ -54,6 +58,13 @@ export function createStatefulVcRequest(loweringArtifact) {
       message: 'stateful VC plan must be ready before Lean VC derivation can be requested',
     });
   }
+  if (semanticEncoding.encodingReady !== true) {
+    diagnostics.push({
+      code: 'stateful-vc-request-semantic-encoding-not-ready',
+      severity: 'error',
+      message: 'Std.Do/StateM semantic encoding must be ready before Lean VC derivation can be requested',
+    });
+  }
   if (specTheorems.length !== (vcPlan.operationGoals ?? []).length) {
     diagnostics.push({
       code: 'stateful-vc-request-spec-theorems-unbound',
@@ -68,7 +79,7 @@ export function createStatefulVcRequest(loweringArtifact) {
     parameterBinders(fn.params ?? []),
     `(__ps_entry : ${stateModel.stateType ?? 'σ'})`,
   ].filter(Boolean).join(' ');
-  const target = vcPlan.tripleGoal?.target ?? null;
+  const target = semanticEncoding.tripleTarget ?? null;
   const requestSourceReady = diagnostics.length === 0 && Boolean(target);
 
   const leanSource = requestSourceReady
@@ -78,7 +89,7 @@ ${openNamespaces.map(namespaceName => `open ${namespaceName}`).join('\n')}
 
 namespace ProofScript.Generated.VCRequest
 
-${programLowering.leanDefinition}
+${semanticEncoding.program.leanDefinition}
 
 /-
 This theorem is a VC-derivation request, not a completed proof artifact.
@@ -98,6 +109,7 @@ end ProofScript.Generated.VCRequest
     function: fn.name ?? null,
     sourcePlanSchema: vcPlan.schema,
     sourceProgramLoweringSchema: programLowering.schema,
+    sourceSemanticEncodingSchema: semanticEncoding.schema,
     environment: {
       standardImports,
       modelImports: declaredImports,
