@@ -774,7 +774,8 @@
     "test:ka143": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ka143-architecture-extraction-tests.ts",
     "test:ka144": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ka144-state-model-descriptor-tests.ts",
     "test:ka145": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ka145-monadic-lowering-tests.ts",
-    "test:ka146": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ka146-monadic-preflight-tests.ts"
+    "test:ka146": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ka146-monadic-preflight-tests.ts",
+    "test:ps1:compiler-facade": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps1-compiler-facade-tests.ts"
   },
   "engines": {
     "node": ">=20"
