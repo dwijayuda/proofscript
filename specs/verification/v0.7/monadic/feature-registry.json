@@ -61,6 +61,8 @@
         "proofscript.stateful-vc-plan/v1 binds stable source obligation IDs, operation theorem identities, typed postcondition goals, concrete program provenance, and the overall Triple target without claiming semantic VC derivation",
         "proofscript.stateful-lean-semantic-encoding/v1 encodes pure predicates into Std.Do StateM Assertion/PostCond syntax using ⌜...⌝ and ⇓ ... => ...",
         "proofscript.stateful-vc-request/v1 emits a Lean vcgen/mvcgen request only when model import provenance is declared; execution remains a separate boundary",
+        "proofscript.stateful-vc-run/v1 records staged Lean model/program/Triple/tactic execution evidence and promotes semantic claims only from actual command results",
+        "proofscript.stateful-vc-goals/v1 gives Lean-derived residual goals stable IDs and trace hashes when the tactic is actually reached",
         "stateful postcondition IR is propagated contracts -> monadic-lowering -> monadic-preflight"
       ],
       "diagnostics": [
