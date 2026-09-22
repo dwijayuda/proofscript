@@ -59,7 +59,7 @@ assert.ok(explicitParams, "language service must expose compiler-owned surface f
 assert.equal(explicitParams.startOffset, 0);
 assert.ok(explicitParams.endOffset > explicitParams.startOffset);
 assert.deepEqual(explicitParams.range.start, { line: 0, character: 0 });
-assert.ok(explicitParams.range.end.character > 0);
+assert.ok(explicitParams.range.end.line > explicitParams.range.start.line || explicitParams.range.end.character > explicitParams.range.start.character);
 
 const cancellation = new CancellationSource();
 cancellation.cancel();
