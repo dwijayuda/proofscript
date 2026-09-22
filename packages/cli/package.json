@@ -11,7 +11,6 @@
     "README.md"
   ],
   "dependencies": {
-    "@proofscript/frontend": "0.1.0-dev.0",
     "@proofscript/kernel-codec": "0.1.0-dev.0",
     "@proofscript/certificates": "0.1.0-dev.0",
     "@proofscript/project": "0.1.0-dev.0",
