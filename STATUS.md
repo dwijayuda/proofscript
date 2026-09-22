@@ -112,12 +112,17 @@ Latest confirmed product gate:
 - language-worker cancellation/state replay — PASS
 - end-to-end stdio LSP diagnostics — PASS
 - v0.6.1 normative C0 — PASS
+- v0.6.1 normative C1 reference acceptance/rejection — **20/20 PASS**
+- v0.6.1 normative C2 reference canonical Lean — **12/12 PASS**
 - v0.6.1 production surface corpus — **20/20 PASS** (12 positive, 8 negative)
+- v0.6.1 production/reference acceptance differential — **20/20 PASS** (C3 prerequisite only)
 - KA137 — PASS
 - KA140 — PASS
 - KA146 — PASS
 
-The 20/20 production surface gate is intentionally **not** called C1. Normative C1/C2 belong to a reference frontend; C3 is production-vs-reference matching.
+The independent reference frontend lives in `reference/v061/frontend.ts` and does not import the production parser/elaborator. C1 and C2 are therefore separate from production behavior.
+
+The production/reference acceptance differential is intentionally **not** called full C3. Full C3 still requires production feature-ownership and canonical surface-lowering comparison, not only matching accept/reject decisions.
 
 ## PS1 closure
 
@@ -133,8 +138,8 @@ The deeper frontend-next/unified-bridge migration is no longer allowed to keep P
 
 ## Next engineering target
 
-1. Build the independent v0.6.1 reference frontend needed for genuine normative C1.
-2. Implement/reference-test canonical Lean lowering for normative C2.
-3. Differentially compare production vs reference for C3.
-4. Add compiler source-map + feature-ID APIs for richer LSP capabilities.
-5. Continue extracting useful incremental infrastructure from frontend-next behind canonical compiler/project APIs.
+1. Add production feature-ownership + source-range metadata to the canonical parser/compiler path.
+2. Add production canonical surface-lowering evidence and complete the remaining C3 differential comparison.
+3. Expose source-map/feature metadata through the compiler and language-service for richer LSP capabilities.
+4. Continue extracting useful incremental infrastructure from frontend-next behind canonical compiler/project APIs.
+5. Keep the independent reference frontend small and assurance-only; do not let it become a second production language implementation.
