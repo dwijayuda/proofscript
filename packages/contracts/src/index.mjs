@@ -760,6 +760,7 @@ export function monadicVerificationProfile(
     else if (diagnostic.code === 'state-operation-signature-invalid') unsupported.push('state-operation-signature-invalid');
   }
   if (operationElaboration.typingComplete !== true) unsupported.push('state-operation-typing-incomplete');
+  if ((contract.operations ?? []).length === 0) unsupported.push('stateful-empty-operation-sequence');
   if ((contract.requirements ?? []).some(r => /\bold\s*\(/.test(r.proposition ?? ''))) unsupported.push('old-in-requires');
   if ((contract.requirements ?? []).some(r => /\bresult\b/.test(r.proposition ?? ''))) unsupported.push('result-in-requires');
   if (requirementsUseStateObservation) unsupported.push('stateful-requires-observation-not-modeled');
