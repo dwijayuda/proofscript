@@ -101,6 +101,13 @@ export function validateStateModelDescriptor(descriptor, { descriptorPath, descr
     else operationNames.add(op.name);
     if (!nonEmptyString(op?.type)) errors.push({ field: `operations[${i}].type`, message: 'operation type is required' });
     if (!nonEmptyString(op?.spec)) errors.push({ field: `operations[${i}].spec`, message: 'operation spec is required' });
+    if (op?.verification !== undefined) {
+      if (!op.verification || typeof op.verification !== 'object' || Array.isArray(op.verification)) {
+        errors.push({ field: `operations[${i}].verification`, message: 'operation verification metadata must be an object' });
+      } else if (!nonEmptyString(op.verification.tripleTheorem)) {
+        errors.push({ field: `operations[${i}].verification.tripleTheorem`, message: 'verification.tripleTheorem must be a non-empty theorem identity' });
+      }
+    }
   }
   const observations = asArray(descriptor.observations);
   const observationNames = new Set();
@@ -135,6 +142,7 @@ export function validateStateModelDescriptor(descriptor, { descriptorPath, descr
     capabilities: {
       monadicContracts: accepted,
       statefulVerification: accepted,
+      operationTripleTheoremIdentities: operations.filter(o => nonEmptyString(o.verification?.tripleTheorem)).length,
       vcgenConnected: vcgenStatus === 'connected',
       semanticProofChecking: false,
     },
@@ -144,7 +152,12 @@ export function validateStateModelDescriptor(descriptor, { descriptorPath, descr
       wp: descriptor.wp,
       semantics: descriptor.semantics,
       laws: laws.map(l => ({ name: l.name, statementSha256: nonEmptyString(l.statement) ? sha256Text(normalizeSpaces(l.statement)) : undefined })),
-      operations: operations.map(o => ({ name: o.name, type: o.type, specSha256: nonEmptyString(o.spec) ? sha256Text(normalizeSpaces(o.spec)) : undefined })),
+      operations: operations.map(o => ({
+        name: o.name,
+        type: o.type,
+        specSha256: nonEmptyString(o.spec) ? sha256Text(normalizeSpaces(o.spec)) : undefined,
+        tripleTheorem: nonEmptyString(o.verification?.tripleTheorem) ? o.verification.tripleTheorem : undefined,
+      })),
       observations: observations.map(o => ({ name: o.name, type: o.type, stateArgument: o.stateArgument ?? 'last', specSha256: nonEmptyString(o.spec) ? sha256Text(normalizeSpaces(o.spec)) : undefined })),
     },
     errors,
