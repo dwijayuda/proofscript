@@ -10,6 +10,12 @@ function programApplication(fn) {
 }
 
 
+function renderLeanRelationOperator(operator) {
+  if (operator === '==') return '=';
+  if (operator === '!=') return '≠';
+  return operator;
+}
+
 function renderLeanPredicateNode(node) {
   if (!node || typeof node !== 'object') {
     throw new Error('typed predicate AST node is missing');
@@ -30,7 +36,7 @@ function renderLeanPredicateNode(node) {
     case 'binary':
       return `(${renderLeanPredicateNode(node.left)} ${node.operator} ${renderLeanPredicateNode(node.right)})`;
     case 'relation':
-      return `(${renderLeanPredicateNode(node.left)} ${node.operator} ${renderLeanPredicateNode(node.right)})`;
+      return `(${renderLeanPredicateNode(node.left)} ${renderLeanRelationOperator(node.operator)} ${renderLeanPredicateNode(node.right)})`;
     default:
       throw new Error(`unsupported typed predicate AST node kind '${node.kind ?? '<missing>'}'`);
   }
