@@ -65,7 +65,7 @@ See:
 - ProofScript remains an npm-workspaces monorepo.
 - `packages/kernel` remains a meaningful trusted logical boundary.
 - `packages/compiler` is being promoted from backend dispatch into the canonical high-level programmatic facade.
-- the CLI now routes source/project checking through `@proofscript/compiler` rather than importing `@proofscript/frontend` directly.
+- both the workspace CLI and the actual packaged `psc` check/build path now route source/project checking through `@proofscript/compiler` rather than importing `@proofscript/frontend` directly.
 - KA146's `packages/lsp` scaffold has now been replaced on the cleanup branch by a minimal compiler-backed LSP transport.
 - the historical LSP remains donor/reference evidence for later editor features; its dual-frontend language-service coupling was not copied.
 - `frontend`, `frontend-next`, and `unified-bridge` are not yet candidates for blind deletion; they have different capabilities.
@@ -121,6 +121,11 @@ Latest confirmed product gate:
   - canonical Lean lowering: 12/12
 - canonical incremental compiler reuse — PASS
 - language-service incremental importer invalidation — PASS
+- packaged structural certificate metadata — PASS
+  - product reference: v0.6.1
+  - product profile: ps1-v061
+  - bound Core compatibility recorded separately
+  - metadata tamper rejection: PASS
 - KA137 — PASS
 - KA140 — PASS
 - KA146 — PASS
@@ -143,10 +148,8 @@ The deeper frontend-next/unified-bridge migration is no longer allowed to keep P
 
 ## Next engineering target
 
-1. Resolve PS2 product metadata drift without rewriting historical Core evidence:
-   - current product certificates identify ProofScript v0.6.1;
-   - historical Core/Lean compatibility is nested and explicit, not presented as the product language version.
-2. Converge the two CLI implementations: the packaged root `bin/psc.mjs` and the smaller `packages/cli` workspace must not remain independent product semantics.
+1. Finish PS2 metadata cleanup for plugin/backend snapshots; current structural certificates are now corrected without rewriting historical Core evidence.
+2. Continue CLI convergence at the orchestration layer; both current check paths already share `@proofscript/compiler`, so remaining duplication is command/UX/workflow code rather than a separate checker.
 3. Continue extracting useful incremental/module-interface infrastructure from `frontend-next` behind canonical compiler/project APIs.
 4. Expand LSP capabilities only from compiler-backed semantic/source-map APIs.
 5. Treat C4 machine-checked reference theorems as assurance work; do not block usable compiler/editor releases on full Lean equivalence.
