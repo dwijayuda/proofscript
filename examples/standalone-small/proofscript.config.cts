@@ -1,1 +1,1 @@
-module.exports={language:"0.1",semanticBaseline:"lean-4.33.1",plugins:[]};
+module.exports={language:"0.6.1",productProfile:"ps1-v061",plugins:[]};
