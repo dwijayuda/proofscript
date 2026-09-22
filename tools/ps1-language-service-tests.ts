@@ -48,12 +48,18 @@ assert.equal(broken.diagnostics[0]!.data.identity.schemaVersion, 1);
 assert.ok(broken.diagnostics[0]!.data.identity.fingerprint.length >= 16);
 assert.notEqual(broken.resultId, first.resultId);
 
-const repairedSource = "theorem repaired(P: Prop, h: P): P := h;\n";
+const repairedSource = "def repaired(P: Prop): Prop := P;\n";
 service.replaceDocument(uri, 3, repairedSource);
 const repaired = service.analyze(uri);
 assert.equal(repaired.status, "accepted");
 assert.ok(repaired.declarations.some((declaration) => declaration.name === "repaired"));
 assert.equal(repaired.diagnostics.length, 0);
+const explicitParams = repaired.surfaceFeatures.find((feature) => feature.feature === "D-EXPLICIT-PARAMS");
+assert.ok(explicitParams, "language service must expose compiler-owned surface features");
+assert.equal(explicitParams.startOffset, 0);
+assert.ok(explicitParams.endOffset > explicitParams.startOffset);
+assert.deepEqual(explicitParams.range.start, { line: 0, character: 0 });
+assert.ok(explicitParams.range.end.character > 0);
 
 const cancellation = new CancellationSource();
 cancellation.cancel();
