@@ -44,6 +44,7 @@ for (const item of positive) {
   assert.equal(artifact.trustBoundary.vcgenConnected, false, item.id);
   assert.equal(artifact.statefulPostconditionIR.schema, "proofscript.stateful-postcondition-ir/v1", item.id);
   assert.equal(artifact.statefulPostconditionIR.defaultExpressionState, "final-state", item.id);
+  assert.equal(artifact.statefulPostconditionIR.predicateNormalizationComplete, true, item.id);
   assert.equal(artifact.statefulPostconditionIR.semanticElaborationComplete, false, item.id);
   assert.ok(artifact.statefulPostconditionIR.clauses.every((clause: any) =>
     clause.oldReferences.length === 0 && clause.resultReferences.length === 0
@@ -59,6 +60,9 @@ for (const item of positive) {
       item.id,
     );
     assert.ok(clause.finalStateObservationReferences.every((ref: any) => ref.stateRole === "final-state"), item.id);
+  }
+  if (item.expected.normalized_predicate) {
+    assert.equal(artifact.statefulPostconditionIR.clauses[0].normalizedPredicate, item.expected.normalized_predicate, item.id);
   }
 
   assert.deepEqual(contract.operations.map((op: any) => op.operation), item.expected.operations, item.id);
@@ -83,7 +87,15 @@ for (const item of positive) {
   assert.equal(lowering.trustBoundary.specifiedStructuralProfile, true, item.id);
   assert.equal(lowering.summary.semanticProofDischarge, false, item.id);
   assert.equal(lowering.tripleSkeleton.leanCheckable, false, item.id);
-  assert.equal(lowering.tripleSkeleton.precondition, item.expected.precondition, item.id);
+  assert.equal(lowering.tripleSkeleton.preconditionBody, item.expected.precondition, item.id);
+  assert.equal(lowering.tripleSkeleton.entryStateBinder.type, "Bank", item.id);
+  assert.equal(`(${lowering.tripleSkeleton.entryStateBinder.name} : ${lowering.tripleSkeleton.entryStateBinder.type})`, item.expected.entry_state_binder, item.id);
+  assert.equal(lowering.tripleSkeleton.precondition, item.expected.precondition_function, item.id);
+  assert.equal(lowering.tripleSkeleton.postconditionBody, item.expected.postcondition_body, item.id);
+  assert.equal(lowering.tripleSkeleton.postcondition, item.expected.postcondition_function, item.id);
+  assert.ok(lowering.tripleSkeleton.theoremStatement.includes(item.expected.entry_state_binder), item.id);
+  assert.ok(lowering.tripleSkeleton.theoremStatement.includes(`(${item.expected.precondition_function})`), item.id);
+  assert.ok(lowering.tripleSkeleton.theoremStatement.includes(`(${item.expected.postcondition_function})`), item.id);
   assert.equal(lowering.tripleSkeleton.modelAdequacyTheorem, item.expected.model_adequacy_theorem, item.id);
   assert.equal(lowering.tripleSkeleton.modelAdequacyChecked, false, item.id);
   assert.equal(lowering.trustBoundary.modelAdequacyTheoremBound, true, item.id);
@@ -154,6 +166,9 @@ for (const item of negative) {
     assert.equal(clause.resultReferences.length, item.expected_ir.result_references, item.id);
     if (item.expected_ir.old_expression) {
       assert.equal(clause.oldReferences[0]?.expression, item.expected_ir.old_expression, item.id);
+    }
+    if (item.expected_ir.normalized_predicate) {
+      assert.equal(clause.normalizedPredicate, item.expected_ir.normalized_predicate, item.id);
     }
     if (item.expected_ir.entry_state_observations !== undefined) {
       const entryRefs = clause.oldReferences.flatMap((oldRef: any) => oldRef.observationReferences ?? []);
