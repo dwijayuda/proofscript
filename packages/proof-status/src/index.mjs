@@ -87,6 +87,7 @@ export function createProofStatusArtifact({ obligations, obligationsPath, outPat
     packageVersion,
     source: obligations.source,
     obligationsArtifact: { path: path.relative(path.dirname(outPath), obligationsPath).replace(/\\/g, '/'), sha256: sha256File(obligationsPath) },
+    verification: obligations.verification,
     leanCheck,
     obligations: items,
     summary: { total: items.length, checked: checkedCount, proved: checkedCount, unproved: items.length - checkedCount },
