@@ -133,6 +133,7 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
       monad: stateModel.monad,
       wp: stateModel.wp,
       semantics: stateModel.semantics,
+      lean: stateModel.lean,
       operations: stateModel.operations ?? [],
       observations: stateModel.observations ?? [],
       laws: stateModel.laws ?? [],
