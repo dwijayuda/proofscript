@@ -289,7 +289,7 @@ export class ProofScriptLanguageServer {
 
   private write(message: any): void {
     const body = JSON.stringify(message);
-    process.stdout.write(`Content-Length: ${Buffer.byteLength(body, "utf8")}\r\n\r\n${body}`);
+    process.stdout.write(`Content-Length: ${(Buffer as any).byteLength(body, "utf8")}\r\n\r\n${body}`);
   }
 
   private log(message: string): void {
