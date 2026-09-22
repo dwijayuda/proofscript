@@ -8,10 +8,10 @@ import path from "node:path";
 import { makeMonadicContractsArtifact } from "../packages/contracts/src/index.mjs";
 import {
   analyzeStatefulVcExecution,
+  classifyLeanCompatibilityOutput,
   createMonadicLoweringArtifact,
 } from "../packages/monadic-lowering/src/index.mjs";
 import { buildStateModelBinding } from "../packages/state-models/src/index.mjs";
-import { probeLean } from "./lib/lean-toolchain.ts";
 
 const root = path.resolve(import.meta.dirname, "..");
 const args = process.argv.slice(2);
@@ -65,8 +65,22 @@ function leanPreamble(request: any) {
   ].join("\n");
 }
 
-const leanProbe = probeLean(leanCmd);
-if (leanProbe.status !== "accepted") {
+const leanVersionRun = run(leanCmd, ["--version"], root);
+const leanCompatibility = leanVersionRun.exitCode === 0
+  ? classifyLeanCompatibilityOutput(`${leanVersionRun.stdout}\n${leanVersionRun.stderr}`)
+  : {
+      status: "unsupported",
+      minimumVersion: "4.33.1",
+      message: leanVersionRun.error ?? leanVersionRun.stderr ?? "unable to execute Lean",
+    };
+
+const leanProbe = {
+  binary: leanCmd,
+  run: leanVersionRun,
+  ...leanCompatibility,
+};
+
+if (leanCompatibility.status !== "accepted") {
   const report = {
     schema: "proofscript.stateful-vc-run/v1",
     status: "unsupported",
