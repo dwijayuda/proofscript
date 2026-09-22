@@ -109,6 +109,10 @@ function escapeRegExp(text) {
   return String(text).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+export function scanCallHeads(text) {
+  return [...String(text).matchAll(/\b([A-Za-z_][A-Za-z0-9_.]*)\s*\(/g)].map(match => match[1]);
+}
+
 export function scanStateObservationReferences(text, observations, stateRole, offsetBase = 0) {
   const source = String(text);
   const out = [];
@@ -224,15 +228,23 @@ export function statefulPostconditionIRForContract(contract, stateModel = contra
     })),
     clauses: (contract.ensures ?? []).map(ensure => {
       const source = ensure.rawProposition ?? ensure.proposition ?? '';
-      const oldReferences = scanOldReferences(source).map(oldReference => ({
-        ...oldReference,
-        observationReferences: scanStateObservationReferences(
-          oldReference.expression,
-          observations,
-          'entry-state',
-          oldReference.expressionStartOffset,
-        ),
-      }));
+      const observationNames = new Set(observations.map(observation => observation.name));
+      const oldReferences = scanOldReferences(source).map(oldReference => {
+        const callHeads = scanCallHeads(oldReference.expression);
+        const undeclaredCallHeads = callHeads.filter(name => !observationNames.has(name));
+        return {
+          ...oldReference,
+          callHeads,
+          undeclaredCallHeads,
+          observationCoverageComplete: undeclaredCallHeads.length === 0,
+          observationReferences: scanStateObservationReferences(
+            oldReference.expression,
+            observations,
+            'entry-state',
+            oldReference.expressionStartOffset,
+          ),
+        };
+      });
       const allFinalObservations = scanStateObservationReferences(source, observations, 'final-state');
       const finalStateObservationReferences = allFinalObservations.filter(
         observationReference => !oldReferences.some(oldReference => rangeIsInside(observationReference, oldReference)),
@@ -710,18 +722,29 @@ export function monadicVerificationProfile(contract, stateModel, postconditionIR
     .filter(op => !declaredOperations.has(op.operation))
     .map(op => op.operation);
   const unsupported = [];
-  if (postconditionIR.clauses.some(clause => clause.oldReferences.length > 0)) unsupported.push('stateful-old-not-modeled');
-  if (postconditionIR.clauses.some(clause => clause.resultReferences.length > 0)) unsupported.push('stateful-result-not-modeled');
+  const oldReferences = postconditionIR.clauses.flatMap(clause => clause.oldReferences ?? []);
+  const resultReferences = postconditionIR.clauses.flatMap(clause => clause.resultReferences ?? []);
+  const requirementsUseStateObservation = (contract.requirements ?? []).some(requirement =>
+    scanStateObservationReferences(requirement.proposition ?? '', stateModel.observations ?? [], 'entry-state').length > 0
+  );
+  if (oldReferences.some(oldReference => oldReference.observationCoverageComplete !== true)) {
+    unsupported.push('stateful-old-unclassified-call');
+  }
+  if (postconditionIR.predicateNormalizationComplete !== true) unsupported.push('stateful-postcondition-not-normalized');
   if ((contract.requirements ?? []).some(r => /\bold\s*\(/.test(r.proposition ?? ''))) unsupported.push('old-in-requires');
   if ((contract.requirements ?? []).some(r => /\bresult\b/.test(r.proposition ?? ''))) unsupported.push('result-in-requires');
+  if (requirementsUseStateObservation) unsupported.push('stateful-requires-observation-not-modeled');
   if (unknownOperations.length > 0) unsupported.push('undeclared-state-operation');
 
   if (unsupported.length === 0) {
+    const features = ['V-MONADIC-CONTRACT'];
+    if (oldReferences.length > 0) features.push('V-OLD');
+    if (resultReferences.length > 0) features.push('V-RESULT');
     return {
       schema: 'proofscript.verification-profile/v1',
       reference: MONADIC_VERIFICATION_REFERENCE,
       profile: MONADIC_VERIFICATION_PROFILE,
-      features: ['V-MONADIC-CONTRACT'],
+      features,
       prototypeFeatures: [],
       claim: 'specified-structural-alpha',
       unknownOperations: [],
