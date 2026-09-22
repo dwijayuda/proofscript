@@ -17,19 +17,29 @@ assert.equal(registry.profile, "ps3-pure-contracts0");
 assert.equal(registry.claim_ceiling, "specified-alpha");
 assert.deepEqual(
   registry.features.map((feature: any) => feature.id).sort(),
-  ["V-ENSURES", "V-REQUIRES", "V-RESULT"],
+  ["V-ASSERT", "V-ENSURES", "V-REQUIRES", "V-RESULT"],
 );
 
 for (const item of positive) {
   const contract = parsePureContractSource(item.source, `<${item.id}>`);
   assert.equal(contract.requirements.length, item.expected.requirements, item.id);
   assert.equal(contract.ensures.length, item.expected.ensures, item.id);
+  assert.equal(contract.assertions.length, item.expected.assertions ?? 0, item.id);
   assert.equal(contract.obligations.length, item.expected.obligations, item.id);
 
-  const obligation = contract.obligations[0];
-  assert.ok(obligation, `${item.id}: expected at least one obligation`);
-  assert.equal(obligation.id, item.expected.obligation_id, item.id);
-  assert.equal(obligation.proposition, item.expected.result_proposition, item.id);
+  const obligationIds = contract.obligations.map((obligation: any) => obligation.id);
+  if (item.expected.obligation_id) assert.ok(obligationIds.includes(item.expected.obligation_id), item.id);
+  if (item.expected.obligation_ids) assert.deepEqual(obligationIds, item.expected.obligation_ids, item.id);
+
+  const ensuresObligation = contract.obligations.find((obligation: any) => obligation.kind === "ensures");
+  assert.ok(ensuresObligation, `${item.id}: expected an ensures obligation`);
+  assert.equal(ensuresObligation.proposition, item.expected.result_proposition, item.id);
+  if (item.expected.assert_proposition) {
+    const assertObligation = contract.obligations.find((obligation: any) => obligation.kind === "assert");
+    assert.ok(assertObligation, `${item.id}: expected an assert obligation`);
+    assert.equal(assertObligation.proposition, item.expected.assert_proposition, item.id);
+  }
+  if (item.expected.runtime_body) assert.equal(contract.body, item.expected.runtime_body, item.id);
 
   const lean = leanForContract(contract);
   const defLine = lean.split(/\r?\n/u)[0]!;
@@ -39,14 +49,16 @@ for (const item of positive) {
       `${item.id}: requires hypothesis must not alter function definition arity`,
     );
     assert.ok(
-      obligation.exactTheoremStatement.includes(`(${requirement.name} : ${requirement.proposition})`),
+      contract.obligations.every((obligation: any) =>
+        obligation.exactTheoremStatement.includes(`(${requirement.name} : ${requirement.proposition})`)
+      ),
       `${item.id}: requires hypothesis must appear in the proof obligation theorem`,
     );
   }
 
   const functionApplication = item.expected.result_proposition.split(" = ")[0]!;
   assert.ok(
-    obligation.exactTheoremStatement.includes(functionApplication),
+    ensuresObligation.exactTheoremStatement.includes(functionApplication),
     `${item.id}: theorem must contain the expected result application`,
   );
 }
