@@ -78,4 +78,57 @@ service.closeDocument(uri);
 assert.equal(service.getDocument(uri), undefined);
 assert.throws(() => service.analyze(uri), /document is not open/);
 
+// Project-level incremental reuse + importer invalidation.
+const projectRoot = fs.mkdtempSync(path.join(os.tmpdir(), "proofscript-language-service-project-"));
+fs.writeFileSync(path.join(projectRoot, "package.json"), JSON.stringify({ private: true }, null, 2) + "\n");
+const projectSrc = path.join(projectRoot, "src");
+fs.mkdirSync(projectSrc);
+const libFile = path.join(projectSrc, "Lib.ps");
+const projectMainFile = path.join(projectSrc, "Main.ps");
+fs.writeFileSync(libFile, "theorem libIdentity(P: Prop, h: P): P := h;\n");
+fs.writeFileSync(projectMainFile, "import Lib;\ntheorem mainIdentity(P: Prop, h: P): P := h;\n");
+
+const projectService = new ProofScriptLanguageService();
+const libUri = "proofscript-test://Lib.ps";
+const mainUri = "proofscript-test://ProjectMain.ps";
+projectService.openDocument(libUri, 1, fs.readFileSync(libFile, "utf8"), libFile);
+projectService.openDocument(mainUri, 1, fs.readFileSync(projectMainFile, "utf8"), projectMainFile);
+
+const coldProject = projectService.analyze(mainUri);
+assert.equal(coldProject.status, "accepted");
+assert.deepEqual(coldProject.moduleReuse?.reused, []);
+assert.deepEqual(coldProject.moduleReuse?.rebuilt, ["Lib", "Main"]);
+
+projectService.replaceDocument(
+  mainUri,
+  2,
+  "import Lib;\ntheorem mainChanged(P: Prop, h: P): P := h;\n",
+);
+const mainOnlyChanged = projectService.analyze(mainUri);
+assert.equal(mainOnlyChanged.status, "accepted");
+assert.deepEqual(mainOnlyChanged.moduleReuse?.reused, ["Lib"]);
+assert.deepEqual(mainOnlyChanged.moduleReuse?.rebuilt, ["Main"]);
+assert.ok(mainOnlyChanged.declarations.some((declaration) => declaration.name === "mainChanged"));
+
+projectService.replaceDocument(
+  libUri,
+  2,
+  "theorem libChanged(P: Prop, h: P): P := h;\n",
+);
+const dependencyChanged = projectService.analyze(mainUri);
+assert.equal(dependencyChanged.status, "accepted");
+assert.deepEqual(dependencyChanged.moduleReuse?.reused, []);
+assert.deepEqual(
+  dependencyChanged.moduleReuse?.rebuilt,
+  ["Lib", "Main"],
+  "changing an imported overlay must invalidate the importer analysis and conservatively rebuild dependents",
+);
+assert.ok(dependencyChanged.declarations.some((declaration) => declaration.name === "libChanged"));
+assert.ok(!dependencyChanged.declarations.some((declaration) => declaration.name === "libIdentity"));
+
+const stableProject = projectService.analyze(mainUri, true);
+assert.equal(stableProject.status, "accepted");
+assert.deepEqual(stableProject.moduleReuse?.reused, ["Lib", "Main"]);
+assert.deepEqual(stableProject.moduleReuse?.rebuilt, []);
+
 console.log("PS1_LANGUAGE_SERVICE_TESTS=PASS");
