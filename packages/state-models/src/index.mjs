@@ -27,6 +27,51 @@ function requireNested(errors, descriptor, dotted, message) {
   if (!nonEmptyString(value)) errors.push({ field: dotted, message });
 }
 
+export function splitTopLevelArrowType(typeText) {
+  const source = normalizeSpaces(typeText);
+  const parts = [];
+  let depth = 0;
+  let start = 0;
+  for (let i = 0; i < source.length; i += 1) {
+    const ch = source[i];
+    if (ch === '(' || ch === '[' || ch === '{') depth += 1;
+    else if (ch === ')' || ch === ']' || ch === '}') depth = Math.max(0, depth - 1);
+    else if (depth === 0 && ch === '-' && source[i + 1] === '>') {
+      parts.push(normalizeSpaces(source.slice(start, i)));
+      start = i + 2;
+      i += 1;
+    }
+  }
+  parts.push(normalizeSpaces(source.slice(start)));
+  return parts.filter(Boolean);
+}
+
+export function parseStateObservationSignature(typeText, stateType) {
+  const parts = splitTopLevelArrowType(typeText);
+  if (parts.length < 2) {
+    return {
+      valid: false,
+      inputTypes: [],
+      stateInputType: null,
+      outputType: null,
+      error: 'observation type must accept the state argument and return a result',
+    };
+  }
+  const allInputs = parts.slice(0, -1);
+  const stateInputType = allInputs.at(-1) ?? null;
+  const outputType = parts.at(-1) ?? null;
+  const inputTypes = allInputs.slice(0, -1);
+  const expectedStateType = normalizeSpaces(stateType);
+  const valid = Boolean(stateInputType) && normalizeSpaces(stateInputType) === expectedStateType;
+  return {
+    valid,
+    inputTypes,
+    stateInputType,
+    outputType,
+    error: valid ? null : `final observation input type must be stateType '${expectedStateType}'`,
+  };
+}
+
 export function validateStateModelDescriptor(descriptor, { descriptorPath, descriptorSha256, packageVersion, checkpoint = 'KA-144 state-model descriptor workflow' } = {}) {
   const errors = [];
   if (!descriptor || typeof descriptor !== 'object' || Array.isArray(descriptor)) {
@@ -67,6 +112,10 @@ export function validateStateModelDescriptor(descriptor, { descriptorPath, descr
     if (!nonEmptyString(observation?.spec)) errors.push({ field: `observations[${i}].spec`, message: 'observation spec is required' });
     const stateArgument = observation?.stateArgument ?? 'last';
     if (stateArgument !== 'last') errors.push({ field: `observations[${i}].stateArgument`, message: "stateArgument must be 'last' in this alpha" });
+    if (nonEmptyString(observation?.type) && nonEmptyString(descriptor.stateType)) {
+      const signature = parseStateObservationSignature(observation.type, descriptor.stateType);
+      if (!signature.valid) errors.push({ field: `observations[${i}].type`, message: signature.error });
+    }
   }
   const vcgenStatus = descriptor.vcgen?.status ?? 'not-connected';
   if (!['not-connected', 'planned', 'connected'].includes(vcgenStatus)) errors.push({ field: 'vcgen.status', message: 'vcgen.status must be not-connected, planned, or connected' });
