@@ -29,6 +29,7 @@ export function createStatefulVcRequest(loweringArtifact) {
   const allImports = uniqueStrings([...standardImports, ...declaredImports]);
   const tactic = stateModel.vcgen?.tactic === 'mvcgen' ? 'mvcgen' : 'vcgen';
   const specTheorems = uniqueStrings((vcPlan.operationGoals ?? []).map(goal => goal.tripleTheorem));
+  const invocationTheorems = tactic === 'vcgen' ? specTheorems : [];
   const diagnostics = [];
 
   if (declaredImports.length === 0) {
@@ -91,7 +92,7 @@ The runner is expected to invoke ${tactic}, capture any generated goals, and
 record the result separately. Unsolved goals are expected at this stage.
 -/
 theorem ${requestName}${binders ? ` ${binders}` : ''} : ${target} := by
-  ${tactic}${specTheorems.length ? ` [${specTheorems.join(', ')}]` : ''}
+  ${tactic}${invocationTheorems.length ? ` [${invocationTheorems.join(', ')}]` : ''}
   all_goals trace_state
 
 end ProofScript.Generated.VCRequest
@@ -115,6 +116,8 @@ end ProofScript.Generated.VCRequest
     tactic: {
       name: tactic,
       specificationTheorems: specTheorems,
+      invocationTheorems,
+      specificationDiscovery: tactic === 'mvcgen' ? 'registered-attribute' : 'explicit-list',
       checkedAvailableInLean: false,
     },
     request: {
