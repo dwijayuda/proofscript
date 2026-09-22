@@ -70,8 +70,21 @@ assert.equal(certify.certificate, certFile);
 assert.ok(fs.existsSync(certFile));
 const cert = JSON.parse(fs.readFileSync(certFile, 'utf8'));
 assert.equal(cert.format, 'proofscript-certificate');
-assert.ok([3, 4].includes(cert.version));
+assert.equal(cert.version, 4);
+assert.equal(cert.proofscriptReference, 'v0.6.1');
+assert.equal(cert.productProfile, 'ps1-v061');
+assert.equal(cert.referenceConformance?.level, 'C3');
+assert.equal(cert.referenceConformance?.scope, 'normative-v0.6.1-conformance-corpus');
+assert.equal(cert.referenceConformance?.c4MachineCheckedReferenceTheorems, false);
 assert.equal(cert.core.sha256, sha256(coreFile));
+const coreArtifact = JSON.parse(fs.readFileSync(coreFile, 'utf8'));
+assert.deepEqual(cert.coreCompatibility, {
+  format: coreArtifact.format ?? null,
+  formatVersion: coreArtifact.formatVersion ?? null,
+  proofscriptReference: coreArtifact.proofscriptReference ?? null,
+  leanSemanticBaseline: coreArtifact.leanSemanticBaseline ?? null,
+  implementationProfile: coreArtifact.implementationProfile ?? null,
+});
 
 const verifyCore = jsonFrom(runOk(node, [psc, 'verify', coreFile, '--json'], app));
 assert.equal(verifyCore.status, 'accepted');
@@ -82,6 +95,14 @@ const verifyCert = jsonFrom(runOk(node, [psc, 'verify', certFile, '--json'], app
 assert.equal(verifyCert.status, 'accepted');
 assert.equal(verifyCert.artifactKind, 'certificate');
 assert.equal(verifyCert.boundCoreSha256, sha256(coreFile));
+
+const tamperedCertFile = path.join(app, 'dist', 'Main.tampered.pscert.json');
+fs.writeFileSync(tamperedCertFile, JSON.stringify({ ...cert, productProfile: 'stale-profile' }, null, 2) + '\n');
+const tamperedCertVerify = run(node, [psc, 'verify', tamperedCertFile, '--json'], app);
+assert.equal(tamperedCertVerify.status, 1, `tampered certificate metadata must be rejected\nstdout=${tamperedCertVerify.stdout}\nstderr=${tamperedCertVerify.stderr}`);
+const tamperedCertResult = JSON.parse(tamperedCertVerify.stdout);
+assert.equal(tamperedCertResult.status, 'rejected');
+assert.match(tamperedCertResult.message, /product profile mismatch/i);
 
 const contractSrc = path.join(app, 'src', 'Contracts.ps');
 fs.writeFileSync(contractSrc, `function boundedAdd(x: Nat, y: Nat, max: Nat): Nat\n  requires hx: x <= max\n  requires hy: y <= max\n  ensures upper: result <= x + y\n:= {\n  x + y\n}\n`);
