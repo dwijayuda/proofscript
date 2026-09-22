@@ -25,7 +25,7 @@ Observed before cleanup and now represented by the product regression workflow:
 
 ### Product CI
 
-`product-ci` is the normal PS1 regression workflow.
+`product-ci` (`.github/workflows/product-ci.yml`) is the normal PS1 regression workflow.
 
 It runs on pull requests to `main`, pushes to `main`, and the PS1 cleanup branch.
 
@@ -93,8 +93,8 @@ See:
 - [x] Begin canonical compiler facade
 - [x] Route CLI checking through compiler facade
 - [x] Define frontend convergence strategy
-- [ ] Add focused compiler-facade regression test
-- [ ] Complete frontend/front-end-next capability matrix
+- [x] Add focused compiler-facade regression test
+- [ ] Complete frontend/frontend-next capability matrix
 - [ ] Establish language-service boundary
 - [ ] Rebase editor/LSP donor code
 - [ ] Converge duplicate frontend semantics
@@ -102,9 +102,22 @@ See:
 - [ ] Reduce historical root/tooling clutter without losing assurance evidence
 - [ ] Final PS1 acceptance suite green
 
+## Current executable gates
+
+Latest confirmed product gate:
+
+- build — PASS
+- compiler facade — PASS
+- v0.6.1 reference conformance C0 — PASS
+- KA137 — PASS
+- KA140 — PASS
+- KA146 — PASS
+
+The v0.6.1 C0 gate proves only that the imported registry/corpus is internally coherent. It does not yet claim production frontend conformance (C1-C3).
+
 ## Next engineering target
 
-1. Confirm the compiler-facade refactor passes product CI.
-2. Add a focused regression gate for the compiler facade.
-3. Inventory unique `frontend-next` capabilities and tests.
-4. Define/implement the smallest `language-service` API that consumes the compiler facade.
+1. Inventory unique `frontend-next` capabilities and existing unified-bridge tests.
+2. Define the minimum compiler/source-map/overlay APIs needed by the rebased language service.
+3. Restore the language-service contract without importing both frontend implementations.
+4. Begin v0.6.1 C1/C2/C3 frontend conformance work after the architecture boundary is stable.
