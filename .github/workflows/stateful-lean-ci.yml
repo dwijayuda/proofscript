@@ -28,8 +28,63 @@ on:
       - ".github/workflows/stateful-lean-ci.yml"
 
 jobs:
-  stateful-vc:
+  resolve-lean-versions:
     runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.resolve.outputs.versions }}
+    steps:
+      - name: Resolve compatibility floor, latest stable, and latest RC
+        id: resolve
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          floor = "v4.33.1"
+          request = urllib.request.Request(
+              "https://api.github.com/repos/leanprover/lean4/releases?per_page=30",
+              headers={"Accept": "application/vnd.github+json"},
+          )
+          with urllib.request.urlopen(request) as response:
+              releases = json.load(response)
+
+          stable = next(
+              release["tag_name"]
+              for release in releases
+              if not release.get("draft") and not release.get("prerelease")
+          )
+          rc = next(
+              (
+                  release["tag_name"]
+                  for release in releases
+                  if not release.get("draft")
+                  and release.get("prerelease")
+                  and "-rc" in release["tag_name"]
+              ),
+              None,
+          )
+
+          versions = []
+          for version in (floor, stable, rc):
+              if version and version not in versions:
+                  versions.append(version)
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write("versions=" + json.dumps(versions) + "\n")
+
+          print("Lean compatibility lanes:", ", ".join(versions))
+          PY
+
+  stateful-vc:
+    needs: resolve-lean-versions
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        lean: ${{ fromJson(needs.resolve-lean-versions.outputs.versions) }}
+
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -38,19 +93,33 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run build
-      - name: Set up pinned Lean verification project
+
+      - name: Select Lean compatibility lane
+        shell: bash
+        run: |
+          printf '%s\n' 'leanprover/lean4:${{ matrix.lean }}' > specs/verification/v0.7/lean/lean-toolchain
+          cat specs/verification/v0.7/lean/lean-toolchain
+
+      - name: Set up Lean verification project
         uses: leanprover/lean-action@v1
         with:
           lake-package-directory: specs/verification/v0.7/lean
           build: true
           test: false
           use-mathlib-cache: false
+
+      - name: Record actual Lean version
+        working-directory: specs/verification/v0.7/lean
+        run: |
+          lake env lean --version
+
       - name: Execute generated stateful VC request
-        run: npm run assurance:ps3:stateful-lean-vc -- --strict --out stateful-vc-run.json
+        run: npm run assurance:ps3:stateful-lean-vc -- --strict --out stateful-vc-run-${{ matrix.lean }}.json
+
       - name: Upload stateful VC evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: stateful-vc-run
-          path: stateful-vc-run.json
+          name: stateful-vc-run-${{ matrix.lean }}
+          path: stateful-vc-run-${{ matrix.lean }}.json
           if-no-files-found: warn
