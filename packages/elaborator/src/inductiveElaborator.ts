@@ -16,6 +16,7 @@ import {
 } from "@proofscript/kernel";
 import {
   ElaborationError,
+  UnsupportedFeature,
   SurfaceBinder,
   SurfaceDeclaration,
   SurfaceTerm,
@@ -65,6 +66,9 @@ export function elaborateStructureDeclaration(
   result: CoreDeclaration[],
   host: InductiveElaborationHost,
 ): void {
+  if (decl.fields.some(field => (field.binderInfo ?? "explicit") !== "explicit")) {
+    throw new UnsupportedFeature("implicit/strict-implicit structure fields are parsed for v0.6.1 surface conformance but their Core structure elaboration is not implemented yet");
+  }
   const fields = decl.fields.map(field => ({
     name: field.name,
     type: host.elaborateTerm(field.type, [], []),
