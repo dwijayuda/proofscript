@@ -81,3 +81,20 @@ mvcgen [withdraw]
 ```
 
 ProofScript records operation Triple theorem identities such as `BankStateModel.debit_triple` separately as provenance; they are not mechanically copied into the mvcgen bracket list.
+
+
+## Standard mvcgen finisher
+
+The bounded public `Std.Do.Triple` request currently emits:
+
+```lean
+mvcgen [generatedProgram]
+all_goals simp_all
+all_goals trace_state
+```
+
+The bracket list unfolds the generated local wrapper. Imported operation specifications remain registered through `@[spec]`.
+
+`simp_all` is an explicit Lean proof tactic, not a ProofScript-side proof claim. It is attempted after VC generation so simple pure obligations may close using checked simplification lemmas such as the bank model's `[simp]` state-observation theorems. If it cannot discharge an obligation, the remaining Lean goals are still captured by `trace_state`.
+
+The request artifact records the finisher and its scope. Before execution, `checkedInLean = false`; only an actual Lean run can establish proof discharge.
