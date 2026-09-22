@@ -216,7 +216,9 @@ The `proofscript.stateful-vc-plan/v1` layer records the overall Triple target, s
 
 A real Lean verification lane now exists under `specs/verification/v0.7/lean/`, pinned to Lean 4.33.1. It contains `ProofScript.Verification.BankStateModel` with concrete `StateM` operations, schematic `@[spec]` Triple theorems, and a runner adequacy bridge. The canonical bank descriptor binds that module, and `07-bank-debit-stateful-vc.ps` is the first deliberately provable end-to-end semantic target. Lean predicates are emitted from the typed predicate AST, so ProofScript call syntax is no longer copied into semantic Lean.
 
-The `proofscript.stateful-vc-run/v1` runner separately checks the model module, emitted `StateM` program, concrete `Std.Do.Triple` target, and then executes `vcgen`. Its claims are evidence-driven: no Lean execution means no promoted semantic-VC or proof-discharge claim.
+The `proofscript.stateful-vc-run/v1` runner separately checks the model module, emitted `StateM` program, concrete `Std.Do.Triple` target, and then executes `vcgen`. The same evidence semantics are exposed publicly through `psc monadic-vc-run <lowering.json> --lean-project <dir> --out <run.json>`. Its claims are evidence-driven: no Lean execution means no promoted semantic-VC or proof-discharge claim.
+
+When Lean reaches the tactic but leaves residual goals, `proofscript.stateful-vc-goals/v1` assigns those goals stable IDs and trace hashes. A `vcs-generated` run is useful semantic evidence but is still distinct from `proved`.
 
 The next stateful verification increment is to obtain a successful pinned-Lean run (or capture real residual VCs) for the debit-only example, then stabilize/discharge those goals before widening the semantic example to two-account transfer and later loop/frame reasoning. Exceptional/abrupt paths remain explicitly uncovered until modeled.
 
