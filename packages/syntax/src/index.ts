@@ -41,7 +41,7 @@ export type SurfaceTerm=
   |{tag:"eq";left:SurfaceTerm;right:SurfaceTerm}
   |{tag:"binaryOp";op:"add"|"sub"|"mul"|"beq"|"lt"|"le"|"gt"|"ge";left:SurfaceTerm;right:SurfaceTerm}
   |{tag:"app";fn:SurfaceTerm;args:SurfaceTerm[];explicit?:boolean}
-  |{tag:"lam";binders:SurfaceBinder[];body:SurfaceTerm}
+  |{tag:"lam";binders:SurfaceLambdaBinder[];body:SurfaceTerm}
   |{tag:"pi";binder:SurfaceBinder;body:SurfaceTerm}
   |{tag:"let";name:string;type?:SurfaceTerm;value:SurfaceTerm;body:SurfaceTerm;nondep:boolean}
   |{tag:"match";scrutinee:SurfaceTerm;cases:SurfaceMatchCase[]}
@@ -49,10 +49,11 @@ export type SurfaceTerm=
   |{tag:"structUpdate";base:SurfaceTerm;fields:SurfaceStructInstField[]};
 
 export type SurfaceBinder={name:string;type:SurfaceTerm;binderInfo?:BinderInfo};
+export type SurfaceLambdaBinder={name:string;type?:SurfaceTerm;binderInfo?:BinderInfo};
 export interface SurfaceDeclBase{name:string;availableLevels:string[];namespacePath?:string[];}
 export interface SurfaceValueDeclBase extends SurfaceDeclBase{binders:SurfaceBinder[];type:SurfaceTerm;}
 export interface SurfaceConstructor{name:string;binders:SurfaceBinder[];result?:SurfaceTerm;}
-export interface SurfaceStructureField{name:string;type:SurfaceTerm;}
+export interface SurfaceStructureField{name:string;type:SurfaceTerm;binderInfo?:BinderInfo;}
 export interface SurfaceStructInstField{name:string;value:SurfaceTerm;}
 export type SurfaceDeclaration=
   |(SurfaceValueDeclBase&{kind:"theorem";value:SurfaceTerm})
