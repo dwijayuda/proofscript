@@ -7,6 +7,20 @@ export type Token={kind:"id"|"num"|"str"|"sym"|"eof";text:string;offset:number};
 
 export type BinderInfo="explicit"|"implicit"|"strictImplicit"|"instImplicit";
 
+export type SurfaceFeatureId=
+  |"D-CALL"
+  |"D-EXPLICIT-PARAMS"
+  |"D-DECL-SEMI"
+  |"D-CONST-ALIAS"
+  |"D-FUNCTION-ALIAS"
+  |"E-IF-BRACE"
+  |"E-STRUCT-BODY"
+  |"E-CLASS-BODY"
+  |"E-INDUCTIVE-BODY"
+  |"E-MATCH-BODY"
+  |"E-WHERE-BODY";
+export interface SurfaceFeatureUse{feature:SurfaceFeatureId;startOffset:number;endOffset:number;}
+
 export type SurfaceLevel=
   |{tag:"zero"}
   |{tag:"succ";of:SurfaceLevel}
