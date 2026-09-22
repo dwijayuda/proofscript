@@ -89,6 +89,7 @@ assert.ok(initialized.result.capabilities.diagnosticProvider);
 assert.equal(initialized.result.capabilities.hoverProvider, undefined);
 assert.equal(initialized.result.capabilities.completionProvider, undefined);
 assert.equal(initialized.result.experimental.proofscript.duplicateParser, false);
+assert.equal(initialized.result.experimental.proofscript.surfaceFeatureRequest, "proofscript/surfaceFeatures");
 
 send({ jsonrpc: "2.0", method: "initialized", params: {} });
 
@@ -125,7 +126,7 @@ assert.equal(pulledBroken.result.kind, "full");
 assert.equal(pulledBroken.result.items.length, 1);
 assert.ok(typeof pulledBroken.result.resultId === "string");
 
-const fixed = "theorem fixed(P: Prop, h: P): P := h;\n";
+const fixed = "def fixed(P: Prop): Prop := P;\n";
 send({
   jsonrpc: "2.0",
   method: "textDocument/didChange",
@@ -154,6 +155,19 @@ assert.equal(pulledFixed.result.items.length, 0);
 
 send({
   jsonrpc: "2.0",
+  id: 4,
+  method: "proofscript/surfaceFeatures",
+  params: { textDocument: { uri } },
+});
+const surfaceFeatures = await waitFor((message) => message.id === 4, "surface feature response");
+assert.equal(surfaceFeatures.result.version, 2);
+assert.ok(typeof surfaceFeatures.result.resultId === "string");
+const explicitParams = surfaceFeatures.result.features.find((feature) => feature.feature === "D-EXPLICIT-PARAMS");
+assert.ok(explicitParams, "LSP must expose compiler-owned surface features");
+assert.deepEqual(explicitParams.range.start, { line: 0, character: 0 });
+
+send({
+  jsonrpc: "2.0",
   method: "textDocument/didClose",
   params: { textDocument: { uri } },
 });
@@ -165,8 +179,8 @@ const closed = await waitFor(
 );
 assert.deepEqual(closed.params.diagnostics, []);
 
-send({ jsonrpc: "2.0", id: 4, method: "shutdown", params: null });
-const shutdown = await waitFor((message) => message.id === 4, "shutdown response");
+send({ jsonrpc: "2.0", id: 5, method: "shutdown", params: null });
+const shutdown = await waitFor((message) => message.id === 5, "shutdown response");
 assert.equal(shutdown.result, null);
 send({ jsonrpc: "2.0", method: "exit", params: null });
 
