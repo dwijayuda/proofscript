@@ -135,6 +135,7 @@ export class ProofScriptLanguageServer {
                 duplicateParser: false,
                 cooperativeCancellation: true,
                 hardCancelFallback: true,
+                surfaceFeatureRequest: "proofscript/surfaceFeatures",
               },
             },
           });
@@ -200,6 +201,31 @@ export class ProofScriptLanguageServer {
           this.worker.closeDocument(uri);
           this.notify("textDocument/publishDiagnostics", { uri, diagnostics: [] });
           return;
+        }
+
+        case "proofscript/surfaceFeatures": {
+          const uri = message.params?.textDocument?.uri;
+          if (typeof uri !== "string") return this.error(message.id, -32602, "missing textDocument.uri");
+          const before = this.documents.get(uri);
+          if (!before) return this.error(message.id, -32602, `document is not open: ${uri}`);
+          const ownerId = requestId(message.id);
+          try {
+            const analysis = await this.worker.analyze(uri, ownerId);
+            const latest = this.documents.get(uri);
+            if (!latest || latest.version !== before.version || latest.version !== analysis.version) {
+              return this.error(message.id, -32801, "document changed while surface features were running");
+            }
+            return this.reply(message.id, {
+              version: analysis.version,
+              resultId: analysis.resultId,
+              features: analysis.surfaceFeatures,
+            });
+          } catch (error) {
+            if (error instanceof LanguageWorkerCancelledError) {
+              return this.error(message.id, -32800, "request cancelled");
+            }
+            throw error;
+          }
         }
 
         case "textDocument/diagnostic": {
