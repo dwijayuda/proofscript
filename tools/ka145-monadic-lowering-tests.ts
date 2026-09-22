@@ -152,7 +152,8 @@ const leanText = fs.readFileSync(loweringLean, 'utf8');
 assert.match(leanText, /Std\.Do\.Triple/);
 assert.match(leanText, /vcgen\/mvcgen connection: not connected/);
 assert.match(leanText, /def transfer .*: StateM Bank Unit := do/);
-assert.match(leanText, /debit from amount/);
+assert.match(leanText, /debit «from» amount/);
+assert.match(leanText, /\(«from» : AccountId\)/u);
 assert.match(leanText, /credit to amount/);
 assert.doesNotMatch(leanText, /Source program placeholder/);
 assert.match(leanText, /admit/); // Triple theorem is still intentionally unproved.
