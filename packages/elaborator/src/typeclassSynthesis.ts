@@ -44,7 +44,7 @@ export function validateK2rInstanceTelescope(type:Term,typeclasses:TypeclassEnvi
     throw new UnsupportedFeature(`K3c-section-vars0 does not support explicit prerequisites on instance ${name}`);
   }
 }
-export function validateInstanceBinderDomain(binder:SurfaceBinder,domain:Term,globals:Map<string,GlobalInfo>,kernelEnv:Environment,ctx:Term[]):void{
+export function validateInstanceBinderDomain(binder:Pick<SurfaceBinder,"name"|"binderInfo">,domain:Term,globals:Map<string,GlobalInfo>,kernelEnv:Environment,ctx:Term[]):void{
   if((binder.binderInfo??"explicit")!=="instImplicit")return;
   const wh=kernelWhnf(kernelEnv,domain);const {head,args}=flattenCoreApps(wh);
   const info=head.tag==="const"?globals.get(head.name):undefined;
