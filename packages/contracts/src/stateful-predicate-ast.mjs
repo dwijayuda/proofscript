@@ -27,7 +27,7 @@ function tokenize(sourceText) {
     }
 
     const two = source.slice(i, i + 2);
-    if (['>=', '<=', '=='].includes(two)) {
+    if (['>=', '<=', '==', '!='].includes(two)) {
       tokens.push({ kind: 'operator', text: two, start: i, end: i + 2 });
       i += 2;
       continue;
@@ -186,7 +186,7 @@ class Parser {
   parseComparison() {
     let left = this.parseAdditive();
     const token = this.current();
-    if (!['=', '>', '>=', '<', '<='].includes(token.text)) return left;
+    if (!['=', '==', '!=', '>', '>=', '<', '<='].includes(token.text)) return left;
 
     this.index += 1;
     const right = this.parseAdditive();
@@ -220,7 +220,7 @@ class Parser {
       return node;
     }
 
-    if (token.text !== '=' && !NUMERIC_TYPES.has(normalizeSpaces(left.type))) {
+    if (!['=', '==', '!='].includes(token.text) && !NUMERIC_TYPES.has(normalizeSpaces(left.type))) {
       this.diagnostics.push(diagnostic(
         'stateful-predicate-nonnumeric-ordering',
         `ordering relation '${token.text}' requires a numeric type, found ${left.type}`,
