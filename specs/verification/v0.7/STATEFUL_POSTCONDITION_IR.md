@@ -112,14 +112,20 @@ must remain visible until later gates replace the structural skeleton with check
 
 ## Profile rule
 
-A contract using stateful `old(...)` or stateful `result` must **not** receive the strict `ps3-monadic-contracts0` profile while this IR remains semantically incomplete.
+The `ps3-monadic-contracts0` profile is a **specified structural alpha** profile, not a semantic proof-discharge claim.
 
-Such artifacts are classified as `ka144-monadic-prototype` with explicit reasons such as:
+Stateful `old(...)` may receive that profile only when its entry-state meaning is structurally modeled:
 
-```text
-stateful-old-not-modeled
-stateful-result-not-modeled
-```
+1. the IR contains an explicit `entry-state` binder role;
+2. every call inside `old(...)` is either call-free or resolves to a state observation declared by the selected state-model descriptor;
+3. every resolved observation is rewritten against the entry-state binder;
+4. observation coverage is complete.
+
+Stateful `result` may receive that profile only when it is confined to postconditions and is rewritten to the explicit `result` binder role.
+
+Ordinary descriptor-declared state observations in postconditions are rewritten against the explicit `final-state` binder role.
+
+If any of those structural conditions are missing, the artifact must remain `ka144-monadic-prototype` with an explicit prototype reason, and a caller requesting `--verification-profile ps3-monadic-contracts0` must fail closed rather than silently downgrade.
 
 This classification must survive:
 
@@ -129,22 +135,44 @@ proofscript.contracts.v1
   -> proofscript.monadic-preflight.v1
 ```
 
-A caller that requests `--verification-profile ps3-monadic-contracts0` must fail closed rather than silently downgrade.
+Even for admitted structural `V-OLD` / `V-RESULT` artifacts:
 
-## Promotion gate
+```text
+semanticElaborationComplete = false
+vcgenConnected = false
+semanticProofDischarge = false
+```
 
-Stateful `old` / `result` can be promoted only after a model-specific elaborator:
+remain required until later semantic gates exist.
 
-1. binds entry, result, and final-state variables explicitly;
-2. resolves state-reading expressions against the selected state model;
-3. produces an inspectable normalized pre/post predicate;
-4. covers exceptional/abrupt paths when the monad supports them;
-5. binds the generated predicates to the descriptor's WP/Triple semantics;
+## Promotion gates
+
+### Structural profile admission
+
+Stateful `old` / `result` may enter `ps3-monadic-contracts0` when the normalized IR:
+
+1. binds entry, result, and final-state roles explicitly;
+2. resolves admitted state-reading calls against the selected descriptor;
+3. records complete observation coverage for every `old(...)` reference;
+4. rewrites the normalized predicate with explicit entry/result/final-state roles;
+5. preserves the same profile/provenance through contracts, monadic lowering, and preflight artifacts.
+
+This is a structural semantics claim only.
+
+### Future semantic proof promotion
+
+A stronger semantic verification claim additionally requires a model-specific elaborator that:
+
+1. binds generated Lean/Core entry, result, and final-state variables;
+2. type-checks the normalized predicates against the selected state model;
+3. covers exceptional/abrupt paths when the monad supports them;
+4. binds the predicates to the descriptor's WP/Triple semantics;
+5. validates the descriptor runner/adequacy theorem connection;
 6. generates real verification conditions;
 7. checks the resulting proof terms or equivalent trusted Core;
 8. preserves all profile/provenance hashes through artifacts.
 
-Until then, this IR is an explicit semantic staging boundary, not a proof claim.
+Until those gates exist, this IR remains an explicit semantic staging boundary and must not be described as vcgen/mvcgen discharge or a completed Hoare proof.
 
 
 ## Normalized predicate form
