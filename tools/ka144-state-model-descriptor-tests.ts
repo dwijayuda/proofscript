@@ -56,8 +56,11 @@ fs.writeFileSync(modelFile, JSON.stringify({
   wp: { triple: 'Std.Do.Triple', precondition: 'Bank -> Prop', postcondition: 'α -> Bank -> Prop' },
   semantics: { runner: 'runBankState', adequacyTheorem: 'runBankState_adequate' },
   operations: [
-    { name: 'debit', type: 'AccountId -> Nat -> State Bank Unit', spec: 'decreases source balance by amount' },
-    { name: 'credit', type: 'AccountId -> Nat -> State Bank Unit', spec: 'increases destination balance by amount' }
+    { name: 'debit', type: 'AccountId -> Nat -> State Bank Unit', spec: 'decreases source balance by amount', verification: { tripleTheorem: 'BankStateModel.debit_triple' } },
+    { name: 'credit', type: 'AccountId -> Nat -> State Bank Unit', spec: 'increases destination balance by amount', verification: { tripleTheorem: 'BankStateModel.credit_triple' } }
+  ],
+  observations: [
+    { name: 'balanceOf', type: 'AccountId -> Bank -> Nat', stateArgument: 'last', spec: 'reads account balance' }
   ],
   laws: [
     { name: 'debit_credit_preserve_total', statement: 'transfer preserves total bank balance' }
@@ -69,6 +72,7 @@ const modelValidation = jsonFrom(runOk(node, [psc, 'state-model', 'validate', mo
 assert.equal(modelValidation.status, 'accepted');
 assert.equal(modelValidation.schema, 'proofscript.state-model-validation.v1');
 assert.equal(modelValidation.capabilities.monadicContracts, true);
+assert.equal(modelValidation.capabilities.operationTripleTheoremIdentities, 2);
 assert.equal(modelValidation.capabilities.vcgenConnected, false);
 assert.equal(modelValidation.trustBoundary.semanticProofChecking, false);
 
@@ -97,6 +101,8 @@ const leanFile = path.join(app, 'dist', 'Transfer.contracts.lean');
 const contracts = jsonFrom(runOk(node, [psc, 'contracts', transfer, '--state-model', modelFile, '--out', contractsFile, '--emit-lean', leanFile, '--json'], app));
 assert.equal(contracts.status, 'accepted');
 assert.equal(contracts.contractKind, 'monadic-stateful');
+assert.equal(contracts.verification.profile, 'ps3-monadic-contracts0');
+assert.equal(contracts.statefulPredicateAST.typeCheckingComplete, true);
 assert.equal(contracts.stateModel.name, 'BankStateModel');
 assert.equal(contracts.trustBoundary.monadicContracts, 'state-model-descriptor-bound');
 assert.equal(contracts.trustBoundary.vcgenConnected, false);
