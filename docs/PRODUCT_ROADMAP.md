@@ -206,7 +206,9 @@ Do not make monadic verification the foundation for pure contracts.
 
 Current specified `ps3-pure-contracts0` features are `V-REQUIRES`, `V-ENSURES`, `V-RESULT`, `V-ASSERT`, `V-GHOST`, and `V-OLD`. The verification profile is propagated through contract/obligation/proof-status artifacts. Loop invariant/decreases syntax is classified as `ka142-loop-prototype`, not as a v0.7 conformance claim.
 
-Current `ps3-monadic-contracts0` is a **specified structural alpha** profile for `V-MONADIC-CONTRACT`, `V-OLD`, and `V-RESULT`. Its normalized stateful postcondition IR records explicit entry-state, result, and final-state roles and rewrites descriptor-declared state observations against the appropriate structural binder. Structurally unmodeled reads, invalid `old`/`result` placement, and undeclared state operations fail closed. This profile does **not** claim state-model adequacy checking, vcgen/mvcgen connection, semantic proof discharge, or runtime correspondence.
+Current `ps3-monadic-contracts0` is a **specified structural alpha** profile for `V-MONADIC-CONTRACT`, `V-OLD`, and `V-RESULT`. Its normalized stateful postcondition IR records explicit entry-state, result, and final-state roles and rewrites descriptor-declared state observations against the appropriate structural binder. The downstream `proofscript.stateful-predicate-elaboration/v1` layer now binds state/result types, validates observation signature state inputs, and checks definite simple observation-argument type mismatches. Structurally unmodeled reads, invalid `old`/`result` placement, definite typed observation mismatches, and undeclared state operations fail closed.
+
+The next stateful verification increment is a real typed predicate AST for the supported postcondition-expression subset, followed by explicit binding to the selected WP/Triple semantics and model adequacy theorem. The current profile still does **not** claim whole-predicate typechecking, state-model adequacy checking, generated semantic verification conditions, vcgen/mvcgen connection, semantic proof discharge, or runtime correspondence.
 
 ---
 
