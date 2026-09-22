@@ -41,7 +41,7 @@
   ],
   "vcgen": {
     "status": "planned",
-    "tactic": "vcgen"
+    "tactic": "mvcgen"
   },
   "observations": [
     {
