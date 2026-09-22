@@ -1,0 +1,49 @@
+{
+  "schema_version": "0.7.0-alpha.2-draft",
+  "profile": "ps3-pure-contracts0",
+  "claim_ceiling": "specified-alpha",
+  "features": [
+    {
+      "id": "V-REQUIRES",
+      "class": "V",
+      "status": "specified-alpha",
+      "surface": "requires <name>: <proposition>",
+      "scope": "pure function contract header",
+      "semantics": "Adds a named proof hypothesis to generated verification obligations. It does not change the program function's parameter list or runtime arity.",
+      "obligations": "No standalone obligation; the proposition is a hypothesis for assertions and postconditions.",
+      "runtime": "erased",
+      "diagnostics": [
+        "requires must be named in ps3-pure-contracts0",
+        "result is not valid in requires"
+      ]
+    },
+    {
+      "id": "V-ENSURES",
+      "class": "V",
+      "status": "specified-alpha",
+      "surface": "ensures [<name>:] <proposition>",
+      "scope": "pure function contract header",
+      "semantics": "Generates one postcondition proof obligation under the function parameters and all requires hypotheses.",
+      "obligations": "One stable ensures obligation per clause.",
+      "runtime": "erased",
+      "diagnostics": [
+        "malformed ensures clause is rejected"
+      ]
+    },
+    {
+      "id": "V-RESULT",
+      "class": "V",
+      "status": "specified-alpha",
+      "surface": "result",
+      "scope": "ensures propositions only",
+      "semantics": "Rewrites to an application of the contracted function to program parameters only. Requires hypotheses are theorem assumptions and are never passed as function arguments.",
+      "obligations": "Participates in the enclosing ensures obligation.",
+      "runtime": "no runtime binding",
+      "diagnostics": [
+        "result is rejected in requires",
+        "result is reserved as a contract parameter name",
+        "result is rejected in the runtime body"
+      ]
+    }
+  ]
+}
