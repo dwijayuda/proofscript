@@ -83,6 +83,11 @@ const descriptorText = fs.readFileSync(modelPath, "utf8");
 const sourceScope = path.relative(root, sourcePath).replace(/\\/g, "/");
 const modelScope = path.relative(root, modelPath).replace(/\\/g, "/");
 const descriptor = JSON.parse(descriptorText);
+const modelModule = descriptor.lean?.imports?.[0];
+assert.equal(typeof modelModule, "string", "state model must declare at least one Lean import");
+assert.ok(modelModule.length > 0, "state model Lean import must be non-empty");
+const modelModulePath = path.join(leanProjectRoot, ...modelModule.split(".")) + ".lean";
+assert.ok(fs.existsSync(modelModulePath), `declared Lean model module not found: ${modelModulePath}`);
 const stateModel = buildStateModelBinding(descriptor, {
   descriptorPath: modelScope,
   descriptorSha256: sha256(descriptorText),
@@ -183,7 +188,7 @@ if (leanCompatibility.status !== "accepted") {
   process.exit(0);
 }
 
-const modelBuild = run(lakeCmd, ["build", "ProofScript.Verification.BankStateModel"], tmp);
+const modelBuild = run(lakeCmd, ["build", modelModule], tmp);
 const programCheck = modelBuild.exitCode === 0
   ? run(lakeCmd, ["env", "lean", path.relative(tmp, programCheckPath)], tmp)
   : { command: lakeCmd, args: [], exitCode: 1, stdout: "", stderr: "model build failed", error: null };
@@ -215,9 +220,8 @@ const report = {
   provenance: {
     sourceSha256: sha256(sourceText),
     stateModelDescriptorSha256: sha256(descriptorText),
-    leanModelSha256: sha256(fs.readFileSync(
-      path.join(leanProjectRoot, "ProofScript", "Verification", "BankStateModel.lean"),
-    )),
+    leanModelModule: modelModule,
+    leanModelSha256: sha256(fs.readFileSync(modelModulePath)),
     generatedProgramSha256: sha256(lowering.statefulProgramLowering.leanDefinition),
     generatedTripleTargetSha256: sha256(lowering.statefulLeanSemanticEncoding.tripleTarget),
     generatedRequestSha256: sha256(request.request.source),
