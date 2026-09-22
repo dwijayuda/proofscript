@@ -202,6 +202,8 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - typed binder + state-observation reference elaboration (`proofscript.stateful-predicate-elaboration/v1`) — PASS
 - bounded typed normalized predicate AST (`proofscript.stateful-predicate-ast/v1`, `stateful-predicate-expressions0`) for monadic requires + postconditions — implemented with executable gates
 - typed WP/Triple identity binding (`proofscript.stateful-wp-binding/v1`) — implemented with executable internal + KA145 public gates
+- used-operation Triple theorem identities required for strict-profile admission — implemented/fail closed
+- inspectable stateful VC planning (`proofscript.stateful-vc-plan/v1`) with stable source-obligation binding — implemented
 - Triple skeleton pre/post functions sourced from the WP binding artifact — implemented
 - state observation descriptor state-input type validation — PASS
 - definite state-observation argument type mismatches downgrade to prototype/fail closed — PASS
@@ -209,7 +211,8 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - arbitrary ProofScript/Lean predicate elaboration outside the bounded AST — **not claimed**
 - WP/Triple semantic equivalence checking — **false by design**
 - state-model adequacy theorem checking — **false by design**
-- verification-condition generation — **false by design**
+- semantic VC derivation / real verification-condition generation — **false by design**
+- operation Triple theorem resolution/checking — **false by design**
 - modeled `old(...)` observations rewrite against entry state; ordinary modeled observations rewrite against final state — PASS
 - call-free `old(x)` structural admission — PASS
 - unclassified calls inside `old(...)` fail closed to prototype — PASS
@@ -227,9 +230,9 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 
 ## Next engineering target
 
-1. Define explicit verification-condition artifacts from the typed WP/Triple identity binding, with stable IDs and source/provenance hashes.
-2. Cover normal operation-spec and postcondition obligations first; keep exceptional/abrupt-path coverage explicitly false until modeled.
-3. Only after inspectable VCs exist, connect vcgen/mvcgen or equivalent checked proof discharge; keep semantic proof discharge false until checked proof artifacts exist.
+1. Generate a Lean-facing VC derivation request from `proofscript.stateful-vc-plan/v1`, resolving the selected Triple and operation theorem identities in a real Lean environment.
+2. Capture the goals produced by Lean as a separate inspectable artifact; only then may `realVerificationConditionsGenerated` become true.
+3. Keep exceptional/abrupt-path coverage, state-model adequacy checking, and semantic proof discharge false until those are separately modeled and checked.
 4. Keep recursive-definition termination in the Lean-compatible language layer; keep loop `decreases` with the later invariant/stateful milestone.
 5. Continue CLI convergence at the orchestration layer; both current check paths already share `@proofscript/compiler`.
 6. Continue extracting useful incremental/module-interface infrastructure from `frontend-next` behind canonical compiler/project APIs.
