@@ -113,7 +113,7 @@ The LSP must not directly own parser/elaborator semantics.
 
 **Goal:** make the production frontend demonstrably conform to the compiler-ready v0.6.1 reference package.
 
-The v0.6.1 reference defines 12 registered surface features and a machine-readable conformance model. Import/retain the registry and corpus as first-class repository inputs.
+The v0.6.1 reference defines 12 L/D/E surface entries (1 inherited L plus 11 admitted D/E features) and 3 registered X-class exclusions used by the negative corpus. Import/retain the machine-readable registry and corpus as first-class repository inputs.
 
 Normative conformance gates (Appendix G):
 
@@ -123,7 +123,7 @@ Normative conformance gates (Appendix G):
 - **C3:** the **production frontend** matches the reference frontend on the corpus;
 - **C4:** corpus properties are covered by machine-checked reference theorems.
 
-Production-only regression gates are tracked separately and do not borrow C-level names. Current prerequisites include production surface-corpus parity and, next, production canonical-lowering parity.
+Production-only regression gates are tracked separately and do not borrow C-level names. Production surface-corpus parity, feature-registry drift checks, and production/reference canonical-lowering parity are now normal product gates.
 
 PS2 must explicitly resolve current metadata drift:
 
@@ -198,11 +198,13 @@ Each V feature must define:
 3. `assert`;
 4. `ghost` and erasure/non-interference;
 5. `old` and snapshot semantics;
-6. `decreases` / termination metadata;
+6. termination boundary: recursive definitions keep Lean-compatible `termination_by` / `decreasing_by`; KA142 loop `decreases` remains prototype-only until loop semantics are promoted;
 7. stateful/monadic contracts;
-8. loop invariants and frame conditions.
+8. loop invariants, loop progress measures, and frame conditions.
 
 Do not make monadic verification the foundation for pure contracts.
+
+Current specified `ps3-pure-contracts0` features are `V-REQUIRES`, `V-ENSURES`, `V-RESULT`, `V-ASSERT`, `V-GHOST`, and `V-OLD`. The verification profile is propagated through contract/obligation/proof-status artifacts. Loop invariant/decreases syntax is classified as `ka142-loop-prototype`, not as a v0.7 conformance claim.
 
 ---
 
