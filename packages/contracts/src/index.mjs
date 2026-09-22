@@ -212,7 +212,7 @@ export function parsePureContractSource(text, sourcePath = '<memory>') {
     proofPoint: `assert ${a.name}`,
   }));
   const ensuresObligations = ensures.map(e => {
-    const resultExpr = `${name} ${params.map(p => p.name).concat(requirements.map(r => r.name)).join(' ')}`.trim();
+    const resultExpr = `${name} ${params.map(p => p.name).join(' ')}`.trim();
     const proposition = e.proposition.replace(/\bresult\b/g, resultExpr);
     return {
       name: `${name}_ensures_${e.name}`,
@@ -232,9 +232,7 @@ export function parsePureContractSource(text, sourcePath = '<memory>') {
 }
 export function leanForContract(contract) {
   const params = contract.params.map(p => `(${p.name} : ${p.type})`).join(' ');
-  const reqs = contract.requirements.map(r => `(${r.name} : ${r.proposition})`).join(' ');
-  const binders = [params, reqs].filter(Boolean).join(' ');
-  const defLine = `def ${contract.name}${binders ? ` ${binders}` : ''} : ${contract.returnType} := by\n  -- ProofScript contract body placeholder for emitted obligation file.\n  admit`;
+  const defLine = `def ${contract.name}${params ? ` ${params}` : ''} : ${contract.returnType} := by\n  -- ProofScript contract body placeholder for emitted obligation file.\n  admit`;
   const ghosts = (contract.ghosts ?? []).map(g => `-- ghost ${g.name} : ${g.type} := ${g.expression} (erased from runtime)`).join('\n');
   const oldSnapshots = (contract.oldSnapshots ?? []).map(s => `-- old snapshot ${s.name} := old(${s.expression})`).join('\n');
   const loopNotes = (contract.loops ?? []).map(loop => {
