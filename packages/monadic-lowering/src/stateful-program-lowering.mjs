@@ -28,6 +28,35 @@ function monadUnitType(stateModel) {
   return monadName ? `${monadName} Unit` : null;
 }
 
+function leanReturnType(sourceReturnType, stateModel) {
+  const source = normalizeSpaces(sourceReturnType);
+  const sourceMonad = normalizeSpaces(stateModel?.monad?.name ?? '');
+  const stateType = normalizeSpaces(stateModel?.stateType ?? '');
+  const configuredLeanMonad = normalizeSpaces(stateModel?.lean?.monadTypeConstructor ?? '');
+  const inferredLeanMonad = sourceMonad === `State ${stateType}` && stateType
+    ? `StateM ${stateType}`
+    : '';
+  const leanMonad = configuredLeanMonad || inferredLeanMonad;
+  if (!sourceMonad || !leanMonad || !source.startsWith(sourceMonad + ' ')) {
+    return {
+      sourceReturnType: source,
+      leanReturnType: null,
+      sourceMonad,
+      leanMonad: leanMonad || null,
+      mapped: false,
+    };
+  }
+  const resultType = normalizeSpaces(source.slice(sourceMonad.length));
+  return {
+    sourceReturnType: source,
+    leanReturnType: `${leanMonad} ${resultType}`,
+    sourceMonad,
+    leanMonad,
+    resultType,
+    mapped: true,
+  };
+}
+
 export function createStatefulProgramLowering(contractArtifact) {
   if (!contractArtifact || contractArtifact.schema !== 'proofscript.contracts.v1') {
     throw new Error('stateful program lowering requires proofscript.contracts.v1');
@@ -42,6 +71,7 @@ export function createStatefulProgramLowering(contractArtifact) {
   const fn = contractArtifact.functions[0];
   const operationElaboration = contractArtifact.statefulOperationElaboration;
   const stateModel = contractArtifact.stateModel ?? {};
+  const returnTypeMapping = leanReturnType(fn.returnType, stateModel);
   if (!operationElaboration || operationElaboration.schema !== 'proofscript.stateful-operation-elaboration/v1') {
     throw new Error('stateful program lowering requires proofscript.stateful-operation-elaboration/v1');
   }
@@ -114,6 +144,16 @@ export function createStatefulProgramLowering(contractArtifact) {
       message: 'operation-call typing must complete before stateful program lowering',
     });
   }
+  if (returnTypeMapping.mapped !== true) {
+    diagnostics.push({
+      code: 'stateful-program-lowering-lean-monad-unbound',
+      severity: 'error',
+      sourceReturnType: fn.returnType,
+      sourceMonad: returnTypeMapping.sourceMonad,
+      leanMonad: returnTypeMapping.leanMonad,
+      message: 'ProofScript state monad return type is not bound to a Lean monad type constructor',
+    });
+  }
 
   const programLoweringReady = diagnostics.length === 0
     && operations.every(operation =>
@@ -127,7 +167,7 @@ export function createStatefulProgramLowering(contractArtifact) {
     : null;
   const binders = parameterBinders(fn.params ?? []);
   const leanDefinition = programLoweringReady
-    ? `def ${safeLeanName(fn.name)}${binders ? ` ${binders}` : ''} : ${fn.returnType} := ${leanBody}`
+    ? `def ${safeLeanName(fn.name)}${binders ? ` ${binders}` : ''} : ${returnTypeMapping.leanReturnType} := ${leanBody}`
     : null;
 
   return {
@@ -137,12 +177,15 @@ export function createStatefulProgramLowering(contractArtifact) {
       name: fn.name,
       params: fn.params ?? [],
       returnType: fn.returnType,
+      leanReturnType: returnTypeMapping.leanReturnType,
       argumentNames: programArgs(fn.params ?? []),
     },
     stateModel: {
       name: stateModel.name ?? null,
       stateType: stateModel.stateType ?? null,
       monad: stateModel.monad?.name ?? null,
+      leanMonad: returnTypeMapping.leanMonad,
+      monadMappingComplete: returnTypeMapping.mapped,
     },
     operations,
     diagnostics,
