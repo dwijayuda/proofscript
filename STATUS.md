@@ -214,8 +214,9 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - Lean >=4.33.1 VC execution runner (`proofscript.stateful-vc-run/v1`) + dedicated `stateful-lean-ci` compatibility workflow — implemented; execution evidence pending hosted runner availability
 - Lean >=4.33.1 stateful compatibility policy — executable gate added; default developer toolchain is 4.34.0, while CI dynamically tracks latest stable and RC
 - `Std.Do.Triple -> mvcgen` compatibility rule — enforced by descriptor validation; omitted tactic defaults from Triple identity
-- local Lean 4.34.0 semantic evidence — model build PASS, generated StateM program PASS, concrete Std.Do.Triple target PASS, mvcgen reached and produced a real residual VC (`withdraw.stateful.vc.001.3542ee3c0940`); semantic proof discharge remains false
-- generated debit VC request now unfolds the local wrapper with `mvcgen [withdraw]` and applies explicit Lean-checked `all_goals simp_all` before residual tracing; execution evidence pending
+- local Lean 4.34.0 debit semantic evidence — **PROVED**: model build PASS, generated `StateM` program PASS, concrete `Std.Do.Triple` target PASS, `mvcgen [withdraw]` PASS, checked `simp_all` finisher PASS, zero residual goals, `semanticProofDischarge = true`
+- proved debit run provenance — source `6e5d389b...`, state-model descriptor `3d749687...`, Lean model `c32fefd2...`, generated program `337b7fe5...`, Triple target `9f9e271a...`, generated request `314212ca...`
+- profile-wide semantic proof discharge remains unclaimed; the proved claim applies to that concrete generated theorem/evidence run only
 - public `psc monadic-vc-run` command — implemented; emits the same evidence schema and treats residual Lean VCs as an accepted `vcs-generated` run, not as a proof
 - stable Lean-derived residual-goal artifact (`proofscript.stateful-vc-goals/v1`) — implemented with deterministic IDs/hashes
 - evidence-based claim promotion is centralized in `@proofscript/monadic-lowering` and covered by synthetic fail-closed stage tests
@@ -226,11 +227,11 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - arbitrary ProofScript/Lean predicate elaboration outside the bounded AST — **not claimed**
 - WP/Triple semantic equivalence checking — **false by design**
 - state-model adequacy theorem checking — **false by design**
-- semantic VC derivation / real verification-condition generation — **false by design**
-- operation Triple theorem resolution/checking — **false by design**
-- emitted `StateM` program typechecking in the selected Lean environment — **false by design**
-- concrete `Std.Do.Triple` target typechecking — **false by design**
-- VC request tactic execution / captured Lean goals — **false until the metatheory-compatible tactic actually runs**
+- semantic VC derivation / real verification-condition generation — **available per executed Lean run; not a profile-wide guarantee**
+- operation Triple theorem identity resolution as an independent named check — **not yet separately claimed**
+- emitted `StateM` program typechecking — **available per executed Lean run**
+- concrete `Std.Do.Triple` target typechecking — **available per executed Lean run**
+- VC request tactic execution / captured Lean goals — **available per executed Lean run**
 - modeled `old(...)` observations rewrite against entry state; ordinary modeled observations rewrite against final state — PASS
 - call-free `old(x)` structural admission — PASS
 - unclassified calls inside `old(...)` fail closed to prototype — PASS
@@ -240,20 +241,16 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - monadic preconditions do not alter program function arity — PASS
 - verification profile propagation contracts → lowering → preflight — PASS
 - fail-closed `psc contracts --verification-profile ...` public CLI gate — PASS
-- stateful postcondition semantic elaboration — **false by design**
-- state-model adequacy theorem checking — **false**
-- semantic proof discharge — **false by design**
-- vcgen/mvcgen connected — **false**
+- stateful postcondition semantic encoding into concrete Lean `Std.Do` terms — **implemented for the bounded profile**
+- state-model adequacy theorem checking/use — **false**
+- semantic proof discharge — **true for the proved debit run; not claimed profile-wide**
+- `mvcgen` connection for public `Std.Do.Triple` — **working for the proved debit run**
 - public CLI router — 1,835 lines after public VC execution routing (below the 1,900-line KA145 architecture guard and 1,950-line KA146 ceiling)
 
 ## Next engineering target
 
-1. Run the `stateful-lean-ci` compatibility matrix (Lean 4.33.1 floor + latest stable + latest RC) and fix any real Lean elaboration/spec/tactic errors exposed by `ProofScript.Verification.BankStateModel` or the generated debit request.
-2. Capture `proofscript.stateful-vc-run/v1` evidence through either the strict runner or public `psc monadic-vc-run`; only actual Lean execution may set environment/program/Triple/vcgen claims true.
-3. If residual VCs remain, use their stable `proofscript.stateful-vc-goals/v1` IDs/hashes and discharge the debit-only example before widening to transfer semantics.
-4. Keep exceptional/abrupt-path coverage, state-model adequacy use, source-to-Lean program equivalence, and project-wide semantic proof discharge false until separately modeled and checked.
-5. Keep recursive-definition termination in the Lean-compatible language layer; keep loop `decreases` with the later invariant/stateful milestone.
-6. Continue CLI convergence at the orchestration layer; both current check paths already share `@proofscript/compiler`.
-7. Continue extracting useful incremental/module-interface infrastructure from `frontend-next` behind canonical compiler/project APIs.
-8. Expand LSP capabilities only from compiler-backed semantic/source-map APIs.
-9. Treat C4 machine-checked reference theorems as assurance work; do not block usable compiler/editor releases on full Lean equivalence.
+1. Prove the corrected two-account transfer contract with the generalized runner; the canonical contract now requires `from != to` and lowers that condition to Lean `≠`.
+2. Exercise the proved debit and transfer paths on the Lean 4.33.1 floor/current-stable/current-RC compatibility matrix.
+3. Preserve `stateModelAdequacyChecked = false`, `sourceToLeanProgramEquivalenceChecked = false`, and `exceptionalPathsCovered = false` until those are separately checked.
+4. After transfer semantics are green, promote loop invariant/decreases/frame work incrementally rather than broadening the stateful profile all at once.
+5. Continue CLI/frontend/LSP convergence only behind canonical compiler APIs and existing regression gates.
