@@ -96,7 +96,7 @@ theorem audit_triple
   simp [audit, Triple, wp]
 
 def runBankState (program : StateM Bank α) (initial : Bank) : α × Bank :=
-  program initial
+  StateT.run program initial
 
 /--
 Adequacy bridge for the concrete StateM runner: a weakest-precondition fact at the
