@@ -55,6 +55,11 @@ fs.writeFileSync(modelFile, JSON.stringify({
   monad: { name: 'State Bank', typeConstructor: 'State Bank α' },
   wp: { triple: 'Std.Do.Triple', precondition: 'Bank -> Prop', postcondition: 'α -> Bank -> Prop' },
   semantics: { runner: 'runBankState', adequacyTheorem: 'runBankState_adequate' },
+  lean: {
+    imports: ['ProofScript.Test.BankStateModel'],
+    openNamespaces: ['BankStateModel'],
+    monadTypeConstructor: 'StateM Bank'
+  },
   operations: [
     { name: 'debit', type: 'AccountId -> Nat -> State Bank Unit', spec: 'decreases source balance by amount', verification: { tripleTheorem: 'BankStateModel.debit_triple' } },
     { name: 'credit', type: 'AccountId -> Nat -> State Bank Unit', spec: 'increases destination balance by amount', verification: { tripleTheorem: 'BankStateModel.credit_triple' } }
@@ -73,6 +78,9 @@ assert.equal(modelValidation.status, 'accepted');
 assert.equal(modelValidation.schema, 'proofscript.state-model-validation.v1');
 assert.equal(modelValidation.capabilities.monadicContracts, true);
 assert.equal(modelValidation.capabilities.operationTripleTheoremIdentities, 2);
+assert.equal(modelValidation.capabilities.leanEnvironmentBindingsDeclared, true);
+assert.deepEqual(modelValidation.requirements.lean.imports, ['ProofScript.Test.BankStateModel']);
+assert.equal(modelValidation.requirements.lean.monadTypeConstructor, 'StateM Bank');
 assert.equal(modelValidation.capabilities.vcgenConnected, false);
 assert.equal(modelValidation.trustBoundary.semanticProofChecking, false);
 
@@ -81,6 +89,24 @@ fs.writeFileSync(badModelFile, JSON.stringify({ schema: 'proofscript.state-model
 const badModel = jsonFromAny(runFail(node, [psc, 'state-model', 'validate', badModelFile, '--json'], app));
 assert.equal(badModel.status, 'rejected');
 assert.ok(badModel.errors.some((e: any) => e.field === 'stateType'));
+
+const validDescriptor = JSON.parse(fs.readFileSync(modelFile, 'utf8'));
+const invalidTacticFile = path.join(app, 'src', 'InvalidTactic.model.json');
+fs.writeFileSync(invalidTacticFile, JSON.stringify({
+  ...validDescriptor,
+  vcgen: { status: 'planned', tactic: 'magic' },
+}, null, 2));
+const invalidTactic = jsonFromAny(runFail(node, [psc, 'state-model', 'validate', invalidTacticFile, '--json'], app));
+assert.ok(invalidTactic.errors.some((e: any) => e.field === 'vcgen.tactic'));
+
+const invalidLeanFile = path.join(app, 'src', 'InvalidLean.model.json');
+fs.writeFileSync(invalidLeanFile, JSON.stringify({
+  ...validDescriptor,
+  lean: { imports: [], openNamespaces: ['BankStateModel'], monadTypeConstructor: '' },
+}, null, 2));
+const invalidLean = jsonFromAny(runFail(node, [psc, 'state-model', 'validate', invalidLeanFile, '--json'], app));
+assert.ok(invalidLean.errors.some((e: any) => e.field === 'lean.imports'));
+assert.ok(invalidLean.errors.some((e: any) => e.field === 'lean.monadTypeConstructor'));
 
 const transfer = path.join(app, 'src', 'Transfer.ps');
 fs.writeFileSync(transfer, `function transfer(from: AccountId, to: AccountId, amount: Nat): State Bank Unit
