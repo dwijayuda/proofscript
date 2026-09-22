@@ -35,6 +35,28 @@ for (const item of [...positive, ...negative]) {
       ...(production.error ? { productionError: production.error } : {}),
       ...(reference.kind === "error" ? { referenceCode: reference.code, referenceMessage: reference.message } : {}),
     });
+    continue;
+  }
+
+  if (referenceAccepted && production.accepted) {
+    if (!production.features.some((use) => use.feature === item.feature)) {
+      failures.push({
+        id: item.id,
+        kind: "production-feature-ownership-mismatch",
+        expectedFeature: item.feature,
+        actualFeatures: production.features.map((use) => use.feature),
+      });
+    }
+    for (const use of production.features) {
+      if (use.startOffset < 0 || use.endOffset < use.startOffset || use.endOffset > production.sourceLength) {
+        failures.push({
+          id: item.id,
+          kind: "invalid-production-feature-range",
+          featureUse: use,
+          sourceLength: production.sourceLength,
+        });
+      }
+    }
   }
 }
 
@@ -47,23 +69,30 @@ assert.deepEqual(
 console.log(JSON.stringify({
   status: "PASS",
   reference: "ProofScript v0.6.1",
-  claim: "C3-prerequisite-acceptance-parity",
+  claim: "C3-prerequisite-acceptance-and-feature-ownership-parity",
   compared: positive.length + negative.length,
   positive: positive.length,
   negative: negative.length,
-  note: "This does not claim full normative C3 because production feature ownership and canonical surface lowering are not yet compared.",
+  note: "This does not claim full normative C3 because canonical production surface lowering is not yet compared.",
 }, null, 2));
 
-function productionDecision(item: any): { accepted: boolean; error?: string } {
+function productionDecision(item: any): {
+  accepted: boolean;
+  sourceLength: number;
+  features: readonly { feature: string; startOffset: number; endOffset: number }[];
+  error?: string;
+} {
   const source = termCases.has(item.id)
     ? harness.term_wrapper_prefix + item.source + harness.term_wrapper_suffix
     : item.source;
   try {
-    parseSource(source);
-    return { accepted: true };
+    const parsed = parseSource(source);
+    return { accepted: true, sourceLength: source.length, features: parsed.ownedFeatures };
   } catch (error) {
     return {
       accepted: false,
+      sourceLength: source.length,
+      features: [],
       error: error instanceof Error ? `${error.constructor?.name ?? error.name}: ${error.message}` : String(error),
     };
   }
