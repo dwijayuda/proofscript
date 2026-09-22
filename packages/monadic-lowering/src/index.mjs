@@ -89,6 +89,7 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
     packageVersion,
     source: contractArtifact.source ? { path: contractArtifact.source, sha256: contractArtifact.sourceSha256 } : undefined,
     contractsArtifact: { path: contractArtifactPath, sha256: contractArtifactSha256 },
+    verification: contractArtifact.verification,
     contractKind: 'monadic-stateful',
     function: { name: fn.name, params: fn.params ?? [], returnType: fn.returnType, body: fn.body },
     stateModel: {
@@ -99,6 +100,8 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
       monad: stateModel.monad,
       wp: stateModel.wp,
       semantics: stateModel.semantics,
+      operations: stateModel.operations ?? [],
+      laws: stateModel.laws ?? [],
       vcgen: stateModel.vcgen ?? { status: 'not-connected' },
     },
     tripleSkeleton: {
@@ -126,6 +129,8 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
     },
     trustBoundary: {
       descriptorBound: true,
+      verificationProfile: contractArtifact.verification?.profile ?? null,
+      specifiedStructuralProfile: contractArtifact.verification?.profile === 'ps3-monadic-contracts0',
       stdDoTripleSkeletonGenerated: true,
       semanticProofChecking: false,
       vcgenConnected: false,
@@ -298,6 +303,7 @@ export function createMonadicLeanPreflightArtifact({ loweringArtifact, loweringA
     packageVersion,
     command: 'monadic-preflight',
     loweringArtifact: { path: loweringArtifactPath, sha256: loweringArtifactSha256 },
+    verification: loweringArtifact.verification,
     function: loweringArtifact.function?.name,
     stateModel: loweringArtifact.stateModel?.name,
     originalTripleSkeleton: {
@@ -325,6 +331,8 @@ export function createMonadicLeanPreflightArtifact({ loweringArtifact, loweringA
     },
     trustBoundary: {
       preflightOnly: true,
+      verificationProfile: loweringArtifact.verification?.profile ?? null,
+      specifiedStructuralProfile: loweringArtifact.verification?.profile === 'ps3-monadic-contracts0',
       explicitStubs: true,
       preflightStubAxioms: true,
       checkableAsCompleteSemanticProof: false,
