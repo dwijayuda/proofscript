@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "proofscriptReference": "v0.6.1",
+  "productProfile": "ps1-v061",
+  "conformance": {
+    "level": "C3",
+    "scope": "normative-v0.6.1-conformance-corpus",
+    "c4MachineCheckedReferenceTheorems": false
+  },
+  "nativeChecking": {
+    "requiresLean": false
+  },
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "fullyFormalK3": false,
+    "runtimeCorrespondenceProof": false
+  }
+}
