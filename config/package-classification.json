@@ -509,6 +509,15 @@
       "trustBoundary": "Experimental monadic verification lowering; cannot create proof authority or alter native kernel acceptance.",
       "productionRole": "KA-era lowering/preflight prototype for stateful and monadic verification.",
       "allowedDependencies": []
+    },
+    {
+      "path": "packages/reference-v061",
+      "npmName": "@proofscript/reference-v061",
+      "tier": "bridge",
+      "lifecycle": "supported",
+      "trustBoundary": "Independent executable language-reference frontend; provides conformance evidence only and must not import production parser/compiler/kernel packages.",
+      "productionRole": "Executes ProofScript v0.6.1 reference-corpus accept/reject and canonical Lean lowering for normative C1/C2 evidence.",
+      "allowedDependencies": []
     }
   ]
 }
