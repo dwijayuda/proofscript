@@ -12,6 +12,7 @@ import { readStateModelDescriptor, validateStateModelDescriptor, buildStateModel
 import {
   monadicLoweringCommand,
   monadicVcRequestCommand,
+  monadicVcRunCommand,
   monadicPreflightCommand,
   createMonadicLoweringBundle,
   createMonadicLeanPreflightBundle,
@@ -34,7 +35,7 @@ const NODE_TS_FLAGS = [
 ];
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OPTIONS_WITH_VALUES = new Set([
-  '--args', '--call', '--core', '--emit-core', '--emit-lean', '--emit-lean-check', '--lean-cmd', '--name', '--out', '--out-dir', '--proofs', '--runtime', '--state-model', '--suffix', '--target', '--template', '--verification-profile',
+  '--args', '--call', '--core', '--emit-core', '--emit-lean', '--emit-lean-check', '--lean-cmd', '--lean-project', '--lake-cmd', '--name', '--out', '--out-dir', '--proofs', '--runtime', '--state-model', '--suffix', '--target', '--template', '--verification-profile',
 ]);
 
 function has(args, name) { return args.includes(name); }
@@ -59,7 +60,7 @@ function positional(args) {
 }
 function usage(code = 0) {
   const text = `ProofScript ${VERSION}\n\nSimple project workflow:\n  psc init my-app\n  cd my-app\n  psc check\n  psc build\n  psc run sample\n\nCompiler setup workflow from the ProofScript source ZIP:\n  npm install --offline --no-audit --no-fund\n  npm run setup\n  npm link\n  psc doctor\n  psc clean [--json]\n\nCommands:\n  psc setup\n  psc init [dir] [--name <name>] [--template software|crud] [--force] [--json]\n  psc status [--json]\n  psc check [file.ps] [--json] [--emit-core <out.json>]\n  psc emit-core [file.ps] --out <out.pscore.json> [--json]\n  psc emit-lean <file.ps|core.json|contracts.json> --out <out.lean> [--json]\n  psc certify [file.ps] --core <core.json> --out <cert.json> [--json]\n  psc build-ts [file.ps] [--out <out.ts>] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc build-js [file.ps] [--out <out.js>] [--json]\n  psc build [file.ps] [--target ts|js] [--out <file>] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc compile [file.ps|dir] [--out-dir <dir>] [--suffix .generated] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc run [file.ps] [--call <name>] [--args a,b] [--json]\n  psc run <name> [--args a,b] [--json]\n  psc target list\n  psc language status [--json]
-  psc state-model validate <model.json> [--out <validation.json>] [--json]\n  psc monadic-lowering <contracts.json> --out <lowering.json> [--emit-lean <out.lean>] [--json]\n  psc monadic-vc-request <monadic-lowering.json> --out <request.json> [--emit-lean <request.lean>] [--json]\n  psc monadic-preflight <monadic-lowering.json> --out <preflight.json> --emit-lean <preflight.lean> [--lean-cmd <lean>] [--json]\n  psc doctor\n  psc clean [--json]\n\nDefaults inside a psc init project:\n  input file: src/Main.ps\n  source dir: src\n  output dir: dist\n\nTrust boundary:\n  This CLI is a wrapper over the PSC-1 software-profile path. It does not claim full Lean 4 equivalence or full backend execution-correspondence proof.\n`;
+  psc state-model validate <model.json> [--out <validation.json>] [--json]\n  psc monadic-lowering <contracts.json> --out <lowering.json> [--emit-lean <out.lean>] [--json]\n  psc monadic-vc-request <monadic-lowering.json> --out <request.json> [--emit-lean <request.lean>] [--json]\n  psc monadic-vc-run <monadic-lowering.json> --lean-project <dir> --out <run.json> [--lake-cmd <lake>] [--json]\n  psc monadic-preflight <monadic-lowering.json> --out <preflight.json> --emit-lean <preflight.lean> [--lean-cmd <lean>] [--json]\n  psc doctor\n  psc clean [--json]\n\nDefaults inside a psc init project:\n  input file: src/Main.ps\n  source dir: src\n  output dir: dist\n\nTrust boundary:\n  This CLI is a wrapper over the PSC-1 software-profile path. It does not claim full Lean 4 equivalence or full backend execution-correspondence proof.\n`;
   (code === 0 ? console.log : console.error)(text);
   process.exit(code);
 }
@@ -1760,19 +1761,30 @@ function languageStatus(args = []) {
     packageVersion: VERSION,
     sourceReference: 'proofscript-language-reference-v0.6.1 compiler-ready + v0.7 verification extensions',
     layers: {
-      programmingLanguage: { status: 'usable-software-alpha', progress: 0.58, note: 'PSC-1 small software profile with def/function/const, structures, inductives, if/match, Nat/Int/Bool/String/Unit/Option/List subset.' },
-      theoremProver: { status: 'partial-lean-export', progress: 0.28, note: 'theorem/proof surface is checked in the supported kernel/Core subset; full tactic engine is not implemented.' },
-      formalVerification: { status: 'monadic-preflight-alpha', progress: 0.70, note: 'requires/ensures/result plus old/assert/ghost/invariant/decreases generate obligations; state-model descriptors are validated and bound for monadic/stateful contracts; Std.Do.Triple-style monadic lowering skeletons and Lean preflight stubs are generated structurally; proof-status can run an external Lean command for Lean-checkable obligations with explicit proof bodies; loop and monadic obligations are structural until vcgen/mvcgen is connected.' },
-      runtimeCorrespondence: { status: 'source-proof-runtime-certificate-alpha', progress: 0.43, note: 'TS/JS build artifacts, Core/cert hashes, obligation manifests, and software-alpha manifests are bindable; full execution-correspondence proof is not claimed.' },
+      programmingLanguage: { status: 'usable-software-alpha', note: 'PSC-1 small software profile with def/function/const, structures, inductives, if/match, Nat/Int/Bool/String/Unit/Option/List subset.' },
+      theoremProver: { status: 'partial-lean-export', note: 'theorem/proof surface is checked in the supported kernel/Core subset; full tactic engine is not implemented.' },
+      formalVerification: { status: 'monadic-preflight-alpha', note: 'Pure requires/ensures/result/assert/ghost/old are promoted in ps3-pure-contracts0. Monadic contracts are a specified structural alpha with typed StateM/Std.Do lowering and evidence-driven Lean VC execution. KA142 loop invariant/decreases remain prototype-only; project-wide semantic proof discharge is not claimed.' },
+      runtimeCorrespondence: { status: 'source-proof-runtime-certificate-alpha', note: 'TS/JS build artifacts, Core/cert hashes, obligation manifests, and software-alpha manifests are bindable; full execution-correspondence proof is not claimed.' },
     },
     features: {
       programming: ['def', 'function', 'const', 'structures', 'inductives', 'match', 'if', 'where', 'Nat', 'Int', 'Bool', 'String', 'Unit', 'Option', 'List'],
       theoremProver: ['theorem', 'rfl/simp passthrough where supported', 'Core artifact checking', 'Lean export'],
-      formalVerification: ['requires', 'ensures', 'result', 'old', 'assert', 'ghost', 'invariant', 'decreases', 'loop invariant structural obligations', 'proof obligation listing', 'proof status records', 'stale proof detection', 'exact theorem statement printing', 'structural certificates', 'software examples workflow', 'source/proof/runtime artifact binding', 'Lean-backed proof-status checking', 'state model descriptors', 'monadic/stateful contract descriptor binding', 'Std.Do.Triple-style monadic lowering skeleton', 'typed StateM monadic program lowering', 'Std.Do StateM semantic encoding', 'Lean VC derivation request artifact', 'Lean-checkable monadic preflight stubs'],
-      notYetImplemented: ['monadic vcgen/mvcgen semantic discharge', 'full macros', 'full tactic engine', 'full Lean4 equivalence'],
+      formalVerification: ['requires', 'ensures', 'result', 'old', 'assert', 'ghost', 'invariant', 'decreases', 'loop invariant structural obligations', 'proof obligation listing', 'proof status records', 'stale proof detection', 'exact theorem statement printing', 'structural certificates', 'software examples workflow', 'source/proof/runtime artifact binding', 'Lean-backed proof-status checking', 'state model descriptors', 'monadic/stateful contract descriptor binding', 'Std.Do.Triple-style monadic lowering skeleton', 'typed StateM monadic program lowering', 'Std.Do StateM semantic encoding', 'Lean VC derivation request artifact', 'Lean VC execution evidence', 'Lean-checkable monadic preflight stubs'],
+      verificationFeatureClaims: {
+        requires: 'ps3-pure-contracts0',
+        ensures: 'ps3-pure-contracts0',
+        result: 'ps3-pure-contracts0; structural-alpha in stateful profile',
+        assert: 'ps3-pure-contracts0',
+        ghost: 'ps3-pure-contracts0',
+        old: 'ps3-pure-contracts0; structural-alpha in stateful profile',
+        invariant: 'ka142-loop-prototype',
+        decreases: 'ka142-loop-prototype',
+        monadicContract: 'ps3-monadic-contracts0 specified-structural-alpha',
+      },
+      notYetImplemented: ['project-wide monadic vcgen/vcgen semantic discharge', 'promoted loop invariant/decreases semantics', 'frame conditions', 'full macros', 'full tactic engine', 'full Lean4 equivalence'],
     },
-    commands: ['init', 'check', 'build', 'build-ts', 'build-js', 'emit-core', 'emit-lean', 'state-model', 'monadic-lowering', 'monadic-vc-request', 'monadic-preflight', 'contracts', 'obligations', 'proof-status', 'check-obligations', 'certify', 'verify', 'software-alpha', 'run', 'npm-readiness'],
-    trustBoundary: { fullLean4Equivalence: false, fullyFormalK3: false, semanticContractProofChecking: 'partial-lean-backed-explicit-proofs-only', monadicProofDischarge: false, monadicLoweringSkeletons: true, monadicPreflightStubs: true, vcgenConnected: false, npmInstallableToolchain: true },
+    commands: ['init', 'check', 'build', 'build-ts', 'build-js', 'emit-core', 'emit-lean', 'state-model', 'monadic-lowering', 'monadic-vc-request', 'monadic-vc-run', 'monadic-preflight', 'contracts', 'obligations', 'proof-status', 'check-obligations', 'certify', 'verify', 'software-alpha', 'run', 'npm-readiness'],
+    trustBoundary: { fullLean4Equivalence: false, fullyFormalK3: false, semanticContractProofChecking: 'partial-lean-backed-explicit-proofs-only', monadicProofDischarge: false, monadicLoweringSkeletons: true, statefulVcRequestArtifacts: true, statefulVcExecutionEvidence: true, leanVcEnvironmentResolved: false, vcgenExecuted: false, monadicPreflightStubs: true, vcgenConnected: false, npmInstallableToolchain: true },
     unsupported: ['monadic vcgen/mvcgen semantic discharge', 'automatic proof search', 'full Lean4 equivalence'],
   };
   if (has(args, '--json')) console.log(JSON.stringify(result, null, 2));
@@ -1803,6 +1815,7 @@ else if (cmd === 'certify') certifyCommand(args);
 else if (cmd === 'state-model') stateModelCommand(args);
 else if (cmd === 'monadic-lowering') monadicLoweringCommand(args, { version: VERSION });
 else if (cmd === 'monadic-vc-request') monadicVcRequestCommand(args);
+else if (cmd === 'monadic-vc-run') monadicVcRunCommand(args);
 else if (cmd === 'monadic-preflight') monadicPreflightCommand(args, { version: VERSION });
 else if (cmd === 'contracts') contractsCommand(args);
 else if (cmd === 'obligations') obligationsCommand(args);
