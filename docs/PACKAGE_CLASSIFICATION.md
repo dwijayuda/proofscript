@@ -278,3 +278,22 @@ Lean oracle/export and assurance tooling may inspect checked artifacts but must 
 5. Inventory `frontend-next` vs `frontend`.
 6. Inventory `unified-bridge` tests and consumers.
 7. Only then remove duplicate paths/scaffolds.
+
+
+## Package source language policy
+
+ProofScript package implementation source is **TypeScript-first**.
+
+- Author implementation code under `packages/**` as `.ts`.
+- Emit JavaScript into package `dist/` directories.
+- Do not maintain parallel hand-authored `.mjs` implementations.
+- Legacy dynamic workflow packages may temporarily use weaker internal typing while migration interfaces are tightened, but their authored source remains TypeScript.
+- Root CLI/oracle scripts outside `packages/` are governed separately.
+
+Run:
+
+```bash
+npm run check:package-source-policy
+```
+
+The check fails on hand-authored `packages/**/*.mjs`.
