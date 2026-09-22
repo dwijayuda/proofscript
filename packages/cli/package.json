@@ -1,8 +1,8 @@
 {
-  "name": "proofscript",
+  "name": "@proofscript/cli",
   "version": "0.1.0-dev.0",
-  "private": false,
-  "description": "ProofScript standalone CLI and npm entrypoint",
+  "private": true,
+  "description": "Internal modular CLI orchestration used for architecture/reference work; the root proofscript package owns the public psc executable.",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,9 +20,6 @@
     "@proofscript/verifier": "0.1.0-dev.0",
     "@proofscript/syntax": "0.1.0-dev.0",
     "@proofscript/environment": "0.1.0-dev.0"
-  },
-  "bin": {
-    "psc": "dist/cli.js"
   },
   "exports": {
     ".": "./dist/public.js"
