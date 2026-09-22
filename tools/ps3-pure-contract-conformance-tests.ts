@@ -17,7 +17,7 @@ assert.equal(registry.profile, "ps3-pure-contracts0");
 assert.equal(registry.claim_ceiling, "specified-alpha");
 assert.deepEqual(
   registry.features.map((feature: any) => feature.id).sort(),
-  ["V-ASSERT", "V-ENSURES", "V-REQUIRES", "V-RESULT"],
+  ["V-ASSERT", "V-ENSURES", "V-GHOST", "V-REQUIRES", "V-RESULT"],
 );
 
 for (const item of positive) {
@@ -25,7 +25,9 @@ for (const item of positive) {
   assert.equal(contract.requirements.length, item.expected.requirements, item.id);
   assert.equal(contract.ensures.length, item.expected.ensures, item.id);
   assert.equal(contract.assertions.length, item.expected.assertions ?? 0, item.id);
+  assert.equal(contract.ghosts.length, item.expected.ghosts ?? 0, item.id);
   assert.equal(contract.obligations.length, item.expected.obligations, item.id);
+  if (item.expected.requires_proposition) assert.equal(contract.requirements[0]?.proposition, item.expected.requires_proposition, item.id);
 
   const obligationIds = contract.obligations.map((obligation: any) => obligation.id);
   if (item.expected.obligation_id) assert.ok(obligationIds.includes(item.expected.obligation_id), item.id);
