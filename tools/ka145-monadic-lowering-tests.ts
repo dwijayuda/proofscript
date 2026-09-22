@@ -60,6 +60,9 @@ fs.writeFileSync(modelFile, JSON.stringify({
     { name: 'debit', type: 'AccountId -> Nat -> State Bank Unit', spec: 'decreases source balance by amount' },
     { name: 'credit', type: 'AccountId -> Nat -> State Bank Unit', spec: 'increases destination balance by amount' }
   ],
+  observations: [
+    { name: 'balanceOf', type: 'AccountId -> Bank -> Nat', stateArgument: 'last', spec: 'reads account balance' }
+  ],
   laws: [
     { name: 'debit_credit_preserve_total', statement: 'transfer preserves total bank balance' }
   ],
@@ -83,6 +86,7 @@ const contractsLean = path.join(app, 'dist', 'Transfer.contracts.lean');
 const contracts = jsonFrom(runOk(node, [psc, 'contracts', transfer, '--state-model', modelFile, '--out', contractsFile, '--emit-lean', contractsLean, '--json'], app));
 assert.equal(contracts.status, 'accepted');
 assert.equal(contracts.contractKind, 'monadic-stateful');
+assert.equal(contracts.verification.profile, 'ps3-monadic-contracts0');
 
 const loweringFile = path.join(app, 'dist', 'Transfer.monadic-lowering.json');
 const loweringLean = path.join(app, 'dist', 'Transfer.monadic-triple.lean');
@@ -99,6 +103,20 @@ const loweringArtifact = JSON.parse(fs.readFileSync(loweringFile, 'utf8'));
 assert.equal(loweringArtifact.schema, 'proofscript.monadic-lowering.v1');
 assert.equal(loweringArtifact.tripleSkeleton.loweringStatus, 'std-do-triple-skeleton');
 assert.equal(loweringArtifact.summary.hasStdDoTripleSkeleton, true);
+assert.equal(loweringArtifact.statefulPredicateAST.schema, 'proofscript.stateful-predicate-ast/v1');
+assert.equal(loweringArtifact.statefulPredicateAST.typeCheckingComplete, true);
+assert.equal(loweringArtifact.statefulWpBinding.schema, 'proofscript.stateful-wp-binding/v1');
+assert.equal(loweringArtifact.statefulWpBinding.typedRequirementsReady, true);
+assert.equal(loweringArtifact.statefulWpBinding.typedPostconditionsReady, true);
+assert.equal(loweringArtifact.statefulWpBinding.bindingReady, true);
+assert.equal(loweringArtifact.statefulWpBinding.wp.triple, 'Std.Do.Triple');
+assert.equal(loweringArtifact.statefulWpBinding.semantics.runner, 'runBankState');
+assert.equal(loweringArtifact.statefulWpBinding.semantics.adequacyTheorem, 'runBankState_adequate');
+assert.equal(loweringArtifact.statefulWpBinding.semantics.adequacyTheoremChecked, false);
+assert.equal(loweringArtifact.statefulWpBinding.verificationConditionsGenerated, false);
+assert.equal(loweringArtifact.statefulWpBinding.semanticProofDischarge, false);
+assert.equal(loweringArtifact.tripleSkeleton.precondition, loweringArtifact.statefulWpBinding.precondition.functionSource);
+assert.equal(loweringArtifact.tripleSkeleton.postcondition, loweringArtifact.statefulWpBinding.postcondition.functionSource);
 assert.equal(loweringArtifact.summary.semanticProofDischarge, false);
 assert.ok(loweringArtifact.operations.length >= 2);
 assert.ok(loweringArtifact.obligations.length >= 2);
