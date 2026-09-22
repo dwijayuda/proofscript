@@ -72,7 +72,7 @@ See:
 - `frontend-next` contains substantial independent parser/elaborator/IR/incremental/plugin functionality.
 - `unified-bridge` connects frontend-next output into PSKernel/Core and is covered by existing unified integration tests.
 - verification workflow packages (`contracts`, `obligations`, `proof-status`, `state-models`, `monadic-lowering`) contain real `.mjs` implementations and are preserved.
-- clear scaffold packages currently include `diagnostics`, `formatter`, `macro`, and `tactics-core`, but they will not be removed until reference/dependency audit is complete.
+- the metadata-only `diagnostics`, `formatter`, `macro`, and `tactics-core` scaffold workspaces were dependency-audited and removed; their capabilities remain roadmap items until concrete implementation milestones exist.
 
 See:
 
@@ -148,7 +148,7 @@ The deeper frontend-next/unified-bridge migration is no longer allowed to keep P
 
 ## Next engineering target
 
-1. Finish PS2 metadata cleanup for plugin/backend snapshots; current structural certificates are now corrected without rewriting historical Core evidence.
+1. Finish PS2 closeout after current plugin/project metadata and scaffold-retirement gates are green; structural certificates, plugin/backend snapshots, and current project profiles now separate product identity from historical Core evidence.
 2. Continue CLI convergence at the orchestration layer; both current check paths already share `@proofscript/compiler`, so remaining duplication is command/UX/workflow code rather than a separate checker.
 3. Continue extracting useful incremental/module-interface infrastructure from `frontend-next` behind canonical compiler/project APIs.
 4. Expand LSP capabilities only from compiler-backed semantic/source-map APIs.
