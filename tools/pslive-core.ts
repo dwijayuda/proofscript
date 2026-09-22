@@ -7,7 +7,7 @@ import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
 
 const require = createRequire(import.meta.url);
-const { checkProjectFile } = require('../packages/frontend/dist/index.js');
+const { checkProjectFile } = require('../packages/compiler/dist/index.js');
 const { loadStandardBootstrap } = require('../packages/environment/dist/index.js');
 const {
   emitJavaScriptModule,
