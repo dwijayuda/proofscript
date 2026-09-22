@@ -2,6 +2,8 @@ import { createHash } from 'node:crypto';
 
 export const PURE_VERIFICATION_REFERENCE = '0.7.0-alpha.2-draft';
 export const PURE_VERIFICATION_PROFILE = 'ps3-pure-contracts0';
+export const MONADIC_VERIFICATION_REFERENCE = '0.7.0-alpha.2-draft';
+export const MONADIC_VERIFICATION_PROFILE = 'ps3-monadic-contracts0';
 export const PURE_VERIFICATION_FEATURE_ORDER = Object.freeze([
   'V-REQUIRES',
   'V-ENSURES',
@@ -449,6 +451,7 @@ export function parseMonadicContractSource(text, sourcePath = '<memory>', stateM
   if (!match) throw new Error('unsupported monadic contract syntax: expected function name(params): State ... specs := do { body }');
   const name = match[1];
   const params = parseParams(match[2]);
+  if (params.some(p => p.name === 'result')) throw new Error("contract parameter name 'result' is reserved for postconditions");
   const returnType = normalizeSpaces(match[3]);
   if (!/^State\b/.test(returnType)) throw new Error('unsupported monadic contract syntax: return type must be State ... in this alpha');
   const spec = match[4];
@@ -465,6 +468,7 @@ export function parseMonadicContractSource(text, sourcePath = '<memory>', stateM
     if (m) { const idx = ensures.length; ensures.push({ name: `ensures${idx}`, proposition: rewriteOldSnapshots(normalizeSpaces(m[1]), oldSnapshots), rawProposition: normalizeSpaces(m[1]), kind: 'ensures' }); continue; }
     throw new Error(`unsupported monadic contract clause: ${line}`);
   }
+  assertUniqueContractNames(params, requirements, ensures);
   const operations = parseMonadicOperations(body);
   const stateModelName = stateModelBinding.name;
   const modelRequirements = [{ name: `h${stateModelName}_adequate`, proposition: stateModelBinding.semantics?.adequacyTheorem ?? `${stateModelName}.adequate`, kind: 'state-model-adequacy' }];
@@ -508,16 +512,49 @@ export function parseMonadicContractSource(text, sourcePath = '<memory>', stateM
 }
 export function leanForMonadicContract(contract) {
   const params = contract.params.map(p => `(${p.name} : ${p.type})`).join(' ');
-  const reqs = contract.requirements.map(r => `(${r.name} : ${r.proposition})`).join(' ');
-  const binders = [params, reqs].filter(Boolean).join(' ');
   const stateModel = contract.stateModel?.name ?? '<missing-state-model>';
   const operations = (contract.operations ?? []).map(op => `-- operation ${op.index}: ${op.text}`).join('\n');
   const oldSnapshots = (contract.oldSnapshots ?? []).map(s => `-- old snapshot ${s.name} := old(${s.expression})`).join('\n');
   const obligations = (contract.obligations ?? []).map(o => `-- monadic obligation ${o.name}\n${o.exactTheoremStatement ?? o.theoremStatement} := by\n  -- status: unproved; vcgen/mvcgen not connected in KA-144\n  admit`).join('\n\n');
-  return `/- ProofScript KA-144 monadic/stateful contract skeleton.\n   Bound state model ${stateModel}. This is structural until vcgen/mvcgen is connected. -/\n\ndef ${contract.name}${binders ? ` ${binders}` : ''} : ${contract.returnType} := by\n  -- ProofScript monadic do body placeholder.\n  admit\n\n-- state model ${stateModel}\n${operations ? operations + '\n' : ''}${oldSnapshots ? oldSnapshots + '\n' : ''}${obligations}\n`;
+  return `/- ProofScript KA-144 monadic/stateful contract skeleton.\n   Bound state model ${stateModel}. This is structural until vcgen/mvcgen is connected. -/\n\ndef ${contract.name}${params ? ` ${params}` : ''} : ${contract.returnType} := by\n  -- ProofScript monadic do body placeholder.\n  admit\n\n-- state model ${stateModel}\n${operations ? operations + '\n' : ''}${oldSnapshots ? oldSnapshots + '\n' : ''}${obligations}\n`;
 }
+export function monadicVerificationProfile(contract, stateModel) {
+  const declaredOperations = new Set((stateModel.operations ?? []).map(op => op.name));
+  const unknownOperations = (contract.operations ?? [])
+    .filter(op => !declaredOperations.has(op.operation))
+    .map(op => op.operation);
+  const unsupported = [];
+  if ((contract.oldSnapshots ?? []).length > 0) unsupported.push('stateful-old-not-modeled');
+  if ((contract.ensures ?? []).some(e => /\bresult\b/.test(e.rawProposition ?? e.proposition ?? ''))) unsupported.push('stateful-result-not-modeled');
+  if ((contract.requirements ?? []).some(r => /\bresult\b/.test(r.proposition ?? ''))) unsupported.push('result-in-requires');
+  if (unknownOperations.length > 0) unsupported.push('undeclared-state-operation');
+
+  if (unsupported.length === 0) {
+    return {
+      schema: 'proofscript.verification-profile/v1',
+      reference: MONADIC_VERIFICATION_REFERENCE,
+      profile: MONADIC_VERIFICATION_PROFILE,
+      features: ['V-MONADIC-CONTRACT'],
+      prototypeFeatures: [],
+      claim: 'specified-structural-alpha',
+      unknownOperations: [],
+    };
+  }
+
+  return {
+    schema: 'proofscript.verification-profile/v1',
+    reference: null,
+    profile: 'ka144-monadic-prototype',
+    features: [],
+    prototypeFeatures: unsupported,
+    claim: 'prototype-only',
+    unknownOperations,
+  };
+}
+
 export function makeMonadicContractsArtifact({ sourceText, sourcePath, sourceSha256, packageVersion, checkpoint = 'KA-144 state-model descriptor workflow', stateModel }) {
   const contract = parseMonadicContractSource(sourceText, sourcePath, stateModel);
+  const verification = monadicVerificationProfile(contract, stateModel);
   return {
     artifact: {
       schema: 'proofscript.contracts.v1',
@@ -526,12 +563,13 @@ export function makeMonadicContractsArtifact({ sourceText, sourcePath, sourceSha
       packageVersion,
       source: sourcePath,
       sourceSha256,
-      stateModel: { name: stateModel.name, path: stateModel.path, sha256: stateModel.sha256, stateType: stateModel.stateType, monad: stateModel.monad, vcgen: stateModel.vcgen },
+      verification,
+      stateModel: { name: stateModel.name, path: stateModel.path, sha256: stateModel.sha256, stateType: stateModel.stateType, monad: stateModel.monad, wp: stateModel.wp, semantics: stateModel.semantics, operations: stateModel.operations, laws: stateModel.laws, vcgen: stateModel.vcgen },
       functions: [{ name: contract.name, contractKind: contract.contractKind, params: contract.params, returnType: contract.returnType, requirements: contract.requirements, modelRequirements: contract.modelRequirements, ensures: contract.ensures, oldSnapshots: contract.oldSnapshots, operations: contract.operations, body: contract.body, stateModel: { name: stateModel.name, stateType: stateModel.stateType, monad: stateModel.monad } }],
       operations: contract.operations,
       oldSnapshots: contract.oldSnapshots,
       obligations: contract.obligations,
-      trustBoundary: { semanticProofChecking: false, hiddenAxioms: false, monadicContracts: 'state-model-descriptor-bound', stateModelDescriptorValidated: true, vcgenConnected: false, monadicProofDischarge: false, fullLean4Equivalence: false },
+      trustBoundary: { semanticProofChecking: false, hiddenAxioms: false, monadicContracts: 'state-model-descriptor-bound', verificationProfile: verification.profile, specifiedStructuralProfile: verification.profile === MONADIC_VERIFICATION_PROFILE, stateModelDescriptorValidated: true, vcgenConnected: false, monadicProofDischarge: false, fullLean4Equivalence: false },
     },
     contract,
     leanText: leanForMonadicContract(contract),
