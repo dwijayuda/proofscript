@@ -22,7 +22,8 @@
         "WP triple/precondition/postcondition descriptors",
         "semantic runner and adequacy theorem identity",
         "at least one law identity/statement",
-        "every operation used by the strict profile must be declared by the descriptor"
+        "every operation used by the strict profile must be declared by the descriptor",
+        "optional state observations declare a pure observation name/type/spec and place the state argument last in this alpha"
       ],
       "runtime": "contract metadata is non-runtime; the source program body remains the executable program. No backend execution-correspondence proof is implied.",
       "trust_boundary": {
@@ -40,7 +41,8 @@
         "undeclared state operations",
         "loop invariants/frame conditions",
         "vcgen/mvcgen semantic discharge",
-        "semantic elaboration of proofscript.stateful-postcondition-ir/v1 into model-specific entry/result/final-state predicates"
+        "semantic elaboration of proofscript.stateful-postcondition-ir/v1 into model-specific entry/result/final-state predicates",
+        "model-specific rewriting of observation calls into generated entry/final-state predicate terms"
       ],
       "artifact_representation": [
         "proofscript.contracts.v1 verification.profile=ps3-monadic-contracts0",
