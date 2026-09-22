@@ -1,0 +1,16 @@
+{
+  "schema_version": "0.6.1-production-harness-1",
+  "description": "Implementation-only context wrappers for v0.6.1 conformance snippets. This file does not modify the authoritative reference cases.",
+  "term_cases": [
+    "adjacent-call-two",
+    "tuple-argument",
+    "braced-if",
+    "match-body",
+    "if-without-parens",
+    "if-statement-list",
+    "pattern-call-sugar",
+    "global-brace-block"
+  ],
+  "term_wrapper_prefix": "def __conformance_case : Nat := ",
+  "term_wrapper_suffix": ";"
+}
