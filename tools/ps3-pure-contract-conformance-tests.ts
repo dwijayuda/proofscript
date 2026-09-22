@@ -59,6 +59,16 @@ for (const item of negative) {
   );
 }
 
+const stableA = parsePureContractSource(
+  "function stable(x: Nat): Nat\n  requires hx: x >= 0\n  ensures post: result = x\n:= {\n  x\n}",
+).obligations[0]!;
+const stableB = parsePureContractSource(
+  "function stable(x: Nat): Nat\n  requires hx: x >= 0\n  ensures post: result = x + 0\n:= {\n  x\n}",
+).obligations[0]!;
+assert.equal(stableA.id, "stable.ensures.post");
+assert.equal(stableB.id, stableA.id, "obligation ID must remain stable when only the proposition changes");
+assert.notEqual(stableB.statementSha256, stableA.statementSha256, "statement hash must detect changed obligation content");
+
 const preconditionRegression = parsePureContractSource(
   "function f(x: Nat): Nat\n  requires hx: x >= 0\n  ensures post: result = x\n:= {\n  x\n}",
 );
