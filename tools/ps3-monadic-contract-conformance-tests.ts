@@ -76,6 +76,16 @@ for (const item of positive) {
   assert.equal(artifact.statefulPredicateElaboration.wholePredicateTypeCheckingComplete, false, item.id);
   assert.equal(artifact.statefulPredicateElaboration.wpTripleSemanticBindingComplete, false, item.id);
   assert.equal(artifact.statefulPredicateElaboration.semanticProofDischarge, false, item.id);
+  assert.equal(artifact.statefulPredicateAST.schema, "proofscript.stateful-predicate-ast/v1", item.id);
+  assert.equal(artifact.statefulPredicateAST.grammarProfile, "stateful-predicate-expressions0", item.id);
+  assert.equal(artifact.statefulPredicateAST.unsupportedSyntax, false, item.id);
+  assert.equal(artifact.statefulPredicateAST.hasTypeErrors, false, item.id);
+  assert.equal(artifact.statefulPredicateAST.typeCheckingComplete, true, item.id);
+  assert.ok(artifact.statefulPredicateAST.clauses.every((clause: any) => clause.inferredType === "Prop"), item.id);
+  assert.equal(artifact.statefulPredicateAST.wpTripleSemanticBindingComplete, false, item.id);
+  assert.equal(artifact.statefulPredicateAST.stateModelAdequacyChecked, false, item.id);
+  assert.equal(artifact.statefulPredicateAST.verificationConditionsGenerated, false, item.id);
+  assert.equal(artifact.statefulPredicateAST.semanticProofDischarge, false, item.id);
   if (item.expected.final_state_observations !== undefined) {
     const clause = artifact.statefulPostconditionIR.clauses[0];
     assert.equal(clause.finalStateObservationReferences.length, item.expected.final_state_observations, item.id);
@@ -113,7 +123,9 @@ for (const item of positive) {
   assert.deepEqual(lowering.verification, artifact.verification, item.id);
   assert.deepEqual(lowering.statefulPostconditionIR, artifact.statefulPostconditionIR, item.id);
   assert.deepEqual(lowering.statefulPredicateElaboration, artifact.statefulPredicateElaboration, item.id);
+  assert.deepEqual(lowering.statefulPredicateAST, artifact.statefulPredicateAST, item.id);
   assert.equal(lowering.summary.statefulReferenceTypingComplete, true, item.id);
+  assert.equal(lowering.summary.normalizedPredicateAstTypeCheckingComplete, true, item.id);
   assert.equal(lowering.summary.wholePredicateTypeCheckingComplete, false, item.id);
   assert.equal(lowering.trustBoundary.specifiedStructuralProfile, true, item.id);
   assert.equal(lowering.summary.semanticProofDischarge, false, item.id);
@@ -151,9 +163,12 @@ for (const item of positive) {
   assert.deepEqual(preflight.verification, artifact.verification, item.id);
   assert.deepEqual(preflight.statefulPostconditionIR, artifact.statefulPostconditionIR, item.id);
   assert.deepEqual(preflight.statefulPredicateElaboration, artifact.statefulPredicateElaboration, item.id);
+  assert.deepEqual(preflight.statefulPredicateAST, artifact.statefulPredicateAST, item.id);
   assert.equal(preflight.staticChecks.hasStatefulPostconditionIR, true, item.id);
   assert.equal(preflight.staticChecks.hasStatefulPredicateElaboration, true, item.id);
+  assert.equal(preflight.staticChecks.hasStatefulPredicateAST, true, item.id);
   assert.equal(preflight.staticChecks.statefulReferenceTypingComplete, true, item.id);
+  assert.equal(preflight.staticChecks.normalizedPredicateAstTypeCheckingComplete, true, item.id);
   assert.equal(preflight.staticChecks.wholePredicateTypeCheckingComplete, false, item.id);
   assert.equal(preflight.staticChecks.statefulPostconditionSemanticElaborationComplete, false, item.id);
   assert.equal(preflight.trustBoundary.specifiedStructuralProfile, true, item.id);
@@ -264,6 +279,32 @@ for (const item of negative) {
       packageVersion: "test",
     });
     assert.deepEqual(preflight.statefulPredicateElaboration, elaboration, item.id);
+  }
+  if (item.expected_ast) {
+    const ast = artifact.statefulPredicateAST;
+    assert.equal(ast.schema, "proofscript.stateful-predicate-ast/v1", item.id);
+    assert.equal(ast.unsupportedSyntax, item.expected_ast.unsupported_syntax, item.id);
+    assert.equal(ast.typeCheckingComplete, item.expected_ast.type_checking_complete, item.id);
+    if (item.expected_ast.error_code) {
+      assert.ok(ast.diagnostics.some((diagnostic: any) => diagnostic.code === item.expected_ast.error_code), item.id);
+    }
+    const lowering = createMonadicLoweringArtifact({
+      contractArtifact: artifact,
+      contractArtifactPath: `<${item.id}.contracts.json>`,
+      contractArtifactSha256: "e".repeat(64),
+      packageVersion: "test",
+    });
+    assert.deepEqual(lowering.statefulPredicateAST, ast, item.id);
+    const preflight = createMonadicLeanPreflightArtifact({
+      loweringArtifact: lowering,
+      loweringArtifactPath: `<${item.id}.monadic-lowering.json>`,
+      loweringArtifactSha256: "f".repeat(64),
+      preflightLeanPath: `<${item.id}.preflight.lean>`,
+      preflightLeanSha256: "0".repeat(64),
+      leanRun: { status: "skipped", reason: "typed predicate AST boundary fixture" },
+      packageVersion: "test",
+    });
+    assert.deepEqual(preflight.statefulPredicateAST, ast, item.id);
   }
   if (item.unknown_operation) {
     assert.ok(artifact.verification.unknownOperations.includes(item.unknown_operation), item.id);
