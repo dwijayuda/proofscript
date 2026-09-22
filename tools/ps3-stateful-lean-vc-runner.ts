@@ -6,8 +6,10 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { makeMonadicContractsArtifact } from "../packages/contracts/src/index.mjs";
-import { createMonadicLoweringArtifact } from "../packages/monadic-lowering/src/index.mjs";
-import { analyzeStatefulVcExecution } from "../packages/monadic-lowering/src/stateful-vc-execution.mjs";
+import {
+  analyzeStatefulVcExecution,
+  createMonadicLoweringArtifact,
+} from "../packages/monadic-lowering/src/index.mjs";
 import { buildStateModelBinding } from "../packages/state-models/src/index.mjs";
 import { probeLean } from "./lib/lean-toolchain.ts";
 
