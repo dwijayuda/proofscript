@@ -99,6 +99,7 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
       wp: stateModel.wp,
       semantics: stateModel.semantics,
       operations: stateModel.operations ?? [],
+      observations: stateModel.observations ?? [],
       laws: stateModel.laws ?? [],
       vcgen: stateModel.vcgen ?? { status: 'not-connected' },
     },
