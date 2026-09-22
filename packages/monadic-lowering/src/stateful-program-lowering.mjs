@@ -1,22 +1,17 @@
+import { leanIdentifier, leanParameterBinders } from './lean-syntax.mjs';
+
 function normalizeSpaces(value) {
   return String(value ?? '').replace(/\s+/g, ' ').trim();
 }
 
-function safeLeanName(name) {
-  return String(name ?? 'x').replace(/[^A-Za-z0-9_]+/g, '_').replace(/^([0-9])/, '_$1') || 'x';
-}
-
-function parameterBinders(params) {
-  return (params ?? []).map(param => `(${safeLeanName(param.name)} : ${param.type})`).join(' ');
-}
 
 function programArgs(params) {
-  return (params ?? []).map(param => safeLeanName(param.name));
+  return (params ?? []).map(param => leanIdentifier(param.name));
 }
 
 function leanArgument(source) {
   const value = normalizeSpaces(source);
-  if (/^[A-Za-z_][A-Za-z0-9_.]*$/.test(value)) return safeLeanName(value);
+  if (/^[A-Za-z_][A-Za-z0-9_.]*$/.test(value)) return leanIdentifier(value);
   if (/^[0-9]+$/.test(value)) return value;
   if (/^(true|false)$/.test(value)) return value;
   if (/^"(?:[^"\\]|\\.)*"$/.test(value)) return value;
@@ -113,7 +108,7 @@ export function createStatefulProgramLowering(contractArtifact) {
     }
 
     const application = renderedArgs.every(argument => argument !== null)
-      ? [safeLeanName(operation.operation), ...renderedArgs].join(' ')
+      ? [leanIdentifier(operation.operation), ...renderedArgs].join(' ')
       : null;
 
     return {
@@ -165,9 +160,9 @@ export function createStatefulProgramLowering(contractArtifact) {
   const leanBody = programLoweringReady
     ? `do\n${operations.map(operation => `  ${operation.leanApplication}`).join('\n')}`
     : null;
-  const binders = parameterBinders(fn.params ?? []);
+  const binders = leanParameterBinders(fn.params ?? []);
   const leanDefinition = programLoweringReady
-    ? `def ${safeLeanName(fn.name)}${binders ? ` ${binders}` : ''} : ${returnTypeMapping.leanReturnType} := ${leanBody}`
+    ? `def ${leanIdentifier(fn.name)}${binders ? ` ${binders}` : ''} : ${returnTypeMapping.leanReturnType} := ${leanBody}`
     : null;
 
   return {
