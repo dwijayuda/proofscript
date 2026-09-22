@@ -40,6 +40,8 @@
         "loop invariants/frame conditions",
         "vcgen/mvcgen semantic discharge",
         "full ProofScript/Lean expression elaboration beyond the bounded stateful-predicate-expressions0 AST",
+        "semantic equivalence of generated pre/post predicates to the selected WP/Triple implementation",
+        "checking the state-model adequacy theorem rather than binding its identity",
         "type-checked model-specific observation semantics beyond structural entry/final-state binder insertion"
       ],
       "artifact_representation": [
@@ -48,7 +50,8 @@
         "proofscript.monadic-preflight.v1 carries the same verification profile",
         "proofscript.stateful-postcondition-ir/v1 records entry/result/final-state binder roles and preserves raw postcondition references",
         "proofscript.stateful-predicate-elaboration/v1 binds state/result types and descriptor observation signatures/arguments without claiming whole-predicate typechecking",
-        "proofscript.stateful-predicate-ast/v1 typechecks the bounded normalized stateful-predicate-expressions0 subset and fails closed outside it",
+        "proofscript.stateful-predicate-ast/v1 typechecks bounded monadic requires and normalized postconditions in stateful-predicate-expressions0 and fails closed outside it",
+        "proofscript.stateful-wp-binding/v1 binds typed pre/post predicate shapes to the selected WP/Triple, runner, and adequacy theorem identities without claiming adequacy checking",
         "stateful postcondition IR is propagated contracts -> monadic-lowering -> monadic-preflight"
       ],
       "diagnostics": [
