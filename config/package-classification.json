@@ -233,11 +233,11 @@
     },
     {
       "path": "packages/cli",
-      "npmName": "proofscript",
+      "npmName": "@proofscript/cli",
       "tier": "product",
-      "lifecycle": "supported",
-      "trustBoundary": "Product entrypoint; may orchestrate but must not redefine trust claims.",
-      "productionRole": "CLI and npm entrypoint for user workflows.",
+      "lifecycle": "internal",
+      "trustBoundary": "Internal modular CLI orchestration/reference package; the root proofscript package is the sole public psc entrypoint.",
+      "productionRole": "Keeps modular CLI orchestration available for convergence/testing without owning the published psc executable.",
       "allowedDependencies": [
         "packages/kernel-codec",
         "packages/certificates",
