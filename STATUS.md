@@ -213,6 +213,7 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - Lean VC derivation request blueprint (`proofscript.stateful-vc-request/v1`) — implemented; canonical bank model now has request-source provenance
 - Lean >=4.33.1 VC execution runner (`proofscript.stateful-vc-run/v1`) + dedicated `stateful-lean-ci` compatibility workflow — implemented; execution evidence pending hosted runner availability
 - Lean >=4.33.1 stateful compatibility policy — executable gate added; default developer toolchain is 4.34.0, while CI dynamically tracks latest stable and RC
+- `Std.Do.Triple -> mvcgen` compatibility rule — enforced by descriptor validation; omitted tactic defaults from Triple identity
 - public `psc monadic-vc-run` command — implemented; emits the same evidence schema and treats residual Lean VCs as an accepted `vcs-generated` run, not as a proof
 - stable Lean-derived residual-goal artifact (`proofscript.stateful-vc-goals/v1`) — implemented with deterministic IDs/hashes
 - evidence-based claim promotion is centralized in `@proofscript/monadic-lowering` and covered by synthetic fail-closed stage tests
@@ -227,7 +228,7 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - operation Triple theorem resolution/checking — **false by design**
 - emitted `StateM` program typechecking in the selected Lean environment — **false by design**
 - concrete `Std.Do.Triple` target typechecking — **false by design**
-- VC request tactic execution / captured Lean goals — **false by design**
+- VC request tactic execution / captured Lean goals — **false until the metatheory-compatible tactic actually runs**
 - modeled `old(...)` observations rewrite against entry state; ordinary modeled observations rewrite against final state — PASS
 - call-free `old(x)` structural admission — PASS
 - unclassified calls inside `old(...)` fail closed to prototype — PASS
