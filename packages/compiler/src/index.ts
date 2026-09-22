@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import { type CheckSummary } from "@proofscript/kernel";
 import { type BackendPlugin, type BackendResult } from "@proofscript/plugin-api";
 import { toCheckedModuleSnapshot } from "@proofscript/semantic-ir";
@@ -27,6 +28,77 @@ export function checkProjectFile(entryFile: string, options: FrontendOptions = {
   return checkProjectFileFrontend(entryFile, options);
 }
 
+
+export interface CheckedModuleSnapshot {
+  readonly module: string;
+  readonly filePath: string;
+  readonly sourceSha256: string;
+  readonly imports: readonly string[];
+  readonly declarations: readonly string[];
+  /**
+   * Hash of the module's checked Core declarations plus typeclass metadata.
+   * This is deliberately conservative: body-only changes invalidate dependents.
+   * A later public/private interface model may reduce unnecessary rebuilds.
+   */
+  readonly checkedSemanticSha256: string;
+  /** Conservative dependency interface: currently identical to checkedSemanticSha256. */
+  readonly dependencyInterfaceSha256: string;
+}
+
+export interface CheckedProjectSnapshot {
+  readonly schema: "proofscript.checked-project/v1";
+  readonly entry: string;
+  readonly modules: readonly CheckedModuleSnapshot[];
+  /** Machine/path-independent digest of the checked module graph. */
+  readonly projectSha256: string;
+}
+
+export interface CheckedProjectResult {
+  readonly project: FrontendProjectResult;
+  readonly snapshot: CheckedProjectSnapshot;
+}
+
+/**
+ * Derive a deterministic incremental identity from already checked canonical
+ * frontend results. This never adds proof authority and never trusts backend IR.
+ */
+export function createCheckedProjectSnapshot(project: FrontendProjectResult): CheckedProjectSnapshot {
+  const modules: CheckedModuleSnapshot[] = project.modules.map((module) => {
+    const checkedSemanticSha256 = sha256(stableJson({
+      declarations: module.declarations,
+      typeclasses: module.typeclasses,
+    }));
+    return {
+      module: module.source.name,
+      filePath: module.source.filePath,
+      sourceSha256: module.source.sourceSha256,
+      imports: [...module.source.imports],
+      declarations: module.declarations.map((declaration) => declaration.name),
+      checkedSemanticSha256,
+      dependencyInterfaceSha256: checkedSemanticSha256,
+    };
+  });
+
+  const projectSha256 = sha256(stableJson({
+    schema: "proofscript.checked-project/v1",
+    entry: project.graph.entry,
+    modules: modules.map(({ filePath: _filePath, ...module }) => module),
+  }));
+
+  return {
+    schema: "proofscript.checked-project/v1",
+    entry: project.graph.entry,
+    modules,
+    projectSha256,
+  };
+}
+
+/** Check a project and return both the canonical result and deterministic checked snapshot. */
+export function checkProjectSnapshot(entryFile: string, options: FrontendOptions = {}): CheckedProjectResult {
+  const project = checkProjectFileFrontend(entryFile, options);
+  return { project, snapshot: createCheckedProjectSnapshot(project) };
+}
+
 /**
  * Dispatch a checked semantic snapshot to a runtime/backend plugin.
  *
@@ -47,3 +119,25 @@ export type {
   FrontendProjectResult,
   FrontendResult,
 };
+
+function stableJson(value: unknown): string {
+  return JSON.stringify(stableValue(value));
+}
+
+function stableValue(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(stableValue);
+  if (value && typeof value === "object") {
+    const input = value as Record<string, unknown>;
+    const output: Record<string, unknown> = {};
+    for (const key of Object.keys(input).sort()) {
+      const item = input[key];
+      if (item !== undefined) output[key] = stableValue(item);
+    }
+    return output;
+  }
+  return value;
+}
+
+function sha256(value: string): string {
+  return crypto.createHash("sha256").update(value).digest("hex");
+}
