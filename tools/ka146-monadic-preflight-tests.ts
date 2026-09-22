@@ -66,7 +66,7 @@ fs.writeFileSync(modelFile, JSON.stringify({
     { name: 'balanceOf', type: 'AccountId -> Bank -> Nat', stateArgument: 'last', spec: 'reads account balance' }
   ],
   laws: [{ name: 'debit_credit_preserve_total', statement: 'transfer preserves total bank balance' }],
-  vcgen: { status: 'planned', tactic: 'vcgen' }
+  vcgen: { status: 'planned', tactic: 'mvcgen' }
 }, null, 2));
 
 const transfer = path.join(app, 'src', 'Transfer.ps');
