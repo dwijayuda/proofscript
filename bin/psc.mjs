@@ -204,8 +204,17 @@ function readProjectConfig() {
   if (!fs.existsSync(file)) return { projectRoot: process.cwd(), sourceDir: 'src', outDir: 'dist', build: { target: 'ts', outDir: 'dist' }, diagnostics: { sourceLocations: true } };
   try {
     const cfg = JSON.parse(fs.readFileSync(file, 'utf8'));
+    const product = currentProductProfile();
+    if (cfg.proofscriptReference !== undefined && cfg.proofscriptReference !== product.proofscriptReference) {
+      throw new Error(`unsupported ProofScript reference in proofscript.config.json: ${String(cfg.proofscriptReference)}`);
+    }
+    if (cfg.productProfile !== undefined && cfg.productProfile !== product.productProfile) {
+      throw new Error(`unsupported ProofScript product profile in proofscript.config.json: ${String(cfg.productProfile)}`);
+    }
     return {
       projectRoot: root,
+      proofscriptReference: cfg.proofscriptReference ?? product.proofscriptReference,
+      productProfile: cfg.productProfile ?? product.productProfile,
       sourceDir: typeof cfg.sourceDir === 'string' ? cfg.sourceDir : 'src',
       outDir: typeof cfg.outDir === 'string' ? cfg.outDir : (typeof cfg.build?.outDir === 'string' ? cfg.build.outDir : 'dist'),
       entry: typeof cfg.entry === 'string' ? cfg.entry : undefined,
@@ -384,6 +393,8 @@ the generated ProofScript module.
     writeFileChecked(path.join(targetDir, '.gitignore'), `node_modules/\ndist/\ndist-js/\ndist-host/\n*.pscore.json\n`, force, written);
     writeFileChecked(path.join(targetDir, 'proofscript.config.json'), JSON.stringify({
       "schemaVersion": 1,
+      "proofscriptReference": "v0.6.1",
+      "productProfile": "ps1-v061",
       "profile": "proofscript-software-v0",
       "entry": "src/Main.ps",
       "sourceDir": "src",
@@ -746,6 +757,8 @@ console.log(JSON.stringify(summary, null, 2));
   writeFileChecked(path.join(targetDir, '.gitignore'), `node_modules/\ndist/\ndist/\n*.pscore.json\n`, force, written);
   writeFileChecked(path.join(targetDir, 'proofscript.config.json'), JSON.stringify({
     schemaVersion: 1,
+    proofscriptReference: 'v0.6.1',
+    productProfile: 'ps1-v061',
     profile: 'proofscript-software-v0',
     entry: 'src/Main.ps',
     sourceDir: 'src',
