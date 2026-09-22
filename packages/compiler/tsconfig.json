@@ -10,6 +10,9 @@
   ],
   "references": [
     {
+      "path": "../frontend"
+    },
+    {
       "path": "../plugin-api"
     },
     {
