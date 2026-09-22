@@ -5,6 +5,7 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
   analyzeStatefulVcExecution,
+  classifyLeanCompatibilityOutput,
   createMonadicLoweringBundle,
   createMonadicLeanPreflightBundle,
   readMonadicLoweringArtifact,
@@ -278,9 +279,18 @@ end ProofScript.Generated.VCRun.Triple
     fs.writeFileSync(requestPath, request.request.source);
 
     const leanProbe = runProcess(lakeCmd, ['env', 'lean', '--version'], resolvedProject);
-    const modelBuild = leanProbe.exitCode === 0
-      ? runProcess(lakeCmd, ['env', 'lean', modelCheckPath], resolvedProject)
-      : skippedProcess(lakeCmd, ['env', 'lean', modelCheckPath], 'Lean environment probe failed');
+    const leanCompatibility = leanProbe.exitCode === 0
+      ? classifyLeanCompatibilityOutput(`${leanProbe.stdout}\n${leanProbe.stderr}`)
+      : {
+          status: 'unsupported',
+          minimumVersion: '4.33.1',
+          message: leanProbe.error ?? leanProbe.stderr ?? 'unable to execute Lean',
+        };
+    if (leanCompatibility.status !== 'accepted') {
+      throw new Error(leanCompatibility.message ?? 'unsupported Lean version');
+    }
+
+    const modelBuild = runProcess(lakeCmd, ['env', 'lean', modelCheckPath], resolvedProject);
     const programCheck = modelBuild.exitCode === 0
       ? runProcess(lakeCmd, ['env', 'lean', programCheckPath], resolvedProject)
       : skippedProcess(lakeCmd, ['env', 'lean', programCheckPath], 'model/import check failed');
@@ -310,6 +320,7 @@ end ProofScript.Generated.VCRun.Triple
       lean: {
         command: lakeCmd,
         probe: leanProbe,
+        compatibility: leanCompatibility,
       },
       provenance: {
         generatedProgramSha256: sha256Text(program.leanDefinition),
