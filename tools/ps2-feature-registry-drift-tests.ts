@@ -66,14 +66,19 @@ for (const feature of registeredOwned) {
 }
 
 const negative = readJsonl(path.join(conformance, "cases", "negative.jsonl"));
-const excluded = new Set(
-  registry.features
-    .filter((feature: any) => feature.class === "X")
-    .map((feature: any) => feature.id),
-);
+const excludedCorpusLabels = new Set<string>();
 for (const item of negative) {
   if (String(item.feature).startsWith("X-")) {
-    assert.ok(excluded.has(item.feature), `negative corpus references unregistered X feature ${item.feature}`);
+    excludedCorpusLabels.add(item.feature);
+    assert.ok(
+      !registeredOwned.includes(item.feature) && !productionOwned.includes(item.feature),
+      `negative exclusion label ${item.feature} must never become an admitted production-owned feature without an explicit reference-version change`,
+    );
+  } else {
+    assert.ok(
+      registry.features.some((feature: any) => feature.id === item.feature),
+      `negative corpus references unknown registered feature ${item.feature}`,
+    );
   }
 }
 
@@ -85,6 +90,7 @@ console.log(JSON.stringify({
   primaryPositiveFeatures: [...positiveFeatures].filter((feature) => registeredOwned.includes(feature)).sort(),
   crossCuttingPositiveFeatures: [...crossCuttingPositiveEvidence.entries()].filter(([, ok]) => ok).map(([feature]) => feature).sort(),
   supplementalOwnedFeatures: [...supplementalOwnedFeatureEvidence.entries()].filter(([, ok]) => ok).map(([feature]) => feature).sort(),
+  excludedCorpusLabels: [...excludedCorpusLabels].sort(),
   positiveCoverage: registeredOwned.length,
 }, null, 2));
 
