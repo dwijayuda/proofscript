@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import {
   leanForContract,
+  makeContractsArtifact,
   parsePureContractSource,
 } from "../packages/contracts/src/index.mjs";
 
@@ -22,6 +23,16 @@ assert.deepEqual(
 
 for (const item of positive) {
   const contract = parsePureContractSource(item.source, `<${item.id}>`);
+  const { artifact } = makeContractsArtifact({
+    sourceText: item.source,
+    sourcePath: `<${item.id}>`,
+    sourceSha256: "0".repeat(64),
+    packageVersion: "test",
+  });
+  assert.equal(artifact.verification.schema, "proofscript.verification-profile/v1", item.id);
+  assert.equal(artifact.verification.reference, registry.schema_version, item.id);
+  assert.equal(artifact.verification.profile, registry.profile, item.id);
+  assert.deepEqual(artifact.verification.features, item.features, item.id);
   assert.equal(contract.requirements.length, item.expected.requirements, item.id);
   assert.equal(contract.ensures.length, item.expected.ensures, item.id);
   assert.equal(contract.assertions.length, item.expected.assertions ?? 0, item.id);
