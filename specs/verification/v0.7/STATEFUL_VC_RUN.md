@@ -102,3 +102,10 @@ semanticProofDischarge
 The stateful verification compatibility floor is Lean **4.33.1**. Lean 4.33.1 and any later stable, RC, or development build are admissible inputs. The evidence must record the exact observed Lean version used for the run.
 
 A run with no usable Lean installation, an unparsable version, or Lean older than 4.33.1 is `unsupported`; it does not count as semantic evidence. Historical K3-TB / differential artifacts remain separately pinned where their claim requires an exact release.
+
+
+## Tactic identity
+
+The report records the tactic actually selected by the request artifact. For the current public `Std.Do.Triple` stateful profile this is `mvcgen`.
+
+A failure inside Lean's experimental `vcgen` implementation is not accepted as evidence that a `Std.Do.Triple` target is invalid. Tactic selection is constrained by the Triple metatheory before execution.
