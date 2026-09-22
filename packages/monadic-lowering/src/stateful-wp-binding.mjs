@@ -68,8 +68,13 @@ export function createStatefulWpBinding(contractArtifact) {
     runner,
     adequacyTheorem,
   ].every(value => typeof value === 'string' && value.length > 0);
-  const typedPredicateReady = ast.typeCheckingComplete === true
+  const typedRequirementsReady = ast.requirementsTypeCheckingComplete === true
+    && (ast.requirements ?? []).every(requirement => requirement.typeCheckingComplete === true && requirement.inferredType === 'Prop');
+  const typedPostconditionsReady = ast.postconditionsTypeCheckingComplete === true
     && (ast.clauses ?? []).every(clause => clause.typeCheckingComplete === true && clause.inferredType === 'Prop');
+  const typedPredicateReady = ast.typeCheckingComplete === true
+    && typedRequirementsReady
+    && typedPostconditionsReady;
   const bindingReady = requiredIdentitiesBound && typedPredicateReady;
 
   return {
@@ -107,7 +112,13 @@ export function createStatefulWpBinding(contractArtifact) {
       body: preconditionBody,
       functionSource: preconditionFunction,
       sha256: sha256Text(preconditionFunction),
-      requirements: fn.requirements ?? [],
+      requirements: (ast.requirements ?? []).map(requirement => ({
+        name: requirement.name,
+        normalizedPredicate: requirement.normalizedPredicate,
+        inferredType: requirement.inferredType,
+        typeCheckingComplete: requirement.typeCheckingComplete,
+      })),
+      typeCheckingComplete: typedRequirementsReady,
       semanticType: preconditionKind,
     },
     postcondition: {
@@ -120,10 +131,13 @@ export function createStatefulWpBinding(contractArtifact) {
         inferredType: clause.inferredType,
         typeCheckingComplete: clause.typeCheckingComplete,
       })),
+      typeCheckingComplete: typedPostconditionsReady,
       semanticType: postconditionKind,
     },
     predicateAstSha256: sha256Text(JSON.stringify(ast)),
     requiredIdentitiesBound,
+    typedRequirementsReady,
+    typedPostconditionsReady,
     typedPredicateReady,
     bindingReady,
     bindingStatus: bindingReady ? 'typed-predicate-bound-to-wp-identities' : 'blocked',
