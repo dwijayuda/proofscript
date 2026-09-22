@@ -52,6 +52,20 @@ export function createStatefulWpBinding(contractArtifact) {
   const postconditionKind = stateModel.wp?.postcondition ?? null;
   const runner = stateModel.semantics?.runner ?? null;
   const adequacyTheorem = stateModel.semantics?.adequacyTheorem ?? null;
+  const stateModelOperationByName = new Map((stateModel.operations ?? []).map(operation => [operation.name, operation]));
+  const operationBindings = (fn.operations ?? []).map(operation => {
+    const modelOperation = stateModelOperationByName.get(operation.operation);
+    const tripleTheorem = modelOperation?.verification?.tripleTheorem ?? null;
+    return {
+      index: operation.index,
+      operation: operation.operation,
+      text: operation.text,
+      tripleTheorem,
+      identityBound: typeof tripleTheorem === 'string' && tripleTheorem.length > 0,
+      theoremChecked: false,
+    };
+  });
+  const operationTripleTheoremIdentitiesBound = operationBindings.every(operation => operation.identityBound);
 
   const preconditionBody = logicalPrecondition(fn);
   const preconditionFunction = preconditionBody === 'True'
@@ -75,7 +89,9 @@ export function createStatefulWpBinding(contractArtifact) {
   const typedPredicateReady = ast.typeCheckingComplete === true
     && typedRequirementsReady
     && typedPostconditionsReady;
-  const bindingReady = requiredIdentitiesBound && typedPredicateReady;
+  const bindingReady = requiredIdentitiesBound
+    && operationTripleTheoremIdentitiesBound
+    && typedPredicateReady;
 
   return {
     schema: 'proofscript.stateful-wp-binding/v1',
@@ -108,6 +124,7 @@ export function createStatefulWpBinding(contractArtifact) {
       result: elaboration.binders?.result ?? null,
       finalState: elaboration.binders?.finalState ?? null,
     },
+    operations: operationBindings,
     precondition: {
       body: preconditionBody,
       functionSource: preconditionFunction,
@@ -136,6 +153,7 @@ export function createStatefulWpBinding(contractArtifact) {
     },
     predicateAstSha256: sha256Text(JSON.stringify(ast)),
     requiredIdentitiesBound,
+    operationTripleTheoremIdentitiesBound,
     typedRequirementsReady,
     typedPostconditionsReady,
     typedPredicateReady,
