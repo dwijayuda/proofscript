@@ -789,7 +789,8 @@
     "test:ps2:project-metadata": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps2-project-metadata-tests.ts",
     "test:ps2:cli-project-profile": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps2-cli-project-profile-tests.ts",
     "test:ps2:feature-registry": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps2-feature-registry-drift-tests.ts",
-    "test:ps3:pure-contracts": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-pure-contract-conformance-tests.ts"
+    "test:ps3:pure-contracts": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-pure-contract-conformance-tests.ts",
+    "test:ps3:monadic-contracts": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-monadic-contract-conformance-tests.ts"
   },
   "engines": {
     "node": ">=20"
