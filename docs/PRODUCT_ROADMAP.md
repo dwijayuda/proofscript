@@ -208,7 +208,9 @@ Current specified `ps3-pure-contracts0` features are `V-REQUIRES`, `V-ENSURES`, 
 
 Current `ps3-monadic-contracts0` is a **specified structural alpha** profile for `V-MONADIC-CONTRACT`, `V-OLD`, and `V-RESULT`. Its normalized stateful postcondition IR records explicit entry-state, result, and final-state roles and rewrites descriptor-declared state observations against the appropriate structural binder. The downstream `proofscript.stateful-predicate-elaboration/v1` layer now binds state/result types, validates observation signature state inputs, and checks definite simple observation-argument type mismatches. Structurally unmodeled reads, invalid `old`/`result` placement, definite typed observation mismatches, and undeclared state operations fail closed.
 
-The next stateful verification increment is a real typed predicate AST for the supported postcondition-expression subset, followed by explicit binding to the selected WP/Triple semantics and model adequacy theorem. The current profile still does **not** claim whole-predicate typechecking, state-model adequacy checking, generated semantic verification conditions, vcgen/mvcgen connection, semantic proof discharge, or runtime correspondence.
+The bounded `proofscript.stateful-predicate-ast/v1` layer now typechecks the normalized `stateful-predicate-expressions0` subset used by the promoted corpus. Unsupported normalized syntax and definite AST type mismatches fail closed rather than being treated as typed predicates. This AST is deliberately scoped to verification IR and is not a second general-purpose ProofScript parser.
+
+The next stateful verification increment is explicit binding of that typed predicate AST to the selected WP/Triple semantics and model adequacy theorem identity, followed by inspectable semantic pre/post artifacts and verification conditions. The current profile still does **not** claim arbitrary ProofScript/Lean predicate elaboration, state-model adequacy checking, generated semantic verification conditions, vcgen/mvcgen connection, semantic proof discharge, or runtime correspondence.
 
 ---
 
