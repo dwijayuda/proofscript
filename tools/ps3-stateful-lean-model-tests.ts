@@ -4,7 +4,10 @@ import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { makeMonadicContractsArtifact } from "../packages/contracts/src/index.mjs";
-import { createMonadicLoweringArtifact } from "../packages/monadic-lowering/src/index.mjs";
+import {
+  classifyLeanCompatibilityOutput,
+  createMonadicLoweringArtifact,
+} from "../packages/monadic-lowering/src/index.mjs";
 import { buildStateModelBinding } from "../packages/state-models/src/index.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
@@ -44,7 +47,13 @@ const moduleSourcePath = path.join(
   ...descriptor.lean.imports[0].split("."),
 ) + ".lean";
 assert.equal(path.resolve(moduleSourcePath), path.resolve(leanModelPath));
-assert.equal(leanToolchain, "leanprover/lean4:v4.33.1");
+const leanToolchainMatch = leanToolchain.match(/^leanprover\/lean4:v(.+)$/u);
+assert.ok(leanToolchainMatch, "verification lean-toolchain must use leanprover/lean4:v<version>");
+const defaultLeanCompatibility = classifyLeanCompatibilityOutput(
+  `Lean (version ${leanToolchainMatch[1]}, Release)`,
+);
+assert.equal(defaultLeanCompatibility.status, "accepted");
+assert.equal(defaultLeanCompatibility.minimumVersion, "4.33.1");
 assert.match(lakefile, /lean_lib ProofScript/u);
 assert.match(lakefile, /srcDir := "\."/u);
 assert.match(leanLibraryRoot, /import ProofScript\.Verification\.BankStateModel/u);
@@ -54,7 +63,7 @@ assert.match(leanModel, /^open Std\.Do/mu);
 assert.match(leanModel, /^namespace BankStateModel/mu);
 assert.match(leanModel, /abbrev Bank := AccountId → Nat/u);
 assert.match(leanModel, /def debit .*: StateM Bank Unit/u);
-assert.match(leanModel, /\@\[spec\][\s\S]*theorem debit_triple/u);
+assert.match(leanModel, /@\[spec\][\s\S]*theorem debit_triple/u);
 assert.match(leanModel, /def runBankState .*:=\s*\n\s*StateT\.run program initial/u);
 assert.match(leanModel, /Std\.Do\.StateM\.of_wp_run_eq/u);
 assert.match(leanModel, /theorem runBankState_adequate/u);
