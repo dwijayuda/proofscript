@@ -66,8 +66,8 @@ See:
 - `packages/kernel` remains a meaningful trusted logical boundary.
 - `packages/compiler` is being promoted from backend dispatch into the canonical high-level programmatic facade.
 - the CLI now routes source/project checking through `@proofscript/compiler` rather than importing `@proofscript/frontend` directly.
-- `packages/lsp` in KA146 is scaffold-only.
-- the separately developed LSP remains donor/reference work and should be rebased through a language-service boundary.
+- KA146's `packages/lsp` scaffold has now been replaced on the cleanup branch by a minimal compiler-backed LSP transport.
+- the historical LSP remains donor/reference evidence for later editor features; its dual-frontend language-service coupling was not copied.
 - `frontend`, `frontend-next`, and `unified-bridge` are not yet candidates for blind deletion; they have different capabilities.
 - `frontend-next` contains substantial independent parser/elaborator/IR/incremental/plugin functionality.
 - `unified-bridge` connects frontend-next output into PSKernel/Core and is covered by existing unified integration tests.
@@ -95,8 +95,8 @@ See:
 - [x] Define frontend convergence strategy
 - [x] Add focused compiler-facade regression test
 - [ ] Complete frontend/frontend-next capability matrix
-- [ ] Establish language-service boundary
-- [ ] Rebase editor/LSP donor code
+- [x] Establish compiler-backed language-service boundary
+- [x] Restore minimal language-worker + diagnostics LSP transport
 - [ ] Converge duplicate frontend semantics
 - [ ] Remove `unified-bridge` only after replacement gates exist
 - [ ] Reduce historical root/tooling clutter without losing assurance evidence
@@ -108,16 +108,21 @@ Latest confirmed product gate:
 
 - build — PASS
 - compiler facade — PASS
-- v0.6.1 reference conformance C0 — PASS
+- language-service — PASS
+- language-worker cancellation/state replay — PASS
+- end-to-end stdio LSP diagnostics — PASS
+- v0.6.1 normative C0 — PASS
+- v0.6.1 production surface corpus — **20/20 PASS** (12 positive, 8 negative)
 - KA137 — PASS
 - KA140 — PASS
 - KA146 — PASS
 
-The v0.6.1 C0 gate proves only that the imported registry/corpus is internally coherent. It does not yet claim production frontend conformance (C1-C3).
+The 20/20 production surface gate is intentionally **not** called C1. Normative C1/C2 belong to a reference frontend; C3 is production-vs-reference matching.
 
 ## Next engineering target
 
-1. Inventory unique `frontend-next` capabilities and existing unified-bridge tests.
-2. Define the minimum compiler/source-map/overlay APIs needed by the rebased language service.
-3. Restore the language-service contract without importing both frontend implementations.
-4. Begin v0.6.1 C1/C2/C3 frontend conformance work after the architecture boundary is stable.
+1. Add production canonical-Lean lowering corpus parity without claiming normative C2.
+2. Design/implement the small v0.6.1 reference frontend needed for genuine C1/C2 evidence.
+3. Add compiler/source-map feature-ID APIs required by the v0.6.1 parser/lowering contract and richer LSP features.
+4. Inventory/migrate unique `frontend-next` incremental and semantic capabilities.
+5. Keep `unified-bridge` until replacement gates cover its unique behavior.
