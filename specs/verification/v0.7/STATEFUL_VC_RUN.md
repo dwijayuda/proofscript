@@ -1,6 +1,6 @@
 # Stateful Lean VC Run Evidence v1
 
-Status: **execution evidence schema; semantic claims are promoted only from an actual pinned-Lean run**
+Status: **execution evidence schema; semantic claims are promoted only from an actual compatible-Lean run**
 
 Schema:
 
@@ -10,7 +10,7 @@ proofscript.stateful-vc-run/v1
 
 This artifact is emitted by either:
 
-- `tools/ps3-stateful-lean-vc-runner.ts` for the pinned debit-only assurance target; or
+- `tools/ps3-stateful-lean-vc-runner.ts` for the debit-only compatibility target; or
 - the public `psc monadic-vc-run` command for a supplied monadic-lowering artifact plus Lean/Lake project.
 
 The public command form is:
@@ -97,4 +97,6 @@ semanticProofDischarge
 
 `stateModelAdequacyChecked`, `sourceToLeanProgramEquivalenceChecked`, and `exceptionalPathsCovered` remain independent claims and stay false until separately checked.
 
-A run with no usable pinned Lean installation is `unsupported`; it does not count as semantic evidence.
+The stateful verification compatibility floor is Lean **4.33.1**. Lean 4.33.1 and any later stable, RC, or development build are admissible inputs. The evidence must record the exact observed Lean version used for the run.
+
+A run with no usable Lean installation, an unparsable version, or Lean older than 4.33.1 is `unsupported`; it does not count as semantic evidence. Historical K3-TB / differential artifacts remain separately pinned where their claim requires an exact release.
