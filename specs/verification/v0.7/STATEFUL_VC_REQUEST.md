@@ -74,4 +74,10 @@ Lean 4.34's own regression suite exercises `mvcgen` on `Std.Do.Triple`. The newe
 
 If `vcgen.tactic` is omitted for a `Std.Do.Triple` model, ProofScript selects `mvcgen` automatically. If a descriptor explicitly pairs `Std.Do.Triple` with `vcgen`, state-model validation fails closed.
 
-For `mvcgen`, imported `@[spec]` theorems are discovered through Lean's registered specification database; ProofScript therefore records the bound theorem identities as provenance but does not mechanically pass them in a `mvcgen [...]` list.
+For `mvcgen`, imported `@[spec]` theorems are discovered through Lean's registered specification database. The `mvcgen [...]` list is instead used to unfold the generated local wrapper definition. For a generated function `withdraw`, the request therefore has the form:
+
+```lean
+mvcgen [withdraw]
+```
+
+ProofScript records operation Triple theorem identities such as `BankStateModel.debit_triple` separately as provenance; they are not mechanically copied into the mvcgen bracket list.
