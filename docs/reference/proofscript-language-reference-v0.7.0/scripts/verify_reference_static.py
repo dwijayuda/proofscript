@@ -27,6 +27,14 @@ assert r['semantic_baseline']=={
 }
 assert r['compatibility_watch']['normative'] is False
 assert set(r['implementation_profiles'])=={'reference-lean','standalone-pskernel'}
+required_lean434_ids={
+    'L-LEAN434-ERASED-DO',
+    'L-LEAN434-MONOTONICITY-BY',
+    'L-LEAN434-RECALL',
+    'L-LEAN434-LIA-GROBNER-PARAMS',
+}
+feature_ids={f['id'] for f in r['features']}
+assert required_lean434_ids <= feature_ids
 baseline=s['properties']['semantic_baseline']
 assert baseline['properties']['version']['const']=='4.34.0'
 assert baseline['properties']['commit']['const']=='293d5d0c0c3f3dded4688b3ccd6a33939ac5102b'

@@ -23,6 +23,66 @@
       "dx_rationale": "Keeps Lean vocabulary and semantics visible."
     },
     {
+      "id": "L-LEAN434-ERASED-DO",
+      "class": "L",
+      "status": "inherited-S1",
+      "surface": "erased x := e; erased mut x := e; erased x ← action inside do notation",
+      "canonical_lean": "same Lean 4.34 erased do syntax",
+      "lowering": "preserve through the reference Lean profile; standalone implementations preserve verification-only binding/erasure semantics",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "reference_accepts_erased_do_forms",
+        "standalone_erased_scope_matches_lean434",
+        "runtime_does_not_observe_erased_values"
+      ],
+      "dx_rationale": "Provides Lean-native verification-only state and a semantic reference point for future ProofScript ghost syntax."
+    },
+    {
+      "id": "L-LEAN434-MONOTONICITY-BY",
+      "class": "L",
+      "status": "inherited-S1",
+      "surface": "monotonicity_by <tactic> on coinductive or relevant mixed inductive/coinductive declarations",
+      "canonical_lean": "same Lean 4.34 declaration suffix",
+      "lowering": "preserve/defer in the reference profile; standalone support must enforce Lean 4.34 contextual placement and tactic elaboration",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "reference_accepts_valid_monotonicity_by",
+        "reject_invalid_inductive_context",
+        "preserve_tactic_goal_meaning"
+      ],
+      "dx_rationale": "Keeps new Lean coinductive proof control available without inventing a second ProofScript-specific spelling."
+    },
+    {
+      "id": "L-LEAN434-RECALL",
+      "class": "L",
+      "status": "inherited-S1",
+      "surface": "recall / recall? checked restatement commands",
+      "canonical_lean": "same Lean 4.34 command",
+      "lowering": "preserve/defer; standalone support compares against the existing declaration by definitional equality without mutating the environment",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "reference_recall_accept_reject_cases",
+        "recall_is_environment_nonmutating",
+        "standalone_recall_uses_defeq"
+      ],
+      "dx_rationale": "Useful checked documentation/restatement behavior with no new logical declaration."
+    },
+    {
+      "id": "L-LEAN434-LIA-GROBNER-PARAMS",
+      "class": "L",
+      "status": "inherited-S1",
+      "surface": "lia [...] and grobner [...] tactic parameter lists",
+      "canonical_lean": "same Lean 4.34 tactic syntax",
+      "lowering": "preserve/defer inside tactic categories only",
+      "claim_level": "S1",
+      "proof_obligations": [
+        "reference_accepts_tactic_parameter_lists",
+        "brackets_remain_tactic_category_scoped",
+        "standalone_tactic_parameter_semantics_match_lean434"
+      ],
+      "dx_rationale": "Tracks the current Lean tactic surface without broadening ProofScript term-level bracket ownership."
+    },
+    {
       "id": "D-CALL",
       "class": "D",
       "status": "admitted-S1",

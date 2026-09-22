@@ -14,3 +14,5 @@
 - Documented inherited `erased` do bindings, `monotonicity_by`, `recall`/`recall?`, and `lia`/`grobner` parameter-list syntax.
 - Added Appendix K with exact upstream commits and ProofScript consequences.
 - Corrected the v0.7 feature-registry JSON Schema to match the v0.7 semantic-baseline object.
+
+- Added version-specific L-class capability IDs for Lean 4.34 `erased` do bindings, `monotonicity_by`, `recall`/`recall?`, and `lia`/`grobner` parameter lists so standalone frontends can claim them independently.
