@@ -8,6 +8,8 @@ import {
   readMonadicLoweringArtifact,
 } from '../packages/monadic-lowering/src/index.mjs';
 
+export { createMonadicLoweringBundle, createMonadicLeanPreflightBundle };
+
 function has(args, name) { return args.includes(name); }
 function opt(args, name) {
   const eq = args.find(arg => arg.startsWith(`${name}=`));
