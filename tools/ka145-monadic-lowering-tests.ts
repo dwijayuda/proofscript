@@ -105,6 +105,12 @@ assert.equal(loweringArtifact.tripleSkeleton.loweringStatus, 'std-do-triple-skel
 assert.equal(loweringArtifact.summary.hasStdDoTripleSkeleton, true);
 assert.equal(loweringArtifact.statefulPredicateAST.schema, 'proofscript.stateful-predicate-ast/v1');
 assert.equal(loweringArtifact.statefulPredicateAST.typeCheckingComplete, true);
+assert.equal(loweringArtifact.statefulOperationElaboration.schema, 'proofscript.stateful-operation-elaboration/v1');
+assert.equal(loweringArtifact.statefulOperationElaboration.typingComplete, true);
+assert.equal(loweringArtifact.statefulProgramLowering.schema, 'proofscript.stateful-program-lowering/v1');
+assert.equal(loweringArtifact.statefulProgramLowering.programLoweringReady, true);
+assert.equal(loweringArtifact.statefulProgramLowering.leanProgramTypechecked, false);
+assert.equal(loweringArtifact.statefulProgramLowering.sourceToLeanProgramEquivalenceChecked, false);
 assert.equal(loweringArtifact.statefulWpBinding.schema, 'proofscript.stateful-wp-binding/v1');
 assert.equal(loweringArtifact.statefulWpBinding.typedRequirementsReady, true);
 assert.equal(loweringArtifact.statefulWpBinding.typedPostconditionsReady, true);
@@ -115,6 +121,10 @@ assert.equal(loweringArtifact.statefulWpBinding.semantics.adequacyTheorem, 'runB
 assert.equal(loweringArtifact.statefulWpBinding.semantics.adequacyTheoremChecked, false);
 assert.equal(loweringArtifact.statefulWpBinding.verificationConditionsGenerated, false);
 assert.equal(loweringArtifact.statefulWpBinding.semanticProofDischarge, false);
+assert.equal(loweringArtifact.statefulVcPlan.schema, 'proofscript.stateful-vc-plan/v1');
+assert.equal(loweringArtifact.statefulVcPlan.planningReady, true);
+assert.equal(loweringArtifact.statefulVcPlan.summary.programLoweringReady, true);
+assert.equal(loweringArtifact.statefulVcPlan.realVerificationConditionsGenerated, false);
 assert.equal(loweringArtifact.tripleSkeleton.precondition, loweringArtifact.statefulWpBinding.precondition.functionSource);
 assert.equal(loweringArtifact.tripleSkeleton.postcondition, loweringArtifact.statefulWpBinding.postcondition.functionSource);
 assert.equal(loweringArtifact.summary.semanticProofDischarge, false);
@@ -123,7 +133,11 @@ assert.ok(loweringArtifact.obligations.length >= 2);
 const leanText = fs.readFileSync(loweringLean, 'utf8');
 assert.match(leanText, /Std\.Do\.Triple/);
 assert.match(leanText, /vcgen\/mvcgen connection: not connected/);
-assert.match(leanText, /admit/);
+assert.match(leanText, /def transfer .*: State Bank Unit := do/);
+assert.match(leanText, /debit from amount/);
+assert.match(leanText, /credit to amount/);
+assert.doesNotMatch(leanText, /Source program placeholder/);
+assert.match(leanText, /admit/); // Triple theorem is still intentionally unproved.
 
 const badLowering = jsonFromAny(runFail(node, [psc, 'monadic-lowering', transfer, '--out', path.join(app, 'dist', 'bad.json'), '--json'], app));
 assert.equal(badLowering.status, 'rejected');
