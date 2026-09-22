@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import {spawnSync} from "node:child_process";
-import {ProofScriptPlugin,OracleResult} from "@proofscript/plugin-api";
+import {CURRENT_PRODUCT_PROFILE,CURRENT_PROOFSCRIPT_REFERENCE,ProofScriptPlugin,OracleResult} from "@proofscript/plugin-api";
 import {decodeArtifact} from "@proofscript/kernel-codec";
 import {emitLeanArtifact} from "@proofscript/lean-export";
 import {stripStandardBootstrap} from "@proofscript/environment";
@@ -10,7 +10,7 @@ import {probeLean} from "./lean";
 interface LeanOracleOptions { binary?:string; }
 
 const plugin:ProofScriptPlugin={
-  manifest:{name:"@proofscript/oracle-lean",version:"0.1.0-dev.0",pluginApi:1,proofscriptReference:"v0.1",semanticBaseline:"lean-4.33.1",kinds:["oracle"],requiresHostCapabilities:["oracle:v1"],logicalContribution:"none"},
+  manifest:{name:"@proofscript/oracle-lean",version:"0.1.0-dev.0",pluginApi:1,proofscriptReference:CURRENT_PROOFSCRIPT_REFERENCE,productProfile:CURRENT_PRODUCT_PROFILE,coreCompatibility:{proofscriptReference:"v0.1",leanSemanticBaseline:"lean-4.33.1"},kinds:["oracle"],requiresHostCapabilities:["oracle:v1"],logicalContribution:"none"},
   setup(api,options){
     const configured=(options??{}) as LeanOracleOptions;
     if(configured.binary!==undefined&&(typeof configured.binary!=="string"||configured.binary.length===0))throw new Error("@proofscript/oracle-lean option 'binary' must be a non-empty string");
