@@ -66,6 +66,16 @@ for (const item of positive) {
   ), item.id);
   assert.equal(artifact.statefulPostconditionIR.observationBindingStatus, "descriptor-bound", item.id);
   assert.ok(artifact.statefulPostconditionIR.modelObservations.some((observation: any) => observation.name === "balanceOf"), item.id);
+  assert.equal(artifact.statefulPredicateElaboration.schema, "proofscript.stateful-predicate-elaboration/v1", item.id);
+  assert.equal(artifact.statefulPredicateElaboration.scope, "binder-and-state-observation-typing", item.id);
+  assert.equal(artifact.statefulPredicateElaboration.binders.entryState.type, "Bank", item.id);
+  assert.equal(artifact.statefulPredicateElaboration.binders.result.type, "Unit", item.id);
+  assert.equal(artifact.statefulPredicateElaboration.binders.finalState.type, "Bank", item.id);
+  assert.equal(artifact.statefulPredicateElaboration.hasTypeErrors, false, item.id);
+  assert.equal(artifact.statefulPredicateElaboration.referenceTypingComplete, true, item.id);
+  assert.equal(artifact.statefulPredicateElaboration.wholePredicateTypeCheckingComplete, false, item.id);
+  assert.equal(artifact.statefulPredicateElaboration.wpTripleSemanticBindingComplete, false, item.id);
+  assert.equal(artifact.statefulPredicateElaboration.semanticProofDischarge, false, item.id);
   if (item.expected.final_state_observations !== undefined) {
     const clause = artifact.statefulPostconditionIR.clauses[0];
     assert.equal(clause.finalStateObservationReferences.length, item.expected.final_state_observations, item.id);
@@ -102,6 +112,9 @@ for (const item of positive) {
   });
   assert.deepEqual(lowering.verification, artifact.verification, item.id);
   assert.deepEqual(lowering.statefulPostconditionIR, artifact.statefulPostconditionIR, item.id);
+  assert.deepEqual(lowering.statefulPredicateElaboration, artifact.statefulPredicateElaboration, item.id);
+  assert.equal(lowering.summary.statefulReferenceTypingComplete, true, item.id);
+  assert.equal(lowering.summary.wholePredicateTypeCheckingComplete, false, item.id);
   assert.equal(lowering.trustBoundary.specifiedStructuralProfile, true, item.id);
   assert.equal(lowering.summary.semanticProofDischarge, false, item.id);
   assert.equal(lowering.tripleSkeleton.leanCheckable, false, item.id);
@@ -137,7 +150,11 @@ for (const item of positive) {
   });
   assert.deepEqual(preflight.verification, artifact.verification, item.id);
   assert.deepEqual(preflight.statefulPostconditionIR, artifact.statefulPostconditionIR, item.id);
+  assert.deepEqual(preflight.statefulPredicateElaboration, artifact.statefulPredicateElaboration, item.id);
   assert.equal(preflight.staticChecks.hasStatefulPostconditionIR, true, item.id);
+  assert.equal(preflight.staticChecks.hasStatefulPredicateElaboration, true, item.id);
+  assert.equal(preflight.staticChecks.statefulReferenceTypingComplete, true, item.id);
+  assert.equal(preflight.staticChecks.wholePredicateTypeCheckingComplete, false, item.id);
   assert.equal(preflight.staticChecks.statefulPostconditionSemanticElaborationComplete, false, item.id);
   assert.equal(preflight.trustBoundary.specifiedStructuralProfile, true, item.id);
   assert.equal(preflight.trustBoundary.preflightOnly, true, item.id);
@@ -222,6 +239,32 @@ for (const item of negative) {
     assert.deepEqual(preflight.statefulPostconditionIR, ir, item.id);
     assert.equal(preflight.staticChecks.statefulPostconditionSemanticElaborationComplete, false, item.id);
   }
+  if (item.expected_elaboration) {
+    const elaboration = artifact.statefulPredicateElaboration;
+    assert.equal(elaboration.schema, "proofscript.stateful-predicate-elaboration/v1", item.id);
+    assert.equal(elaboration.hasTypeErrors, item.expected_elaboration.has_type_errors, item.id);
+    assert.equal(elaboration.referenceTypingComplete, item.expected_elaboration.reference_typing_complete, item.id);
+    if (item.expected_elaboration.error_code) {
+      assert.ok(elaboration.diagnostics.some((diagnostic: any) => diagnostic.code === item.expected_elaboration.error_code), item.id);
+    }
+    const lowering = createMonadicLoweringArtifact({
+      contractArtifact: artifact,
+      contractArtifactPath: `<${item.id}.contracts.json>`,
+      contractArtifactSha256: "b".repeat(64),
+      packageVersion: "test",
+    });
+    assert.deepEqual(lowering.statefulPredicateElaboration, elaboration, item.id);
+    const preflight = createMonadicLeanPreflightArtifact({
+      loweringArtifact: lowering,
+      loweringArtifactPath: `<${item.id}.monadic-lowering.json>`,
+      loweringArtifactSha256: "c".repeat(64),
+      preflightLeanPath: `<${item.id}.preflight.lean>`,
+      preflightLeanSha256: "d".repeat(64),
+      leanRun: { status: "skipped", reason: "typed elaboration boundary fixture" },
+      packageVersion: "test",
+    });
+    assert.deepEqual(preflight.statefulPredicateElaboration, elaboration, item.id);
+  }
   if (item.unknown_operation) {
     assert.ok(artifact.verification.unknownOperations.includes(item.unknown_operation), item.id);
   }
@@ -243,6 +286,15 @@ assert.throws(
   (error: any) => error instanceof Error
     && error.validation?.errors?.some((item: any) => item.field === "observations[1].name"),
   "duplicate state observation names must fail closed",
+);
+
+const invalidObservationStateType = JSON.parse(JSON.stringify(positive[0].state_model));
+invalidObservationStateType.observations[0].type = "AccountId -> WrongBank -> Nat";
+assert.throws(
+  () => binding(invalidObservationStateType, "invalid-observation-state-type"),
+  (error: any) => error instanceof Error
+    && error.validation?.errors?.some((item: any) => item.field === "observations[0].type"),
+  "state observation signatures must bind the selected state type as their final input",
 );
 
 console.log(JSON.stringify({
