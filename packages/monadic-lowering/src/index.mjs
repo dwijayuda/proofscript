@@ -4,9 +4,10 @@ import { createHash } from 'node:crypto';
 import { createStatefulWpBinding } from './stateful-wp-binding.mjs';
 import { createStatefulProgramLowering } from './stateful-program-lowering.mjs';
 import { createStatefulVcPlan } from './stateful-vc-plan.mjs';
+import { createStatefulLeanSemanticEncoding } from './stateful-lean-semantic-encoding.mjs';
 import { createStatefulVcRequest } from './stateful-vc-request.mjs';
 
-export { createStatefulWpBinding, createStatefulProgramLowering, createStatefulVcPlan, createStatefulVcRequest };
+export { createStatefulWpBinding, createStatefulProgramLowering, createStatefulVcPlan, createStatefulLeanSemanticEncoding, createStatefulVcRequest };
 
 export function sha256Text(text) {
   return createHash('sha256').update(String(text)).digest('hex');
@@ -204,6 +205,11 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
       fullLean4Equivalence: false,
     },
   };
+  const statefulLeanSemanticEncoding = createStatefulLeanSemanticEncoding(artifact);
+  artifact.statefulLeanSemanticEncoding = statefulLeanSemanticEncoding;
+  artifact.summary.statefulLeanSemanticEncodingReady = statefulLeanSemanticEncoding.encodingReady === true;
+  artifact.trustBoundary.statefulLeanSemanticEncodingReady = statefulLeanSemanticEncoding.encodingReady === true;
+  artifact.trustBoundary.tripleTargetTypecheckedInLean = false;
   const statefulVcRequest = createStatefulVcRequest(artifact);
   artifact.statefulVcRequest = statefulVcRequest;
   artifact.summary.statefulVcRequestSourceReady = statefulVcRequest.requestSourceReady === true;
@@ -384,6 +390,7 @@ export function createMonadicLeanPreflightArtifact({ loweringArtifact, loweringA
     statefulWpBinding: loweringArtifact.statefulWpBinding,
     statefulProgramLowering: loweringArtifact.statefulProgramLowering,
     statefulVcPlan: loweringArtifact.statefulVcPlan,
+    statefulLeanSemanticEncoding: loweringArtifact.statefulLeanSemanticEncoding,
     statefulVcRequest: loweringArtifact.statefulVcRequest,
     function: loweringArtifact.function?.name,
     stateModel: loweringArtifact.stateModel?.name,
@@ -411,6 +418,9 @@ export function createMonadicLeanPreflightArtifact({ loweringArtifact, loweringA
       statefulWpIdentityBindingReady: loweringArtifact.statefulWpBinding?.bindingReady === true,
       hasStatefulVcPlan: Boolean(loweringArtifact.statefulVcPlan),
       statefulVcPlanningReady: loweringArtifact.statefulVcPlan?.planningReady === true,
+      hasStatefulLeanSemanticEncoding: Boolean(loweringArtifact.statefulLeanSemanticEncoding),
+      statefulLeanSemanticEncodingReady: loweringArtifact.statefulLeanSemanticEncoding?.encodingReady === true,
+      tripleTargetTypecheckedInLean: loweringArtifact.statefulLeanSemanticEncoding?.tripleTargetTypechecked === true,
       hasStatefulVcRequest: Boolean(loweringArtifact.statefulVcRequest),
       statefulVcRequestSourceReady: loweringArtifact.statefulVcRequest?.requestSourceReady === true,
       leanVcEnvironmentResolved: loweringArtifact.statefulVcRequest?.leanEnvironmentResolved === true,
@@ -444,6 +454,8 @@ export function createMonadicLeanPreflightArtifact({ loweringArtifact, loweringA
       leanProgramTypechecked: false,
       wpTripleIdentityBindingComplete: loweringArtifact.statefulWpBinding?.wpTripleIdentityBindingComplete === true,
       statefulVcPlanningReady: loweringArtifact.statefulVcPlan?.planningReady === true,
+      statefulLeanSemanticEncodingReady: loweringArtifact.statefulLeanSemanticEncoding?.encodingReady === true,
+      tripleTargetTypecheckedInLean: false,
       statefulVcRequestSourceReady: loweringArtifact.statefulVcRequest?.requestSourceReady === true,
       leanVcEnvironmentResolved: false,
       vcgenExecuted: false,
