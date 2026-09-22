@@ -87,6 +87,20 @@ export function validateStateModelDescriptor(descriptor, { descriptorPath, descr
   requireNested(errors, descriptor, 'wp.postcondition', 'wp.postcondition is required');
   requireNested(errors, descriptor, 'semantics.runner', 'semantics.runner is required');
   requireNested(errors, descriptor, 'semantics.adequacyTheorem', 'semantics.adequacyTheorem is required');
+  if (descriptor.lean !== undefined) {
+    if (!descriptor.lean || typeof descriptor.lean !== 'object' || Array.isArray(descriptor.lean)) {
+      errors.push({ field: 'lean', message: 'lean environment metadata must be an object' });
+    } else {
+      const imports = asArray(descriptor.lean.imports);
+      if (imports.length === 0) errors.push({ field: 'lean.imports', message: 'lean.imports must contain at least one module when lean metadata is present' });
+      for (const [i, moduleName] of imports.entries()) {
+        if (!nonEmptyString(moduleName)) errors.push({ field: `lean.imports[${i}]`, message: 'Lean import module must be a non-empty string' });
+      }
+      for (const [i, namespaceName] of asArray(descriptor.lean.openNamespaces).entries()) {
+        if (!nonEmptyString(namespaceName)) errors.push({ field: `lean.openNamespaces[${i}]`, message: 'Lean namespace must be a non-empty string' });
+      }
+    }
+  }
   const laws = asArray(descriptor.laws);
   if (laws.length === 0) errors.push({ field: 'laws', message: 'at least one law/theorem name is required' });
   for (const [i, law] of laws.entries()) {
@@ -143,6 +157,7 @@ export function validateStateModelDescriptor(descriptor, { descriptorPath, descr
       monadicContracts: accepted,
       statefulVerification: accepted,
       operationTripleTheoremIdentities: operations.filter(o => nonEmptyString(o.verification?.tripleTheorem)).length,
+      leanEnvironmentBindingsDeclared: asArray(descriptor.lean?.imports).length > 0,
       vcgenConnected: vcgenStatus === 'connected',
       semanticProofChecking: false,
     },
@@ -151,6 +166,10 @@ export function validateStateModelDescriptor(descriptor, { descriptorPath, descr
       monad: descriptor.monad,
       wp: descriptor.wp,
       semantics: descriptor.semantics,
+      lean: descriptor.lean ? {
+        imports: asArray(descriptor.lean.imports),
+        openNamespaces: asArray(descriptor.lean.openNamespaces),
+      } : undefined,
       laws: laws.map(l => ({ name: l.name, statementSha256: nonEmptyString(l.statement) ? sha256Text(normalizeSpaces(l.statement)) : undefined })),
       operations: operations.map(o => ({
         name: o.name,
@@ -198,6 +217,10 @@ export function buildStateModelBinding(descriptor, { descriptorPath, descriptorS
     monad: descriptor.monad,
     wp: descriptor.wp,
     semantics: descriptor.semantics,
+    lean: descriptor.lean ? {
+      imports: descriptor.lean.imports ?? [],
+      openNamespaces: descriptor.lean.openNamespaces ?? [],
+    } : undefined,
     laws: descriptor.laws ?? [],
     operations: descriptor.operations ?? [],
     observations: descriptor.observations ?? [],
