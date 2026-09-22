@@ -178,9 +178,9 @@ Specified V-features:
 - `V-GHOST`
 - `V-OLD`
 
-Executable PS3 corpus: **6 positive / 20 negative PASS**.
+Executable pure PS3 corpus: **6 positive / 20 negative PASS**.
 
-Additional gates:
+Additional pure-profile gates:
 
 - stable, unique obligation IDs — PASS
 - statement/theorem hashes detect changed obligation content — PASS
@@ -191,11 +191,26 @@ Additional gates:
 - verification profile propagated contract → obligations → proof-status → verify — PASS
 - KA142 loop invariant/decreases artifacts classified prototype-only — PASS
 
+Current structural monadic profile: `ps3-monadic-contracts0`.
+
+- `V-MONADIC-CONTRACT` — specified structural alpha
+- monadic corpus — **2 positive / 5 negative-or-prototype-boundary PASS**
+- validated `proofscript.state-model.v1` binding — PASS
+- all strict-profile body operations must be declared by the state model — PASS
+- monadic preconditions do not alter program function arity — PASS
+- verification profile propagation contracts → lowering → preflight — PASS
+- semantic proof discharge — **false by design**
+- vcgen/mvcgen connected — **false**
+- stateful `old` / `result` — prototype-only until entry/result/final-state semantics are explicitly modeled
+- fail-closed `psc contracts --verification-profile ...` — PASS
+- public CLI router — 1,927 lines (KA146 ceiling 1,950)
+
 ## Next engineering target
 
-1. Promote the state-model/monadic prototype into an explicit `V-MONADIC-CONTRACT` specification and conformance corpus without overstating vcgen/mvcgen proof discharge.
-2. Keep recursive-definition termination in the Lean-compatible language layer; keep loop `decreases` with the later invariant/stateful milestone.
-3. Continue CLI convergence at the orchestration layer; both current check paths already share `@proofscript/compiler`.
-4. Continue extracting useful incremental/module-interface infrastructure from `frontend-next` behind canonical compiler/project APIs.
-5. Expand LSP capabilities only from compiler-backed semantic/source-map APIs.
-6. Treat C4 machine-checked reference theorems as assurance work; do not block usable compiler/editor releases on full Lean equivalence.
+1. Define an explicit normalized stateful postcondition IR with entry-state, result, and final-state binders before promoting monadic `old`/`result` semantics.
+2. Keep `ps3-monadic-contracts0` structural until that IR is connected to an adequate state model and real vcgen/mvcgen obligations.
+3. Keep recursive-definition termination in the Lean-compatible language layer; keep loop `decreases` with the later invariant/stateful milestone.
+4. Continue CLI convergence at the orchestration layer; both current check paths already share `@proofscript/compiler`.
+5. Continue extracting useful incremental/module-interface infrastructure from `frontend-next` behind canonical compiler/project APIs.
+6. Expand LSP capabilities only from compiler-backed semantic/source-map APIs.
+7. Treat C4 machine-checked reference theorems as assurance work; do not block usable compiler/editor releases on full Lean equivalence.
