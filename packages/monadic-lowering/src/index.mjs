@@ -233,7 +233,7 @@ ProofScript KA-145 monadic/stateful lowering skeleton.
 
 This file is intentionally a skeleton. It records the planned Lean Std.Do.Triple-style
 shape for a monadic ProofScript contract. The bounded modeled operation sequence is
-lowered deterministically to a Lean `do` body, but this file still does not claim that
+lowered deterministically to a Lean do body, but this file still does not claim that
 program declaration or the Triple proof has been checked in the selected Lean environment.
 A later checkpoint must typecheck the semantic program and derive real verification conditions.
 -/
