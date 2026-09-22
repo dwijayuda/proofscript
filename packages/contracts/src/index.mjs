@@ -144,6 +144,69 @@ export function scanStateObservationReferences(text, observations, stateRole, of
 function rangeIsInside(range, outer) {
   return range.startOffset >= outer.startOffset && range.endOffset <= outer.endOffset;
 }
+
+function isIdentifierChar(char) {
+  return typeof char === 'string' && /^[A-Za-z0-9_]$/.test(char);
+}
+
+export function rewriteStateObservationCalls(text, observations, stateBinder) {
+  const source = String(text);
+  const sorted = [...(observations ?? [])].filter(observation => observation?.name).sort((a, b) => b.name.length - a.name.length);
+  let out = '';
+  let i = 0;
+  while (i < source.length) {
+    let matched = false;
+    for (const observation of sorted) {
+      const name = observation.name;
+      if (!source.startsWith(name, i)) continue;
+      if (i > 0 && isIdentifierChar(source[i - 1])) continue;
+      const afterName = i + name.length;
+      if (afterName < source.length && isIdentifierChar(source[afterName])) continue;
+      let open = afterName;
+      while (/\s/.test(source[open] ?? '')) open += 1;
+      if (source[open] !== '(') continue;
+      let depth = 1;
+      let end = open + 1;
+      for (; end < source.length && depth > 0; end += 1) {
+        if (source[end] === '(') depth += 1;
+        else if (source[end] === ')') depth -= 1;
+      }
+      if (depth !== 0) throw new Error("unterminated state observation call '" + name + "(...)'");
+      const args = source.slice(open + 1, end - 1);
+      const rewrittenArgs = rewriteStateObservationCalls(args, observations, stateBinder);
+      out += name + '(' + rewrittenArgs + (normalizeSpaces(rewrittenArgs) ? ', ' : '') + stateBinder + ')';
+      i = end;
+      matched = true;
+      break;
+    }
+    if (!matched) {
+      out += source[i];
+      i += 1;
+    }
+  }
+  return normalizeSpaces(out);
+}
+
+export function normalizeStatefulPostcondition(sourceText, observations) {
+  const source = String(sourceText);
+  const oldReferences = scanOldReferences(source);
+  const replacements = [];
+  let rewritten = source;
+  for (let index = oldReferences.length - 1; index >= 0; index -= 1) {
+    const oldReference = oldReferences[index];
+    if (/\bresult\b/.test(oldReference.expression)) {
+      throw new Error("'result' is not valid inside stateful old(...)");
+    }
+    const token = '__PS_OLD_' + index + '__';
+    const entryExpression = rewriteStateObservationCalls(oldReference.expression, observations, '__ps_entry');
+    replacements.unshift({ token, expression: '(' + entryExpression + ')' });
+    rewritten = rewritten.slice(0, oldReference.startOffset) + token + rewritten.slice(oldReference.endOffset);
+  }
+  rewritten = rewriteStateObservationCalls(rewritten, observations, '__ps_final');
+  rewritten = rewritten.replace(/\bresult\b/g, '__ps_result');
+  for (const replacement of replacements) rewritten = rewritten.replace(replacement.token, replacement.expression);
+  return normalizeSpaces(rewritten);
+}
 export function statefulPostconditionIRForContract(contract, stateModel = contract.stateModel) {
   const observations = stateModel?.observations ?? [];
   return {
@@ -177,13 +240,15 @@ export function statefulPostconditionIRForContract(contract, stateModel = contra
       return {
         name: ensure.name,
         source,
+        normalizedPredicate: normalizeStatefulPostcondition(source, observations),
         oldReferences,
         resultReferences: scanResultReferences(source),
         finalStateObservationReferences,
       };
     }),
     observationBindingStatus: observations.length > 0 ? 'descriptor-bound' : 'none-declared',
-    loweringStatus: 'source-normalized-binder-roles-and-observations',
+    predicateNormalizationComplete: true,
+    loweringStatus: 'normalized-proofscript-predicate-with-explicit-state-binders',
     semanticElaborationComplete: false,
   };
 }
