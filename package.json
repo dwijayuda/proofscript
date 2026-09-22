@@ -794,7 +794,8 @@
     "test:ps3:verification-profile-cli": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-verification-profile-cli-tests.ts",
     "test:ps3:stateful-lean-model": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-stateful-lean-model-tests.ts",
     "assurance:ps3:stateful-lean-vc": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-stateful-lean-vc-runner.ts",
-    "assurance:ps3:stateful-lean-vc:strict": "npm run assurance:ps3:stateful-lean-vc -- --strict"
+    "assurance:ps3:stateful-lean-vc:strict": "npm run assurance:ps3:stateful-lean-vc -- --strict",
+    "test:ps3:stateful-vc-evidence": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-stateful-vc-evidence-tests.ts"
   },
   "engines": {
     "node": ">=20"
