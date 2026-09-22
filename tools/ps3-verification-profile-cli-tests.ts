@@ -36,6 +36,9 @@ try {
     operations: [
       { name: "audit", type: "Nat -> State Bank Unit", spec: "records an audit code" },
     ],
+    observations: [
+      { name: "balanceOf", type: "AccountId -> Bank -> Nat", stateArgument: "last", spec: "reads account balance" },
+    ],
     laws: [
       { name: "audit_preserves_balance", statement: "audit does not change account balances" },
     ],
@@ -127,6 +130,25 @@ try {
   const prototypeArtifactJson = JSON.parse(fs.readFileSync(prototypeArtifact, "utf8"));
   assert.equal(prototypeArtifactJson.statefulPostconditionIR.clauses[0].oldReferences[0].observationCoverageComplete, false);
   assert.ok(prototypeArtifactJson.statefulPostconditionIR.clauses[0].oldReferences[0].undeclaredCallHeads.includes("hiddenRead"));
+
+  const typeMismatchSource = path.join(tmp, "TypeMismatch.ps");
+  fs.writeFileSync(typeMismatchSource, `function inspect(amount: Nat): State Bank Unit
+  ensures bad: balanceOf(amount) = balanceOf(amount)
+:= do {
+  audit(amount);
+}
+`);
+  const typeMismatch = run([
+    "contracts", typeMismatchSource,
+    "--state-model", model,
+    "--verification-profile", "ps3-monadic-contracts0",
+    "--json",
+  ]);
+  assert.equal(typeMismatch.status, 1, typeMismatch.stderr + typeMismatch.stdout);
+  const typeMismatchJson = json(typeMismatch);
+  assert.equal(typeMismatchJson.status, "rejected");
+  assert.match(typeMismatchJson.message, /verification profile mismatch/i);
+  assert.match(typeMismatchJson.message, /stateful-predicate-type-mismatch/i);
 
   console.log("PS3_VERIFICATION_PROFILE_CLI_TESTS=PASS");
 } finally {
