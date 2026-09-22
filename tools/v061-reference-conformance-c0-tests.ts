@@ -36,7 +36,12 @@ assert.equal(schema.properties.schema_version.const, "0.6.1");
 
 const featureIds = registry.features.map((feature: any) => feature.id);
 assert.equal(new Set(featureIds).size, featureIds.length, "feature IDs must be unique");
-assert.equal(featureIds.length, 12, "v0.6.1 compiler-ready registry must contain the 12 registered surface features");
+assert.equal(featureIds.length, 15, "v0.6.1 compiler-ready registry must contain 15 entries: 1 inherited L, 11 admitted D/E, and 3 registered X exclusions");
+const classCounts = registry.features.reduce((counts: Record<string, number>, feature: any) => {
+  counts[feature.class] = (counts[feature.class] ?? 0) + 1;
+  return counts;
+}, {});
+assert.deepEqual(classCounts, { L: 1, D: 5, E: 6, X: 3 }, "v0.6.1 registry class counts must remain explicit");
 
 const registered = new Set(featureIds);
 for (const item of positive) {
@@ -45,6 +50,7 @@ for (const item of positive) {
 }
 for (const item of negative) {
   assert.ok(item.id && item.feature && item.source && item.reason, `negative case must be complete: ${JSON.stringify(item)}`);
+  assert.ok(registered.has(item.feature), `negative case ${item.id} references unregistered feature/exclusion ${item.feature}`);
 }
 for (const item of lowering) {
   assert.ok(item.id && item.feature && item.source && item.canonical_lean, `lowering case must be complete: ${JSON.stringify(item)}`);
