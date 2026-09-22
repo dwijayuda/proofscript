@@ -94,13 +94,13 @@ See:
 - [x] Route CLI checking through compiler facade
 - [x] Define frontend convergence strategy
 - [x] Add focused compiler-facade regression test
-- [ ] Complete frontend/frontend-next capability matrix
+- [x] Complete frontend/frontend-next capability matrix
 - [x] Establish compiler-backed language-service boundary
 - [x] Restore minimal language-worker + diagnostics LSP transport
-- [ ] Converge duplicate frontend semantics
-- [ ] Remove `unified-bridge` only after replacement gates exist
-- [ ] Reduce historical root/tooling clutter without losing assurance evidence
-- [ ] Final PS1 acceptance suite green
+- [x] Give duplicate frontend semantics an explicit migration/disposition plan
+- [x] Keep `unified-bridge` explicitly outside the canonical product path until replacement gates exist
+- [x] Separate historical assurance from normal product CI; deeper historical-file cleanup deferred
+- [x] Final PS1 acceptance suite green
 
 ## Current executable gates
 
@@ -119,10 +119,22 @@ Latest confirmed product gate:
 
 The 20/20 production surface gate is intentionally **not** called C1. Normative C1/C2 belong to a reference frontend; C3 is production-vs-reference matching.
 
+## PS1 closure
+
+PS1 now satisfies its original completion criteria. See `docs/PS1_CLOSEOUT.md`.
+
+Additional current gates include:
+
+- machine-checked package dependency classification — PASS
+- deterministic checked-project snapshot/hash regression — PASS
+- v0.6.1 production surface corpus — 20/20 PASS
+
+The deeper frontend-next/unified-bridge migration is no longer allowed to keep PS1 open indefinitely. It continues under explicit follow-up milestones with replacement gates.
+
 ## Next engineering target
 
-1. Add production canonical-Lean lowering corpus parity without claiming normative C2.
-2. Design/implement the small v0.6.1 reference frontend needed for genuine C1/C2 evidence.
-3. Add compiler/source-map feature-ID APIs required by the v0.6.1 parser/lowering contract and richer LSP features.
-4. Inventory/migrate unique `frontend-next` incremental and semantic capabilities.
-5. Keep `unified-bridge` until replacement gates cover its unique behavior.
+1. Build the independent v0.6.1 reference frontend needed for genuine normative C1.
+2. Implement/reference-test canonical Lean lowering for normative C2.
+3. Differentially compare production vs reference for C3.
+4. Add compiler source-map + feature-ID APIs for richer LSP capabilities.
+5. Continue extracting useful incremental infrastructure from frontend-next behind canonical compiler/project APIs.
