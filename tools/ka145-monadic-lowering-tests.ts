@@ -184,6 +184,7 @@ assert.match(vcRequestText, /StateM Bank Unit/u);
 assert.match(vcRequestText, /⌜/u);
 assert.match(vcRequestText, /⇓ __ps_result __ps_final => ⌜/u);
 assert.match(vcRequestText, /mvcgen \[transfer\]/u);
+assert.match(vcRequestText, /all_goals simp_all/u);
 assert.doesNotMatch(vcRequestText, /mvcgen \[BankStateModel\.debit_triple/u);
 assert.doesNotMatch(vcRequestText, /\b(?:admit|sorry)\b/u);
 
