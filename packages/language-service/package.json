@@ -1,0 +1,16 @@
+{
+  "name": "@proofscript/language-service",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "Compiler-backed editor-independent ProofScript language service",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "@proofscript/compiler": "0.1.0-dev.0"
+  }
+}
