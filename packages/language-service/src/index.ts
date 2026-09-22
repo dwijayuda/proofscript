@@ -156,7 +156,9 @@ export class ProofScriptLanguageService {
   closeDocument(uri: string): void {
     const document = this.documents.get(uri);
     this.documents.delete(uri);
-    this.analyses.delete(uri);
+    // Closing an overlay can change the source seen by any importer, so cached
+    // editor analyses must be invalidated conservatively across open documents.
+    this.analyses.clear();
     if (document?.filePath) this.incrementalProjects.delete(normalizePath(document.filePath));
   }
 
@@ -276,7 +278,10 @@ export class ProofScriptLanguageService {
       ...(filePath ? { filePath: path.resolve(filePath) } : {}),
     };
     this.documents.set(uri, snapshot);
-    this.analyses.delete(uri);
+    // Any unsaved document can be part of another open document's import closure.
+    // Clear editor-result caches globally; IncrementalCompilerSession still reuses
+    // modules whose source + checked dependency environment remain unchanged.
+    this.analyses.clear();
     return snapshot;
   }
 
