@@ -121,8 +121,14 @@ assert.equal(loweringArtifact.statefulVcRequest.tactic.name, "mvcgen");
 assert.equal(loweringArtifact.statefulVcRequest.tactic.requestedName, null);
 assert.equal(loweringArtifact.statefulVcRequest.tactic.selectedFromTriple, true);
 assert.equal(loweringArtifact.statefulVcRequest.tactic.tripleIdentity, "Std.Do.Triple");
-assert.match(loweringArtifact.statefulVcRequest.request.source, /\bmvcgen\b/u);
-assert.doesNotMatch(loweringArtifact.statefulVcRequest.request.source, /mvcgen\s*\[/u);
+assert.deepEqual(loweringArtifact.statefulVcRequest.tactic.invocationDefinitions, ["auditTransfer"]);
+assert.deepEqual(loweringArtifact.statefulVcRequest.tactic.invocationItems, ["auditTransfer"]);
+assert.equal(loweringArtifact.statefulVcRequest.tactic.programDefinitionHandling, "explicit-unfold-list");
+assert.match(loweringArtifact.statefulVcRequest.request.source, /mvcgen \[auditTransfer\]/u);
+assert.doesNotMatch(
+  loweringArtifact.statefulVcRequest.request.source,
+  /mvcgen \[BankStateModel\.audit_triple\]/u,
+);
 assert.equal(loweringArtifact.statefulVcRequest.leanEnvironmentResolved, false);
 assert.equal(loweringArtifact.statefulVcRequest.tacticExecuted, false);
 assert.equal(loweringArtifact.statefulVcRequest.realVerificationConditionsGenerated, false);
