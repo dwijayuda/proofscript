@@ -34,7 +34,7 @@ try {
     },
     semantics: { runner: "runBankState", adequacyTheorem: "runBankState_adequate" },
     operations: [
-      { name: "audit", type: "Nat -> State Bank Unit", spec: "records an audit code" },
+      { name: "audit", type: "Nat -> State Bank Unit", spec: "records an audit code", verification: { tripleTheorem: "BankStateModel.audit_triple" } },
     ],
     observations: [
       { name: "balanceOf", type: "AccountId -> Bank -> Nat", stateArgument: "last", spec: "reads account balance" },
