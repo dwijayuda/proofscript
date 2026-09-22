@@ -115,14 +115,19 @@ Latest confirmed product gate:
 - v0.6.1 normative C1 reference acceptance/rejection — **20/20 PASS**
 - v0.6.1 normative C2 reference canonical Lean — **12/12 PASS**
 - v0.6.1 production surface corpus — **20/20 PASS** (12 positive, 8 negative)
-- v0.6.1 production/reference acceptance differential — **20/20 PASS** (C3 prerequisite only)
+- v0.6.1 normative C3 production/reference corpus parity — **PASS**
+  - acceptance/rejection: 20/20
+  - feature ownership/ranges: PASS
+  - canonical Lean lowering: 12/12
+- canonical incremental compiler reuse — PASS
+- language-service incremental importer invalidation — PASS
 - KA137 — PASS
 - KA140 — PASS
 - KA146 — PASS
 
 The independent reference frontend lives in `reference/v061/frontend.ts` and does not import the production parser/elaborator. C1 and C2 are therefore separate from production behavior.
 
-The production/reference acceptance differential is intentionally **not** called full C3. Full C3 still requires production feature-ownership and canonical surface-lowering comparison, not only matching accept/reject decisions.
+C3 is intentionally bounded to the normative v0.6.1 conformance corpus. It does not imply C4 machine-checked reference theorems, S2/S3 proof claims, runtime correspondence proofs, or full Lean 4 equivalence.
 
 ## PS1 closure
 
@@ -138,8 +143,10 @@ The deeper frontend-next/unified-bridge migration is no longer allowed to keep P
 
 ## Next engineering target
 
-1. Add production feature-ownership + source-range metadata to the canonical parser/compiler path.
-2. Add production canonical surface-lowering evidence and complete the remaining C3 differential comparison.
-3. Expose source-map/feature metadata through the compiler and language-service for richer LSP capabilities.
-4. Continue extracting useful incremental infrastructure from frontend-next behind canonical compiler/project APIs.
-5. Keep the independent reference frontend small and assurance-only; do not let it become a second production language implementation.
+1. Resolve PS2 product metadata drift without rewriting historical Core evidence:
+   - current product certificates identify ProofScript v0.6.1;
+   - historical Core/Lean compatibility is nested and explicit, not presented as the product language version.
+2. Converge the two CLI implementations: the packaged root `bin/psc.mjs` and the smaller `packages/cli` workspace must not remain independent product semantics.
+3. Continue extracting useful incremental/module-interface infrastructure from `frontend-next` behind canonical compiler/project APIs.
+4. Expand LSP capabilities only from compiler-backed semantic/source-map APIs.
+5. Treat C4 machine-checked reference theorems as assurance work; do not block usable compiler/editor releases on full Lean equivalence.
