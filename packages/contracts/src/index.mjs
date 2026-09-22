@@ -156,6 +156,39 @@ export function exactTheoremStatement(functionName, theoremName, params, require
 export function stableObligationId(sourceFunction, kind, label) {
   return `${sourceFunction}.${kind}.${label}`;
 }
+
+export function assertUniqueContractNames(params, requirements, ensures) {
+  const parameterNames = new Set();
+  for (const param of params) {
+    if (parameterNames.has(param.name)) throw new Error(`duplicate contract parameter name '${param.name}'`);
+    parameterNames.add(param.name);
+  }
+
+  const requirementNames = new Set();
+  for (const requirement of requirements) {
+    if (parameterNames.has(requirement.name)) {
+      throw new Error(`requires name '${requirement.name}' collides with a function parameter`);
+    }
+    if (requirementNames.has(requirement.name)) {
+      throw new Error(`duplicate requires name '${requirement.name}'`);
+    }
+    requirementNames.add(requirement.name);
+  }
+
+  const ensureNames = new Set();
+  for (const ensure of ensures) {
+    if (ensureNames.has(ensure.name)) throw new Error(`duplicate ensures name '${ensure.name}'`);
+    ensureNames.add(ensure.name);
+  }
+}
+
+export function assertUniqueObligationIds(obligations) {
+  const ids = new Set();
+  for (const obligation of obligations) {
+    if (ids.has(obligation.id)) throw new Error(`duplicate generated obligation id '${obligation.id}'`);
+    ids.add(obligation.id);
+  }
+}
 export function enrichContractObligation(o, params, requirements) {
   const statement = o.statement ?? o.proposition;
   const exact = o.exactTheoremStatement ?? exactTheoremStatement(o.functionName ?? 'contract', o.name, params, requirements, statement);
@@ -200,7 +233,8 @@ export function parsePureContractSource(text, sourcePath = '<memory>') {
     if (m) { ghosts.push({ name: m[1], type: normalizeSpaces(m[2]), expression: normalizeSpaces(m[3]), erasedFromRuntime: true }); continue; }
     throw new Error(`unsupported contract clause: ${line}`);
   }
-  for (const ghost of ghosts) {
+  assertUniqueContractNames(params, requirements, ensures);
+    for (const ghost of ghosts) {
     const bodyWithoutGhostDecls = body.replace(new RegExp(`ghost\\s+${ghost.name}\\b[^;]*;`, 'g'), '');
     if (new RegExp(`\\b${ghost.name}\\b`).test(bodyWithoutGhostDecls)) throw new Error(`ghost value '${ghost.name}' is used in runtime body; ghost erasure cannot be certified`);
   }
@@ -235,6 +269,7 @@ export function parsePureContractSource(text, sourcePath = '<memory>') {
   });
   const loopObligations = loopObligationsForContract(name, params, requirements, loops, ensures);
   const obligations = [...assertObligations, ...ensuresObligations].map(o => enrichContractObligation(o, params, requirements)).concat(loopObligations.map(o => enrichContractObligation(o, params, requirements)));
+  assertUniqueObligationIds(obligations);
   return { name, params, returnType, requirements, ensures, ghosts, assertions, oldSnapshots, loops, obligations, body: runtimeBody, sourcePath };
 }
 export function leanForContract(contract) {
