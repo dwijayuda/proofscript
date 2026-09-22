@@ -1,0 +1,10 @@
+{
+  "name": "@proofscript/reference-v061",
+  "version": "0.6.1",
+  "private": true,
+  "description": "Independent executable reference frontend for the ProofScript v0.6.1 conformance corpus",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "README.md"]
+}
