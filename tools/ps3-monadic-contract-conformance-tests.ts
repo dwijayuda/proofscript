@@ -80,7 +80,11 @@ for (const item of positive) {
   assert.equal(artifact.statefulPredicateAST.grammarProfile, "stateful-predicate-expressions0", item.id);
   assert.equal(artifact.statefulPredicateAST.unsupportedSyntax, false, item.id);
   assert.equal(artifact.statefulPredicateAST.hasTypeErrors, false, item.id);
+  assert.equal(artifact.statefulPredicateAST.requirementsTypeCheckingComplete, true, item.id);
+  assert.equal(artifact.statefulPredicateAST.postconditionsTypeCheckingComplete, true, item.id);
   assert.equal(artifact.statefulPredicateAST.typeCheckingComplete, true, item.id);
+  assert.equal(artifact.statefulPredicateAST.requirements.length, contract.requirements.length, item.id);
+  assert.ok(artifact.statefulPredicateAST.requirements.every((requirement: any) => requirement.inferredType === "Prop"), item.id);
   assert.ok(artifact.statefulPredicateAST.clauses.every((clause: any) => clause.inferredType === "Prop"), item.id);
   assert.equal(artifact.statefulPredicateAST.wpTripleSemanticBindingComplete, false, item.id);
   assert.equal(artifact.statefulPredicateAST.stateModelAdequacyChecked, false, item.id);
@@ -126,6 +130,20 @@ for (const item of positive) {
   assert.deepEqual(lowering.statefulPredicateAST, artifact.statefulPredicateAST, item.id);
   assert.equal(lowering.summary.statefulReferenceTypingComplete, true, item.id);
   assert.equal(lowering.summary.normalizedPredicateAstTypeCheckingComplete, true, item.id);
+  assert.equal(lowering.statefulWpBinding.schema, "proofscript.stateful-wp-binding/v1", item.id);
+  assert.equal(lowering.statefulWpBinding.wp.triple, "Std.Do.Triple", item.id);
+  assert.equal(lowering.statefulWpBinding.semantics.runner, "runBankState", item.id);
+  assert.equal(lowering.statefulWpBinding.semantics.adequacyTheorem, item.expected.model_adequacy_theorem, item.id);
+  assert.equal(lowering.statefulWpBinding.typedRequirementsReady, true, item.id);
+  assert.equal(lowering.statefulWpBinding.typedPostconditionsReady, true, item.id);
+  assert.equal(lowering.statefulWpBinding.typedPredicateReady, true, item.id);
+  assert.equal(lowering.statefulWpBinding.bindingReady, true, item.id);
+  assert.equal(lowering.statefulWpBinding.wpTripleIdentityBindingComplete, true, item.id);
+  assert.equal(lowering.statefulWpBinding.wpTripleSemanticEquivalenceChecked, false, item.id);
+  assert.equal(lowering.statefulWpBinding.stateModelAdequacyChecked, false, item.id);
+  assert.equal(lowering.statefulWpBinding.verificationConditionsGenerated, false, item.id);
+  assert.equal(lowering.statefulWpBinding.semanticProofDischarge, false, item.id);
+  assert.equal(lowering.summary.statefulWpIdentityBindingReady, true, item.id);
   assert.equal(lowering.summary.wholePredicateTypeCheckingComplete, false, item.id);
   assert.equal(lowering.trustBoundary.specifiedStructuralProfile, true, item.id);
   assert.equal(lowering.summary.semanticProofDischarge, false, item.id);
@@ -134,8 +152,10 @@ for (const item of positive) {
   assert.equal(lowering.tripleSkeleton.entryStateBinder.type, "Bank", item.id);
   assert.equal(`(${lowering.tripleSkeleton.entryStateBinder.name} : ${lowering.tripleSkeleton.entryStateBinder.type})`, item.expected.entry_state_binder, item.id);
   assert.equal(lowering.tripleSkeleton.precondition, item.expected.precondition_function, item.id);
+  assert.equal(lowering.statefulWpBinding.precondition.functionSource, lowering.tripleSkeleton.precondition, item.id);
   assert.equal(lowering.tripleSkeleton.postconditionBody, item.expected.postcondition_body, item.id);
   assert.equal(lowering.tripleSkeleton.postcondition, item.expected.postcondition_function, item.id);
+  assert.equal(lowering.statefulWpBinding.postcondition.functionSource, lowering.tripleSkeleton.postcondition, item.id);
   assert.ok(lowering.tripleSkeleton.theoremStatement.includes(item.expected.entry_state_binder), item.id);
   assert.ok(lowering.tripleSkeleton.theoremStatement.includes(`(${item.expected.precondition_function})`), item.id);
   assert.ok(lowering.tripleSkeleton.theoremStatement.includes(`(${item.expected.postcondition_function})`), item.id);
@@ -164,14 +184,20 @@ for (const item of positive) {
   assert.deepEqual(preflight.statefulPostconditionIR, artifact.statefulPostconditionIR, item.id);
   assert.deepEqual(preflight.statefulPredicateElaboration, artifact.statefulPredicateElaboration, item.id);
   assert.deepEqual(preflight.statefulPredicateAST, artifact.statefulPredicateAST, item.id);
+  assert.deepEqual(preflight.statefulWpBinding, lowering.statefulWpBinding, item.id);
   assert.equal(preflight.staticChecks.hasStatefulPostconditionIR, true, item.id);
   assert.equal(preflight.staticChecks.hasStatefulPredicateElaboration, true, item.id);
   assert.equal(preflight.staticChecks.hasStatefulPredicateAST, true, item.id);
   assert.equal(preflight.staticChecks.statefulReferenceTypingComplete, true, item.id);
   assert.equal(preflight.staticChecks.normalizedPredicateAstTypeCheckingComplete, true, item.id);
+  assert.equal(preflight.staticChecks.hasStatefulWpBinding, true, item.id);
+  assert.equal(preflight.staticChecks.statefulWpIdentityBindingReady, true, item.id);
   assert.equal(preflight.staticChecks.wholePredicateTypeCheckingComplete, false, item.id);
   assert.equal(preflight.staticChecks.statefulPostconditionSemanticElaborationComplete, false, item.id);
   assert.equal(preflight.trustBoundary.specifiedStructuralProfile, true, item.id);
+  assert.equal(preflight.trustBoundary.wpTripleIdentityBindingComplete, true, item.id);
+  assert.equal(preflight.trustBoundary.wpTripleSemanticEquivalenceChecked, false, item.id);
+  assert.equal(preflight.trustBoundary.stateModelAdequacyChecked, false, item.id);
   assert.equal(preflight.trustBoundary.preflightOnly, true, item.id);
   assert.equal(preflight.trustBoundary.checkableAsCompleteSemanticProof, false, item.id);
   assert.equal(preflight.summary.semanticProofDischarge, false, item.id);
@@ -295,6 +321,8 @@ for (const item of negative) {
       packageVersion: "test",
     });
     assert.deepEqual(lowering.statefulPredicateAST, ast, item.id);
+    assert.equal(lowering.statefulWpBinding.bindingReady, false, item.id);
+    assert.equal(lowering.statefulWpBinding.wpTripleIdentityBindingComplete, false, item.id);
     const preflight = createMonadicLeanPreflightArtifact({
       loweringArtifact: lowering,
       loweringArtifactPath: `<${item.id}.monadic-lowering.json>`,
@@ -305,6 +333,8 @@ for (const item of negative) {
       packageVersion: "test",
     });
     assert.deepEqual(preflight.statefulPredicateAST, ast, item.id);
+    assert.deepEqual(preflight.statefulWpBinding, lowering.statefulWpBinding, item.id);
+    assert.equal(preflight.staticChecks.statefulWpIdentityBindingReady, false, item.id);
   }
   if (item.unknown_operation) {
     assert.ok(artifact.verification.unknownOperations.includes(item.unknown_operation), item.id);
