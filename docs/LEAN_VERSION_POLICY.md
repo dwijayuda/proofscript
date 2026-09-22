@@ -4,31 +4,38 @@ Status: active policy for ProofScript product and assurance work.
 
 ## Principle
 
-Do not use the phrase "latest Lean" inside a reproducible artifact.
+ProofScript separates **compatibility policy** from **evidence identity**.
 
-ProofScript may track current Lean releases, but every release, certificate, oracle result, and assurance bundle must record the exact Lean version and commit it used.
+The active stateful-verification product lane accepts **Lean 4.33.1 or newer**, including later stable, RC, and development/nightly builds. A reproducible evidence artifact must still record the exact Lean version (and commit when available) that actually executed it.
+
+Historical assurance artifacts may remain exactly pinned when their claim is defined against a particular Lean release.
 
 ## Version lanes
 
-### 1. Product stable lane
+### 1. Stateful verification compatibility lane
 
-The primary Lean oracle/conformance target for new ProofScript releases.
+The active v0.7 stateful-verification tooling has this compatibility floor:
 
-As of 2026-09-22:
+```text
+Lean >= 4.33.1
+```
 
-- Lean stable: **4.34.0**
+This lane accepts later stable releases, release candidates, and future development/nightly versions. The repository's default developer toolchain may move forward without redefining the minimum compatibility floor.
 
-A ProofScript release pins the exact version/commit it actually validates. Updating the stable lane is a deliberate compatibility change with CI evidence.
+As of 2026-09-23:
 
-### 2. Tracking/RC lane
+- minimum supported stateful Lean: **4.33.1**;
+- default developer toolchain: **4.34.0**;
+- current stable discovered upstream: **4.34.0**;
+- current RC discovered upstream: **4.35.0-rc2**.
 
-Used to discover upcoming compatibility changes before they become stable.
+Compatibility CI resolves and tests the floor, latest stable, and latest RC dynamically. Each resulting execution artifact records the exact Lean version actually used.
 
-As of 2026-09-22:
+### 2. Product tracking lanes
 
-- Lean RC: **4.35.0-rc2**
+The current stable and RC lanes are compatibility probes, not permanent semantic identities.
 
-RC success is informative. It does not silently change the semantic baseline of an already published ProofScript release.
+A newer stable or RC may be tested immediately when it appears upstream. Passing such a lane means the tested ProofScript feature set is compatible with that exact observed Lean build; it does not rewrite historical ProofScript or K3-TB assurance claims.
 
 ### 3. Historical assurance lane
 
@@ -90,32 +97,37 @@ Every release manifest should record at least:
 
 ## Compatibility CI
 
-New development should eventually have three separate jobs:
+Current product verification uses:
 
 ```text
 native-product
-  Node + pinned TypeScript + PSKernel tests
+  Node + pinned TypeScript + PSKernel/product tests
 
-lean-stable
-  exact current supported stable Lean
+stateful-lean-floor
+  Lean 4.33.1
 
-lean-rc
-  exact tracked release candidate, allowed to be advisory until promoted
+stateful-lean-stable
+  latest non-prerelease Lean release discovered from upstream
+
+stateful-lean-rc
+  latest upstream -rc release when one exists
 ```
 
-Historical K3-TB verification remains a separate manually invoked/release workflow.
+The stable and RC versions are resolved at workflow execution time, deduplicated with the floor, and written into the verification project's `lean-toolchain` before running. The resulting evidence reports the actual Lean version observed by `lean --version`.
+
+Historical K3-TB verification remains separate and exactly pinned to its original 4.33.1 release/commit.
 
 ## Upgrade rule
 
-Before changing the product stable lane:
+The stateful-verification compatibility floor does not move merely because a new Lean version exists. Before raising the minimum above 4.33.1:
 
-1. read the target Lean release notes;
-2. run parser/lowering conformance;
-3. run Lean export/oracle differential tests;
-4. run kernel parity evidence relevant to the supported subset;
-5. record any changed semantics or capability gaps;
-6. update the release manifest;
-7. only then make the new version the default stable lane.
+1. identify which supported stateful features require the newer Lean;
+2. run the floor/current-stable/current-RC compatibility suites;
+3. record any changed semantics or capability gaps;
+4. update the compatibility specification and release manifest;
+5. raise the floor only with explicit executable evidence.
+
+The default developer toolchain may advance independently as long as the 4.33.1 floor remains green.
 
 ## Soundness incident rule
 
