@@ -6,8 +6,24 @@ import { createStatefulProgramLowering } from './stateful-program-lowering.mjs';
 import { createStatefulVcPlan } from './stateful-vc-plan.mjs';
 import { createStatefulLeanSemanticEncoding } from './stateful-lean-semantic-encoding.mjs';
 import { createStatefulVcRequest } from './stateful-vc-request.mjs';
+import {
+  analyzeStatefulVcExecution,
+  classifyLeanResidualGoals,
+  createStatefulVcGoalArtifact,
+  firstStatefulVcFailedStage,
+} from './stateful-vc-execution.mjs';
 
-export { createStatefulWpBinding, createStatefulProgramLowering, createStatefulVcPlan, createStatefulLeanSemanticEncoding, createStatefulVcRequest };
+export {
+  createStatefulWpBinding,
+  createStatefulProgramLowering,
+  createStatefulVcPlan,
+  createStatefulLeanSemanticEncoding,
+  createStatefulVcRequest,
+  analyzeStatefulVcExecution,
+  classifyLeanResidualGoals,
+  createStatefulVcGoalArtifact,
+  firstStatefulVcFailedStage,
+};
 
 export function sha256Text(text) {
   return createHash('sha256').update(String(text)).digest('hex');
