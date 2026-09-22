@@ -48,6 +48,7 @@ theorem balanceOf_creditState_self (state : Bank) (account : AccountId) (amount 
       balanceOf account state + amount := by
   simp [balanceOf, creditState]
 
+@[simp]
 theorem balanceOf_debitState_other
     (state : Bank) (account other : AccountId) (amount : Nat)
     (h : other ≠ account) :
@@ -55,6 +56,7 @@ theorem balanceOf_debitState_other
       balanceOf other state := by
   simp [balanceOf, debitState, h]
 
+@[simp]
 theorem balanceOf_creditState_other
     (state : Bank) (account other : AccountId) (amount : Nat)
     (h : other ≠ account) :
