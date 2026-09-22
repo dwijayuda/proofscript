@@ -10,21 +10,24 @@ import { buildStateModelBinding } from "../packages/state-models/src/index.mjs";
 const root = path.resolve(import.meta.dirname, "..");
 const sourcePath = path.join(root, "examples", "software", "07-bank-debit-stateful-vc.ps");
 const modelPath = path.join(root, "examples", "software", "06-bank-state.model.json");
+const leanProjectRoot = path.join(root, "specs", "verification", "v0.7", "lean");
 const leanModelPath = path.join(
-  root,
-  "specs",
-  "verification",
-  "v0.7",
-  "lean",
+  leanProjectRoot,
   "ProofScript",
   "Verification",
   "BankStateModel.lean",
 );
+const leanToolchainPath = path.join(leanProjectRoot, "lean-toolchain");
+const lakefilePath = path.join(leanProjectRoot, "lakefile.lean");
+const leanLibraryRootPath = path.join(leanProjectRoot, "ProofScript.lean");
 
 const sourceText = fs.readFileSync(sourcePath, "utf8");
 const descriptorText = fs.readFileSync(modelPath, "utf8");
 const descriptor = JSON.parse(descriptorText);
 const leanModel = fs.readFileSync(leanModelPath, "utf8");
+const leanToolchain = fs.readFileSync(leanToolchainPath, "utf8").trim();
+const lakefile = fs.readFileSync(lakefilePath, "utf8");
+const leanLibraryRoot = fs.readFileSync(leanLibraryRootPath, "utf8");
 
 function sha256(text: string) {
   return createHash("sha256").update(text).digest("hex");
@@ -34,6 +37,17 @@ assert.equal(descriptor.lean.imports[0], "ProofScript.Verification.BankStateMode
 assert.deepEqual(descriptor.lean.openNamespaces, ["BankStateModel"]);
 assert.equal(descriptor.lean.monadTypeConstructor, "StateM Bank");
 assert.equal(descriptor.operations[0].verification.tripleTheorem, "BankStateModel.debit_triple");
+assert.match(descriptor.operations[0].spec, /Nat subtraction \(saturating at zero\)/u);
+
+const moduleSourcePath = path.join(
+  leanProjectRoot,
+  ...descriptor.lean.imports[0].split("."),
+) + ".lean";
+assert.equal(path.resolve(moduleSourcePath), path.resolve(leanModelPath));
+assert.equal(leanToolchain, "leanprover/lean4:v4.33.1");
+assert.match(lakefile, /lean_lib ProofScript/u);
+assert.match(lakefile, /srcDir := "\."/u);
+assert.match(leanLibraryRoot, /import ProofScript\.Verification\.BankStateModel/u);
 
 assert.match(leanModel, /^import Std\.Tactic\.Do/mu);
 assert.match(leanModel, /^open Std\.Do/mu);
@@ -41,6 +55,8 @@ assert.match(leanModel, /^namespace BankStateModel/mu);
 assert.match(leanModel, /abbrev Bank := AccountId → Nat/u);
 assert.match(leanModel, /def debit .*: StateM Bank Unit/u);
 assert.match(leanModel, /\@\[spec\][\s\S]*theorem debit_triple/u);
+assert.match(leanModel, /def runBankState .*:=\s*\n\s*StateT\.run program initial/u);
+assert.match(leanModel, /Std\.Do\.StateM\.of_wp_run_eq/u);
 assert.match(leanModel, /theorem runBankState_adequate/u);
 assert.doesNotMatch(leanModel, /\b(?:sorry|admit)\b/u);
 
