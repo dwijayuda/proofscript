@@ -44,6 +44,7 @@ export function normalizeObligationsForWorkflow(contractArtifact, contractArtifa
     source: { path: source, sha256: contractArtifact.sourceSha256 },
     contractArtifact: { path: contractArtifactPath, schema: contractArtifact.schema },
     contracts: { path: contractArtifactPath, sha256: contractArtifact.contractsSha256 },
+    verification: contractArtifact.verification,
     obligations,
     summary: { total: obligations.length, checked: obligations.filter(o => o.status === 'checked').length, proved: obligations.filter(o => o.status === 'checked').length, unproved: obligations.filter(o => o.status !== 'checked').length },
     trustBoundary: { semanticProofChecking: false, staleProofDetection: true, hiddenAxiomsIntroduced: false, loopInvariantChecking: obligations.some(o => String(o.kind).startsWith('loop.')) ? 'structural-obligations-only' : undefined, vcgenConnected: false, fullLean4Equivalence: false },
