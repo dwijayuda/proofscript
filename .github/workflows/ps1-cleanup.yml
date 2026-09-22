@@ -18,8 +18,6 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci --ignore-scripts
-      - name: Pin repository-compatible TypeScript for baseline build
-        run: npm install --no-save --ignore-scripts typescript@5.9.3
       - run: npm run build
       - run: npm run test:ka137
       - run: npm run test:ka140
