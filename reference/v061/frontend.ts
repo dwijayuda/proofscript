@@ -54,8 +54,10 @@ export interface ReferenceLoweringResult {
 }
 
 class ReferenceSyntaxError extends Error {
-  constructor(readonly code: ReferenceErrorCode, message: string) {
+  readonly code: ReferenceErrorCode;
+  constructor(code: ReferenceErrorCode, message: string) {
     super(message);
+    this.code = code;
     this.name = "ReferenceSyntaxError";
   }
 }
