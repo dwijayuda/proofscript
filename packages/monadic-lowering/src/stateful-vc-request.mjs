@@ -1,4 +1,4 @@
-import { leanGeneratedIdentifier, leanParameterBinders } from './lean-syntax.mjs';
+import { leanGeneratedIdentifier, leanIdentifier, leanParameterBinders } from './lean-syntax.mjs';
 
 function uniqueStrings(values) {
   return [...new Set((values ?? []).filter(value => typeof value === 'string' && value.trim().length > 0).map(value => value.trim()))];
@@ -30,7 +30,10 @@ export function createStatefulVcRequest(loweringArtifact) {
   const requestedTactic = stateModel.vcgen?.tactic ?? null;
   const tactic = requestedTactic ?? (stateModel.wp?.triple === 'Std.Do.Triple' ? 'mvcgen' : 'vcgen');
   const specTheorems = uniqueStrings((vcPlan.operationGoals ?? []).map(goal => goal.tripleTheorem));
+  const programDefinition = leanIdentifier(loweringArtifact.function?.name ?? 'program');
   const invocationTheorems = tactic === 'vcgen' ? specTheorems : [];
+  const invocationDefinitions = tactic === 'mvcgen' ? [programDefinition] : [];
+  const invocationItems = tactic === 'mvcgen' ? invocationDefinitions : invocationTheorems;
   const diagnostics = [];
 
   if (declaredImports.length === 0) {
