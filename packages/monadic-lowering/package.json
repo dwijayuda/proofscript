@@ -2,9 +2,25 @@
   "name": "@proofscript/monadic-lowering",
   "version": "1.0.0-pskernel.149",
   "type": "module",
-  "main": "src/index.mjs",
+  "main": "dist/index.js",
   "exports": {
-    ".": "./src/index.mjs"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
   },
-  "private": false
+  "private": false,
+  "description": "ProofScript monadic/stateful contract lowering and Lean preflight artifact construction.",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "proofscript": {
+    "sourceLanguage": "typescript",
+    "typingStatus": "dynamic-artifact-migration"
+  }
 }

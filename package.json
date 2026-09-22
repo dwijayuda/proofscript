@@ -55,7 +55,7 @@
     "assurance:ka8": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/pskernel-ka8-source-intake.ts --soft",
     "assurance:ka9": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/pskernel-ka9-lean4lean-compat.ts --soft",
     "bootstrap:local-workspaces": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/link-local-workspaces.cts",
-    "build": "tsc -b packages/obligations packages/proof-status packages/state-models && node bin/psc.mjs setup",
+    "build": "tsc -b packages/contracts packages/obligations packages/proof-status packages/state-models packages/monadic-lowering && node bin/psc.mjs setup",
     "clean": "tsc -b --clean",
     "delivery-archive-verify:pskernel-kernel": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/pskernel-kernel-delivery-archive-verify.ts",
     "delivery-archive-verify:pskernel-kernel:full": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/pskernel-kernel-delivery-archive-verify.ts --full",

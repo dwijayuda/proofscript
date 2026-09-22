@@ -1,12 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { createHash } from 'node:crypto';
+import crypto from 'node:crypto';
 
 export function sha256Text(text) {
-  return createHash('sha256').update(String(text)).digest('hex');
+  return crypto.createHash('sha256').update(String(text)).digest('hex');
 }
 export function sha256File(file) {
-  return createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+  return crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 }
 function normalizeSpaces(s) { return String(s ?? '').replace(/\s+/g, ' ').trim(); }
 function safeLeanName(name) {

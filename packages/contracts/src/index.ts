@@ -1,7 +1,7 @@
-import { createHash } from 'node:crypto';
+import crypto from 'node:crypto';
 
 export function sha256Text(text) {
-  return createHash('sha256').update(String(text)).digest('hex');
+  return crypto.createHash('sha256').update(String(text)).digest('hex');
 }
 export function normalizeSpaces(s) { return String(s).replace(/\s+/g, ' ').trim(); }
 export function parseParams(paramsText) {

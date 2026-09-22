@@ -2,6 +2,25 @@
   "name": "@proofscript/contracts-workflow",
   "version": "1.0.0-pskernel.149",
   "type": "module",
-  "main": "src/index.mjs",
-  "private": false
+  "main": "dist/index.js",
+  "private": false,
+  "description": "ProofScript contract parsing and verification-workflow artifact construction.",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "proofscript": {
+    "sourceLanguage": "typescript",
+    "typingStatus": "dynamic-artifact-migration"
+  }
 }

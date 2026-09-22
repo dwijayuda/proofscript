@@ -32,12 +32,12 @@ function jsonFromAny(r: ReturnType<typeof run>) {
 const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
 assert.equal(pkg.version, '1.0.0-pskernel.149');
 assert.equal(pkg.scripts?.['test:ka145'], 'node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ka145-monadic-lowering-tests.ts');
-assert.ok(fs.existsSync(path.join(ROOT, 'packages', 'monadic-lowering', 'src', 'index.mjs')));
+assert.ok(fs.existsSync(path.join(ROOT, 'packages', 'monadic-lowering', 'src', 'index.ts')));
 const mlPkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'packages', 'monadic-lowering', 'package.json'), 'utf8'));
 assert.equal(mlPkg.name, '@proofscript/monadic-lowering');
 
 const cliText = fs.readFileSync(psc, 'utf8');
-assert.ok(cliText.includes('../packages/monadic-lowering/src/index.mjs'));
+assert.ok(cliText.includes('../packages/monadic-lowering/dist/index.js'));
 assert.ok(cliText.includes('psc monadic-lowering <contracts.json>'));
 assert.ok(cliText.split('\n').length < 1900, 'psc should remain a router, not absorb all monadic lowering logic');
 

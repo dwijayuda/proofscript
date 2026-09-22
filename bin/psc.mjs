@@ -5,11 +5,11 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
 import { createHash } from 'node:crypto';
-import { makeContractsArtifact, makeMonadicContractsArtifact, leanForContract, leanForMonadicContract, parsePureContractSource, isMonadicContractSource } from '../packages/contracts/src/index.mjs';
+import { makeContractsArtifact, makeMonadicContractsArtifact, leanForContract, leanForMonadicContract, parsePureContractSource, isMonadicContractSource } from '../packages/contracts/dist/index.js';
 import { normalizeObligationsForWorkflow } from '../packages/obligations/dist/index.js';
 import { readProofClaims, createProofStatusArtifact, verifyProofStatusArtifact } from '../packages/proof-status/dist/index.js';
 import { readStateModelDescriptor, validateStateModelDescriptor, buildStateModelBinding } from '../packages/state-models/dist/index.js';
-import { createMonadicLoweringBundle, createMonadicLeanPreflightBundle, readMonadicLoweringArtifact } from '../packages/monadic-lowering/src/index.mjs';
+import { createMonadicLoweringBundle, createMonadicLeanPreflightBundle, readMonadicLoweringArtifact } from '../packages/monadic-lowering/dist/index.js';
 const require = createRequire(import.meta.url);
 
 const VERSION = '1.0.0-pskernel.149';

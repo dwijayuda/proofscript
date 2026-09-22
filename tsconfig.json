@@ -93,6 +93,12 @@
     },
     {
       "path": "./packages/state-models"
+    },
+    {
+      "path": "./packages/contracts"
+    },
+    {
+      "path": "./packages/monadic-lowering"
     }
   ]
 }

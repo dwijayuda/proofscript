@@ -36,7 +36,7 @@ for (const packageName of ['contracts', 'obligations', 'proof-status']) {
 }
 
 const cliText = fs.readFileSync(psc, 'utf8');
-assert.ok(cliText.includes("../packages/contracts/src/index.mjs"));
+assert.ok(cliText.includes("../packages/contracts/dist/index.js"));
 assert.ok(cliText.includes("../packages/obligations/dist/index.js"));
 assert.ok(cliText.includes("../packages/proof-status/dist/index.js"));
 assert.ok(cliText.split('\n').length < 1900, 'psc CLI should remain bounded after extraction plus monadic lowering router');
