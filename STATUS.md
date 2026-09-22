@@ -72,6 +72,7 @@ See:
 - `frontend-next` contains substantial independent parser/elaborator/IR/incremental/plugin functionality.
 - `unified-bridge` connects frontend-next output into PSKernel/Core and is covered by existing unified integration tests.
 - verification workflow packages (`contracts`, `obligations`, `proof-status`, `state-models`, `monadic-lowering`) contain real `.mjs` implementations and are preserved.
+- `packages/product-profile` centralizes current product identity/certificate compatibility metadata outside the public CLI router.
 - the metadata-only `diagnostics`, `formatter`, `macro`, and `tactics-core` scaffold workspaces were dependency-audited and removed; their capabilities remain roadmap items until concrete implementation milestones exist.
 
 See:
@@ -146,10 +147,55 @@ Additional current gates include:
 
 The deeper frontend-next/unified-bridge migration is no longer allowed to keep PS1 open indefinitely. It continues under explicit follow-up milestones with replacement gates.
 
+## PS2 closure
+
+PS2 is complete. See `docs/PS2_CLOSEOUT.md`.
+
+Current PS2 gates:
+
+- current product identity `v0.6.1 / ps1-v061` — PASS
+- plugin metadata current/legacy separation — PASS
+- project metadata current/legacy separation — PASS
+- CLI project-profile stamping/stale rejection — PASS
+- production D/E registry equality / X-exclusion governance — PASS
+- C0 — PASS
+- C1 — 20/20 PASS
+- C2 — 12/12 PASS
+- C3 — PASS
+
+C4 remains assurance work and is not implied by PS2 closure.
+
+## PS3 progress
+
+Current specified profile: `ps3-pure-contracts0`.
+
+Specified V-features:
+
+- `V-REQUIRES`
+- `V-ENSURES`
+- `V-RESULT`
+- `V-ASSERT`
+- `V-GHOST`
+- `V-OLD`
+
+Executable PS3 corpus: **6 positive / 20 negative PASS**.
+
+Additional gates:
+
+- stable, unique obligation IDs — PASS
+- statement/theorem hashes detect changed obligation content — PASS
+- preconditions remain proof hypotheses and do not alter program function arity — PASS
+- parenthesized `result` substitution — PASS
+- pure `old(e)` entry-value semantics — PASS
+- ghost runtime non-interference check — PASS (syntactic; formal erasure proof not claimed)
+- verification profile propagated contract → obligations → proof-status → verify — PASS
+- KA142 loop invariant/decreases artifacts classified prototype-only — PASS
+
 ## Next engineering target
 
-1. Finish PS2 closeout after current plugin/project metadata and scaffold-retirement gates are green; structural certificates, plugin/backend snapshots, and current project profiles now separate product identity from historical Core evidence.
-2. Continue CLI convergence at the orchestration layer; both current check paths already share `@proofscript/compiler`, so remaining duplication is command/UX/workflow code rather than a separate checker.
-3. Continue extracting useful incremental/module-interface infrastructure from `frontend-next` behind canonical compiler/project APIs.
-4. Expand LSP capabilities only from compiler-backed semantic/source-map APIs.
-5. Treat C4 machine-checked reference theorems as assurance work; do not block usable compiler/editor releases on full Lean equivalence.
+1. Promote the state-model/monadic prototype into an explicit `V-MONADIC-CONTRACT` specification and conformance corpus without overstating vcgen/mvcgen proof discharge.
+2. Keep recursive-definition termination in the Lean-compatible language layer; keep loop `decreases` with the later invariant/stateful milestone.
+3. Continue CLI convergence at the orchestration layer; both current check paths already share `@proofscript/compiler`.
+4. Continue extracting useful incremental/module-interface infrastructure from `frontend-next` behind canonical compiler/project APIs.
+5. Expand LSP capabilities only from compiler-backed semantic/source-map APIs.
+6. Treat C4 machine-checked reference theorems as assurance work; do not block usable compiler/editor releases on full Lean equivalence.
