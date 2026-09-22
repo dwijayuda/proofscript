@@ -50,6 +50,8 @@ vc-request-execution
 
 A successful completed proof has `failedStage = null`.
 
+The runner's `--strict` mode means "require real Lean-generated verification conditions"; it does **not** mean "require exactly Lean 4.33.1". Version compatibility is governed separately by the `Lean >= 4.33.1` policy.
+
 The public command reports:
 
 - CLI `status = accepted` with `verificationStatus = vcs-generated` when Lean reached the tactic and left residual goals;
