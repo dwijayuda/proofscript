@@ -209,6 +209,7 @@ export function leanForMonadicLoweringArtifact(artifact) {
   const fn = artifact.function;
   const stateModel = artifact.stateModel;
   const triple = artifact.tripleSkeleton;
+  const programLowering = artifact.statefulProgramLowering;
   const params = (fn.params ?? []).map(p => `(${p.name} : ${p.type})`).join(' ');
   const operations = (artifact.operations ?? []).map(op => `-- operation ${op.index}: ${op.text}\n--   model spec: ${op.stateModelOperation?.spec ?? 'not found in descriptor'}`).join('\n');
   const obligations = (artifact.obligations ?? []).map(o => `-- obligation ${o.name}\n--   kind: ${o.kind}\n--   statement: ${o.statement}`).join('\n');
@@ -216,9 +217,10 @@ export function leanForMonadicLoweringArtifact(artifact) {
 ProofScript KA-145 monadic/stateful lowering skeleton.
 
 This file is intentionally a skeleton. It records the planned Lean Std.Do.Triple-style
-shape for a monadic ProofScript contract, but it does not claim vcgen/mvcgen semantic
-discharge. A later checkpoint must replace the placeholders with real Lean-checked
-terms or generated verification conditions.
+shape for a monadic ProofScript contract. The bounded modeled operation sequence is
+lowered deterministically to a Lean `do` body, but this file still does not claim that
+program declaration or the Triple proof has been checked in the selected Lean environment.
+A later checkpoint must typecheck the semantic program and derive real verification conditions.
 -/
 
 -- import Std.Do.Triple  -- intended Lean-side dependency when the selected Lean lane supports it
@@ -231,11 +233,10 @@ namespace ProofScript.Generated
     triple: ${triple.triple}
     vcgen status: ${stateModel.vcgen?.status ?? 'not-connected'} -/
 
--- Source program placeholder. The real executable body remains the ProofScript source body.
-def ${safeLeanName(fn.name)}${params ? ` ${params}` : ''} : ${fn.returnType} := by
-  -- ProofScript monadic do body placeholder:
-${String(fn.body ?? '').split(/;\s*/).filter(Boolean).map(line => `  --   ${line.trim()};`).join('\n')}
-  admit
+-- Deterministic lowering of the bounded modeled operation sequence.
+-- This declaration is the semantic program target for future Lean VC derivation,
+-- but this KA-145 skeleton does not itself typecheck it in the selected Lean environment.
+${programLowering?.leanDefinition ?? `-- stateful program lowering unavailable for ${safeLeanName(fn.name)}`}
 
 /-- Planned Hoare/Triple skeleton. Not checked as a completed proof in KA-145. -/
 ${triple.theoremStatement} := by
