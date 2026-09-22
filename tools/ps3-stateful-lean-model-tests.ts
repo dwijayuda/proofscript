@@ -40,6 +40,7 @@ assert.equal(descriptor.lean.imports[0], "ProofScript.Verification.BankStateMode
 assert.deepEqual(descriptor.lean.openNamespaces, ["BankStateModel"]);
 assert.equal(descriptor.lean.monadTypeConstructor, "StateM Bank");
 assert.equal(descriptor.operations[0].verification.tripleTheorem, "BankStateModel.debit_triple");
+assert.equal(descriptor.vcgen.tactic, "mvcgen");
 assert.match(descriptor.operations[0].spec, /Nat subtraction \(saturating at zero\)/u);
 
 const moduleSourcePath = path.join(
@@ -135,6 +136,10 @@ assert.equal(encoding.tripleTargetTypechecked, false);
 const request = lowering.statefulVcRequest;
 assert.equal(request.schema, "proofscript.stateful-vc-request/v1");
 assert.equal(request.requestSourceReady, true);
+assert.equal(request.tactic.name, "mvcgen");
+assert.deepEqual(request.tactic.specificationTheorems, ["BankStateModel.debit_triple"]);
+assert.deepEqual(request.tactic.invocationTheorems, []);
+assert.equal(request.tactic.specificationDiscovery, "registered-attribute");
 assert.equal(request.environment.bindingsDeclared, true);
 assert.equal(request.environment.resolvedInLean, false);
 assert.equal(request.leanEnvironmentResolved, false);
@@ -148,7 +153,8 @@ assert.match(request.request.source, /open BankStateModel/u);
 assert.match(request.request.source, /def withdraw .*: StateM Bank Unit := do/u);
 assert.match(request.request.source, /\(«from» : AccountId\)/u);
 assert.match(request.request.source, /withdraw «from» amount/u);
-assert.match(request.request.source, /vcgen \[BankStateModel\.debit_triple\]/u);
+assert.match(request.request.source, /\bmvcgen\b/u);
+assert.doesNotMatch(request.request.source, /mvcgen\s*\[/u);
 assert.doesNotMatch(request.request.source, /\b(?:sorry|admit)\b/u);
 assert.doesNotMatch(
   request.request.source,
