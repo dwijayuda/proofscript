@@ -22,12 +22,15 @@ function programApplication(fn) {
   return `${fn.name}${(fn.params ?? []).map(param => ` ${param.name}`).join('')}`;
 }
 
-export function createStatefulVcPlan({ contractArtifact, wpBinding, tripleTheoremName, tripleTheoremStatement } = {}) {
+export function createStatefulVcPlan({ contractArtifact, wpBinding, programLowering, tripleTheoremName, tripleTheoremStatement } = {}) {
   if (!contractArtifact || contractArtifact.schema !== 'proofscript.contracts.v1') {
     throw new Error('stateful VC plan requires proofscript.contracts.v1');
   }
   if (!wpBinding || wpBinding.schema !== 'proofscript.stateful-wp-binding/v1') {
     throw new Error('stateful VC plan requires proofscript.stateful-wp-binding/v1');
+  }
+  if (!programLowering || programLowering.schema !== 'proofscript.stateful-program-lowering/v1') {
+    throw new Error('stateful VC plan requires proofscript.stateful-program-lowering/v1');
   }
   if (!Array.isArray(contractArtifact.functions) || contractArtifact.functions.length !== 1) {
     throw new Error('stateful VC plan expects exactly one function in this alpha');
@@ -102,7 +105,9 @@ export function createStatefulVcPlan({ contractArtifact, wpBinding, tripleTheore
     goal.typeCheckingComplete === true && goal.inferredType === 'Prop'
   );
   const sourceObligationsBound = [...operationGoals, ...postconditionGoals].every(goal => Boolean(goal.sourceObligation));
+  const programLoweringReady = programLowering.programLoweringReady === true;
   const planningReady = wpBinding.bindingReady === true
+    && programLoweringReady
     && operationTheoremIdentitiesBound
     && typedGoalsReady
     && sourceObligationsBound;
@@ -113,11 +118,13 @@ export function createStatefulVcPlan({ contractArtifact, wpBinding, tripleTheore
     sourceSchemas: {
       contract: contractArtifact.schema,
       wpBinding: wpBinding.schema,
+      programLowering: programLowering.schema,
       predicateAST: ast.schema,
     },
     provenance: {
       stateModel: wpBinding.stateModel,
       predicateAstSha256: wpBinding.predicateAstSha256,
+      programLeanDefinitionSha256: programLowering.leanDefinition ? sha256Text(programLowering.leanDefinition) : null,
       preconditionSha256: wpBinding.precondition.sha256,
       postconditionSha256: wpBinding.postcondition.sha256,
     },
@@ -128,6 +135,7 @@ export function createStatefulVcPlan({ contractArtifact, wpBinding, tripleTheore
       operationGoals: operationGoals.length,
       postconditionGoals: postconditionGoals.length,
       totalPlannedGoals: operationGoals.length + postconditionGoals.length + 1,
+      programLoweringReady,
       operationTheoremIdentitiesBound,
       typedGoalsReady,
       sourceObligationsBound,
