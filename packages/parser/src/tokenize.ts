@@ -1,5 +1,9 @@
 import {ParseError,Token} from "@proofscript/syntax";
 
+const isIdentifierStart=(ch:string):boolean=>ch==="_"||/\p{ID_Start}/u.test(ch);
+const isIdentifierContinue=(ch:string):boolean=>ch==="_"||ch==="'"||ch==="?"||/\p{ID_Continue}/u.test(ch);
+const codePointAt=(source:string,index:number):string=>String.fromCodePoint(source.codePointAt(index)!);
+
 export function tokenize(source:string):Token[]{
   const out:Token[]=[];let i=0;const push=(kind:Token["kind"],text:string,offset:number)=>out.push({kind,text,offset});
   while(i<source.length){const c=source[i];if(/\s/u.test(c)){i++;continue;}
