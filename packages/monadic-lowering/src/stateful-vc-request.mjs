@@ -34,6 +34,7 @@ export function createStatefulVcRequest(loweringArtifact) {
   const invocationTheorems = tactic === 'vcgen' ? specTheorems : [];
   const invocationDefinitions = tactic === 'mvcgen' ? [programDefinition] : [];
   const invocationItems = tactic === 'mvcgen' ? invocationDefinitions : invocationTheorems;
+  const finisher = tactic === 'mvcgen' ? 'simp_all' : null;
   const diagnostics = [];
 
   if (declaredImports.length === 0) {
@@ -97,7 +98,7 @@ record the result separately. Unsolved goals are expected at this stage.
 -/
 theorem ${requestName}${binders ? ` ${binders}` : ''} : ${target} := by
   ${tactic}${invocationItems.length ? ` [${invocationItems.join(', ')}]` : ''}
-  all_goals trace_state
+  ${finisher ? `all_goals ${finisher}\n  ` : ''}all_goals trace_state
 
 end ProofScript.Generated.VCRequest
 `
@@ -128,6 +129,7 @@ end ProofScript.Generated.VCRequest
       invocationItems,
       specificationDiscovery: tactic === 'mvcgen' ? 'registered-attribute' : 'explicit-list',
       programDefinitionHandling: tactic === 'mvcgen' ? 'explicit-unfold-list' : 'tactic-native',
+      finisher: finisher ? { tactic: finisher, scope: 'all-goals', checkedInLean: false } : null,
       checkedAvailableInLean: false,
     },
     request: {
