@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "release": "P5.94",
+  "release": "PS1-architecture-cleanup",
   "trustClaim": {
     "label": "K3-TB trusted-boundary",
     "fullyFormalK3": false,
@@ -239,7 +239,6 @@
       "trustBoundary": "Product entrypoint; may orchestrate but must not redefine trust claims.",
       "productionRole": "CLI and npm entrypoint for user workflows.",
       "allowedDependencies": [
-        "packages/frontend",
         "packages/kernel-codec",
         "packages/certificates",
         "packages/project",
@@ -256,9 +255,11 @@
       "npmName": "@proofscript/lsp",
       "tier": "product",
       "lifecycle": "supported",
-      "trustBoundary": "Editor integration only; no trusted proof authority.",
-      "productionRole": "Language-server integration surface.",
-      "allowedDependencies": []
+      "trustBoundary": "Thin LSP/JSON-RPC transport over language-worker; no parser, elaborator, kernel, or proof authority.",
+      "productionRole": "Compiler-backed Language Server Protocol transport and document diagnostics.",
+      "allowedDependencies": [
+        "packages/language-worker"
+      ]
     },
     {
       "path": "packages/plugin-api",
@@ -323,14 +324,37 @@
     {
       "path": "packages/compiler",
       "npmName": "@proofscript/compiler",
-      "tier": "experimental",
-      "lifecycle": "experimental",
-      "trustBoundary": "Backend dispatch prototype; not canonical PSC-1 proof authority.",
-      "productionRole": "Future backend dispatch and plugin compilation experiments.",
+      "tier": "product",
+      "lifecycle": "supported",
+      "trustBoundary": "Canonical high-level compiler facade; delegates language semantics to frontend/kernel and is not independent proof authority.",
+      "productionRole": "Programmatic source/project checking and checked-backend dispatch used by CLI and editor services.",
       "allowedDependencies": [
+        "packages/frontend",
         "packages/plugin-api",
         "packages/semantic-ir",
         "packages/kernel"
+      ]
+    },
+    {
+      "path": "packages/language-service",
+      "npmName": "@proofscript/language-service",
+      "tier": "product",
+      "lifecycle": "supported",
+      "trustBoundary": "Editor-independent semantic service that delegates checking to the canonical compiler facade; no independent parser/checker semantics.",
+      "productionRole": "Owns versioned unsaved document state, compiler-backed analysis, diagnostics, and cancellation boundaries.",
+      "allowedDependencies": [
+        "packages/compiler"
+      ]
+    },
+    {
+      "path": "packages/language-worker",
+      "npmName": "@proofscript/language-worker",
+      "tier": "product",
+      "lifecycle": "supported",
+      "trustBoundary": "Worker-thread isolation, cancellation, crash recovery, and state replay only; no ProofScript language semantics.",
+      "productionRole": "Runs the language service off the LSP transport thread and preserves document state across worker restarts.",
+      "allowedDependencies": [
+        "packages/language-service"
       ]
     },
     {
@@ -440,6 +464,51 @@
       "allowedDependencies": [
         "packages/kernel"
       ]
+    },
+    {
+      "path": "packages/contracts",
+      "npmName": "@proofscript/contracts-workflow",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Contract extraction/workflow prototype; generates verification metadata and obligations but is not kernel proof authority.",
+      "productionRole": "KA138+ verification workflow prototype for requires/ensures/assert/ghost/old contract extraction.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/obligations",
+      "npmName": "@proofscript/obligations",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Proof-obligation workflow metadata only; obligation status does not bypass kernel/oracle proof checking.",
+      "productionRole": "Tracks generated verification obligations and stable workflow identifiers.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/proof-status",
+      "npmName": "@proofscript/proof-status",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Proof-status/provenance workflow metadata only; does not establish theorem validity by itself.",
+      "productionRole": "Aggregates verification workflow status for KA-era contract/proof tooling.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/state-models",
+      "npmName": "@proofscript/state-models",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "State-model descriptor prototype outside the trusted kernel; semantic adequacy must be established separately.",
+      "productionRole": "Describes state/effect models used by experimental stateful verification workflows.",
+      "allowedDependencies": []
+    },
+    {
+      "path": "packages/monadic-lowering",
+      "npmName": "@proofscript/monadic-lowering",
+      "tier": "experimental",
+      "lifecycle": "experimental",
+      "trustBoundary": "Experimental monadic verification lowering; cannot create proof authority or alter native kernel acceptance.",
+      "productionRole": "KA-era lowering/preflight prototype for stateful and monadic verification.",
+      "allowedDependencies": []
     }
   ]
 }

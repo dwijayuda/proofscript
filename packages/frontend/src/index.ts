@@ -11,13 +11,15 @@ import {
 } from "@proofscript/kernel";
 import { CoreModulesBuildMetadata, makeArtifact } from "@proofscript/kernel-codec";
 import { prepareCoreEnvironment } from "@proofscript/environment";
-import { buildModuleGraph, ProjectModuleGraph, ProjectModuleSource } from "@proofscript/project";
+import { buildModuleGraph, ProjectModuleGraph, ProjectModuleSource, type ProjectSourceProvider } from "@proofscript/project";
 import { UnsupportedFeature } from "@proofscript/syntax";
 
 export interface FrontendOptions {
   prelude?:CoreArtifact;
   /** Internal module-driver switch: imports were already resolved by the project graph. */
   allowResolvedImports?:boolean;
+  /** Optional source overlay for unsaved/editor buffers during project checks. */
+  sourceProvider?:ProjectSourceProvider;
 }
 export interface FrontendResult {
   artifact: ReturnType<typeof makeArtifact>;
@@ -58,7 +60,7 @@ export function checkSource(source:string,options:FrontendOptions={}):FrontendRe
  * unrelated sibling modules. The final artifact is self-contained Core.
  */
 export function checkProjectFile(entryFile:string,options:FrontendOptions={}):FrontendProjectResult{
-  const graph=buildModuleGraph(entryFile);
+  const graph=buildModuleGraph(entryFile,undefined,options.sourceProvider);
   const baseDecls=[...(options.prelude?.declarations??[])];
   const baseTypeclasses=cloneTypeclasses(options.prelude?.typeclasses??emptyTypeclassEnvironment());
   const compiled=new Map<string,CheckedProjectModule>();

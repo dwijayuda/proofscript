@@ -1,5 +1,5 @@
 import { Environment, Term, infer, kernelWhnf } from "@proofscript/kernel";
-import { SurfaceTerm } from "@proofscript/syntax";
+import { SurfaceTerm, UnsupportedFeature } from "@proofscript/syntax";
 import { elabProofTerm } from "./proofElaborator";
 import { elaborateMatchTerm } from "./matchElaborator";
 import { elabArrayLiteral, elabDo } from "./arrayDoElaboration";
@@ -32,6 +32,8 @@ export function elabTerm(
     case "intLit":
     case "natLit":
       return elabPrimitiveLiteral(term, localTypes, kernelEnv, expectedType);
+    case "tuple":
+      throw new UnsupportedFeature("Lean tuple syntax is parsed for v0.6.1 surface conformance but tuple Core elaboration is not implemented yet");
     case "arrayLit":
       return elabArrayLiteral(term, locals, localTypes, globals, available, kernelEnv, elabTerm, expectedType);
     case "do":
@@ -58,7 +60,7 @@ export function elabTerm(
     case "app":
       return elabAppTerm(term, locals, localTypes, globals, available, kernelEnv, elabTerm, expectedType);
     case "lam":
-      return elabLambdaTerm(term, locals, localTypes, globals, available, kernelEnv, elabTerm);
+      return elabLambdaTerm(term, locals, localTypes, globals, available, kernelEnv, elabTerm, expectedType);
     case "pi":
       return elabPiTerm(term, locals, localTypes, globals, available, kernelEnv, elabTerm);
     case "structUpdate": {

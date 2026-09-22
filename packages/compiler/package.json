@@ -2,7 +2,7 @@
   "name": "@proofscript/compiler",
   "version": "0.1.0-dev.0",
   "private": false,
-  "description": "ProofScript backend dispatch",
+  "description": "ProofScript canonical compiler facade and backend dispatch",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,6 +11,7 @@
     "README.md"
   ],
   "dependencies": {
+    "@proofscript/frontend": "0.1.0-dev.0",
     "@proofscript/plugin-api": "0.1.0-dev.0",
     "@proofscript/semantic-ir": "0.1.0-dev.0",
     "@proofscript/kernel": "0.1.0-dev.0"

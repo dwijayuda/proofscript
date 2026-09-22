@@ -1,5 +1,9 @@
 import {ParseError,Token} from "@proofscript/syntax";
 
+const isIdentifierStart=(ch:string):boolean=>ch==="_"||/\p{ID_Start}/u.test(ch);
+const isIdentifierContinue=(ch:string):boolean=>ch==="_"||ch==="'"||ch==="?"||/\p{ID_Continue}/u.test(ch);
+const codePointAt=(source:string,index:number):string=>String.fromCodePoint(source.codePointAt(index)!);
+
 export function tokenize(source:string):Token[]{
   const out:Token[]=[];let i=0;const push=(kind:Token["kind"],text:string,offset:number)=>out.push({kind,text,offset});
   while(i<source.length){const c=source[i];if(/\s/u.test(c)){i++;continue;}
@@ -40,7 +44,28 @@ export function tokenize(source:string):Token[]{
     const two=source.slice(i,i+2);if([":=","=>","->","==","!=","<=",">=","<-","&&","||"].includes(two)){push("sym",two,i);i+=2;continue;}
     if(["(",")",",",":",";","→","∀","←","{","}","⦃","⦄","[","]","=","≠","@",".","+","-","*","<",">","|","!"].includes(c)){push("sym",c,i);i++;continue;}
     if(/[0-9]/.test(c)){const s=i;while(i<source.length&&/[0-9]/.test(source[i]))i++;push("num",source.slice(s,i),s);continue;}
-    if(/[A-Za-z_]/.test(c)){const s=i;i++;while(i<source.length){if(/[A-Za-z0-9_'?]/u.test(source[i])){i++;continue;}if(source[i]==="."&&i+1<source.length&&/[A-Za-z_]/.test(source[i+1])){i+=2;while(i<source.length&&/[A-Za-z0-9_'?]/u.test(source[i]))i++;continue;}break;}push("id",source.slice(s,i),s);continue;}
+    const idStart=codePointAt(source,i);
+    if(isIdentifierStart(idStart)){
+      const start=i;i+=idStart.length;
+      while(i<source.length){
+        const ch=codePointAt(source,i);
+        if(isIdentifierContinue(ch)){i+=ch.length;continue;}
+        if(source[i]==="."&&i+1<source.length){
+          const next=codePointAt(source,i+1);
+          if(isIdentifierStart(next)){
+            i+=1+next.length;
+            while(i<source.length){
+              const q=codePointAt(source,i);
+              if(isIdentifierContinue(q)){i+=q.length;continue;}
+              break;
+            }
+            continue;
+          }
+        }
+        break;
+      }
+      push("id",source.slice(start,i),start);continue;
+    }
     throw new ParseError(`unexpected character ${JSON.stringify(c)} at offset ${i}`);
   }out.push({kind:"eof",text:"<eof>",offset:source.length});return out;
 }

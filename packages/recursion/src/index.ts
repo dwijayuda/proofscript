@@ -34,7 +34,7 @@ export function containsSurfaceName(term: SurfaceTerm, name: string, bound: Read
     }
     case "eq": return containsSurfaceName(term.left, name, bound) || containsSurfaceName(term.right, name, bound);
     case "binaryOp": return containsSurfaceName(term.left, name, bound) || containsSurfaceName(term.right, name, bound);
-    case "arrayLit": return term.items.some(item => containsSurfaceName(item, name, bound));
+    case "arrayLit": case "tuple": return term.items.some(item => containsSurfaceName(item, name, bound));
     case "do": {
       const next = new Set(bound);
       for (const bind of term.binds) {
@@ -52,7 +52,7 @@ export function containsSurfaceName(term: SurfaceTerm, name: string, bound: Read
     case "lam": {
       let next = new Set(bound);
       for (const binder of term.binders) {
-        if (containsSurfaceName(binder.type, name, next)) return true;
+        if (binder.type && containsSurfaceName(binder.type, name, next)) return true;
         next = new Set(next); next.add(binder.name);
       }
       return containsSurfaceName(term.body, name, next);
@@ -204,7 +204,7 @@ function rewriteBranchTerm(
     }
     case "eq": return { ...term, left: rewriteBranchTerm(term.left, declarationName, recursiveNames, patternBinders, shadowed), right: rewriteBranchTerm(term.right, declarationName, recursiveNames, patternBinders, shadowed) };
     case "binaryOp": return { ...term, left: rewriteBranchTerm(term.left, declarationName, recursiveNames, patternBinders, shadowed), right: rewriteBranchTerm(term.right, declarationName, recursiveNames, patternBinders, shadowed) };
-    case "arrayLit": return { ...term, items: term.items.map(item => rewriteBranchTerm(item, declarationName, recursiveNames, patternBinders, shadowed)) };
+    case "arrayLit": case "tuple": return { ...term, items: term.items.map(item => rewriteBranchTerm(item, declarationName, recursiveNames, patternBinders, shadowed)) };
     case "do": {
       let next = new Set(shadowed);
       const binds = term.binds.map(bind => {
@@ -241,7 +241,7 @@ function rewriteBranchTerm(
     case "lam": {
       let next = new Set(shadowed);
       const binders = term.binders.map(b => {
-        const type = rewriteBranchTerm(b.type, declarationName, recursiveNames, patternBinders, next);
+        const type = b.type ? rewriteBranchTerm(b.type, declarationName, recursiveNames, patternBinders, next) : undefined;
         next = new Set(next); next.add(b.name);
         return { ...b, type };
       });

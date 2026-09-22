@@ -147,7 +147,7 @@ function surfaceMentionsInt(term: SurfaceTerm): boolean {
     case "bif":
       return surfaceMentionsInt(term.condition) || surfaceMentionsInt(term.thenBranch) || surfaceMentionsInt(term.elseBranch);
     case "lam":
-      return term.binders.some(b => surfaceMentionsInt(b.type)) || surfaceMentionsInt(term.body);
+      return term.binders.some(b => b.type ? surfaceMentionsInt(b.type) : false) || surfaceMentionsInt(term.body);
     case "pi":
       return surfaceMentionsInt(term.binder.type) || surfaceMentionsInt(term.body);
     case "let":
@@ -157,6 +157,7 @@ function surfaceMentionsInt(term: SurfaceTerm): boolean {
     case "structInst":
       return term.fields.some(f => surfaceMentionsInt(f.value));
     case "arrayLit":
+    case "tuple":
       return term.items.some(surfaceMentionsInt);
     case "do":
       return term.binds.some(b => surfaceMentionsInt(b.value)) || surfaceMentionsInt(term.body);

@@ -83,6 +83,7 @@ function collectNameRefs(term:SurfaceTerm,out:Set<string>,bound:Set<string>):voi
     case "sort":case "natLit":case "intLit":case "stringLit":case "boolLit":case "rflProof":case "assumptionProof":
       break;
     case "arrayLit":
+    case "tuple":
       for(const item of term.items)collectNameRefs(item,out,bound);
       break;
     case "do":{
@@ -115,7 +116,7 @@ function collectNameRefs(term:SurfaceTerm,out:Set<string>,bound:Set<string>):voi
       break;
     case "lam":{
       const scoped=new Set(bound);
-      for(const binder of term.binders){collectNameRefs(binder.type,out,scoped);scoped.add(binder.name);}
+      for(const binder of term.binders){if(binder.type)collectNameRefs(binder.type,out,scoped);scoped.add(binder.name);}
       collectNameRefs(term.body,out,scoped);
       break;
     }

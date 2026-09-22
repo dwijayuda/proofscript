@@ -53,6 +53,15 @@
       "path": "./packages/compiler"
     },
     {
+      "path": "./packages/language-service"
+    },
+    {
+      "path": "./packages/language-worker"
+    },
+    {
+      "path": "./packages/lsp"
+    },
+    {
       "path": "./packages/lean-export"
     },
     {

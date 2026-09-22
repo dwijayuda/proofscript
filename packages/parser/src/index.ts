@@ -146,13 +146,14 @@ class Parser extends TokenCursor{
     const visit=(t:SurfaceTerm,scope:Set<string>)=>{switch(t.tag){
       case "name":if(sectionNames.has(t.name)&&!scope.has(t.name))out.add(t.name);break;
       case "sort":case "natLit":case "intLit":case "stringLit":case "boolLit":case "rflProof":case "assumptionProof":break;
+      case "tuple":for(const item of t.items)visit(item,scope);break;
       case "bif":visit(t.condition,scope);visit(t.thenBranch,scope);visit(t.elseBranch,scope);break;
       case "exactProof":visit(t.term,scope);break;
       case "applyProof":visit(t.term,scope);if(t.body)visit(t.body,scope);break;
       case "introProof":{const s=new Set(scope);for(const name of t.names)s.add(name);visit(t.body,s);break;}
       case "eq":visit(t.left,scope);visit(t.right,scope);break;
       case "app":visit(t.fn,scope);for(const a of t.args)visit(a,scope);break;
-      case "lam":{const s=new Set(scope);for(const b of t.binders){visit(b.type,s);s.add(b.name);}visit(t.body,s);break;}
+      case "lam":{const s=new Set(scope);for(const b of t.binders){if(b.type)visit(b.type,s);s.add(b.name);}visit(t.body,s);break;}
       case "pi":visit(t.binder.type,scope);{const s=new Set(scope);s.add(t.binder.name);visit(t.body,s);}break;
       case "let":if(t.type)visit(t.type,scope);visit(t.value,scope);{const s=new Set(scope);s.add(t.name);visit(t.body,s);}break;
       case "match":visit(t.scrutinee,scope);for(const c of t.cases){const s=new Set(scope);if(c.pattern.tag==="ctor")for(const b of c.pattern.binders)s.add(b);visit(c.body,s);}break;
@@ -346,11 +347,20 @@ class Parser extends TokenCursor{
     if(this.atId("where"))this.next();
     // K2c deliberately starts with parameterless structures. The following
     // brace is the field block, not an implicit parameter binder.
-    this.expect("{");const fields:{name:string;type:SurfaceTerm}[]=[];
+    this.expect("{");const fields:{name:string;type:SurfaceTerm;binderInfo?:"explicit"|"implicit"|"strictImplicit"|"instImplicit"}[]=[];
     while(!this.at("}")){
+      if(this.at("{")){
+        const implicitFields=this.parseValueBinderGroup();
+        this.expect(";");
+        for(const field of implicitFields){
+          if(fields.some(f=>f.name===field.name))throw new ParseError(`duplicate structure field '${field.name}'`);
+          fields.push({name:field.name,type:field.type,binderInfo:field.binderInfo});
+        }
+        continue;
+      }
       const fieldName=this.expectKind("id","structure field name").text;this.expect(":");const type=this.parseTerm();this.expect(";");
       if(fields.some(f=>f.name===fieldName))throw new ParseError(`duplicate structure field '${fieldName}'`);
-      fields.push({name:fieldName,type});
+      fields.push({name:fieldName,type,binderInfo:"explicit"});
     }
     this.expect("}");if(this.at(";"))this.next();
     if(fields.length===0)throw new UnsupportedFeature("K3c-section-vars0 does not yet implement empty structures");
@@ -486,10 +496,18 @@ class Parser extends TokenCursor{
     currentOpenNamespaces:()=>this.currentOpenNamespaces()
   };}
 
-  private parseLambda():SurfaceTerm{this.next();const binders:SurfaceBinder[]=[];if(!this.canStartValueBinder())throw new ParseError("canonical ProofScript lambda requires at least one binder");while(this.canStartValueBinder())binders.push(...this.parseValueBinderGroup());this.expect("=>");return{tag:"lam",binders,body:this.parseTerm()};}
+  private parseLambda():SurfaceTerm{this.next();const binders:{name:string;type?:SurfaceTerm;binderInfo?:"explicit"|"implicit"|"strictImplicit"|"instImplicit"}[]=[];while(true){if(this.canStartValueBinder()){binders.push(...this.parseValueBinderGroup());continue;}if(this.peek().kind==="id"){binders.push({name:this.next().text,binderInfo:"explicit"});continue;}break;}if(binders.length===0)throw new ParseError("canonical ProofScript lambda requires at least one binder");this.expect("=>");return{tag:"lam",binders,body:this.parseTerm()};}
   private parseForall():SurfaceTerm{this.next();if(!this.canStartValueBinder())throw new ParseError("forall requires at least one binder");const binders:SurfaceBinder[]=[];while(this.canStartValueBinder())binders.push(...this.parseValueBinderGroup());this.expect(",");let body=this.parseTerm();for(let i=binders.length-1;i>=0;i--)body={tag:"pi",binder:binders[i],body};return body;}
   private parseAtom():SurfaceTerm{
-    const t=this.peek();if(t.text==="("){this.next();const inner=this.parseTerm();this.expect(")");return inner;}
+    const t=this.peek();if(t.text==="("){
+      this.next();const first=this.parseTerm();
+      if(this.at(",")){
+        const items:SurfaceTerm[]=[first];
+        while(this.at(",")){this.next();if(this.at(")"))throw new ParseError("tuple syntax requires an element after ','");items.push(this.parseTerm());}
+        this.expect(")");return{tag:"tuple",items};
+      }
+      this.expect(")");return first;
+    }
     if(t.text==="[")return this.parseArrayLiteral();
     if(t.text==="{")return this.parseStructureInstance();
     if(t.kind==="id"){
