@@ -147,6 +147,12 @@ export function validateStateModelDescriptor(descriptor, { descriptorPath, descr
   if (vcgenTactic !== undefined && !['vcgen', 'mvcgen'].includes(vcgenTactic)) {
     errors.push({ field: 'vcgen.tactic', message: 'vcgen.tactic must be vcgen or mvcgen when provided' });
   }
+  if (descriptor.wp?.triple === 'Std.Do.Triple' && vcgenTactic !== undefined && vcgenTactic !== 'mvcgen') {
+    errors.push({
+      field: 'vcgen.tactic',
+      message: 'Std.Do.Triple requires mvcgen in the current compatibility profile; vcgen targets Std.Internal.Do.Triple',
+    });
+  }
   const accepted = errors.length === 0;
   return {
     schema: 'proofscript.state-model-validation.v1',
@@ -165,6 +171,8 @@ export function validateStateModelDescriptor(descriptor, { descriptorPath, descr
       statefulVerification: accepted,
       operationTripleTheoremIdentities: operations.filter(o => nonEmptyString(o.verification?.tripleTheorem)).length,
       leanEnvironmentBindingsDeclared: asArray(descriptor.lean?.imports).length > 0,
+      verificationTactic: vcgenTactic ?? null,
+      tripleTacticCompatible: !(descriptor.wp?.triple === 'Std.Do.Triple') || vcgenTactic === undefined || vcgenTactic === 'mvcgen',
       vcgenConnected: vcgenStatus === 'connected',
       semanticProofChecking: false,
     },
