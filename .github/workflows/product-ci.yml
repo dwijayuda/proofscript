@@ -21,6 +21,7 @@ jobs:
       - run: npm run build
       - run: npm run test:architecture:package-classification
       - run: npm run test:ps1:compiler-facade
+      - run: npm run test:ps1:incremental
       - run: npm run test:ps1:language-service
       - run: npm run test:ps1:language-worker
       - run: npm run test:ps1:lsp
