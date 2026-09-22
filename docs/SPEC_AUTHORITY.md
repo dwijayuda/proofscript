@@ -152,19 +152,32 @@ PS2 must replace hard-coded legacy metadata with an explicit release/profile man
 
 Historical certificates remain historical and must not be rewritten.
 
-## 7. Claim levels
+## 7. Claim and conformance levels
 
-Use the v0.6.1 compiler-ready claim/conformance vocabulary where applicable.
+Use the v0.6.1 compiler-ready vocabulary exactly.
 
-Implementation progress is reported by passing gates/cases, not by subjective percentage.
+Normative C-level meanings are:
+
+```text
+C0 = static corpus well formed
+C1 = reference frontend accepts/rejects corpus correctly
+C2 = reference frontend emits canonical Lean corpus
+C3 = production frontend matches the reference frontend
+C4 = corpus properties covered by machine-checked reference theorems
+```
+
+C-levels are separate from S1–S5 proof claims. A production-only parser corpus test must not be labeled C1, and a production-only lowering test must not be labeled C2.
+
+Implementation progress is reported by passing gates/cases, not subjective percentage.
 
 Examples:
 
 ```text
-surface conformance: C2
-registered v0.6.1 cases: 87/87
+v0.6.1 normative conformance: C0
+production surface corpus: 20/20
+production lowering corpus: 0/12
+reference frontend C1/C2: pending
 verification features specified: 4/10
-PS1 architecture gates: 8/10
 Lean differential dimensions: 17/21
 ```
 
