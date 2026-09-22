@@ -53,7 +53,7 @@ function positional(args) {
 }
 function usage(code = 0) {
   const text = `ProofScript ${VERSION}\n\nSimple project workflow:\n  psc init my-app\n  cd my-app\n  psc check\n  psc build\n  psc run sample\n\nCompiler setup workflow from the ProofScript source ZIP:\n  npm install --offline --no-audit --no-fund\n  npm run setup\n  npm link\n  psc doctor\n  psc clean [--json]\n\nCommands:\n  psc setup\n  psc init [dir] [--name <name>] [--template software|crud] [--force] [--json]\n  psc status [--json]\n  psc check [file.ps] [--json] [--emit-core <out.json>]\n  psc emit-core [file.ps] --out <out.pscore.json> [--json]\n  psc emit-lean <file.ps|core.json|contracts.json> --out <out.lean> [--json]\n  psc certify [file.ps] --core <core.json> --out <cert.json> [--json]\n  psc build-ts [file.ps] [--out <out.ts>] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc build-js [file.ps] [--out <out.js>] [--json]\n  psc build [file.ps] [--target ts|js] [--out <file>] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc compile [file.ps|dir] [--out-dir <dir>] [--suffix .generated] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc run [file.ps] [--call <name>] [--args a,b] [--json]\n  psc run <name> [--args a,b] [--json]\n  psc target list\n  psc language status [--json]
-  psc state-model validate <model.json> [--out <validation.json>] [--json]\n  psc monadic-lowering <contracts.json> --out <lowering.json> [--emit-lean <out.lean>] [--json]\n  psc monadic-preflight <monadic-lowering.json> --out <preflight.json> --emit-lean <preflight.lean> [--lean-cmd <lean>] [--json]\n  psc doctor\n  psc clean [--json]\n\nDefaults inside a psc init project:\n  input file: src/Main.ps\n  source dir: src\n  output dir: dist\n\nTrust boundary:\n  This CLI is a wrapper over the PSC-1 software-profile path. It does not claim full Lean 4 equivalence or full backend execution-correspondence proof.\n`;
+  psc state-model validate <model.json> [--out <validation.json>] [--json]\n  psc monadic-lowering <contracts.json> --out <lowering.json> [--emit-lean <out.lean>] [--json]\n  psc monadic-vc-request <monadic-lowering.json> --out <request.json> [--emit-lean <request.lean>] [--json]\n  psc monadic-preflight <monadic-lowering.json> --out <preflight.json> --emit-lean <preflight.lean> [--lean-cmd <lean>] [--json]\n  psc doctor\n  psc clean [--json]\n\nDefaults inside a psc init project:\n  input file: src/Main.ps\n  source dir: src\n  output dir: dist\n\nTrust boundary:\n  This CLI is a wrapper over the PSC-1 software-profile path. It does not claim full Lean 4 equivalence or full backend execution-correspondence proof.\n`;
   (code === 0 ? console.log : console.error)(text);
   process.exit(code);
 }
@@ -1694,7 +1694,7 @@ function softwareAlphaCommand(args) {
       obligationsArtifact: { path: path.relative(path.dirname(proofStatus), obligations).replace(/\\/g, '/'), sha256: sha256File(obligations) },
       obligations: items,
       summary: { total: items.length, proved: 0, checked: 0, unproved: items.length },
-      trustBoundary: { semanticProofChecking: false, staleProofDetection: true, monadicProofDischarge: false, monadicLoweringSkeletons: true, monadicPreflightStubs: true, vcgenConnected: false, hiddenAxiomsIntroduced: false },
+      trustBoundary: { semanticProofChecking: false, staleProofDetection: true, monadicProofDischarge: false, monadicLoweringSkeletons: true, statefulVcRequestArtifacts: true, leanVcEnvironmentResolved: false, vcgenExecuted: false, monadicPreflightStubs: true, vcgenConnected: false, hiddenAxiomsIntroduced: false },
     };
     writeJsonFile(proofStatus, statusArtifact);
     workflows.push({
@@ -1790,6 +1790,67 @@ function monadicLoweringCommand(args) {
   }
 }
 
+function monadicVcRequestCommand(args) {
+  const json = has(args, '--json');
+  const pos = positional(args);
+  const input = pos[0] ? path.resolve(process.cwd(), pos[0]) : undefined;
+  const out = opt(args, '--out');
+  const emitLean = opt(args, '--emit-lean');
+  if (!input || !out) usage(2);
+  try {
+    const { loweringArtifact } = readMonadicLoweringArtifact(input);
+    const request = loweringArtifact.statefulVcRequest;
+    if (!request || request.schema !== 'proofscript.stateful-vc-request/v1') {
+      throw new Error('monadic lowering artifact does not contain proofscript.stateful-vc-request/v1');
+    }
+    const resolvedOut = path.resolve(process.cwd(), out);
+    writeJsonFile(resolvedOut, request);
+    let resolvedLean;
+    if (emitLean) {
+      if (request.requestSourceReady !== true || !request.request?.source) {
+        const reasons = (request.diagnostics ?? []).map(item => item.code).join(', ') || 'request source not ready';
+        jsonOut({
+          status: 'unsupported',
+          command: 'monadic-vc-request',
+          out: resolvedOut,
+          outSha256: sha256File(resolvedOut),
+          schema: request.schema,
+          requestSourceReady: false,
+          diagnostics: request.diagnostics ?? [],
+          message: `Lean VC request source is not ready: ${reasons}`,
+        }, json);
+        process.exit(2);
+      }
+      resolvedLean = path.resolve(process.cwd(), emitLean);
+      fs.mkdirSync(path.dirname(resolvedLean), { recursive: true });
+      fs.writeFileSync(resolvedLean, request.request.source);
+    }
+    jsonOut({
+      status: 'accepted',
+      command: 'monadic-vc-request',
+      out: resolvedOut,
+      outSha256: sha256File(resolvedOut),
+      emitLean: resolvedLean,
+      emitLeanSha256: resolvedLean ? sha256File(resolvedLean) : undefined,
+      schema: request.schema,
+      function: request.function,
+      requestSourceReady: request.requestSourceReady,
+      environment: request.environment,
+      tactic: request.tactic,
+      executionStatus: request.executionStatus,
+      leanEnvironmentResolved: request.leanEnvironmentResolved,
+      tacticExecuted: request.tacticExecuted,
+      semanticVcDerivationComplete: request.semanticVcDerivationComplete,
+      realVerificationConditionsGenerated: request.realVerificationConditionsGenerated,
+      semanticProofDischarge: request.semanticProofDischarge,
+      diagnostics: request.diagnostics,
+    }, json);
+  } catch (error) {
+    jsonOut({ status: 'rejected', command: 'monadic-vc-request', message: error instanceof Error ? error.message : String(error) }, json);
+    process.exit(1);
+  }
+}
+
 function runLeanPreflightCommand(leanCmd, leanFile) {
   if (!leanCmd) return { status: 'skipped', reason: 'no --lean-cmd provided' };
   const result = spawnSync(leanCmd, [leanFile], { cwd: process.cwd(), encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
@@ -1874,10 +1935,10 @@ function languageStatus(args = []) {
     features: {
       programming: ['def', 'function', 'const', 'structures', 'inductives', 'match', 'if', 'where', 'Nat', 'Int', 'Bool', 'String', 'Unit', 'Option', 'List'],
       theoremProver: ['theorem', 'rfl/simp passthrough where supported', 'Core artifact checking', 'Lean export'],
-      formalVerification: ['requires', 'ensures', 'result', 'old', 'assert', 'ghost', 'invariant', 'decreases', 'loop invariant structural obligations', 'proof obligation listing', 'proof status records', 'stale proof detection', 'exact theorem statement printing', 'structural certificates', 'software examples workflow', 'source/proof/runtime artifact binding', 'Lean-backed proof-status checking', 'state model descriptors', 'monadic/stateful contract descriptor binding', 'Std.Do.Triple-style monadic lowering skeleton', 'Lean-checkable monadic preflight stubs'],
+      formalVerification: ['requires', 'ensures', 'result', 'old', 'assert', 'ghost', 'invariant', 'decreases', 'loop invariant structural obligations', 'proof obligation listing', 'proof status records', 'stale proof detection', 'exact theorem statement printing', 'structural certificates', 'software examples workflow', 'source/proof/runtime artifact binding', 'Lean-backed proof-status checking', 'state model descriptors', 'monadic/stateful contract descriptor binding', 'Std.Do.Triple-style monadic lowering skeleton', 'typed StateM monadic program lowering', 'Std.Do StateM semantic encoding', 'Lean VC derivation request artifact', 'Lean-checkable monadic preflight stubs'],
       notYetImplemented: ['monadic vcgen/mvcgen semantic discharge', 'full macros', 'full tactic engine', 'full Lean4 equivalence'],
     },
-    commands: ['init', 'check', 'build', 'build-ts', 'build-js', 'emit-core', 'emit-lean', 'state-model', 'monadic-lowering', 'monadic-preflight', 'contracts', 'obligations', 'proof-status', 'check-obligations', 'certify', 'verify', 'software-alpha', 'run', 'npm-readiness'],
+    commands: ['init', 'check', 'build', 'build-ts', 'build-js', 'emit-core', 'emit-lean', 'state-model', 'monadic-lowering', 'monadic-vc-request', 'monadic-preflight', 'contracts', 'obligations', 'proof-status', 'check-obligations', 'certify', 'verify', 'software-alpha', 'run', 'npm-readiness'],
     trustBoundary: { fullLean4Equivalence: false, fullyFormalK3: false, semanticContractProofChecking: 'partial-lean-backed-explicit-proofs-only', monadicProofDischarge: false, monadicLoweringSkeletons: true, monadicPreflightStubs: true, vcgenConnected: false, npmInstallableToolchain: true },
     unsupported: ['monadic vcgen/mvcgen semantic discharge', 'automatic proof search', 'full Lean4 equivalence'],
   };
@@ -1908,6 +1969,7 @@ else if (cmd === 'emit-lean') emitLeanCommand(args);
 else if (cmd === 'certify') certifyCommand(args);
 else if (cmd === 'state-model') stateModelCommand(args);
 else if (cmd === 'monadic-lowering') monadicLoweringCommand(args);
+else if (cmd === 'monadic-vc-request') monadicVcRequestCommand(args);
 else if (cmd === 'monadic-preflight') monadicPreflightCommand(args);
 else if (cmd === 'contracts') contractsCommand(args);
 else if (cmd === 'obligations') obligationsCommand(args);
