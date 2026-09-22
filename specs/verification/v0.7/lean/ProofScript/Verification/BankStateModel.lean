@@ -28,13 +28,13 @@ def creditState (account : AccountId) (amount : Nat) (state : Bank) : Bank :=
       state current
 
 def debit (account : AccountId) (amount : Nat) : StateM Bank Unit :=
-  fun state => ((), debitState account amount state)
+  modifyGet fun state => ((), debitState account amount state)
 
 def credit (account : AccountId) (amount : Nat) : StateM Bank Unit :=
-  fun state => ((), creditState account amount state)
+  modifyGet fun state => ((), creditState account amount state)
 
 def audit (_code : Nat) : StateM Bank Unit :=
-  fun state => ((), state)
+  modifyGet fun state => ((), state)
 
 @[simp]
 theorem balanceOf_debitState_self (state : Bank) (account : AccountId) (amount : Nat) :
@@ -73,7 +73,13 @@ theorem debit_triple
     ⦃ fun state => Q.1 () (debitState account amount state) ⦄
       debit account amount
     ⦃ Q ⦄ := by
-  simp [debit, Triple, wp]
+  simpa [debit] using
+    (Std.Do.Spec.modifyGet_StateT
+      (m := Id)
+      (σ := Bank)
+      (α := Unit)
+      (f := fun state : Bank => ((), debitState account amount state))
+      (Q := Q))
 
 /-- Precise schematic specification for credit. -/
 @[spec]
@@ -83,7 +89,13 @@ theorem credit_triple
     ⦃ fun state => Q.1 () (creditState account amount state) ⦄
       credit account amount
     ⦃ Q ⦄ := by
-  simp [credit, Triple, wp]
+  simpa [credit] using
+    (Std.Do.Spec.modifyGet_StateT
+      (m := Id)
+      (σ := Bank)
+      (α := Unit)
+      (f := fun state : Bank => ((), creditState account amount state))
+      (Q := Q))
 
 /-- Audit leaves the modeled bank state unchanged. -/
 @[spec]
@@ -93,7 +105,13 @@ theorem audit_triple
     ⦃ fun state => Q.1 () state ⦄
       audit code
     ⦃ Q ⦄ := by
-  simp [audit, Triple, wp]
+  simpa [audit] using
+    (Std.Do.Spec.modifyGet_StateT
+      (m := Id)
+      (σ := Bank)
+      (α := Unit)
+      (f := fun state : Bank => ((), state))
+      (Q := Q))
 
 def runBankState (program : StateM Bank α) (initial : Bank) : α × Bank :=
   StateT.run program initial
