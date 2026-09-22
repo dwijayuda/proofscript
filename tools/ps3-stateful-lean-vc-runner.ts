@@ -16,6 +16,7 @@ import { buildStateModelBinding } from "../packages/state-models/src/index.mjs";
 const root = path.resolve(import.meta.dirname, "..");
 const args = process.argv.slice(2);
 const strict = args.includes("--strict");
+const requireProof = args.includes("--require-proof");
 const outArg = option("--out");
 const sourceArg = option("--source");
 const modelArg = option("--model");
@@ -184,7 +185,7 @@ if (leanCompatibility.status !== "accepted") {
     },
   };
   writeReport(report);
-  if (strict) process.exit(2);
+  if (strict || requireProof) process.exit(2);
   process.exit(0);
 }
 
@@ -240,4 +241,5 @@ const report = {
 
 writeReport(report);
 
+if (requireProof && !execution.claims.semanticProofDischarge) process.exit(1);
 if (strict && !execution.claims.realVerificationConditionsGenerated) process.exit(1);
