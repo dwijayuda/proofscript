@@ -1,0 +1,56 @@
+name: stateful-lean-ci
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - "packages/contracts/**"
+      - "packages/state-models/**"
+      - "packages/monadic-lowering/**"
+      - "specs/verification/v0.7/**"
+      - "examples/software/06-bank-state.model.json"
+      - "examples/software/07-bank-debit-stateful-vc.ps"
+      - "tools/ps3-stateful-lean-*.ts"
+      - ".github/workflows/stateful-lean-ci.yml"
+  push:
+    branches:
+      - main
+      - cleanup/ps1-architecture
+    paths:
+      - "packages/contracts/**"
+      - "packages/state-models/**"
+      - "packages/monadic-lowering/**"
+      - "specs/verification/v0.7/**"
+      - "examples/software/06-bank-state.model.json"
+      - "examples/software/07-bank-debit-stateful-vc.ps"
+      - "tools/ps3-stateful-lean-*.ts"
+      - ".github/workflows/stateful-lean-ci.yml"
+
+jobs:
+  stateful-vc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - name: Set up pinned Lean verification project
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: specs/verification/v0.7/lean
+          build: true
+          test: false
+          use-mathlib-cache: false
+      - name: Execute generated stateful VC request
+        run: npm run assurance:ps3:stateful-lean-vc -- --strict --out stateful-vc-run.json
+      - name: Upload stateful VC evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stateful-vc-run
+          path: stateful-vc-run.json
+          if-no-files-found: warn
