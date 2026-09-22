@@ -50,7 +50,12 @@ vc-request-execution
 
 A successful completed proof has `failedStage = null`.
 
-The runner's `--strict` mode means "require real Lean-generated verification conditions"; it does **not** mean "require exactly Lean 4.33.1". Version compatibility is governed separately by the `Lean >= 4.33.1` policy.
+The runner has two enforcement modes:
+
+- `--strict` means "require real Lean-generated verification conditions"; a `vcs-generated` run with residual goals is acceptable.
+- `--require-proof` means "require zero residual goals and `semanticProofDischarge = true`".
+
+Neither flag pins Lean to exactly 4.33.1. Version compatibility is governed separately by the `Lean >= 4.33.1` policy.
 
 The public command reports:
 
@@ -116,3 +121,22 @@ A failure inside Lean's experimental `vcgen` implementation is not accepted as e
 The generated request may include a checked Lean finisher after VC generation. In the current bounded `Std.Do.Triple` profile this is `all_goals simp_all`.
 
 A successful finisher does not bypass the trust boundary: Lean typechecks the resulting theorem. If the request exits successfully with no residual goals, `semanticProofDischarge = true` applies only to that concrete generated theorem/evidence record.
+
+
+## First concrete proved run
+
+A local Lean 4.34.0 execution of `examples/software/07-bank-debit-stateful-vc.ps` completed with:
+
+```text
+status = proved
+failedStage = null
+leanModelTypechecked = true
+leanProgramTypechecked = true
+tripleTargetTypechecked = true
+tacticExecuted = true
+realVerificationConditionsGenerated = true
+semanticProofDischarge = true
+residual goal count = 0
+```
+
+This is evidence for that concrete generated theorem only. It does not set `stateModelAdequacyChecked`, `sourceToLeanProgramEquivalenceChecked`, or `exceptionalPathsCovered`.
