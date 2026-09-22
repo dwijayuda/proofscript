@@ -7,54 +7,104 @@
 - Baseline label: KA146 canonical baseline
 - Protected archive branch: `archive/legacy-ka146`
 - Cleanup branch: `cleanup/ps1-architecture`
+- Draft PR: #1
 
-## Baseline behavior already observed
+## Baseline behavior
 
-The uploaded KA146 code corresponding to this baseline was exercised before cleanup work began.
+Observed before cleanup and now represented by the product regression workflow:
 
-Observed passing behavior:
+- `npm run build`
+- `npm run test:ka137`
+- `npm run test:ka140`
+- `npm run test:ka146`
+- `psc check examples/software/01-domain-model.ps`
+- JavaScript build/runtime smoke behavior
+- proof/theorem runtime erasure behavior
 
-- `npm run test:ka137` — PASS
-- `npm run test:ka140` — PASS
-- `npm run test:ka146` — PASS
-- `psc check examples/software/01-domain-model.ps` — accepted
-- `psc build examples/software/01-domain-model.ps --target js` — emitted executable JavaScript
-- theorem declarations were omitted from runtime emission in that build path
+## CI status
 
-GitHub had no recorded workflow run/status for the baseline commit when PS1 cleanup started, so PS1 adds a lightweight CI workflow and treats it as the remote regression gate going forward.
+### Product CI
+
+`product-ci` is the normal PS1 regression workflow.
+
+It runs on pull requests to `main`, pushes to `main`, and the PS1 cleanup branch.
+
+The repository now pins TypeScript `5.9.3` as a dev dependency instead of relying on an ambient/global `tsc`.
+
+### Historical K3-TB assurance
+
+The former always-on `ci` workflow is now `legacy-k3tb-assurance` and is manual-only.
+
+Reason:
+
+- it is historical Lean 4.33.1/K3-TB evidence;
+- it includes generated-evidence assumptions that are not appropriate normal PR gates;
+- its old verification-bundle assertions also depend on historical script text/shape;
+- none of those failures should mask whether the current product compiler regression suite is healthy.
+
+The historical workflow is preserved rather than deleted.
+
+## Active specification policy
+
+- active source baseline: ProofScript Language Reference v0.6.1;
+- v0.1/v0.1.x references: historical unless an assurance artifact explicitly pins them;
+- v0.7: next verification-language specification track;
+- KA138–KA146 verification code: useful implementation evidence/prototypes, not automatically final v0.7 semantics;
+- Lean 4.33.1: historical K3-TB assurance lane;
+- Lean 4.34.0: current product stable compatibility lane as of 2026-09-22;
+- Lean 4.35.0-rc2: current tracking/RC lane as of 2026-09-22.
+
+See:
+
+- `docs/SPEC_AUTHORITY.md`
+- `docs/LEAN_VERSION_POLICY.md`
+- `docs/PRODUCT_ROADMAP.md`
 
 ## Current architectural findings
 
-- ProofScript is an npm-workspaces monorepo and should remain one.
-- `packages/kernel` is a meaningful trust boundary and should stay modular.
-- `packages/compiler` exists but currently has a narrow backend-dispatch role rather than being the canonical high-level compiler API.
+- ProofScript remains an npm-workspaces monorepo.
+- `packages/kernel` remains a meaningful trusted logical boundary.
+- `packages/compiler` is being promoted from backend dispatch into the canonical high-level programmatic facade.
+- the CLI now routes source/project checking through `@proofscript/compiler` rather than importing `@proofscript/frontend` directly.
 - `packages/lsp` in KA146 is scaffold-only.
-- The separately developed LSP implementation is not present in KA146 and must later be rebased through a stable language-service boundary.
-- The repository contains overlapping frontend architecture: `frontend`, `frontend-next`, and `unified-bridge`.
-- Several packages are scaffolds or future-facing boundaries and need classification before removal or implementation.
-- The root `package.json` contains a very large historical script surface. PS1 will not delete scripts blindly; active product gates must be separated from historical/assurance gates first.
+- the separately developed LSP remains donor/reference work and should be rebased through a language-service boundary.
+- `frontend`, `frontend-next`, and `unified-bridge` are not yet candidates for blind deletion; they have different capabilities.
+- `frontend-next` contains substantial independent parser/elaborator/IR/incremental/plugin functionality.
+- `unified-bridge` connects frontend-next output into PSKernel/Core and is covered by existing unified integration tests.
+- verification workflow packages (`contracts`, `obligations`, `proof-status`, `state-models`, `monadic-lowering`) contain real `.mjs` implementations and are preserved.
+- clear scaffold packages currently include `diagnostics`, `formatter`, `macro`, and `tactics-core`, but they will not be removed until reference/dependency audit is complete.
+
+See:
+
+- `docs/PACKAGE_CLASSIFICATION.md`
+- `docs/FRONTEND_CONVERGENCE.md`
+- `docs/PS1_ARCHITECTURE.md`
 
 ## PS1 progress
 
 - [x] Preserve baseline on `archive/legacy-ka146`
 - [x] Create isolated cleanup branch
 - [x] Freeze PS1 milestone
-- [ ] Add lightweight PS1 CI
-- [ ] Publish canonical package classification
-- [ ] Make compiler API the canonical programmatic entry point
+- [x] Establish normal product CI
+- [x] Separate historical K3-TB assurance from product CI
+- [x] Pin TypeScript build toolchain
+- [x] Publish package classification
+- [x] Define active spec/version policy
+- [x] Begin canonical compiler facade
+- [x] Route CLI checking through compiler facade
+- [x] Define frontend convergence strategy
+- [ ] Add focused compiler-facade regression test
+- [ ] Complete frontend/front-end-next capability matrix
 - [ ] Establish language-service boundary
-- [ ] Audit `frontend-next` vs canonical frontend behavior
-- [ ] Remove/migrate `unified-bridge`
-- [ ] Restore/adapt LSP
+- [ ] Rebase editor/LSP donor code
+- [ ] Converge duplicate frontend semantics
+- [ ] Remove `unified-bridge` only after replacement gates exist
 - [ ] Reduce historical root/tooling clutter without losing assurance evidence
 - [ ] Final PS1 acceptance suite green
 
 ## Next engineering target
 
-Add the lightweight CI gate and package-architecture target document. Then inspect the dependency graph and classify every workspace package as:
-
-- active product;
-- active assurance;
-- editor/tooling;
-- deferred scaffold;
-- duplicate/migration candidate.
+1. Confirm the compiler-facade refactor passes product CI.
+2. Add a focused regression gate for the compiler facade.
+3. Inventory unique `frontend-next` capabilities and tests.
+4. Define/implement the smallest `language-service` API that consumes the compiler facade.
