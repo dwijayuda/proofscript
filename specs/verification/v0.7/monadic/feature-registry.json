@@ -42,6 +42,8 @@
         "full ProofScript/Lean expression elaboration beyond the bounded stateful-predicate-expressions0 AST",
         "semantic equivalence of generated pre/post predicates to the selected WP/Triple implementation",
         "checking the state-model adequacy theorem rather than binding its identity",
+        "semantic derivation of real verification conditions from the VC plan",
+        "resolution/checking of operation Triple theorem identities in a real Lean environment",
         "type-checked model-specific observation semantics beyond structural entry/final-state binder insertion"
       ],
       "artifact_representation": [
@@ -51,7 +53,8 @@
         "proofscript.stateful-postcondition-ir/v1 records entry/result/final-state binder roles and preserves raw postcondition references",
         "proofscript.stateful-predicate-elaboration/v1 binds state/result types and descriptor observation signatures/arguments without claiming whole-predicate typechecking",
         "proofscript.stateful-predicate-ast/v1 typechecks bounded monadic requires and normalized postconditions in stateful-predicate-expressions0 and fails closed outside it",
-        "proofscript.stateful-wp-binding/v1 binds typed pre/post predicate shapes to the selected WP/Triple, runner, and adequacy theorem identities without claiming adequacy checking",
+        "proofscript.stateful-wp-binding/v1 binds typed pre/post predicate shapes to the selected WP/Triple, runner, adequacy theorem, and operation Triple theorem identities without claiming theorem checking",
+        "proofscript.stateful-vc-plan/v1 binds stable source obligation IDs, operation theorem identities, typed postcondition goals, and the overall Triple target without claiming semantic VC derivation",
         "stateful postcondition IR is propagated contracts -> monadic-lowering -> monadic-preflight"
       ],
       "diagnostics": [
