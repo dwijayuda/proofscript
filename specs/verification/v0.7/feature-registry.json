@@ -63,6 +63,23 @@
         "malformed assert syntax is rejected",
         "result is not valid in assert"
       ]
+    },
+    {
+      "id": "V-GHOST",
+      "class": "V",
+      "status": "specified-alpha",
+      "surface": "ghost <name>: <type> := <expression>",
+      "scope": "pure function contract header",
+      "semantics": "Defines a nonrecursive logical abbreviation. Ghost references in requires/ensures/assert propositions are substituted by the ghost expression before proof obligations are emitted.",
+      "obligations": "No standalone obligation; ghost substitutions affect enclosing proof obligations.",
+      "runtime": "erased; any reference from extracted runtime code is rejected. This is a syntactic non-interference check, not a formal backend erasure proof.",
+      "diagnostics": [
+        "ghost names must be unique",
+        "ghost names must not collide with result, parameters, or requires hypotheses",
+        "ghost expressions may not depend on result",
+        "ghost expressions are nonrecursive and may not depend on ghost names in ps3-pure-contracts0",
+        "runtime ghost references are rejected"
+      ]
     }
   ]
 }
