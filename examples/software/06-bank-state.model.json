@@ -19,12 +19,18 @@
     {
       "name": "debit",
       "type": "AccountId -> Nat -> State Bank Unit",
-      "spec": "decreases the source account balance by amount when funds are sufficient"
+      "spec": "decreases the source account balance by amount when funds are sufficient",
+      "verification": {
+        "tripleTheorem": "BankStateModel.debit_triple"
+      }
     },
     {
       "name": "credit",
       "type": "AccountId -> Nat -> State Bank Unit",
-      "spec": "increases the destination account balance by amount"
+      "spec": "increases the destination account balance by amount",
+      "verification": {
+        "tripleTheorem": "BankStateModel.credit_triple"
+      }
     }
   ],
   "laws": [
@@ -36,5 +42,13 @@
   "vcgen": {
     "status": "not-connected",
     "tactic": "vcgen"
-  }
+  },
+  "observations": [
+    {
+      "name": "balanceOf",
+      "type": "AccountId -> Bank -> Nat",
+      "stateArgument": "last",
+      "spec": "reads an account balance from the selected Bank state"
+    }
+  ]
 }
