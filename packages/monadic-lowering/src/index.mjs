@@ -1,6 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
+import { createStatefulWpBinding } from './stateful-wp-binding.mjs';
+
+export { createStatefulWpBinding };
 
 export function sha256Text(text) {
   return createHash('sha256').update(String(text)).digest('hex');
@@ -63,17 +66,19 @@ function operationSkeletons(fn, stateModel) {
 export function createMonadicLoweringArtifact({ contractArtifact, contractArtifactPath, contractArtifactSha256, packageVersion, checkpoint = 'KA-145 monadic contract lowering skeleton' } = {}) {
   const fn = contractFunctionFromArtifact(contractArtifact);
   const stateModel = stateModelFromArtifact(contractArtifact);
+  const statefulWpBinding = createStatefulWpBinding(contractArtifact);
+  if (contractArtifact.verification?.profile === 'ps3-monadic-contracts0' && statefulWpBinding.bindingReady !== true) {
+    throw new Error('strict monadic profile invariant violated: typed predicate is not ready for WP/Triple identity binding');
+  }
   const parameterBinders = programParameterBinderText(fn.params ?? []);
   const entryStateBinder = `(__ps_entry : ${stateModel.stateType})`;
   const binders = [parameterBinders, entryStateBinder].filter(Boolean).join(' ');
   const theoremName = `${safeLeanName(fn.name)}_triple`;
   const triple = tripleNameFromStateModel(stateModel);
-  const preconditionBody = logicalPrecondition(fn);
-  const precondition = preconditionBody === 'True'
-    ? `fun __ps_initial : ${stateModel.stateType} => __ps_initial = __ps_entry`
-    : `fun __ps_initial : ${stateModel.stateType} => __ps_initial = __ps_entry ∧ (${preconditionBody})`;
-  const postconditionBody = logicalPostcondition(fn, contractArtifact.statefulPostconditionIR);
-  const postcondition = `fun __ps_result __ps_final => ${postconditionBody}`;
+  const preconditionBody = statefulWpBinding.precondition.body;
+  const precondition = statefulWpBinding.precondition.functionSource;
+  const postconditionBody = statefulWpBinding.postcondition.body;
+  const postcondition = statefulWpBinding.postcondition.functionSource;
   const monad = monadNameFromStateModel(stateModel);
   const programName = safeLeanName(fn.name);
   const statement = `theorem ${theoremName}${binders ? ` ${binders}` : ''} : ${triple} (${programName}${(fn.params ?? []).map(p => ` ${p.name}`).join(' ')}) (${precondition}) (${postcondition})`;
@@ -98,6 +103,7 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
     statefulPostconditionIR: contractArtifact.statefulPostconditionIR,
     statefulPredicateElaboration: contractArtifact.statefulPredicateElaboration,
     statefulPredicateAST: contractArtifact.statefulPredicateAST,
+    statefulWpBinding,
     contractKind: 'monadic-stateful',
     function: { name: fn.name, params: fn.params ?? [], returnType: fn.returnType, body: fn.body },
     stateModel: {
@@ -140,6 +146,7 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
       hasStdDoTripleSkeleton: true,
       statefulReferenceTypingComplete: contractArtifact.statefulPredicateElaboration?.referenceTypingComplete === true,
       normalizedPredicateAstTypeCheckingComplete: contractArtifact.statefulPredicateAST?.typeCheckingComplete === true,
+      statefulWpIdentityBindingReady: statefulWpBinding.bindingReady === true,
       wholePredicateTypeCheckingComplete: false,
       vcgenConnected: false,
       semanticProofDischarge: false,
@@ -153,6 +160,9 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
       stdDoTripleSkeletonGenerated: true,
       statefulReferenceTypingComplete: contractArtifact.statefulPredicateElaboration?.referenceTypingComplete === true,
       normalizedPredicateAstTypeCheckingComplete: contractArtifact.statefulPredicateAST?.typeCheckingComplete === true,
+      wpTripleIdentityBindingComplete: statefulWpBinding.wpTripleIdentityBindingComplete === true,
+      wpTripleSemanticEquivalenceChecked: false,
+      stateModelAdequacyChecked: false,
       wholePredicateTypeCheckingComplete: false,
       semanticProofChecking: false,
       vcgenConnected: false,
@@ -329,6 +339,7 @@ export function createMonadicLeanPreflightArtifact({ loweringArtifact, loweringA
     statefulPostconditionIR: loweringArtifact.statefulPostconditionIR,
     statefulPredicateElaboration: loweringArtifact.statefulPredicateElaboration,
     statefulPredicateAST: loweringArtifact.statefulPredicateAST,
+    statefulWpBinding: loweringArtifact.statefulWpBinding,
     function: loweringArtifact.function?.name,
     stateModel: loweringArtifact.stateModel?.name,
     originalTripleSkeleton: {
@@ -346,6 +357,8 @@ export function createMonadicLeanPreflightArtifact({ loweringArtifact, loweringA
       hasStatefulPredicateAST: Boolean(loweringArtifact.statefulPredicateAST),
       statefulReferenceTypingComplete: loweringArtifact.statefulPredicateElaboration?.referenceTypingComplete === true,
       normalizedPredicateAstTypeCheckingComplete: loweringArtifact.statefulPredicateAST?.typeCheckingComplete === true,
+      hasStatefulWpBinding: Boolean(loweringArtifact.statefulWpBinding),
+      statefulWpIdentityBindingReady: loweringArtifact.statefulWpBinding?.bindingReady === true,
       wholePredicateTypeCheckingComplete: loweringArtifact.statefulPredicateElaboration?.wholePredicateTypeCheckingComplete === true,
       statefulPostconditionSemanticElaborationComplete: loweringArtifact.statefulPostconditionIR?.semanticElaborationComplete === true,
       hasExplicitStubBoundary: true,
@@ -367,6 +380,9 @@ export function createMonadicLeanPreflightArtifact({ loweringArtifact, loweringA
       specifiedStructuralProfile: loweringArtifact.verification?.profile === 'ps3-monadic-contracts0',
       statefulReferenceTypingComplete: loweringArtifact.statefulPredicateElaboration?.referenceTypingComplete === true,
       normalizedPredicateAstTypeCheckingComplete: loweringArtifact.statefulPredicateAST?.typeCheckingComplete === true,
+      wpTripleIdentityBindingComplete: loweringArtifact.statefulWpBinding?.wpTripleIdentityBindingComplete === true,
+      wpTripleSemanticEquivalenceChecked: false,
+      stateModelAdequacyChecked: false,
       wholePredicateTypeCheckingComplete: false,
       explicitStubs: true,
       preflightStubAxioms: true,
