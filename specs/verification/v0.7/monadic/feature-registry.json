@@ -39,7 +39,7 @@
         "undeclared state operations",
         "loop invariants/frame conditions",
         "vcgen/mvcgen semantic discharge",
-        "whole-predicate Lean/Core elaboration beyond the typed binder/observation-reference layer",
+        "full ProofScript/Lean expression elaboration beyond the bounded stateful-predicate-expressions0 AST",
         "type-checked model-specific observation semantics beyond structural entry/final-state binder insertion"
       ],
       "artifact_representation": [
@@ -48,13 +48,14 @@
         "proofscript.monadic-preflight.v1 carries the same verification profile",
         "proofscript.stateful-postcondition-ir/v1 records entry/result/final-state binder roles and preserves raw postcondition references",
         "proofscript.stateful-predicate-elaboration/v1 binds state/result types and descriptor observation signatures/arguments without claiming whole-predicate typechecking",
+        "proofscript.stateful-predicate-ast/v1 typechecks the bounded normalized stateful-predicate-expressions0 subset and fails closed outside it",
         "stateful postcondition IR is propagated contracts -> monadic-lowering -> monadic-preflight"
       ],
       "diagnostics": [
         "state model descriptor is mandatory",
         "return type must use State in this alpha",
         "duplicate contract labels are rejected",
-        "unmodeled stateful old/result, definite state-observation type mismatches, invalid stateful preconditions, or undeclared operations cannot receive the specified profile"
+        "unmodeled stateful old/result, definite state-observation or predicate-AST type mismatches, unsupported normalized predicate AST syntax, invalid stateful preconditions, or undeclared operations cannot receive the specified profile"
       ]
     },
     {
