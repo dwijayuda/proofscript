@@ -50,5 +50,14 @@
       "stateArgument": "last",
       "spec": "reads an account balance from the selected Bank state"
     }
-  ]
+  ],
+  "lean": {
+    "imports": [
+      "ProofScript.Verification.BankStateModel"
+    ],
+    "openNamespaces": [
+      "BankStateModel"
+    ],
+    "monadTypeConstructor": "StateM Bank"
+  }
 }
