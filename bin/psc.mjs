@@ -1540,11 +1540,12 @@ function verifyCommand(args) {
       jsonOut({ status: 'rejected', command: 'verify', artifactKind: 'certificate', message: 'certificate core hash mismatch', expected: artifact.core.sha256, actual }, json);
       process.exit(1);
     }
+    let verifiedFfi;
     try {
       const coreArtifact = readJsonPath(corePath);
       verifyCertificateMetadataAgainstCore(ROOT, artifact, coreArtifact);
       verifyRuntimeCertificateMetadata(ROOT, artifact);
-      const verifiedFfi = verifyCertificateFfiMetadata(resolved, artifact, coreArtifact);
+      verifiedFfi = verifyCertificateFfiMetadata(resolved, artifact, coreArtifact);
     } catch (error) {
       jsonOut({ status: 'rejected', command: 'verify', artifactKind: 'certificate', message: error instanceof Error ? error.message : String(error) }, json);
       process.exit(1);
