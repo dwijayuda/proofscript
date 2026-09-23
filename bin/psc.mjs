@@ -68,7 +68,7 @@ function positional(args) {
   return out;
 }
 function usage(code = 0) {
-  const text = `ProofScript ${VERSION}\n\nSimple project workflow:\n  psc init my-app\n  cd my-app\n  psc check\n  psc build\n  psc run sample\n\nCompiler setup workflow from the ProofScript source ZIP:\n  npm install --offline --no-audit --no-fund\n  npm run setup\n  npm link\n  psc doctor\n  psc clean [--json]\n\nCommands:\n  psc setup\n  psc init [dir] [--name <name>] [--template software|crud] [--force] [--json]\n  psc status [--json]\n  psc check [file.ps] [--json] [--emit-core <out.json>]\n  psc emit-core [file.ps] --out <out.pscore.json> [--json]\n  psc emit-lean <file.ps|core.json|contracts.json> --out <out.lean> [--json]\n  psc certify [file.ps] --core <core.json> --out <cert.json> [--runtime-artifact <out.ts|out.js>] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc build-ts [file.ps] [--out <out.ts>] [--runtime local|package|bundled] [--bundle-runtime] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc build-js [file.ps] [--out <out.js>] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc build [file.ps] [--target ts|js] [--out <file>] [--runtime local|package|bundled] [--bundle-runtime] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc compile [file.ps|dir] [--out-dir <dir>] [--suffix .generated] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc run [file.ps] [--call <name>] [--args a,b] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc run <name> [--args a,b] [--json]\n  psc target list\n  psc language status [--json]
+  const text = `ProofScript ${VERSION}\n\nSimple project workflow:\n  psc init my-app\n  cd my-app\n  psc check\n  psc build\n  psc run sample\n\nCompiler setup workflow from the ProofScript source ZIP:\n  npm install --offline --no-audit --no-fund\n  npm run setup\n  npm link\n  psc doctor\n  psc clean [--json]\n\nCommands:\n  psc setup\n  psc init [dir] [--name <name>] [--template software|crud] [--force] [--json]\n  psc status [--json]\n  psc check [file.ps] [--json] [--emit-core <out.json>]\n  psc emit-core [file.ps] --out <out.pscore.json> [--json]\n  psc emit-lean <file.ps|core.json|contracts.json> --out <out.lean> [--json]\n  psc certify [file.ps] --core <core.json> --out <cert.json> [--runtime-artifact <out.ts|out.js>] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc build-ts [file.ps] [--out <out.ts>] [--runtime local|package|bundled] [--bundle-runtime] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc build-js [file.ps] [--out <out.js>] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc build [file.ps] [--target ts|js] [--out <file>] [--runtime local|package|bundled] [--bundle-runtime] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc compile [file.ps|dir] [--out-dir <dir>] [--suffix .generated] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc fmt [file.ps|dir] [--check] [--stdout] [--json]\n  psc run [file.ps] [--call <name>] [--args a,b] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc run <name> [--args a,b] [--json]\n  psc target list\n  psc language status [--json]
   psc state-model validate <model.json> [--out <validation.json>] [--json]\n  psc monadic-lowering <contracts.json> --out <lowering.json> [--emit-lean <out.lean>] [--json]\n  psc monadic-vc-request <monadic-lowering.json> --out <request.json> [--emit-lean <request.lean>] [--json]\n  psc monadic-vc-run <monadic-lowering.json> --lean-project <dir> --out <run.json> [--lake-cmd <lake>] [--json]\n  psc monadic-preflight <monadic-lowering.json> --out <preflight.json> --emit-lean <preflight.lean> [--lean-cmd <lean>] [--json]\n  psc doctor\n  psc clean [--json]\n\nDefaults inside a psc init project:\n  input file: src/Main.ps\n  source dir: src\n  output dir: dist\n\nTrust boundary:\n  This CLI is a wrapper over the PSC-1 software-profile path. It does not claim full Lean 4 equivalence or full backend execution-correspondence proof.\n`;
   (code === 0 ? console.log : console.error)(text);
   process.exit(code);
@@ -125,6 +125,11 @@ function compilerLibs() {
     environment: require('@proofscript/environment'),
     backendTypescript: require('@proofscript/backend-typescript'),
   };
+}
+
+function formatterLib() {
+  ensureLocalWorkspacePackageLinks();
+  return require('@proofscript/formatter');
 }
 function checkedProgram(file) {
   const { compiler, environment } = compilerLibs();
@@ -932,6 +937,72 @@ function buildCommand(args) {
   const out = opt(args, '--out') || defaultOutFor(file, target === 'js' ? 'js' : 'ts');
   const result = target === 'js' ? buildJsDirect(file, out, args) : buildTsDirect(file, out, args);
   jsonOut(result, has(args, '--json'));
+}
+
+function fmtCommand(args) {
+  const json = has(args, '--json');
+  const checkOnly = has(args, '--check');
+  const stdout = has(args, '--stdout');
+  const pos = positional(args);
+  const input = pos[0] ? path.resolve(process.cwd(), pos[0]) : defaultEntry();
+
+  let files;
+  try {
+    files = sourceFiles(input);
+  } catch (error) {
+    const result = { status: 'rejected', command: 'fmt', message: error instanceof Error ? error.message : String(error) };
+    jsonOut(result, json);
+    process.exit(1);
+  }
+  if (!files.length) {
+    const result = { status: 'rejected', command: 'fmt', message: `no .ps sources found at ${input}` };
+    jsonOut(result, json);
+    process.exit(1);
+  }
+  if (stdout && files.length !== 1) {
+    const result = { status: 'rejected', command: 'fmt', message: '--stdout requires exactly one .ps source' };
+    jsonOut(result, json);
+    process.exit(1);
+  }
+
+  try {
+    const { formatSource } = formatterLib();
+    const results = [];
+    for (const file of files) {
+      const source = fs.readFileSync(file, 'utf8');
+      const formatted = formatSource(source);
+      if (formatted.changed && !checkOnly && !stdout) fs.writeFileSync(file, formatted.formatted);
+      results.push({
+        file,
+        changed: formatted.changed,
+        tokenCount: formatted.tokenCount,
+      });
+      if (stdout && !json) process.stdout.write(formatted.formatted);
+    }
+    const changed = results.filter(item => item.changed);
+    const result = {
+      status: checkOnly && changed.length ? 'rejected' : 'accepted',
+      command: 'fmt',
+      mode: stdout ? 'stdout' : checkOnly ? 'check' : 'write',
+      files: results.length,
+      changed: changed.length,
+      results,
+      ...(stdout && json ? { formatted: formatSource(fs.readFileSync(files[0], 'utf8')).formatted } : {}),
+      trustBoundary: {
+        tokenStreamPreserved: true,
+        proofAuthority: false,
+        commentTriviaPreservation: false,
+      },
+    };
+    jsonOut(result, json);
+    if (checkOnly && changed.length) process.exit(1);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    const unsupported = /refuses sources containing comments/u.test(message);
+    const result = { status: unsupported ? 'unsupported' : 'rejected', command: 'fmt', message };
+    jsonOut(result, json);
+    process.exit(unsupported ? 2 : 1);
+  }
 }
 
 function cleanCommand(args) {
@@ -1845,7 +1916,7 @@ function languageStatus(args = []) {
       },
       notYetImplemented: ['project-wide monadic vcgen/vcgen semantic discharge', 'promoted loop invariant/decreases semantics', 'frame conditions', 'full macros', 'full tactic engine', 'full Lean4 equivalence'],
     },
-    commands: ['init', 'check', 'build', 'build-ts', 'build-js', 'emit-core', 'emit-lean', 'state-model', 'monadic-lowering', 'monadic-vc-request', 'monadic-vc-run', 'monadic-preflight', 'contracts', 'obligations', 'proof-status', 'check-obligations', 'certify', 'verify', 'software-alpha', 'run', 'npm-readiness'],
+    commands: ['init', 'check', 'build', 'build-ts', 'build-js', 'fmt', 'emit-core', 'emit-lean', 'state-model', 'monadic-lowering', 'monadic-vc-request', 'monadic-vc-run', 'monadic-preflight', 'contracts', 'obligations', 'proof-status', 'check-obligations', 'certify', 'verify', 'software-alpha', 'run', 'npm-readiness'],
     trustBoundary: { fullLean4Equivalence: false, fullyFormalK3: false, semanticContractProofChecking: 'partial-lean-backed-explicit-proofs-only', monadicProofDischarge: false, monadicLoweringSkeletons: true, statefulVcRequestArtifacts: true, statefulVcExecutionEvidence: true, leanVcEnvironmentResolved: false, vcgenExecuted: false, monadicPreflightStubs: true, vcgenConnected: false, npmInstallableToolchain: true },
     unsupported: ['monadic vcgen/mvcgen semantic discharge', 'automatic proof search', 'full Lean4 equivalence'],
   };
@@ -1886,6 +1957,7 @@ else if (cmd === 'check-obligations') proofStatusCommand(args, 'check-obligation
 else if (cmd === 'software-alpha') softwareAlphaCommand(args);
 else if (cmd === 'verify') verifyCommand(args);
 else if (cmd === 'compile') compileCommand(args);
+else if (cmd === 'fmt') fmtCommand(args);
 else if (cmd === 'clean') cleanCommand(args);
 else if (cmd === 'build') buildCommand(args);
 else if (cmd === 'check') checkCommand(args);
