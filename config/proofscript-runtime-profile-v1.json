@@ -1,0 +1,225 @@
+{
+  "schema": "proofscript.runtime-profile/v1",
+  "profileId": "proofscript-js-runtime-v1",
+  "status": "specified-bounded",
+  "productBranch": "product/v1-completion",
+  "semanticsAuthority": "checked ProofScript Core plus this versioned runtime representation contract",
+  "host": {
+    "language": "JavaScript/TypeScript",
+    "minimumNodeMajor": 20,
+    "integerPrimitive": "bigint",
+    "stringPrimitive": "string",
+    "booleanPrimitive": "boolean"
+  },
+  "representations": {
+    "Nat": {
+      "status": "implemented-gated",
+      "host": "bigint",
+      "invariant": "value >= 0n",
+      "semantics": [
+        "unbounded integer magnitude subject to host memory",
+        "pred saturates at zero",
+        "subtraction saturates at zero"
+      ],
+      "forbidden": [
+        "JavaScript number representation",
+        "negative bigint values"
+      ]
+    },
+    "Int": {
+      "status": "implemented-gated",
+      "host": "bigint",
+      "invariant": "arbitrary bigint",
+      "semantics": [
+        "negation/addition/subtraction use bigint arithmetic"
+      ],
+      "forbidden": [
+        "JavaScript number representation"
+      ]
+    },
+    "Bool": {
+      "status": "implemented-gated",
+      "host": "boolean",
+      "values": [
+        "false",
+        "true"
+      ],
+      "forbidden": [
+        "JavaScript truthiness coercion"
+      ]
+    },
+    "String": {
+      "status": "implemented-bounded",
+      "host": "string",
+      "semantics": [
+        "source string literals and checked String values emit as JavaScript strings"
+      ],
+      "limitations": [
+        "full Lean String/Unicode observational correspondence is not claimed",
+        "String library semantics beyond the admitted bounded profile are unsupported"
+      ]
+    },
+    "Unit": {
+      "status": "implemented-gated",
+      "host": "null",
+      "value": "null",
+      "note": "null is reserved here as the representation of Unit; it is not Option.none"
+    },
+    "Structure": {
+      "status": "implemented-gated",
+      "host": "frozen tagged record",
+      "shape": "Object.freeze({ __psInductive: string, __psCtor: nonnegative safe integer, fields: Object.freeze([...]) })"
+    },
+    "Inductive": {
+      "status": "implemented-gated",
+      "host": "frozen tagged record",
+      "shape": "same tagged representation as Structure; constructor identity is (__psInductive, __psCtor)"
+    },
+    "Option": {
+      "status": "implemented-gated",
+      "host": "tagged record",
+      "constructors": {
+        "none": {
+          "__psInductive": "Option",
+          "__psCtor": 0,
+          "fields": []
+        },
+        "some": {
+          "__psInductive": "Option",
+          "__psCtor": 1,
+          "fields": [
+            "value"
+          ]
+        }
+      },
+      "forbidden": [
+        "null",
+        "undefined",
+        "A | null"
+      ]
+    },
+    "Except": {
+      "status": "implemented-gated",
+      "host": "tagged record",
+      "constructors": {
+        "error": {
+          "__psInductive": "Except",
+          "__psCtor": 0,
+          "fields": [
+            "error"
+          ]
+        },
+        "ok": {
+          "__psInductive": "Except",
+          "__psCtor": 1,
+          "fields": [
+            "value"
+          ]
+        }
+      }
+    },
+    "List": {
+      "status": "implemented-gated",
+      "host": "recursive tagged record",
+      "constructors": {
+        "nil": {
+          "__psInductive": "List",
+          "__psCtor": 0,
+          "fields": []
+        },
+        "cons": {
+          "__psInductive": "List",
+          "__psCtor": 1,
+          "fields": [
+            "head",
+            "tail"
+          ]
+        }
+      },
+      "runtimeHelperLimit": "List_toArray traversals reject payloads deeper than 100000 nodes"
+    },
+    "Array": {
+      "status": "implemented-gated",
+      "host": "tagged record containing a ProofScript List payload",
+      "constructor": {
+        "__psInductive": "Array",
+        "__psCtor": 0,
+        "fields": [
+          "List payload"
+        ]
+      },
+      "forbidden": [
+        "raw mutable JavaScript Array as semantic representation"
+      ]
+    },
+    "Function": {
+      "status": "implemented-bounded",
+      "host": "JavaScript function",
+      "callingConvention": "curried for checked Core functions/runtime primitives"
+    },
+    "PropAndProofs": {
+      "status": "erased",
+      "runtime": "no proof-validity decision occurs in @proofscript/runtime",
+      "claim": "proof checking belongs to checked Core/PSKernel or the explicitly selected Lean assurance path"
+    },
+    "Equality": {
+      "status": "bounded",
+      "runtime": "no general JavaScript ==/=== replacement for ProofScript equality",
+      "admitted": [
+        "Nat.beq uses bigint === after Nat validation",
+        "Int.beq uses bigint ==="
+      ],
+      "notYetSpecified": [
+        "general structural BEq",
+        "String BEq",
+        "user-defined derived equality"
+      ]
+    },
+    "IO": {
+      "status": "unsupported",
+      "runtime": null
+    },
+    "Char": {
+      "status": "unsupported",
+      "runtime": null
+    },
+    "Float": {
+      "status": "unsupported",
+      "runtime": null
+    },
+    "UInt8": {
+      "status": "unsupported",
+      "runtime": null
+    },
+    "UInt16": {
+      "status": "unsupported",
+      "runtime": null
+    },
+    "UInt32": {
+      "status": "unsupported",
+      "runtime": null
+    },
+    "UInt64": {
+      "status": "unsupported",
+      "runtime": null
+    },
+    "USize": {
+      "status": "unsupported",
+      "runtime": null
+    }
+  },
+  "correspondence": {
+    "runtimeRepresentationSpecified": true,
+    "runtimeImplementationGated": true,
+    "differentialRuntimeCorpus": "partial-existing",
+    "sourceToCoreConformance": "bounded-v0.6.1-corpus",
+    "coreToTypeScriptFormalCorrespondence": false,
+    "typeScriptToJavaScriptFormalCorrespondence": false,
+    "endToEndVerifiedJavaScriptClaim": false
+  },
+  "trustBoundary": [
+    "@proofscript/runtime executes already-checked terms and does not validate proofs",
+    "a passing runtime gate is execution evidence, not a formal refinement theorem",
+    "unsupported representations must fail closed in emitters or profiles"
+  ]
+}
