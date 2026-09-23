@@ -122,6 +122,8 @@ export class ProofScriptLanguageServer {
                 interFileDependencies: true,
                 workspaceDiagnostics: false,
               },
+              hoverProvider: true,
+              documentSymbolProvider: true,
             },
             serverInfo: {
               name: "ProofScript LSP",
@@ -136,6 +138,7 @@ export class ProofScriptLanguageServer {
                 cooperativeCancellation: true,
                 hardCancelFallback: true,
                 surfaceFeatureRequest: "proofscript/surfaceFeatures",
+                declarationSourceIndex: true,
               },
             },
           });
@@ -253,6 +256,66 @@ export class ProofScriptLanguageServer {
           }
         }
 
+        case "textDocument/documentSymbol": {
+          const uri = message.params?.textDocument?.uri;
+          if (typeof uri !== "string") return this.error(message.id, -32602, "missing textDocument.uri");
+          const before = this.documents.get(uri);
+          if (!before) return this.error(message.id, -32602, `document is not open: ${uri}`);
+          const ownerId = requestId(message.id);
+          try {
+            const symbols = await this.worker.documentSymbols(uri, ownerId);
+            const latest = this.documents.get(uri);
+            if (!latest || latest.version !== before.version) {
+              return this.error(message.id, -32801, "document changed while document symbols were running");
+            }
+            return this.reply(message.id, symbols.map((symbol) => ({
+              name: symbol.name,
+              detail: symbol.detail,
+              kind: lspSymbolKind(symbol.kind),
+              range: symbol.range,
+              selectionRange: symbol.selectionRange,
+            })));
+          } catch (error) {
+            if (error instanceof LanguageWorkerCancelledError) {
+              return this.error(message.id, -32800, "request cancelled");
+            }
+            throw error;
+          }
+        }
+
+        case "textDocument/hover": {
+          const uri = message.params?.textDocument?.uri;
+          const position = message.params?.position;
+          if (typeof uri !== "string") return this.error(message.id, -32602, "missing textDocument.uri");
+          if (!position || typeof position.line !== "number" || typeof position.character !== "number") {
+            return this.error(message.id, -32602, "missing or invalid position");
+          }
+          const before = this.documents.get(uri);
+          if (!before) return this.error(message.id, -32602, `document is not open: ${uri}`);
+          const ownerId = requestId(message.id);
+          try {
+            const hover = await this.worker.hover(uri, position, ownerId);
+            const latest = this.documents.get(uri);
+            if (!latest || latest.version !== before.version) {
+              return this.error(message.id, -32801, "document changed while hover was running");
+            }
+            if (!hover) return this.reply(message.id, null);
+            const displayName = hover.qualifiedName || hover.name;
+            return this.reply(message.id, {
+              contents: {
+                kind: "markdown",
+                value: `\`\`\`proofscript\n${displayName} : ${hover.type}\n\`\`\`\n\n${hover.kind}`,
+              },
+              range: hover.range,
+            });
+          } catch (error) {
+            if (error instanceof LanguageWorkerCancelledError) {
+              return this.error(message.id, -32800, "request cancelled");
+            }
+            throw error;
+          }
+        }
+
         default:
           if (message.id !== undefined) this.error(message.id, -32601, `method not found: ${message.method}`);
           return;
@@ -320,6 +383,29 @@ export class ProofScriptLanguageServer {
 
   private log(message: string): void {
     process.stderr.write(`[proofscript-lsp] ${message}\n`);
+  }
+}
+
+function lspSymbolKind(kind: string): number {
+  switch (kind) {
+    case "theorem":
+    case "definition":
+    case "equationDefinition":
+    case "opaque":
+    case "abbrev":
+      return 12; // Function
+    case "axiom":
+      return 14; // Constant
+    case "inductive":
+      return 10; // Enum
+    case "structure":
+      return 23; // Struct
+    case "class":
+      return 5; // Class
+    case "instance":
+      return 13; // Variable
+    default:
+      return 13; // Variable
   }
 }
 
