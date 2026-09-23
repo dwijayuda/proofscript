@@ -1,6 +1,7 @@
 import { Worker } from "node:worker_threads";
 import type {
   Analysis,
+  CompletionInfo,
   DiagnosticBundle,
   DocumentSymbolInfo,
   HoverInfo,
@@ -178,6 +179,10 @@ export class LanguageWorkerClient {
 
   async hover(uri: string, position: Position, ownerId?: number | string | null): Promise<HoverInfo | null> {
     return this.request("hover", { uri, position }, ownerId);
+  }
+
+  async completion(uri: string, position: Position, ownerId?: number | string | null): Promise<readonly CompletionInfo[]> {
+    return this.request("completion", { uri, position }, ownerId);
   }
 
   async request<T = any>(operation: string, args: any = {}, ownerId?: number | string | null): Promise<T> {
