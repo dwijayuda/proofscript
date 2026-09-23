@@ -126,8 +126,11 @@ The same closure includes the dependent-local `assumption` correction:
 local candidates are typed by kernel inference in the full current context
 before definitional comparison with the goal.
 
-Partial proof-state recovery for rejected or incomplete proofs remains a
-separate follow-up; no editor-only parser/elaborator is introduced.
+Phase 3 implementation is now present on this branch but is **not closed**
+until the v3 consolidated gate is executed on its committed source. It retains
+only proof states already emitted before a later elaboration failure. Parser
+failures still yield no partial states; no editor-only parser/elaborator,
+metavariable recovery, or speculative continuation is introduced.
 
 See `docs/TACTIC_ERGONOMICS.md`.
 
