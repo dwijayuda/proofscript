@@ -12,8 +12,9 @@ function obligationForOperation(contractArtifact, operation) {
 }
 
 function obligationForPostcondition(contractArtifact, clause) {
+  const expectedKind = clause.kind === 'frame' ? 'monadic.frame' : 'monadic.ensures';
   return (contractArtifact.obligations ?? []).find(obligation =>
-    obligation.kind === 'monadic.ensures'
+    obligation.kind === expectedKind
     && obligation.label === clause.name
   ) ?? null;
 }
@@ -69,9 +70,11 @@ export function createStatefulVcPlan({ contractArtifact, wpBinding, programLower
 
   const postconditionGoals = (ast.clauses ?? []).map(clause => {
     const obligation = obligationForPostcondition(contractArtifact, clause);
+    const clauseKind = clause.kind === 'frame' ? 'frame' : 'ensures';
     return {
-      id: obligation?.id ?? `${fn.name}.monadic.ensures.${clause.name}`,
-      kind: 'typed-postcondition-goal',
+      id: obligation?.id ?? `${fn.name}.monadic.${clauseKind}.${clause.name}`,
+      kind: clauseKind === 'frame' ? 'typed-frame-goal' : 'typed-postcondition-goal',
+      clauseKind,
       clause: clause.name,
       normalizedPredicate: clause.normalizedPredicate,
       inferredType: clause.inferredType,
