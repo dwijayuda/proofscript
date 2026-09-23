@@ -284,17 +284,33 @@
     {
       "id": "V1-P7",
       "name": "representative applications and release gate",
-      "status": "planned",
+      "status": "in_progress",
       "exitGates": [
-        "CLI app",
-        "npm library consumed from TypeScript",
-        "JSON/validation example",
-        "HTTP/API example",
-        "stateful business-domain app",
-        "fresh-machine install/release gate"
+        "test:product-v1:representative-apps",
+        "test:product-v1:json-validation",
+        "test:product-v1:source-package",
+        "test:product-v1:fresh-release",
+        "invoice case proved in assurance:ps3:stateful-lean-proof-matrix",
+        "consolidated Product-v1 end-test green"
       ],
       "implementedPendingExecution": [
         "JSON/validation example"
+      ],
+      "done": [
+        "representative CLI application using canonical psc check/build-js/run",
+        "generated ProofScript runtime library packaged for npm",
+        "bounded public TypeScript signatures for primitive Product-v1 exports",
+        "ordinary TypeScript consumer compiles without casts against generated primitive API",
+        "JSON/validation application with explicit trusted-host FFI boundary",
+        "HTTP host adapter around checked ProofScript response-domain logic",
+        "stateful invoice settlement contract reusing canonical BankStateModel",
+        "deterministic psc setup --prebuilt mode for packed distributions",
+        "packed-release fresh-install gate installs without ProofScript TypeScript devDependency"
+      ],
+      "remaining": [
+        "execute representative runtime-app and fresh-release gates on supported hosts",
+        "record proof-required invoice evidence across supported Lean lanes",
+        "record full Product-v1 fresh-machine/release evidence"
       ]
     }
   ]
