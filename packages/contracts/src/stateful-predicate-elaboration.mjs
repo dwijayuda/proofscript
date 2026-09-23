@@ -241,6 +241,7 @@ export function statefulPredicateElaborationForContract(contract, stateModel, po
 
     return {
       name: clause.name,
+      kind: clause.kind ?? 'ensures',
       source: clause.source,
       normalizedPredicate: clause.normalizedPredicate,
       oldReferences,
