@@ -140,7 +140,10 @@ function elaborateRepeatedMinor(
       // recursor/motive beta-redexes. This is observational only: branch
       // elaboration below still checks against the original `cursor`.
       goal: kernelWhnf(kernelEnv, cursor),
-      locals: proofStateLocals(namesNow, typesNow),
+      locals: proofStateLocals(
+        namesNow,
+        typesNow.map((type) => kernelWhnf(kernelEnv, type)),
+      ),
     });
   }
 
