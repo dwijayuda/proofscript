@@ -40,6 +40,22 @@ assert.equal(firstGoals.declarationGoal?.origin, "compiler-theorem");
 assert.equal(firstGoals.declarationGoal?.name, "overlay");
 assert.equal(firstGoals.verification.status, "unavailable");
 
+const partialFile = path.join(srcDir, "Partial.ps");
+const partialUri = "proofscript-worker-test://Partial.ps";
+const partialSource = "theorem partial(P: Prop, h: P): P := by { exact missing }\n";
+fs.writeFileSync(partialFile, partialSource);
+worker.openDocument(partialUri, 1, partialSource, partialFile);
+const partialAnalysis = await worker.analyze(partialUri);
+assert.equal(partialAnalysis.status, "rejected");
+assert.ok(partialAnalysis.proofStates.some((state) => state.tactic === "exact"));
+const partialGoals = await worker.goals(partialUri, { line: 0, character: partialSource.indexOf("exact") + 1 });
+assert.equal(partialGoals.tacticStateAvailable, true);
+assert.equal(partialGoals.tacticState?.tactic, "exact");
+assert.equal(partialGoals.tacticState?.goal, "P");
+assert.deepEqual(partialGoals.tacticState?.locals.map((local) => local.name), ["P", "h"]);
+assert.equal(partialGoals.declarationGoal, null);
+worker.closeDocument(partialUri);
+
 worker.replaceDocument(uri, 2, "theorem broken");
 const broken = await worker.diagnostics(uri);
 assert.equal(broken.version, 2);
