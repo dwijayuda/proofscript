@@ -6,6 +6,7 @@ import { createStatefulProgramLowering } from './stateful-program-lowering.mjs';
 import { createStatefulVcPlan } from './stateful-vc-plan.mjs';
 import { createStatefulLeanSemanticEncoding } from './stateful-lean-semantic-encoding.mjs';
 import { createStatefulVcRequest } from './stateful-vc-request.mjs';
+import { createStatefulAdequacyCheck } from './stateful-adequacy-check.mjs';
 import {
   analyzeStatefulVcExecution,
   classifyLeanResidualGoals,
@@ -34,6 +35,7 @@ export {
   createStatefulVcPlan,
   createStatefulLeanSemanticEncoding,
   createStatefulVcRequest,
+  createStatefulAdequacyCheck,
   analyzeStatefulVcExecution,
   classifyLeanResidualGoals,
   createStatefulVcGoalArtifact,
@@ -250,6 +252,10 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
   artifact.trustBoundary.statefulVcRequestSourceReady = statefulVcRequest.requestSourceReady === true;
   artifact.trustBoundary.leanVcEnvironmentResolved = false;
   artifact.trustBoundary.vcgenExecuted = false;
+  const statefulAdequacyCheck = createStatefulAdequacyCheck(artifact);
+  artifact.statefulAdequacyCheck = statefulAdequacyCheck;
+  artifact.summary.statefulAdequacyCheckReady = statefulAdequacyCheck.ready === true;
+  artifact.trustBoundary.statefulAdequacyCheckReady = statefulAdequacyCheck.ready === true;
   return artifact;
 }
 
