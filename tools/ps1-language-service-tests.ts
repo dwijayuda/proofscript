@@ -8,6 +8,38 @@ import {
   CancellationSource,
   ProofScriptLanguageService,
 } from "@proofscript/language-service";
+import {
+  checkSource as checkCompilerSource,
+  withStandardPrelude,
+} from "@proofscript/compiler";
+
+const compilerPartialStates = [];
+assert.throws(
+  () => checkCompilerSource(
+    "theorem partialCompiler(P: Prop, h: P): P := by { exact missing }\n",
+    withStandardPrelude({
+      proofStateSink: (event) => compilerPartialStates.push(event.state),
+    }),
+  ),
+  /unknown identifier: missing/u,
+  "canonical compiler must still reject the bad proof",
+);
+assert.ok(
+  compilerPartialStates.some((state) => state.tactic === "exact" && state.goal === "P"),
+  "compiler observer must retain the failing tactic entry state before rejection",
+);
+
+const acceptedWithThrowingObserver = checkCompilerSource(
+  "theorem observerFailOpen(P: Prop, h: P): P := by { assumption }\n",
+  withStandardPrelude({
+    proofStateSink: () => { throw new Error("observer failure must be ignored"); },
+  }),
+);
+assert.equal(
+  acceptedWithThrowingObserver.summary.status,
+  "accepted",
+  "proof-state observers must remain outside source acceptance",
+);
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "proofscript-language-service-"));
 fs.writeFileSync(path.join(tmp, "package.json"), JSON.stringify({ private: true }, null, 2) + "\n");
@@ -174,6 +206,30 @@ assert.equal(diagnosticBundle.resultId, navigation.resultId);
 service.closeDocument(uri);
 assert.equal(service.getDocument(uri), undefined);
 assert.throws(() => service.analyze(uri), /document is not open/);
+
+// Rejected-but-parseable proofs retain states emitted before the failure.
+const partialFile = path.join(srcDir, "Partial.ps");
+const partialUri = "proofscript-test://Partial.ps";
+const partialSource = "theorem partial(P: Prop, h: P): P := by { exact missing }\n";
+fs.writeFileSync(partialFile, partialSource);
+const partialService = new ProofScriptLanguageService();
+partialService.openDocument(partialUri, 1, partialSource, partialFile);
+const partialAnalysis = partialService.analyze(partialUri);
+assert.equal(partialAnalysis.status, "rejected");
+assert.equal(partialAnalysis.diagnostics.length, 1);
+assert.ok(
+  partialAnalysis.proofStates.some((state) => state.tactic === "exact"),
+  "rejected elaboration should retain compiler-observed tactic states",
+);
+const partialExactCharacter = partialSource.indexOf("exact") + 1;
+const partialGoals = partialService.goals(partialUri, { line: 0, character: partialExactCharacter });
+assert.equal(partialGoals.tacticStateAvailable, true);
+assert.equal(partialGoals.tacticState?.kind, "tactic");
+assert.equal(partialGoals.tacticState?.tactic, "exact");
+assert.equal(partialGoals.tacticState?.goal, "P");
+assert.deepEqual(partialGoals.tacticState?.locals.map((local) => local.name), ["P", "h"]);
+assert.equal(partialGoals.declarationGoal, null, "rejected declarations must not be reported as checked goals");
+partialService.closeDocument(partialUri);
 
 // Branch-aware tactics must flow through the existing compiler-backed editor path.
 const branchService = new ProofScriptLanguageService();
