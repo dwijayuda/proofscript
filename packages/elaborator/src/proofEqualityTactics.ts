@@ -8,7 +8,7 @@ import {
   shift,
 } from "@proofscript/kernel";
 import { ElaborationError, SurfaceTerm, UnsupportedFeature } from "@proofscript/syntax";
-import { contextFromTypes, flattenCoreApps } from "./coreUtils";
+import { contextFromTypes, coreContainsScoped, flattenCoreApps, replaceCoreScoped } from "./coreUtils";
 
 export interface EqualityTacticHost {
   elaborateTerm(term: SurfaceTerm, locals: string[], localTypes: Term[], expectedType?: Term): Term;
@@ -22,80 +22,12 @@ interface EqualityShape {
   eqLevel: Extract<Term, { tag: "const" }>["levels"][number];
 }
 
-interface ReplaceResult {
-  term: Term;
-  changed: boolean;
-}
-
 function mkApp(fn: Term, arg: Term): Term {
   return { tag: "app", fn, arg };
 }
 
 function mkApps(fn: Term, args: readonly Term[]): Term {
   return args.reduce((out, arg) => mkApp(out, arg), fn);
-}
-
-function replaceScoped(term: Term, needle: Term, replacement: Term, depth = 0): ReplaceResult {
-  if (sameTerm(term, shift(needle, depth))) {
-    return { term: shift(replacement, depth), changed: true };
-  }
-  switch (term.tag) {
-    case "sort":
-    case "bvar":
-    case "const":
-    case "lit":
-      return { term, changed: false };
-    case "app": {
-      const fn = replaceScoped(term.fn, needle, replacement, depth);
-      const arg = replaceScoped(term.arg, needle, replacement, depth);
-      return {
-        term: fn.changed || arg.changed ? { tag: "app", fn: fn.term, arg: arg.term } : term,
-        changed: fn.changed || arg.changed,
-      };
-    }
-    case "lam": {
-      const domain = replaceScoped(term.domain, needle, replacement, depth);
-      const body = replaceScoped(term.body, needle, replacement, depth + 1);
-      return {
-        term: domain.changed || body.changed
-          ? { tag: "lam", domain: domain.term, body: body.term, binderInfo: term.binderInfo }
-          : term,
-        changed: domain.changed || body.changed,
-      };
-    }
-    case "pi": {
-      const domain = replaceScoped(term.domain, needle, replacement, depth);
-      const body = replaceScoped(term.body, needle, replacement, depth + 1);
-      return {
-        term: domain.changed || body.changed
-          ? { tag: "pi", domain: domain.term, body: body.term, binderInfo: term.binderInfo }
-          : term,
-        changed: domain.changed || body.changed,
-      };
-    }
-    case "let": {
-      const type = replaceScoped(term.type, needle, replacement, depth);
-      const value = replaceScoped(term.value, needle, replacement, depth);
-      const body = replaceScoped(term.body, needle, replacement, depth + 1);
-      return {
-        term: type.changed || value.changed || body.changed
-          ? { tag: "let", type: type.term, value: value.term, body: body.term, nondep: term.nondep }
-          : term,
-        changed: type.changed || value.changed || body.changed,
-      };
-    }
-    case "proj": {
-      const expr = replaceScoped(term.expr, needle, replacement, depth);
-      return {
-        term: expr.changed ? { tag: "proj", typeName: term.typeName, index: term.index, expr: expr.term } : term,
-        changed: expr.changed,
-      };
-    }
-  }
-}
-
-function containsScoped(term: Term, needle: Term): boolean {
-  return replaceScoped(term, needle, needle).changed;
 }
 
 function equalityShapeFromProof(
@@ -160,7 +92,7 @@ function buildRewriteTransport(
   let reflCaseDomain: Term;
   if (!reverse) {
     const liftedGoal = shift(originalGoal, 2);
-    const replaced = replaceScoped(
+    const replaced = replaceCoreScoped(
       liftedGoal,
       shift(shape.left, 2),
       { tag: "bvar", index: 1 },
@@ -177,7 +109,7 @@ function buildRewriteTransport(
     reflCaseDomain = originalGoal;
   } else {
     const liftedGoal = shift(originalGoal, 2);
-    const replaced = replaceScoped(
+    const replaced = replaceCoreScoped(
       liftedGoal,
       shift(shape.right, 2),
       { tag: "bvar", index: 1 },
@@ -246,7 +178,7 @@ function elabRwWithShape(
   const ctx = contextFromTypes(localTypes);
   const from = reverse ? shape.right : shape.left;
   const to = reverse ? shape.left : shape.right;
-  const rewritten = replaceScoped(expectedType, from, to);
+  const rewritten = replaceCoreScoped(expectedType, from, to);
   if (!rewritten.changed) {
     throw new ElaborationError(
       reverse
@@ -309,7 +241,7 @@ export function elabSubstProof(
     throw new ElaborationError(`subst failed: unknown local '${name}'`);
   }
   const variable: Term = { tag: "bvar", index: locals.length - 1 - localIndex };
-  if (!containsScoped(expectedType, variable)) {
+  if (!coreContainsScoped(expectedType, variable)) {
     throw new ElaborationError(`subst failed: local '${name}' does not occur in the current goal`);
   }
 
@@ -322,10 +254,10 @@ export function elabSubstProof(
     } catch {
       continue;
     }
-    if (sameTerm(shape.left, variable) && !containsScoped(shape.right, variable)) {
+    if (sameTerm(shape.left, variable) && !coreContainsScoped(shape.right, variable)) {
       return elabRwWithShape(shape, false, body, locals, localTypes, kernelEnv, expectedType, host);
     }
-    if (sameTerm(shape.right, variable) && !containsScoped(shape.left, variable)) {
+    if (sameTerm(shape.right, variable) && !coreContainsScoped(shape.left, variable)) {
       return elabRwWithShape(shape, true, body, locals, localTypes, kernelEnv, expectedType, host);
     }
   }
