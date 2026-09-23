@@ -105,6 +105,8 @@ function dispatch(operation: string, args: any, cancellation?: CancellationToken
       return service.semanticTokens(args.uri, cancellation);
     case "formatDocument":
       return service.formatDocument(args.uri, cancellation);
+    case "goals":
+      return service.goals(args.uri, args.position, cancellation);
     case "definition":
       return service.definition(args.uri, args.position, cancellation);
     case "references":
