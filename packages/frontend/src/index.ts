@@ -126,7 +126,7 @@ export function checkSource(source:string,options:FrontendOptions={}):FrontendRe
           // canonical prefix AST the parser actually reached so editor tooling
           // can display already-determined goals/locals.
           elaborateProgram(
-            observation.declarations,
+            [...observation.declarations],
             prepared?.globals??[],
             prepared?.artifact.declarations??[],
             prepared?.typeclasses,
