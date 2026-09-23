@@ -24,13 +24,13 @@ assert.match(proof, /apply failed: supplied term/, 'proofElaborator.ts must pres
 
 const equalityTactics = fs.readFileSync(equalityTacticsSrc, 'utf8');
 for (const name of ['elabRwProof', 'elabSubstProof', 'elabSimpProof']) {
-  assert.match(equalityTactics, new RegExp(`export function ${name}\\\\b`), `proofEqualityTactics.ts must export ${name}`);
+  assert.match(equalityTactics, new RegExp(`export function ${name}\\b`), `proofEqualityTactics.ts must export ${name}`);
 }
 assert.match(equalityTactics, /Eq\.rec/, 'rw must construct checked Eq.rec transport');
 
 const inductiveTactics = fs.readFileSync(inductiveTacticsSrc, 'utf8');
 for (const name of ['elabConstructorProof', 'elabCasesProof', 'elabInductionProof']) {
-  assert.match(inductiveTactics, new RegExp(`export function ${name}\\\\b`), `proofInductiveTactics.ts must export ${name}`);
+  assert.match(inductiveTactics, new RegExp(`export function ${name}\\b`), `proofInductiveTactics.ts must export ${name}`);
 }
 assert.match(inductiveTactics, /recursor/, 'cases/induction must use checked recursor metadata');
 
