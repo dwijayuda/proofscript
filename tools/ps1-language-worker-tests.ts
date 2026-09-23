@@ -82,6 +82,33 @@ assert.equal(incompleteGoals.declarationGoal, null);
 worker.closeDocument(incompleteUri);
 fs.unlinkSync(incompleteFile);
 
+const emptyGoalFile = path.join(srcDir, "EmptyGoal.ps");
+const emptyGoalUri = "proofscript-worker-test://EmptyGoal.ps";
+const emptyGoalSource = "axiom P: Prop; theorem emptyGoal(h: P): P := by {";
+fs.writeFileSync(emptyGoalFile, emptyGoalSource);
+worker.openDocument(emptyGoalUri, 1, emptyGoalSource, emptyGoalFile);
+const emptyGoalAnalysis = await worker.analyze(emptyGoalUri);
+assert.equal(emptyGoalAnalysis.status, "rejected");
+assert.ok(emptyGoalAnalysis.proofStates.some((state) =>
+  state.kind === "goal"
+  && state.sourceStatus === "syntax-incomplete"
+  && state.goal === "P"
+));
+const emptyGoalState = await worker.goals(
+  emptyGoalUri,
+  { line: 0, character: emptyGoalSource.length },
+);
+assert.equal(emptyGoalState.tacticStateAvailable, true);
+assert.equal(emptyGoalState.tacticState?.kind, "goal");
+assert.equal(emptyGoalState.tacticState?.tactic, "by");
+assert.equal(emptyGoalState.tacticState?.goal, "P");
+assert.equal(emptyGoalState.tacticState?.sourceStatus, "syntax-incomplete");
+assert.deepEqual(emptyGoalState.tacticState?.locals.map((local) => local.name), ["h"]);
+assert.equal(emptyGoalState.tacticState?.locals[0]?.type, "P");
+assert.equal(emptyGoalState.declarationGoal, null);
+worker.closeDocument(emptyGoalUri);
+fs.unlinkSync(emptyGoalFile);
+
 worker.replaceDocument(uri, 2, "theorem broken");
 const broken = await worker.diagnostics(uri);
 assert.equal(broken.version, 2);
