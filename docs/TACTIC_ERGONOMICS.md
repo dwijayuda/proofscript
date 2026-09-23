@@ -1,6 +1,6 @@
 # Tactic Ergonomics
 
-Status: **PHASE 3 COMPLETE; PHASE 4 IMPLEMENTED, ACCEPTANCE PENDING**
+Status: **PHASE 4 COMPLETE; PHASE 5 PENDING**
 
 Branch: `feature/tactic-ergonomics`
 
@@ -203,6 +203,30 @@ compiler-backed language service, the language-worker boundary, LSP transport,
 the active VS Code smoke test, `standalone-small`, and reference governance.
 
 The earlier Phase 1 evidence remains the recorded 7/7 v1 result.
+
+### Phase 4 machine acceptance
+
+Phase 4 was executed on committed source
+`7573f5cb3aa8196472020d33d4c83430819f2f3e` with
+`npm run assurance:tactic-ergonomics`.
+
+Machine result:
+
+- schema: `proofscript.tactic-ergonomics-endtest/v4`
+- total steps: 9
+- passed: 9
+- failed: 0
+- skipped: 0
+- `allTacticErgonomicsGatesPassed: true`
+
+The v4 run covers the canonical missing-final-brace observation path through
+parser, frontend/compiler, language service, worker, LSP, and VS Code. It also
+covers the project-layer leading-import scanner so an incomplete editor buffer
+can reach the canonical frontend without requiring full project-graph parsing
+first.
+
+The source remains rejected on syntax failure; `syntax-incomplete` is editor
+provenance only and carries no proof authority.
 
 ### Phase 3 machine acceptance
 
