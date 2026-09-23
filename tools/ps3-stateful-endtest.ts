@@ -49,6 +49,7 @@ const steps = [
   { name: "lean-version-compatibility", args: ["run", "test:ps3:lean-version-compatibility"] },
   { name: "stateful-frame", args: ["run", "test:ps3:stateful-frame"] },
   { name: "stateful-logical-predicate", args: ["run", "test:ps3:stateful-logical-predicate"] },
+  { name: "stateful-control-flow-boundary", args: ["run", "test:ps3:stateful-control-flow-boundary"] },
   { name: "stateful-model", args: ["run", "test:ps3:stateful-lean-model"] },
   { name: "runner-selection", args: ["run", "test:ps3:stateful-lean-runner-selection"] },
   { name: "proof-matrix-plan", args: ["run", "test:ps3:stateful-lean-proof-matrix"] },
