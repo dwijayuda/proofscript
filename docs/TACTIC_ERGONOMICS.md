@@ -110,9 +110,9 @@ The metadata is deliberately outside the trust path:
   current compiler-backed state or `null` when the cursor is outside a proof
   tactic.
 
-This first proof-state slice is for successfully checked documents. Recovering
-useful partial tactic states from a proof that currently fails elaboration is a
-separate later phase and must not introduce an editor-only elaborator.
+Phase 2 closes the successfully-checked proof-state slice. Phase 3 below extends
+that same observation path across later elaboration failure without introducing
+an editor-only elaborator.
 
 ## Phase 3: retained proof states after elaboration failure
 
