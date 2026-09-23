@@ -4,19 +4,18 @@ Editor-independent semantic service for ProofScript.
 
 This package deliberately depends on the canonical `@proofscript/compiler` facade, not on parser/elaborator/kernel internals and not on `frontend-next` or `unified-bridge`.
 
-## PS1 scope
+## Current scope
 
-The initial service provides:
+The service provides versioned document state, incremental overlays, diagnostics,
+symbols, hover, completion, navigation, rename, semantic tokens, formatting,
+code actions, declaration/verification goals, and compiler-backed tactic states.
 
-- versioned in-memory document snapshots;
-- incremental text change application;
-- unsaved-buffer checking through compiler/project source overlays;
-- cached compiler-backed analysis;
-- stable diagnostic identities/result IDs;
-- stale-version rejection;
-- cooperative cancellation boundaries.
-
-It does **not** yet provide hover, completion, navigation, rename, semantic tokens, or proof-state UI. Those features will be added only when the compiler exposes the required semantic/source-map APIs.
+Tactic states are read-only observations returned by the canonical compiler.
+The language service does not parse proof syntax or reconstruct goals itself.
+For currently accepted proofs it can select the smallest canonical proof span at
+the cursor and return its goal, named local context, tactic, and optional
+constructor branch. Partial states for rejected/incomplete proofs are not
+implemented yet.
 
 ## Dependency rule
 
