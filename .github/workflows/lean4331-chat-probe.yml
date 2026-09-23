@@ -1,0 +1,36 @@
+name: lean4331-chat-probe
+
+on:
+  push:
+    branches:
+      - tmp/lean4331-chat-probe
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Lean 4.33.1
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-github-cache: false
+
+      - name: Show Lean version
+        run: lean --version
+
+      - name: Compile tiny Lean program
+        shell: bash
+        run: |
+          cat > /tmp/Probe.lean <<'EOF'
+          #eval (2 + 3 : Nat)
+
+          theorem probe (n : Nat) : n + 0 = n := by
+            simp
+          EOF
+          lean /tmp/Probe.lean
