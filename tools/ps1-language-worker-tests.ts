@@ -44,10 +44,26 @@ const replayedCompletion = await worker.completion(uri, { line: 0, character: 11
 assert.ok(replayedCompletion.some((item) => item.label === "replayed"));
 
 
+worker.replaceDocument(uri, 4, "def workerBase: Nat := 1;\ndef workerUse: Nat := workerBase;\n");
+const workerNavigation = await worker.analyze(uri);
+assert.equal(workerNavigation.status, "accepted");
+assert.ok(workerNavigation.sourceReferences.some((reference) => reference.resolvedName === "workerBase"));
+const workerDefinition = await worker.definition(uri, { line: 1, character: 25 });
+assert.ok(workerDefinition);
+assert.deepEqual(workerDefinition.range.start, { line: 0, character: 4 });
+const workerReferences = await worker.references(uri, { line: 1, character: 25 }, true);
+assert.equal(workerReferences.length, 2);
+const workerRename = await worker.rename(uri, { line: 1, character: 25 }, "workerRenamed");
+assert.equal(workerRename.changes[uri]?.length, 2);
+
+
 await worker.restart("test state replay");
 const afterRestart = await worker.analyze(uri);
 assert.equal(afterRestart.status, "accepted");
-assert.ok(afterRestart.declarations.some((declaration) => declaration.name === "replayed"));
+assert.ok(afterRestart.declarations.some((declaration) => declaration.name === "workerBase"));
+assert.ok(afterRestart.declarations.some((declaration) => declaration.name === "workerUse"));
+const afterRestartDefinition = await worker.definition(uri, { line: 1, character: 25 });
+assert.ok(afterRestartDefinition);
 assert.ok(worker.stats().stateReplays >= 1);
 
 const owner = "cancel-me";
