@@ -156,12 +156,29 @@
     {
       "id": "V1-P4",
       "name": "safe JS/npm interoperability",
-      "status": "planned",
+      "status": "in_progress",
       "exitGates": [
-        "FFI trust model specified",
-        "typed extern/import surface implemented",
+        "test:product-v1:ffi",
+        "npm consumption example green",
         "unsafe interop fails closed",
-        "npm consumption example green"
+        "FFI certificate trust metadata verified"
+      ],
+      "done": [
+        "explicit proofscript.ffi/v1 execution manifest",
+        "logical FFI boundary uses explicit checked Core axioms",
+        "trusted-external classification is mandatory",
+        "named-import-only JavaScript/TypeScript bindings",
+        "monomorphic first-order Nat/Int/Bool/String/Unit boundary",
+        "unbound executable axioms fail closed",
+        "unsupported FFI boundary types fail closed",
+        "FFI manifest identity/hash and exact bindings recorded in certificates",
+        "certificate verification rejects FFI manifest tampering"
+      ],
+      "remaining": [
+        "execute Product-v1 FFI gate on supported host platforms",
+        "add package-oriented npm consumer example",
+        "decide whether a future source-level extern sugar is justified; it is not required for v1",
+        "async/IO/callback/object interop remains outside ffi-v1"
       ]
     },
     {
