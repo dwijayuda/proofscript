@@ -53,6 +53,8 @@ axiom Q: Prop;
 
 theorem intro_assumption: P -> P := by { intro h; assumption }
 
+theorem dependent_assumption(P0: Prop, h: P0): P0 := by { assumption }
+
 theorem apply_exact(h: P): P := by { apply h }
 
 theorem apply_subgoal(h: P -> Q, hp: P): Q := by { apply h; assumption }
@@ -116,7 +118,7 @@ def executable: Nat := { idNat 9 }
 });
 const checked = runPsliveJson(['check', fixture.source, '--json']);
 assert.equal(checked.status, 'accepted');
-for (const name of ['idNat_rfl', 'exact_rfl', 'intro_assumption', 'apply_exact', 'apply_subgoal', 'show_exact', 'have_exact', 'have_inferred', 'have_nested', 'have_dependent_target', 'rw_forward', 'rw_reverse', 'rw_exact_numeral', 'subst_forward', 'constructor_both', 'cases_bool', 'cases_holder', 'induction_nat_reflexive', 'induction_chain', 'cases_bool_branches', 'cases_holder_branch', 'induction_chain_branches', 'simp_reflexive', 'simp_assumption', 'simp_rewrite']) {
+for (const name of ['idNat_rfl', 'exact_rfl', 'intro_assumption', 'dependent_assumption', 'apply_exact', 'apply_subgoal', 'show_exact', 'have_exact', 'have_inferred', 'have_nested', 'have_dependent_target', 'rw_forward', 'rw_reverse', 'rw_exact_numeral', 'subst_forward', 'constructor_both', 'cases_bool', 'cases_holder', 'induction_nat_reflexive', 'induction_chain', 'cases_bool_branches', 'cases_holder_branch', 'induction_chain_branches', 'simp_reflexive', 'simp_assumption', 'simp_rewrite']) {
   assert.ok(checked.userDeclarations.some(d => d.name === name && d.kind === 'theorem'), `expected theorem ${name}`);
 }
 const built = buildJsFixture(fixture, 'proof-elab.js');
