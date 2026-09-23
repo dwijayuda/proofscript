@@ -124,7 +124,9 @@ function collectNameRefs(term:SurfaceTerm,out:Set<string>,bound:Set<string>):voi
       break;
     case "casesProof":
     case "inductionProof":
-      collectNameRefs(term.term,out,bound);collectNameRefs(term.body,out,bound);
+      collectNameRefs(term.term,out,bound);
+      if(term.body)collectNameRefs(term.body,out,bound);
+      for(const branch of term.branches??[]){const next=new Set(bound);for(const name of branch.binders)next.add(name);collectNameRefs(branch.body,out,next);}
       break;
     case "simpProof":
       break;
