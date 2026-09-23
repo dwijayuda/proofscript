@@ -77,4 +77,32 @@ for (const branch of parsed.declarations[16].value.branches ?? []) {
 }
 assert.equal(parsed.declarations[17].value.tag, 'simpProof');
 
+const incompleteObservations = [];
+const incompleteSource = "theorem incomplete(P: Prop, h: P): P := by { assumption\n";
+assert.throws(
+  () => parseSource(incompleteSource, undefined, {
+    incompleteProofSink: observation => incompleteObservations.push(observation),
+  }),
+  /expected '\}' at offset \d+, found '<eof>'/u,
+);
+assert.equal(incompleteObservations.length, 1);
+assert.equal(incompleteObservations[0].partialDeclaration.kind, 'theorem');
+assert.equal(incompleteObservations[0].partialDeclaration.name, 'incomplete');
+assert.equal(incompleteObservations[0].partialDeclaration.value.tag, 'assumptionProof');
+assert.equal(incompleteObservations[0].declarations.length, 1);
+assert.equal(incompleteObservations[0].declarations[0].name, 'incomplete');
+assert.equal(incompleteObservations[0].failureOffset, incompleteSource.length);
+
+const unrelatedParseObservations = [];
+assert.throws(
+  () => parseSource("theorem broken", undefined, {
+    incompleteProofSink: observation => unrelatedParseObservations.push(observation),
+  }),
+);
+assert.equal(
+  unrelatedParseObservations.length,
+  0,
+  'unrelated parser failures must not fabricate incomplete proof observations',
+);
+
 console.log('parser proof extraction tests: PASS');
