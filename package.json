@@ -822,7 +822,8 @@
     "test:ps3:stateful-logical-predicate": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-stateful-logical-predicate-tests.ts",
     "assurance:ps3:stateful-lean-logical-vc": "npm run assurance:ps3:stateful-lean-vc -- --source examples/software/10-bank-audit-logical-stateful-vc.ps --model examples/software/06-bank-state.model.json",
     "assurance:ps3:stateful-lean-logical-vc:proof": "npm run assurance:ps3:stateful-lean-logical-vc -- --require-proof",
-    "test:ps3:stateful-control-flow-boundary": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-stateful-control-flow-boundary-tests.ts"
+    "test:ps3:stateful-control-flow-boundary": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-stateful-control-flow-boundary-tests.ts",
+    "test:product-v1:canonical-cli": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-canonical-cli-tests.ts"
   },
   "engines": {
     "node": ">=20"
