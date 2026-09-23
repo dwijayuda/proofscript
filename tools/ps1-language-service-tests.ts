@@ -83,6 +83,22 @@ assert.equal(
   "semantically invalid duplicate headers must not publish an initial goal",
 );
 
+const illTypedEmptyGoalStates: FrontendProofState[] = [];
+assert.throws(
+  () => checkCompilerSource(
+    "theorem illTypedGoal: 1 := by {",
+    withStandardPrelude({
+      proofStateSink: (event) => illTypedEmptyGoalStates.push(event.state),
+    }),
+  ),
+  /expected proof tactic at offset \d+, found '<eof>'/u,
+);
+assert.equal(
+  illTypedEmptyGoalStates.length,
+  0,
+  "ill-typed theorem headers must not publish an initial goal",
+);
+
 const acceptedWithThrowingObserver = checkCompilerSource(
   "theorem observerFailOpen(P: Prop, h: P): P := by { assumption }\n",
   withStandardPrelude({
