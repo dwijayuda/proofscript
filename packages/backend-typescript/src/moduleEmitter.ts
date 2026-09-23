@@ -23,6 +23,18 @@ import {
 } from "./ffi";
 import { buildSanitizedNameMap } from "./names";
 import { emitTerm, flattenPi, productV1PublicType } from "./termEmitter";
+type ExecutableCoreDeclaration = Extract<CoreDeclaration, { kind: "definition" | "opaque" }>;
+
+function findExecutableDeclaration(
+  decls: readonly CoreDeclaration[],
+  name: string,
+): ExecutableCoreDeclaration | undefined {
+  return decls.find(
+    (decl): decl is ExecutableCoreDeclaration =>
+      decl.name === name && (decl.kind === "definition" || decl.kind === "opaque"),
+  );
+}
+
 import type {
   EmitContext,
   EmitJavaScriptOptions,
@@ -181,8 +193,8 @@ export function emitTypeScriptModule(artifact: CoreArtifact, options: EmitJavaSc
     lines.push(`import type { PsValue } from ${JSON.stringify(runtimeImport)};`);
   }
   for (const item of emitted) {
-    const decl = executableDecls.find(candidate => candidate.name === item.name);
-    if (!decl) throw new Error(`internal emitter error: missing declaration '${item.name}'`);
+    const decl = findExecutableDeclaration(executableDecls, item.name);
+    if (!decl) throw new Error(`internal emitter error: missing executable declaration '${item.name}'`);
     const publicType = productV1PublicType(decl.type) ?? "PsValue";
     lines.push(`export const ${item.jsName}: ${publicType} = ${item.expr};`);
   }
