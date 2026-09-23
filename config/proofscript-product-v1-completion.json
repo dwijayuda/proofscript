@@ -193,7 +193,7 @@
       "status": "in_progress",
       "exitGates": [
         "test:product-v1:stdlib-profile",
-        "JSON/validation package gate",
+        "test:product-v1:json-validation",
         "package resolution/publishing contract",
         "dependency certificate identity for package dependencies"
       ],
@@ -207,10 +207,12 @@
         "Array stable bounded collection API",
         "String live type/literal profile with broader utilities explicitly deferred",
         "runtime lowering required for every bootstrap computational axiom",
-        "implicit @proofscript/std manifest/hash identity bound into new certificates"
+        "implicit @proofscript/std manifest/hash identity bound into new certificates",
+        "bounded @proofscript/json-validation trusted-host package",
+        "JSON validation ProofScript consumer + offline npm FFI example",
+        "JSON FFI/certificate trust boundary remains explicit (parserVerified=false)"
       ],
       "remaining": [
-        "JSON/validation package",
         "broader String utilities needed by JSON/application code",
         "ProofScript source-level package resolution beyond project modules",
         "published-package dependency certificate identities beyond the implicit stdlib",
@@ -279,6 +281,9 @@
         "HTTP/API example",
         "stateful business-domain app",
         "fresh-machine install/release gate"
+      ],
+      "implementedPendingExecution": [
+        "JSON/validation example"
       ]
     }
   ]
