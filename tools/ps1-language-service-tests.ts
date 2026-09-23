@@ -11,9 +11,10 @@ import {
 import {
   checkSource as checkCompilerSource,
   withStandardPrelude,
+  type FrontendProofState,
 } from "@proofscript/compiler";
 
-const compilerPartialStates = [];
+const compilerPartialStates: FrontendProofState[] = [];
 assert.throws(
   () => checkCompilerSource(
     "theorem partialCompiler(P: Prop, h: P): P := by { exact missing }\n",
