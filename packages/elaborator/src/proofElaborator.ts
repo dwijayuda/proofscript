@@ -139,13 +139,12 @@ function elabAssumptionProof(
   const ctx = contextFromTypes(localTypes);
   const expected = kernelWhnf(kernelEnv, expectedType);
   for (let i = localTypes.length - 1; i >= 0; i--) {
-    const localType = kernelWhnf(kernelEnv, localTypes[i]);
-    if (!defEq(kernelEnv, ctx, localType, expected)) continue;
     const proof: Term = { tag: "bvar", index: locals.length - 1 - i };
+    // Local declaration types are stored in the context before that local.
+    // Ask the kernel for the bvar's type in the full current context so
+    // dependent locals are lifted exactly as the trusted checker expects.
     const actual = kernelWhnf(kernelEnv, infer(kernelEnv, ctx, proof));
-    if (!defEq(kernelEnv, ctx, actual, expected)) {
-      throw new ElaborationError(`assumption internal check failed for local '${locals[i]}'`);
-    }
+    if (!defEq(kernelEnv, ctx, actual, expected)) continue;
     return proof;
   }
   throw new ElaborationError("assumption failed: no local hypothesis has the expected goal type");
