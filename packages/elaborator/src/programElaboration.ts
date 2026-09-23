@@ -161,6 +161,8 @@ export interface ElaboratedInitialProofGoal {
  */
 export function elaborateInitialProofGoalCore(
   prefixDecls: SurfaceDeclaration[],
+  sourceName: string,
+  namespacePath: readonly string[] | undefined,
   binders: SurfaceBinder[],
   resultTerm: SurfaceTerm,
   availableLevels: readonly string[],
@@ -212,6 +214,11 @@ export function elaborateInitialProofGoalCore(
       ...previous,
       structureFields: sourceDecl.fields.map(field => field.name),
     });
+  }
+
+  const qualifiedName = qualifyDeclarationName(sourceName, namespacePath);
+  if (globals.has(qualifiedName)) {
+    throw new ElaborationError(`duplicate source declaration: ${qualifiedName}`);
   }
 
   const available = new Set(availableLevels);
