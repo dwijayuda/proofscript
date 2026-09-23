@@ -1,0 +1,7 @@
+function withdrawPreserving(from: AccountId, other: AccountId, amount: Nat): State Bank Unit
+  requires distinct: from != other
+  ensures debit: balanceOf(from) = old(balanceOf(from)) - amount
+  frame other_unchanged: balanceOf(other) = old(balanceOf(other))
+:= do {
+  debit(from, amount);
+}
