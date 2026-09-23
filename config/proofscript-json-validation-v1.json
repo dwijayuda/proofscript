@@ -1,0 +1,75 @@
+{
+  "schema": "proofscript.json-validation-profile/v1",
+  "profileId": "proofscript-json-validation-v1",
+  "status": "implemented-trusted-host-bounded",
+  "package": {
+    "name": "@proofscript/json-validation",
+    "version": "0.1.0",
+    "role": "text-level JSON validation/canonicalization host package"
+  },
+  "ffi": {
+    "schema": "proofscript.ffi/v1",
+    "trust": "trusted-external",
+    "boundaryTypes": [
+      "String",
+      "Bool"
+    ],
+    "forbiddenBoundaryTypes": [
+      "host object",
+      "host array",
+      "host number",
+      "null",
+      "undefined",
+      "exception"
+    ]
+  },
+  "operations": {
+    "jsonIsValid": {
+      "type": "String -> Bool",
+      "meaning": "true iff the host JSON parser accepts the complete input text"
+    },
+    "jsonIsObject": {
+      "type": "String -> Bool",
+      "meaning": "true iff accepted JSON has a non-null, non-array object root"
+    },
+    "jsonIsArray": {
+      "type": "String -> Bool",
+      "meaning": "true iff accepted JSON has an array root"
+    },
+    "jsonHasStringField": {
+      "type": "String -> String -> Bool",
+      "meaning": "true iff an object root has an own property with a string value"
+    },
+    "jsonHasBooleanField": {
+      "type": "String -> String -> Bool",
+      "meaning": "true iff an object root has an own property with a boolean value"
+    },
+    "jsonHasSafeIntegerField": {
+      "type": "String -> String -> Bool",
+      "meaning": "true iff an object root has an own property represented by a finite JavaScript safe integer"
+    },
+    "jsonCanonicalizeOr": {
+      "type": "String -> String -> String",
+      "meaning": "host JSON parse/stringify normalization, returning the supplied fallback on parse/stringify failure"
+    }
+  },
+  "claims": {
+    "fullJsonValueModel": false,
+    "parserVerified": false,
+    "serializerVerified": false,
+    "hostJsonParserTrusted": true,
+    "structuredJsonCrossesFfiBoundary": false,
+    "jsonNumberCorrespondenceToProofScriptInt": false,
+    "endToEndVerifiedJson": false
+  },
+  "rationale": [
+    "Product-v1 lacks a checked JSON value representation with decimal-number semantics.",
+    "The existing FFI safely admits first-order String/Bool host boundaries.",
+    "This package provides practical validation without pretending host JSON.parse is formally verified."
+  ],
+  "future": [
+    "checked Json value inductive after number/String semantics are sufficient",
+    "verified parser/serializer or proved refinement to a trusted parser",
+    "typed schema decoding into ProofScript structures"
+  ]
+}
