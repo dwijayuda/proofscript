@@ -95,19 +95,20 @@
         "state-model adequacy"
       ],
       "remaining": [
-        "loop invariant obligations",
-        "loop progress measures",
-        "exceptional/control-flow paths",
-        "broader typed specification expressions"
+        "exceptional/control-flow paths"
       ],
       "exitGates": [
-        "V-FRAME static gates green and proof-required frame matrix evidence recorded",
-        "loops green",
-        "exceptional paths modeled or explicitly excluded",
+        "V-FRAME proof-required matrix evidence recorded",
+        "loop-vc0 static gates green and proof-required loop matrix evidence recorded",
+        "compound stateful predicate proof-required matrix evidence recorded",
+        "exceptional/control-flow paths modeled or explicitly excluded",
         "stateful matrix remains proof-required"
       ],
       "implementedProofPending": [
-        "V-FRAME"
+        "V-FRAME",
+        "V-INVARIANT (loop-vc0)",
+        "V-DECREASES (loop-vc0)",
+        "stateful Prop connectives (¬, ∧, ∨)"
       ]
     },
     {
