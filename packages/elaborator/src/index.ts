@@ -3,9 +3,9 @@ import {
   TypeclassEnvironmentMetadata,
   emptyTypeclassEnvironment,
 } from "@proofscript/kernel";
-import { SurfaceDeclaration } from "@proofscript/syntax";
+import { SurfaceBinder, SurfaceDeclaration, SurfaceTerm } from "@proofscript/syntax";
 import { InitialGlobalInfo } from "./globalEnvironment";
-import { elaborateProgramCore } from "./programElaboration";
+import { elaborateInitialProofGoalCore, elaborateProgramCore } from "./programElaboration";
 import { elabTerm } from "./termElaboration";
 import { ProofElaborationObserver } from "./proofState";
 export type { GlobalInfo, InitialGlobalInfo } from "./globalEnvironment";
@@ -13,6 +13,7 @@ export { elabTerm } from "./termElaboration";
 export { collectResolvedGlobalReferences } from "./sourceReferences";
 export type { ResolvedGlobalReference } from "./sourceReferences";
 export type { ProofElaborationObserver, ProofStateLocal, ProofStateSnapshot } from "./proofState";
+export type { ElaboratedInitialProofGoal } from "./programElaboration";
 
 /**
  * Elaborate the current K2c/PSC-1 source slice into explicit kernel declarations.
@@ -35,6 +36,28 @@ export function elaborateProgram(
     initialTypeclasses,
     (term, locals, localTypes, globals, available, kernelEnv, expectedType) =>
       elabTerm(term, locals, localTypes, globals, available, kernelEnv, expectedType, observer),
+  );
+}
+
+export function elaborateInitialProofGoal(
+  prefixDecls: SurfaceDeclaration[],
+  binders: SurfaceBinder[],
+  resultTerm: SurfaceTerm,
+  availableLevels: readonly string[],
+  initialGlobals: readonly InitialGlobalInfo[] = [],
+  initialDeclarations: readonly CoreDeclaration[] = [],
+  initialTypeclasses: TypeclassEnvironmentMetadata = emptyTypeclassEnvironment(),
+) {
+  return elaborateInitialProofGoalCore(
+    prefixDecls,
+    binders,
+    resultTerm,
+    availableLevels,
+    initialGlobals,
+    initialDeclarations,
+    initialTypeclasses,
+    (term, locals, localTypes, globals, available, kernelEnv, expectedType) =>
+      elabTerm(term, locals, localTypes, globals, available, kernelEnv, expectedType),
   );
 }
 
