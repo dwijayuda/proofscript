@@ -345,7 +345,8 @@
       "trustBoundary": "Editor-independent semantic service that delegates checking to the canonical compiler facade; no independent parser/checker semantics.",
       "productionRole": "Owns versioned unsaved document state, compiler-backed analysis, diagnostics, and cancellation boundaries.",
       "allowedDependencies": [
-        "packages/compiler"
+        "packages/compiler",
+        "packages/formatter"
       ]
     },
     {
