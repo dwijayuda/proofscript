@@ -41,6 +41,17 @@ export function containsSurfaceName(term: SurfaceTerm, name: string, bound: Read
       next.add(term.name);
       return containsSurfaceName(term.body, name, next);
     }
+    case "rwProof":
+      return containsSurfaceName(term.equality, name, bound) || containsSurfaceName(term.body, name, bound);
+    case "substProof":
+      return containsSurfaceName(term.body, name, bound);
+    case "constructorProof":
+      return term.body ? containsSurfaceName(term.body, name, bound) : false;
+    case "casesProof":
+    case "inductionProof":
+      return containsSurfaceName(term.term, name, bound) || containsSurfaceName(term.body, name, bound);
+    case "simpProof":
+      return false;
     case "eq": return containsSurfaceName(term.left, name, bound) || containsSurfaceName(term.right, name, bound);
     case "binaryOp": return containsSurfaceName(term.left, name, bound) || containsSurfaceName(term.right, name, bound);
     case "arrayLit": case "tuple": return term.items.some(item => containsSurfaceName(item, name, bound));
@@ -219,6 +230,31 @@ function rewriteBranchTerm(
         body: rewriteBranchTerm(term.body, declarationName, recursiveNames, patternBinders, next),
       };
     }
+    case "rwProof":
+      return {
+        ...term,
+        equality: rewriteBranchTerm(term.equality, declarationName, recursiveNames, patternBinders, shadowed),
+        body: rewriteBranchTerm(term.body, declarationName, recursiveNames, patternBinders, shadowed),
+      };
+    case "substProof":
+      return {
+        ...term,
+        body: rewriteBranchTerm(term.body, declarationName, recursiveNames, patternBinders, shadowed),
+      };
+    case "constructorProof":
+      return {
+        ...term,
+        body: term.body ? rewriteBranchTerm(term.body, declarationName, recursiveNames, patternBinders, shadowed) : undefined,
+      };
+    case "casesProof":
+    case "inductionProof":
+      return {
+        ...term,
+        term: rewriteBranchTerm(term.term, declarationName, recursiveNames, patternBinders, shadowed),
+        body: rewriteBranchTerm(term.body, declarationName, recursiveNames, patternBinders, shadowed),
+      };
+    case "simpProof":
+      return term;
     case "name": {
       if (recursiveNames.includes(term.name) && !shadowed.has(term.name)) {
         throw new UnsupportedFeature(
