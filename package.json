@@ -810,7 +810,8 @@
     "test:product-v1:contract": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-completion-tests.ts",
     "test:ps3:stateful-frame": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-stateful-frame-tests.ts",
     "assurance:ps3:stateful-lean-frame-vc": "npm run assurance:ps3:stateful-lean-vc -- --source examples/software/08-bank-debit-frame-stateful-vc.ps --model examples/software/06-bank-state.model.json",
-    "assurance:ps3:stateful-lean-frame-vc:proof": "npm run assurance:ps3:stateful-lean-frame-vc -- --require-proof"
+    "assurance:ps3:stateful-lean-frame-vc:proof": "npm run assurance:ps3:stateful-lean-frame-vc -- --require-proof",
+    "test:ps3:loop-vc": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-loop-vc-tests.ts"
   },
   "engines": {
     "node": ">=20"
