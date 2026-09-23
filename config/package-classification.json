@@ -327,6 +327,17 @@
       ]
     },
     {
+      "path": "packages/formatter",
+      "npmName": "@proofscript/formatter",
+      "tier": "product",
+      "lifecycle": "supported",
+      "trustBoundary": "Source-layout utility over the canonical parser; it cannot elaborate, check, or validate proofs.",
+      "productionRole": "Provides token-preserving canonical formatting for psc and editor integrations.",
+      "allowedDependencies": [
+        "packages/parser"
+      ]
+    },
+    {
       "path": "packages/language-service",
       "npmName": "@proofscript/language-service",
       "tier": "product",
