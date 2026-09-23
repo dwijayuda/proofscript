@@ -427,6 +427,23 @@ assert.equal(emptyGoalResponse.result.declarationGoal, null);
 
 send({
   jsonrpc: "2.0",
+  id: 104,
+  method: "textDocument/completion",
+  params: {
+    textDocument: { uri: emptyGoalUri },
+    position: { line: 0, character: emptyGoalSource.length },
+  },
+});
+const emptyGoalCompletion = await waitFor((message) => message.id === 104, "empty proof tactic completion response");
+assert.equal(emptyGoalCompletion.result.isIncomplete, false);
+const assumptionCompletion = emptyGoalCompletion.result.items.find((item) => item.label === "assumption");
+assert.ok(assumptionCompletion);
+assert.equal(assumptionCompletion.kind, 14, "tactic completions must use the LSP Keyword kind");
+assert.match(assumptionCompletion.detail, /canonical elaboration/u);
+assert.ok(emptyGoalCompletion.result.items.some((item) => item.label === "induction" && item.kind === 14));
+
+send({
+  jsonrpc: "2.0",
   method: "textDocument/didClose",
   params: { textDocument: { uri: emptyGoalUri } },
 });
