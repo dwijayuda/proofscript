@@ -127,6 +127,7 @@
       "status": "in_progress",
       "exitGates": [
         "test:product-v1:runtime-profile",
+        "test:product-v1:runtime-certificate",
         "test:product-v1:runtime-differential",
         "certificate correspondence levels explicit and emitted",
         "runtime artifact hashes bound to certificate",
@@ -147,7 +148,12 @@
         "optional emitted TS/JS artifact hash bound into certificates",
         "certificate verification rejects runtime-profile and backend-artifact tampering",
         "explicit correspondence claims emitted with end-to-end JavaScript verification false",
-        "Product-v1 runtime differential corpus defined across all implemented representation families"
+        "Product-v1 runtime differential corpus defined across all implemented representation families",
+        "certificate binds runtime profile identity",
+        "certificate optionally binds emitted TS/JS artifact SHA-256",
+        "profile-bound and artifact-bound-structural correspondence levels",
+        "certificate verification rejects runtime artifact tampering",
+        "structural certification cannot claim runtime differential testing or formal backend correspondence"
       ],
       "remaining": [
         "formal Core-to-TypeScript refinement remains separate and unproved"
