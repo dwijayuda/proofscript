@@ -270,7 +270,7 @@ function registerLanguageProviders(context) {
         return completion;
       });
     },
-  }, "."));
+  }, ".", "{"));
   context.subscriptions.push(vscode.languages.registerDefinitionProvider(selector, {
     provideDefinition: async (document, position, token) => {
       if (!client?.ready || client.capabilities?.definitionProvider !== true) return null;
