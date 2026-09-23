@@ -22,6 +22,7 @@ jobs:
       - run: npm run build
       - run: npm run test:architecture:package-classification
       - run: npm run test:product-v1:contract
+      - run: npm run test:product-v1:verification-endtest
       - run: npm run test:ps2:plugin-metadata
       - run: npm run test:ps2:project-metadata
       - run: npm run test:ps2:cli-project-profile
