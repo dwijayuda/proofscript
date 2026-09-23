@@ -7,10 +7,12 @@ import { SurfaceDeclaration } from "@proofscript/syntax";
 import { InitialGlobalInfo } from "./globalEnvironment";
 import { elaborateProgramCore } from "./programElaboration";
 import { elabTerm } from "./termElaboration";
+import { ProofElaborationObserver } from "./proofState";
 export type { GlobalInfo, InitialGlobalInfo } from "./globalEnvironment";
 export { elabTerm } from "./termElaboration";
 export { collectResolvedGlobalReferences } from "./sourceReferences";
 export type { ResolvedGlobalReference } from "./sourceReferences";
+export type { ProofElaborationObserver, ProofStateLocal, ProofStateSnapshot } from "./proofState";
 
 /**
  * Elaborate the current K2c/PSC-1 source slice into explicit kernel declarations.
@@ -24,8 +26,16 @@ export function elaborateProgram(
   initialGlobals: readonly InitialGlobalInfo[] = [],
   initialDeclarations: readonly CoreDeclaration[] = [],
   initialTypeclasses: TypeclassEnvironmentMetadata = emptyTypeclassEnvironment(),
+  observer?: ProofElaborationObserver,
 ): { declarations: CoreDeclaration[]; typeclasses: TypeclassEnvironmentMetadata } {
-  return elaborateProgramCore(decls, initialGlobals, initialDeclarations, initialTypeclasses, elabTerm);
+  return elaborateProgramCore(
+    decls,
+    initialGlobals,
+    initialDeclarations,
+    initialTypeclasses,
+    (term, locals, localTypes, globals, available, kernelEnv, expectedType) =>
+      elabTerm(term, locals, localTypes, globals, available, kernelEnv, expectedType, observer),
+  );
 }
 
 export function elaborateDeclarations(
