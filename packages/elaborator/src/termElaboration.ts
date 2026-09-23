@@ -50,6 +50,12 @@ export function elabTerm(
     case "introProof":
     case "showProof":
     case "haveProof":
+    case "rwProof":
+    case "substProof":
+    case "constructorProof":
+    case "casesProof":
+    case "inductionProof":
+    case "simpProof":
       return elabProofTerm(term, locals, localTypes, kernelEnv, expectedType, {
         elaborateTerm: (source, nextLocals, nextLocalTypes, nextExpectedType) =>
           elabTerm(source, nextLocals, nextLocalTypes, globals, available, kernelEnv, nextExpectedType),
