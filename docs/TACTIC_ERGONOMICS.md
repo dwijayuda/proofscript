@@ -1,6 +1,6 @@
 # Tactic Ergonomics
 
-Status: **PHASE 3 COMPLETE; PHASE 4 PENDING**
+Status: **PHASE 3 COMPLETE; PHASE 4 IMPLEMENTED, ACCEPTANCE PENDING**
 
 Branch: `feature/tactic-ergonomics`
 
@@ -147,6 +147,47 @@ The theorem remains rejected because `missing` is unknown, while the cursor on
 `exact` can still show the compiler-observed state `P, h : P ⊢ P` that was
 emitted before the identifier failure.
 
+## Phase 4: canonical syntax-incomplete proof prefix
+
+Phase 4 adds one deliberately narrow parser-failure UX case without source
+repair. When a `by { ...` proof step parses completely and the canonical
+parser reaches EOF where only the closing `}` is missing, the parser emits a
+read-only observation containing the actual theorem/example header and proof
+AST it reached. It then throws the same ordinary `ParseError` as before.
+
+The frontend may elaborate that observed declaration prefix through the ordinary
+elaborator solely to emit proof-state snapshots. The elaboration result is
+discarded and cannot turn the source into an accepted program.
+
+Example:
+
+```proofscript
+theorem incomplete(P: Prop, h: P): P := by { assumption
+```
+
+At the `assumption` cursor, editor tooling may show:
+
+```text
+P : Prop
+h : P
+⊢ P
+```
+
+while the document still reports the missing-`}` parser diagnostic and has no
+checked declaration goal.
+
+Proof-state provenance is explicit:
+
+- `checked` — state from a source unit that completed canonical checking;
+- `rejected-prefix` — state observed before a later elaboration rejection;
+- `syntax-incomplete` — state derived only from the canonical parser prefix
+  described above.
+
+Phase 4 does **not** insert a synthetic brace, continue parsing after an error,
+recover a missing tactic body/term, create metavariables, or reuse stale editor
+state as if it were current. Unrelated parser failures still expose zero proof
+states. Parser/frontend observers remain fail-open and have no proof authority.
+
 ## Acceptance
 
 Run one consolidated command:
@@ -155,8 +196,8 @@ Run one consolidated command:
 npm run assurance:tactic-ergonomics
 ```
 
-For the current Phase 3 source it uses schema
-`proofscript.tactic-ergonomics-endtest/v3` and covers nine steps: build,
+For the current Phase 4 source it uses schema
+`proofscript.tactic-ergonomics-endtest/v4` and covers nine steps: build,
 parser proof regressions, elaborator/kernel-check proof regressions,
 compiler-backed language service, the language-worker boundary, LSP transport,
 the active VS Code smoke test, `standalone-small`, and reference governance.
@@ -220,7 +261,8 @@ This work does not add general metavariable proof search, indexed/dependent
 cases or induction, arbitrary goal focusing, Lean tactic metaprogramming, a
 second editor parser, or any new trusted kernel primitive.
 
-Phase 3 also retains already-observed tactic states after a later elaboration
-failure when parsing succeeded. It does **not** recover states across parser
-failures, invent metavariables/holes, continue elaboration speculatively after a
-failure, or claim general incomplete-proof recovery.
+Phase 3 retains already-observed tactic states after later elaboration failure.
+Phase 4 additionally handles only the canonical missing-final-brace case above.
+It does **not** provide general parser recovery, invent metavariables/holes,
+continue parsing/elaboration speculatively after a failure, or claim general
+incomplete-proof recovery.
