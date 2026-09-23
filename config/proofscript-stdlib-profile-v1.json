@@ -194,8 +194,15 @@
   },
   "packageLayer": {
     "jsonValidation": {
-      "status": "missing",
-      "reason": "No canonical checked JSON parser/validator package exists yet."
+      "status": "implemented-trusted-host-bounded",
+      "profile": "config/proofscript-json-validation-v1.json",
+      "package": "@proofscript/json-validation",
+      "example": "examples/product-v1/json-validation-app",
+      "trust": "trusted-external",
+      "boundary": "String/Bool text validation only",
+      "parserVerified": false,
+      "structuredJsonValueModel": false,
+      "gate": "test:product-v1:json-validation"
     },
     "http": {
       "status": "missing"
