@@ -20,6 +20,11 @@ export interface ProofParserHost{
    * is read-only; parseProofTerm still throws the ordinary ParseError below.
    */
   onIncompleteProofBlock?(proof:SurfaceTerm,failure:Token):void;
+  /**
+   * Canonical observation for an empty by-block that reached EOF before its
+   * first tactic. The parser still rejects immediately after the observation.
+   */
+  onIncompleteProofStart?(sourceStartOffset:number,failure:Token):void;
 }
 
 function withProofSpan(host:ProofParserHost,startOffset:number,term:SurfaceTerm):SurfaceTerm{
@@ -29,9 +34,17 @@ function withProofSpan(host:ProofParserHost,startOffset:number,term:SurfaceTerm)
 /** Parse a theorem/example proof term after `:=`. */
 export function parseProofTerm(host:ProofParserHost):SurfaceTerm{
   if(!host.atId("by"))return host.parseTerm();
+  const proofStartOffset=host.peek().offset;
   host.next();
   if(!host.at("{"))return parseProofStep(host);
   host.expect("{");
+  if(host.peek().kind==="eof"){
+    try{host.onIncompleteProofStart?.(proofStartOffset,host.peek());}
+    catch{
+      // Parser observers are tooling-only and cannot change parse acceptance.
+    }
+    throw new ParseError(`expected proof tactic at offset ${host.peek().offset}, found '<eof>'`);
+  }
   const proof=parseProofStep(host);
   if(host.at(";"))throw new ParseError("PSC-1 proof blocks do not use a trailing tactic semicolon in the current canonical slice");
   if(!host.at("}")&&host.peek().kind==="eof"){
