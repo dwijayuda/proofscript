@@ -30,6 +30,11 @@ export interface FrontendProofState {
   readonly locals:readonly FrontendProofStateLocal[];
   readonly branch?:string;
 }
+export interface FrontendProofStateEvent {
+  readonly state:FrontendProofState;
+  readonly moduleName?:string;
+  readonly filePath?:string;
+}
 
 export interface FrontendModuleCacheEntry {
   readonly sourceSha256:string;
@@ -57,6 +62,13 @@ export interface FrontendOptions {
   moduleCache?:FrontendModuleCache;
   /** Unsaved/new workspace files not yet present on disk. Used only by workspace indexing. */
   workspaceAdditionalFiles?:readonly string[];
+  /**
+   * Read-only proof-state event sink for editor tooling. Events are emitted by
+   * the canonical elaboration path as states become available, so already
+   * observed states survive a later elaboration failure. Sink failures are
+   * ignored and can never affect source acceptance.
+   */
+  proofStateSink?:(event:FrontendProofStateEvent)=>void;
 }
 export interface FrontendResult {
   artifact: ReturnType<typeof makeArtifact>;
@@ -99,13 +111,18 @@ export function checkSource(source:string,options:FrontendOptions={}):FrontendRe
   const prepared=options.prelude?prepareCoreEnvironment(options.prelude):undefined;
   const parsed=parseSource(source,undefined,{knownGlobalNames:prepared?.globals.map(g=>g.name)??[],validateOpenNamespaces:true});
   if(parsed.imports.length&&!options.allowResolvedImports)throw new UnsupportedFeature("K3c-section-vars0 source imports require project/module resolution; use the project frontend");
-  const rawProofStates:ProofStateSnapshot[]=[];
+  const proofStates:FrontendProofState[]=[];
   const elaborated=elaborateProgram(
     parsed.declarations,
     prepared?.globals??[],
     prepared?.artifact.declarations??[],
     prepared?.typeclasses,
-    {recordProofState:(state)=>rawProofStates.push(state)},
+    {recordProofState:(state)=>{
+      const displayed=safeDisplayProofState(state);
+      if(!displayed)return;
+      proofStates.push(displayed);
+      safeEmitProofState(options.proofStateSink,{state:cloneProofState(displayed)});
+    }},
   );
   const initial=prepared?.artifact.declarations??[];
   const all=[...initial,...elaborated.declarations];
@@ -114,7 +131,6 @@ export function checkSource(source:string,options:FrontendOptions={}):FrontendRe
   // The project driver supplies the complete graph after every dependency has been checked.
   // Intermediate per-module artifacts intentionally carry no partial module metadata.
   const globalReferences=[...collectResolvedGlobalReferences(parsed.declarations,all.map(declaration=>declaration.name))];
-  const proofStates=safeDisplayProofStates(rawProofStates);
   return{artifact:makeArtifact(all,elaborated.typeclasses,options.allowResolvedImports?undefined:modules),summary,parserState:parsed.finalState,ownedFeatures:[...parsed.ownedFeatures],declarationLocations:parsed.declarationLocations.map(item=>({...item})),globalReferences,proofStates};
 }
 
@@ -197,7 +213,17 @@ function compileResolvedModules(
     }
 
     const envArtifact=makeArtifact(visibleDecls,visibleTypeclasses);
-    const checked=checkSource(sourceModule.source,{prelude:envArtifact,allowResolvedImports:true});
+    const checked=checkSource(sourceModule.source,{
+      prelude:envArtifact,
+      allowResolvedImports:true,
+      ...(options.proofStateSink?{
+        proofStateSink:(event:FrontendProofStateEvent)=>options.proofStateSink!({
+          ...event,
+          moduleName:sourceModule.name,
+          filePath:sourceModule.filePath,
+        }),
+      }:{}),
+    });
     const declarations=checked.artifact.declarations.slice(visibleDecls.length);
     const owned=new Set(declarations.map(d=>d.name));
     const typeclasses:TypeclassEnvironmentMetadata={
@@ -230,16 +256,22 @@ function compileResolvedModules(
   return{modules:sourceModules.map(module=>compiled.get(module.name)!),reused,rebuilt};
 }
 
-function safeDisplayProofStates(states:readonly ProofStateSnapshot[]):FrontendProofState[]{
-  const out:FrontendProofState[]=[];
-  for(const state of states){
-    try{out.push(displayProofState(state));}
-    catch{
-      // Display metadata is observational only. A formatter bug must not turn a
-      // successfully checked Core program into a frontend rejection.
-    }
+function safeDisplayProofState(state:ProofStateSnapshot):FrontendProofState|undefined{
+  try{return displayProofState(state);}
+  catch{
+    // Display metadata is observational only. A formatter bug must not turn a
+    // successfully checked Core program into a frontend rejection.
+    return undefined;
   }
-  return out;
+}
+function safeEmitProofState(
+  sink:FrontendOptions["proofStateSink"],
+  event:FrontendProofStateEvent,
+):void{
+  try{sink?.(event);}
+  catch{
+    // Editor observers have no proof authority and must not affect compilation.
+  }
 }
 function displayProofState(state:ProofStateSnapshot):FrontendProofState{
   const localNames=state.locals.map(local=>local.name);
@@ -284,11 +316,14 @@ function freshDisplayBinder(locals:readonly string[]):string{
     if(!locals.includes(name))return name;
   }
 }
-function cloneProofStates(states:readonly FrontendProofState[]):FrontendProofState[]{
-  return states.map(state=>({
+function cloneProofState(state:FrontendProofState):FrontendProofState{
+  return{
     ...state,
     locals:state.locals.map(local=>({...local})),
-  }));
+  };
+}
+function cloneProofStates(states:readonly FrontendProofState[]):FrontendProofState[]{
+  return states.map(cloneProofState);
 }
 
 function dependencyClosure(module:ProjectModuleSource,all:Map<string,ProjectModuleSource>):Set<string>{
