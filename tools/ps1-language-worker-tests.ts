@@ -74,11 +74,11 @@ assert.equal(workerFormatEdits.length, 1);
 assert.match(workerFormatEdits[0].newText, /def workerFormatted: Nat := \{1 \+ 2\};/u);
 worker.replaceDocument(uri, 6, workerFormatEdits[0].newText);
 assert.deepEqual(await worker.formatDocument(uri), []);
-worker.replaceDocument(uri, 7, "-- keep\ndef x: Nat := 1;\n");
-await assert.rejects(
-  worker.formatDocument(uri),
-  /refuses sources containing comments/u,
-);
+worker.replaceDocument(uri, 7, "-- keep\ndef   x : Nat:={1+2};\n");
+const workerCommentFormat = await worker.formatDocument(uri);
+assert.equal(workerCommentFormat.length, 1);
+assert.match(workerCommentFormat[0].newText, /-- keep/u);
+assert.match(workerCommentFormat[0].newText, /def x: Nat := \{1 \+ 2\};/u);
 
 
 const owner = "cancel-me";
