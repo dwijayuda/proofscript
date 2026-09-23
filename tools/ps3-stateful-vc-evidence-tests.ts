@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   analyzeStatefulVcExecution,
   classifyLeanResidualGoals,
+  validateStatefulProofMatrixProvenance,
   validateStatefulVcRunEvidence,
 } from "../packages/monadic-lowering/src/index.mjs";
 
@@ -190,5 +191,35 @@ assert.equal(validateStatefulVcRunEvidence(generatedReport).valid, true);
 const proofRequiredGenerated = validateStatefulVcRunEvidence(generatedReport, { requireProof: true });
 assert.equal(proofRequiredGenerated.valid, false);
 assert.ok(proofRequiredGenerated.errors.includes("proof-required-but-not-discharged"));
+
+const stableProvenance = {
+  sourceSha256: "a".repeat(64),
+  stateModelDescriptorSha256: "b".repeat(64),
+  leanModelSha256: "c".repeat(64),
+  generatedProgramSha256: "d".repeat(64),
+  generatedTripleTargetSha256: "e".repeat(64),
+  generatedRequestSha256: "f".repeat(64),
+};
+assert.deepEqual(
+  validateStatefulProofMatrixProvenance([
+    { name: "debit", toolchain: "leanprover/lean4:v4.33.1", provenance: stableProvenance },
+    { name: "debit", toolchain: "leanprover/lean4:v4.34.0", provenance: { ...stableProvenance } },
+  ]),
+  { valid: true, errors: [] },
+);
+const mismatchedProvenance = validateStatefulProofMatrixProvenance([
+  { name: "transfer", toolchain: "leanprover/lean4:v4.33.1", provenance: stableProvenance },
+  {
+    name: "transfer",
+    toolchain: "leanprover/lean4:v4.34.0",
+    provenance: { ...stableProvenance, generatedRequestSha256: "0".repeat(64) },
+  },
+]);
+assert.equal(mismatchedProvenance.valid, false);
+assert.ok(
+  mismatchedProvenance.errors.includes(
+    "provenance-mismatch:transfer:generatedRequestSha256",
+  ),
+);
 
 console.log("PS3_STATEFUL_VC_EVIDENCE_TESTS=PASS");
