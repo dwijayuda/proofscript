@@ -86,10 +86,15 @@ send({ jsonrpc: "2.0", id: 1, method: "initialize", params: { capabilities: {} }
 const initialized = await waitFor((message) => message.id === 1, "initialize response");
 assert.equal(initialized.result.serverInfo.name, "ProofScript LSP");
 assert.ok(initialized.result.capabilities.diagnosticProvider);
-assert.equal(initialized.result.capabilities.hoverProvider, undefined);
-assert.equal(initialized.result.capabilities.completionProvider, undefined);
+assert.equal(initialized.result.capabilities.hoverProvider, true);
+assert.equal(initialized.result.capabilities.documentSymbolProvider, true);
+assert.ok(initialized.result.capabilities.completionProvider);
+assert.equal(initialized.result.capabilities.completionProvider.resolveProvider, false);
 assert.equal(initialized.result.experimental.proofscript.duplicateParser, false);
 assert.equal(initialized.result.experimental.proofscript.surfaceFeatureRequest, "proofscript/surfaceFeatures");
+assert.equal(initialized.result.experimental.proofscript.documentStatusRequest, "proofscript/documentStatus");
+assert.equal(initialized.result.experimental.proofscript.semanticInfoRequest, "proofscript/semanticInfo");
+assert.equal(initialized.result.experimental.proofscript.proofStateAvailable, false);
 
 send({ jsonrpc: "2.0", method: "initialized", params: {} });
 
@@ -168,6 +173,69 @@ assert.deepEqual(explicitParams.range.start, { line: 0, character: 0 });
 
 send({
   jsonrpc: "2.0",
+  id: 5,
+  method: "proofscript/serverInfo",
+  params: {},
+});
+const serverInfo = await waitFor((message) => message.id === 5, "server info response");
+assert.equal(serverInfo.result.protocolVersion, 1);
+assert.equal(serverInfo.result.compilerBacked, true);
+assert.equal(serverInfo.result.duplicateParser, false);
+assert.equal(serverInfo.result.proofStateAvailable, false);
+
+send({
+  jsonrpc: "2.0",
+  id: 6,
+  method: "proofscript/documentStatus",
+  params: { textDocument: { uri } },
+});
+const documentStatus = await waitFor((message) => message.id === 6, "document status response");
+assert.equal(documentStatus.result.status, "accepted");
+assert.equal(documentStatus.result.compilerBacked, true);
+assert.equal(documentStatus.result.proofStateAvailable, false);
+
+send({
+  jsonrpc: "2.0",
+  id: 7,
+  method: "proofscript/semanticInfo",
+  params: { textDocument: { uri }, position: { line: 0, character: 6 } },
+});
+const semanticInfo = await waitFor((message) => message.id === 7, "semantic info response");
+assert.equal(semanticInfo.result.status, "accepted");
+assert.equal(semanticInfo.result.symbol.name, "fixed");
+assert.equal(semanticInfo.result.proofStateAvailable, false);
+
+send({
+  jsonrpc: "2.0",
+  id: 8,
+  method: "textDocument/documentSymbol",
+  params: { textDocument: { uri } },
+});
+const documentSymbols = await waitFor((message) => message.id === 8, "document symbol response");
+assert.equal(documentSymbols.result.length, 1);
+assert.equal(documentSymbols.result[0].name, "fixed");
+
+send({
+  jsonrpc: "2.0",
+  id: 9,
+  method: "textDocument/hover",
+  params: { textDocument: { uri }, position: { line: 0, character: 6 } },
+});
+const hover = await waitFor((message) => message.id === 9, "hover response");
+assert.match(hover.result.contents.value, /fixed/u);
+
+send({
+  jsonrpc: "2.0",
+  id: 10,
+  method: "textDocument/completion",
+  params: { textDocument: { uri }, position: { line: 0, character: 7 } },
+});
+const completion = await waitFor((message) => message.id === 10, "completion response");
+assert.equal(completion.result.isIncomplete, false);
+assert.ok(completion.result.items.some((item) => item.label === "fixed"));
+
+send({
+  jsonrpc: "2.0",
   method: "textDocument/didClose",
   params: { textDocument: { uri } },
 });
@@ -179,8 +247,8 @@ const closed = await waitFor(
 );
 assert.deepEqual(closed.params.diagnostics, []);
 
-send({ jsonrpc: "2.0", id: 5, method: "shutdown", params: null });
-const shutdown = await waitFor((message) => message.id === 5, "shutdown response");
+send({ jsonrpc: "2.0", id: 11, method: "shutdown", params: null });
+const shutdown = await waitFor((message) => message.id === 11, "shutdown response");
 assert.equal(shutdown.result, null);
 send({ jsonrpc: "2.0", method: "exit", params: null });
 
