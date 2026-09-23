@@ -11,6 +11,7 @@ import {
   assertStatefulVcRunEvidence,
   classifyLeanCompatibilityOutput,
   createMonadicLoweringArtifact,
+  normalizeLeanToolchainSelector,
 } from "../packages/monadic-lowering/src/index.mjs";
 import { buildStateModelBinding } from "../packages/state-models/src/index.mjs";
 
@@ -24,6 +25,10 @@ const modelArg = option("--model");
 const leanProjectArg = option("--lean-project");
 const leanCmd = option("--lean-cmd") ?? process.env.LEAN ?? "lean";
 const requestedLakeCmd = option("--lake-cmd") ?? process.env.LAKE;
+const requestedLeanToolchain = option("--lean-toolchain") ?? process.env.PROOFSCRIPT_LEAN_TOOLCHAIN;
+const selectedLeanToolchain = requestedLeanToolchain
+  ? normalizeLeanToolchainSelector(requestedLeanToolchain)
+  : null;
 
 function option(name: string) {
   const eq = args.find(arg => arg.startsWith(`${name}=`));
@@ -115,6 +120,13 @@ assert.ok(request.request.source);
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "proofscript-stateful-vc-"));
 fs.cpSync(leanProjectRoot, tmp, { recursive: true });
+const tempToolchainPath = path.join(tmp, "lean-toolchain");
+if (selectedLeanToolchain) {
+  fs.writeFileSync(tempToolchainPath, selectedLeanToolchain + "\n");
+}
+const projectToolchain = fs.existsSync(tempToolchainPath)
+  ? fs.readFileSync(tempToolchainPath, "utf8").trim()
+  : null;
 
 const generatedDir = path.join(tmp, "ProofScript", "Verification");
 const generatedStem = lowering.function.name.replace(/[^A-Za-z0-9_]+/g, "_");
@@ -162,6 +174,8 @@ const leanCompatibility = leanVersionRun.exitCode === 0
 
 const leanProbe = {
   requestedLeanBinary: leanCmd,
+  requestedToolchain: selectedLeanToolchain,
+  projectToolchain,
   lakeCommand: lakeCmd,
   run: leanVersionRun,
   ...leanCompatibility,

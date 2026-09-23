@@ -18,6 +18,7 @@ import {
   MINIMUM_STATEFUL_LEAN_VERSION,
   classifyLeanCompatibilityOutput,
   compareLeanCompatibilityVersions,
+  normalizeLeanToolchainSelector,
   parseLeanCompatibilityVersion,
 } from './lean-compatibility.mjs';
 import {
@@ -41,6 +42,7 @@ export {
   MINIMUM_STATEFUL_LEAN_VERSION,
   classifyLeanCompatibilityOutput,
   compareLeanCompatibilityVersions,
+  normalizeLeanToolchainSelector,
   parseLeanCompatibilityVersion,
 };
 

@@ -49,6 +49,17 @@ export function compareLeanCompatibilityVersions(left, right) {
   return comparePrerelease(a.prerelease, b.prerelease);
 }
 
+export function normalizeLeanToolchainSelector(value) {
+  const raw = String(value ?? "").trim();
+  const prefix = "leanprover/lean4:";
+  const selected = raw.startsWith(prefix) ? raw.slice(prefix.length) : raw;
+  const version = selected.startsWith("v") ? selected.slice(1) : selected;
+  if (!parseParts(version)) {
+    throw new Error(`invalid Lean toolchain selector '${raw}'`);
+  }
+  return `${prefix}v${version}`;
+}
+
 export function classifyLeanCompatibilityOutput(
   output,
   minimumVersion = MINIMUM_STATEFUL_LEAN_VERSION,
