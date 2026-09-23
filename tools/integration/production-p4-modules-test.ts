@@ -15,6 +15,20 @@ import { assertCoreDeclarationsRejected, assertOnlyStandardBootstrapAssumptions,
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const projectRoot = path.join(root, 'integration-fixtures/production-p4/modules');
 const hex64 = /^[0-9a-f]{64}$/;
+const pinnedTsc = path.join(root, 'node_modules', 'typescript', 'lib', 'tsc.js');
+
+function compileTypeScript(args, cwd) {
+  const result = spawnSync(process.execPath, [pinnedTsc, ...args], {
+    cwd,
+    encoding: 'utf8',
+  });
+  assert.equal(
+    result.status,
+    0,
+    `pinned TypeScript compilation failed${result.error ? `\nERROR:\n${result.error.message}` : ''}\nSTDOUT:\n${result.stdout ?? ''}\nSTDERR:\n${result.stderr ?? ''}`,
+  );
+  return result;
+}
 
 function writeProject(files) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'ps-p4-project-'));
@@ -35,8 +49,10 @@ async function expectProjectRuntime(projectDir, entry, expectedLine) {
   try {
     fs.writeFileSync(path.join(tmp, 'project.ts'), `${out.typescript}\nconsole.log("R=" + result());\n`);
     fs.writeFileSync(path.join(tmp, 'package.json'), '{"type":"module"}\n');
-    const tsc = spawnSync('tsc', ['project.ts', '--target', 'ES2022', '--module', 'NodeNext', '--moduleResolution', 'NodeNext', '--skipLibCheck', '--outDir', 'js'], { cwd: tmp, encoding: 'utf8' });
-    assert.equal(tsc.status, 0, tsc.stderr || tsc.stdout);
+    compileTypeScript(
+      ['project.ts', '--target', 'ES2022', '--module', 'NodeNext', '--moduleResolution', 'NodeNext', '--skipLibCheck', '--outDir', 'js'],
+      tmp,
+    );
     const rt = spawnSync(process.execPath, [path.join(tmp, 'js/project.js')], { encoding: 'utf8' });
     assert.equal(rt.status, 0, rt.stderr || rt.stdout);
     assert.equal(rt.stdout.trim(), expectedLine);
@@ -80,8 +96,10 @@ try {
 
   fs.writeFileSync(path.join(tmp, 'project.ts'), `${checked.typescript}\nconsole.log("R=" + result());\n`);
   fs.writeFileSync(path.join(tmp, 'package.json'), '{"type":"module"}\n');
-  const tsc = spawnSync('tsc', ['project.ts', '--target', 'ES2022', '--module', 'NodeNext', '--moduleResolution', 'NodeNext', '--skipLibCheck', '--outDir', 'js'], { cwd: tmp, encoding: 'utf8' });
-  assert.equal(tsc.status, 0, tsc.stderr || tsc.stdout);
+  compileTypeScript(
+    ['project.ts', '--target', 'ES2022', '--module', 'NodeNext', '--moduleResolution', 'NodeNext', '--skipLibCheck', '--outDir', 'js'],
+    tmp,
+  );
   const rt = spawnSync(process.execPath, [path.join(tmp, 'js/project.js')], { encoding: 'utf8' });
   assert.equal(rt.status, 0, rt.stderr || rt.stdout);
   assert.deepEqual(rt.stdout.trim().split(/\r?\n/), ['R=6']);
