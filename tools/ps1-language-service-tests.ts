@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -46,6 +47,39 @@ assert.equal(overlayHover.name, "overlay");
 assert.equal(overlayHover.kind, "theorem");
 assert.match(overlayHover.type, /Prop/u);
 assert.equal(service.hover(uri, { line: 0, character: 0 }), null);
+
+const overlayGoals = service.goals(uri, { line: 0, character: 10 });
+assert.equal(overlayGoals.tacticStateAvailable, false);
+assert.equal(overlayGoals.declarationGoal?.origin, "compiler-theorem");
+assert.equal(overlayGoals.declarationGoal?.name, "overlay");
+assert.equal(overlayGoals.declarationGoal?.status, "checked");
+assert.equal(overlayGoals.verification.status, "unavailable");
+
+const overlaySha256 = createHash("sha256").update(overlay).digest("hex");
+const obligationsPath = mainFile.replace(/\.ps$/u, ".obligations.json");
+fs.writeFileSync(obligationsPath, JSON.stringify({
+  schema: "proofscript.obligations.v1",
+  source: { path: "src/Main.ps", sha256: overlaySha256 },
+  obligations: [{
+    id: "overlay.ensures.goal",
+    name: "overlay_goal",
+    kind: "ensures",
+    statement: "P",
+    exactTheoremStatement: "theorem overlay_goal (P : Prop) : P",
+    status: "unproved",
+    proofRequired: true,
+  }],
+  trustBoundary: { semanticProofChecking: false },
+}, null, 2) + "\n");
+
+const artifactGoals = service.goals(uri, { line: 0, character: 10 });
+assert.equal(artifactGoals.verification.status, "current");
+assert.equal(artifactGoals.verification.semanticProofChecking, false);
+assert.equal(artifactGoals.verification.goals.length, 1);
+assert.equal(artifactGoals.verification.goals[0].origin, "verification-artifact");
+assert.equal(artifactGoals.verification.goals[0].name, "overlay_goal");
+assert.equal(artifactGoals.verification.goals[0].status, "unproved");
+assert.match(artifactGoals.verification.goals[0].exactTheoremStatement ?? "", /theorem overlay_goal/u);
 
 const cached = service.analyze(uri);
 assert.equal(cached, first, "same document generation should reuse the cached analysis object");
