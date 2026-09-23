@@ -167,11 +167,21 @@ try {
   assert.equal(certificate.trustBoundary.trustedExternalCode, true);
   assert.ok(certificate.ffi.sha256);
   assert.ok(certificate.runtime?.backendArtifact?.sha256);
-  assert.equal(
-    Object.prototype.hasOwnProperty.call(certificate.ffi, "packageIntegrity"),
-    false,
-    "Product-v1 must not imply npm package-content identity before that gate exists",
-  );
+  assert.equal(certificate.ffi.dependencies.length, 1);
+  assert.equal(certificate.ffi.dependencies[0].schema, "proofscript.npm-dependency-identity/v1");
+  assert.equal(certificate.ffi.dependencies[0].package, "@proofscript/json-validation");
+  assert.equal(certificate.ffi.dependencies[0].version, "0.1.0");
+  assert.match(certificate.ffi.dependencies[0].packageJsonSha256, /^[0-9a-f]{64}$/u);
+  assert.match(certificate.ffi.dependencies[0].contentSha256, /^[0-9a-f]{64}$/u);
+
+  const installedJsonPackage = path.join(app, "node_modules/@proofscript/json-validation/index.cjs");
+  const originalJsonPackage = fs.readFileSync(installedJsonPackage, "utf8");
+  fs.writeFileSync(installedJsonPackage, originalJsonPackage + "\n// certificate tamper probe\n");
+  const tamperedDependency = pscJson(["verify", cert], 1);
+  assert.equal(tamperedDependency.status, "rejected");
+  assert.match(tamperedDependency.message, /npm FFI dependency identity mismatch/u);
+  fs.writeFileSync(installedJsonPackage, originalJsonPackage);
+  assert.equal(pscJson(["verify", cert]).status, "accepted");
 
   console.log("PRODUCT_V1_JSON_VALIDATION_TESTS=PASS");
 } finally {
