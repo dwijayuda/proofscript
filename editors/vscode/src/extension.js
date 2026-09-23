@@ -305,6 +305,44 @@ function registerLanguageProviders(context) {
       return (result ?? []).map((item) => vscode.TextEdit.replace(toRange(item.range), item.newText));
     },
   }));
+  const proofscriptFormatActionKind = vscode.CodeActionKind.Source.append("format.proofscript");
+  context.subscriptions.push(vscode.languages.registerCodeActionsProvider(selector, {
+    provideCodeActions: async (document, range, context, token) => {
+      if (!client?.ready || !client.capabilities?.codeActionProvider) return [];
+      const result = await client.request("textDocument/codeAction", {
+        textDocument: { uri: document.uri.toString() },
+        range: toPlainRange(range),
+        context: {
+          diagnostics: context.diagnostics.map((diagnostic) => ({
+            range: toPlainRange(diagnostic.range),
+            severity: diagnostic.severity + 1,
+            code: diagnostic.code,
+            source: diagnostic.source,
+            message: diagnostic.message,
+          })),
+          only: context.only?.value ? [context.only.value] : undefined,
+        },
+      }, token);
+      return (result ?? []).map((item) => {
+        const kind = item.kind === "quickfix" ? vscode.CodeActionKind.QuickFix : proofscriptFormatActionKind;
+        const action = new vscode.CodeAction(item.title, kind);
+        action.isPreferred = item.isPreferred === true;
+        const edit = new vscode.WorkspaceEdit();
+        for (const [uri, edits] of Object.entries(item.edit?.changes ?? {})) {
+          for (const textEdit of edits) {
+            edit.replace(vscode.Uri.parse(uri), toRange(textEdit.range), textEdit.newText);
+          }
+        }
+        action.edit = edit;
+        return action;
+      });
+    },
+  }, {
+    providedCodeActionKinds: [
+      vscode.CodeActionKind.QuickFix,
+      proofscriptFormatActionKind,
+    ],
+  }));
   const semanticLegend = new vscode.SemanticTokensLegend(
     ["function", "enum", "struct", "class", "variable"],
     ["declaration", "definition", "readonly"],
