@@ -6,6 +6,7 @@ import {
   instantiate,
   kernelWhnf,
   levelDefEq,
+  shift,
 } from "@proofscript/kernel";
 import { ElaborationError, SurfaceTerm, UnsupportedFeature } from "@proofscript/syntax";
 import { contextFromTypes, flattenCoreApps } from "./coreUtils";
@@ -17,6 +18,8 @@ type ProofSurfaceTerm = Extract<
   | { tag: "assumptionProof" }
   | { tag: "applyProof" }
   | { tag: "introProof" }
+  | { tag: "showProof" }
+  | { tag: "haveProof" }
 >;
 
 export interface ProofElaborationHost {
@@ -38,6 +41,8 @@ export function elabProofTerm(
     case "assumptionProof": return elabAssumptionProof(locals, localTypes, kernelEnv, expectedType);
     case "applyProof": return elabApplyProof(term.term, term.body, locals, localTypes, kernelEnv, expectedType, host);
     case "introProof": return elabIntroProof(term.names, term.body, locals, localTypes, kernelEnv, expectedType, host);
+    case "showProof": return elabShowProof(term.type, term.body, locals, localTypes, kernelEnv, expectedType, host);
+    case "haveProof": return elabHaveProof(term.name, term.type, term.value, term.body, locals, localTypes, kernelEnv, expectedType, host);
   }
 }
 
@@ -198,6 +203,98 @@ function elabIntroProof(
   let proof = host.elaborateTerm(body, namesNow, typesNow, cursor);
   for (let i = domains.length - 1; i >= 0; i--) {
     proof = { tag: "lam", domain: domains[i], body: proof, binderInfo: binderInfos[i] };
+  }
+  return proof;
+}
+
+function elabShowProof(
+  shownTypeSource: SurfaceTerm,
+  body: SurfaceTerm,
+  locals: string[],
+  localTypes: Term[],
+  kernelEnv: Environment,
+  expectedType: Term | undefined,
+  host: ProofElaborationHost,
+): Term {
+  if (!expectedType) {
+    throw new UnsupportedFeature("PSC-1 show requires an expected proof goal type");
+  }
+  const ctx = contextFromTypes(localTypes);
+  const shownType = host.elaborateTerm(shownTypeSource, locals, localTypes);
+  const shownSort = kernelWhnf(kernelEnv, infer(kernelEnv, ctx, shownType));
+  if (shownSort.tag !== "sort") {
+    throw new ElaborationError("show failed: displayed goal is not a proposition/type");
+  }
+  const expected = kernelWhnf(kernelEnv, expectedType);
+  if (!defEq(kernelEnv, ctx, shownType, expected)) {
+    throw new ElaborationError("show failed: displayed goal is not definitionally equal to the current goal");
+  }
+  const proof = host.elaborateTerm(body, locals, localTypes, shownType);
+  const actual = kernelWhnf(kernelEnv, infer(kernelEnv, ctx, proof));
+  if (!defEq(kernelEnv, ctx, actual, shownType)) {
+    throw new ElaborationError("show failed: following proof does not solve the displayed goal");
+  }
+  return proof;
+}
+
+function elabHaveProof(
+  name: string,
+  declaredTypeSource: SurfaceTerm | undefined,
+  valueSource: SurfaceTerm,
+  body: SurfaceTerm,
+  locals: string[],
+  localTypes: Term[],
+  kernelEnv: Environment,
+  expectedType: Term | undefined,
+  host: ProofElaborationHost,
+): Term {
+  if (!expectedType) {
+    throw new UnsupportedFeature("PSC-1 proof-local have requires an expected proof goal type");
+  }
+  if (locals.includes(name)) {
+    throw new ElaborationError(`have failed: local name '${name}' is already in scope`);
+  }
+
+  const ctx = contextFromTypes(localTypes);
+  let declaredType: Term | undefined;
+  if (declaredTypeSource) {
+    declaredType = host.elaborateTerm(declaredTypeSource, locals, localTypes);
+    const declaredSort = kernelWhnf(kernelEnv, infer(kernelEnv, ctx, declaredType));
+    if (declaredSort.tag !== "sort") {
+      throw new ElaborationError("have failed: declared hypothesis type is not a proposition/type");
+    }
+  }
+
+  const value = host.elaborateTerm(valueSource, locals, localTypes, declaredType);
+  const inferredValueType = kernelWhnf(kernelEnv, infer(kernelEnv, ctx, value));
+  const hypothesisType = declaredType ?? inferredValueType;
+  const hypothesisSort = kernelWhnf(kernelEnv, infer(kernelEnv, ctx, hypothesisType));
+  if (hypothesisSort.tag !== "sort") {
+    throw new ElaborationError("have failed: inferred hypothesis type is not a proposition/type");
+  }
+  if (!defEq(kernelEnv, ctx, inferredValueType, hypothesisType)) {
+    throw new ElaborationError("have failed: supplied proof does not have the declared hypothesis type");
+  }
+
+  const liftedGoal = shift(expectedType, 1, 0);
+  const bodyProof = host.elaborateTerm(
+    body,
+    [...locals, name],
+    [...localTypes, hypothesisType],
+    liftedGoal,
+  );
+  const proof: Term = {
+    tag: "let",
+    type: hypothesisType,
+    value,
+    body: bodyProof,
+    nondep: true,
+  };
+
+  const actual = kernelWhnf(kernelEnv, infer(kernelEnv, ctx, proof));
+  const expected = kernelWhnf(kernelEnv, expectedType);
+  if (!defEq(kernelEnv, ctx, actual, expected)) {
+    throw new ElaborationError("have internal check failed: constructed proof does not solve the original goal");
   }
   return proof;
 }
