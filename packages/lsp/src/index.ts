@@ -124,6 +124,10 @@ export class ProofScriptLanguageServer {
               },
               hoverProvider: true,
               documentSymbolProvider: true,
+              completionProvider: {
+                resolveProvider: false,
+                triggerCharacters: ["."],
+              },
             },
             serverInfo: {
               name: "ProofScript LSP",
@@ -380,6 +384,39 @@ export class ProofScriptLanguageServer {
           }
         }
 
+        case "textDocument/completion": {
+          const uri = message.params?.textDocument?.uri;
+          const position = message.params?.position;
+          if (typeof uri !== "string") return this.error(message.id, -32602, "missing textDocument.uri");
+          if (!position || typeof position.line !== "number" || typeof position.character !== "number") {
+            return this.error(message.id, -32602, "missing or invalid position");
+          }
+          const before = this.documents.get(uri);
+          if (!before) return this.error(message.id, -32602, `document is not open: ${uri}`);
+          const ownerId = requestId(message.id);
+          try {
+            const items = await this.worker.completion(uri, position, ownerId);
+            const latest = this.documents.get(uri);
+            if (!latest || latest.version !== before.version) {
+              return this.error(message.id, -32801, "document changed while completion was running");
+            }
+            return this.reply(message.id, {
+              isIncomplete: false,
+              items: items.map((item) => ({
+                label: item.label,
+                detail: item.qualifiedName === item.label
+                  ? item.detail
+                  : `${item.qualifiedName} : ${item.detail}`,
+                kind: lspCompletionKind(item.kind),
+                sortText: item.sortText,
+              })),
+            });
+          } catch (error) {
+            if (error instanceof LanguageWorkerCancelledError) return this.error(message.id, -32800, "request cancelled");
+            throw error;
+          }
+        }
+
         case "textDocument/hover": {
           const uri = message.params?.textDocument?.uri;
           const position = message.params?.position;
@@ -522,6 +559,29 @@ function positionInRange(position: Position, range: Range): boolean {
   const beforeEnd = position.line < range.end.line
     || (position.line === range.end.line && position.character <= range.end.character);
   return afterStart && beforeEnd;
+}
+
+function lspCompletionKind(kind: string): number {
+  switch (kind) {
+    case "theorem":
+    case "definition":
+    case "equationDefinition":
+    case "opaque":
+    case "abbrev":
+      return 3; // Function
+    case "axiom":
+      return 21; // Constant
+    case "inductive":
+      return 13; // Enum
+    case "structure":
+      return 22; // Struct
+    case "class":
+      return 7; // Class
+    case "instance":
+      return 6; // Variable
+    default:
+      return 6; // Variable
+  }
 }
 
 function lspSymbolKind(kind: string): number {
