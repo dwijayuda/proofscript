@@ -73,10 +73,18 @@
       "name": "small general-purpose software profile",
       "status": "in_progress",
       "exitGates": [
-        "authoritative v1 feature manifest matches production acceptance",
-        "representative pure/data/module programs check and execute",
-        "no frontend-next-only product semantics",
-        "unsupported neighboring syntax fails closed"
+        "test:product-v1:canonical-cli",
+        "test:product-v1:software-profile",
+        "test:profile:software",
+        "test:profile:software:examples",
+        "test:production-p4:modules"
+      ],
+      "authority": "config/proofscript-software-profile-v1.json",
+      "implementedPendingExecution": [
+        "31-construct Product-v1 smallness manifest",
+        "public psc routed through @proofscript/compiler",
+        "retained software-profile executable corpus is compiler-backed",
+        "bounded modules/imports included in acceptance scope"
       ]
     },
     {
