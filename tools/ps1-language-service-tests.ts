@@ -192,9 +192,28 @@ branchService.openDocument(branchUri, 1, branchSource);
 const branchAnalysis = branchService.analyze(branchUri);
 assert.equal(branchAnalysis.status, "accepted");
 assert.ok(branchAnalysis.declarations.some((declaration) => declaration.name === "branchAware"));
-const branchGoals = branchService.goals(branchUri, { line: 5, character: 10 });
+assert.ok(branchAnalysis.proofStates.length >= 5, "checked branch proof should expose tactic + branch observations");
+const branchGoals = branchService.goals(branchUri, { line: 6, character: 4 });
 assert.equal(branchGoals.declarationGoal?.name, "branchAware");
-assert.equal(branchGoals.tacticStateAvailable, false, "phase 1 does not invent editor-side tactic state");
+assert.equal(branchGoals.tacticStateAvailable, true);
+assert.equal(branchGoals.tacticState?.kind, "tactic");
+assert.equal(branchGoals.tacticState?.tactic, "induction");
+assert.equal(branchGoals.tacticState?.goal, "P");
+assert.deepEqual(branchGoals.tacticState?.locals.map((local) => local.name), ["h"]);
+
+const stepBranchGoals = branchService.goals(branchUri, { line: 7, character: 5 });
+assert.equal(stepBranchGoals.tacticState?.kind, "branch");
+assert.equal(stepBranchGoals.tacticState?.tactic, "induction");
+assert.equal(stepBranchGoals.tacticState?.branch, "ChainP.step");
+assert.equal(stepBranchGoals.tacticState?.goal, "P");
+assert.deepEqual(stepBranchGoals.tacticState?.locals.map((local) => local.name), ["h", "tail", "ih"]);
+assert.equal(stepBranchGoals.tacticState?.locals.find((local) => local.name === "ih")?.type, "P");
+
+const stepExactGoals = branchService.goals(branchUri, { line: 7, character: 22 });
+assert.equal(stepExactGoals.tacticState?.kind, "tactic");
+assert.equal(stepExactGoals.tacticState?.tactic, "exact");
+assert.equal(stepExactGoals.tacticState?.goal, "P");
+assert.deepEqual(stepExactGoals.tacticState?.locals.map((local) => local.name), ["h", "tail", "ih"]);
 branchService.closeDocument(branchUri);
 // Canonical formatter reuse: one implementation for CLI and editor.
 const formatService = new ProofScriptLanguageService();
