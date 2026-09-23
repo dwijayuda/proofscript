@@ -103,7 +103,7 @@ theorem cases_bool_branches(b: Bool): 1 = 1 := by { cases b | false => rfl | tru
 
 theorem cases_holder_branch(h: HolderP): P := by { cases h | intro value => exact value }
 
-theorem induction_chain_branches(h: ChainP): P := by { induction h | step tail ih => exact ih | base value => exact value }
+theorem induction_chain_branches(h: ChainP): P := by { induction h | ChainP.step tail ih => exact ih | base value => exact value }
 
 theorem simp_reflexive(n: Nat): n = n := by { simp }
 
@@ -207,6 +207,19 @@ theorem bad_branch_binders(h: HolderP): P := by { cases h | intro => assumption 
 const rejectedBranchBinders = runPsliveJson(['check', badBranchBinders, '--json'], 1);
 assert.equal(rejectedBranchBinders.status, 'rejected');
 assert.match(rejectedBranchBinders.message, /expects 1 binder\(s\), got 0/i);
+
+const badInductionIhBinders = fixture.write('BadInductionIhBinders.ps', `
+axiom P: Prop;
+inductive ChainP: Prop where { | base (value: P) | step (tail: ChainP) }
+theorem bad_induction_ih_binders(h: ChainP): P := by {
+  induction h
+  | base value => exact value
+  | step tail => assumption
+}
+`);
+const rejectedInductionIhBinders = runPsliveJson(['check', badInductionIhBinders, '--json'], 1);
+assert.equal(rejectedInductionIhBinders.status, 'rejected');
+assert.match(rejectedInductionIhBinders.message, /expects 2 binder\(s\), got 1/i);
 
 const badSimp = fixture.write('BadSimp.ps', `
 axiom P: Prop;
