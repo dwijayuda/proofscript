@@ -136,7 +136,10 @@ function elaborateRepeatedMinor(
       branch: canonicalBranch,
       startOffset: namedBranch.sourceStartOffset,
       endOffset: namedBranch.sourceEndOffset,
-      goal: cursor,
+      // Proof-state display should expose the current goal rather than
+      // recursor/motive beta-redexes. This is observational only: branch
+      // elaboration below still checks against the original `cursor`.
+      goal: kernelWhnf(kernelEnv, cursor),
       locals: proofStateLocals(namesNow, typesNow),
     });
   }
