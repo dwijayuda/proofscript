@@ -44,6 +44,7 @@ jobs:
       - run: npm run test:ps3:verification-profile-cli
       - run: npm run test:ps3:stateful-frame
       - run: npm run test:ps3:stateful-logical-predicate
+      - run: npm run test:ps3:stateful-control-flow-boundary
       - run: npm run test:ps3:stateful-lean-model
       - run: npm run test:ps3:stateful-lean-runner-selection
       - run: npm run test:ps3:stateful-lean-proof-matrix
