@@ -58,6 +58,15 @@ try {
   ], path.join(tmp, "transfer-run.json"));
   assert.equal(transferReport.scope, "examples/software/06-bank-transfer-monadic-contract.ps");
 
+  const floorReport = invoke([
+    "--source", "examples/software/06-bank-transfer-monadic-contract.ps",
+    "--model", copiedModel,
+    "--lean-project", copiedLeanProject,
+    "--lean-toolchain", "4.33.1",
+  ], path.join(tmp, "transfer-floor-run.json"));
+  assert.equal(floorReport.lean.requestedToolchain, "leanprover/lean4:v4.33.1");
+  assert.equal(floorReport.lean.projectToolchain, "leanprover/lean4:v4.33.1");
+
   console.log("PS3_STATEFUL_LEAN_RUNNER_SELECTION_TESTS=PASS");
 } finally {
   fs.rmSync(tmp, { recursive: true, force: true });

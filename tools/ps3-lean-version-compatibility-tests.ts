@@ -4,10 +4,22 @@ import {
   MINIMUM_STATEFUL_LEAN_VERSION,
   classifyLeanCompatibilityOutput,
   compareLeanCompatibilityVersions,
+  normalizeLeanToolchainSelector,
   parseLeanCompatibilityVersion,
 } from "../packages/monadic-lowering/src/index.mjs";
 
 assert.equal(MINIMUM_STATEFUL_LEAN_VERSION, "4.33.1");
+
+assert.equal(normalizeLeanToolchainSelector("4.33.1"), "leanprover/lean4:v4.33.1");
+assert.equal(normalizeLeanToolchainSelector("v4.34.0"), "leanprover/lean4:v4.34.0");
+assert.equal(
+  normalizeLeanToolchainSelector("leanprover/lean4:v4.35.0-rc2"),
+  "leanprover/lean4:v4.35.0-rc2",
+);
+assert.throws(
+  () => normalizeLeanToolchainSelector("not-a-lean-version"),
+  /invalid Lean toolchain selector/u,
+);
 
 assert.equal(
   parseLeanCompatibilityVersion("Lean (version 4.33.1, x86_64, commit deadbeef, Release)"),
