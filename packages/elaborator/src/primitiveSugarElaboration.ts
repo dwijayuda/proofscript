@@ -179,6 +179,17 @@ function surfaceMentionsInt(term: SurfaceTerm): boolean {
       return (term.type ? surfaceMentionsInt(term.type) : false)
         || surfaceMentionsInt(term.value)
         || surfaceMentionsInt(term.body);
+    case "rwProof":
+      return surfaceMentionsInt(term.equality) || surfaceMentionsInt(term.body);
+    case "substProof":
+      return surfaceMentionsInt(term.body);
+    case "constructorProof":
+      return term.body ? surfaceMentionsInt(term.body) : false;
+    case "casesProof":
+    case "inductionProof":
+      return surfaceMentionsInt(term.term) || surfaceMentionsInt(term.body);
+    case "simpProof":
+      return false;
   }
 }
 
