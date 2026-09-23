@@ -211,7 +211,10 @@ assert.equal(missingActions[0].isPreferred, true);
 const semicolonEdit = missingActions[0].edit.changes[actionUri]?.[0];
 assert.ok(semicolonEdit);
 assert.equal(semicolonEdit.newText, ";");
-actionService.updateDocument(actionUri, 2, [semicolonEdit]);
+actionService.updateDocument(actionUri, 2, [{
+  range: semicolonEdit.range,
+  text: semicolonEdit.newText,
+}]);
 assert.equal(actionService.analyze(actionUri).status, "accepted");
 
 const messyActionSource = "def   actionFormatted : Nat:={1+2};\n";
