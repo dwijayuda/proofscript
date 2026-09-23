@@ -78,6 +78,10 @@ assert.deepEqual(repaired.sourceDeclarations[0].selectionRange.start, { line: 0,
 assert.deepEqual(repaired.sourceDeclarations[0].selectionRange.end, { line: 0, character: 12 });
 assert.equal(service.documentSymbols(uri)[0].name, "repaired");
 assert.equal(service.hover(uri, { line: 0, character: 6 })?.name, "repaired");
+const repairedCompletion = service.completion(uri, { line: 0, character: 7 });
+assert.ok(repairedCompletion.some((item) => item.label === "repaired"));
+assert.ok(repairedCompletion.every((item) => item.qualifiedName && item.detail));
+
 const explicitParams = repaired.surfaceFeatures.find((feature) => feature.feature === "D-EXPLICIT-PARAMS");
 assert.ok(explicitParams, "language service must expose compiler-owned surface features");
 assert.equal(explicitParams.startOffset, 0);
@@ -91,6 +95,11 @@ assert.throws(
   () => service.analyze(uri, true, cancellation.token),
   /request cancelled/,
   "cancelled analysis must stop before compiler work",
+);
+assert.throws(
+  () => service.completion(uri, { line: 0, character: 7 }, cancellation.token),
+  /request cancelled/,
+  "cancelled completion must stop through the same compiler-backed cancellation boundary",
 );
 
 const diagnosticBundle = service.diagnostics(uri);
