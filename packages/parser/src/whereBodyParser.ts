@@ -105,6 +105,14 @@ function collectNameRefs(term:SurfaceTerm,out:Set<string>,bound:Set<string>):voi
       const scoped=new Set(bound);for(const name of term.names)scoped.add(name);collectNameRefs(term.body,out,scoped);
       break;
     }
+    case "showProof":
+      collectNameRefs(term.type,out,bound);collectNameRefs(term.body,out,bound);
+      break;
+    case "haveProof":{
+      if(term.type)collectNameRefs(term.type,out,bound);collectNameRefs(term.value,out,bound);
+      const scoped=new Set(bound);scoped.add(term.name);collectNameRefs(term.body,out,scoped);
+      break;
+    }
     case "eq":
       collectNameRefs(term.left,out,bound);collectNameRefs(term.right,out,bound);
       break;
