@@ -248,6 +248,39 @@ function registerLanguageProviders(context) {
       });
     },
   }, "."));
+  context.subscriptions.push(vscode.languages.registerDefinitionProvider(selector, {
+    provideDefinition: async (document, position, token) => {
+      if (!client?.ready || client.capabilities?.definitionProvider !== true) return null;
+      const result = await client.request("textDocument/definition", { textDocument: { uri: document.uri.toString() }, position: toPos(position) }, token);
+      return result ? new vscode.Location(vscode.Uri.parse(result.uri), toRange(result.range)) : null;
+    },
+  }));
+  context.subscriptions.push(vscode.languages.registerReferenceProvider(selector, {
+    provideReferences: async (document, position, context, token) => {
+      if (!client?.ready || client.capabilities?.referencesProvider !== true) return [];
+      const result = await client.request("textDocument/references", {
+        textDocument: { uri: document.uri.toString() },
+        position: toPos(position),
+        context: { includeDeclaration: context.includeDeclaration },
+      }, token);
+      return (result ?? []).map((item) => new vscode.Location(vscode.Uri.parse(item.uri), toRange(item.range)));
+    },
+  }));
+  context.subscriptions.push(vscode.languages.registerRenameProvider(selector, {
+    provideRenameEdits: async (document, position, newName, token) => {
+      if (!client?.ready || client.capabilities?.renameProvider !== true) return null;
+      const result = await client.request("textDocument/rename", {
+        textDocument: { uri: document.uri.toString() },
+        position: toPos(position),
+        newName,
+      }, token);
+      const edit = new vscode.WorkspaceEdit();
+      for (const [uri, edits] of Object.entries(result?.changes ?? {})) {
+        for (const item of edits) edit.replace(vscode.Uri.parse(uri), toRange(item.range), item.newText);
+      }
+      return edit;
+    },
+  }));
 }
 
 function registerCommands(context) {
