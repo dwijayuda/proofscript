@@ -260,6 +260,7 @@ assert.equal(goals.result.tacticStateAvailable, true);
 assert.equal(goals.result.tacticState.kind, "tactic");
 assert.equal(goals.result.tacticState.tactic, "assumption");
 assert.equal(goals.result.tacticState.goal, "P");
+assert.equal(goals.result.tacticState.sourceStatus, "checked");
 assert.deepEqual(goals.result.tacticState.locals.map((local) => local.name), ["P", "h"]);
 assert.equal(goals.result.tacticState.locals.find((local) => local.name === "h")?.type, "P");
 assert.equal(goals.result.declarationGoal.origin, "compiler-theorem");
@@ -305,6 +306,7 @@ assert.equal(partialGoals.result.tacticStateAvailable, true);
 assert.equal(partialGoals.result.tacticState.kind, "tactic");
 assert.equal(partialGoals.result.tacticState.tactic, "exact");
 assert.equal(partialGoals.result.tacticState.goal, "P");
+assert.equal(partialGoals.result.tacticState.sourceStatus, "rejected-prefix");
 assert.deepEqual(partialGoals.result.tacticState.locals.map((local) => local.name), ["P", "h"]);
 assert.equal(partialGoals.result.declarationGoal, null);
 
@@ -321,6 +323,63 @@ const partialClosed = await waitFor(
 );
 assert.deepEqual(partialClosed.params.diagnostics, []);
 fs.unlinkSync(partialFile);
+
+const incompleteFile = path.join(srcDir, "Incomplete.ps");
+const incompleteUri = pathToFileURL(incompleteFile).href;
+const incompleteSource = "theorem incomplete(P: Prop, h: P): P := by { assumption\n";
+fs.writeFileSync(incompleteFile, incompleteSource);
+send({
+  jsonrpc: "2.0",
+  method: "textDocument/didOpen",
+  params: {
+    textDocument: {
+      uri: incompleteUri,
+      languageId: "proofscript",
+      version: 1,
+      text: incompleteSource,
+    },
+  },
+});
+const pushedIncomplete = await waitFor(
+  (message) => message.method === "textDocument/publishDiagnostics"
+    && message.params?.uri === incompleteUri
+    && message.params?.version === 1,
+  "syntax-incomplete proof diagnostics",
+);
+assert.equal(pushedIncomplete.params.diagnostics.length, 1);
+assert.equal(pushedIncomplete.params.diagnostics[0].code, "PSLS1001");
+
+send({
+  jsonrpc: "2.0",
+  id: 102,
+  method: "proofscript/goals",
+  params: {
+    textDocument: { uri: incompleteUri },
+    position: { line: 0, character: incompleteSource.indexOf("assumption") + 1 },
+  },
+});
+const incompleteGoals = await waitFor((message) => message.id === 102, "syntax-incomplete proof goals response");
+assert.equal(incompleteGoals.result.tacticStateAvailable, true);
+assert.equal(incompleteGoals.result.tacticState.kind, "tactic");
+assert.equal(incompleteGoals.result.tacticState.tactic, "assumption");
+assert.equal(incompleteGoals.result.tacticState.goal, "P");
+assert.equal(incompleteGoals.result.tacticState.sourceStatus, "syntax-incomplete");
+assert.deepEqual(incompleteGoals.result.tacticState.locals.map((local) => local.name), ["P", "h"]);
+assert.equal(incompleteGoals.result.declarationGoal, null);
+
+send({
+  jsonrpc: "2.0",
+  method: "textDocument/didClose",
+  params: { textDocument: { uri: incompleteUri } },
+});
+const incompleteClosed = await waitFor(
+  (message) => message.method === "textDocument/publishDiagnostics"
+    && message.params?.uri === incompleteUri
+    && message.params?.version === undefined,
+  "syntax-incomplete close diagnostics clear",
+);
+assert.deepEqual(incompleteClosed.params.diagnostics, []);
+fs.unlinkSync(incompleteFile);
 
 const navigationSource = "def navBase: Nat := 1;\ndef navUse: Nat := navBase;\n";
 send({
