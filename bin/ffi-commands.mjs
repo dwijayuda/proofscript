@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
+import { createRequire } from "node:module";
 
 function option(args, name) {
   const eq = args.find((arg) => arg.startsWith(name + "="));
@@ -59,6 +60,125 @@ export function readFfiManifest(args, cwd = process.cwd()) {
   };
 }
 
+function npmPackageName(specifier) {
+  if (
+    typeof specifier !== "string"
+    || specifier.startsWith("node:")
+    || specifier.startsWith(".")
+    || specifier.startsWith("/")
+    || specifier.startsWith("file:")
+  ) return undefined;
+  const parts = specifier.split("/");
+  if (specifier.startsWith("@")) return parts.length >= 2 ? `${parts[0]}/${parts[1]}` : undefined;
+  return parts[0] || undefined;
+}
+
+function findPackageRoot(entryPath, packageName) {
+  let current = fs.statSync(entryPath).isDirectory() ? entryPath : path.dirname(entryPath);
+  while (true) {
+    const packageJson = path.join(current, "package.json");
+    if (fs.existsSync(packageJson)) {
+      const parsed = JSON.parse(fs.readFileSync(packageJson, "utf8"));
+      if (parsed?.name === packageName) return { root: fs.realpathSync(current), packageJson, parsed };
+    }
+    const parent = path.dirname(current);
+    if (parent === current) break;
+    current = parent;
+  }
+  throw new Error(`unable to locate package.json for npm FFI dependency '${packageName}'`);
+}
+
+function hashInstalledPackageTree(root) {
+  const files = [];
+  let totalBytes = 0;
+  const walk = (dir) => {
+    for (const name of fs.readdirSync(dir).sort()) {
+      if (name === "node_modules" || name === ".git") continue;
+      const absolute = path.join(dir, name);
+      const stat = fs.lstatSync(absolute);
+      if (stat.isSymbolicLink()) {
+        throw new Error(`npm FFI dependency identity rejects symbolic links inside package tree: ${absolute}`);
+      }
+      if (stat.isDirectory()) {
+        walk(absolute);
+        continue;
+      }
+      if (!stat.isFile()) continue;
+      if (stat.size > 16 * 1024 * 1024) {
+        throw new Error(`npm FFI dependency file exceeds 16 MiB identity limit: ${absolute}`);
+      }
+      totalBytes += stat.size;
+      if (totalBytes > 64 * 1024 * 1024) {
+        throw new Error("npm FFI dependency package exceeds 64 MiB identity limit");
+      }
+      files.push({
+        path: path.relative(root, absolute).replace(/\\/g, "/"),
+        bytes: stat.size,
+        sha256: sha256File(absolute),
+      });
+      if (files.length > 2048) throw new Error("npm FFI dependency package exceeds 2048-file identity limit");
+    }
+  };
+  walk(root);
+  const digest = createHash("sha256");
+  for (const file of files) {
+    digest.update(file.path);
+    digest.update("\0");
+    digest.update(String(file.bytes));
+    digest.update("\0");
+    digest.update(file.sha256);
+    digest.update("\n");
+  }
+  return {
+    sha256: digest.digest("hex"),
+    fileCount: files.length,
+    totalBytes,
+  };
+}
+
+export function ffiPackageDependencies(ffi) {
+  if (!ffi) return [];
+  const packageModules = new Map();
+  for (const binding of ffi.bindings ?? []) {
+    const packageName = npmPackageName(binding.module);
+    if (!packageName) continue;
+    const modules = packageModules.get(packageName) ?? new Set();
+    modules.add(binding.module);
+    packageModules.set(packageName, modules);
+  }
+  if (packageModules.size === 0) return [];
+
+  const requireFromManifest = createRequire(ffi.resolved);
+  const dependencies = [];
+  for (const [packageName, modules] of [...packageModules.entries()].sort(([a], [b]) => a.localeCompare(b))) {
+    let entry;
+    try {
+      entry = requireFromManifest.resolve([...modules][0]);
+    } catch (error) {
+      throw new Error(
+        `unable to resolve npm FFI dependency '${packageName}' relative to ${ffi.resolved}: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
+    const located = findPackageRoot(entry, packageName);
+    const version = located.parsed?.version;
+    if (typeof version !== "string" || version.length === 0) {
+      throw new Error(`npm FFI dependency '${packageName}' requires a package.json version`);
+    }
+    const tree = hashInstalledPackageTree(located.root);
+    dependencies.push({
+      schema: "proofscript.npm-dependency-identity/v1",
+      package: packageName,
+      version,
+      modules: [...modules].sort(),
+      packageJsonSha256: sha256File(located.packageJson),
+      contentSha256: tree.sha256,
+      fileCount: tree.fileCount,
+      totalBytes: tree.totalBytes,
+    });
+  }
+  return dependencies;
+}
+
 export function ffiBuildMetadata(ffi, outDir = process.cwd()) {
   if (!ffi) return undefined;
   return {
@@ -72,6 +192,7 @@ export function ffiBuildMetadata(ffi, outDir = process.cwd()) {
       exportName,
       trust,
     })),
+    dependencies: ffiPackageDependencies(ffi),
   };
 }
 
@@ -124,6 +245,15 @@ export function verifyCertificateFfiMetadata(certificatePath, certificate, coreA
   if (JSON.stringify(normalized) !== JSON.stringify(certificate.ffi.bindings ?? [])) {
     throw new Error("certificate FFI bindings do not match the bound manifest");
   }
+  const dependencyIdentity = ffiPackageDependencies({
+    schema: parsed.schema,
+    resolved: manifestPath,
+    sha256: certificate.ffi.sha256,
+    bindings: normalized,
+  });
+  if (JSON.stringify(dependencyIdentity) !== JSON.stringify(certificate.ffi.dependencies ?? [])) {
+    throw new Error("certificate npm FFI dependency identity mismatch");
+  }
   const axioms = new Set(
     (coreArtifact?.declarations ?? [])
       .filter((declaration) => declaration?.kind === "axiom")
@@ -146,5 +276,6 @@ export function verifyCertificateFfiMetadata(certificatePath, certificate, coreA
     sha256: certificate.ffi.sha256,
     trust: certificate.ffi.trust,
     bindings: normalized,
+    dependencies: dependencyIdentity,
   };
 }
