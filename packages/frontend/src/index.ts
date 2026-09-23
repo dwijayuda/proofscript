@@ -20,6 +20,7 @@ export interface FrontendModuleCacheEntry {
   readonly declarations:CoreDeclaration[];
   readonly typeclasses:TypeclassEnvironmentMetadata;
   readonly ownedFeatures:SurfaceFeatureUse[];
+  readonly declarationLocations:ReturnType<typeof parseSource>["declarationLocations"];
 }
 export interface FrontendModuleCache {
   get(moduleName:string):FrontendModuleCacheEntry|undefined;
@@ -42,6 +43,8 @@ export interface FrontendResult {
   parserState: ReturnType<typeof parseSource>["finalState"];
   /** ProofScript-owned surface feature occurrences with source offsets. */
   ownedFeatures: SurfaceFeatureUse[];
+  /** Non-semantic source locations for declarations, produced by the canonical parser. */
+  declarationLocations: ReturnType<typeof parseSource>["declarationLocations"];
 }
 
 export interface CheckedProjectModule {
@@ -49,6 +52,7 @@ export interface CheckedProjectModule {
   declarations:CoreDeclaration[];
   typeclasses:TypeclassEnvironmentMetadata;
   ownedFeatures:SurfaceFeatureUse[];
+  declarationLocations:ReturnType<typeof parseSource>["declarationLocations"];
 }
 export interface FrontendProjectResult {
   artifact:ReturnType<typeof makeArtifact>;
@@ -70,7 +74,7 @@ export function checkSource(source:string,options:FrontendOptions={}):FrontendRe
   const modules:CoreModulesBuildMetadata={entry:"__single__",modules:[{name:"__single__",sourceSha256:sha256Text(source),imports:[],declarations:elaborated.declarations.map(d=>d.name)}]};
   // The project driver supplies the complete graph after every dependency has been checked.
   // Intermediate per-module artifacts intentionally carry no partial module metadata.
-  return{artifact:makeArtifact(all,elaborated.typeclasses,options.allowResolvedImports?undefined:modules),summary,parserState:parsed.finalState,ownedFeatures:[...parsed.ownedFeatures]};
+  return{artifact:makeArtifact(all,elaborated.typeclasses,options.allowResolvedImports?undefined:modules),summary,parserState:parsed.finalState,ownedFeatures:[...parsed.ownedFeatures],declarationLocations:parsed.declarationLocations.map(item=>({...item}))};
 }
 
 /**
@@ -100,6 +104,7 @@ export function checkProjectFile(entryFile:string,options:FrontendOptions={}):Fr
         declarations:cached.declarations,
         typeclasses:cloneTypeclasses(cached.typeclasses),
         ownedFeatures:cached.ownedFeatures.map(item=>({...item})),
+        declarationLocations:cached.declarationLocations.map(item=>({...item})),
       });
       reused.push(sourceModule.name);
       continue;
@@ -113,7 +118,7 @@ export function checkProjectFile(entryFile:string,options:FrontendOptions={}):Fr
       classes:checked.artifact.typeclasses.classes.filter(c=>owned.has(c.name)).map(cloneClass),
       instances:checked.artifact.typeclasses.instances.filter(i=>owned.has(i.name)).map(i=>({...i})),
     };
-    const moduleResult:CheckedProjectModule={source:sourceModule,declarations,typeclasses,ownedFeatures:[...checked.ownedFeatures]};
+    const moduleResult:CheckedProjectModule={source:sourceModule,declarations,typeclasses,ownedFeatures:[...checked.ownedFeatures],declarationLocations:checked.declarationLocations.map(item=>({...item}))};
     compiled.set(sourceModule.name,moduleResult);
     options.moduleCache?.set(sourceModule.name,{
       sourceSha256:sourceModule.sourceSha256,
@@ -121,6 +126,7 @@ export function checkProjectFile(entryFile:string,options:FrontendOptions={}):Fr
       declarations,
       typeclasses:cloneTypeclasses(typeclasses),
       ownedFeatures:checked.ownedFeatures.map(item=>({...item})),
+      declarationLocations:checked.declarationLocations.map(item=>({...item})),
     });
     rebuilt.push(sourceModule.name);
   }
