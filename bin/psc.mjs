@@ -1360,6 +1360,68 @@ function certificateRuntimeMetadata(args, certificateOut) {
   };
 }
 
+function certificateFfiMetadata(args, certificateOut, coreArtifact) {
+  const ffi = readFfiManifest(args);
+  if (!ffi) return {};
+  const userAxioms = new Set(
+    (coreArtifact?.declarations ?? [])
+      .filter((declaration) => declaration?.kind === 'axiom')
+      .map((declaration) => declaration.name),
+  );
+  for (const binding of ffi.bindings) {
+    if (!userAxioms.has(binding.name)) {
+      throw new Error(`FFI certificate binding '${binding.name}' does not target a Core axiom`);
+    }
+  }
+  return {
+    ffi: ffiBuildMetadata(ffi, path.dirname(certificateOut)),
+  };
+}
+
+function verifyCertificateFfiMetadata(certificatePath, certificate, coreArtifact) {
+  if (!certificate?.ffi) {
+    if (certificate?.trustBoundary?.trustedExternalCode === true) {
+      throw new Error("certificate claims trusted external code without an FFI manifest binding");
+    }
+    return undefined;
+  }
+  if (certificate.ffi.schema !== 'proofscript.ffi/v1' || certificate.ffi.trust !== 'trusted-external') {
+    throw new Error("certificate FFI metadata has an invalid schema or trust classification");
+  }
+  const manifestPath = path.resolve(path.dirname(certificatePath), certificate.ffi.path ?? '');
+  if (!fs.existsSync(manifestPath)) throw new Error("certificate FFI manifest is missing or unreadable");
+  if (!certificate.ffi.sha256 || sha256File(manifestPath) !== certificate.ffi.sha256) {
+    throw new Error("certificate FFI manifest hash mismatch");
+  }
+  const parsed = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  if (parsed?.schema !== 'proofscript.ffi/v1' || !Array.isArray(parsed.bindings)) {
+    throw new Error("certificate FFI manifest content is invalid");
+  }
+  const normalized = parsed.bindings.map(({ name, module, exportName, trust }) => ({ name, module, exportName, trust }));
+  if (JSON.stringify(normalized) !== JSON.stringify(certificate.ffi.bindings ?? [])) {
+    throw new Error("certificate FFI bindings do not match the bound manifest");
+  }
+  const axioms = new Set(
+    (coreArtifact?.declarations ?? [])
+      .filter((declaration) => declaration?.kind === 'axiom')
+      .map((declaration) => declaration.name),
+  );
+  for (const binding of normalized) {
+    if (binding.trust !== 'trusted-external') throw new Error(`certificate FFI binding '${binding.name}' is not explicitly trusted-external`);
+    if (!axioms.has(binding.name)) throw new Error(`certificate FFI binding '${binding.name}' does not target a Core axiom`);
+  }
+  if (certificate.trustBoundary?.trustedExternalCode !== true) {
+    throw new Error("certificate FFI metadata exists but trustedExternalCode is not true");
+  }
+  return {
+    schema: certificate.ffi.schema,
+    path: manifestPath,
+    sha256: certificate.ffi.sha256,
+    trust: certificate.ffi.trust,
+    bindings: normalized,
+  };
+}
+
 function certifyCommand(args) {
   const json = has(args, '--json');
   const pos = positional(args);
@@ -1382,10 +1444,11 @@ function certifyCommand(args) {
     packageVersion: VERSION,
     ...certificateMetadataForCore(ROOT, artifact),
     ...certificateRuntimeMetadata(args, resolvedOut),
+    ...certificateFfiMetadata(args, resolvedOut, artifact),
     source: { path: path.relative(path.dirname(resolvedOut), source).replace(/\\/g, '/'), sha256: sha256File(source) },
     core: { path: path.relative(path.dirname(resolvedOut), resolvedCore).replace(/\\/g, '/'), sha256: sha256File(resolvedCore), declarations },
     checker: { command: 'psc certify', structuralOnly: true, semanticPSKernelReplay: true },
-    trustBoundary: { hiddenAxiomsIntroduced: false, fullLean4Equivalence: false, executionCorrespondenceProof: false },
+    trustBoundary: { hiddenAxiomsIntroduced: false, trustedExternalCode: Boolean(opt(args, '--ffi-manifest')), externalImplementationVerified: false, fullLean4Equivalence: false, executionCorrespondenceProof: false },
   };
   fs.mkdirSync(path.dirname(resolvedOut), { recursive: true });
   fs.writeFileSync(resolvedOut, JSON.stringify(cert, null, 2) + '\n');
@@ -1604,8 +1667,10 @@ function verifyCommand(args) {
       process.exit(1);
     }
     try {
-      verifyCertificateMetadataAgainstCore(ROOT, artifact, readJsonPath(corePath));
+      const coreArtifact = readJsonPath(corePath);
+      verifyCertificateMetadataAgainstCore(ROOT, artifact, coreArtifact);
       verifyRuntimeCertificateMetadata(ROOT, artifact);
+      const verifiedFfi = verifyCertificateFfiMetadata(resolved, artifact, coreArtifact);
     } catch (error) {
       jsonOut({ status: 'rejected', command: 'verify', artifactKind: 'certificate', message: error instanceof Error ? error.message : String(error) }, json);
       process.exit(1);
@@ -1636,6 +1701,7 @@ function verifyCommand(args) {
     }
     if (artifact.runtimeProfile) result.runtimeProfile = artifact.runtimeProfile;
     if (artifact.correspondence) result.correspondence = artifact.correspondence;
+    if (verifiedFfi) result.ffi = verifiedFfi;
     result.boundCore = corePath;
     result.boundCoreSha256 = actual;
     result.trustBoundary.semanticPSKernelReplay = true;
