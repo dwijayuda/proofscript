@@ -142,6 +142,14 @@ export interface WorkspaceEditInfo {
   readonly changes: Readonly<Record<string, readonly TextEditInfo[]>>;
 }
 
+export interface CodeActionInfo {
+  readonly title: string;
+  readonly kind: "quickfix" | "source.format.proofscript";
+  readonly isPreferred?: boolean;
+  readonly diagnostics?: readonly Diagnostic[];
+  readonly edit: WorkspaceEditInfo;
+}
+
 export interface ProofGoalInfo {
   readonly id: string;
   readonly origin: "compiler-theorem" | "verification-artifact";
@@ -640,6 +648,49 @@ export class ProofScriptLanguageService {
     }];
   }
 
+  codeActions(uri: string, range?: Range, cancellation?: CancellationToken): readonly CodeActionInfo[] {
+    cancellation?.throwIfCancellationRequested();
+    const document = this.requireDocument(uri);
+    const analysis = this.analyze(uri, false, cancellation);
+    const actions: CodeActionInfo[] = [];
+
+    const formatEdits = this.formatDocument(uri, cancellation);
+    if (formatEdits.length > 0) {
+      actions.push({
+        title: "Format ProofScript document",
+        kind: "source.format.proofscript",
+        edit: { changes: { [uri]: formatEdits } },
+      });
+    }
+
+    for (const diagnostic of analysis.diagnostics) {
+      cancellation?.throwIfCancellationRequested();
+      if (diagnostic.code !== "PSLS1001") continue;
+      if (range && !rangesOverlapOrTouch(range, diagnostic.range)) continue;
+      const match = diagnostic.data.rawMessage.match(/^expected ';' at offset (\d+), found '/u);
+      if (!match) continue;
+      const offset = Number(match[1]);
+      if (!Number.isSafeInteger(offset) || offset < 0 || offset > document.text.length) continue;
+      const position = positionAt(document.text, offset);
+      actions.push({
+        title: "Insert missing ';'",
+        kind: "quickfix",
+        isPreferred: true,
+        diagnostics: [diagnostic],
+        edit: {
+          changes: {
+            [uri]: [{
+              range: { start: position, end: position },
+              newText: ";",
+            }],
+          },
+        },
+      });
+    }
+
+    return actions;
+  }
+
   definition(uri: string, position: Position, cancellation?: CancellationToken): LocationInfo | null {
     const analysis = this.analyze(uri, false, cancellation);
     const symbol = symbolAtPosition(analysis, position);
@@ -857,6 +908,11 @@ function symbolAtPosition(analysis: Analysis, position: Position): string | null
     offset >= item.startOffset && offset < item.endOffset
   );
   return reference?.resolvedName ?? null;
+}
+
+function rangesOverlapOrTouch(left: Range, right: Range): boolean {
+  return comparePosition(left.end, right.start) >= 0
+    && comparePosition(right.end, left.start) >= 0;
 }
 
 function semanticTokenKind(kind: string): SemanticTokenKind {
