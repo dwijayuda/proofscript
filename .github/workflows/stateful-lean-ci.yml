@@ -116,10 +116,10 @@ jobs:
           lake env lean --version
 
       - name: Execute generated debit stateful VC request
-        run: npm run assurance:ps3:stateful-lean-vc -- --strict --out stateful-vc-run-${{ matrix.lean }}.json
+        run: npm run assurance:ps3:stateful-lean-vc -- --require-proof --out stateful-vc-run-${{ matrix.lean }}.json
 
       - name: Execute generated transfer stateful VC request
-        run: npm run assurance:ps3:stateful-lean-transfer-vc -- --strict --out stateful-transfer-vc-run-${{ matrix.lean }}.json
+        run: npm run assurance:ps3:stateful-lean-transfer-vc -- --require-proof --out stateful-transfer-vc-run-${{ matrix.lean }}.json
 
       - name: Upload stateful VC evidence
         if: always()
