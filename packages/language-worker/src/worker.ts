@@ -101,6 +101,8 @@ function dispatch(operation: string, args: any, cancellation?: CancellationToken
       return service.hover(args.uri, args.position, cancellation);
     case "completion":
       return service.completion(args.uri, args.position, cancellation);
+    case "semanticTokens":
+      return service.semanticTokens(args.uri, cancellation);
     case "definition":
       return service.definition(args.uri, args.position, cancellation);
     case "references":
