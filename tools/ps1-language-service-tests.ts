@@ -49,7 +49,8 @@ assert.match(overlayHover.type, /Prop/u);
 assert.equal(service.hover(uri, { line: 0, character: 0 }), null);
 
 const overlayGoals = service.goals(uri, { line: 0, character: 10 });
-assert.equal(overlayGoals.tacticStateAvailable, false);
+assert.equal(overlayGoals.tacticStateAvailable, true);
+assert.equal(overlayGoals.tacticState, null, "direct-term theorem has no tactic span at the cursor");
 assert.equal(overlayGoals.declarationGoal?.origin, "compiler-theorem");
 assert.equal(overlayGoals.declarationGoal?.name, "overlay");
 assert.equal(overlayGoals.declarationGoal?.status, "checked");
