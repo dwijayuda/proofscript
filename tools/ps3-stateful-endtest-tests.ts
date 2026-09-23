@@ -4,6 +4,37 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { resolveNpmInvocation } from "./ps3-npm-invocation.mjs";
+
+const windowsInvocation = resolveNpmInvocation(
+  ["run", "build"],
+  {
+    env: {
+      npm_execpath: "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+    },
+    execPath: "C:\\Program Files\\nodejs\\node.exe",
+    platform: "win32",
+  },
+);
+assert.deepEqual(windowsInvocation, {
+  command: "C:\\Program Files\\nodejs\\node.exe",
+  args: [
+    "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+    "run",
+    "build",
+  ],
+  mode: "node-npm-cli",
+});
+
+const posixFallback = resolveNpmInvocation(
+  ["run", "build"],
+  { env: {}, execPath: "/usr/bin/node", platform: "linux" },
+);
+assert.deepEqual(posixFallback, {
+  command: "npm",
+  args: ["run", "build"],
+  mode: "npm-bin",
+});
 
 const root = path.resolve(import.meta.dirname, "..");
 const endtest = path.join(root, "tools", "ps3-stateful-endtest.ts");
