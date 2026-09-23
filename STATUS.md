@@ -126,11 +126,33 @@ The same closure includes the dependent-local `assumption` correction:
 local candidates are typed by kernel inference in the full current context
 before definitional comparison with the goal.
 
-Phase 3 implementation is now present on this branch but is **not closed**
-until the v3 consolidated gate is executed on its committed source. It retains
-only proof states already emitted before a later elaboration failure. Parser
-failures still yield no partial states; no editor-only parser/elaborator,
-metavariable recovery, or speculative continuation is introduced.
+## Tactic ergonomics Phase 3 closure
+
+Status: **CLOSED** on tested source commit `10836538e37f547596cbbbb556bc643d93d17461`.
+
+Closeout evidence on 2026-09-24:
+
+- consolidated gate: `npm run assurance:tactic-ergonomics`;
+- schema: `proofscript.tactic-ergonomics-endtest/v3`;
+- **9/9 PASS**, 0 failed, 0 skipped;
+- build — PASS;
+- parser proof extraction — PASS;
+- elaborator/kernel-check proof regression — PASS;
+- compiler-backed language service — PASS;
+- language worker — PASS;
+- LSP transport — PASS;
+- active VS Code smoke — PASS;
+- standalone-small — PASS;
+- reference governance — PASS;
+- `allTacticErgonomicsGatesPassed = true`.
+
+Phase 3 retains only compiler proof states already emitted before a later
+elaboration failure. Rejected proofs remain rejected, rejected declarations are
+not exposed as checked theorem goals, observer failures are fail-open, and
+parser failures still produce no partial proof states.
+
+No editor-only parser/elaborator, metavariable recovery, syntax repair, or
+speculative continuation was added.
 
 See `docs/TACTIC_ERGONOMICS.md`.
 
