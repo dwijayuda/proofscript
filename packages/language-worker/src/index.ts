@@ -7,6 +7,7 @@ import type {
   DocumentSymbolInfo,
   HoverInfo,
   Position,
+  ProofGoalBundle,
   SemanticTokenInfo,
   TextEditInfo,
   WorkspaceEditInfo,
@@ -195,6 +196,10 @@ export class LanguageWorkerClient {
 
   async formatDocument(uri: string, ownerId?: number | string | null): Promise<readonly TextEditInfo[]> {
     return this.request("formatDocument", { uri }, ownerId);
+  }
+
+  async goals(uri: string, position?: Position, ownerId?: number | string | null): Promise<ProofGoalBundle> {
+    return this.request("goals", { uri, position }, ownerId);
   }
 
   async definition(uri: string, position: Position, ownerId?: number | string | null): Promise<LocationInfo | null> {
