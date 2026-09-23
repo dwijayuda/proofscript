@@ -82,23 +82,66 @@ export function resolveFfiBindings(
   return resolved;
 }
 
+function typeScriptRuntimeType(typeName: string): string {
+  switch (typeName) {
+    case "Nat":
+    case "Int":
+      return "bigint";
+    case "Bool":
+      return "boolean";
+    case "String":
+      return "string";
+    case "Unit":
+      return "null";
+    default:
+      throw new Error(`unsupported ffi-v1 runtime type '${typeName}'`);
+  }
+}
+
+function curriedFfiExpression(
+  binding: ResolvedFfiBinding,
+  rawName: string,
+  target: "js" | "ts",
+): string {
+  const args = binding.parameters.map((_, index) => `arg${index}`);
+  let body = `${rawName}(${args.join(", ")})`;
+  for (let index = args.length - 1; index >= 0; index--) {
+    const arg = args[index]!;
+    const param = target === "ts"
+      ? `(${arg}: ${typeScriptRuntimeType(binding.parameters[index]!)})`
+      : arg;
+    body = `${param} => ${body}`;
+  }
+  return body;
+}
+
 export function emitJavaScriptFfiPrelude(bindings: readonly ResolvedFfiBinding[]): readonly string[] {
   const lines: string[] = [];
   bindings.forEach((binding, index) => {
     const moduleName = `__psFfiModule${index}`;
+    const rawName = `__psFfiRaw${index}`;
     lines.push(`const ${moduleName} = require(${JSON.stringify(binding.module)});`);
-    lines.push(`const ${binding.jsName} = ${moduleName}[${JSON.stringify(binding.exportName)}];`);
+    lines.push(`const ${rawName} = ${moduleName}[${JSON.stringify(binding.exportName)}];`);
     lines.push(
-      `if (typeof ${binding.jsName} !== "function") throw new TypeError(${JSON.stringify(
+      `if (typeof ${rawName} !== "function") throw new TypeError(${JSON.stringify(
         `ProofScript FFI binding '${binding.name}' expected function export '${binding.exportName}' from '${binding.module}'`,
       )});`,
     );
+    lines.push(`const ${binding.jsName} = ${curriedFfiExpression(binding, rawName, "js")};`);
   });
   return lines;
 }
 
 export function emitTypeScriptFfiPrelude(bindings: readonly ResolvedFfiBinding[]): readonly string[] {
-  return bindings.map((binding) =>
-    `import { ${binding.exportName} as ${binding.jsName} } from ${JSON.stringify(binding.module)};`
-  );
+  const lines: string[] = [];
+  bindings.forEach((binding, index) => {
+    const rawName = `__psFfiRaw${index}`;
+    lines.push(
+      `import { ${binding.exportName} as ${rawName} } from ${JSON.stringify(binding.module)};`,
+    );
+    lines.push(
+      `const ${binding.jsName} = ${curriedFfiExpression(binding, rawName, "ts")};`,
+    );
+  });
+  return lines;
 }

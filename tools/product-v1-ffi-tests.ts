@@ -38,17 +38,27 @@ try {
 
   fs.writeFileSync(source, [
     "axiom hostBasename(path: String): String;",
+    "axiom hostBasenameSuffix(path: String, suffix: String): String;",
     'def hostResult: String := { hostBasename("/tmp/example.txt") }',
+    'def hostSuffixResult: String := { hostBasenameSuffix("/tmp/example.txt", ".txt") }',
     "",
   ].join("\n"));
   fs.writeFileSync(manifest, JSON.stringify({
     schema: "proofscript.ffi/v1",
-    bindings: [{
-      name: "hostBasename",
-      module: "node:path",
-      exportName: "basename",
-      trust: "trusted-external",
-    }],
+    bindings: [
+      {
+        name: "hostBasename",
+        module: "node:path",
+        exportName: "basename",
+        trust: "trusted-external",
+      },
+      {
+        name: "hostBasenameSuffix",
+        module: "node:path",
+        exportName: "basename",
+        trust: "trusted-external",
+      },
+    ],
   }, null, 2) + "\n");
 
   const checked = json(["check", source, "--emit-core", core]);
@@ -71,11 +81,13 @@ try {
   assert.equal(builtJs.status, "accepted");
   assert.equal(builtJs.ffi.schema, "proofscript.ffi/v1");
   assert.equal(builtJs.ffi.trust, "trusted-external");
-  assert.equal(builtJs.ffi.bindings.length, 1);
+  assert.equal(builtJs.ffi.bindings.length, 2);
+  assert.deepEqual(builtJs.ffi.bindings.map((binding: any) => binding.arity), [1, 2]);
   assert.equal(builtJs.trustBoundary.trustedExternalCode, true);
   const jsSource = fs.readFileSync(js, "utf8");
   assert.match(jsSource, /require\("node:path"\)/u);
   assert.match(jsSource, /\["basename"\]/u);
+  assert.match(jsSource, /arg0 => arg1 => __psFfiRaw\d+\(arg0, arg1\)/u);
 
   const executed = json([
     "run", source, "--call", "hostResult",
@@ -86,6 +98,13 @@ try {
   assert.equal(executed.ffi.trust, "trusted-external");
   assert.equal(executed.trustBoundary.trustedExternalCode, true);
 
+  const executedSuffix = json([
+    "run", source, "--call", "hostSuffixResult",
+    "--ffi-manifest", manifest,
+  ]);
+  assert.equal(executedSuffix.status, "accepted");
+  assert.equal(executedSuffix.result, "example");
+
   const builtTs = json([
     "build-ts", source, "--out", ts,
     "--runtime", "bundled",
@@ -94,7 +113,8 @@ try {
   assert.equal(builtTs.status, "accepted");
   assert.equal(builtTs.ffi.bindings[0].name, "hostBasename");
   const tsSource = fs.readFileSync(ts, "utf8");
-  assert.match(tsSource, /import \{ basename as [A-Za-z_$][A-Za-z0-9_$]* \} from "node:path";/u);
+  assert.match(tsSource, /import \{ basename as __psFfiRaw\d+ \} from "node:path";/u);
+  assert.match(tsSource, /\(arg0: string\) => \(arg1: string\) => __psFfiRaw\d+\(arg0, arg1\)/u);
 
   const certified = json([
     "certify", source,
