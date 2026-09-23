@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import { spawnSync } from "node:child_process";
 import fs from "node:fs";
+import { formatProcessProgress, runStreamingProcess } from "./ps3-process-runner.mjs";
 import path from "node:path";
 import {
   normalizeLeanToolchainSelector,
@@ -112,12 +112,18 @@ for (const toolchain of toolchains) {
     if (leanCmd) runnerArgs.push("--lean-cmd", leanCmd);
     if (lakeCmd) runnerArgs.push("--lake-cmd", lakeCmd);
 
-    const run = spawnSync(process.execPath, runnerArgs, {
+    const progressName = `${proofCase.name} @ ${toolchain}`;
+    console.error(formatProcessProgress("start", progressName));
+    const run = await runStreamingProcess(process.execPath, runnerArgs, {
       cwd: root,
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "pipe"],
-      maxBuffer: 64 * 1024 * 1024,
+      streamStdout: false,
+      streamStderr: true,
     });
+    console.error(formatProcessProgress(
+      (run.status ?? 1) === 0 ? "pass" : "fail",
+      progressName,
+      run.status ?? 1,
+    ));
 
     let evidence = null;
     let validation = {
@@ -137,6 +143,7 @@ for (const toolchain of toolchains) {
       requireProof: true,
       processExitCode: run.status ?? 1,
       processError: run.error?.message ?? null,
+      signal: run.signal ?? null,
       stdout: run.stdout ?? "",
       stderr: run.stderr ?? "",
       reportPath: path.relative(root, reportPath).replace(/\\/gu, "/"),

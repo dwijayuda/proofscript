@@ -163,6 +163,7 @@ const leanBinDir = path.dirname(path.resolve(leanCmd));
 const localLake = path.join(leanBinDir, process.platform === "win32" ? "lake.exe" : "lake");
 const lakeCmd = requestedLakeCmd ?? (fs.existsSync(localLake) ? localLake : "lake");
 
+console.error(`[proofscript] LEAN  probe ${projectToolchain ?? "<project-default>"}`);
 const leanVersionRun = run(lakeCmd, ["env", "lean", "--version"], tmp);
 const leanCompatibility = leanVersionRun.exitCode === 0
   ? classifyLeanCompatibilityOutput(`${leanVersionRun.stdout}\n${leanVersionRun.stderr}`)
@@ -205,13 +206,17 @@ if (leanCompatibility.status !== "accepted") {
   process.exit(0);
 }
 
+console.error(`[proofscript] LEAN  model-build ${modelModule}`);
 const modelBuild = run(lakeCmd, ["build", modelModule], tmp);
+if (modelBuild.exitCode === 0) console.error("[proofscript] LEAN  program-typecheck");
 const programCheck = modelBuild.exitCode === 0
   ? run(lakeCmd, ["env", "lean", path.relative(tmp, programCheckPath)], tmp)
   : { command: lakeCmd, args: [], exitCode: 1, stdout: "", stderr: "model build failed", error: null };
+if (programCheck.exitCode === 0) console.error("[proofscript] LEAN  triple-typecheck");
 const tripleCheck = programCheck.exitCode === 0
   ? run(lakeCmd, ["env", "lean", path.relative(tmp, tripleCheckPath)], tmp)
   : { command: lakeCmd, args: [], exitCode: 1, stdout: "", stderr: "program check failed", error: null };
+if (tripleCheck.exitCode === 0) console.error("[proofscript] LEAN  proof-request");
 const requestRun = tripleCheck.exitCode === 0
   ? run(lakeCmd, ["env", "lean", path.relative(tmp, requestPath)], tmp)
   : { command: lakeCmd, args: [], exitCode: 1, stdout: "", stderr: "triple target check failed", error: null };
@@ -222,6 +227,7 @@ const checks = {
   tripleCheck,
   requestRun,
 };
+console.error("[proofscript] LEAN  analyze-evidence");
 const execution = analyzeStatefulVcExecution({
   functionName: lowering.function.name,
   request,

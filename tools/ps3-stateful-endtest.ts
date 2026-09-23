@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { resolveNpmInvocation } from "./ps3-npm-invocation.mjs";
+import { formatProcessProgress, runStreamingProcess } from "./ps3-process-runner.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
 const args = process.argv.slice(2);
@@ -106,14 +106,13 @@ for (const step of steps) {
   }
 
   const npmInvocation = resolveNpmInvocation(step.args);
-  const run = spawnSync(npmInvocation.command, npmInvocation.args, {
+  console.error(formatProcessProgress("start", step.name));
+  const run = await runStreamingProcess(npmInvocation.command, npmInvocation.args, {
     cwd: root,
-    encoding: "utf8",
-    stdio: ["ignore", "pipe", "pipe"],
-    maxBuffer: 64 * 1024 * 1024,
   });
   const exitCode = run.status ?? 1;
   const passed = exitCode === 0;
+  console.error(formatProcessProgress(passed ? "pass" : "fail", step.name, exitCode));
   results.push({
     ...step,
     command: npmInvocation.command,
@@ -121,6 +120,7 @@ for (const step of steps) {
     status: passed ? "passed" : "failed",
     exitCode,
     processError: run.error?.message ?? null,
+    signal: run.signal ?? null,
     stdout: run.stdout ?? "",
     stderr: run.stderr ?? "",
   });
