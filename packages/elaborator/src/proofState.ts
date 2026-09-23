@@ -30,8 +30,27 @@ export function proofStateLocals(
   names: readonly string[],
   types: readonly Term[],
 ): ProofStateLocal[] {
-  if (names.length !== types.length) {
-    throw new Error("internal: proof-state local names/types length mismatch");
+  const count = Math.min(names.length, types.length);
+  const out: ProofStateLocal[] = [];
+  for (let index = 0; index < count; index++) {
+    out.push({ name: names[index], type: types[index] });
   }
-  return names.map((name, index) => ({ name, type: types[index] }));
+  return out;
+}
+
+/**
+ * Proof-state collection must never become proof authority. In particular, a
+ * buggy or third-party observer is not allowed to make an otherwise valid
+ * elaboration fail.
+ */
+export function observeProofState(
+  observer: ProofElaborationObserver | undefined,
+  state: ProofStateSnapshot,
+): void {
+  try {
+    observer?.recordProofState(state);
+  } catch {
+    // Observational tooling is deliberately fail-open with respect to proof
+    // checking. The checked Core term remains the only acceptance path.
+  }
 }
