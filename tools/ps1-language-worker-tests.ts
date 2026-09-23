@@ -19,7 +19,7 @@ fs.writeFileSync(mainFile, "theorem disk(P: Prop, h: P): P := h;\n");
 
 const worker = new LanguageWorkerClient({ hardCancelGraceMs: 25 });
 const uri = "proofscript-worker-test://Main.ps";
-worker.openDocument(uri, 1, "theorem overlay(P: Prop, h: P): P := h;\n", mainFile);
+worker.openDocument(uri, 1, "theorem overlay(P: Prop, h: P): P := by { assumption }\n", mainFile);
 
 await worker.start();
 const ping = await worker.ping();
@@ -31,8 +31,11 @@ assert.equal(first.status, "accepted");
 assert.ok(first.declarations.some((declaration) => declaration.name === "overlay"));
 assert.ok(!first.declarations.some((declaration) => declaration.name === "disk"));
 
-const firstGoals = await worker.goals(uri, { line: 0, character: 10 });
-assert.equal(firstGoals.tacticStateAvailable, false);
+const firstGoals = await worker.goals(uri, { line: 0, character: 47 });
+assert.equal(firstGoals.tacticStateAvailable, true);
+assert.equal(firstGoals.tacticState?.tactic, "assumption");
+assert.equal(firstGoals.tacticState?.goal, "P");
+assert.deepEqual(firstGoals.tacticState?.locals.map((local) => local.name), ["P", "h"]);
 assert.equal(firstGoals.declarationGoal?.origin, "compiler-theorem");
 assert.equal(firstGoals.declarationGoal?.name, "overlay");
 assert.equal(firstGoals.verification.status, "unavailable");
