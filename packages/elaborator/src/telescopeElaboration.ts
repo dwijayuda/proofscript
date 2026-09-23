@@ -66,6 +66,46 @@ export function elabTelescopeType(
   return go(0, locals, localTypes);
 }
 
+export interface ElaboratedTelescopeGoal {
+  readonly locals: string[];
+  readonly localTypes: Term[];
+  readonly goal: Term;
+}
+
+/**
+ * Elaborate only a declaration's binder telescope and result type.
+ *
+ * This is the same binder walk used by value elaboration, including instance
+ * binder validation, but deliberately creates no proof/value term. Editor
+ * tooling can therefore inspect a real initial proof context without
+ * synthesizing a placeholder proof.
+ */
+export function elabTelescopeGoal(
+  binders: SurfaceBinder[],
+  result: SurfaceTerm,
+  locals: string[],
+  localTypes: Term[],
+  globals: Map<string, GlobalInfo>,
+  available: Set<string>,
+  kernelEnv: Environment,
+  elaborateTerm: ElaborateTermFn,
+): ElaboratedTelescopeGoal {
+  const go = (i: number, names: string[], types: Term[]): ElaboratedTelescopeGoal => {
+    if (i === binders.length) {
+      return {
+        locals: [...names],
+        localTypes: [...types],
+        goal: elaborateTerm(result, names, types, globals, available, kernelEnv),
+      };
+    }
+    const b = binders[i];
+    const domain = elaborateTerm(b.type, names, types, globals, available, kernelEnv);
+    validateInstanceBinderDomain(b, domain, globals, kernelEnv, contextFromTypes(types));
+    return go(i + 1, [...names, b.name], [...types, domain]);
+  };
+  return go(0, locals, localTypes);
+}
+
 export function elabTelescopeValue(
   binders: SurfaceBinder[],
   value: SurfaceTerm,
