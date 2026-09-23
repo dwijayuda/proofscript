@@ -216,6 +216,36 @@ term, source repair, or editor-only elaborator was added.
 
 See `docs/TACTIC_ERGONOMICS.md`.
 
+## Tactic ergonomics Phase 6
+
+Status: **IMPLEMENTED; ACCEPTANCE PENDING**.
+
+Phase 6 adds proof-state-aware native tactic keyword completion. The language
+service only injects tactic keywords when a canonical compiler/parser-derived
+proof state covers the cursor. Outside a proof state, normal source completion
+is unchanged.
+
+The completion list contains the bounded native tactics already supported by
+the compiler: `rfl`, `exact`, `intro`, `assumption`, `apply`,
+`show`, `have`, `rw`, `subst`, `constructor`, `cases`,
+`induction`, and `simp`.
+
+This is completion only. It does not predict tactic applicability, run tactics
+speculatively, search for proofs, create metavariables, or construct proof
+terms. After insertion, the canonical parser/elaborator/PSKernel path remains
+the sole authority.
+
+LSP transports these items as standard Keyword completions and advertises
+`{` as a trigger so `by {` can request them immediately. The VS Code
+adapter now also correctly converts 1-based LSP completion kinds to VS Code's
+0-based enum.
+
+Closure requires a green
+`proofscript.tactic-ergonomics-endtest/v6` run on the committed Phase 6
+candidate.
+
+See `docs/TACTIC_ERGONOMICS.md`.
+
 ## Baseline behavior
 
 Observed before cleanup and now represented by the product regression workflow:
