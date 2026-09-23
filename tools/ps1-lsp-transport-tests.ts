@@ -90,6 +90,9 @@ assert.equal(initialized.result.capabilities.hoverProvider, true);
 assert.equal(initialized.result.capabilities.documentSymbolProvider, true);
 assert.ok(initialized.result.capabilities.completionProvider);
 assert.equal(initialized.result.capabilities.completionProvider.resolveProvider, false);
+assert.equal(initialized.result.capabilities.definitionProvider, true);
+assert.equal(initialized.result.capabilities.referencesProvider, true);
+assert.equal(initialized.result.capabilities.renameProvider, true);
 assert.equal(initialized.result.experimental.proofscript.duplicateParser, false);
 assert.equal(initialized.result.experimental.proofscript.surfaceFeatureRequest, "proofscript/surfaceFeatures");
 assert.equal(initialized.result.experimental.proofscript.documentStatusRequest, "proofscript/documentStatus");
@@ -234,6 +237,61 @@ const completion = await waitFor((message) => message.id === 10, "completion res
 assert.equal(completion.result.isIncomplete, false);
 assert.ok(completion.result.items.some((item) => item.label === "fixed"));
 
+const navigationSource = "def navBase: Nat := 1;\ndef navUse: Nat := navBase;\n";
+send({
+  jsonrpc: "2.0",
+  method: "textDocument/didChange",
+  params: {
+    textDocument: { uri, version: 3 },
+    contentChanges: [{ text: navigationSource }],
+  },
+});
+const pushedNavigation = await waitFor(
+  (message) => message.method === "textDocument/publishDiagnostics"
+    && message.params?.uri === uri
+    && message.params?.version === 3,
+  "version 3 navigation diagnostics",
+);
+assert.equal(pushedNavigation.params.diagnostics.length, 0);
+
+send({
+  jsonrpc: "2.0",
+  id: 11,
+  method: "textDocument/definition",
+  params: { textDocument: { uri }, position: { line: 1, character: 21 } },
+});
+const definition = await waitFor((message) => message.id === 11, "definition response");
+assert.equal(definition.result.uri, uri);
+assert.deepEqual(definition.result.range.start, { line: 0, character: 4 });
+assert.deepEqual(definition.result.range.end, { line: 0, character: 11 });
+
+send({
+  jsonrpc: "2.0",
+  id: 12,
+  method: "textDocument/references",
+  params: {
+    textDocument: { uri },
+    position: { line: 1, character: 21 },
+    context: { includeDeclaration: true },
+  },
+});
+const references = await waitFor((message) => message.id === 12, "references response");
+assert.equal(references.result.length, 2);
+
+send({
+  jsonrpc: "2.0",
+  id: 13,
+  method: "textDocument/rename",
+  params: {
+    textDocument: { uri },
+    position: { line: 1, character: 21 },
+    newName: "renamedBase",
+  },
+});
+const rename = await waitFor((message) => message.id === 13, "rename response");
+assert.equal(rename.result.changes[uri].length, 2);
+assert.ok(rename.result.changes[uri].every((edit) => edit.newText === "renamedBase"));
+
 send({
   jsonrpc: "2.0",
   method: "textDocument/didClose",
@@ -247,8 +305,8 @@ const closed = await waitFor(
 );
 assert.deepEqual(closed.params.diagnostics, []);
 
-send({ jsonrpc: "2.0", id: 11, method: "shutdown", params: null });
-const shutdown = await waitFor((message) => message.id === 11, "shutdown response");
+send({ jsonrpc: "2.0", id: 14, method: "shutdown", params: null });
+const shutdown = await waitFor((message) => message.id === 14, "shutdown response");
 assert.equal(shutdown.result, null);
 send({ jsonrpc: "2.0", method: "exit", params: null });
 
