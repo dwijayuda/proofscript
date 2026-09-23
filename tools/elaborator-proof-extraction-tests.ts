@@ -71,6 +71,9 @@ theorem rw_forward(a: Nat, b: Nat, h: a = b): a = b := by { rw h; rfl }
 
 theorem rw_reverse(a: Nat, b: Nat, h: a = b): b = a := by { rw ← h; rfl }
 
+axiom one_eq_two: 1 = 2;
+theorem rw_exact_numeral: 1 = 2 := by { rw one_eq_two; rfl }
+
 theorem subst_forward(a: Nat, b: Nat, h: a = b): a = b := by { subst a; rfl }
 
 inductive BothP: Prop where {
@@ -107,7 +110,7 @@ def executable: Nat := { idNat 9 }
 });
 const checked = runPsliveJson(['check', fixture.source, '--json']);
 assert.equal(checked.status, 'accepted');
-for (const name of ['idNat_rfl', 'exact_rfl', 'intro_assumption', 'apply_exact', 'apply_subgoal', 'show_exact', 'have_exact', 'have_inferred', 'have_nested', 'have_dependent_target', 'rw_forward', 'rw_reverse', 'subst_forward', 'constructor_both', 'cases_bool', 'cases_holder', 'induction_nat_reflexive', 'induction_chain', 'simp_reflexive', 'simp_assumption', 'simp_rewrite']) {
+for (const name of ['idNat_rfl', 'exact_rfl', 'intro_assumption', 'apply_exact', 'apply_subgoal', 'show_exact', 'have_exact', 'have_inferred', 'have_nested', 'have_dependent_target', 'rw_forward', 'rw_reverse', 'rw_exact_numeral', 'subst_forward', 'constructor_both', 'cases_bool', 'cases_holder', 'induction_nat_reflexive', 'induction_chain', 'simp_reflexive', 'simp_assumption', 'simp_rewrite']) {
   assert.ok(checked.userDeclarations.some(d => d.name === name && d.kind === 'theorem'), `expected theorem ${name}`);
 }
 const built = buildJsFixture(fixture, 'proof-elab.js');
