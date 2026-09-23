@@ -138,6 +138,11 @@ export class ProofScriptLanguageServer {
                 cooperativeCancellation: true,
                 hardCancelFallback: true,
                 surfaceFeatureRequest: "proofscript/surfaceFeatures",
+                documentStatusRequest: "proofscript/documentStatus",
+                semanticInfoRequest: "proofscript/semanticInfo",
+                serverInfoRequest: "proofscript/serverInfo",
+                proofStateAvailable: false,
+                editorFeatureLevel: "document-semantic0",
                 declarationSourceIndex: true,
               },
             },
@@ -204,6 +209,98 @@ export class ProofScriptLanguageServer {
           this.worker.closeDocument(uri);
           this.notify("textDocument/publishDiagnostics", { uri, diagnostics: [] });
           return;
+        }
+
+        case "proofscript/serverInfo": {
+          return this.reply(message.id, {
+            protocolVersion: 1,
+            serverVersion: "0.1.0-dev.0",
+            architecture: "compiler -> language-service -> language-worker -> lsp",
+            compilerBacked: true,
+            duplicateParser: false,
+            proofStateAvailable: false,
+            editorFeatureLevel: "document-semantic0",
+            worker: this.worker.stats(),
+          });
+        }
+
+        case "proofscript/documentStatus": {
+          const uri = message.params?.textDocument?.uri;
+          if (typeof uri !== "string") return this.error(message.id, -32602, "missing textDocument.uri");
+          const before = this.documents.get(uri);
+          if (!before) return this.error(message.id, -32602, `document is not open: ${uri}`);
+          const ownerId = requestId(message.id);
+          try {
+            const analysis = await this.worker.analyze(uri, ownerId);
+            const latest = this.documents.get(uri);
+            if (!latest || latest.version !== before.version || latest.version !== analysis.version) {
+              return this.error(message.id, -32801, "document changed while document status was running");
+            }
+            return this.reply(message.id, documentStatusFromAnalysis(analysis));
+          } catch (error) {
+            if (error instanceof LanguageWorkerCancelledError) return this.error(message.id, -32800, "request cancelled");
+            throw error;
+          }
+        }
+
+        case "proofscript/semanticInfo": {
+          const uri = message.params?.textDocument?.uri;
+          const position = message.params?.position;
+          if (typeof uri !== "string") return this.error(message.id, -32602, "missing textDocument.uri");
+          if (!position || typeof position.line !== "number" || typeof position.character !== "number") {
+            return this.error(message.id, -32602, "missing or invalid position");
+          }
+          const before = this.documents.get(uri);
+          if (!before) return this.error(message.id, -32602, `document is not open: ${uri}`);
+          const ownerId = requestId(message.id);
+          try {
+            const analysis = await this.worker.analyze(uri, ownerId);
+            const latest = this.documents.get(uri);
+            if (!latest || latest.version !== before.version || latest.version !== analysis.version) {
+              return this.error(message.id, -32801, "document changed while semantic info was running");
+            }
+            const offset = offsetAt(before.text, position);
+            const declaration = analysis.sourceDeclarations.find((item: any) =>
+              offset >= item.startOffset && offset < item.endOffset
+            ) ?? null;
+            const symbol = analysis.sourceDeclarations.find((item: any) =>
+              offset >= item.nameStartOffset && offset < item.nameEndOffset
+            ) ?? declaration;
+            const features = analysis.surfaceFeatures.filter((item: any) =>
+              offset >= item.startOffset && offset < item.endOffset
+            );
+            const diagnostics = analysis.diagnostics.filter((item: any) => positionInRange(position, item.range));
+            return this.reply(message.id, {
+              uri,
+              version: analysis.version,
+              generation: analysis.generation,
+              resultId: analysis.resultId,
+              status: analysis.status,
+              symbol: symbol ? {
+                name: symbol.name,
+                qualifiedName: symbol.qualifiedName,
+                kind: symbol.kind,
+                type: symbol.type,
+                range: symbol.selectionRange,
+              } : null,
+              declaration: declaration ? {
+                name: declaration.name,
+                qualifiedName: declaration.qualifiedName,
+                kind: declaration.kind,
+                type: declaration.type,
+                range: declaration.range,
+                selectionRange: declaration.selectionRange,
+              } : null,
+              surfaceFeatures: features,
+              diagnostics,
+              allDiagnostics: analysis.diagnostics,
+              assumptions: analysis.assumptions,
+              proofStateAvailable: false,
+            });
+          } catch (error) {
+            if (error instanceof LanguageWorkerCancelledError) return this.error(message.id, -32800, "request cancelled");
+            throw error;
+          }
         }
 
         case "proofscript/surfaceFeatures": {
@@ -327,6 +424,7 @@ export class ProofScriptLanguageServer {
   }
 
   private scheduleDiagnostics(uri: string, version: number): void {
+    this.notify("proofscript/documentProcessing", { uri, version, processing: true });
     const previousTimer = this.diagnosticTimers.get(uri);
     if (previousTimer) clearTimeout(previousTimer);
 
@@ -352,11 +450,22 @@ export class ProofScriptLanguageServer {
         version,
         diagnostics: bundle.diagnostics,
       });
+      const analysis = await this.worker.analyze(uri, owner);
+      const current = this.documents.get(uri);
+      if (current && current.version === version && analysis.version === version) {
+        this.notify("proofscript/documentStatusChanged", {
+          uri,
+          version,
+          generation: analysis.generation,
+          status: documentStatusFromAnalysis(analysis),
+        });
+      }
     } catch (error) {
       if (!(error instanceof LanguageWorkerCancelledError)) {
         this.log(`diagnostics ${uri}: ${messageOf(error)}`);
       }
     } finally {
+      this.notify("proofscript/documentProcessing", { uri, version, processing: false });
       if (this.diagnosticOwners.get(uri) === owner) this.diagnosticOwners.delete(uri);
     }
   }
@@ -384,6 +493,35 @@ export class ProofScriptLanguageServer {
   private log(message: string): void {
     process.stderr.write(`[proofscript-lsp] ${message}\n`);
   }
+}
+
+function documentStatusFromAnalysis(analysis: any): any {
+  const declarations = Array.isArray(analysis.sourceDeclarations)
+    ? analysis.sourceDeclarations.length
+    : Array.isArray(analysis.declarations) ? analysis.declarations.length : 0;
+  return {
+    uri: analysis.uri,
+    version: analysis.version,
+    generation: analysis.generation,
+    resultId: analysis.resultId,
+    status: analysis.status,
+    frontend: analysis.status,
+    declarations,
+    assumptions: [...(analysis.assumptions ?? [])],
+    diagnostics: analysis.diagnostics?.length ?? 0,
+    message: analysis.diagnostics?.[0]?.message ?? null,
+    compilerBacked: true,
+    kernelStatus: analysis.status === "accepted" ? "checked-document" : "not-checked",
+    proofStateAvailable: false,
+  };
+}
+
+function positionInRange(position: Position, range: Range): boolean {
+  const afterStart = position.line > range.start.line
+    || (position.line === range.start.line && position.character >= range.start.character);
+  const beforeEnd = position.line < range.end.line
+    || (position.line === range.end.line && position.character <= range.end.character);
+  return afterStart && beforeEnd;
 }
 
 function lspSymbolKind(kind: string): number {
