@@ -99,6 +99,8 @@ function dispatch(operation: string, args: any, cancellation?: CancellationToken
       return service.documentSymbols(args.uri, cancellation);
     case "hover":
       return service.hover(args.uri, args.position, cancellation);
+    case "completion":
+      return service.completion(args.uri, args.position, cancellation);
     case "__debugBlock":
       return debugBlock(args?.ms, cancellation);
     default:
