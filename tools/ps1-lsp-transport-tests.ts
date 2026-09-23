@@ -339,7 +339,7 @@ const formatting = await waitFor((message) => message.id === 15, "formatting res
 assert.equal(formatting.result.length, 1);
 assert.match(formatting.result[0].newText, /def formatted: Nat := \{1 \+ 2\};/u);
 
-const commentedSource = "-- keep\ndef x: Nat := 1;\n";
+const commentedSource = "-- keep\ndef   x : Nat:={1+2};\n";
 send({
   jsonrpc: "2.0",
   method: "textDocument/didChange",
@@ -366,8 +366,9 @@ send({
   },
 });
 const commentedFormatting = await waitFor((message) => message.id === 16, "comment formatting response");
-assert.equal(commentedFormatting.error.code, -32602);
-assert.match(commentedFormatting.error.message, /refuses sources containing comments/u);
+assert.equal(commentedFormatting.result.length, 1);
+assert.match(commentedFormatting.result[0].newText, /-- keep/u);
+assert.match(commentedFormatting.result[0].newText, /def x: Nat := \{1 \+ 2\};/u);
 
 send({
   jsonrpc: "2.0",
