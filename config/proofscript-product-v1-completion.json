@@ -165,14 +165,16 @@
         "worker isolation",
         "cancellation",
         "stdio LSP diagnostics",
-        "surface-feature query"
-      ],
-      "remaining": [
+        "surface-feature query",
         "hover",
         "completion",
         "definition",
         "references",
         "rename",
+        "document outline",
+        "compiler-backed Infoview"
+      ],
+      "remaining": [
         "semantic tokens",
         "code actions",
         "proof/VC goal presentation",
@@ -183,6 +185,12 @@
         "no duplicate parser",
         "proof goals visible through compiler-backed service",
         "psc fmt stable"
+      ],
+      "implementationNotes": [
+        "VS Code 0.46.0 is retained under donors/editors/vscode and reused selectively.",
+        "Active editors/vscode registers only capabilities implemented by the current compiler-backed language service.",
+        "Definition/references/rename use canonical parser source spans plus elaborator global-name resolution; no editor-side text parser.",
+        "Tactic proof-state snapshots remain unavailable and are not fabricated."
       ]
     },
     {
