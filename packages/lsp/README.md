@@ -16,8 +16,10 @@ tokens, the server exposes ProofScript-specific compiler-backed requests:
 
 `proofscript/goals` carries declaration/verification goals plus an optional
 cursor-local tactic state. `proofStateAvailable: true` means the server
-supports this metadata; `tacticState: null` means the cursor is not currently
-inside a checked tactic span.
+supports this metadata. A tactic state may come from a fully accepted proof or
+from a state already observed before a later elaboration failure. A
+`tacticState: null` result means no canonical observed state covers the cursor;
+the LSP does not synthesize fallback goals.
 
 ## Architecture
 
