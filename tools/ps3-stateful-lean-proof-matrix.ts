@@ -53,6 +53,11 @@ const proofCases = [
     source: "examples/software/06-bank-transfer-monadic-contract.ps",
     model: "examples/software/06-bank-state.model.json",
   },
+  {
+    name: "frame",
+    source: "examples/software/08-bank-debit-frame-stateful-vc.ps",
+    model: "examples/software/06-bank-state.model.json",
+  },
 ];
 
 function slug(toolchain: string) {
