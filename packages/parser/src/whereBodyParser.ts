@@ -113,6 +113,21 @@ function collectNameRefs(term:SurfaceTerm,out:Set<string>,bound:Set<string>):voi
       const scoped=new Set(bound);scoped.add(term.name);collectNameRefs(term.body,out,scoped);
       break;
     }
+    case "rwProof":
+      collectNameRefs(term.equality,out,bound);collectNameRefs(term.body,out,bound);
+      break;
+    case "substProof":
+      collectNameRefs(term.body,out,bound);
+      break;
+    case "constructorProof":
+      if(term.body)collectNameRefs(term.body,out,bound);
+      break;
+    case "casesProof":
+    case "inductionProof":
+      collectNameRefs(term.term,out,bound);collectNameRefs(term.body,out,bound);
+      break;
+    case "simpProof":
+      break;
     case "eq":
       collectNameRefs(term.left,out,bound);collectNameRefs(term.right,out,bound);
       break;
