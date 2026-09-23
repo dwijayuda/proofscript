@@ -28,7 +28,8 @@ export interface DeclarationSourceLocation{
 export interface ParseResult{imports:string[];declarations:SurfaceDeclaration[];finalState:ParserState;ownedFeatures:SurfaceFeatureUse[];declarationLocations:DeclarationSourceLocation[];}
 export function parseSource(source:string,initial:ParserState={commandIndex:0,grammarRevision:0,universeParams:[]},options:ParseOptions={}):ParseResult{return new Parser(tokenize(source),initial,options).parseFile();}
 
-export {tokenize} from "./tokenize";
+export {tokenize,tokenizeWithSpans} from "./tokenize";
+export type {SpannedToken} from "./tokenize";
 export {lowerOwnedSourceToCanonicalLean} from "./canonicalLean";
 import {tokenize} from "./tokenize";
 
