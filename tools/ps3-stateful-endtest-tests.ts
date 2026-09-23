@@ -85,6 +85,7 @@ try {
     "lean-version-compatibility",
     "stateful-frame",
     "stateful-logical-predicate",
+    "stateful-control-flow-boundary",
     "stateful-model",
     "runner-selection",
     "proof-matrix-plan",
