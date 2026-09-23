@@ -16,10 +16,14 @@ For accepted proofs it selects the smallest canonical proof span at the cursor
 and returns its goal, named local context, tactic, and optional constructor
 branch. When canonical parsing succeeds but later elaboration fails, the service
 can also retain states the compiler had already emitted before that failure.
-For the bounded missing-final-`}` by-block case, it can display a state from
-the complete proof prefix explicitly observed by the canonical parser. States
-carry `sourceStatus` = `checked`, `rejected-prefix`, or
-`syntax-incomplete`.
+For bounded syntax-incomplete editing states it supports:
+
+- a fully parsed proof prefix missing only its final `}`;
+- an empty `by {` block at EOF, where the frontend asks the canonical
+  elaborator for the proof-free initial theorem/example goal.
+
+States carry `sourceStatus` = `checked`, `rejected-prefix`, or
+`syntax-incomplete`; initial empty-block states also carry `kind: "goal"`.
 
 The service does not repair source, continue parsing after an error, fabricate
 holes/metavariables, or synthesize speculative proof states. Other parser
