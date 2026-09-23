@@ -215,15 +215,15 @@ theorem direct_apply(h: P): P := by { apply h }
 
 ## Recommended Next Milestones
 
-1. Execute the consolidated native-tactic parser/elaborator regression suite on the supported Windows environment.
-2. Add named branch syntax/proof-state ergonomics only after the bounded generated-goal core is green.
-3. Extend `rw` locations and simplifier theorem sets without weakening the current Eq.rec/kernel-check boundary.
+1. Add named branch syntax and generated-goal proof-state ergonomics on top of the now-green bounded tactic core.
+2. Add an explicit tactic-sequence/proof-state representation only where it improves multi-goal composition.
+3. Extend `rw` locations and bounded simplifier theorem sets without weakening the current Eq.rec/kernel-check boundary.
 4. Consider indexed/dependent cases and induction as a separate profile expansion.
 5. Keep full Lean tactics/metaprogramming outside PSC-1.
 
 ## Current Best Next Step
 
-The native tactic surface is implemented as a bounded source/elaboration layer. The next theorem-prover step is execution hardening and then branch ergonomics, not adding trusted tactic semantics.
+The bounded native tactic surface is execution-green under the consolidated 5-stage gate. The next theorem-prover step is branch/proof-state ergonomics on a new feature branch, not adding trusted tactic semantics.
 
 The programming-language track remains independent: broader libraries/effects/runtime features should continue without changing the proof-kernel trust boundary.
 

@@ -2,7 +2,7 @@
 
 Branch: `feature/native-tactics`
 
-Status: **implementation assembled; consolidated execution pending**
+Status: **CLOSED — consolidated execution green**
 
 ## Trust boundary
 
@@ -121,25 +121,37 @@ attribute system, or metaprogramming.
 
 ## Evidence status
 
-Already execution-green on Windows at commit
-`e60d70f595b18f35d3f0d9d40f3b80944330e1fa`:
+The complete bounded native-tactic milestone is execution-green on Windows at
+source commit:
 
-- build;
-- parser proof extraction;
-- proof elaborator extraction;
-- native `show`;
-- proof-local `have`, including a dependent-local target regression.
+`7a98acc8f983b770c6d04c50474c68116b7f483f`
 
-Implemented after that checkpoint and awaiting the consolidated execution gate:
+Consolidated gate result on 2026-09-23:
 
-- `rw`;
-- `subst`;
-- `constructor`;
-- `cases`;
-- `induction`;
-- `simp-lite`;
-- stronger generated-field / induction-hypothesis regressions;
-- Unicode and ASCII reverse-rewrite parsing.
+- build — PASS;
+- parser proof extraction — PASS;
+- proof elaborator/kernel-check regression — PASS;
+- standalone-small regression — PASS;
+- reference-governance regression — PASS;
+- total stages — **5/5 PASS**;
+- failed — **0**;
+- skipped — **0**;
+- `allNativeTacticGatesPassed = true`.
+
+The executed corpus covers:
+
+- `show`;
+- typed/inferred/nested proof-local `have`;
+- dependent-local `have` context shifting;
+- forward and reverse `rw`;
+- Unicode and ASCII reverse rewrite syntax;
+- exact Nat-numeral rewrite while rejecting spurious rewrites inside the constructor encoding of a different numeral;
+- bounded `subst`;
+- one-constructor `constructor`;
+- nonrecursive `cases` with constructor-field exposure;
+- recursive `induction` with generated induction hypotheses;
+- bounded `simp-lite`;
+- fail-closed unsupported/invalid tactic cases.
 
 ## Consolidated gate
 
@@ -165,3 +177,21 @@ Default machine-readable report:
 ```
 
 A green result requires all five stages to pass with zero skips.
+
+
+## Closure rule
+
+This milestone is frozen at the source commit above. Future tactic work should
+extend ergonomics/capability on a new branch rather than silently changing the
+meaning of the closed bounded tactic claims.
+
+Recommended follow-up order:
+
+1. named branch / generated-goal ergonomics;
+2. explicit tactic-sequence proof-state representation;
+3. targeted `rw` locations;
+4. configurable bounded simp theorem sets;
+5. indexed/dependent `cases` and `induction` as a separate capability milestone.
+
+Full Lean tactic parity, metavariable search, arbitrary tactic metaprogramming,
+and unrestricted simplifier behavior remain explicit nonclaims.

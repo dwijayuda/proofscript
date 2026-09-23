@@ -59,6 +59,40 @@ Current nonclaims remain explicit:
 - no formal Core→TypeScript or TypeScript→JavaScript refinement theorem yet;
 - no end-to-end "verified JavaScript" claim from structural certificates alone.
 
+## Native tactics closure
+
+Status: **CLOSED** on source commit `7a98acc8f983b770c6d04c50474c68116b7f483f`.
+
+Branch: `feature/native-tactics`.
+
+Closeout evidence on 2026-09-23:
+
+- consolidated gate: `npm run assurance:native-tactics`;
+- **5/5 PASS**, 0 failed, 0 skipped;
+- build — PASS;
+- parser proof extraction — PASS;
+- proof elaborator/kernel-check regression — PASS;
+- standalone-small — PASS;
+- reference-governance — PASS;
+- `allNativeTacticGatesPassed = true`.
+
+Execution-green bounded tactics:
+
+- `show`;
+- proof-local `have`;
+- target `rw` / reverse `rw` through checked `Eq.rec`;
+- bounded target `subst`;
+- bounded one-constructor `constructor`;
+- bounded nonrecursive `cases`;
+- bounded recursor-based `induction`;
+- bounded `simp-lite`.
+
+Trust boundary remains unchanged: tactic success only constructs ordinary Core;
+PSKernel still accepts or rejects the completed proof. No trusted tactic
+primitive was added.
+
+See `docs/NATIVE_TACTICS.md`.
+
 ## Baseline behavior
 
 Observed before cleanup and now represented by the product regression workflow:
