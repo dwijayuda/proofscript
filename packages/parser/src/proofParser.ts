@@ -14,6 +14,12 @@ export interface ProofParserHost{
   expect(text:string):Token;
   parseTerm():SurfaceTerm;
   peek():Token;
+  /**
+   * Canonical parser observation for the narrow case where a by-block proof
+   * parsed completely but EOF arrived before its closing brace. The observer
+   * is read-only; parseProofTerm still throws the ordinary ParseError below.
+   */
+  onIncompleteProofBlock?(proof:SurfaceTerm,failure:Token):void;
 }
 
 function withProofSpan(host:ProofParserHost,startOffset:number,term:SurfaceTerm):SurfaceTerm{
@@ -28,6 +34,12 @@ export function parseProofTerm(host:ProofParserHost):SurfaceTerm{
   host.expect("{");
   const proof=parseProofStep(host);
   if(host.at(";"))throw new ParseError("PSC-1 proof blocks do not use a trailing tactic semicolon in the current canonical slice");
+  if(!host.at("}")&&host.peek().kind==="eof"){
+    try{host.onIncompleteProofBlock?.(proof,host.peek());}
+    catch{
+      // Parser observers are tooling-only and cannot change parse acceptance.
+    }
+  }
   host.expect("}");
   return proof;
 }
