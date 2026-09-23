@@ -833,7 +833,8 @@
     "test:product-v1:ffi": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-ffi-tests.ts",
     "test:product-v1:ffi-npm": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-ffi-npm-consumer-tests.ts",
     "test:product-v1:stdlib-profile": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-stdlib-profile-tests.ts",
-    "test:product-v1:runtime-certificate": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-runtime-certificate-tests.ts"
+    "test:product-v1:runtime-certificate": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-runtime-certificate-tests.ts",
+    "test:product-v1:formatter": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-formatter-tests.ts"
   },
   "engines": {
     "node": ">=20"
