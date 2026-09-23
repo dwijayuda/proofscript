@@ -10,16 +10,31 @@
 - Draft PR: #1
 
 
-## Product-v1 completion checkpoint
+## Product-v1 closure
 
-Active completion branch: `product/v1-completion`.
+Status: **CLOSED** on source commit `0abea67df1bef85a567cb08ce52ef9ab8382b543`.
+
+Active closeout branch: `product/v1-completion`.
 
 Machine-readable authority:
 
 - `config/proofscript-product-v1-completion.json`
 - final gate: `assurance:product-v1:endtest`
+- closeout report: `docs/PRODUCT_V1_CLOSEOUT.md`
 
-Implemented since the PS1/PS2 baseline, pending fresh full-gate execution where noted:
+Strict closure evidence recorded on 2026-09-23:
+
+- Product-v1 end-test: **25/25 PASS**, 0 failed, 0 skipped;
+- diagnostic mode: **false**;
+- non-Lean Product-v1 gates: **PASS**;
+- proof-required verification end-test: **8/8 PASS**;
+- loop proof matrix: **3/3 proved** across Lean 4.33.1, 4.34.0, 4.35.0-rc2;
+- stateful proof matrix: **15/15 proved** (debit, transfer, frame, logical, invoice × 3 Lean lanes);
+- all state models adequate: **true**;
+- proof provenance consistency: **true**;
+- `allProductV1GatesPassed = true`.
+
+Implemented since the PS1/PS2 baseline:
 
 - bounded Product-v1 software profile with canonical compiler/CLI gates;
 - pure + bounded stateful verification, including V-FRAME, typed Prop connectives, semantic loop invariant/decreases VCs, and fail-closed unsupported stateful control flow;
@@ -34,7 +49,7 @@ Implemented since the PS1/PS2 baseline, pending fresh full-gate execution where 
 - deterministic `psc setup --prebuilt` plus packed-release fresh-install gate;
 - consolidated `proofscript.product-v1-endtest/v1` runner.
 
-The last recorded real Lean evidence is still the earlier debit+transfer 6/6 matrix. New frame/logical/invoice and loop proof cases remain **proof-pending until the consolidated gate executes on a working Lean machine**.
+The earlier debit+transfer-only 6/6 evidence has been superseded by the strict Product-v1 closure run: loop 3/3 and stateful 15/15 proof executions are green across Lean 4.33.1, 4.34.0, and 4.35.0-rc2.
 
 Current nonclaims remain explicit:
 

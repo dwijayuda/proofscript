@@ -74,3 +74,29 @@ A PS1 change must do at least one of:
 6. fix a demonstrated correctness or integration bug.
 
 Ideas outside those categories go to the backlog instead of the implementation.
+
+
+---
+
+## Product-v1 closure checkpoint
+
+The later Product-v1 completion milestone is now closed independently of the
+historical PS1 architecture milestone.
+
+Closure source commit:
+
+`0abea67df1bef85a567cb08ce52ef9ab8382b543`
+
+Strict Product-v1 acceptance result on 2026-09-23:
+
+- 25/25 gates passed;
+- 0 failed;
+- 0 skipped;
+- verification end-test 8/8 passed;
+- loop proof matrix 3/3 proved;
+- stateful proof matrix 15/15 proved;
+- all state models adequate;
+- diagnostic mode false;
+- `allProductV1GatesPassed = true`.
+
+Detailed evidence and nonclaims: `docs/PRODUCT_V1_CLOSEOUT.md`.

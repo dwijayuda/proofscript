@@ -39,8 +39,10 @@ separation, trusted-external JS/npm FFI, bounded stdlib/source packages, and
 compiler-backed VS Code tooling. Representative application and packed-release
 gates are also present.
 
-The release is **not declared complete from implementation alone**. Closure is
-one executable gate:
+Product-v1 is **closed** on source commit
+`0abea67df1bef85a567cb08ce52ef9ab8382b543`.
+
+The strict closure command was:
 
 ```bash
 npm run assurance:product-v1:endtest -- \
@@ -48,12 +50,24 @@ npm run assurance:product-v1:endtest -- \
   --out .proofscript-product-v1-endtest/summary.json
 ```
 
-That gate combines the non-Lean Product-v1 profile/runtime/FFI/package/editor/
-representative-release gates with the proof-required Lean verification end-test.
+Recorded result on 2026-09-23:
+
+- 25/25 Product-v1 gates passed;
+- 0 failed, 0 skipped;
+- diagnostic mode false;
+- verification end-test 8/8 passed;
+- loop proof matrix 3/3 proved;
+- stateful proof matrix 15/15 proved;
+- all state models adequate;
+- all proof provenance checks consistent;
+- `allProductV1GatesPassed = true`.
+
+See `docs/PRODUCT_V1_CLOSEOUT.md`.
 
 Formal Core→TypeScript refinement, arbitrary stateful exceptional/branching
-control flow, full Lean equivalence, and full Lean tactic/kernel parity remain
-separate explicit nonclaims rather than hidden release assumptions.
+control flow, source-to-Lean program equivalence, full Lean equivalence, and
+full Lean tactic/kernel parity remain separate explicit nonclaims rather than
+hidden release assumptions.
 
 ---
 
