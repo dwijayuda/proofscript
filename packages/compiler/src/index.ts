@@ -6,6 +6,7 @@ import {
   checkProjectFile as checkProjectFileFrontend,
   checkSource as checkSourceFrontend,
   checkWorkspace as checkWorkspaceFrontend,
+  checkWorkspaceForFile as checkWorkspaceForFileFrontend,
   type FrontendModuleCacheEntry,
   type FrontendOptions,
   type FrontendProjectResult,
@@ -36,6 +37,10 @@ export function checkWorkspace(projectRoot: string, options: FrontendOptions = {
   return checkWorkspaceFrontend(projectRoot, options);
 }
 
+export function checkWorkspaceForFile(filePath: string, options: FrontendOptions = {}): FrontendWorkspaceResult {
+  return checkWorkspaceForFileFrontend(filePath, options);
+}
+
 /**
  * In-process incremental project checker over the canonical frontend.
  *
@@ -60,6 +65,12 @@ export class IncrementalCompilerSession {
 
   checkWorkspace(projectRoot: string, options: FrontendOptions = {}): FrontendWorkspaceResult {
     const workspace = checkWorkspaceFrontend(projectRoot, { ...options, moduleCache: this.moduleCache });
+    this.pruneNames(workspace.graph.modules.map((module) => module.name));
+    return workspace;
+  }
+
+  checkWorkspaceForFile(filePath: string, options: FrontendOptions = {}): FrontendWorkspaceResult {
+    const workspace = checkWorkspaceForFileFrontend(filePath, { ...options, moduleCache: this.moduleCache });
     this.pruneNames(workspace.graph.modules.map((module) => module.name));
     return workspace;
   }
