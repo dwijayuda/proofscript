@@ -43,6 +43,7 @@ export function classifyLeanResidualGoals(output) {
 
 export function firstStatefulVcFailedStage(checks, residual) {
   if (checks.modelBuild.exitCode !== 0) return 'lean-model-build';
+  if (checks.adequacyCheck.exitCode !== 0) return 'state-model-adequacy-check';
   if (checks.programCheck.exitCode !== 0) return 'lean-program-typecheck';
   if (checks.tripleCheck.exitCode !== 0) return 'lean-triple-target-typecheck';
   if (residual.detected) return 'vc-residual-goals';
@@ -93,7 +94,7 @@ export function analyzeStatefulVcExecution({
   request,
   checks,
 }) {
-  for (const name of ['modelBuild', 'programCheck', 'tripleCheck', 'requestRun']) {
+  for (const name of ['modelBuild', 'adequacyCheck', 'programCheck', 'tripleCheck', 'requestRun']) {
     if (!checks?.[name] || typeof checks[name].exitCode !== 'number') {
       throw new Error(`stateful VC execution analysis requires numeric checks.${name}.exitCode`);
     }
@@ -108,6 +109,7 @@ export function analyzeStatefulVcExecution({
   const semanticProofDischarge = checks.requestRun.exitCode === 0
     && !residual.detected
     && checks.modelBuild.exitCode === 0
+    && checks.adequacyCheck.exitCode === 0
     && checks.programCheck.exitCode === 0
     && checks.tripleCheck.exitCode === 0;
   const failedStage = firstStatefulVcFailedStage(checks, residual);
@@ -130,14 +132,17 @@ export function analyzeStatefulVcExecution({
     claims: {
       leanEnvironmentResolved: checks.modelBuild.exitCode === 0,
       leanModelTypechecked: checks.modelBuild.exitCode === 0,
-      leanProgramTypechecked: checks.modelBuild.exitCode === 0 && checks.programCheck.exitCode === 0,
+      stateModelAdequacyChecked: checks.modelBuild.exitCode === 0
+        && checks.adequacyCheck.exitCode === 0,
+      leanProgramTypechecked: checks.modelBuild.exitCode === 0
+        && checks.adequacyCheck.exitCode === 0
+        && checks.programCheck.exitCode === 0,
       tripleTargetTypechecked: checks.modelBuild.exitCode === 0
         && checks.programCheck.exitCode === 0
         && checks.tripleCheck.exitCode === 0,
       tacticExecuted: tacticReached,
       semanticVcDerivationComplete,
       realVerificationConditionsGenerated,
-      stateModelAdequacyChecked: false,
       sourceToLeanProgramEquivalenceChecked: false,
       exceptionalPathsCovered: false,
       semanticProofDischarge,
@@ -177,6 +182,7 @@ export function validateStatefulVcRunEvidence(report, { requireProof = false } =
     for (const claim of [
       'leanEnvironmentResolved',
       'leanModelTypechecked',
+      'stateModelAdequacyChecked',
       'leanProgramTypechecked',
       'tripleTargetTypechecked',
       'tacticExecuted',
@@ -190,6 +196,7 @@ export function validateStatefulVcRunEvidence(report, { requireProof = false } =
   if (report?.status === 'vcs-generated') {
     if (report?.failedStage !== 'vc-residual-goals') errors.push('vcs-generated-stage-mismatch');
     if (!residualDetected) errors.push('vcs-generated-without-residual-goals');
+    if (claims.stateModelAdequacyChecked !== true) errors.push('vcs-generated-without-adequacy-check');
     if (claims.tacticExecuted !== true) errors.push('vcs-generated-without-tactic');
     if (claims.realVerificationConditionsGenerated !== true) errors.push('vcs-generated-without-real-vcs');
     if (claims.semanticProofDischarge === true) errors.push('vcs-generated-with-proof-discharge');
@@ -226,6 +233,7 @@ export function validateStatefulProofMatrixProvenance(cases) {
     'sourceSha256',
     'stateModelDescriptorSha256',
     'leanModelSha256',
+    'generatedAdequacyCheckSha256',
     'generatedProgramSha256',
     'generatedTripleTargetSha256',
     'generatedRequestSha256',
