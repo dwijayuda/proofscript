@@ -16,6 +16,11 @@ import {
   isNonExecutableDeclaration,
   userDeclarations,
 } from "./declarationAnalysis";
+import {
+  emitJavaScriptFfiPrelude,
+  emitTypeScriptFfiPrelude,
+  resolveFfiBindings,
+} from "./ffi";
 import { buildSanitizedNameMap } from "./names";
 import { emitTerm, flattenPi } from "./termEmitter";
 import type {
@@ -103,6 +108,7 @@ export function emitJavaScriptModule(artifact: CoreArtifact, options: EmitJavaSc
   // call checked bootstrap constructors such as Option.none/Option.some without
   // re-declaring them in every source file.
   const ctx = buildEmitContext(artifact.declarations, "JavaScript");
+  const ffiBindings = [...resolveFfiBindings(executableDecls, ctx, options.ffiBindings)];
   const { emitted, skipped } = collectExecutableDeclarations(executableDecls, ctx, "JavaScript");
   for (const item of emitted) {
     const decl = executableDecls.find(candidate => candidate.name === item.name);
@@ -125,6 +131,7 @@ export function emitJavaScriptModule(artifact: CoreArtifact, options: EmitJavaSc
     failClosed: PSC1_FAIL_CLOSED_FEATURES,
     sourceSha256,
   }));
+  lines.push(...emitJavaScriptFfiPrelude(ffiBindings));
   for (const item of emitted) lines.push(`const ${item.jsName} = ${item.expr};`);
   lines.push("module.exports = Object.freeze({");
   lines.push("  __proofscript,");
@@ -133,7 +140,7 @@ export function emitJavaScriptModule(artifact: CoreArtifact, options: EmitJavaSc
   lines.push("if (require.main === module) {");
   lines.push("  const printable = {}; for (const [k,v] of Object.entries(module.exports)) if (k !== '__proofscript') printable[k] = typeof v === 'bigint' ? v.toString() : `[function:${k}]`; console.log(JSON.stringify({ status: 'ok', exports: printable, trust: __proofscript.trustLabel }, null, 2));");
   lines.push("}");
-  return { js: `${lines.join("\n")}\n`, emitted, skipped };
+  return { js: `${lines.join("\n")}\n`, emitted, skipped, ffiBindings };
 }
 
 export function emitTypeScriptModule(artifact: CoreArtifact, options: EmitJavaScriptOptions = {}): EmitTypeScriptResult {
@@ -142,6 +149,7 @@ export function emitTypeScriptModule(artifact: CoreArtifact, options: EmitJavaSc
   // while emitting only source/user declarations. This keeps runtime constructor
   // metadata available for standard-library values such as Option.
   const ctx = buildEmitContext(artifact.declarations, "TypeScript");
+  const ffiBindings = [...resolveFfiBindings(executableDecls, ctx, options.ffiBindings)];
   const { emitted, skipped } = collectExecutableDeclarations(executableDecls, ctx, "TypeScript");
   for (const item of emitted) {
     const decl = executableDecls.find(candidate => candidate.name === item.name);
@@ -165,6 +173,7 @@ export function emitTypeScriptModule(artifact: CoreArtifact, options: EmitJavaSc
   lines.push(`// Source: ${sourceName}`);
   lines.push(`// Trust: ${PSC1_TRUST_LABEL}`);
   lines.push("// Runtime: Nat/Int are encoded as BigInt for this executable smoke subset.");
+  lines.push(...emitTypeScriptFfiPrelude(ffiBindings));
   if (runtimeMode === "bundled") {
     lines.push(psc1RuntimeTypeScriptSource(manifest));
   } else {
@@ -184,5 +193,6 @@ export function emitTypeScriptModule(artifact: CoreArtifact, options: EmitJavaSc
     runtimeMode,
     runtimeTs: runtimeMode === "local" ? `${runtimeTypeScriptModuleSource(manifest)}\n` : undefined,
     runtimeImport: runtimeMode === "bundled" ? undefined : runtimeImport,
+    ffiBindings,
   };
 }
