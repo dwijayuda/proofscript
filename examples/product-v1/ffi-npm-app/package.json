@@ -1,0 +1,8 @@
+{
+  "name": "proofscript-ffi-npm-app",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@proofscript-example/host-tools": "file:../ffi-host-package"
+  }
+}
