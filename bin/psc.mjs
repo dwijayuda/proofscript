@@ -872,12 +872,35 @@ console.log(JSON.stringify(summary, null, 2));
   }
 }
 
+function prebuiltWorkspaceDistStatus() {
+  const packagesDir = path.join(ROOT, 'packages');
+  if (!fs.existsSync(packagesDir)) return { ok: false, required: [], missing: ['packages/'] };
+  const required = [];
+  const missing = [];
+  for (const entry of fs.readdirSync(packagesDir, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    const packageDir = path.join(packagesDir, entry.name);
+    const packageJsonPath = path.join(packageDir, 'package.json');
+    if (!fs.existsSync(packageJsonPath)) continue;
+    let packageJson;
+    try { packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8')); }
+    catch { continue; }
+    const main = typeof packageJson.main === 'string' ? packageJson.main : '';
+    if (!main.startsWith('dist/')) continue;
+    const output = path.join(packageDir, main);
+    required.push(path.relative(ROOT, output).split(path.sep).join('/'));
+    if (!fs.existsSync(output)) missing.push(path.relative(ROOT, output).split(path.sep).join('/'));
+  }
+  return { ok: required.length > 0 && missing.length === 0, required, missing };
+}
+
 function setupCommand(args) {
   console.log('ProofScript setup');
   runProcess(process.execPath, [...NODE_TS_FLAGS, path.join(ROOT, 'tools', 'setup-local-workspaces.cts')], 'workspace link/copy setup');
   const tscBin = path.join(ROOT, 'node_modules', 'typescript', 'bin', 'tsc');
   const globalTsc = spawnSync('bash', ['-lc', 'command -v tsc'], { encoding: 'utf8' });
   const globalTscBin = globalTsc.status === 0 ? globalTsc.stdout.trim().split('\n')[0] : '';
+  let setupMode = 'compiled';
   if (fs.existsSync(tscBin)) {
     const tscArgs = [tscBin, '-b', ...args.filter(a => a !== '--json')];
     runProcess(process.execPath, tscArgs, 'tsc -b');
@@ -885,15 +908,20 @@ function setupCommand(args) {
     const tscArgs = ['-b', ...args.filter(a => a !== '--json')];
     runProcess(globalTscBin, tscArgs, 'tsc -b');
   } else {
-    console.error('rejected: TypeScript is not installed. Run: npm install --offline --no-audit --no-fund or provide tsc on PATH');
-    process.exit(1);
+    const prebuilt = prebuiltWorkspaceDistStatus();
+    if (!prebuilt.ok) {
+      console.error(`rejected: TypeScript is not installed and the packaged workspace is not fully prebuilt; missing ${prebuilt.missing.join(', ') || 'required dist output'}`);
+      process.exit(1);
+    }
+    setupMode = 'prebuilt';
+    console.log(`ProofScript setup using packaged prebuilt workspace outputs (${prebuilt.required.length} package entries)`);
   }
   // If a locked-down Windows machine used copy fallback before the build, the
   // copied node_modules/@proofscript/* packages must be refreshed after dist/
   // exists. Junction/symlink setups are idempotent here.
   runProcess(process.execPath, [...NODE_TS_FLAGS, path.join(ROOT, 'tools', 'setup-local-workspaces.cts')], 'post-build workspace link/copy refresh');
   runProcess(process.execPath, [...NODE_TS_FLAGS, path.join(ROOT, 'tools', 'copy-static-assets.ts')], 'static asset copy');
-  console.log('PROOFSCRIPT_SETUP=PASS');
+  console.log(`PROOFSCRIPT_SETUP=PASS mode=${setupMode}`);
 }
 function checkCommand(args) {
   const pos = positional(args);
