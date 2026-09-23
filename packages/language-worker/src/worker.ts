@@ -101,6 +101,12 @@ function dispatch(operation: string, args: any, cancellation?: CancellationToken
       return service.hover(args.uri, args.position, cancellation);
     case "completion":
       return service.completion(args.uri, args.position, cancellation);
+    case "definition":
+      return service.definition(args.uri, args.position, cancellation);
+    case "references":
+      return service.references(args.uri, args.position, args.includeDeclaration !== false, cancellation);
+    case "rename":
+      return service.rename(args.uri, args.position, args.newName, cancellation);
     case "__debugBlock":
       return debugBlock(args?.ms, cancellation);
     default:
