@@ -7,9 +7,10 @@ import {
   CheckSummary,
   CoreArtifact,
   CoreDeclaration,
+  Term,
   TypeclassEnvironmentMetadata,
   emptyTypeclassEnvironment,
-  pretty,
+  prettyLevel,
 } from "@proofscript/kernel";
 import { CoreModulesBuildMetadata, makeArtifact } from "@proofscript/kernel-codec";
 import { prepareCoreEnvironment } from "@proofscript/environment";
@@ -230,15 +231,47 @@ function compileResolvedModules(
 }
 
 function displayProofState(state:ProofStateSnapshot):FrontendProofState{
+  const localNames=state.locals.map(local=>local.name);
   return{
     kind:state.kind,
     tactic:state.tactic,
     startOffset:state.startOffset,
     endOffset:state.endOffset,
-    goal:pretty(state.goal),
-    locals:state.locals.map(local=>({name:local.name,type:pretty(local.type)})),
+    goal:prettyProofTerm(state.goal,localNames),
+    locals:state.locals.map((local,index)=>({
+      name:local.name,
+      type:prettyProofTerm(local.type,localNames.slice(0,index)),
+    })),
     ...(state.branch?{branch:state.branch}:{}),
   };
+}
+function prettyProofTerm(term:Term,locals:readonly string[]):string{
+  switch(term.tag){
+    case "sort":return prettyLevel(term.level);
+    case "bvar":return locals[locals.length-1-term.index]??`#${term.index}`;
+    case "const":return term.levels.length?`${term.name}.{${term.levels.map(prettyLevel).join(",")}}`:term.name;
+    case "lit":return term.literal.tag==="str"?JSON.stringify(term.literal.value):String(term.literal.value);
+    case "app":return `(${prettyProofTerm(term.fn,locals)} ${prettyProofTerm(term.arg,locals)})`;
+    case "lam":{
+      const name=freshDisplayBinder(locals);
+      return `(fun (${name}: ${prettyProofTerm(term.domain,locals)}) => ${prettyProofTerm(term.body,[...locals,name])})`;
+    }
+    case "pi":{
+      const name=freshDisplayBinder(locals);
+      return `(Pi (${name}: ${prettyProofTerm(term.domain,locals)}) -> ${prettyProofTerm(term.body,[...locals,name])})`;
+    }
+    case "let":{
+      const name=freshDisplayBinder(locals);
+      return `(let ${name}: ${prettyProofTerm(term.type,locals)} := ${prettyProofTerm(term.value,locals)}; ${prettyProofTerm(term.body,[...locals,name])})`;
+    }
+    case "proj":return `(${prettyProofTerm(term.expr,locals)}.${term.index})`;
+  }
+}
+function freshDisplayBinder(locals:readonly string[]):string{
+  for(let index=0;;index++){
+    const name=`_x${index}`;
+    if(!locals.includes(name))return name;
+  }
 }
 function cloneProofStates(states:readonly FrontendProofState[]):FrontendProofState[]{
   return states.map(state=>({
