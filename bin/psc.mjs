@@ -1051,7 +1051,7 @@ function fmtCommand(args) {
         commentTriviaPreservation: false,
       },
     };
-    jsonOut(result, json);
+    if (json || !stdout) jsonOut(result, json);
     if (checkOnly && changed.length) process.exit(1);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);

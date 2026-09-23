@@ -108,7 +108,14 @@ assert.equal(
 );
 assert.equal(profile.packageLayer.dependencyCertificateIdentity.identitySchema, "proofscript.npm-dependency-identity/v1");
 assert.equal(profile.packageLayer.dependencyCertificateIdentity.tamperRejection, true);
-assert.equal(profile.packageLayer.dependencyCertificateIdentity.sourcePackageImports, "not yet implemented");
+assert.match(
+  profile.packageLayer.dependencyCertificateIdentity.sourcePackageImports,
+  /Core-module-source-hash bound/u,
+);
+assert.match(
+  profile.packageLayer.dependencyCertificateIdentity.sourcePackageImports,
+  /public certificate verify remains future hardening/u,
+);
 
 const stdlib = readCurrentStandardLibrary(root);
 assert.equal(stdlib.package, "@proofscript/std");

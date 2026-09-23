@@ -166,7 +166,8 @@ try {
   const certificate = JSON.parse(fs.readFileSync(cert, "utf8"));
   assert.equal(certificate.trustBoundary.trustedExternalCode, true);
   assert.ok(certificate.ffi.sha256);
-  assert.ok(certificate.runtime?.backendArtifact?.sha256);
+  assert.ok(certificate.runtimeArtifact?.sha256);
+  assert.equal(certificate.runtimeArtifact.target, "js");
   assert.equal(certificate.ffi.dependencies.length, 1);
   assert.equal(certificate.ffi.dependencies[0].schema, "proofscript.npm-dependency-identity/v1");
   assert.equal(certificate.ffi.dependencies[0].package, "@proofscript/json-validation");

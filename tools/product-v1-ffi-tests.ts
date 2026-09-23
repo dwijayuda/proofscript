@@ -82,7 +82,10 @@ try {
   assert.equal(builtJs.ffi.schema, "proofscript.ffi/v1");
   assert.equal(builtJs.ffi.trust, "trusted-external");
   assert.equal(builtJs.ffi.bindings.length, 2);
-  assert.deepEqual(builtJs.ffi.bindings.map((binding: any) => binding.arity), [1, 2]);
+  assert.deepEqual(
+    builtJs.ffi.bindings.map((binding: any) => binding.name),
+    ["hostBasename", "hostBasenameSuffix"],
+  );
   assert.equal(builtJs.trustBoundary.trustedExternalCode, true);
   const jsSource = fs.readFileSync(js, "utf8");
   assert.match(jsSource, /require\("node:path"\)/u);

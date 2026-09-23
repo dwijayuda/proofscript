@@ -403,7 +403,10 @@ export class ProofScriptLanguageService {
 
       if (rawProjectModules.length > 0) {
         projectDeclarations = rawProjectModules.flatMap((module: any) => {
-          const moduleUri = pathToFileURL(module.source.filePath).toString();
+          const moduleUri = document.filePath
+            && normalizePath(module.source.filePath) === normalizePath(document.filePath)
+            ? document.uri
+            : pathToFileURL(module.source.filePath).toString();
           const semantic = module.declarations ?? [];
           return (module.declarationLocations ?? []).map((location: any) => {
             const declaration = semantic.find((item: any) =>
@@ -426,7 +429,10 @@ export class ProofScriptLanguageService {
           });
         });
         projectReferences = rawProjectModules.flatMap((module: any) => {
-          const moduleUri = pathToFileURL(module.source.filePath).toString();
+          const moduleUri = document.filePath
+            && normalizePath(module.source.filePath) === normalizePath(document.filePath)
+            ? document.uri
+            : pathToFileURL(module.source.filePath).toString();
           return (module.globalReferences ?? []).map((reference: any) => ({
             uri: moduleUri,
             filePath: module.source.filePath,

@@ -347,7 +347,7 @@ assert.equal(pushedFormatting.params.diagnostics.length, 0);
 
 send({
   jsonrpc: "2.0",
-  id: 17,
+  id: 16,
   method: "textDocument/formatting",
   params: {
     textDocument: { uri },
@@ -377,7 +377,7 @@ assert.equal(pushedCommented.params.diagnostics.length, 0);
 
 send({
   jsonrpc: "2.0",
-  id: 16,
+  id: 17,
   method: "textDocument/formatting",
   params: {
     textDocument: { uri },
