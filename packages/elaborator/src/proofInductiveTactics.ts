@@ -9,7 +9,7 @@ import {
 } from "@proofscript/kernel";
 import { ElaborationError, SurfaceProofBranch, SurfaceTerm, UnsupportedFeature } from "@proofscript/syntax";
 import { contextFromTypes, flattenCoreApps, replaceCoreScoped } from "./coreUtils";
-import { ProofStateSnapshot, proofStateLocals } from "./proofState";
+import { ProofStateSnapshot, observeProofState, proofStateLocals } from "./proofState";
 
 export interface InductiveTacticHost {
   elaborateTerm(term: SurfaceTerm, locals: string[], localTypes: Term[], expectedType?: Term): Term;
@@ -130,7 +130,7 @@ function elaborateRepeatedMinor(
     && typeof namedBranch.sourceStartOffset === "number"
     && typeof namedBranch.sourceEndOffset === "number"
   ) {
-    host.recordProofState?.({
+    observeProofState(host, {
       kind: "branch",
       tactic,
       branch: canonicalBranch,
