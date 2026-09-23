@@ -48,6 +48,11 @@ try {
     false,
     "a failed full run must not close Product v1",
   );
+  assert.equal(
+    productV1ClosureSatisfied({ executionPassed: true, skipLean: false, diagnoseAll: true }),
+    false,
+    "a green --diagnose-all run must remain diagnostic and must not close Product v1",
+  );
 
   const full = runPlan(
     ["--toolchains", "4.33.1,4.34.0,4.35.0-rc2"],
@@ -57,6 +62,7 @@ try {
   assert.equal(full.status, "planned");
   assert.equal(full.executionAttempted, false);
   assert.equal(full.skipLean, false);
+  assert.equal(full.diagnoseAll, false);
   assert.deepEqual(full.toolchains, ["4.33.1","4.34.0","4.35.0-rc2"]);
   assert.equal(full.steps.at(0).name, "build");
   assert.equal(full.steps.at(-1).name, "proof-required-verification");
@@ -75,6 +81,14 @@ try {
   assert.equal(noLean.output.verification, null);
   assert.equal(noLean.steps.some((step) => step.name === "proof-required-verification"), false);
   assert.equal(noLean.steps.at(-1).name, "fresh-release");
+
+  const diagnostic = runPlan(
+    ["--diagnose-all", "--toolchains", "4.33.1,4.34.0,4.35.0-rc2"],
+    path.join(tmp, "diagnostic.json"),
+  );
+  assert.equal(diagnostic.diagnoseAll, true);
+  assert.equal(diagnostic.skipLean, false);
+  assert.equal(diagnostic.steps.at(-1).name, "proof-required-verification");
 
   console.log("PRODUCT_V1_ENDTEST_TESTS=PASS");
 } finally {

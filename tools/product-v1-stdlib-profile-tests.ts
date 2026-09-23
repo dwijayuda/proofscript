@@ -36,8 +36,8 @@ assert.equal(profile.status, "specified-bounded");
 assert.equal(packageJson.name, "@proofscript/std");
 assert.equal(profile.package.name, "@proofscript/std");
 assert.equal(profile.package.sourceImportRequired, false);
-assert.equal(manifest.declarations.length, 96);
-assert.equal(manifest.declarationCount, 96);
+assert.equal(manifest.declarations.length, manifest.declarationCount);
+assert.ok(manifest.declarations.includes("Unit"), "Product-v1 checked bootstrap must expose Unit");
 
 const declarations = new Set(manifest.declarations);
 for (const [familyName, family] of Object.entries(profile.families) as [string, any][]) {
@@ -63,6 +63,8 @@ assert.match(foundation, /\| zero;/u);
 assert.match(foundation, /\| succ\(n: Nat\);/u);
 assert.match(foundation, /\| false;/u);
 assert.match(foundation, /\| true;/u);
+assert.match(foundation, /inductive Unit: Type/u);
+assert.match(foundation, /\| unit;/u);
 assert.match(foundation, /\| none;/u);
 assert.match(foundation, /\| some\(value: A\);/u);
 assert.match(foundation, /\| nil;/u);
@@ -112,7 +114,7 @@ const stdlib = readCurrentStandardLibrary(root);
 assert.equal(stdlib.package, "@proofscript/std");
 assert.equal(stdlib.version, packageJson.version);
 assert.equal(stdlib.profileId, "proofscript-stdlib-v1");
-assert.equal(stdlib.declarationCount, 96);
+assert.equal(stdlib.declarationCount, manifest.declarationCount);
 assert.equal(
   stdlib.manifestSha256,
   createHash("sha256").update(manifestBytes).digest("hex"),

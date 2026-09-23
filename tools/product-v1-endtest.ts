@@ -9,6 +9,7 @@ const root = path.resolve(import.meta.dirname, "..");
 const args = process.argv.slice(2);
 const planOnly = args.includes("--plan-only");
 const skipLean = args.includes("--skip-lean");
+const diagnoseAll = args.includes("--diagnose-all");
 
 function option(name: string) {
   const eq = args.find((arg) => arg.startsWith(`${name}=`));
@@ -83,6 +84,7 @@ if (planOnly) {
     status: "planned",
     executionAttempted: false,
     skipLean,
+    diagnoseAll,
     toolchains: skipLean ? [] : toolchainInput.split(",").map((item) => item.trim()).filter(Boolean),
     output: {
       summary: path.relative(root, outPath).replace(/\\/gu, "/"),
@@ -131,7 +133,7 @@ for (const step of steps) {
     stdout: run.stdout ?? "",
     stderr: run.stderr ?? "",
   });
-  canContinue = passed;
+  if (!passed && (step.name === "build" || !diagnoseAll)) canContinue = false;
 }
 
 const verification = !skipLean && fs.existsSync(verificationOut)
@@ -141,13 +143,14 @@ const passed = results.length === steps.length
   && results.every((step) => step.status === "passed")
   && (skipLean || verification?.status === "passed");
 
-const closureSatisfied = productV1ClosureSatisfied({ executionPassed: passed, skipLean });
+const closureSatisfied = productV1ClosureSatisfied({ executionPassed: passed, skipLean, diagnoseAll });
 
 const report = {
   schema: "proofscript.product-v1-endtest/v1",
   status: passed ? "passed" : "failed",
   executionAttempted: true,
   skipLean,
+  diagnoseAll,
   toolchains: skipLean ? [] : toolchainInput.split(",").map((item) => item.trim()).filter(Boolean),
   output: {
     summary: path.relative(root, outPath).replace(/\\/gu, "/"),
@@ -169,6 +172,7 @@ const report = {
       .filter((step) => step.name !== "proof-required-verification")
       .every((step) => step.status === "passed"),
     verificationPassed: skipLean ? null : verification?.status === "passed",
+    diagnosticMode: diagnoseAll,
     allProductV1GatesPassed: closureSatisfied,
   },
 };

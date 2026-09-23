@@ -1,3 +1,3 @@
-export function productV1ClosureSatisfied({ executionPassed, skipLean } = {}) {
-  return executionPassed === true && skipLean !== true;
+export function productV1ClosureSatisfied({ executionPassed, skipLean, diagnoseAll } = {}) {
+  return executionPassed === true && skipLean !== true && diagnoseAll !== true;
 }
