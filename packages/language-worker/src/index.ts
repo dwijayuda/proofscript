@@ -1,6 +1,7 @@
 import { Worker } from "node:worker_threads";
 import type {
   Analysis,
+  CodeActionInfo,
   CompletionInfo,
   DiagnosticBundle,
   LocationInfo,
@@ -196,6 +197,14 @@ export class LanguageWorkerClient {
 
   async formatDocument(uri: string, ownerId?: number | string | null): Promise<readonly TextEditInfo[]> {
     return this.request("formatDocument", { uri }, ownerId);
+  }
+
+  async codeActions(
+    uri: string,
+    range?: { readonly start: Position; readonly end: Position },
+    ownerId?: number | string | null,
+  ): Promise<readonly CodeActionInfo[]> {
+    return this.request("codeActions", { uri, range }, ownerId);
   }
 
   async goals(uri: string, position?: Position, ownerId?: number | string | null): Promise<ProofGoalBundle> {
