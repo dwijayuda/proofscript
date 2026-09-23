@@ -36,13 +36,14 @@ theorem have_p(h: P): P := by { have hp : P := h; exact hp }
 theorem have_inferred(h: P): P := by { have hp := h; exact hp }
 theorem rw_p(a: Nat, b: Nat, h: a = b): a = b := by { rw h; rfl }
 theorem rw_rev(a: Nat, b: Nat, h: a = b): b = a := by { rw ← h; rfl }
+theorem rw_rev_ascii(a: Nat, b: Nat, h: a = b): b = a := by { rw <- h; rfl }
 theorem subst_p(a: Nat, b: Nat, h: a = b): a = b := by { subst a; rfl }
 theorem constructor_p(h: P): P := by { constructor }
 theorem cases_p(h: P): P := by { cases h; assumption }
 theorem induction_p(n: Nat): n = n := by { induction n; rfl }
 theorem simp_p(h: P): P := by { simp }
 `);
-assert.equal(parsed.declarations.length, 15);
+assert.equal(parsed.declarations.length, 16);
 assert.equal(parsed.declarations[1].value.tag, 'rflProof');
 assert.equal(parsed.declarations[2].value.tag, 'rflProof');
 assert.equal(parsed.declarations[3].value.tag, 'introProof');
@@ -51,10 +52,11 @@ assert.equal(parsed.declarations[6].value.tag, 'haveProof');
 assert.equal(parsed.declarations[7].value.tag, 'haveProof');
 assert.equal(parsed.declarations[8].value.tag, 'rwProof');
 assert.equal(parsed.declarations[9].value.tag, 'rwProof');
-assert.equal(parsed.declarations[10].value.tag, 'substProof');
-assert.equal(parsed.declarations[11].value.tag, 'constructorProof');
-assert.equal(parsed.declarations[12].value.tag, 'casesProof');
-assert.equal(parsed.declarations[13].value.tag, 'inductionProof');
-assert.equal(parsed.declarations[14].value.tag, 'simpProof');
+assert.equal(parsed.declarations[10].value.tag, 'rwProof');
+assert.equal(parsed.declarations[11].value.tag, 'substProof');
+assert.equal(parsed.declarations[12].value.tag, 'constructorProof');
+assert.equal(parsed.declarations[13].value.tag, 'casesProof');
+assert.equal(parsed.declarations[14].value.tag, 'inductionProof');
+assert.equal(parsed.declarations[15].value.tag, 'simpProof');
 
 console.log('parser proof extraction tests: PASS');
