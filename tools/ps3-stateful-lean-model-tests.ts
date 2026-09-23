@@ -126,6 +126,22 @@ assert.match(lowering.statefulProgramLowering.leanDefinition, /: StateM Bank Uni
 assert.match(lowering.statefulProgramLowering.leanDefinition, /\(«from» : AccountId\)/u);
 assert.equal(lowering.statefulProgramLowering.leanProgramTypechecked, false);
 
+const adequacy = lowering.statefulAdequacyCheck;
+assert.equal(adequacy.schema, "proofscript.stateful-adequacy-check/v1");
+assert.equal(adequacy.ready, true);
+assert.equal(adequacy.expectedShape, "stateM-wp-run-result/v1");
+assert.equal(adequacy.semantics.runner, "runBankState");
+assert.equal(adequacy.semantics.adequacyTheorem, "runBankState_adequate");
+assert.equal(adequacy.semantics.monadTypeConstructor, "StateM Bank");
+assert.equal(adequacy.checkedInLean, false);
+assert.equal(adequacy.stateModelAdequacyChecked, false);
+assert.match(adequacy.check.source, /theorem __ps_state_model_adequacy_check/u);
+assert.match(adequacy.check.source, /\{program : StateM Bank α\}/u);
+assert.match(adequacy.check.source, /hRun : runBankState program initial = result/u);
+assert.match(adequacy.check.source, /⊢ₛ wp⟦program⟧/u);
+assert.match(adequacy.check.source, /exact runBankState_adequate hRun P hWp/u);
+assert.doesNotMatch(adequacy.check.source, /\b(?:sorry|admit)\b/u);
+
 assert.equal(lowering.statefulWpBinding.bindingReady, true);
 assert.equal(lowering.statefulVcPlan.planningReady, true);
 assert.equal(lowering.statefulVcPlan.operationGoals.length, 1);

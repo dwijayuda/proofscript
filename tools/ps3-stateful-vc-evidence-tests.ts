@@ -26,7 +26,10 @@ function analyze(checks: any) {
   return analyzeStatefulVcExecution({
     functionName: "withdraw",
     request,
-    checks,
+    checks: {
+      adequacyCheck: result(0),
+      ...checks,
+    },
   });
 }
 
@@ -44,6 +47,21 @@ assert.equal(modelFailure.claims.tacticExecuted, false);
 assert.equal(modelFailure.claims.realVerificationConditionsGenerated, false);
 assert.equal(modelFailure.claims.semanticProofDischarge, false);
 assert.equal(modelFailure.goalArtifact.generatedFromLeanExecution, false);
+
+const adequacyFailure = analyze({
+  modelBuild: result(0),
+  adequacyCheck: result(1, "", "adequacy bridge type mismatch"),
+  programCheck: result(0, "must not override failed adequacy"),
+  tripleCheck: result(0),
+  requestRun: result(0),
+});
+assert.equal(adequacyFailure.status, "failed");
+assert.equal(adequacyFailure.failedStage, "state-model-adequacy-check");
+assert.equal(adequacyFailure.claims.leanModelTypechecked, true);
+assert.equal(adequacyFailure.claims.stateModelAdequacyChecked, false);
+assert.equal(adequacyFailure.claims.leanProgramTypechecked, false);
+assert.equal(adequacyFailure.claims.tacticExecuted, false);
+assert.equal(adequacyFailure.claims.semanticProofDischarge, false);
 
 const programFailure = analyze({
   modelBuild: result(0),
@@ -152,7 +170,7 @@ assert.equal(proved.claims.tacticExecuted, true);
 assert.equal(proved.claims.semanticVcDerivationComplete, true);
 assert.equal(proved.claims.realVerificationConditionsGenerated, true);
 assert.equal(proved.claims.semanticProofDischarge, true);
-assert.equal(proved.claims.stateModelAdequacyChecked, false);
+assert.equal(proved.claims.stateModelAdequacyChecked, true);
 assert.equal(proved.claims.sourceToLeanProgramEquivalenceChecked, false);
 assert.equal(proved.claims.exceptionalPathsCovered, false);
 assert.equal(proved.goalArtifact.summary.goalCount, 0);
@@ -196,6 +214,7 @@ const stableProvenance = {
   sourceSha256: "a".repeat(64),
   stateModelDescriptorSha256: "b".repeat(64),
   leanModelSha256: "c".repeat(64),
+  generatedAdequacyCheckSha256: "9".repeat(64),
   generatedProgramSha256: "d".repeat(64),
   generatedTripleTargetSha256: "e".repeat(64),
   generatedRequestSha256: "f".repeat(64),
