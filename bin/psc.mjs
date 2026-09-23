@@ -217,7 +217,11 @@ async function runDirect(file, call, rawArgs, cliArgs = []) {
   const out = path.join(tmp, 'out.js');
   const built = buildJsDirect(file, out, cliArgs);
   const mod = await import(pathToFileURL(out).href);
-  let value = mod.default?.[call] ?? mod[call];
+  const defaultExports = mod.default;
+  const hasDefaultExport = defaultExports !== null
+    && (typeof defaultExports === 'object' || typeof defaultExports === 'function')
+    && Object.prototype.hasOwnProperty.call(defaultExports, call);
+  let value = hasDefaultExport ? defaultExports[call] : mod[call];
   if (value === undefined) throw new Error(`export '${call}' not found in small-subset JS output`);
   const callArgs = rawArgs.map(parseRunArg);
   for (const arg of callArgs) value = value(arg);
