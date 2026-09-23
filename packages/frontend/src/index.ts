@@ -1,7 +1,7 @@
 import path from "node:path";
 import crypto from "node:crypto";
 import { parseSource } from "@proofscript/parser";
-import { collectResolvedGlobalReferences, elaborateProgram, type ProofStateSnapshot, type ResolvedGlobalReference } from "@proofscript/elaborator";
+import { collectResolvedGlobalReferences, elaborateInitialProofGoal, elaborateProgram, type ProofStateSnapshot, type ResolvedGlobalReference } from "@proofscript/elaborator";
 import {
   checkCoreDeclarations,
   CheckSummary,
@@ -135,6 +135,33 @@ export function checkSource(source:string,options:FrontendOptions={}):FrontendRe
         }catch{
           // Partial-state recovery is observational and never replaces the
           // original parse failure or fabricates continuation after it.
+        }
+      },
+      incompleteProofGoalSink:(observation)=>{
+        try{
+          const initialGoal=elaborateInitialProofGoal(
+            [...observation.declarations],
+            [...observation.header.binders],
+            observation.header.type,
+            [...observation.header.availableLevels],
+            prepared?.globals??[],
+            prepared?.artifact.declarations??[],
+            prepared?.typeclasses,
+          );
+          recordProofState({
+            kind:"goal",
+            tactic:"by",
+            startOffset:observation.sourceStartOffset,
+            endOffset:observation.sourceEndOffset,
+            goal:initialGoal.goal,
+            locals:initialGoal.locals.map((name,index)=>({
+              name,
+              type:initialGoal.localTypes[index]!,
+            })),
+          });
+        }catch{
+          // Header-goal observation is tooling-only. If the prefix/header
+          // cannot elaborate, the original parser failure remains authoritative.
         }
       },
     }:{}),
