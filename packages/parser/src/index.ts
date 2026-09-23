@@ -572,7 +572,7 @@ class Parser extends TokenCursor{
       if(t.text==="false")return{tag:"boolLit",value:false};
       if(t.text==="by")throw new UnsupportedFeature("K3c-section-vars0 does not implement tactic syntax ('by')");if(["then","else"].includes(t.text))throw new ParseError(`unexpected ${t.text} without matching if-expression`);if(["let","have","return"].includes(t.text))throw new UnsupportedFeature(`K3c-section-vars0 does not implement ProofScript term '${t.text}' yet`);
       let levels:SurfaceLevel[]|undefined;if(this.at(".")&&this.peek(1).text==="{"){this.next();this.next();levels=[];if(this.at("}"))throw new ParseError("explicit universe application cannot be empty");while(true){levels.push(this.parseLevel());if(!this.at(","))break;this.next();}this.expect("}");}
-      return{tag:"name",name:t.text,levels,namespacePath:this.currentNamespace(),openNamespaces:this.currentOpenNamespaces()};
+      return{tag:"name",name:t.text,levels,namespacePath:this.currentNamespace(),openNamespaces:this.currentOpenNamespaces(),sourceStartOffset:t.offset,sourceEndOffset:t.offset+t.text.length};
     }
     if(t.kind==="num"){this.next();const value=Number(t.text);if(!Number.isSafeInteger(value))throw new UnsupportedFeature("K3c-section-vars0 numeric literal exceeds the safe parser integer range");return{tag:"natLit",value};}
     if(t.kind==="str"){this.next();return{tag:"stringLit",value:t.text};}
