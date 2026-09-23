@@ -87,6 +87,32 @@ assert.throws(
   /duplicate import 'Foo'/u,
 );
 
+const emptyGoalObservations = [];
+const emptyGoalSource = "axiom P: Prop; theorem empty_goal(h: P): P := by {";
+assert.throws(
+  () => parseSource(emptyGoalSource, undefined, {
+    incompleteProofGoalSink: observation => emptyGoalObservations.push(observation),
+  }),
+  /expected proof tactic at offset \d+, found '<eof>'/u,
+);
+assert.equal(emptyGoalObservations.length, 1);
+assert.equal(emptyGoalObservations[0].declarations.length, 1);
+assert.equal(emptyGoalObservations[0].declarations[0].kind, 'axiom');
+assert.equal(emptyGoalObservations[0].header.kind, 'theorem');
+assert.equal(emptyGoalObservations[0].header.name, 'empty_goal');
+assert.deepEqual(emptyGoalObservations[0].header.binders.map(binder => binder.name), ['h']);
+assert.equal(emptyGoalObservations[0].sourceStartOffset, emptyGoalSource.indexOf('by'));
+assert.equal(emptyGoalObservations[0].sourceEndOffset, emptyGoalSource.length);
+assert.equal(emptyGoalObservations[0].failureOffset, emptyGoalSource.length);
+
+assert.throws(
+  () => parseSource(emptyGoalSource, undefined, {
+    incompleteProofGoalSink: () => { throw new Error('goal observer must be fail-open'); },
+  }),
+  /expected proof tactic at offset \d+, found '<eof>'/u,
+  'empty-proof observer failures must not replace canonical parse rejection',
+);
+
 const incompleteObservations = [];
 const incompleteSource = "theorem incomplete(P: Prop, h: P): P := by { assumption\n";
 assert.throws(
