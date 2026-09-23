@@ -124,12 +124,31 @@
     {
       "id": "V1-P3",
       "name": "JS runtime semantics and correspondence",
-      "status": "planned",
+      "status": "in_progress",
       "exitGates": [
-        "runtime profile specified",
-        "core type representations gated",
+        "test:product-v1:runtime-profile",
         "runtime differential corpus green",
-        "certificate correspondence levels explicit"
+        "certificate correspondence levels explicit and emitted",
+        "runtime artifact hashes bound to certificate"
+      ],
+      "done": [
+        "versioned JS runtime representation profile",
+        "Nat bigint + nonnegative invariant",
+        "Int bigint",
+        "Bool boolean without truthiness coercion",
+        "String JavaScript string bounded profile",
+        "Unit null (distinct from Option.none)",
+        "frozen tagged structure/inductive values",
+        "tagged Option/Except/List/Array representations",
+        "general runtime equality explicitly not claimed",
+        "unsupported IO/UInt/Float/Char fail-closed profile entries"
+      ],
+      "remaining": [
+        "expand differential runtime corpus into one Product-v1 gate",
+        "bind runtime profile identity into certificates",
+        "bind emitted TypeScript/JavaScript hashes into certificates",
+        "define and test correspondence levels",
+        "formal Core-to-TypeScript refinement remains separate and unproved"
       ]
     },
     {
