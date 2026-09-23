@@ -105,4 +105,12 @@ assert.equal(
   'unrelated parser failures must not fabricate incomplete proof observations',
 );
 
+assert.throws(
+  () => parseSource(incompleteSource, undefined, {
+    incompleteProofSink: () => { throw new Error('observer must be fail-open'); },
+  }),
+  /expected '\}' at offset \d+, found '<eof>'/u,
+  'tooling observer failures must not replace canonical parse rejection',
+);
+
 console.log('parser proof extraction tests: PASS');
