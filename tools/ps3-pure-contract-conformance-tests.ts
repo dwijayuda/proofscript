@@ -21,7 +21,7 @@ assert.equal(registry.profile, "ps3-pure-contracts0");
 assert.equal(registry.claim_ceiling, "specified-alpha");
 assert.deepEqual(
   registry.features.map((feature: any) => feature.id).sort(),
-  ["V-ASSERT", "V-ENSURES", "V-GHOST", "V-OLD", "V-REQUIRES", "V-RESULT"],
+  ["V-ASSERT", "V-DECREASES", "V-ENSURES", "V-GHOST", "V-INVARIANT", "V-OLD", "V-REQUIRES", "V-RESULT"],
 );
 
 for (const item of positive) {
