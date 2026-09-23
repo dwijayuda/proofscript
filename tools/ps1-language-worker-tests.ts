@@ -55,6 +55,7 @@ assert.equal(partialGoals.tacticState?.goal, "P");
 assert.deepEqual(partialGoals.tacticState?.locals.map((local) => local.name), ["P", "h"]);
 assert.equal(partialGoals.declarationGoal, null);
 worker.closeDocument(partialUri);
+fs.unlinkSync(partialFile);
 
 worker.replaceDocument(uri, 2, "theorem broken");
 const broken = await worker.diagnostics(uri);
