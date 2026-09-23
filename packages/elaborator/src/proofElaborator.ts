@@ -10,6 +10,8 @@ import {
 } from "@proofscript/kernel";
 import { ElaborationError, SurfaceTerm, UnsupportedFeature } from "@proofscript/syntax";
 import { contextFromTypes, flattenCoreApps } from "./coreUtils";
+import { elabRwProof, elabSimpProof, elabSubstProof } from "./proofEqualityTactics";
+import { elabCasesProof, elabConstructorProof, elabInductionProof } from "./proofInductiveTactics";
 
 type ProofSurfaceTerm = Extract<
   SurfaceTerm,
@@ -20,6 +22,12 @@ type ProofSurfaceTerm = Extract<
   | { tag: "introProof" }
   | { tag: "showProof" }
   | { tag: "haveProof" }
+  | { tag: "rwProof" }
+  | { tag: "substProof" }
+  | { tag: "constructorProof" }
+  | { tag: "casesProof" }
+  | { tag: "inductionProof" }
+  | { tag: "simpProof" }
 >;
 
 export interface ProofElaborationHost {
@@ -43,6 +51,12 @@ export function elabProofTerm(
     case "introProof": return elabIntroProof(term.names, term.body, locals, localTypes, kernelEnv, expectedType, host);
     case "showProof": return elabShowProof(term.type, term.body, locals, localTypes, kernelEnv, expectedType, host);
     case "haveProof": return elabHaveProof(term.name, term.type, term.value, term.body, locals, localTypes, kernelEnv, expectedType, host);
+    case "rwProof": return elabRwProof(term.equality, term.reverse, term.body, locals, localTypes, kernelEnv, expectedType, host);
+    case "substProof": return elabSubstProof(term.name, term.body, locals, localTypes, kernelEnv, expectedType, host);
+    case "constructorProof": return elabConstructorProof(term.body, locals, localTypes, kernelEnv, expectedType, host);
+    case "casesProof": return elabCasesProof(term.term, term.body, locals, localTypes, kernelEnv, expectedType, host);
+    case "inductionProof": return elabInductionProof(term.term, term.body, locals, localTypes, kernelEnv, expectedType, host);
+    case "simpProof": return elabSimpProof(locals, localTypes, kernelEnv, expectedType, host);
   }
 }
 
