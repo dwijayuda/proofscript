@@ -3,9 +3,11 @@ import type {
   Analysis,
   CompletionInfo,
   DiagnosticBundle,
+  LocationInfo,
   DocumentSymbolInfo,
   HoverInfo,
   Position,
+  WorkspaceEditInfo,
   TextDocumentContentChange,
 } from "@proofscript/language-service";
 
@@ -183,6 +185,28 @@ export class LanguageWorkerClient {
 
   async completion(uri: string, position: Position, ownerId?: number | string | null): Promise<readonly CompletionInfo[]> {
     return this.request("completion", { uri, position }, ownerId);
+  }
+
+  async definition(uri: string, position: Position, ownerId?: number | string | null): Promise<LocationInfo | null> {
+    return this.request("definition", { uri, position }, ownerId);
+  }
+
+  async references(
+    uri: string,
+    position: Position,
+    includeDeclaration = true,
+    ownerId?: number | string | null,
+  ): Promise<readonly LocationInfo[]> {
+    return this.request("references", { uri, position, includeDeclaration }, ownerId);
+  }
+
+  async rename(
+    uri: string,
+    position: Position,
+    newName: string,
+    ownerId?: number | string | null,
+  ): Promise<WorkspaceEditInfo> {
+    return this.request("rename", { uri, position, newName }, ownerId);
   }
 
   async request<T = any>(operation: string, args: any = {}, ownerId?: number | string | null): Promise<T> {
