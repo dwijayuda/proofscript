@@ -1,0 +1,26 @@
+{
+  "schema": "proofscript.prebuilt-release/v1",
+  "mode": "prebuilt",
+  "description": "Files that must exist in a packed Product-v1 release so psc setup --prebuilt never needs TypeScript compilation or source-only asset regeneration.",
+  "requiredStaticAssets": [
+    "packages/frontend-next/dist/plugins/features/lean/option.lean",
+    "packages/frontend-next/dist/plugins/features/lean/rust-black-box.lean",
+    "packages/kernel/docs/TRUST_BOUNDARY.md",
+    "packages/kernel/docs/PROOF_OBLIGATIONS.md",
+    "packages/kernel/docs/PSKERNEL_TS_PORTING_MAP.md",
+    "packages/kernel/docs/PSKERNEL_TS_PHASE_PLAN.md",
+    "packages/kernel/docs/PSKERNEL_TS_RELEASE_PREFLIGHT.json",
+    "packages/kernel/docs/PSKERNEL_TS_PROOF_OBLIGATIONS.json",
+    "packages/kernel/docs/PSKERNEL_TS_PACKAGE_AUDIT.json",
+    "packages/kernel/docs/PSKERNEL_TS_TARBALL_SMOKE.json",
+    "packages/kernel/docs/PSKERNEL_TS_RELEASE_ARCHIVE.json",
+    "packages/kernel/docs/PSKERNEL_TS_DELIVERY_BOOTSTRAP.json",
+    "packages/kernel/docs/PSKERNEL_TS_DELIVERY_ARCHIVE_VERIFICATION.json"
+  ],
+  "claims": {
+    "requiresTypeScriptCompiler": false,
+    "requiresLean4": false,
+    "rebuildsWorkspace": false,
+    "usesPrebuiltDist": true
+  }
+}
