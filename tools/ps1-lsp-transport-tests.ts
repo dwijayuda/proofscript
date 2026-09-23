@@ -90,6 +90,7 @@ assert.equal(initialized.result.capabilities.hoverProvider, true);
 assert.equal(initialized.result.capabilities.documentSymbolProvider, true);
 assert.ok(initialized.result.capabilities.completionProvider);
 assert.equal(initialized.result.capabilities.completionProvider.resolveProvider, false);
+assert.deepEqual(initialized.result.capabilities.completionProvider.triggerCharacters, [".", "{"]);
 assert.equal(initialized.result.capabilities.definitionProvider, true);
 assert.equal(initialized.result.capabilities.referencesProvider, true);
 assert.equal(initialized.result.capabilities.renameProvider, true);
