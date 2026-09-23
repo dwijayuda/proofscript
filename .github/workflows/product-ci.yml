@@ -24,6 +24,7 @@ jobs:
       - run: npm run test:product-v1:contract
       - run: npm run test:product-v1:software-profile
       - run: npm run test:product-v1:runtime-profile
+      - run: npm run test:product-v1:runtime-certificate
       - run: npm run test:product-v1:certificate-correspondence
       - run: npm run test:product-v1:runtime-differential
       - run: npm run test:product-v1:ffi
