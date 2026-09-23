@@ -48,8 +48,15 @@ export function containsSurfaceName(term: SurfaceTerm, name: string, bound: Read
     case "constructorProof":
       return term.body ? containsSurfaceName(term.body, name, bound) : false;
     case "casesProof":
-    case "inductionProof":
-      return containsSurfaceName(term.term, name, bound) || containsSurfaceName(term.body, name, bound);
+    case "inductionProof": {
+      if (containsSurfaceName(term.term, name, bound)) return true;
+      if (term.body && containsSurfaceName(term.body, name, bound)) return true;
+      return (term.branches ?? []).some(branch => {
+        const next = new Set(bound);
+        for (const binder of branch.binders) next.add(binder);
+        return containsSurfaceName(branch.body, name, next);
+      });
+    }
     case "simpProof":
       return false;
     case "eq": return containsSurfaceName(term.left, name, bound) || containsSurfaceName(term.right, name, bound);
@@ -251,7 +258,15 @@ function rewriteBranchTerm(
       return {
         ...term,
         term: rewriteBranchTerm(term.term, declarationName, recursiveNames, patternBinders, shadowed),
-        body: rewriteBranchTerm(term.body, declarationName, recursiveNames, patternBinders, shadowed),
+        body: term.body ? rewriteBranchTerm(term.body, declarationName, recursiveNames, patternBinders, shadowed) : undefined,
+        branches: term.branches?.map(branch => {
+          const branchShadowed = new Set(shadowed);
+          for (const binder of branch.binders) branchShadowed.add(binder);
+          return {
+            ...branch,
+            body: rewriteBranchTerm(branch.body, declarationName, recursiveNames, patternBinders, branchShadowed),
+          };
+        }),
       };
     case "simpProof":
       return term;
