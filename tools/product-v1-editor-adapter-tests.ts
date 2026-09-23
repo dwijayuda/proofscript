@@ -8,7 +8,7 @@ const lsp = fs.readFileSync(path.join(root,"packages/lsp/src/index.ts"),"utf8");
 const extension = fs.readFileSync(path.join(root,"editors/vscode/src/extension.js"),"utf8");
 const grammar = JSON.parse(fs.readFileSync(path.join(root,"editors/vscode/syntaxes/proofscript.tmLanguage.json"),"utf8"));
 
-for (const method of ["proofscript/serverInfo","proofscript/documentStatus","proofscript/semanticInfo"]) {
+for (const method of ["proofscript/serverInfo","proofscript/documentStatus","proofscript/semanticInfo","proofscript/goals"]) {
   assert.ok(lsp.includes(method), "missing LSP adapter method " + method);
 }
 assert.match(lsp,/proofStateAvailable:\s*false/u);
@@ -17,7 +17,7 @@ assert.match(lsp,/documentStatusFromAnalysis/u);
 assert.ok(lsp.includes("proofscript/documentProcessing"));
 assert.ok(lsp.includes("proofscript/documentStatusChanged"));
 
-for (const supported of ["textDocument/hover","textDocument/documentSymbol","textDocument/completion","textDocument/definition","textDocument/references","textDocument/rename","textDocument/semanticTokens/full","textDocument/formatting","proofscript/documentStatus","proofscript/semanticInfo"]) {
+for (const supported of ["textDocument/hover","textDocument/documentSymbol","textDocument/completion","textDocument/definition","textDocument/references","textDocument/rename","textDocument/semanticTokens/full","textDocument/formatting","proofscript/documentStatus","proofscript/semanticInfo","proofscript/goals"]) {
   assert.ok(extension.includes(supported), "missing active editor method " + supported);
 }
 for (const unsupported of ["textDocument/signatureHelp","textDocument/codeAction","proofscript/proofState"]) {
@@ -35,6 +35,10 @@ assert.match(lsp,/semanticTokensProvider/u);
 assert.match(lsp,/this\.worker\.semanticTokens/u);
 assert.match(lsp,/documentFormattingProvider:\s*true/u);
 assert.match(lsp,/this\.worker\.formatDocument/u);
+assert.match(lsp,/goalPresentationAvailable:\s*true/u);
+assert.match(lsp,/this\.worker\.goals/u);
+assert.match(extension,/client\.request\("proofscript\/goals"/u);
+assert.match(extension,/tacticStateAvailable=false/u);
 assert.match(extension,/registerDocumentFormattingEditProvider/u);
 assert.equal(extension.includes("EXPECTED_LSP_PROTOCOL_VERSION = 1"), true);
 assert.match(JSON.stringify(grammar),/frame/u);
