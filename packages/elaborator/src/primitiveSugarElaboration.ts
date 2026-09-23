@@ -173,6 +173,12 @@ function surfaceMentionsInt(term: SurfaceTerm): boolean {
     case "applyProof":
     case "introProof":
       return false;
+    case "showProof":
+      return surfaceMentionsInt(term.type) || surfaceMentionsInt(term.body);
+    case "haveProof":
+      return (term.type ? surfaceMentionsInt(term.type) : false)
+        || surfaceMentionsInt(term.value)
+        || surfaceMentionsInt(term.body);
   }
 }
 
