@@ -29,6 +29,13 @@ export const PSC1_SUPPORTED_FEATURES = Object.freeze([
   "theorem/example by { intro x; ... } for explicit function/forall goals",
   "theorem/example by { assumption } via local-context exact-type search",
   "theorem/example by { apply term; ... } for one explicit generated implication/function subgoal",
+  "theorem/example bounded show and proof-local have, lowered to checked expected-type/Core have terms",
+  "theorem/example bounded target rw / reverse rw through checked Eq.rec transport",
+  "theorem/example bounded target subst using a direct local equality; locals remain available after rewriting",
+  "theorem/example bounded constructor for one-constructor non-indexed goals with a repeated continuation over generated explicit fields",
+  "theorem/example bounded cases for nonrecursive non-indexed inductives through checked recursors",
+  "theorem/example bounded induction for non-indexed recursive inductives through checked recursors and generated IH binders",
+  "theorem/example bounded simp-lite: definitional rfl, assumption, or one local equality rewrite followed by rfl/assumption",
   "Boolean conditional expression bif (b) { then } else { else } via checked Bool.rec",
   "Lean-style Boolean if expression `if b then t else e` parsed as checked Bool.rec sugar",
   "Lean-style Boolean operators `a && b` and `a || b` lowered to checked Bool.rec sugar with && binding tighter than ||",
@@ -52,7 +59,7 @@ export const PSC1_SUPPORTED_FEATURES = Object.freeze([
 
 export const PSC1_FAIL_CLOSED_FEATURES = Object.freeze([
   "proposition/Decidable if over Prop until Decidable/typeclass elaboration exists; PSC-1 currently supports direct Boolean if sugar only",
-  "general tactic scripts beyond PSC-1 by { rfl } / by { exact term } / by { intro x; ... } / by { assumption } / by { apply term; ... }",
+  "full Lean tactic scripts/metavariables/branch syntax beyond the bounded native rfl/exact/intro/assumption/apply/show/have/rw/subst/constructor/cases/induction/simp-lite slice",
   "macros, full tactics, typeclass elaboration as source behavior",
   "JavaScript // source comments and arrow-only lambdas in standard PSC-1",
   "local function binder sugar and local recursion `let rec` in def-body blocks",
