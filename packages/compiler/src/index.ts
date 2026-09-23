@@ -5,10 +5,12 @@ import { toCheckedModuleSnapshot } from "@proofscript/semantic-ir";
 import {
   checkProjectFile as checkProjectFileFrontend,
   checkSource as checkSourceFrontend,
+  checkWorkspace as checkWorkspaceFrontend,
   type FrontendModuleCacheEntry,
   type FrontendOptions,
   type FrontendProjectResult,
   type FrontendResult,
+  type FrontendWorkspaceResult,
 } from "@proofscript/frontend";
 
 /**
@@ -27,6 +29,11 @@ export function checkSource(source: string, options: FrontendOptions = {}): Fron
  */
 export function checkProjectFile(entryFile: string, options: FrontendOptions = {}): FrontendProjectResult {
   return checkProjectFileFrontend(entryFile, options);
+}
+
+/** Check all configured source modules for compiler-backed editor/workspace indexing. */
+export function checkWorkspace(projectRoot: string, options: FrontendOptions = {}): FrontendWorkspaceResult {
+  return checkWorkspaceFrontend(projectRoot, options);
 }
 
 /**
@@ -51,6 +58,12 @@ export class IncrementalCompilerSession {
     return { project, snapshot: createCheckedProjectSnapshot(project) };
   }
 
+  checkWorkspace(projectRoot: string, options: FrontendOptions = {}): FrontendWorkspaceResult {
+    const workspace = checkWorkspaceFrontend(projectRoot, { ...options, moduleCache: this.moduleCache });
+    this.pruneNames(workspace.graph.modules.map((module) => module.name));
+    return workspace;
+  }
+
   clear(): void {
     this.moduleCache.clear();
   }
@@ -60,7 +73,11 @@ export class IncrementalCompilerSession {
   }
 
   private prune(project: FrontendProjectResult): void {
-    const active = new Set(project.graph.modules.map((module) => module.name));
+    this.pruneNames(project.graph.modules.map((module) => module.name));
+  }
+
+  private pruneNames(moduleNames: readonly string[]): void {
+    const active = new Set(moduleNames);
     for (const name of this.moduleCache.keys()) if (!active.has(name)) this.moduleCache.delete(name);
   }
 }
@@ -156,6 +173,7 @@ export type {
   FrontendOptions,
   FrontendProjectResult,
   FrontendResult,
+  FrontendWorkspaceResult,
 };
 
 function stableJson(value: unknown): string {
