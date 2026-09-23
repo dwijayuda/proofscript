@@ -23,6 +23,22 @@ export interface IncompleteProofParseObservation{
   readonly failureOffset:number;
   readonly message:string;
 }
+export interface IncompleteProofGoalHeader{
+  readonly kind:"theorem"|"example";
+  readonly name:string;
+  readonly binders:readonly SurfaceBinder[];
+  readonly type:SurfaceTerm;
+  readonly availableLevels:readonly string[];
+  readonly namespacePath?:readonly string[];
+}
+export interface IncompleteProofGoalParseObservation{
+  readonly declarations:readonly SurfaceDeclaration[];
+  readonly header:IncompleteProofGoalHeader;
+  readonly sourceStartOffset:number;
+  readonly sourceEndOffset:number;
+  readonly failureOffset:number;
+  readonly message:string;
+}
 export interface ParseOptions{
   knownGlobalNames?:readonly string[];
   validateOpenNamespaces?:boolean;
@@ -31,6 +47,11 @@ export interface ParseOptions{
    * whose only remaining syntax error is EOF before the closing brace.
    */
   incompleteProofSink?:(observation:IncompleteProofParseObservation)=>void;
+  /**
+   * Read-only canonical parser observation for an empty by-block that reached
+   * EOF before its first tactic.
+   */
+  incompleteProofGoalSink?:(observation:IncompleteProofGoalParseObservation)=>void;
 }
 export interface DeclarationSourceLocation{
   readonly name:string;
@@ -62,12 +83,13 @@ import {tokenize} from "./tokenize";
 function countLeadingSurfacePis(term:SurfaceTerm):number{let n=0,cur=term;while(cur.tag==="pi"){n++;cur=cur.body;}return n;}
 
 class Parser extends TokenCursor{
-  private state:ParserState;private namespaceStack:string[]=[];private openedNamespaces:string[]=[];private knownNamespaces=new Set<string>();private sectionVariables:SectionVariableEntry[]=[];private ownedFeatures:SurfaceFeatureUse[]=[];private declarationLocations:DeclarationSourceLocation[]=[];private parsedDeclarations:SurfaceDeclaration[]=[];private readonly validateOpenNamespaces:boolean;private readonly incompleteProofSink:ParseOptions["incompleteProofSink"];
+  private state:ParserState;private namespaceStack:string[]=[];private openedNamespaces:string[]=[];private knownNamespaces=new Set<string>();private sectionVariables:SectionVariableEntry[]=[];private ownedFeatures:SurfaceFeatureUse[]=[];private declarationLocations:DeclarationSourceLocation[]=[];private parsedDeclarations:SurfaceDeclaration[]=[];private readonly validateOpenNamespaces:boolean;private readonly incompleteProofSink:ParseOptions["incompleteProofSink"];private readonly incompleteProofGoalSink:ParseOptions["incompleteProofGoalSink"];
   constructor(tokens:Token[],initial:ParserState,options:ParseOptions){
     super(tokens);
     this.state={...initial,universeParams:[...initial.universeParams]};
     this.validateOpenNamespaces=options.validateOpenNamespaces??false;
     this.incompleteProofSink=options.incompleteProofSink;
+    this.incompleteProofGoalSink=options.incompleteProofGoalSink;
     for(const name of options.knownGlobalNames??[])this.registerNameNamespaces(name);
   }
   parseLeadingImports():string[]{
@@ -302,11 +324,18 @@ class Parser extends TokenCursor{
     this.expect(":");const type=this.parseTerm();const availableLevels=[...this.state.universeParams];
     if(kind==="axiom"){this.expect(";");if(binders.length)this.markOwnedFeature("D-EXPLICIT-PARAMS",featureStart,this.peek().offset);return{kind:"axiom",name,binders,type,availableLevels};}
     this.expect(":=");const byBlock=this.atId("by");
-    const value=this.parseProofExpression((proof,failure)=>this.emitIncompleteProofObservation(
-      {kind:"theorem",name,binders,type,value:proof,availableLevels},
-      featureStart,
-      failure,
-    ));
+    const value=this.parseProofExpression(
+      (proof,failure)=>this.emitIncompleteProofObservation(
+        {kind:"theorem",name,binders,type,value:proof,availableLevels},
+        featureStart,
+        failure,
+      ),
+      (proofStartOffset,failure)=>this.emitIncompleteProofGoalObservation(
+        {kind:"theorem",name,binders,type,availableLevels},
+        proofStartOffset,
+        failure,
+      ),
+    );
     this.closeProofDeclaration(byBlock);if(binders.length)this.markOwnedFeature("D-EXPLICIT-PARAMS",featureStart,this.peek().offset);return{kind:"theorem",name,binders,type,value,availableLevels};
   }
   private parseTransparentLikeDeclaration(kind:"opaque"|"abbrev"):SurfaceDeclaration{
@@ -318,11 +347,18 @@ class Parser extends TokenCursor{
   private parseExampleDeclaration():SurfaceDeclaration{
     const featureStart=this.peek().offset;this.expectId("example");const binders:SurfaceBinder[]=[];while(this.canStartValueBinder())binders.push(...this.parseValueBinderGroup());
     this.expect(":");const type=this.parseTerm();this.expect(":=");const byBlock=this.atId("by");const name=`__example_${this.state.commandIndex}`;const availableLevels=[...this.state.universeParams];
-    const value=this.parseProofExpression((proof,failure)=>this.emitIncompleteProofObservation(
-      {kind:"example",name,binders,type,value:proof,availableLevels},
-      featureStart,
-      failure,
-    ));
+    const value=this.parseProofExpression(
+      (proof,failure)=>this.emitIncompleteProofObservation(
+        {kind:"example",name,binders,type,value:proof,availableLevels},
+        featureStart,
+        failure,
+      ),
+      (proofStartOffset,failure)=>this.emitIncompleteProofGoalObservation(
+        {kind:"example",name,binders,type,availableLevels},
+        proofStartOffset,
+        failure,
+      ),
+    );
     this.closeProofDeclaration(byBlock);
     return{kind:"example",name,binders,type,value,availableLevels};
   }
@@ -334,7 +370,10 @@ class Parser extends TokenCursor{
     if(this.at(";")){this.next();return;}
     throw new ParseError("inline theorem/example proof terms require a command terminator; self-delimited by-block proofs close at their final '}'");
   }
-  private parseProofExpression(onIncompleteProofBlock?:(proof:SurfaceTerm,failure:Token)=>void):SurfaceTerm{return parseProofTerm({
+  private parseProofExpression(
+    onIncompleteProofBlock?:(proof:SurfaceTerm,failure:Token)=>void,
+    onIncompleteProofStart?:(sourceStartOffset:number,failure:Token)=>void,
+  ):SurfaceTerm{return parseProofTerm({
     at:(text:string)=>this.at(text),
     atId:(text:string)=>this.atId(text),
     next:()=>this.next(),
@@ -342,7 +381,50 @@ class Parser extends TokenCursor{
     parseTerm:()=>this.parseTerm(),
     peek:()=>this.peek(),
     onIncompleteProofBlock,
+    onIncompleteProofStart,
   });}
+  private emitIncompleteProofGoalObservation(
+    raw:{
+      kind:"theorem"|"example";
+      name:string;
+      binders:SurfaceBinder[];
+      type:SurfaceTerm;
+      availableLevels:string[];
+    },
+    sourceStartOffset:number,
+    failure:Token,
+  ):void{
+    if(!this.incompleteProofGoalSink)return;
+    try{
+      const explicitBinders=raw.binders;
+      const headerRefs=this.collectHeaderSectionRefs(explicitBinders,raw.type);
+      let required=new Set<string>(headerRefs);
+      if(raw.kind==="theorem"){
+        for(const v of this.sectionVariables)if(v.policy==="include")required.add(v.binder.name);
+        required=this.closeSectionDependencies(required,true);
+      }else{
+        required=this.closeSectionDependencies(required,false);
+      }
+      const sectionBinders=this.sectionVariables
+        .filter(v=>required.has(v.binder.name))
+        .map(v=>({...v.binder}));
+      this.incompleteProofGoalSink({
+        declarations:[...this.parsedDeclarations],
+        header:{
+          ...raw,
+          binders:[...sectionBinders,...explicitBinders],
+          namespacePath:[...this.namespaceStack],
+        },
+        sourceStartOffset,
+        sourceEndOffset:failure.offset,
+        failureOffset:failure.offset,
+        message:`expected proof tactic at offset ${failure.offset}, found '${failure.text}'`,
+      });
+    }catch{
+      // Tooling observations are fail-open and cannot change parser rejection.
+    }
+  }
+
   private emitIncompleteProofObservation(
     raw:Extract<SurfaceDeclaration,{kind:"theorem"|"example"}>,
     startOffset:number,
