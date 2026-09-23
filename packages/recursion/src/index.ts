@@ -32,6 +32,15 @@ export function containsSurfaceName(term: SurfaceTerm, name: string, bound: Read
       for (const introduced of term.names) next.add(introduced);
       return containsSurfaceName(term.body, name, next);
     }
+    case "showProof":
+      return containsSurfaceName(term.type, name, bound) || containsSurfaceName(term.body, name, bound);
+    case "haveProof": {
+      if (term.type && containsSurfaceName(term.type, name, bound)) return true;
+      if (containsSurfaceName(term.value, name, bound)) return true;
+      const next = new Set(bound);
+      next.add(term.name);
+      return containsSurfaceName(term.body, name, next);
+    }
     case "eq": return containsSurfaceName(term.left, name, bound) || containsSurfaceName(term.right, name, bound);
     case "binaryOp": return containsSurfaceName(term.left, name, bound) || containsSurfaceName(term.right, name, bound);
     case "arrayLit": case "tuple": return term.items.some(item => containsSurfaceName(item, name, bound));
@@ -193,6 +202,22 @@ function rewriteBranchTerm(
       const next = new Set(shadowed);
       for (const introduced of term.names) next.add(introduced);
       return { ...term, body: rewriteBranchTerm(term.body, declarationName, recursiveNames, patternBinders, next) };
+    }
+    case "showProof":
+      return {
+        ...term,
+        type: rewriteBranchTerm(term.type, declarationName, recursiveNames, patternBinders, shadowed),
+        body: rewriteBranchTerm(term.body, declarationName, recursiveNames, patternBinders, shadowed),
+      };
+    case "haveProof": {
+      const next = new Set(shadowed);
+      next.add(term.name);
+      return {
+        ...term,
+        type: term.type ? rewriteBranchTerm(term.type, declarationName, recursiveNames, patternBinders, shadowed) : undefined,
+        value: rewriteBranchTerm(term.value, declarationName, recursiveNames, patternBinders, shadowed),
+        body: rewriteBranchTerm(term.body, declarationName, recursiveNames, patternBinders, next),
+      };
     }
     case "name": {
       if (recursiveNames.includes(term.name) && !shadowed.has(term.name)) {
