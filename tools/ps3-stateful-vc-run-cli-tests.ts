@@ -144,6 +144,7 @@ const execution = run([
   "monadic-vc-run",
   lowering,
   "--lean-project", leanProject,
+  "--lean-toolchain", "4.33.1",
   "--lake-cmd", missingLake,
   "--out", runArtifact,
   "--json",
@@ -168,6 +169,7 @@ const report = JSON.parse(fs.readFileSync(runArtifact, "utf8"));
 assert.equal(report.schema, "proofscript.stateful-vc-run/v1");
 assert.equal(report.status, "failed");
 assert.equal(report.failedStage, "setup");
+assert.equal(report.lean.requestedToolchain, "leanprover/lean4:v4.33.1");
 assert.match(report.message, /unable to execute Lean|ENOENT|not found|unsupported Lean version/iu);
 assert.equal(report.claims.leanEnvironmentResolved, false);
 assert.equal(report.claims.realVerificationConditionsGenerated, false);
