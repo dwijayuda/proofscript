@@ -220,7 +220,28 @@
       "npmFfi": "bare npm FFI dependencies are resolved relative to the FFI manifest and bound by package name/version/package.json SHA-256/content-tree SHA-256",
       "identitySchema": "proofscript.npm-dependency-identity/v1",
       "tamperRejection": true,
-      "sourcePackageImports": "not yet implemented"
+      "sourcePackageImports": "source package module bytes are Core-module-source-hash bound; installed source-package revalidation in public certificate verify remains future hardening"
+    },
+    "sourcePackages": {
+      "status": "implemented-pending-execution",
+      "declaration": "package.json.proofscript.sourceRoot",
+      "importModel": "ordinary ProofScript module names; A.B resolves to A/B.ps across deterministic local/package source roots",
+      "discovery": "declared dependencies/optionalDependencies/devDependencies installed under project node_modules",
+      "failClosed": [
+        "absolute or escaping proofscript.sourceRoot",
+        "missing source root",
+        "duplicate source root",
+        "missing module",
+        "ambiguous module across local/package roots",
+        "module import cycles"
+      ],
+      "provenance": [
+        "package name/version/package.json SHA-256 in ProjectModuleGraph.packages",
+        "per-module exact source SHA-256 in checked Core module metadata"
+      ],
+      "publishingFixture": "examples/product-v1/source-package-math",
+      "consumerFixture": "examples/product-v1/source-package-app",
+      "gate": "test:product-v1:source-package"
     }
   },
   "trustBoundary": [
