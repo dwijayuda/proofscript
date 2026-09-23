@@ -1,0 +1,9 @@
+function settleInvoice(payer: AccountId, merchant: AccountId, amount: Nat): State Bank Unit
+  requires positive: amount > 0
+  requires distinct: payer != merchant
+  ensures payer_debited: balanceOf(payer) = old(balanceOf(payer)) - amount
+  ensures merchant_credited: balanceOf(merchant) = old(balanceOf(merchant)) + amount
+:= do {
+  debit(payer, amount);
+  credit(merchant, amount);
+}
