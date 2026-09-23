@@ -1,5 +1,5 @@
 import { Environment, Level, Term, infer, kernelWhnf } from "@proofscript/kernel";
-import { SurfaceBinder, SurfaceTerm } from "@proofscript/syntax";
+import { ElaborationError, SurfaceBinder, SurfaceTerm } from "@proofscript/syntax";
 import { contextFromTypes } from "./coreUtils";
 import { GlobalInfo } from "./globalEnvironment";
 import { validateInstanceBinderDomain } from "./typeclassSynthesis";
@@ -96,7 +96,7 @@ export function elabTelescopeGoal(
       const goal = elaborateTerm(result, names, types, globals, available, kernelEnv);
       const goalSort = kernelWhnf(kernelEnv, infer(kernelEnv, ctx, goal));
       if (goalSort.tag !== "sort") {
-        throw new Error("initial proof goal is not a type");
+        throw new ElaborationError("initial proof goal is not a type");
       }
       return {
         locals: [...names],
@@ -108,7 +108,7 @@ export function elabTelescopeGoal(
     const domain = elaborateTerm(b.type, names, types, globals, available, kernelEnv);
     const domainSort = kernelWhnf(kernelEnv, infer(kernelEnv, ctx, domain));
     if (domainSort.tag !== "sort") {
-      throw new Error(`initial proof binder '${b.name}' domain is not a type`);
+      throw new ElaborationError(`initial proof binder '${b.name}' domain is not a type`);
     }
     validateInstanceBinderDomain(b, domain, globals, kernelEnv, ctx);
     return go(i + 1, [...names, b.name], [...types, domain]);
