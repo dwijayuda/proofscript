@@ -126,7 +126,7 @@ export class ProofScriptLanguageServer {
               documentSymbolProvider: true,
               completionProvider: {
                 resolveProvider: false,
-                triggerCharacters: ["."],
+                triggerCharacters: [".", "{"],
               },
               definitionProvider: true,
               referencesProvider: true,
