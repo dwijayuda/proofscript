@@ -2,7 +2,13 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { IncrementalCompilerSession, checkSource, withStandardPrelude } from "@proofscript/compiler";
+import {
+  IncrementalCompilerSession,
+  checkSource,
+  withStandardPrelude,
+  type FrontendProofState,
+  type FrontendProofStateEvent,
+} from "@proofscript/compiler";
 import { formatSource } from "@proofscript/formatter";
 
 export interface Position {
@@ -318,7 +324,16 @@ export class ProofScriptLanguageService {
     let assumptions: readonly string[] = [];
     let surfaceFeatures: readonly SurfaceFeatureOccurrence[] = [];
     let proofStates: readonly ProofStateInfo[] = [];
-    let rawProofStates: readonly { readonly kind: "tactic" | "branch"; readonly tactic: string; readonly startOffset: number; readonly endOffset: number; readonly goal: string; readonly locals: readonly { readonly name: string; readonly type: string }[]; readonly branch?: string }[] = [];
+    let rawProofStates: readonly FrontendProofState[] = [];
+    const partialProofStates: FrontendProofState[] = [];
+    const proofStateSink = (event: FrontendProofStateEvent): void => {
+      if (document.filePath) {
+        if (!event.filePath || normalizePath(event.filePath) !== normalizePath(document.filePath)) return;
+      } else if (event.filePath) {
+        return;
+      }
+      partialProofStates.push(event.state);
+    };
     let sourceDeclarations: readonly SourceDeclarationOccurrence[] = [];
     let sourceReferences: readonly SourceReferenceOccurrence[] = [];
     let projectDeclarations: readonly ProjectDeclarationOccurrence[] = [];
@@ -351,6 +366,7 @@ export class ProofScriptLanguageService {
         const sourceProvider = this.sourceProvider();
         const checked = session.checkProjectFile(document.filePath, withStandardPrelude({
           sourceProvider,
+          proofStateSink,
         }));
         const workspace = session.checkWorkspaceForFile(document.filePath, withStandardPrelude({
           sourceProvider,
@@ -372,7 +388,7 @@ export class ProofScriptLanguageService {
         rawProofStates = currentModule?.proofStates ?? [];
         localDeclarationNames = new Set(currentModule?.declarations.map((declaration) => declaration.name) ?? []);
       } else {
-        const checked = checkSource(document.text, withStandardPrelude());
+        const checked = checkSource(document.text, withStandardPrelude({ proofStateSink }));
         summary = checked.summary;
         rawFeatures = checked.ownedFeatures;
         rawDeclarationLocations = checked.declarationLocations;
@@ -394,17 +410,7 @@ export class ProofScriptLanguageService {
         endOffset: use.endOffset,
         range: rangeFromOffsets(document.text, use.startOffset, use.endOffset),
       }));
-      proofStates = rawProofStates.map((state, index) => ({
-        id: `proof-state:${state.kind}:${state.startOffset}:${state.endOffset}:${index}`,
-        kind: state.kind,
-        tactic: state.tactic,
-        goal: state.goal,
-        locals: state.locals.map((local) => ({ ...local })),
-        ...(state.branch ? { branch: state.branch } : {}),
-        startOffset: state.startOffset,
-        endOffset: state.endOffset,
-        range: rangeFromOffsets(document.text, state.startOffset, state.endOffset),
-      }));
+      proofStates = proofStateInfos(rawProofStates, document.text);
 
       const semanticDeclarations = localDeclarationNames
         ? declarations.filter((declaration) => localDeclarationNames!.has(declaration.name))
@@ -497,6 +503,7 @@ export class ProofScriptLanguageService {
     } catch (error) {
       cancellation?.throwIfCancellationRequested();
       status = statusFromError(error);
+      proofStates = proofStateInfos(partialProofStates, document.text);
       diagnostics = [diagnosticFromError(error, document.text, status)];
     }
 
@@ -639,24 +646,26 @@ export class ProofScriptLanguageService {
 
     try {
       const analysis = this.analyze(uri, false, cancellation);
-      if (analysis.status === "accepted" && position) {
+      if (position) {
         const offset = offsetAt(analysis.text, position);
-        const declaration = analysis.sourceDeclarations.find((item) =>
-          offset >= item.startOffset && offset < item.endOffset
-        );
-        if (declaration && (declaration.kind === "theorem" || declaration.kind === "example")) {
-          declarationGoal = {
-            id: `compiler:${declaration.qualifiedName}`,
-            origin: "compiler-theorem",
-            name: declaration.qualifiedName,
-            kind: declaration.kind,
-            statement: declaration.type,
-            status: "checked",
-            proofRequired: true,
-            range: declaration.range,
-          };
-        }
         tacticState = proofStateAtOffset(analysis.proofStates, offset);
+        if (analysis.status === "accepted") {
+          const declaration = analysis.sourceDeclarations.find((item) =>
+            offset >= item.startOffset && offset < item.endOffset
+          );
+          if (declaration && (declaration.kind === "theorem" || declaration.kind === "example")) {
+            declarationGoal = {
+              id: `compiler:${declaration.qualifiedName}`,
+              origin: "compiler-theorem",
+              name: declaration.qualifiedName,
+              kind: declaration.kind,
+              statement: declaration.type,
+              status: "checked",
+              proofRequired: true,
+              range: declaration.range,
+            };
+          }
+        }
       }
     } catch {
       // Verification-extension sources may intentionally be outside the ordinary
@@ -954,6 +963,20 @@ function symbolAtPosition(analysis: Analysis, position: Position): string | null
     offset >= item.startOffset && offset < item.endOffset
   );
   return reference?.resolvedName ?? null;
+}
+
+function proofStateInfos(states: readonly FrontendProofState[], text: string): ProofStateInfo[] {
+  return states.map((state, index) => ({
+    id: `proof-state:${state.kind}:${state.startOffset}:${state.endOffset}:${index}`,
+    kind: state.kind,
+    tactic: state.tactic,
+    goal: state.goal,
+    locals: state.locals.map((local) => ({ ...local })),
+    ...(state.branch ? { branch: state.branch } : {}),
+    startOffset: state.startOffset,
+    endOffset: state.endOffset,
+    range: rangeFromOffsets(text, state.startOffset, state.endOffset),
+  }));
 }
 
 function proofStateAtOffset(states: readonly ProofStateInfo[], offset: number): ProofStateInfo | null {
