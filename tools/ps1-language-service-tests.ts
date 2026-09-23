@@ -191,6 +191,41 @@ assert.match(commentFormatEdits[0].newText, /-- keep/u);
 assert.match(commentFormatEdits[0].newText, /def x: Nat := \{1 \+ 2\};/u);
 formatService.closeDocument(formatUri);
 
+// Bounded code actions reuse canonical diagnostics/formatter; no editor-side parsing.
+const actionService = new ProofScriptLanguageService();
+const actionFile = path.join(srcDir, "Actions.ps");
+const actionUri = "proofscript-test://Actions.ps";
+const missingSemicolonSource = "def missing: Nat := 1\n";
+fs.writeFileSync(actionFile, missingSemicolonSource);
+actionService.openDocument(actionUri, 1, missingSemicolonSource, actionFile);
+const missingAnalysis = actionService.analyze(actionUri);
+assert.equal(missingAnalysis.status, "rejected");
+assert.equal(missingAnalysis.diagnostics.length, 1);
+assert.equal(missingAnalysis.diagnostics[0].code, "PSLS1001");
+assert.match(missingAnalysis.diagnostics[0].data.rawMessage, /^expected ';' at offset \d+, found '/u);
+const missingActions = actionService.codeActions(actionUri, missingAnalysis.diagnostics[0].range);
+assert.equal(missingActions.length, 1);
+assert.equal(missingActions[0].title, "Insert missing ';'");
+assert.equal(missingActions[0].kind, "quickfix");
+assert.equal(missingActions[0].isPreferred, true);
+const semicolonEdit = missingActions[0].edit.changes[actionUri]?.[0];
+assert.ok(semicolonEdit);
+assert.equal(semicolonEdit.newText, ";");
+actionService.updateDocument(actionUri, 2, [semicolonEdit]);
+assert.equal(actionService.analyze(actionUri).status, "accepted");
+
+const messyActionSource = "def   actionFormatted : Nat:={1+2};\n";
+actionService.replaceDocument(actionUri, 3, messyActionSource);
+const formatActions = actionService.codeActions(actionUri, {
+  start: { line: 0, character: 0 },
+  end: { line: 0, character: messyActionSource.length - 1 },
+});
+assert.equal(formatActions.length, 1);
+assert.equal(formatActions[0].title, "Format ProofScript document");
+assert.equal(formatActions[0].kind, "source.format.proofscript");
+assert.match(formatActions[0].edit.changes[actionUri]?.[0]?.newText ?? "", /def actionFormatted: Nat := \{1 \+ 2\};/u);
+actionService.closeDocument(actionUri);
+
 // Project-level incremental reuse + importer invalidation.
 const projectRoot = fs.mkdtempSync(path.join(os.tmpdir(), "proofscript-language-service-project-"));
 fs.writeFileSync(path.join(projectRoot, "package.json"), JSON.stringify({ private: true }, null, 2) + "\n");
