@@ -29,6 +29,11 @@ assert.match(
   /assurance:ps3:stateful-lean-logical-vc -- --require-proof/u,
   "logical CI lane must require full proof discharge",
 );
+assert.match(
+  statefulWorkflow,
+  /assurance:ps3:stateful-lean-invoice-vc -- --require-proof/u,
+  "invoice CI lane must require full proof discharge",
+);
 assert.doesNotMatch(
   statefulWorkflow,
   /assurance:ps3:stateful-lean-(?:transfer-)?vc -- --strict/u,
@@ -69,11 +74,11 @@ try {
     "leanprover/lean4:v4.34.0",
     "leanprover/lean4:v4.35.0-rc2",
   ]);
-  assert.equal(report.cases.length, 12);
+  assert.equal(report.cases.length, 15);
 
   for (const toolchain of report.toolchains) {
     const cases = report.cases.filter((item: any) => item.toolchain === toolchain);
-    assert.deepEqual(cases.map((item: any) => item.name), ["debit", "transfer", "frame", "logical"]);
+    assert.deepEqual(cases.map((item: any) => item.name), ["debit", "transfer", "frame", "logical", "invoice"]);
     assert.ok(cases.every((item: any) => item.requireProof === true));
     assert.ok(cases.every((item: any) => item.status === "planned"));
   }
