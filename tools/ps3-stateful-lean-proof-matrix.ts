@@ -58,6 +58,11 @@ const proofCases = [
     source: "examples/software/08-bank-debit-frame-stateful-vc.ps",
     model: "examples/software/06-bank-state.model.json",
   },
+  {
+    name: "logical",
+    source: "examples/software/10-bank-audit-logical-stateful-vc.ps",
+    model: "examples/software/06-bank-state.model.json",
+  },
 ];
 
 function slug(toolchain: string) {
