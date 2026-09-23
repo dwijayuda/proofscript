@@ -190,7 +190,8 @@ function elaborateRecursorProof(
     binderInfo: "explicit",
   };
 
-  const recLevels = [...data.typeHead.levels, goalSort.level];
+  // PSKernel simple recursors declare universes as [motive, ...family].
+  const recLevels = [goalSort.level, ...data.typeHead.levels];
   let recursor: Term = {
     tag: "const",
     name: data.recEntry.declaration.name,
