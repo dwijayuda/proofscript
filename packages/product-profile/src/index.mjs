@@ -36,6 +36,8 @@ export function runtimeCertificateMetadata(root) {
   return {
     runtimeProfile: runtime.metadata,
     correspondence: {
+      level: "profile-bound",
+      meaning: "runtime representation profile identity is bound; no emitted backend artifact is bound",
       runtimeRepresentationProfileBound: true,
       runtimeImplementationGated: runtime.profile.correspondence?.runtimeImplementationGated === true,
       backendArtifactBound: false,
@@ -59,6 +61,22 @@ export function verifyRuntimeCertificateMetadata(root, certificate) {
   const claims = certificate.correspondence;
   if (!claims || claims.runtimeRepresentationProfileBound !== true) {
     throw new Error("certificate runtime correspondence metadata is missing its runtime-profile binding claim");
+  }
+  const expectedLevel = claims.backendArtifactBound === true ? "artifact-bound-structural" : "profile-bound";
+  if (claims.level !== expectedLevel) {
+    throw new Error(`certificate runtime correspondence level mismatch: expected ${expectedLevel}, got ${String(claims.level)}`);
+  }
+  if (
+    expectedLevel === "profile-bound"
+    && claims.meaning !== "runtime representation profile identity is bound; no emitted backend artifact is bound"
+  ) {
+    throw new Error("certificate profile-bound correspondence meaning is invalid");
+  }
+  if (
+    expectedLevel === "artifact-bound-structural"
+    && claims.meaning !== "runtime profile and emitted backend artifact hash are bound; execution correspondence is not proved"
+  ) {
+    throw new Error("certificate artifact-bound correspondence meaning is invalid");
   }
   for (const forbiddenClaim of [
     "runtimeDifferentialTested",
