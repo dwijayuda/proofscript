@@ -2,7 +2,7 @@
   "schema": "proofscript.product-v1-completion/v1",
   "branch": "product/v1-completion",
   "baseCommit": "a7d223c421653e2a74753fbfe108c605d393465c",
-  "productVision": "Small Go-like general-purpose ProofScript for the JS ecosystem with dependent types, theorem proving, and formal verification.",
+  "productVision": "Small Go-like general-purpose ProofScript for the JavaScript ecosystem with dependent types, theorem proving, and formal verification.",
   "finishRule": "Complete only when every required pillar has executable green exit gates; no subjective percentages.",
   "canonicalArchitecture": {
     "sourceSemantics": "@proofscript/compiler -> canonical frontend -> checked Core -> PSKernel",
