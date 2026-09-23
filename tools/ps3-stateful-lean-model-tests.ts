@@ -7,6 +7,7 @@ import { makeMonadicContractsArtifact } from "../packages/contracts/src/index.mj
 import {
   classifyLeanCompatibilityOutput,
   createMonadicLoweringArtifact,
+  createStatefulAdequacyCheck,
 } from "../packages/monadic-lowering/src/index.mjs";
 import { buildStateModelBinding } from "../packages/state-models/src/index.mjs";
 
@@ -228,6 +229,11 @@ const transferLowering = createMonadicLoweringArtifact({
   contractArtifactSha256: "c".repeat(64),
   packageVersion: "test",
 });
+assert.equal(
+  transferLowering.statefulAdequacyCheck.check.sha256,
+  lowering.statefulAdequacyCheck.check.sha256,
+  "adequacy check identity must depend on the state model, not the program",
+);
 assert.equal(transferLowering.statefulProgramLowering.programLoweringReady, true);
 assert.match(
   transferLowering.statefulProgramLowering.leanDefinition,
@@ -270,6 +276,17 @@ assert.doesNotMatch(
   transferLowering.statefulVcRequest.request.source,
   /!=/u,
   "generated Lean request must not retain ProofScript != syntax",
+);
+
+const unsupportedAdequacyInput = structuredClone(lowering);
+unsupportedAdequacyInput.stateModel.lean.monadTypeConstructor = "ReaderT Env Id";
+const unsupportedAdequacy = createStatefulAdequacyCheck(unsupportedAdequacyInput);
+assert.equal(unsupportedAdequacy.ready, false);
+assert.equal(unsupportedAdequacy.check.source, null);
+assert.ok(
+  unsupportedAdequacy.diagnostics.some(
+    (diagnostic: any) => diagnostic.code === "stateful-adequacy-unsupported-monad-shape",
+  ),
 );
 
 const inequalityMismatchSourceText = `function invalidDistinct(from: AccountId, flag: Bool): State Bank Unit
