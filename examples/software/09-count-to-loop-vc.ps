@@ -1,0 +1,12 @@
+function countTo(n: Nat): Nat
+  ensures done: result = n
+:= {
+  let mut i: Nat := 0;
+  while (i < n)
+    invariant inv_bound: i <= n
+    decreases remaining: n - i
+  {
+    i := i + 1;
+  }
+  i
+}
