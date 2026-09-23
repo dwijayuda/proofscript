@@ -41,6 +41,8 @@ export function elaborateProgram(
 
 export function elaborateInitialProofGoal(
   prefixDecls: SurfaceDeclaration[],
+  sourceName: string,
+  namespacePath: readonly string[] | undefined,
   binders: SurfaceBinder[],
   resultTerm: SurfaceTerm,
   availableLevels: readonly string[],
@@ -50,6 +52,8 @@ export function elaborateInitialProofGoal(
 ) {
   return elaborateInitialProofGoalCore(
     prefixDecls,
+    sourceName,
+    namespacePath,
     binders,
     resultTerm,
     availableLevels,
