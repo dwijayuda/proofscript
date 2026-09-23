@@ -195,3 +195,34 @@ psc monadic-vc-run <lowering.json> --lean-project <dir> --lean-toolchain 4.33.1 
 
 The override is normalized to `leanprover/lean4:v<version>` and applied only
 to a temporary copy of the verification project.
+
+
+## Confirmed green checkpoint — 2026-09-23
+
+The consolidated command above was executed at commit
+`94696c4eb41798583e47b708fa445eb9f84c0d16` on Windows and completed green
+for Lean 4.33.1, 4.34.0, and 4.35.0-rc2:
+
+```text
+proof matrix: 6/6 proved
+proof matrix failures: 0
+allProofsDischarged: true
+provenanceConsistent: true
+
+end-test steps: 8/8 passed
+failed steps: 0
+skipped steps: 0
+allStaticGatesPassed: true
+allLeanProofsDischarged: true
+```
+
+The transfer request still uses the normal generated path:
+
+```text
+mvcgen [transfer]
+all_goals simp_all
+```
+
+The model now contains symmetric cross-account preservation lemmas so a source
+hypothesis `from ≠ to` is sufficient for automation to simplify both debit and
+credit preservation obligations without transfer-specific proof scripting.

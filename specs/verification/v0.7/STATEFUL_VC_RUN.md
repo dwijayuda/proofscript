@@ -187,3 +187,67 @@ Thus a green matrix means the same generated proof request was accepted across
 the selected compatibility lanes. It still does not establish state-model
 adequacy, source-to-Lean program equivalence, exceptional-path coverage, or full
 Lean equivalence.
+
+
+## 2026-09-23 promoted debit + transfer matrix evidence
+
+A local proof-required run at repository commit
+`94696c4eb41798583e47b708fa445eb9f84c0d16` completed on:
+
+```text
+Lean 4.33.1
+Lean 4.34.0
+Lean 4.35.0-rc2
+```
+
+For both canonical cases in every lane:
+
+```text
+status = proved
+failedStage = null
+residual goal count = 0
+semanticProofDischarge = true
+```
+
+Matrix summary:
+
+```text
+total = 6
+proved = 6
+failed = 0
+allProofsDischarged = true
+provenanceConsistent = true
+```
+
+Current shared model identities:
+
+```text
+stateModelDescriptorSha256 = 3d749687aee201ff2e3f4d312c939ab49ab8a6584d51d6355d1d7500c371ff1f
+leanModelSha256 = 6f2a680d0fbef2143b3e4fb838e059ccc62a5cd144e5cfa2a66d8bfd7153ce53
+```
+
+Debit theorem-family identities:
+
+```text
+sourceSha256 = 6e5d389bb89b5f52501166db0acfd1f9dc0cfa84d918ea8713c0ef74888f0c55
+generatedProgramSha256 = 337b7fe5c3c9bc53833ed121fd15b378fdc449feba27abac0ddb81bff885e51e
+generatedTripleTargetSha256 = 9f9e271a41257b76953228549439282c17635a90ca70c13526fe6d0757eeca2c
+generatedRequestSha256 = 314212ca04378fc2d281cd3b6a2a77c0ede8a078757a95a412b386b88ac79ed3
+```
+
+Transfer theorem-family identities:
+
+```text
+sourceSha256 = 1a47a3c448e5e8a20affea22bc98f565531eb78572f83b80c28ead646951edde
+generatedProgramSha256 = e7f178be5aec53dd60cfe1ca5656a1ded1eb42032ca60ac8453138f7e71c2c09
+generatedTripleTargetSha256 = 3991596316b5b7f87efb6376cdf1e094f49a0625d183061c5cfabdcc152c3b5b
+generatedRequestSha256 = f2856fbeb19882429b6693a0013c37c711c839abe2f9ade5f7b3a567814a7e63
+```
+
+The dedicated stateful Lean CI workflow now enforces `--require-proof` for
+both debit and transfer on every resolved compatibility lane.
+
+These results leave the independent claims
+`stateModelAdequacyChecked`,
+`sourceToLeanProgramEquivalenceChecked`, and
+`exceptionalPathsCovered` false.

@@ -89,3 +89,46 @@ A green matrix does not by itself prove:
 - exceptional/abrupt path coverage;
 - profile-wide proof discharge;
 - full Lean 4 equivalence.
+
+
+## Confirmed matrix checkpoint — 2026-09-23
+
+Repository commit:
+
+```text
+94696c4eb41798583e47b708fa445eb9f84c0d16
+```
+
+Observed toolchains:
+
+```text
+leanprover/lean4:v4.33.1
+leanprover/lean4:v4.34.0
+leanprover/lean4:v4.35.0-rc2
+```
+
+Observed result:
+
+```text
+cases = 6
+proved = 6
+failed = 0
+allProofsDischarged = true
+provenanceValidation.valid = true
+provenanceConsistent = true
+```
+
+The corresponding consolidated end-test reported:
+
+```text
+totalSteps = 8
+passedSteps = 8
+failedSteps = 0
+skippedSteps = 0
+allStaticGatesPassed = true
+allLeanProofsDischarged = true
+```
+
+This checkpoint promotes debit+transfer proof discharge to a concrete
+multi-version compatibility result. It does not change the explicit non-claims
+below.

@@ -222,14 +222,13 @@ When Lean reaches the tactic but leaves residual goals, `proofscript.stateful-vc
 
 A real Lean 4.34.0 run has now completed the first stateful semantic vertical slice. The bank model, emitted `StateM` program, and concrete `Std.Do.Triple` target all typecheck; `mvcgen [withdraw]` plus the checked `simp_all` finisher closes the theorem with zero residual goals. The resulting `proofscript.stateful-vc-run/v1` reports `status = proved` and `semanticProofDischarge = true` for that concrete debit theorem only.
 
-The next target is the corrected two-account transfer contract. It now requires distinct accounts (`from != to`, emitted as Lean `≠`) so its debit and credit postconditions are semantically valid. The generalized VC runner can execute either source through the same evidence pipeline. After transfer is proved, repeat debit/transfer across the 4.33.1 floor/current-stable/current-RC matrix before widening to loop/frame reasoning. Exceptional/abrupt paths, state-model adequacy use, and source-to-Lean program equivalence remain explicitly unclaimed. Exceptional/abrupt paths remain explicitly uncovered until modeled.
+The corrected two-account transfer contract now requires distinct accounts (`from != to`, emitted as Lean `≠`) so its debit and credit postconditions are semantically valid. The generalized VC runner executes debit and transfer through the same evidence pipeline.
 
-A consolidated local end-test and proof-matrix harness are now implemented for
-that checkpoint. Per-run toolchain selection is temporary, every child VC report
-must satisfy canonical evidence invariants, and each debit/transfer proof case
-must retain identical source/model/generated-request provenance across Lean
-lanes. These harnesses are infrastructure only until a real machine run produces
-the corresponding Lean evidence.
+On 2026-09-23, repository commit `94696c4eb41798583e47b708fa445eb9f84c0d16` passed the consolidated local stateful end-test across Lean 4.33.1, 4.34.0, and 4.35.0-rc2. All six proof-required cases (debit + transfer × three lanes) completed with zero residual goals; matrix provenance validation passed and the end-test reported all eight steps green. The stateful hosted workflow is therefore promoted from VC-generation-only enforcement to `--require-proof` for both canonical cases.
+
+This is concrete proof evidence for the two generated theorem families and their recorded model/program/request provenance. It does **not** establish exceptional/abrupt path coverage, state-model adequacy use, source-to-Lean program equivalence, profile-wide proof discharge, or full Lean equivalence.
+
+The next bounded verification increment is explicit frame conditions, followed by loop invariant/progress obligations. Recursive function termination remains a separate Lean-compatible concern.
 
 ---
 

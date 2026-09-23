@@ -51,8 +51,8 @@ The historical workflow is preserved rather than deleted.
 - v0.7: next verification-language specification track;
 - KA138–KA146 verification code: useful implementation evidence/prototypes, not automatically final v0.7 semantics;
 - Lean 4.33.1: historical K3-TB assurance lane;
-- Lean 4.34.0: current product stable compatibility lane as of 2026-09-22;
-- Lean 4.35.0-rc2: current tracking/RC lane as of 2026-09-22.
+- Lean 4.34.0: current product stable compatibility lane as of 2026-09-23;
+- Lean 4.35.0-rc2: current tracking/RC lane as of 2026-09-23.
 
 See:
 
@@ -211,18 +211,21 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - canonical bank descriptor now binds its Lean import/namespace and `StateM Bank` constructor
 - provable debit-only end-to-end example (`07-bank-debit-stateful-vc.ps`) — added as the first semantic execution target
 - Lean VC derivation request blueprint (`proofscript.stateful-vc-request/v1`) — implemented; canonical bank model now has request-source provenance
-- Lean >=4.33.1 VC execution runner (`proofscript.stateful-vc-run/v1`) + dedicated `stateful-lean-ci` compatibility workflow — implemented; execution evidence pending hosted runner availability
+- Lean >=4.33.1 VC execution runner (`proofscript.stateful-vc-run/v1`) + dedicated `stateful-lean-ci` compatibility workflow — implemented; local proof-required matrix evidence is green, while hosted-run execution remains dependent on GitHub runner availability
 - Lean >=4.33.1 stateful compatibility policy — executable gate added; default developer toolchain is 4.34.0, while CI dynamically tracks latest stable and RC
 - `Std.Do.Triple -> mvcgen` compatibility rule — enforced by descriptor validation; omitted tactic defaults from Triple identity
-- local Lean 4.34.0 debit semantic evidence — **PROVED**: model build PASS, generated `StateM` program PASS, concrete `Std.Do.Triple` target PASS, `mvcgen [withdraw]` PASS, checked `simp_all` finisher PASS, zero residual goals, `semanticProofDischarge = true`
-- proved debit run provenance — source `6e5d389b...`, state-model descriptor `3d749687...`, Lean model `c32fefd2...`, generated program `337b7fe5...`, Triple target `9f9e271a...`, generated request `314212ca...`
-- profile-wide semantic proof discharge remains unclaimed; the proved claim applies to that concrete generated theorem/evidence run only
+- first local Lean 4.34.0 debit semantic evidence — **PROVED** historically; superseded for current provenance by the 2026-09-23 proof matrix after the Bank model gained symmetric cross-account preservation lemmas
+- proof-required stateful compatibility matrix at repository commit `94696c4eb41798583e47b708fa445eb9f84c0d16` on 2026-09-23 — **6/6 PROVED**: debit + transfer on Lean 4.33.1, 4.34.0, and 4.35.0-rc2; zero failed lanes; `allProofsDischarged = true`; `provenanceConsistent = true`
+- current shared state-model provenance — descriptor `3d749687...`, Lean model `6f2a680d...`
+- current debit proof provenance — source `6e5d389b...`, generated program `337b7fe5...`, Triple target `9f9e271a...`, generated request `314212ca...`
+- current transfer proof provenance — source `1a47a3c4...`, generated program `e7f178be...`, Triple target `39915963...`, generated request `f2856fbe...`
+- profile-wide semantic proof discharge remains unclaimed; the proved claims apply to these two concrete generated theorem families across the recorded three-lane matrix
 - public `psc monadic-vc-run` command — implemented; emits the same evidence schema and treats residual Lean VCs as an accepted `vcs-generated` run, not as a proof
 - stable Lean-derived residual-goal artifact (`proofscript.stateful-vc-goals/v1`) — implemented with deterministic IDs/hashes
 - evidence-based claim promotion is centralized in `@proofscript/monadic-lowering` and covered by synthetic fail-closed stage tests
 - stateful VC evidence invariant validation — implemented; contradictory `proved` + residual-goal reports are rejected
 - per-run temporary Lean toolchain selection — implemented for the specialized stateful runner and public `psc monadic-vc-run`
-- proof-required debit+transfer multi-version matrix — implemented; execution evidence still pending the final local machine run
+- proof-required debit+transfer multi-version matrix — **PASS on local machine, 6/6 proved** across Lean 4.33.1 / 4.34.0 / 4.35.0-rc2
 - cross-version provenance consistency — implemented; the same proof case must retain identical source/model/generated theorem hashes across lanes
 - consolidated `proofscript.stateful-endtest/v1` local gate — implemented; combines build/static regressions with the proof matrix
 - Triple skeleton pre/post functions sourced from the WP binding artifact — implemented
@@ -248,14 +251,14 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - fail-closed `psc contracts --verification-profile ...` public CLI gate — PASS
 - stateful postcondition semantic encoding into concrete Lean `Std.Do` terms — **implemented for the bounded profile**
 - state-model adequacy theorem checking/use — **false**
-- semantic proof discharge — **true for the proved debit run; not claimed profile-wide**
-- `mvcgen` connection for public `Std.Do.Triple` — **working for the proved debit run**
+- semantic proof discharge — **true for the recorded debit+transfer matrix cases; not claimed profile-wide**
+- `mvcgen` connection for public `Std.Do.Triple` — **working for the recorded debit+transfer matrix cases**
 - public CLI router — 1,835 lines after public VC execution routing (below the 1,900-line KA145 architecture guard and 1,950-line KA146 ceiling)
 
 ## Next engineering target
 
-1. Run the consolidated local stateful end-test and prove the corrected two-account transfer contract; the canonical contract requires `from != to` and lowers that condition to Lean `≠`.
-2. Require the proof matrix to pass debit and transfer on the Lean 4.33.1 floor/current-stable/current-RC lanes with identical proof provenance.
-3. Preserve `stateModelAdequacyChecked = false`, `sourceToLeanProgramEquivalenceChecked = false`, and `exceptionalPathsCovered = false` until those are separately checked.
-4. After transfer semantics are green, promote loop invariant/decreases/frame work incrementally rather than broadening the stateful profile all at once.
+1. Preserve the new proof-required compatibility matrix as a regression gate; hosted CI must reject any debit/transfer lane that leaves residual goals.
+2. Preserve `stateModelAdequacyChecked = false`, `sourceToLeanProgramEquivalenceChecked = false`, and `exceptionalPathsCovered = false` until those are separately checked.
+3. Begin the next bounded stateful-verification increment: explicit frame conditions first, then loop invariant/progress obligations, rather than broadening the profile all at once.
+4. Keep recursive termination (`termination_by` / `decreasing_by`) separate from loop-progress verification.
 5. Continue CLI/frontend/LSP convergence only behind canonical compiler APIs and existing regression gates.
