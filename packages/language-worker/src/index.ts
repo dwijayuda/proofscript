@@ -7,6 +7,7 @@ import type {
   DocumentSymbolInfo,
   HoverInfo,
   Position,
+  SemanticTokenInfo,
   WorkspaceEditInfo,
   TextDocumentContentChange,
 } from "@proofscript/language-service";
@@ -185,6 +186,10 @@ export class LanguageWorkerClient {
 
   async completion(uri: string, position: Position, ownerId?: number | string | null): Promise<readonly CompletionInfo[]> {
     return this.request("completion", { uri, position }, ownerId);
+  }
+
+  async semanticTokens(uri: string, ownerId?: number | string | null): Promise<readonly SemanticTokenInfo[]> {
+    return this.request("semanticTokens", { uri }, ownerId);
   }
 
   async definition(uri: string, position: Position, ownerId?: number | string | null): Promise<LocationInfo | null> {
