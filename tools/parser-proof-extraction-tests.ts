@@ -24,7 +24,7 @@ assert.doesNotMatch(parser, /private parseProofTerm\(/, 'Parser must not keep in
 assert.doesNotMatch(parser, /private parseProofStep\(/, 'Parser must not keep inline parseProofStep');
 assert.match(parser, /parseProofTerm\(\{/, 'Parser must delegate proof parsing through a narrow host object');
 
-const { parseSource } = require('../packages/parser/dist/index.js');
+const { parseSource, parseLeadingImports } = require('../packages/parser/dist/index.js');
 const parsed = parseSource(`
 def x: Nat := { 1 };
 theorem x_eq: x = 1 := by rfl
@@ -76,6 +76,16 @@ for (const branch of parsed.declarations[16].value.branches ?? []) {
   assert.equal(typeof branch.body.sourceEndOffset, 'number');
 }
 assert.equal(parsed.declarations[17].value.tag, 'simpProof');
+
+assert.deepEqual(
+  parseLeadingImports("import Foo;\nimport Bar.Baz;\ntheorem incomplete(P: Prop, h: P): P := by { assumption\n"),
+  ['Foo', 'Bar.Baz'],
+  'project import discovery must not require the rest of an editor buffer to parse',
+);
+assert.throws(
+  () => parseLeadingImports("import Foo;\nimport Foo;\ntheorem x: Nat := 1;"),
+  /duplicate import 'Foo'/u,
+);
 
 const incompleteObservations = [];
 const incompleteSource = "theorem incomplete(P: Prop, h: P): P := by { assumption\n";
