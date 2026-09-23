@@ -10,11 +10,11 @@ Canonical path:
       -> @proofscript/lsp
       -> editors/vscode
 
-Current promoted features: diagnostics with stale-version rejection, cancellation-aware RPC, hover, document outline, completion, go-to-definition, project references, safe global rename, compiler-backed document status, cursor semantic information, Infoview, and server lifecycle/status commands.
+Current promoted features: diagnostics with stale-version rejection, cancellation-aware RPC, hover, document outline, completion, go-to-definition, project references, safe global rename, compiler-backed semantic highlighting, compiler-backed document status, cursor semantic information, Infoview, and server lifecycle/status commands.
 
 Definition/references/rename are backed by canonical parser source spans plus the same namespace/open-namespace resolver used by elaboration. They do not use editor-side textual symbol guessing.
 
-The 0.46 donor still contains signature help, semantic tokens, code actions, and richer proof-state UI. Those providers remain disabled until the current compiler-backed service exposes the required semantic APIs.
+The 0.46 donor still contains signature help, code actions, and richer proof-state UI. Those providers remain disabled until the current compiler-backed service exposes the required semantic APIs.
 
 Protocol v1 does not expose tactic-state snapshots. The active Infoview never fabricates proof goals.
 
