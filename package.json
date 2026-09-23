@@ -836,7 +836,10 @@
     "test:product-v1:runtime-certificate": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-runtime-certificate-tests.ts",
     "test:product-v1:formatter": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-formatter-tests.ts",
     "test:product-v1:json-validation": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-json-validation-tests.ts",
-    "test:product-v1:source-package": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-source-package-tests.ts"
+    "test:product-v1:source-package": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-source-package-tests.ts",
+    "test:product-v1:representative-apps": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-representative-apps-tests.ts",
+    "assurance:ps3:stateful-lean-invoice-vc": "npm run assurance:ps3:stateful-lean-vc -- --source examples/product-v1/stateful-invoice/Invoice.ps --model examples/software/06-bank-state.model.json",
+    "assurance:ps3:stateful-lean-invoice-vc:proof": "npm run assurance:ps3:stateful-lean-invoice-vc -- --require-proof"
   },
   "engines": {
     "node": ">=20"
