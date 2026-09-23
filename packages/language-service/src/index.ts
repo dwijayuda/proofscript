@@ -1156,7 +1156,7 @@ function analysisResultId(
     diagnostics: diagnostics.map((diagnostic) => diagnostic.data.identity.fingerprint),
     declarations: declarations.map((declaration) => [declaration.name, declaration.kind, declaration.type]),
     surfaceFeatures: surfaceFeatures.map((feature) => [feature.feature, feature.startOffset, feature.endOffset]),
-    proofStates: proofStates.map((state) => [state.kind, state.tactic, state.branch ?? null, state.goal, state.startOffset, state.endOffset, state.locals.map((local) => [local.name, local.type])]),
+    proofStates: proofStates.map((state) => [state.sourceStatus, state.kind, state.tactic, state.branch ?? null, state.goal, state.startOffset, state.endOffset, state.locals.map((local) => [local.name, local.type])]),
     sourceDeclarations: sourceDeclarations.map((declaration) => [
       declaration.qualifiedName,
       declaration.kind,
