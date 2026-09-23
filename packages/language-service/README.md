@@ -29,6 +29,13 @@ The service does not repair source, continue parsing after an error, fabricate
 holes/metavariables, or synthesize speculative proof states. Other parser
 failures expose no partial state.
 
+Completion also reuses these canonical states. When a proof state covers the
+cursor, the service adds the bounded native tactic keywords already supported by
+the compiler. This is keyword completion only: it does not predict
+applicability, run tactics speculatively, search for proofs, or construct proof
+terms. Outside a proof state, normal source completion does not inject tactic
+keywords.
+
 ## Dependency rule
 
 ```text
