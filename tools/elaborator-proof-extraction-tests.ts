@@ -14,7 +14,7 @@ const proof = fs.readFileSync(proofSrc, 'utf8');
 for (const name of ['ProofElaborationHost', 'elabProofTerm']) {
   assert.match(proof, new RegExp(`export (?:interface|function) ${name}\\b`), `proofElaborator.ts must export ${name}`);
 }
-for (const helper of ['elabRflProof', 'elabExactProof', 'elabAssumptionProof', 'elabApplyProof', 'elabIntroProof']) {
+for (const helper of ['elabRflProof', 'elabExactProof', 'elabAssumptionProof', 'elabApplyProof', 'elabIntroProof', 'elabShowProof', 'elabHaveProof']) {
   assert.match(proof, new RegExp(`function ${helper}\\b`), `proofElaborator.ts must own ${helper}`);
 }
 assert.match(proof, /Eq\.refl/, 'proofElaborator.ts must own rfl Eq.refl construction');
@@ -43,12 +43,20 @@ theorem apply_exact(h: P): P := by { apply h }
 
 theorem apply_subgoal(h: P -> Q, hp: P): Q := by { apply h; assumption }
 
+theorem show_exact(h: P): P := by { show P; exact h }
+
+theorem have_exact(h: P): P := by { have hp : P := h; exact hp }
+
+theorem have_inferred(h: P): P := by { have hp := h; exact hp }
+
+theorem have_nested(h: P): P := by { have hp : P := by { exact h }; show P; exact hp }
+
 def executable: Nat := { idNat 9 }
 `,
 });
 const checked = runPsliveJson(['check', fixture.source, '--json']);
 assert.equal(checked.status, 'accepted');
-for (const name of ['idNat_rfl', 'exact_rfl', 'intro_assumption', 'apply_exact', 'apply_subgoal']) {
+for (const name of ['idNat_rfl', 'exact_rfl', 'intro_assumption', 'apply_exact', 'apply_subgoal', 'show_exact', 'have_exact', 'have_inferred', 'have_nested']) {
   assert.ok(checked.userDeclarations.some(d => d.name === name && d.kind === 'theorem'), `expected theorem ${name}`);
 }
 const built = buildJsFixture(fixture, 'proof-elab.js');
@@ -60,5 +68,23 @@ const bad = fixture.write('BadProof.ps', 'theorem bad: 1 = 2 := by rfl\n');
 const rejected = runPsliveJson(['check', bad, '--json'], 1);
 assert.equal(rejected.status, 'rejected');
 assert.match(rejected.message, /rfl|definitionally equal|equality sides/i);
+
+const badShow = fixture.write('BadShow.ps', `
+axiom P: Prop;
+axiom Q: Prop;
+theorem bad_show(h: P): P := by { show Q; exact h }
+`);
+const rejectedShow = runPsliveJson(['check', badShow, '--json'], 1);
+assert.equal(rejectedShow.status, 'rejected');
+assert.match(rejectedShow.message, /show failed|definitionally equal|current goal/i);
+
+const badHave = fixture.write('BadHave.ps', `
+axiom P: Prop;
+axiom Q: Prop;
+theorem bad_have(h: P): P := by { have hq : Q := h; exact h }
+`);
+const rejectedHave = runPsliveJson(['check', badHave, '--json'], 1);
+assert.equal(rejectedHave.status, 'rejected');
+assert.match(rejectedHave.message, /have failed|declared hypothesis type|expected/i);
 
 console.log('ELABORATOR_PROOF_EXTRACTION=PASS');
