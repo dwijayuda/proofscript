@@ -13,6 +13,7 @@ on:
       - "examples/software/06-bank-transfer-monadic-contract.ps"
       - "examples/software/07-bank-debit-stateful-vc.ps"
       - "examples/software/08-bank-debit-frame-stateful-vc.ps"
+      - "examples/software/10-bank-audit-logical-stateful-vc.ps"
       - "tools/ps3-stateful-lean-*.ts"
       - ".github/workflows/stateful-lean-ci.yml"
   push:
@@ -126,6 +127,9 @@ jobs:
       - name: Execute generated frame stateful VC request
         run: npm run assurance:ps3:stateful-lean-frame-vc -- --require-proof --out stateful-frame-vc-run-${{ matrix.lean }}.json
 
+      - name: Execute generated logical stateful VC request
+        run: npm run assurance:ps3:stateful-lean-logical-vc -- --require-proof --out stateful-logical-vc-run-${{ matrix.lean }}.json
+
       - name: Upload stateful VC evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -148,4 +152,12 @@ jobs:
         with:
           name: stateful-frame-vc-run-${{ matrix.lean }}
           path: stateful-frame-vc-run-${{ matrix.lean }}.json
+          if-no-files-found: warn
+
+      - name: Upload logical stateful VC evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stateful-logical-vc-run-${{ matrix.lean }}
+          path: stateful-logical-vc-run-${{ matrix.lean }}.json
           if-no-files-found: warn
