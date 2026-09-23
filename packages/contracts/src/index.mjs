@@ -635,7 +635,10 @@ export function makeContractsArtifact({ sourceText, sourcePath, sourceSha256, pa
   const contract = parsePureContractSource(sourceText, sourcePath);
   const loopVerification = createLoopVerificationArtifact(contract);
   if (loopVerification.ready === true) {
-    const nonLoopObligations = (contract.obligations ?? []).filter(obligation => !String(obligation.kind ?? '').startsWith('loop.'));
+    const nonLoopObligations = (contract.obligations ?? []).filter(obligation =>
+      !String(obligation.kind ?? '').startsWith('loop.')
+      && obligation.kind !== 'ensures'
+    );
     const semanticLoopObligations = (loopVerification.obligations ?? []).map(obligation =>
       enrichContractObligation(obligation, contract.params, contract.requirements)
     );
