@@ -2,6 +2,7 @@
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
+import { resolveNpmInvocation } from "./ps3-npm-invocation.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
 const args = process.argv.slice(2);
@@ -30,7 +31,7 @@ const outPath = path.resolve(
 const outputRoot = path.dirname(outPath);
 const matrixPath = path.join(outputRoot, "proof-matrix.json");
 const evidenceDir = path.join(outputRoot, "evidence");
-const npmCommand = process.platform === "win32" ? "npm.cmd" : "npm";
+const npmPlanInvocation = resolveNpmInvocation([]);
 
 const matrixArgs = [
   "run", "assurance:ps3:stateful-lean-proof-matrix", "--",
@@ -60,7 +61,8 @@ if (planOnly) {
     status: "planned",
     executionAttempted: false,
     toolchains,
-    command: npmCommand,
+    command: npmPlanInvocation.command,
+    commandMode: npmPlanInvocation.mode,
     output: {
       summary: path.relative(root, outPath).replace(/\\/gu, "/"),
       matrix: path.relative(root, matrixPath).replace(/\\/gu, "/"),
@@ -103,7 +105,8 @@ for (const step of steps) {
     continue;
   }
 
-  const run = spawnSync(npmCommand, step.args, {
+  const npmInvocation = resolveNpmInvocation(step.args);
+  const run = spawnSync(npmInvocation.command, npmInvocation.args, {
     cwd: root,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"],
@@ -113,6 +116,8 @@ for (const step of steps) {
   const passed = exitCode === 0;
   results.push({
     ...step,
+    command: npmInvocation.command,
+    commandMode: npmInvocation.mode,
     status: passed ? "passed" : "failed",
     exitCode,
     processError: run.error?.message ?? null,
