@@ -68,7 +68,7 @@ function positional(args) {
   return out;
 }
 function usage(code = 0) {
-  const text = `ProofScript ${VERSION}\n\nSimple project workflow:\n  psc init my-app\n  cd my-app\n  psc check\n  psc build\n  psc run sample\n\nCompiler setup workflow from the ProofScript source ZIP:\n  npm install --offline --no-audit --no-fund\n  npm run setup\n  npm link\n  psc doctor\n  psc clean [--json]\n\nCommands:\n  psc setup\n  psc init [dir] [--name <name>] [--template software|crud] [--force] [--json]\n  psc status [--json]\n  psc check [file.ps] [--json] [--emit-core <out.json>]\n  psc emit-core [file.ps] --out <out.pscore.json> [--json]\n  psc emit-lean <file.ps|core.json|contracts.json> --out <out.lean> [--json]\n  psc certify [file.ps] --core <core.json> --out <cert.json> [--runtime-artifact <out.ts|out.js>] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc build-ts [file.ps] [--out <out.ts>] [--runtime local|package|bundled] [--bundle-runtime] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc build-js [file.ps] [--out <out.js>] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc build [file.ps] [--target ts|js] [--out <file>] [--runtime local|package|bundled] [--bundle-runtime] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc compile [file.ps|dir] [--out-dir <dir>] [--suffix .generated] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc fmt [file.ps|dir] [--check] [--stdout] [--json]\n  psc run [file.ps] [--call <name>] [--args a,b] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc run <name> [--args a,b] [--json]\n  psc target list\n  psc language status [--json]
+  const text = `ProofScript ${VERSION}\n\nSimple project workflow:\n  psc init my-app\n  cd my-app\n  psc check\n  psc build\n  psc run sample\n\nCompiler setup workflow from the ProofScript source ZIP:\n  npm install --offline --no-audit --no-fund\n  npm run setup\n  npm link\n  psc doctor\n  psc clean [--json]\n\nCommands:\n  psc setup [--prebuilt]\n  psc init [dir] [--name <name>] [--template software|crud] [--force] [--json]\n  psc status [--json]\n  psc check [file.ps] [--json] [--emit-core <out.json>]\n  psc emit-core [file.ps] --out <out.pscore.json> [--json]\n  psc emit-lean <file.ps|core.json|contracts.json> --out <out.lean> [--json]\n  psc certify [file.ps] --core <core.json> --out <cert.json> [--runtime-artifact <out.ts|out.js>] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc build-ts [file.ps] [--out <out.ts>] [--runtime local|package|bundled] [--bundle-runtime] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc build-js [file.ps] [--out <out.js>] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc build [file.ps] [--target ts|js] [--out <file>] [--runtime local|package|bundled] [--bundle-runtime] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc compile [file.ps|dir] [--out-dir <dir>] [--suffix .generated] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc fmt [file.ps|dir] [--check] [--stdout] [--json]\n  psc run [file.ps] [--call <name>] [--args a,b] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc run <name> [--args a,b] [--json]\n  psc target list\n  psc language status [--json]
   psc state-model validate <model.json> [--out <validation.json>] [--json]\n  psc monadic-lowering <contracts.json> --out <lowering.json> [--emit-lean <out.lean>] [--json]\n  psc monadic-vc-request <monadic-lowering.json> --out <request.json> [--emit-lean <request.lean>] [--json]\n  psc monadic-vc-run <monadic-lowering.json> --lean-project <dir> --out <run.json> [--lake-cmd <lake>] [--json]\n  psc monadic-preflight <monadic-lowering.json> --out <preflight.json> --emit-lean <preflight.lean> [--lean-cmd <lean>] [--json]\n  psc doctor\n  psc clean [--json]\n\nDefaults inside a psc init project:\n  input file: src/Main.ps\n  source dir: src\n  output dir: dist\n\nTrust boundary:\n  This CLI is a wrapper over the PSC-1 software-profile path. It does not claim full Lean 4 equivalence or full backend execution-correspondence proof.\n`;
   (code === 0 ? console.log : console.error)(text);
   process.exit(code);
@@ -897,11 +897,21 @@ function prebuiltWorkspaceDistStatus() {
 function setupCommand(args) {
   console.log('ProofScript setup');
   runProcess(process.execPath, [...NODE_TS_FLAGS, path.join(ROOT, 'tools', 'setup-local-workspaces.cts')], 'workspace link/copy setup');
+  const forcePrebuilt = has(args, '--prebuilt');
   const tscBin = path.join(ROOT, 'node_modules', 'typescript', 'bin', 'tsc');
-  const globalTsc = spawnSync('bash', ['-lc', 'command -v tsc'], { encoding: 'utf8' });
+  const globalTsc = forcePrebuilt
+    ? { status: 1, stdout: '' }
+    : spawnSync('bash', ['-lc', 'command -v tsc'], { encoding: 'utf8' });
   const globalTscBin = globalTsc.status === 0 ? globalTsc.stdout.trim().split('\n')[0] : '';
-  let setupMode = 'compiled';
-  if (fs.existsSync(tscBin)) {
+  let setupMode = forcePrebuilt ? 'prebuilt' : 'compiled';
+  if (forcePrebuilt) {
+    const prebuilt = prebuiltWorkspaceDistStatus();
+    if (!prebuilt.ok) {
+      console.error(`rejected: --prebuilt requires complete packaged workspace outputs; missing ${prebuilt.missing.join(', ') || 'required dist output'}`);
+      process.exit(1);
+    }
+    console.log(`ProofScript setup using packaged prebuilt workspace outputs (${prebuilt.required.length} package entries)`);
+  } else if (fs.existsSync(tscBin)) {
     const tscArgs = [tscBin, '-b', ...args.filter(a => a !== '--json')];
     runProcess(process.execPath, tscArgs, 'tsc -b');
   } else if (globalTscBin) {
