@@ -106,7 +106,7 @@ assert.equal(
 assert.equal(historicalBuilt.artifact.trustBoundary.loopInvariantChecking, "structural-obligations-only");
 
 const missingDecrease = sourceText.replace(
-  /^[ \\t]*decreases remaining: n - i\\r?\\n/mu,
+  /^[ \t]*decreases remaining: n - i\r?\n/mu,
   "",
 );
 assert.notEqual(missingDecrease, sourceText, "missing-decreases fixture must remove the decreases clause");
