@@ -9,6 +9,41 @@
 - Cleanup branch: `cleanup/ps1-architecture`
 - Draft PR: #1
 
+
+## Product-v1 completion checkpoint
+
+Active completion branch: `product/v1-completion`.
+
+Machine-readable authority:
+
+- `config/proofscript-product-v1-completion.json`
+- final gate: `assurance:product-v1:endtest`
+
+Implemented since the PS1/PS2 baseline, pending fresh full-gate execution where noted:
+
+- bounded Product-v1 software profile with canonical compiler/CLI gates;
+- pure + bounded stateful verification, including V-FRAME, typed Prop connectives, semantic loop invariant/decreases VCs, and fail-closed unsupported stateful control flow;
+- proof-required stateful matrix now plans debit, transfer, frame, logical-predicate, and representative invoice cases across each Lean lane;
+- exact bounded JS runtime representation profile and runtime/certificate correspondence levels;
+- artifact-bound runtime hashes, runtime differential corpus, and tamper checks;
+- fail-closed `proofscript.ffi/v1` trusted-external JS/npm boundary;
+- bounded `@proofscript/std`, JSON/validation host package, and ProofScript source-package resolution;
+- compiler-backed VS Code integration reusing the 0.46 donor for UI/tooling only;
+- diagnostics, hover, outline, completion, semantic definition/references/rename, semantic tokens, formatting, bounded code actions, and compiler-backed goal presentation;
+- representative CLI, generated npm/TypeScript library, JSON/validation, HTTP host-adapter, and stateful invoice examples;
+- deterministic `psc setup --prebuilt` plus packed-release fresh-install gate;
+- consolidated `proofscript.product-v1-endtest/v1` runner.
+
+The last recorded real Lean evidence is still the earlier debit+transfer 6/6 matrix. New frame/logical/invoice and loop proof cases remain **proof-pending until the consolidated gate executes on a working Lean machine**.
+
+Current nonclaims remain explicit:
+
+- no full Lean 4 equivalence;
+- no profile-wide stateful proof claim beyond executed evidence;
+- no arbitrary exceptional/branching stateful verification in `ps3-monadic-contracts0`;
+- no formal Core→TypeScript or TypeScript→JavaScript refinement theorem yet;
+- no end-to-end "verified JavaScript" claim from structural certificates alone.
+
 ## Baseline behavior
 
 Observed before cleanup and now represented by the product regression workflow:
@@ -262,9 +297,9 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 
 ## Next engineering target
 
-1. Product completion work continues on `product/v1-completion` under `config/proofscript-product-v1-completion.json`.
-2. Finish V-FRAME promotion by executing the new debit+frame theorem across the proof-required Lean matrix; do not promote it to proved until real Lean evidence is green.
-3. After V-FRAME evidence is green, implement loop invariant/progress obligations, then exceptional/control-flow paths.
-4. Preserve `sourceToLeanProgramEquivalenceChecked = false` and `exceptionalPathsCovered = false` until separately checked.
-5. Keep recursive termination (`termination_by` / `decreasing_by`) separate from loop-progress verification.
-6. Reuse ProofScript LSP 0.46.0 as the primary tooling donor, but port features only through current compiler-backed language-service APIs; no duplicate frontend/parser.
+1. Run the consolidated Product-v1 gate on a supported machine:
+   `npm run assurance:product-v1:endtest -- --toolchains 4.33.1,4.34.0,4.35.0-rc2 --out .proofscript-product-v1-endtest/summary.json`.
+2. Fix the first concrete failing gate without weakening semantics or claim boundaries.
+3. Promote Product-v1 pillars to complete only from recorded executable evidence.
+4. If all bounded product gates pass, continue the separate formal runtime-correspondence/refinement track without blocking the bounded Product-v1 release claim.
+5. Keep full Lean/kernel parity on the independent assurance track.
