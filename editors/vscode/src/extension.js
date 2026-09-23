@@ -176,9 +176,13 @@ class InfoviewProvider {
     const diagnosticHtml = allDiagnostics.length ? allDiagnostics.map((item) => "<div class=\"diagnostic\">" + escapeHtml(item.message) + "</div>").join("") : "<p>None.</p>";
     const tacticState = goals?.tacticState;
     const tacticLocals = tacticState?.locals ?? [];
+    const tacticSourceStatus = tacticState?.sourceStatus ?? "checked";
+    const tacticSourceHtml = tacticSourceStatus === "checked"
+      ? ""
+      : " <code>" + escapeHtml(tacticSourceStatus) + "</code>";
     const tacticStateHtml = goals?.tacticStateAvailable === true
       ? tacticState
-        ? "<div class=\"goal tactic-state\"><div><strong>" + escapeHtml(tacticState.tactic) + "</strong>" + (tacticState.branch ? " <code>" + escapeHtml(tacticState.branch) + "</code>" : "") + "</div>" + (tacticLocals.length ? "<pre>" + escapeHtml(tacticLocals.map((local) => local.name + " : " + local.type).join("\n")) + "</pre>" : "") + "<pre>⊢ " + escapeHtml(tacticState.goal) + "</pre></div>"
+        ? "<div class=\"goal tactic-state\"><div><strong>" + escapeHtml(tacticState.tactic) + "</strong>" + (tacticState.branch ? " <code>" + escapeHtml(tacticState.branch) + "</code>" : "") + tacticSourceHtml + "</div>" + (tacticLocals.length ? "<pre>" + escapeHtml(tacticLocals.map((local) => local.name + " : " + local.type).join("\n")) + "</pre>" : "") + "<pre>⊢ " + escapeHtml(tacticState.goal) + "</pre></div>"
         : "<p>No tactic state at the cursor.</p>"
       : "<p>Compiler-backed tactic states are unavailable.</p>";
     const compilerGoalHtml = goals?.declarationGoal
@@ -191,7 +195,7 @@ class InfoviewProvider {
     const goalHtml = goals
       ? "<h3>Proof state</h3>" + tacticStateHtml + "<h3>Goals</h3><div class=\"goal-source\">Compiler theorem</div>" + compilerGoalHtml + "<div class=\"goal-source\">Verification obligations — " + escapeHtml(goals.verification?.status ?? "unavailable") + "</div>" + verificationGoalHtml
       : "<h3>Goals</h3><p>Goal service unavailable.</p>";
-    this.view.webview.html = "<!doctype html><html><head><style>body{font-family:var(--vscode-font-family);color:var(--vscode-foreground);padding:10px;line-height:1.45}h2,h3{margin:10px 0 6px}pre,code{font-family:var(--vscode-editor-font-family)}pre{white-space:pre-wrap;background:var(--vscode-textCodeBlock-background);padding:8px;border-radius:4px}.diagnostic,.goal{padding:6px 0;border-bottom:1px solid var(--vscode-panel-border)}.goal-source{margin-top:8px;font-size:.9em;color:var(--vscode-descriptionForeground)}</style></head><body><h2>ProofScript</h2><strong>" + escapeHtml(state) + "</strong>" + symbolHtml + goalHtml + "<h3>Document</h3><div>" + (status?.declarations ?? 0) + " declaration(s), " + (status?.diagnostics ?? allDiagnostics.length) + " diagnostic(s)</div>" + assumptions + featureHtml + "<h3>Diagnostics</h3>" + diagnosticHtml + "<details><summary>Trust boundary</summary><p>Tactic states are read-only observations from the canonical compiler/elaborator path. They do not participate in proof acceptance; Core proof terms are still checked by PSKernel. The editor does not parse or fabricate proof states.</p></details></body></html>";
+    this.view.webview.html = "<!doctype html><html><head><style>body{font-family:var(--vscode-font-family);color:var(--vscode-foreground);padding:10px;line-height:1.45}h2,h3{margin:10px 0 6px}pre,code{font-family:var(--vscode-editor-font-family)}pre{white-space:pre-wrap;background:var(--vscode-textCodeBlock-background);padding:8px;border-radius:4px}.diagnostic,.goal{padding:6px 0;border-bottom:1px solid var(--vscode-panel-border)}.goal-source{margin-top:8px;font-size:.9em;color:var(--vscode-descriptionForeground)}</style></head><body><h2>ProofScript</h2><strong>" + escapeHtml(state) + "</strong>" + symbolHtml + goalHtml + "<h3>Document</h3><div>" + (status?.declarations ?? 0) + " declaration(s), " + (status?.diagnostics ?? allDiagnostics.length) + " diagnostic(s)</div>" + assumptions + featureHtml + "<h3>Diagnostics</h3>" + diagnosticHtml + "<details><summary>Trust boundary</summary><p>Tactic states are read-only observations from the canonical parser/compiler/elaborator path. A syntax-incomplete state comes only from a proof prefix the canonical parser actually reached; it does not make the source accepted. States never participate in proof acceptance; Core proof terms are still checked by PSKernel. The editor does not parse, repair, or fabricate proof states.</p></details></body></html>";
   }
 }
 
