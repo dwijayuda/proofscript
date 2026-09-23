@@ -184,12 +184,31 @@
     {
       "id": "V1-P5",
       "name": "packages and practical standard library",
-      "status": "planned",
+      "status": "in_progress",
       "exitGates": [
-        "Option/Result/List/Array/String stable",
-        "JSON/validation package",
+        "test:product-v1:stdlib-profile",
+        "JSON/validation package gate",
         "package resolution/publishing contract",
-        "dependency certificate identity"
+        "dependency certificate identity for package dependencies"
+      ],
+      "done": [
+        "versioned proofscript-stdlib-v1 profile",
+        "@proofscript/std canonical checked bootstrap package",
+        "96-declaration checked bootstrap manifest",
+        "Option stable bounded API",
+        "Except(E,A) stable bounded Result-like API",
+        "List stable bounded collection API",
+        "Array stable bounded collection API",
+        "String live type/literal profile with broader utilities explicitly deferred",
+        "runtime lowering required for every bootstrap computational axiom",
+        "implicit @proofscript/std manifest/hash identity bound into new certificates"
+      ],
+      "remaining": [
+        "JSON/validation package",
+        "broader String utilities needed by JSON/application code",
+        "ProofScript source-level package resolution beyond project modules",
+        "published-package dependency certificate identities beyond the implicit stdlib",
+        "HTTP/database higher-level packages are post-core-stdlib"
       ]
     },
     {
