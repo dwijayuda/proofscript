@@ -93,6 +93,11 @@ assert.equal(initialized.result.capabilities.completionProvider.resolveProvider,
 assert.equal(initialized.result.capabilities.definitionProvider, true);
 assert.equal(initialized.result.capabilities.referencesProvider, true);
 assert.equal(initialized.result.capabilities.renameProvider, true);
+assert.equal(initialized.result.capabilities.semanticTokensProvider.full, true);
+assert.deepEqual(
+  initialized.result.capabilities.semanticTokensProvider.legend.tokenTypes,
+  ["function", "enum", "struct", "class", "variable"],
+);
 assert.equal(initialized.result.experimental.proofscript.duplicateParser, false);
 assert.equal(initialized.result.experimental.proofscript.surfaceFeatureRequest, "proofscript/surfaceFeatures");
 assert.equal(initialized.result.experimental.proofscript.documentStatusRequest, "proofscript/documentStatus");
@@ -294,6 +299,17 @@ assert.ok(rename.result.changes[uri].every((edit) => edit.newText === "renamedBa
 
 send({
   jsonrpc: "2.0",
+  id: 14,
+  method: "textDocument/semanticTokens/full",
+  params: { textDocument: { uri } },
+});
+const semanticTokens = await waitFor((message) => message.id === 14, "semantic tokens response");
+assert.ok(typeof semanticTokens.result.resultId === "string");
+assert.equal(semanticTokens.result.data.length, 15);
+assert.deepEqual(semanticTokens.result.data.slice(0, 5), [0, 4, 7, 0, 3]);
+
+send({
+  jsonrpc: "2.0",
   method: "textDocument/didClose",
   params: { textDocument: { uri } },
 });
@@ -305,8 +321,8 @@ const closed = await waitFor(
 );
 assert.deepEqual(closed.params.diagnostics, []);
 
-send({ jsonrpc: "2.0", id: 14, method: "shutdown", params: null });
-const shutdown = await waitFor((message) => message.id === 14, "shutdown response");
+send({ jsonrpc: "2.0", id: 15, method: "shutdown", params: null });
+const shutdown = await waitFor((message) => message.id === 15, "shutdown response");
 assert.equal(shutdown.result, null);
 send({ jsonrpc: "2.0", method: "exit", params: null });
 
