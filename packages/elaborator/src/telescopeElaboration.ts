@@ -1,4 +1,4 @@
-import { Environment, Level, Term } from "@proofscript/kernel";
+import { Environment, Level, Term, infer, kernelWhnf } from "@proofscript/kernel";
 import { SurfaceBinder, SurfaceTerm } from "@proofscript/syntax";
 import { contextFromTypes } from "./coreUtils";
 import { GlobalInfo } from "./globalEnvironment";
@@ -91,16 +91,26 @@ export function elabTelescopeGoal(
   elaborateTerm: ElaborateTermFn,
 ): ElaboratedTelescopeGoal {
   const go = (i: number, names: string[], types: Term[]): ElaboratedTelescopeGoal => {
+    const ctx = contextFromTypes(types);
     if (i === binders.length) {
+      const goal = elaborateTerm(result, names, types, globals, available, kernelEnv);
+      const goalSort = kernelWhnf(kernelEnv, infer(kernelEnv, ctx, goal));
+      if (goalSort.tag !== "sort") {
+        throw new Error("initial proof goal is not a type");
+      }
       return {
         locals: [...names],
         localTypes: [...types],
-        goal: elaborateTerm(result, names, types, globals, available, kernelEnv),
+        goal,
       };
     }
     const b = binders[i];
     const domain = elaborateTerm(b.type, names, types, globals, available, kernelEnv);
-    validateInstanceBinderDomain(b, domain, globals, kernelEnv, contextFromTypes(types));
+    const domainSort = kernelWhnf(kernelEnv, infer(kernelEnv, ctx, domain));
+    if (domainSort.tag !== "sort") {
+      throw new Error(`initial proof binder '${b.name}' domain is not a type`);
+    }
+    validateInstanceBinderDomain(b, domain, globals, kernelEnv, ctx);
     return go(i + 1, [...names, b.name], [...types, domain]);
   };
   return go(0, locals, localTypes);
