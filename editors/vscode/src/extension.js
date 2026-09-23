@@ -281,6 +281,19 @@ function registerLanguageProviders(context) {
       return edit;
     },
   }));
+  context.subscriptions.push(vscode.languages.registerDocumentFormattingEditProvider(selector, {
+    provideDocumentFormattingEdits: async (document, options, token) => {
+      if (!client?.ready || client.capabilities?.documentFormattingProvider !== true) return [];
+      const result = await client.request("textDocument/formatting", {
+        textDocument: { uri: document.uri.toString() },
+        options: {
+          tabSize: options.tabSize,
+          insertSpaces: options.insertSpaces,
+        },
+      }, token);
+      return (result ?? []).map((item) => vscode.TextEdit.replace(toRange(item.range), item.newText));
+    },
+  }));
   const semanticLegend = new vscode.SemanticTokensLegend(
     ["function", "enum", "struct", "class", "variable"],
     ["declaration", "definition", "readonly"],
