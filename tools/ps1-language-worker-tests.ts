@@ -31,6 +31,12 @@ assert.equal(first.status, "accepted");
 assert.ok(first.declarations.some((declaration) => declaration.name === "overlay"));
 assert.ok(!first.declarations.some((declaration) => declaration.name === "disk"));
 
+const firstGoals = await worker.goals(uri, { line: 0, character: 10 });
+assert.equal(firstGoals.tacticStateAvailable, false);
+assert.equal(firstGoals.declarationGoal?.origin, "compiler-theorem");
+assert.equal(firstGoals.declarationGoal?.name, "overlay");
+assert.equal(firstGoals.verification.status, "unavailable");
+
 worker.replaceDocument(uri, 2, "theorem broken");
 const broken = await worker.diagnostics(uri);
 assert.equal(broken.version, 2);
