@@ -199,6 +199,7 @@ function compileResolvedModules(
     const visibleEnvironmentSha256=checkedEnvironmentSha256(visibleDecls,visibleTypeclasses);
     const cached=options.moduleCache?.get(sourceModule.name);
     if(cached&&cached.sourceSha256===sourceModule.sourceSha256&&cached.visibleEnvironmentSha256===visibleEnvironmentSha256){
+      const cachedProofStates=cloneProofStates(cached.proofStates);
       compiled.set(sourceModule.name,{
         source:sourceModule,
         declarations:cached.declarations,
@@ -206,8 +207,15 @@ function compileResolvedModules(
         ownedFeatures:cached.ownedFeatures.map(item=>({...item})),
         declarationLocations:cached.declarationLocations.map(item=>({...item})),
         globalReferences:cached.globalReferences.map(item=>({...item})),
-        proofStates:cloneProofStates(cached.proofStates),
+        proofStates:cachedProofStates,
       });
+      for(const state of cachedProofStates){
+        safeEmitProofState(options.proofStateSink,{
+          state:cloneProofState(state),
+          moduleName:sourceModule.name,
+          filePath:sourceModule.filePath,
+        });
+      }
       reused.push(sourceModule.name);
       continue;
     }
