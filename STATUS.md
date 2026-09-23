@@ -156,30 +156,34 @@ speculative continuation was added.
 
 See `docs/TACTIC_ERGONOMICS.md`.
 
-## Tactic ergonomics Phase 4
+## Tactic ergonomics Phase 4 closure
 
-Status: **IMPLEMENTED; ACCEPTANCE PENDING**.
+Status: **CLOSED** on tested source commit `7573f5cb3aa8196472020d33d4c83430819f2f3e`.
 
-Phase 4 adds one narrow canonical parser-failure UX path: if a `by { ...`
-proof step parses completely and EOF is reached where only the closing `}` is
-missing, the parser emits the actual proof/header prefix it reached. The
-frontend may elaborate that observed prefix through the ordinary elaborator
-solely to publish read-only proof states; the original `ParseError` still
-rejects the source.
+Closeout evidence on 2026-09-24:
 
-Proof states now expose `sourceStatus`:
+- consolidated gate: `npm run assurance:tactic-ergonomics`;
+- schema: `proofscript.tactic-ergonomics-endtest/v4`;
+- **9/9 PASS**, 0 failed, 0 skipped;
+- build — PASS;
+- parser proof extraction — PASS;
+- elaborator/kernel-check proof regression — PASS;
+- compiler-backed language service — PASS;
+- language worker — PASS;
+- LSP transport — PASS;
+- active VS Code smoke — PASS;
+- standalone-small — PASS;
+- reference governance — PASS;
+- `allTacticErgonomicsGatesPassed = true`.
 
-- `checked`;
-- `rejected-prefix`;
-- `syntax-incomplete`.
+Phase 4 adds the bounded canonical missing-final-`}` observation path and
+explicit proof-state provenance `checked`, `rejected-prefix`, and
+`syntax-incomplete`. Project graph discovery now uses canonical leading-import
+parsing rather than requiring the entire current editor buffer to parse.
 
-No synthetic brace is inserted, parsing does not continue past the failure,
-unrelated parser failures still expose no proof state, and no metavariable,
-hole, stale-state substitution, or editor-only parser/elaborator is introduced.
-
-Closure requires a green
-`proofscript.tactic-ergonomics-endtest/v4` run on the committed Phase 4
-candidate.
+The original syntax error still rejects the source. No synthetic delimiter,
+metavariable/hole, speculative continuation, stale-state substitution, or
+editor-only parser/elaborator was added.
 
 See `docs/TACTIC_ERGONOMICS.md`.
 
