@@ -37,7 +37,7 @@ const NODE_TS_FLAGS = [
 ];
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OPTIONS_WITH_VALUES = new Set([
-  '--args', '--call', '--core', '--emit-core', '--emit-lean', '--emit-lean-check', '--lean-cmd', '--lean-project', '--lake-cmd', '--name', '--out', '--out-dir', '--proofs', '--runtime', '--runtime-artifact', '--state-model', '--suffix', '--target', '--template', '--verification-profile',
+  '--args', '--call', '--core', '--emit-core', '--emit-lean', '--emit-lean-check', '--ffi-manifest', '--lean-cmd', '--lean-project', '--lake-cmd', '--name', '--out', '--out-dir', '--proofs', '--runtime', '--runtime-artifact', '--state-model', '--suffix', '--target', '--template', '--verification-profile',
 ]);
 
 function has(args, name) { return args.includes(name); }
@@ -61,7 +61,7 @@ function positional(args) {
   return out;
 }
 function usage(code = 0) {
-  const text = `ProofScript ${VERSION}\n\nSimple project workflow:\n  psc init my-app\n  cd my-app\n  psc check\n  psc build\n  psc run sample\n\nCompiler setup workflow from the ProofScript source ZIP:\n  npm install --offline --no-audit --no-fund\n  npm run setup\n  npm link\n  psc doctor\n  psc clean [--json]\n\nCommands:\n  psc setup\n  psc init [dir] [--name <name>] [--template software|crud] [--force] [--json]\n  psc status [--json]\n  psc check [file.ps] [--json] [--emit-core <out.json>]\n  psc emit-core [file.ps] --out <out.pscore.json> [--json]\n  psc emit-lean <file.ps|core.json|contracts.json> --out <out.lean> [--json]\n  psc certify [file.ps] --core <core.json> --out <cert.json> [--runtime-artifact <out.ts|out.js>] [--json]\n  psc build-ts [file.ps] [--out <out.ts>] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc build-js [file.ps] [--out <out.js>] [--json]\n  psc build [file.ps] [--target ts|js] [--out <file>] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc compile [file.ps|dir] [--out-dir <dir>] [--suffix .generated] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc run [file.ps] [--call <name>] [--args a,b] [--json]\n  psc run <name> [--args a,b] [--json]\n  psc target list\n  psc language status [--json]
+  const text = `ProofScript ${VERSION}\n\nSimple project workflow:\n  psc init my-app\n  cd my-app\n  psc check\n  psc build\n  psc run sample\n\nCompiler setup workflow from the ProofScript source ZIP:\n  npm install --offline --no-audit --no-fund\n  npm run setup\n  npm link\n  psc doctor\n  psc clean [--json]\n\nCommands:\n  psc setup\n  psc init [dir] [--name <name>] [--template software|crud] [--force] [--json]\n  psc status [--json]\n  psc check [file.ps] [--json] [--emit-core <out.json>]\n  psc emit-core [file.ps] --out <out.pscore.json> [--json]\n  psc emit-lean <file.ps|core.json|contracts.json> --out <out.lean> [--json]\n  psc certify [file.ps] --core <core.json> --out <cert.json> [--runtime-artifact <out.ts|out.js>] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc build-ts [file.ps] [--out <out.ts>] [--runtime local|package|bundled] [--bundle-runtime] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc build-js [file.ps] [--out <out.js>] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc build [file.ps] [--target ts|js] [--out <file>] [--runtime local|package|bundled] [--bundle-runtime] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc compile [file.ps|dir] [--out-dir <dir>] [--suffix .generated] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc run [file.ps] [--call <name>] [--args a,b] [--ffi-manifest <proofscript.ffi.json>] [--json]\n  psc run <name> [--args a,b] [--json]\n  psc target list\n  psc language status [--json]
   psc state-model validate <model.json> [--out <validation.json>] [--json]\n  psc monadic-lowering <contracts.json> --out <lowering.json> [--emit-lean <out.lean>] [--json]\n  psc monadic-vc-request <monadic-lowering.json> --out <request.json> [--emit-lean <request.lean>] [--json]\n  psc monadic-vc-run <monadic-lowering.json> --lean-project <dir> --out <run.json> [--lake-cmd <lake>] [--json]\n  psc monadic-preflight <monadic-lowering.json> --out <preflight.json> --emit-lean <preflight.lean> [--lean-cmd <lean>] [--json]\n  psc doctor\n  psc clean [--json]\n\nDefaults inside a psc init project:\n  input file: src/Main.ps\n  source dir: src\n  output dir: dist\n\nTrust boundary:\n  This CLI is a wrapper over the PSC-1 software-profile path. It does not claim full Lean 4 equivalence or full backend execution-correspondence proof.\n`;
   (code === 0 ? console.log : console.error)(text);
   process.exit(code);
@@ -129,6 +129,50 @@ function userDeclarations(checked, prelude) {
   const offset = Array.isArray(prelude?.declarations) ? prelude.declarations.length : 0;
   return checked.artifact.declarations.slice(offset).map(d => ({ name: d.name, kind: d.kind }));
 }
+function readFfiManifest(args) {
+  const file = opt(args, '--ffi-manifest');
+  if (!file) return undefined;
+  const resolved = path.resolve(process.cwd(), file);
+  if (!fs.existsSync(resolved)) throw new Error(`FFI manifest is missing or unreadable: ${resolved}`);
+  const bytes = fs.readFileSync(resolved);
+  let parsed;
+  try { parsed = JSON.parse(bytes.toString('utf8')); }
+  catch (error) { throw new Error(`invalid FFI manifest JSON: ${error instanceof Error ? error.message : String(error)}`); }
+  if (parsed?.schema !== 'proofscript.ffi/v1') throw new Error("FFI manifest schema must be 'proofscript.ffi/v1'");
+  if (!Array.isArray(parsed.bindings)) throw new Error("FFI manifest bindings must be an array");
+  const bindings = parsed.bindings.map((binding, index) => {
+    if (!binding || typeof binding !== 'object') throw new Error(`FFI binding #${index} must be an object`);
+    const normalized = {
+      name: binding.name,
+      module: binding.module,
+      exportName: binding.exportName,
+      trust: binding.trust,
+    };
+    if (typeof normalized.name !== 'string' || normalized.name.length === 0) throw new Error(`FFI binding #${index} requires name`);
+    if (typeof normalized.module !== 'string' || normalized.module.length === 0) throw new Error(`FFI binding '${normalized.name}' requires module`);
+    if (typeof normalized.exportName !== 'string' || normalized.exportName.length === 0) throw new Error(`FFI binding '${normalized.name}' requires exportName`);
+    if (normalized.trust !== 'trusted-external') throw new Error(`FFI binding '${normalized.name}' must declare trust='trusted-external'`);
+    return normalized;
+  });
+  return {
+    schema: parsed.schema,
+    resolved,
+    sha256: createHash('sha256').update(bytes).digest('hex'),
+    bindings,
+  };
+}
+
+function ffiBuildMetadata(ffi, outDir = process.cwd()) {
+  if (!ffi) return undefined;
+  return {
+    schema: ffi.schema,
+    path: path.relative(outDir, ffi.resolved).replace(/\\/g, '/'),
+    sha256: ffi.sha256,
+    trust: 'trusted-external',
+    bindings: ffi.bindings.map(({ name, module, exportName, trust }) => ({ name, module, exportName, trust })),
+  };
+}
+
 function checkDirect(file, emitCore) {
   const { checked, prelude } = checkedProgram(file);
   if (emitCore) {
