@@ -99,12 +99,8 @@ function parseProofStep(host:ProofParserHost):SurfaceTerm{
   if(host.atId("rw")){
     host.next();
     let reverse=false;
-    if(host.at("←")){
+    if(host.at("←")||host.at("<-")){
       host.next();
-      reverse=true;
-    }else if(host.at("<")){
-      host.next();
-      host.expect("-");
       reverse=true;
     }
     const equality=host.parseTerm();
