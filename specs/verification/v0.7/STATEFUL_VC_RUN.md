@@ -140,3 +140,50 @@ residual goal count = 0
 ```
 
 This is evidence for that concrete generated theorem only. It does not set `stateModelAdequacyChecked`, `sourceToLeanProgramEquivalenceChecked`, or `exceptionalPathsCovered`.
+
+
+## Evidence consistency gate
+
+`validateStatefulVcRunEvidence` is the canonical report-invariant checker used
+by stateful execution surfaces and matrix tooling. In particular:
+
+- `status = proved` requires zero residual goals;
+- `semanticProofDischarge = true` requires `status = proved`,
+  `failedStage = null`, and no residual-goal evidence;
+- `status = vcs-generated` requires real generated VCs and no proof-discharge
+  claim;
+- `requireProof` validation rejects any report without concrete proof
+  discharge.
+
+This is defense in depth around Lean process results. It does not replace Lean
+checking.
+
+## Multi-version proof matrix
+
+The local matrix artifact is:
+
+```text
+proofscript.stateful-proof-matrix/v1
+```
+
+It executes both canonical stateful cases (debit and transfer) with
+`--require-proof` for each selected Lean toolchain. Every child
+`proofscript.stateful-vc-run/v1` report is validated before the lane counts as
+proved.
+
+The matrix additionally requires identical provenance for each proof case across
+toolchains:
+
+```text
+sourceSha256
+stateModelDescriptorSha256
+leanModelSha256
+generatedProgramSha256
+generatedTripleTargetSha256
+generatedRequestSha256
+```
+
+Thus a green matrix means the same generated proof request was accepted across
+the selected compatibility lanes. It still does not establish state-model
+adequacy, source-to-Lean program equivalence, exceptional-path coverage, or full
+Lean equivalence.

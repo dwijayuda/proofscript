@@ -119,3 +119,79 @@ If it leaves real residual VCs, rerun without `:proof` if you want a successful 
 ```powershell
 npm run assurance:ps3:stateful-lean-transfer-vc -- --strict --out stateful-transfer-vc-run.local.json
 ```
+
+
+## Consolidated final-machine gate
+
+The repository now has a single cross-platform end-test orchestrator. It keeps
+per-run Lean selection inside temporary verification copies, so testing several
+versions does **not** rewrite the checked-in `lean-toolchain`.
+
+After pulling the target branch and installing npm dependencies, run:
+
+```powershell
+npm run assurance:ps3:stateful-endtest -- --toolchains 4.33.1,4.34.0,4.35.0-rc2 --out .proofscript-stateful-endtest/summary.json
+```
+
+This runs, in order:
+
+1. the product build;
+2. the Lean compatibility parser gate;
+3. the stateful model/lowering regression;
+4. generalized runner-selection regression;
+5. proof-matrix planning regression;
+6. VC evidence invariant regression;
+7. public `monadic-vc-run` regression;
+8. proof-required debit + transfer runs for every selected Lean lane.
+
+The matrix uses `--require-proof`, not merely `--strict`. Every executed
+debit/transfer case must therefore have zero residual goals and
+`semanticProofDischarge = true`.
+
+Outputs are written under:
+
+```text
+.proofscript-stateful-endtest/
+  summary.json
+  proof-matrix.json
+  evidence/
+    debit-<toolchain>.json
+    transfer-<toolchain>.json
+```
+
+The directory is ignored by the repository's existing `.proofscript-*` rule.
+
+The matrix also checks that source/model/generated-program/generated-Triple/
+generated-request provenance hashes remain identical for the same proof case
+across Lean versions. A compatibility matrix that checks different generated
+theorems in different lanes is rejected.
+
+If a selected Lean version is not installed, install it with elan and rerun the
+same end-test command. Example:
+
+```powershell
+elan toolchain install leanprover/lean4:v4.33.1
+elan toolchain install leanprover/lean4:v4.34.0
+elan toolchain install leanprover/lean4:v4.35.0-rc2
+```
+
+The exact current stable/RC lanes can move over time; the versions above match
+the repository policy snapshot dated 2026-09-23.
+
+### Per-run toolchain override
+
+Both the specialized stateful runner and public VC runner support explicit
+temporary selection:
+
+```powershell
+npm run assurance:ps3:stateful-lean-transfer-vc:proof -- --lean-toolchain 4.33.1 --out .proofscript-transfer-4331.json
+```
+
+For a public lowering artifact:
+
+```text
+psc monadic-vc-run <lowering.json> --lean-project <dir> --lean-toolchain 4.33.1 --out <run.json>
+```
+
+The override is normalized to `leanprover/lean4:v<version>` and applied only
+to a temporary copy of the verification project.

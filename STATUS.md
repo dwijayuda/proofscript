@@ -220,6 +220,11 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - public `psc monadic-vc-run` command — implemented; emits the same evidence schema and treats residual Lean VCs as an accepted `vcs-generated` run, not as a proof
 - stable Lean-derived residual-goal artifact (`proofscript.stateful-vc-goals/v1`) — implemented with deterministic IDs/hashes
 - evidence-based claim promotion is centralized in `@proofscript/monadic-lowering` and covered by synthetic fail-closed stage tests
+- stateful VC evidence invariant validation — implemented; contradictory `proved` + residual-goal reports are rejected
+- per-run temporary Lean toolchain selection — implemented for the specialized stateful runner and public `psc monadic-vc-run`
+- proof-required debit+transfer multi-version matrix — implemented; execution evidence still pending the final local machine run
+- cross-version provenance consistency — implemented; the same proof case must retain identical source/model/generated theorem hashes across lanes
+- consolidated `proofscript.stateful-endtest/v1` local gate — implemented; combines build/static regressions with the proof matrix
 - Triple skeleton pre/post functions sourced from the WP binding artifact — implemented
 - state observation descriptor state-input type validation — PASS
 - definite state-observation argument type mismatches downgrade to prototype/fail closed — PASS
@@ -249,8 +254,8 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 
 ## Next engineering target
 
-1. Prove the corrected two-account transfer contract with the generalized runner; the canonical contract now requires `from != to` and lowers that condition to Lean `≠`.
-2. Exercise the proved debit and transfer paths on the Lean 4.33.1 floor/current-stable/current-RC compatibility matrix.
+1. Run the consolidated local stateful end-test and prove the corrected two-account transfer contract; the canonical contract requires `from != to` and lowers that condition to Lean `≠`.
+2. Require the proof matrix to pass debit and transfer on the Lean 4.33.1 floor/current-stable/current-RC lanes with identical proof provenance.
 3. Preserve `stateModelAdequacyChecked = false`, `sourceToLeanProgramEquivalenceChecked = false`, and `exceptionalPathsCovered = false` until those are separately checked.
 4. After transfer semantics are green, promote loop invariant/decreases/frame work incrementally rather than broadening the stateful profile all at once.
 5. Continue CLI/frontend/LSP convergence only behind canonical compiler APIs and existing regression gates.

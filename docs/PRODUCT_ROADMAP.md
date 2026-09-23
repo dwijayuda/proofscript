@@ -224,6 +224,13 @@ A real Lean 4.34.0 run has now completed the first stateful semantic vertical sl
 
 The next target is the corrected two-account transfer contract. It now requires distinct accounts (`from != to`, emitted as Lean `≠`) so its debit and credit postconditions are semantically valid. The generalized VC runner can execute either source through the same evidence pipeline. After transfer is proved, repeat debit/transfer across the 4.33.1 floor/current-stable/current-RC matrix before widening to loop/frame reasoning. Exceptional/abrupt paths, state-model adequacy use, and source-to-Lean program equivalence remain explicitly unclaimed. Exceptional/abrupt paths remain explicitly uncovered until modeled.
 
+A consolidated local end-test and proof-matrix harness are now implemented for
+that checkpoint. Per-run toolchain selection is temporary, every child VC report
+must satisfy canonical evidence invariants, and each debit/transfer proof case
+must retain identical source/model/generated-request provenance across Lean
+lanes. These harnesses are infrastructure only until a real machine run produces
+the corresponding Lean evidence.
+
 ---
 
 ## PS4 — Runtime correspondence and certification

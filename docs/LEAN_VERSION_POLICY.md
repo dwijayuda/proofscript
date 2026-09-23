@@ -31,6 +31,12 @@ As of 2026-09-23:
 
 Compatibility CI resolves and tests the floor, latest stable, and latest RC dynamically. Each resulting execution artifact records the exact Lean version actually used.
 
+Local proof-matrix runs may select an exact compatible lane with
+`--lean-toolchain <version>`. The runner applies that selector to a temporary
+copy of the Lean verification project; the checked-in developer toolchain is not
+rewritten. The selected toolchain and the exact observed `lean --version`
+remain separate evidence fields.
+
 ### 2. Product tracking lanes
 
 The current stable and RC lanes are compatibility probes, not permanent semantic identities.
