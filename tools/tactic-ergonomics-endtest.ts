@@ -43,7 +43,7 @@ const steps = [
 
 if (planOnly) {
   const report = {
-    schema: "proofscript.tactic-ergonomics-endtest/v4",
+    schema: "proofscript.tactic-ergonomics-endtest/v5",
     status: "planned",
     executionAttempted: false,
     steps: steps.map((step) => ({ ...step, status: "planned" })),
@@ -95,7 +95,7 @@ const skippedSteps = results.filter((step) => step.status === "skipped").length;
 const passed = failedSteps === 0 && skippedSteps === 0 && passedSteps === steps.length;
 
 const report = {
-  schema: "proofscript.tactic-ergonomics-endtest/v4",
+  schema: "proofscript.tactic-ergonomics-endtest/v5",
   status: passed ? "passed" : "failed",
   executionAttempted: true,
   summary: {
