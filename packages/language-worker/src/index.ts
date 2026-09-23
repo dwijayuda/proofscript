@@ -2,6 +2,8 @@ import { Worker } from "node:worker_threads";
 import type {
   Analysis,
   DiagnosticBundle,
+  DocumentSymbolInfo,
+  HoverInfo,
   Position,
   TextDocumentContentChange,
 } from "@proofscript/language-service";
@@ -168,6 +170,14 @@ export class LanguageWorkerClient {
 
   async diagnostics(uri: string, ownerId?: number | string | null): Promise<DiagnosticBundle> {
     return this.request("diagnostics", { uri }, ownerId);
+  }
+
+  async documentSymbols(uri: string, ownerId?: number | string | null): Promise<readonly DocumentSymbolInfo[]> {
+    return this.request("documentSymbols", { uri }, ownerId);
+  }
+
+  async hover(uri: string, position: Position, ownerId?: number | string | null): Promise<HoverInfo | null> {
+    return this.request("hover", { uri, position }, ownerId);
   }
 
   async request<T = any>(operation: string, args: any = {}, ownerId?: number | string | null): Promise<T> {
