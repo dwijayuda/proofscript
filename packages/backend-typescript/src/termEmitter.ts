@@ -11,6 +11,32 @@ export function flattenPi(type: Term): PiShape {
   return { domains, codomain: cur };
 }
 
+export function productV1PublicType(term: Term, depth = 0): string | undefined {
+  if (term.tag === "const") {
+    switch (term.name) {
+      case "Nat":
+      case "Int":
+        return "bigint";
+      case "Bool":
+        return "boolean";
+      case "String":
+        return "string";
+      case "Unit":
+        return "null";
+      default:
+        return undefined;
+    }
+  }
+  if (term.tag === "pi") {
+    if ((term.binderInfo ?? "explicit") !== "explicit") return undefined;
+    const domain = productV1PublicType(term.domain, depth + 1);
+    const codomain = productV1PublicType(term.body, depth + 1);
+    if (!domain || !codomain) return undefined;
+    return `(arg${depth}: ${domain}) => ${codomain}`;
+  }
+  return undefined;
+}
+
 export function flattenApp(term: Term): AppShape {
   const args: Term[] = [];
   let head: Term = term;
@@ -173,7 +199,8 @@ export function emitTerm(term: Term, locals: readonly string[], ctx: EmitContext
     }
     case "lam": {
       const arg = `x${locals.length}`;
-      const binding = target === "ts" ? `${arg}: PsValue` : arg;
+      const runtimeType = productV1PublicType(term.domain) ?? "PsValue";
+      const binding = target === "ts" ? `${arg}: ${runtimeType}` : arg;
       return `((${binding}) => ${emitTerm(term.body, [...locals, arg], ctx, target)})`;
     }
     case "app": {
