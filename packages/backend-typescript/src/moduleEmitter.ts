@@ -23,6 +23,15 @@ import {
 } from "./ffi";
 import { buildSanitizedNameMap } from "./names";
 import { emitTerm, flattenPi, productV1PublicType } from "./termEmitter";
+import type {
+  EmitContext,
+  EmitJavaScriptOptions,
+  EmitJavaScriptResult,
+  EmitTypeScriptResult,
+  EmittedJavaScriptDeclaration,
+  SkippedJavaScriptDeclaration,
+} from "./types";
+
 type ExecutableCoreDeclaration = Extract<CoreDeclaration, { kind: "definition" | "opaque" }>;
 
 function findExecutableDeclaration(
@@ -34,15 +43,6 @@ function findExecutableDeclaration(
       decl.name === name && (decl.kind === "definition" || decl.kind === "opaque"),
   );
 }
-
-import type {
-  EmitContext,
-  EmitJavaScriptOptions,
-  EmitJavaScriptResult,
-  EmitTypeScriptResult,
-  EmittedJavaScriptDeclaration,
-  SkippedJavaScriptDeclaration,
-} from "./types";
 
 function sha256Text(text: string): string {
   return crypto.createHash("sha256").update(text).digest("hex");
