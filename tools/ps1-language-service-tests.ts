@@ -150,12 +150,11 @@ assert.deepEqual(formatEdits[0].range.start, { line: 0, character: 0 });
 assert.match(formatEdits[0].newText, /def formatted: Nat := \{1 \+ 2\};/u);
 formatService.replaceDocument(formatUri, 2, formatEdits[0].newText);
 assert.deepEqual(formatService.formatDocument(formatUri), [], "canonical formatting must be idempotent");
-formatService.replaceDocument(formatUri, 3, "-- keep\ndef x: Nat := 1;\n");
-assert.throws(
-  () => formatService.formatDocument(formatUri),
-  /refuses sources containing comments/u,
-  "editor formatting must fail closed until comment trivia is preserved",
-);
+formatService.replaceDocument(formatUri, 3, "-- keep\ndef   x : Nat:={1+2};\n");
+const commentFormatEdits = formatService.formatDocument(formatUri);
+assert.equal(commentFormatEdits.length, 1);
+assert.match(commentFormatEdits[0].newText, /-- keep/u);
+assert.match(commentFormatEdits[0].newText, /def x: Nat := \{1 \+ 2\};/u);
 formatService.closeDocument(formatUri);
 
 // Project-level incremental reuse + importer invalidation.
