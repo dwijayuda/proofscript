@@ -53,6 +53,9 @@
       "path": "./packages/compiler"
     },
     {
+      "path": "./packages/formatter"
+    },
+    {
       "path": "./packages/language-service"
     },
     {
