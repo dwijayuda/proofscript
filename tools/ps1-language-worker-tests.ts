@@ -40,6 +40,9 @@ worker.replaceDocument(uri, 3, "theorem replayed(P: Prop, h: P): P := h;\n");
 const beforeRestart = await worker.analyze(uri);
 assert.equal(beforeRestart.status, "accepted");
 assert.ok(beforeRestart.declarations.some((declaration) => declaration.name === "replayed"));
+const replayedCompletion = await worker.completion(uri, { line: 0, character: 11 });
+assert.ok(replayedCompletion.some((item) => item.label === "replayed"));
+
 
 await worker.restart("test state replay");
 const afterRestart = await worker.analyze(uri);
