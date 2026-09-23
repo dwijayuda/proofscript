@@ -93,6 +93,44 @@ primitive was added.
 
 See `docs/NATIVE_TACTICS.md`.
 
+## Tactic ergonomics Phase 2 closure
+
+Status: **CLOSED** on tested source commit `8315cf3e3e1ef467bbdb3f569ebd063895c3cf0f`.
+
+Branch: `feature/tactic-ergonomics`.
+
+Closeout evidence on 2026-09-24:
+
+- consolidated gate: `npm run assurance:tactic-ergonomics`;
+- schema: `proofscript.tactic-ergonomics-endtest/v2`;
+- **9/9 PASS**, 0 failed, 0 skipped;
+- build — PASS;
+- parser proof extraction — PASS;
+- elaborator/kernel-check proof regression — PASS;
+- compiler-backed language service — PASS;
+- language worker — PASS;
+- LSP transport — PASS;
+- active VS Code smoke — PASS;
+- standalone-small — PASS;
+- reference governance — PASS;
+- `allTacticErgonomicsGatesPassed = true`.
+
+Phase 2 adds read-only compiler-backed tactic/branch proof states for
+successfully checked proofs. Source spans originate in the canonical parser;
+goals and locals are observed during ordinary elaboration, normalized for
+display only, and flow through frontend/compiler -> language service -> worker
+-> LSP -> VS Code. The observer is fail-open and is never consulted for proof
+construction or acceptance.
+
+The same closure includes the dependent-local `assumption` correction:
+local candidates are typed by kernel inference in the full current context
+before definitional comparison with the goal.
+
+Partial proof-state recovery for rejected or incomplete proofs remains a
+separate follow-up; no editor-only parser/elaborator is introduced.
+
+See `docs/TACTIC_ERGONOMICS.md`.
+
 ## Baseline behavior
 
 Observed before cleanup and now represented by the product regression workflow:
