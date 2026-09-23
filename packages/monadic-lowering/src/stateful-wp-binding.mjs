@@ -17,7 +17,8 @@ function logicalPostcondition(fn, postconditionIR) {
   const normalized = (postconditionIR?.clauses ?? []).map(clause => clause.normalizedPredicate).filter(Boolean);
   if (normalized.length > 0) return normalizeSpaces(normalized.join(' ∧ '));
   const ensures = (fn?.ensures ?? []).map(item => item.proposition ?? item.rawProposition).filter(Boolean);
-  return normalizeSpaces(ensures.join(' ∧ ') || 'True');
+  const frames = (fn?.frames ?? []).map(item => item.proposition ?? item.rawProposition).filter(Boolean);
+  return normalizeSpaces([...ensures, ...frames].join(' ∧ ') || 'True');
 }
 
 export function createStatefulWpBinding(contractArtifact) {
@@ -144,6 +145,7 @@ export function createStatefulWpBinding(contractArtifact) {
       sha256: sha256Text(postconditionFunction),
       clauses: (ast.clauses ?? []).map(clause => ({
         name: clause.name,
+        kind: clause.kind ?? 'ensures',
         normalizedPredicate: clause.normalizedPredicate,
         inferredType: clause.inferredType,
         typeCheckingComplete: clause.typeCheckingComplete,
