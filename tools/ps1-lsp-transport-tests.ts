@@ -93,6 +93,7 @@ assert.equal(initialized.result.capabilities.completionProvider.resolveProvider,
 assert.equal(initialized.result.capabilities.definitionProvider, true);
 assert.equal(initialized.result.capabilities.referencesProvider, true);
 assert.equal(initialized.result.capabilities.renameProvider, true);
+assert.equal(initialized.result.capabilities.documentFormattingProvider, true);
 assert.equal(initialized.result.capabilities.semanticTokensProvider.full, true);
 assert.deepEqual(
   initialized.result.capabilities.semanticTokensProvider.legend.tokenTypes,
@@ -308,6 +309,66 @@ assert.ok(typeof semanticTokens.result.resultId === "string");
 assert.equal(semanticTokens.result.data.length, 15);
 assert.deepEqual(semanticTokens.result.data.slice(0, 5), [0, 4, 7, 0, 3]);
 
+const messyFormattingSource = "def   formatted : Nat:={1+2};\n";
+send({
+  jsonrpc: "2.0",
+  method: "textDocument/didChange",
+  params: {
+    textDocument: { uri, version: 4 },
+    contentChanges: [{ text: messyFormattingSource }],
+  },
+});
+const pushedFormatting = await waitFor(
+  (message) => message.method === "textDocument/publishDiagnostics"
+    && message.params?.uri === uri
+    && message.params?.version === 4,
+  "version 4 formatting diagnostics",
+);
+assert.equal(pushedFormatting.params.diagnostics.length, 0);
+
+send({
+  jsonrpc: "2.0",
+  id: 15,
+  method: "textDocument/formatting",
+  params: {
+    textDocument: { uri },
+    options: { tabSize: 2, insertSpaces: true },
+  },
+});
+const formatting = await waitFor((message) => message.id === 15, "formatting response");
+assert.equal(formatting.result.length, 1);
+assert.match(formatting.result[0].newText, /def formatted: Nat := \{1 \+ 2\};/u);
+
+const commentedSource = "-- keep\ndef x: Nat := 1;\n";
+send({
+  jsonrpc: "2.0",
+  method: "textDocument/didChange",
+  params: {
+    textDocument: { uri, version: 5 },
+    contentChanges: [{ text: commentedSource }],
+  },
+});
+const pushedCommented = await waitFor(
+  (message) => message.method === "textDocument/publishDiagnostics"
+    && message.params?.uri === uri
+    && message.params?.version === 5,
+  "version 5 commented diagnostics",
+);
+assert.equal(pushedCommented.params.diagnostics.length, 0);
+
+send({
+  jsonrpc: "2.0",
+  id: 16,
+  method: "textDocument/formatting",
+  params: {
+    textDocument: { uri },
+    options: { tabSize: 2, insertSpaces: true },
+  },
+});
+const commentedFormatting = await waitFor((message) => message.id === 16, "comment formatting response");
+assert.equal(commentedFormatting.error.code, -32602);
+assert.match(commentedFormatting.error.message, /refuses sources containing comments/u);
+
 send({
   jsonrpc: "2.0",
   method: "textDocument/didClose",
@@ -321,8 +382,8 @@ const closed = await waitFor(
 );
 assert.deepEqual(closed.params.diagnostics, []);
 
-send({ jsonrpc: "2.0", id: 15, method: "shutdown", params: null });
-const shutdown = await waitFor((message) => message.id === 15, "shutdown response");
+send({ jsonrpc: "2.0", id: 17, method: "shutdown", params: null });
+const shutdown = await waitFor((message) => message.id === 17, "shutdown response");
 assert.equal(shutdown.result, null);
 send({ jsonrpc: "2.0", method: "exit", params: null });
 
