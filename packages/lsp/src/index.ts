@@ -156,6 +156,8 @@ export class ProofScriptLanguageServer {
                 documentStatusRequest: "proofscript/documentStatus",
                 semanticInfoRequest: "proofscript/semanticInfo",
                 serverInfoRequest: "proofscript/serverInfo",
+                goalsRequest: "proofscript/goals",
+                goalPresentationAvailable: true,
                 proofStateAvailable: false,
                 editorFeatureLevel: "document-semantic0",
                 declarationSourceIndex: true,
@@ -312,6 +314,32 @@ export class ProofScriptLanguageServer {
               assumptions: analysis.assumptions,
               proofStateAvailable: false,
             });
+          } catch (error) {
+            if (error instanceof LanguageWorkerCancelledError) return this.error(message.id, -32800, "request cancelled");
+            throw error;
+          }
+        }
+
+        case "proofscript/goals": {
+          const uri = message.params?.textDocument?.uri;
+          const position = message.params?.position;
+          if (typeof uri !== "string") return this.error(message.id, -32602, "missing textDocument.uri");
+          if (
+            position !== undefined
+            && (!position || typeof position.line !== "number" || typeof position.character !== "number")
+          ) {
+            return this.error(message.id, -32602, "invalid position");
+          }
+          const before = this.documents.get(uri);
+          if (!before) return this.error(message.id, -32602, `document is not open: ${uri}`);
+          const ownerId = requestId(message.id);
+          try {
+            const goals = await this.worker.goals(uri, position, ownerId);
+            const latest = this.documents.get(uri);
+            if (!latest || latest.version !== before.version || goals.version !== before.version) {
+              return this.error(message.id, -32801, "document changed while proof goals were running");
+            }
+            return this.reply(message.id, goals);
           } catch (error) {
             if (error instanceof LanguageWorkerCancelledError) return this.error(message.id, -32800, "request cancelled");
             throw error;
