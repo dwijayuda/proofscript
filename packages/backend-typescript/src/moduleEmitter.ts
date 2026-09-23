@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import path from "node:path";
-import type { CoreArtifact, CoreDeclaration } from "@proofscript/kernel";
+import type { CoreArtifact, CoreDeclaration, Term } from "@proofscript/kernel";
 import {
   PSC1_FAIL_CLOSED_FEATURES,
   PSC1_IMPLEMENTATION_PROFILE,
@@ -74,6 +74,31 @@ function collectExecutableDeclarations(
     });
   }
   return { emitted, skipped };
+}
+
+function productV1PublicType(term: Term, depth = 0): string | undefined {
+  if (term.tag === "const") {
+    switch (term.name) {
+      case "Nat":
+      case "Int":
+        return "bigint";
+      case "Bool":
+        return "boolean";
+      case "String":
+        return "string";
+      case "Unit":
+        return "null";
+      default:
+        return undefined;
+    }
+  }
+  if (term.tag === "pi") {
+    const domain = productV1PublicType(term.domain, depth + 1);
+    const codomain = productV1PublicType(term.body, depth + 1);
+    if (!domain || !codomain) return undefined;
+    return `(arg${depth}: ${domain}) => ${codomain}`;
+  }
+  return undefined;
 }
 
 function executableExpression(decl: CoreDeclaration, ctx: EmitContext, target: "js" | "ts"): string {
@@ -180,7 +205,12 @@ export function emitTypeScriptModule(artifact: CoreArtifact, options: EmitJavaSc
     lines.push(`import { __ps, __proofscript } from ${JSON.stringify(runtimeImport)};`);
     lines.push(`import type { PsValue } from ${JSON.stringify(runtimeImport)};`);
   }
-  for (const item of emitted) lines.push(`export const ${item.jsName}: PsValue = ${item.expr};`);
+  for (const item of emitted) {
+    const decl = executableDecls.find(candidate => candidate.name === item.name);
+    if (!decl) throw new Error(`internal emitter error: missing declaration '${item.name}'`);
+    const publicType = productV1PublicType(decl.type) ?? "PsValue";
+    lines.push(`export const ${item.jsName}: ${publicType} = ${item.expr};`);
+  }
   lines.push("const __default = Object.freeze({");
   lines.push("  __proofscript,");
   for (const item of emitted) lines.push(`  ${JSON.stringify(item.name)}: ${item.jsName},`);
