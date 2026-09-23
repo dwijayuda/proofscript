@@ -230,6 +230,7 @@ export function monadicVcRunCommand(args, { cwd = process.cwd() } = {}) {
     const request = loweringArtifact.statefulVcRequest;
     const program = loweringArtifact.statefulProgramLowering;
     const encoding = loweringArtifact.statefulLeanSemanticEncoding;
+    const adequacy = loweringArtifact.statefulAdequacyCheck;
 
     if (!request || request.schema !== 'proofscript.stateful-vc-request/v1') {
       throw new Error('monadic lowering artifact does not contain proofscript.stateful-vc-request/v1');
@@ -244,6 +245,10 @@ export function monadicVcRunCommand(args, { cwd = process.cwd() } = {}) {
     if (!encoding || encoding.schema !== 'proofscript.stateful-lean-semantic-encoding/v1' || !encoding.tripleTarget) {
       throw new Error('monadic lowering artifact does not contain a ready Std.Do/StateM semantic encoding');
     }
+    if (!adequacy || adequacy.schema !== 'proofscript.stateful-adequacy-check/v1'
+        || adequacy.ready !== true || !adequacy.check?.source) {
+      throw new Error('monadic lowering artifact does not contain a ready state-model adequacy check');
+    }
 
     const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'proofscript-vc-run-'));
     fs.cpSync(resolvedProject, tmp, { recursive: true });
@@ -256,21 +261,22 @@ export function monadicVcRunCommand(args, { cwd = process.cwd() } = {}) {
       : null;
 
     const modelCheckPath = path.join(tmp, 'ModelCheck.lean');
+    const adequacyCheckPath = path.join(tmp, 'AdequacyCheck.lean');
     const programCheckPath = path.join(tmp, 'ProgramCheck.lean');
     const tripleCheckPath = path.join(tmp, 'TripleCheck.lean');
     const requestPath = path.join(tmp, 'Request.lean');
     const preamble = vcRequestPreamble(request);
     const specificationTheorems = request.tactic?.specificationTheorems ?? [];
-    const adequacyTheorem = loweringArtifact.statefulWpBinding?.semantics?.adequacyTheorem;
 
     fs.writeFileSync(modelCheckPath, `${preamble}
 namespace ProofScript.Generated.VCRun.Model
 
 ${specificationTheorems.map(name => `#check ${name}`).join('\n')}
-${adequacyTheorem ? `#check ${adequacyTheorem}` : ''}
 
 end ProofScript.Generated.VCRun.Model
 `);
+
+    fs.writeFileSync(adequacyCheckPath, adequacy.check.source);
 
     fs.writeFileSync(programCheckPath, `${preamble}
 namespace ProofScript.Generated.VCRun.Program
@@ -308,9 +314,12 @@ end ProofScript.Generated.VCRun.Triple
     }
 
     const modelBuild = runProcess(lakeCmd, ['env', 'lean', modelCheckPath], tmp);
-    const programCheck = modelBuild.exitCode === 0
+    const adequacyCheck = modelBuild.exitCode === 0
+      ? runProcess(lakeCmd, ['env', 'lean', adequacyCheckPath], tmp)
+      : skippedProcess(lakeCmd, ['env', 'lean', adequacyCheckPath], 'model/import check failed');
+    const programCheck = adequacyCheck.exitCode === 0
       ? runProcess(lakeCmd, ['env', 'lean', programCheckPath], tmp)
-      : skippedProcess(lakeCmd, ['env', 'lean', programCheckPath], 'model/import check failed');
+      : skippedProcess(lakeCmd, ['env', 'lean', programCheckPath], 'state-model adequacy check failed');
     const tripleCheck = programCheck.exitCode === 0
       ? runProcess(lakeCmd, ['env', 'lean', tripleCheckPath], tmp)
       : skippedProcess(lakeCmd, ['env', 'lean', tripleCheckPath], 'program typecheck failed');
@@ -318,7 +327,7 @@ end ProofScript.Generated.VCRun.Triple
       ? runProcess(lakeCmd, ['env', 'lean', requestPath], tmp)
       : skippedProcess(lakeCmd, ['env', 'lean', requestPath], 'Triple target typecheck failed');
 
-    const checks = { modelBuild, programCheck, tripleCheck, requestRun };
+    const checks = { modelBuild, adequacyCheck, programCheck, tripleCheck, requestRun };
     const execution = analyzeStatefulVcExecution({
       functionName: loweringArtifact.function?.name ?? request.function ?? 'program',
       request,
@@ -342,12 +351,15 @@ end ProofScript.Generated.VCRun.Triple
         compatibility: leanCompatibility,
       },
       provenance: {
+        generatedAdequacyCheckSha256: sha256Text(adequacy.check.source),
         generatedProgramSha256: sha256Text(program.leanDefinition),
         generatedTripleTargetSha256: sha256Text(encoding.tripleTarget),
         generatedRequestSha256: sha256Text(request.request.source),
       },
       checks,
       generated: {
+        adequacyCheckTheoremName: adequacy.check.theoremName,
+        adequacyCheckSource: adequacy.check.source,
         programLeanDefinition: program.leanDefinition,
         tripleTarget: encoding.tripleTarget,
         requestTheoremName: request.request.theoremName,

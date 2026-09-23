@@ -115,8 +115,12 @@ const lowering = createMonadicLoweringArtifact({
   packageVersion: "test",
 });
 const request = lowering.statefulVcRequest;
+const adequacy = lowering.statefulAdequacyCheck;
 assert.equal(request.requestSourceReady, true);
 assert.ok(request.request.source);
+assert.equal(adequacy?.schema, "proofscript.stateful-adequacy-check/v1");
+assert.equal(adequacy.ready, true);
+assert.ok(adequacy.check?.source);
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "proofscript-stateful-vc-"));
 fs.cpSync(leanProjectRoot, tmp, { recursive: true });
@@ -131,10 +135,12 @@ const projectToolchain = fs.existsSync(tempToolchainPath)
 const generatedDir = path.join(tmp, "ProofScript", "Verification");
 const generatedStem = lowering.function.name.replace(/[^A-Za-z0-9_]+/g, "_");
 const requestPath = path.join(generatedDir, `Generated_${generatedStem}_Request.lean`);
+const adequacyCheckPath = path.join(generatedDir, `Generated_${generatedStem}_AdequacyCheck.lean`);
 const programCheckPath = path.join(generatedDir, `Generated_${generatedStem}_ProgramCheck.lean`);
 const tripleCheckPath = path.join(generatedDir, `Generated_${generatedStem}_TripleCheck.lean`);
 
 fs.writeFileSync(requestPath, request.request.source);
+fs.writeFileSync(adequacyCheckPath, adequacy.check.source);
 
 const preamble = leanPreamble(request);
 fs.writeFileSync(programCheckPath, `${preamble}
@@ -192,6 +198,7 @@ if (leanCompatibility.status !== "accepted") {
     claims: {
       leanEnvironmentResolved: false,
       leanModelTypechecked: false,
+      stateModelAdequacyChecked: false,
       leanProgramTypechecked: false,
       tripleTargetTypechecked: false,
       tacticExecuted: false,
@@ -208,10 +215,14 @@ if (leanCompatibility.status !== "accepted") {
 
 console.error(`[proofscript] LEAN  model-build ${modelModule}`);
 const modelBuild = run(lakeCmd, ["build", modelModule], tmp);
-if (modelBuild.exitCode === 0) console.error("[proofscript] LEAN  program-typecheck");
-const programCheck = modelBuild.exitCode === 0
-  ? run(lakeCmd, ["env", "lean", path.relative(tmp, programCheckPath)], tmp)
+if (modelBuild.exitCode === 0) console.error("[proofscript] LEAN  adequacy-check");
+const adequacyCheck = modelBuild.exitCode === 0
+  ? run(lakeCmd, ["env", "lean", path.relative(tmp, adequacyCheckPath)], tmp)
   : { command: lakeCmd, args: [], exitCode: 1, stdout: "", stderr: "model build failed", error: null };
+if (adequacyCheck.exitCode === 0) console.error("[proofscript] LEAN  program-typecheck");
+const programCheck = adequacyCheck.exitCode === 0
+  ? run(lakeCmd, ["env", "lean", path.relative(tmp, programCheckPath)], tmp)
+  : { command: lakeCmd, args: [], exitCode: 1, stdout: "", stderr: "adequacy check failed", error: null };
 if (programCheck.exitCode === 0) console.error("[proofscript] LEAN  triple-typecheck");
 const tripleCheck = programCheck.exitCode === 0
   ? run(lakeCmd, ["env", "lean", path.relative(tmp, tripleCheckPath)], tmp)
@@ -223,6 +234,7 @@ const requestRun = tripleCheck.exitCode === 0
 
 const checks = {
   modelBuild,
+  adequacyCheck,
   programCheck,
   tripleCheck,
   requestRun,
@@ -245,12 +257,15 @@ const report = {
     stateModelDescriptorSha256: sha256(descriptorText),
     leanModelModule: modelModule,
     leanModelSha256: sha256(fs.readFileSync(modelModulePath)),
+    generatedAdequacyCheckSha256: sha256(adequacy.check.source),
     generatedProgramSha256: sha256(lowering.statefulProgramLowering.leanDefinition),
     generatedTripleTargetSha256: sha256(lowering.statefulLeanSemanticEncoding.tripleTarget),
     generatedRequestSha256: sha256(request.request.source),
   },
   checks,
   generated: {
+    adequacyCheckTheoremName: adequacy.check.theoremName,
+    adequacyCheckSource: adequacy.check.source,
     programLeanDefinition: lowering.statefulProgramLowering.leanDefinition,
     tripleTarget: lowering.statefulLeanSemanticEncoding.tripleTarget,
     requestTheoremName: request.request.theoremName,
