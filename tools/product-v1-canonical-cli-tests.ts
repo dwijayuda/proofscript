@@ -30,27 +30,41 @@ assert.match(compiler, /export function checkProjectFile/u);
 const fixtureDir = fs.mkdtempSync(path.join(os.tmpdir(), "proofscript-product-v1-canonical-cli-"));
 try {
   const source = path.join(fixtureDir, "Run.ps");
-  fs.writeFileSync(source, "def answer: Nat := { 40 + 2 }\n");
-  const run = spawnSync(process.execPath, [
-    path.join(root, "bin", "psc.mjs"),
-    "run",
-    source,
-    "--call",
-    "answer",
-    "--json",
-  ], {
-    cwd: root,
-    encoding: "utf8",
-  });
-  assert.equal(
-    run.status,
-    0,
-    `canonical psc run must execute a checked source value\nSTDOUT:\n${run.stdout ?? ""}\nSTDERR:\n${run.stderr ?? ""}`,
-  );
-  const parsed = JSON.parse(run.stdout);
-  assert.equal(parsed.status, "accepted");
-  assert.equal(parsed.call, "answer");
-  assert.equal(parsed.result, "42");
+  fs.writeFileSync(source, [
+    "def answer: Nat := { 40 + 2 }",
+    "def unitValue: Unit := { Unit.unit }",
+    "",
+  ].join("\n"));
+
+  function runExport(name: string) {
+    const run = spawnSync(process.execPath, [
+      path.join(root, "bin", "psc.mjs"),
+      "run",
+      source,
+      "--call",
+      name,
+      "--json",
+    ], {
+      cwd: root,
+      encoding: "utf8",
+    });
+    assert.equal(
+      run.status,
+      0,
+      `canonical psc run must execute checked export '${name}'\nSTDOUT:\n${run.stdout ?? ""}\nSTDERR:\n${run.stderr ?? ""}`,
+    );
+    return JSON.parse(run.stdout);
+  }
+
+  const answer = runExport("answer");
+  assert.equal(answer.status, "accepted");
+  assert.equal(answer.call, "answer");
+  assert.equal(answer.result, "42");
+
+  const unit = runExport("unitValue");
+  assert.equal(unit.status, "accepted");
+  assert.equal(unit.call, "unitValue");
+  assert.equal(unit.result, "null");
 } finally {
   fs.rmSync(fixtureDir, { recursive: true, force: true });
 }
