@@ -137,6 +137,7 @@ function recursorDataForScrutinee(
     scrutineeType,
     typeHead: head,
     typeArgs: args,
+    typeLevelParams: typeEntry.declaration.levelParams,
     recEntry,
     metadata,
   };
@@ -181,8 +182,25 @@ function elaborateRecursorProof(
     binderInfo: "explicit",
   };
 
-  // PSKernel simple recursors declare universes as [motive, ...family].
-  const recLevels = [goalSort.level, ...data.typeHead.levels];
+  // Instantiate exactly the universe parameters declared by the checked
+  // recursor. Family parameters reuse the scrutinee-family levels; any one
+  // extra recursor-only parameter is the motive universe. Prop recursors that
+  // eliminate only to Prop therefore correctly receive no extra universe.
+  const familyLevels = new Map(
+    data.typeLevelParams.map((name, index) => [name, data.typeHead.levels[index]] as const),
+  );
+  let motiveLevelUsed = false;
+  const recLevels = data.recEntry.declaration.levelParams.map((name) => {
+    const familyLevel = familyLevels.get(name);
+    if (familyLevel) return familyLevel;
+    if (motiveLevelUsed) {
+      throw new UnsupportedFeature(
+        `${mode} encountered more than one recursor-only universe parameter`,
+      );
+    }
+    motiveLevelUsed = true;
+    return goalSort.level;
+  });
   let recursor: Term = {
     tag: "const",
     name: data.recEntry.declaration.name,
