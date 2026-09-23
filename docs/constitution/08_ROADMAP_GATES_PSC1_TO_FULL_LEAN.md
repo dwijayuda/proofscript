@@ -92,10 +92,14 @@ Prop
 Eq
 rfl
 exact
+assumption
 intro
 apply
+show
 have
 small rw
+bounded subst
+bounded simp-lite
 ```
 
 Exit criteria:
@@ -114,7 +118,9 @@ simple inductive source syntax
 simple structures
 pattern matching compiled to recursors
 structural recursion over Nat/List/Option
-small induction tactic or proof-term equivalent
+bounded constructor tactic
+bounded nonrecursive cases tactic
+small induction tactic over generated recursors
 ```
 
 Exit criteria:
