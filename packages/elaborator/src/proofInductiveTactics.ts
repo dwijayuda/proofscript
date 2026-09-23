@@ -7,7 +7,7 @@ import {
   kernelWhnf,
   shift,
 } from "@proofscript/kernel";
-import { ElaborationError, SurfaceTerm, UnsupportedFeature } from "@proofscript/syntax";
+import { ElaborationError, SurfaceProofBranch, SurfaceTerm, UnsupportedFeature } from "@proofscript/syntax";
 import { contextFromTypes, flattenCoreApps, replaceCoreScoped } from "./coreUtils";
 
 export interface InductiveTacticHost {
@@ -27,6 +27,33 @@ function freshGeneratedLocal(locals: readonly string[], prefix: string): string 
   }
 }
 
+function constructorShortName(name: string): string {
+  const separator = name.lastIndexOf(".");
+  return separator >= 0 ? name.slice(separator + 1) : name;
+}
+
+function resolveNamedBranches(
+  tactic: "cases" | "induction",
+  branches: readonly SurfaceProofBranch[] | undefined,
+  rules: readonly { ctor: string }[],
+): SurfaceProofBranch[] | undefined {
+  if (!branches) return undefined;
+  const resolved: Array<SurfaceProofBranch | undefined> = new Array(rules.length);
+  for (const branch of branches) {
+    const matches: number[] = [];
+    for (let i = 0; i < rules.length; i++) {
+      if (branch.constructor === rules[i].ctor || branch.constructor === constructorShortName(rules[i].ctor)) matches.push(i);
+    }
+    if (matches.length === 0) throw new ElaborationError(`${tactic} branch \'${branch.constructor}\' does not match any constructor of the scrutinee`);
+    if (matches.length > 1) throw new ElaborationError(`${tactic} branch \'${branch.constructor}\' is ambiguous; use a qualified constructor name`);
+    const index = matches[0];
+    if (resolved[index]) throw new ElaborationError(`${tactic} branch \'${branch.constructor}\' duplicates constructor \'${rules[index].ctor}\'`);
+    resolved[index] = branch;
+  }
+  const missing = rules.filter((_, index) => !resolved[index]).map(rule => constructorShortName(rule.ctor));
+  if (missing.length > 0) throw new ElaborationError(`${tactic} branch proof is missing constructor branch(es): ${missing.join(", ")}`);
+  return resolved as SurfaceProofBranch[];
+}
 function inferWhnf(
   term: Term,
   localTypes: readonly Term[],
@@ -56,6 +83,8 @@ function elaborateRepeatedMinor(
   binderCount: number,
   body: SurfaceTerm,
   branchIndex: number,
+  binderNames: readonly string[] | undefined,
+  branchLabel: string | undefined,
   locals: string[],
   localTypes: Term[],
   kernelEnv: Environment,
@@ -67,6 +96,15 @@ function elaborateRepeatedMinor(
   let namesNow = [...locals];
   let typesNow = [...localTypes];
 
+  if (binderNames) {
+    if (binderNames.length !== binderCount) {
+      throw new ElaborationError(`proof branch \'${branchLabel ?? branchIndex + 1}\' expects ${binderCount} binder(s), got ${binderNames.length}`);
+    }
+    if (new Set(binderNames).size !== binderNames.length) {
+      throw new ElaborationError(`proof branch \'${branchLabel ?? branchIndex + 1}\' contains duplicate binder names`);
+    }
+  }
+
   for (let i = 0; i < binderCount; i++) {
     const pi = kernelWhnf(kernelEnv, cursor);
     if (pi.tag !== "pi") {
@@ -74,7 +112,7 @@ function elaborateRepeatedMinor(
         `generated proof-state branch ${branchIndex + 1} ended before its expected ${binderCount} binder(s)`,
       );
     }
-    const name = freshGeneratedLocal(namesNow, `__ps_case_${branchIndex + 1}_${i + 1}`);
+    const name = binderNames?.[i] ?? freshGeneratedLocal(namesNow, `__ps_case_${branchIndex + 1}_${i + 1}`);
     domains.push(pi.domain);
     binderInfos.push(pi.binderInfo);
     namesNow.push(name);
@@ -146,8 +184,9 @@ function recursorDataForScrutinee(
 function elaborateRecursorProof(
   mode: "cases" | "induction",
   scrutinee: Term,
-  body: SurfaceTerm,
-  locals: string[],
+  body: SurfaceTerm | undefined,
+  branches: readonly SurfaceProofBranch[] | undefined,
+  locals: string[]
   localTypes: Term[],
   kernelEnv: Environment,
   expectedType: Term | undefined,
@@ -156,6 +195,9 @@ function elaborateRecursorProof(
   const goalSort = requireGoalSort(expectedType, localTypes, kernelEnv, mode);
   const goal = expectedType!;
   const data = recursorDataForScrutinee(scrutinee, localTypes, kernelEnv, mode);
+  if (body === undefined && branches === undefined) throw new ElaborationError(`${mode} requires either a continuation or named constructor branches`);
+  if (body !== undefined && branches !== undefined) throw new ElaborationError(`${mode} cannot combine a shared continuation with named constructor branches`);
+  const namedBranches = resolveNamedBranches(mode, branches, data.metadata.rules);
 
   if (
     mode === "cases"
@@ -221,11 +263,16 @@ function elaborateRecursorProof(
       ? rule.recursiveFields.filter(Boolean).length
       : 0;
     const binderCount = rule.nfields + ihCount;
+    const namedBranch = namedBranches?.[i];
+    const minorBody = namedBranch?.body ?? body;
+    if (!minorBody) throw new ElaborationError(`${mode} internal error: no proof body for constructor \'${rule.ctor}\'`);
     const minor = elaborateRepeatedMinor(
       currentType.domain,
       binderCount,
-      body,
+      minorBody,
       i,
+      namedBranch?.binders,
+      namedBranch?.constructor,
       locals,
       localTypes,
       kernelEnv,
@@ -333,8 +380,9 @@ export function elabConstructorProof(
 
 export function elabCasesProof(
   source: SurfaceTerm,
-  body: SurfaceTerm,
-  locals: string[],
+  body: SurfaceTerm | undefined,
+  branches: readonly SurfaceProofBranch[] | undefined,
+  locals: string[]
   localTypes: Term[],
   kernelEnv: Environment,
   expectedType: Term | undefined,
@@ -345,6 +393,7 @@ export function elabCasesProof(
     "cases",
     scrutinee,
     body,
+    branches,
     locals,
     localTypes,
     kernelEnv,
@@ -355,8 +404,9 @@ export function elabCasesProof(
 
 export function elabInductionProof(
   source: SurfaceTerm,
-  body: SurfaceTerm,
-  locals: string[],
+  body: SurfaceTerm | undefined,
+  branches: readonly SurfaceProofBranch[] | undefined,
+  locals: string[]
   localTypes: Term[],
   kernelEnv: Environment,
   expectedType: Term | undefined,
@@ -367,6 +417,7 @@ export function elabInductionProof(
     "induction",
     scrutinee,
     body,
+    branches,
     locals,
     localTypes,
     kernelEnv,

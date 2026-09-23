@@ -41,9 +41,11 @@ theorem subst_p(a: Nat, b: Nat, h: a = b): a = b := by { subst a; rfl }
 theorem constructor_p(h: P): P := by { constructor }
 theorem cases_p(h: P): P := by { cases h; assumption }
 theorem induction_p(n: Nat): n = n := by { induction n; rfl }
+theorem cases_branch_p(h: P): P := by { cases h | intro value => exact value }
+theorem induction_branch_p(n: Nat): n = n := by { induction n | Nat.zero => rfl | Nat.succ k ih => rfl }
 theorem simp_p(h: P): P := by { simp }
 `);
-assert.equal(parsed.declarations.length, 16);
+assert.equal(parsed.declarations.length, 18);
 assert.equal(parsed.declarations[1].value.tag, 'rflProof');
 assert.equal(parsed.declarations[2].value.tag, 'rflProof');
 assert.equal(parsed.declarations[3].value.tag, 'introProof');
@@ -57,6 +59,10 @@ assert.equal(parsed.declarations[11].value.tag, 'substProof');
 assert.equal(parsed.declarations[12].value.tag, 'constructorProof');
 assert.equal(parsed.declarations[13].value.tag, 'casesProof');
 assert.equal(parsed.declarations[14].value.tag, 'inductionProof');
-assert.equal(parsed.declarations[15].value.tag, 'simpProof');
+assert.equal(parsed.declarations[15].value.tag, 'casesProof');
+assert.deepEqual(parsed.declarations[15].value.branches?.map(branch => [branch.constructor, branch.binders]), [['intro', ['value']]]);
+assert.equal(parsed.declarations[16].value.tag, 'inductionProof');
+assert.deepEqual(parsed.declarations[16].value.branches?.map(branch => [branch.constructor, branch.binders]), [['Nat.zero', []], ['Nat.succ', ['k', 'ih']]]);
+assert.equal(parsed.declarations[17].value.tag, 'simpProof');
 
 console.log('parser proof extraction tests: PASS');

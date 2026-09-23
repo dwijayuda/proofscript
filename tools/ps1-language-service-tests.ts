@@ -174,6 +174,28 @@ service.closeDocument(uri);
 assert.equal(service.getDocument(uri), undefined);
 assert.throws(() => service.analyze(uri), /document is not open/);
 
+// Branch-aware tactics must flow through the existing compiler-backed editor path.
+const branchService = new ProofScriptLanguageService();
+const branchUri = "proofscript-test://BranchAware.ps";
+const branchSource = `axiom P: Prop;
+inductive ChainP: Prop where {
+  | base (value: P)
+  | step (tail: ChainP)
+}
+theorem branchAware(h: ChainP): P := by {
+  induction h
+  | step tail ih => exact ih
+  | base value => exact value
+}
+`;
+branchService.openDocument(branchUri, 1, branchSource);
+const branchAnalysis = branchService.analyze(branchUri);
+assert.equal(branchAnalysis.status, "accepted");
+assert.ok(branchAnalysis.declarations.some((declaration) => declaration.name === "branchAware"));
+const branchGoals = branchService.goals(branchUri, { line: 5, character: 10 });
+assert.equal(branchGoals.declarationGoal?.name, "branchAware");
+assert.equal(branchGoals.tacticStateAvailable, false, "phase 1 does not invent editor-side tactic state");
+branchService.closeDocument(branchUri);
 // Canonical formatter reuse: one implementation for CLI and editor.
 const formatService = new ProofScriptLanguageService();
 const formatUri = "proofscript-test://Format.ps";

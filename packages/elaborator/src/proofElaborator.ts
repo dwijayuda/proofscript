@@ -54,8 +54,8 @@ export function elabProofTerm(
     case "rwProof": return elabRwProof(term.equality, term.reverse, term.body, locals, localTypes, kernelEnv, expectedType, host);
     case "substProof": return elabSubstProof(term.name, term.body, locals, localTypes, kernelEnv, expectedType, host);
     case "constructorProof": return elabConstructorProof(term.body, locals, localTypes, kernelEnv, expectedType, host);
-    case "casesProof": return elabCasesProof(term.term, term.body, locals, localTypes, kernelEnv, expectedType, host);
-    case "inductionProof": return elabInductionProof(term.term, term.body, locals, localTypes, kernelEnv, expectedType, host);
+    case "casesProof": return elabCasesProof(term.term, term.body, term.branches, locals, localTypes, kernelEnv, expectedType, host);
+    case "inductionProof": return elabInductionProof(term.term, term.body, term.branches, locals, localTypes, kernelEnv, expectedType, host);
     case "simpProof": return elabSimpProof(locals, localTypes, kernelEnv, expectedType, host);
   }
 }

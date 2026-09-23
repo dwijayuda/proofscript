@@ -1,4 +1,4 @@
-import {ParseError,UnsupportedFeature,SurfaceTerm,Token} from "@proofscript/syntax";
+import {ParseError,UnsupportedFeature,SurfaceProofBranch,SurfaceTerm,Token} from "@proofscript/syntax";
 
 /**
  * Narrow interface required by PSC-1 proof parsing.
@@ -28,6 +28,37 @@ export function parseProofTerm(host:ProofParserHost):SurfaceTerm{
   return proof;
 }
 
+function parseProofBranchConstructor(host:ProofParserHost):string{
+  const first=host.next();
+  if(first.kind!=="id")throw new ParseError("proof branch requires a constructor name after `|`");
+  let name=first.text;
+  while(host.at(".")){
+    host.next();
+    const part=host.next();
+    if(part.kind!=="id")throw new ParseError("qualified proof branch constructor name requires an identifier after `.`");
+    name+=`.${part.text}`;
+  }
+  return name;
+}
+
+function parseProofBranches(host:ProofParserHost):SurfaceProofBranch[]{
+  const branches:SurfaceProofBranch[]=[];
+  while(host.at("|")){
+    host.next();
+    const constructor=parseProofBranchConstructor(host);
+    const binders:string[]=[];
+    while(!host.at("=>")){
+      const binder=host.next();
+      if(binder.kind!=="id")throw new ParseError(`proof branch \'${constructor}\' expects binder names followed by \`=>\``);
+      binders.push(binder.text);
+    }
+    host.expect("=>");
+    const body=host.atId("by")?parseProofTerm(host):parseProofStep(host);
+    branches.push({constructor,binders,body});
+  }
+  if(branches.length===0)throw new ParseError("branch-aware proof requires at least one `| constructor => ...` branch");
+  return branches;
+}
 function parseProofStep(host:ProofParserHost):SurfaceTerm{
   if(host.atId("rfl")){
     host.next();
@@ -125,12 +156,14 @@ function parseProofStep(host:ProofParserHost):SurfaceTerm{
   if(host.atId("cases")){
     host.next();
     const term=host.parseTerm();
+    if(host.at("|"))return{tag:"casesProof",term,branches:parseProofBranches(host)};
     host.expect(";");
     return{tag:"casesProof",term,body:parseProofStep(host)};
   }
   if(host.atId("induction")){
     host.next();
     const term=host.parseTerm();
+    if(host.at("|"))return{tag:"inductionProof",term,branches:parseProofBranches(host)};
     host.expect(";");
     return{tag:"inductionProof",term,body:parseProofStep(host)};
   }

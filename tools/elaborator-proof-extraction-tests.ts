@@ -99,6 +99,12 @@ theorem induction_nat_reflexive(n: Nat): n = n := by { induction n; rfl }
 
 theorem induction_chain(h: ChainP): P := by { induction h; assumption }
 
+theorem cases_bool_branches(b: Bool): 1 = 1 := by { cases b | false => rfl | true => rfl }
+
+theorem cases_holder_branch(h: HolderP): P := by { cases h | intro value => exact value }
+
+theorem induction_chain_branches(h: ChainP): P := by { induction h | step tail ih => exact ih | base value => exact value }
+
 theorem simp_reflexive(n: Nat): n = n := by { simp }
 
 theorem simp_assumption(h: P): P := by { simp }
@@ -110,7 +116,7 @@ def executable: Nat := { idNat 9 }
 });
 const checked = runPsliveJson(['check', fixture.source, '--json']);
 assert.equal(checked.status, 'accepted');
-for (const name of ['idNat_rfl', 'exact_rfl', 'intro_assumption', 'apply_exact', 'apply_subgoal', 'show_exact', 'have_exact', 'have_inferred', 'have_nested', 'have_dependent_target', 'rw_forward', 'rw_reverse', 'rw_exact_numeral', 'subst_forward', 'constructor_both', 'cases_bool', 'cases_holder', 'induction_nat_reflexive', 'induction_chain', 'simp_reflexive', 'simp_assumption', 'simp_rewrite']) {
+for (const name of ['idNat_rfl', 'exact_rfl', 'intro_assumption', 'apply_exact', 'apply_subgoal', 'show_exact', 'have_exact', 'have_inferred', 'have_nested', 'have_dependent_target', 'rw_forward', 'rw_reverse', 'rw_exact_numeral', 'subst_forward', 'constructor_both', 'cases_bool', 'cases_holder', 'induction_nat_reflexive', 'induction_chain', 'cases_bool_branches', 'cases_holder_branch', 'induction_chain_branches', 'simp_reflexive', 'simp_assumption', 'simp_rewrite']) {
   assert.ok(checked.userDeclarations.some(d => d.name === name && d.kind === 'theorem'), `expected theorem ${name}`);
 }
 const built = buildJsFixture(fixture, 'proof-elab.js');
@@ -171,6 +177,36 @@ theorem bad_cases(h: ChainP): 1 = 1 := by { cases h; rfl }
 const rejectedCases = runPsliveJson(['check', badCasesRecursive, '--json'], 1);
 assert.equal(rejectedCases.status, 'rejected');
 assert.match(rejectedCases.message, /cases currently handles nonrecursive inductives/i);
+
+const badBranchMissing = fixture.write('BadBranchMissing.ps', `
+theorem bad_branch_missing(b: Bool): 1 = 1 := by { cases b | false => rfl }
+`);
+const rejectedBranchMissing = runPsliveJson(['check', badBranchMissing, '--json'], 1);
+assert.equal(rejectedBranchMissing.status, 'rejected');
+assert.match(rejectedBranchMissing.message, /missing constructor branch\(es\).*true/i);
+
+const badBranchUnknown = fixture.write('BadBranchUnknown.ps', `
+theorem bad_branch_unknown(b: Bool): 1 = 1 := by { cases b | false => rfl | nope => rfl }
+`);
+const rejectedBranchUnknown = runPsliveJson(['check', badBranchUnknown, '--json'], 1);
+assert.equal(rejectedBranchUnknown.status, 'rejected');
+assert.match(rejectedBranchUnknown.message, /does not match any constructor/i);
+
+const badBranchDuplicate = fixture.write('BadBranchDuplicate.ps', `
+theorem bad_branch_duplicate(b: Bool): 1 = 1 := by { cases b | false => rfl | false => rfl | true => rfl }
+`);
+const rejectedBranchDuplicate = runPsliveJson(['check', badBranchDuplicate, '--json'], 1);
+assert.equal(rejectedBranchDuplicate.status, 'rejected');
+assert.match(rejectedBranchDuplicate.message, /duplicates constructor/i);
+
+const badBranchBinders = fixture.write('BadBranchBinders.ps', `
+axiom P: Prop;
+inductive HolderP: Prop where { | intro (value: P) }
+theorem bad_branch_binders(h: HolderP): P := by { cases h | intro => assumption }
+`);
+const rejectedBranchBinders = runPsliveJson(['check', badBranchBinders, '--json'], 1);
+assert.equal(rejectedBranchBinders.status, 'rejected');
+assert.match(rejectedBranchBinders.message, /expects 1 binder\(s\), got 0/i);
 
 const badSimp = fixture.write('BadSimp.ps', `
 axiom P: Prop;
