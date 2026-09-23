@@ -62,6 +62,36 @@ export interface SurfaceFeatureOccurrence {
   readonly range: Range;
 }
 
+export interface SourceDeclarationOccurrence {
+  readonly name: string;
+  readonly qualifiedName: string;
+  readonly kind: string;
+  readonly type: string;
+  readonly startOffset: number;
+  readonly endOffset: number;
+  readonly nameStartOffset: number;
+  readonly nameEndOffset: number;
+  readonly range: Range;
+  readonly selectionRange: Range;
+}
+
+export interface DocumentSymbolInfo {
+  readonly name: string;
+  readonly qualifiedName: string;
+  readonly kind: string;
+  readonly detail: string;
+  readonly range: Range;
+  readonly selectionRange: Range;
+}
+
+export interface HoverInfo {
+  readonly name: string;
+  readonly qualifiedName: string;
+  readonly kind: string;
+  readonly type: string;
+  readonly range: Range;
+}
+
 export interface Analysis {
   readonly uri: string;
   readonly version: number;
@@ -76,6 +106,7 @@ export interface Analysis {
   }[];
   readonly assumptions: readonly string[];
   readonly surfaceFeatures: readonly SurfaceFeatureOccurrence[];
+  readonly sourceDeclarations: readonly SourceDeclarationOccurrence[];
   readonly moduleReuse?: {
     readonly reused: readonly string[];
     readonly rebuilt: readonly string[];
@@ -176,6 +207,17 @@ export class ProofScriptLanguageService {
     let declarations: Analysis["declarations"] = [];
     let assumptions: readonly string[] = [];
     let surfaceFeatures: readonly SurfaceFeatureOccurrence[] = [];
+    let sourceDeclarations: readonly SourceDeclarationOccurrence[] = [];
+    let rawDeclarationLocations: readonly {
+      readonly name: string;
+      readonly qualifiedName: string;
+      readonly kind: string;
+      readonly startOffset: number;
+      readonly endOffset: number;
+      readonly nameStartOffset: number;
+      readonly nameEndOffset: number;
+    }[] = [];
+    let localDeclarationNames: ReadonlySet<string> | undefined;
     let moduleReuse: Analysis["moduleReuse"];
     let diagnostics: readonly Diagnostic[] = [];
 
@@ -194,10 +236,13 @@ export class ProofScriptLanguageService {
         const currentModule = checked.modules.find((module) =>
           normalizePath(module.source.filePath) === normalizePath(document.filePath!));
         rawFeatures = currentModule?.ownedFeatures ?? [];
+        rawDeclarationLocations = currentModule?.declarationLocations ?? [];
+        localDeclarationNames = new Set(currentModule?.declarations.map((declaration) => declaration.name) ?? []);
       } else {
         const checked = checkSource(document.text);
         summary = checked.summary;
         rawFeatures = checked.ownedFeatures;
+        rawDeclarationLocations = checked.declarationLocations;
       }
       cancellation?.throwIfCancellationRequested();
 
@@ -215,6 +260,27 @@ export class ProofScriptLanguageService {
         range: rangeFromOffsets(document.text, use.startOffset, use.endOffset),
       }));
 
+      const semanticDeclarations = localDeclarationNames
+        ? declarations.filter((declaration) => localDeclarationNames!.has(declaration.name))
+        : declarations;
+      sourceDeclarations = rawDeclarationLocations.map((location) => {
+        const semantic = semanticDeclarations.find((declaration) =>
+          declaration.name === location.qualifiedName || declaration.name === location.name
+        );
+        return {
+          name: location.name,
+          qualifiedName: location.qualifiedName,
+          kind: semantic?.kind ?? location.kind,
+          type: semantic?.type ?? "<type unavailable>",
+          startOffset: location.startOffset,
+          endOffset: location.endOffset,
+          nameStartOffset: location.nameStartOffset,
+          nameEndOffset: location.nameEndOffset,
+          range: rangeFromOffsets(document.text, location.startOffset, location.endOffset),
+          selectionRange: rangeFromOffsets(document.text, location.nameStartOffset, location.nameEndOffset),
+        };
+      });
+
       if (status !== "accepted") {
         const message = summary.message ?? `compiler status: ${status}`;
         diagnostics = [diagnosticFromFailure(message, document.text, status)];
@@ -225,7 +291,7 @@ export class ProofScriptLanguageService {
       diagnostics = [diagnosticFromError(error, document.text, status)];
     }
 
-    const resultId = analysisResultId(document.version, diagnostics, status, declarations, surfaceFeatures);
+    const resultId = analysisResultId(document.version, diagnostics, status, declarations, surfaceFeatures, sourceDeclarations);
     const analysis: Analysis = {
       uri: document.uri,
       version: document.version,
@@ -236,6 +302,7 @@ export class ProofScriptLanguageService {
       declarations,
       assumptions,
       surfaceFeatures,
+      sourceDeclarations,
       ...(moduleReuse ? { moduleReuse } : {}),
       diagnostics,
       resultId,
@@ -255,6 +322,34 @@ export class ProofScriptLanguageService {
       generation: analysis.generation,
       diagnostics: analysis.diagnostics,
       resultId: analysis.resultId,
+    };
+  }
+
+  documentSymbols(uri: string, cancellation?: CancellationToken): readonly DocumentSymbolInfo[] {
+    const analysis = this.analyze(uri, false, cancellation);
+    return analysis.sourceDeclarations.map((declaration) => ({
+      name: declaration.name,
+      qualifiedName: declaration.qualifiedName,
+      kind: declaration.kind,
+      detail: declaration.type,
+      range: declaration.range,
+      selectionRange: declaration.selectionRange,
+    }));
+  }
+
+  hover(uri: string, position: Position, cancellation?: CancellationToken): HoverInfo | null {
+    const analysis = this.analyze(uri, false, cancellation);
+    const offset = offsetAt(analysis.text, position);
+    const declaration = analysis.sourceDeclarations.find((item) =>
+      offset >= item.nameStartOffset && offset < item.nameEndOffset
+    );
+    if (!declaration) return null;
+    return {
+      name: declaration.name,
+      qualifiedName: declaration.qualifiedName,
+      kind: declaration.kind,
+      type: declaration.type,
+      range: declaration.selectionRange,
     };
   }
 
@@ -361,6 +456,7 @@ function analysisResultId(
   status: AnalysisStatus,
   declarations: Analysis["declarations"],
   surfaceFeatures: readonly SurfaceFeatureOccurrence[],
+  sourceDeclarations: readonly SourceDeclarationOccurrence[],
 ): string {
   return sha256(JSON.stringify({
     version,
@@ -368,6 +464,15 @@ function analysisResultId(
     diagnostics: diagnostics.map((diagnostic) => diagnostic.data.identity.fingerprint),
     declarations: declarations.map((declaration) => [declaration.name, declaration.kind, declaration.type]),
     surfaceFeatures: surfaceFeatures.map((feature) => [feature.feature, feature.startOffset, feature.endOffset]),
+    sourceDeclarations: sourceDeclarations.map((declaration) => [
+      declaration.qualifiedName,
+      declaration.kind,
+      declaration.type,
+      declaration.startOffset,
+      declaration.endOffset,
+      declaration.nameStartOffset,
+      declaration.nameEndOffset,
+    ]),
   })).slice(0, 24);
 }
 
