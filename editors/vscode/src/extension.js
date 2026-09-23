@@ -236,6 +236,18 @@ function registerLanguageProviders(context) {
     const result = await client.request("textDocument/documentSymbol", { textDocument: { uri: document.uri.toString() } }, token);
     return (result ?? []).map((item) => new vscode.DocumentSymbol(item.name, item.detail ?? "", mapSymbolKind(item.kind), toRange(item.range), toRange(item.selectionRange)));
   }}));
+  context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, {
+    provideCompletionItems: async (document, position, token) => {
+      if (!client?.ready || !client.capabilities?.completionProvider) return [];
+      const result = await client.request("textDocument/completion", { textDocument: { uri: document.uri.toString() }, position: toPos(position) }, token);
+      return (result?.items ?? []).map((item) => {
+        const completion = new vscode.CompletionItem(item.label, mapCompletionKind(item.kind));
+        completion.detail = item.detail;
+        completion.sortText = item.sortText;
+        return completion;
+      });
+    },
+  }, "."));
 }
 
 function registerCommands(context) {
@@ -308,6 +320,7 @@ function toPos(position) { return { line: position.line, character: position.cha
 function toPlainRange(range) { return { start: toPos(range.start), end: toPos(range.end) }; }
 function toRange(range) { return new vscode.Range(range.start.line, range.start.character, range.end.line, range.end.character); }
 function toSeverity(severity) { return severity === 2 ? vscode.DiagnosticSeverity.Warning : severity === 3 ? vscode.DiagnosticSeverity.Information : severity === 4 ? vscode.DiagnosticSeverity.Hint : vscode.DiagnosticSeverity.Error; }
+function mapCompletionKind(kind) { return Number.isInteger(kind) ? kind : vscode.CompletionItemKind.Text; }
 function mapSymbolKind(kind) { return Number.isInteger(kind) ? kind : vscode.SymbolKind.Variable; }
 function escapeHtml(value) { return String(value ?? "").replace(/[&<>"\']/g, (char) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "\"":"&quot;", "\'":"&#39;" }[char])); }
 function messageOf(error) { return error instanceof Error ? error.message : String(error); }
