@@ -68,6 +68,18 @@ assert.ok(afterRestart.declarations.some((declaration) => declaration.name === "
 const afterRestartDefinition = await worker.definition(uri, { line: 1, character: 25 });
 assert.ok(afterRestartDefinition);
 assert.ok(worker.stats().stateReplays >= 1);
+worker.replaceDocument(uri, 5, "def   workerFormatted : Nat:={1+2};\n");
+const workerFormatEdits = await worker.formatDocument(uri);
+assert.equal(workerFormatEdits.length, 1);
+assert.match(workerFormatEdits[0].newText, /def workerFormatted: Nat := \{1 \+ 2\};/u);
+worker.replaceDocument(uri, 6, workerFormatEdits[0].newText);
+assert.deepEqual(await worker.formatDocument(uri), []);
+worker.replaceDocument(uri, 7, "-- keep\ndef x: Nat := 1;\n");
+await assert.rejects(
+  worker.formatDocument(uri),
+  /refuses sources containing comments/u,
+);
+
 
 const owner = "cancel-me";
 const blocked = worker.request("__debugBlock", { ms: 500 }, owner);
