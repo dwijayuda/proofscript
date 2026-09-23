@@ -128,6 +128,9 @@ export class ProofScriptLanguageServer {
                 resolveProvider: false,
                 triggerCharacters: ["."],
               },
+              definitionProvider: true,
+              referencesProvider: true,
+              renameProvider: true,
             },
             serverInfo: {
               name: "ProofScript LSP",
@@ -414,6 +417,82 @@ export class ProofScriptLanguageServer {
           } catch (error) {
             if (error instanceof LanguageWorkerCancelledError) return this.error(message.id, -32800, "request cancelled");
             throw error;
+          }
+        }
+
+        case "textDocument/definition": {
+          const uri = message.params?.textDocument?.uri;
+          const position = message.params?.position;
+          if (typeof uri !== "string") return this.error(message.id, -32602, "missing textDocument.uri");
+          if (!position || typeof position.line !== "number" || typeof position.character !== "number") {
+            return this.error(message.id, -32602, "missing or invalid position");
+          }
+          const before = this.documents.get(uri);
+          if (!before) return this.error(message.id, -32602, `document is not open: ${uri}`);
+          const ownerId = requestId(message.id);
+          try {
+            const location = await this.worker.definition(uri, position, ownerId);
+            const latest = this.documents.get(uri);
+            if (!latest || latest.version !== before.version) {
+              return this.error(message.id, -32801, "document changed while definition was running");
+            }
+            return this.reply(message.id, location);
+          } catch (error) {
+            if (error instanceof LanguageWorkerCancelledError) return this.error(message.id, -32800, "request cancelled");
+            throw error;
+          }
+        }
+
+        case "textDocument/references": {
+          const uri = message.params?.textDocument?.uri;
+          const position = message.params?.position;
+          if (typeof uri !== "string") return this.error(message.id, -32602, "missing textDocument.uri");
+          if (!position || typeof position.line !== "number" || typeof position.character !== "number") {
+            return this.error(message.id, -32602, "missing or invalid position");
+          }
+          const before = this.documents.get(uri);
+          if (!before) return this.error(message.id, -32602, `document is not open: ${uri}`);
+          const ownerId = requestId(message.id);
+          try {
+            const locations = await this.worker.references(
+              uri,
+              position,
+              message.params?.context?.includeDeclaration !== false,
+              ownerId,
+            );
+            const latest = this.documents.get(uri);
+            if (!latest || latest.version !== before.version) {
+              return this.error(message.id, -32801, "document changed while references was running");
+            }
+            return this.reply(message.id, locations);
+          } catch (error) {
+            if (error instanceof LanguageWorkerCancelledError) return this.error(message.id, -32800, "request cancelled");
+            throw error;
+          }
+        }
+
+        case "textDocument/rename": {
+          const uri = message.params?.textDocument?.uri;
+          const position = message.params?.position;
+          const newName = message.params?.newName;
+          if (typeof uri !== "string") return this.error(message.id, -32602, "missing textDocument.uri");
+          if (!position || typeof position.line !== "number" || typeof position.character !== "number") {
+            return this.error(message.id, -32602, "missing or invalid position");
+          }
+          if (typeof newName !== "string") return this.error(message.id, -32602, "missing newName");
+          const before = this.documents.get(uri);
+          if (!before) return this.error(message.id, -32602, `document is not open: ${uri}`);
+          const ownerId = requestId(message.id);
+          try {
+            const edit = await this.worker.rename(uri, position, newName, ownerId);
+            const latest = this.documents.get(uri);
+            if (!latest || latest.version !== before.version) {
+              return this.error(message.id, -32801, "document changed while rename was running");
+            }
+            return this.reply(message.id, edit);
+          } catch (error) {
+            if (error instanceof LanguageWorkerCancelledError) return this.error(message.id, -32800, "request cancelled");
+            return this.error(message.id, -32602, error instanceof Error ? error.message : String(error));
           }
         }
 
