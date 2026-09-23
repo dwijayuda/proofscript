@@ -25,6 +25,36 @@ ProofScript should become a small, serious Lean-semantic programming language an
 
 The v0.6.1 reference remains immutable as a versioned baseline. v0.7 is a new specification track, not a silent rewrite of v0.6.1.
 
+
+## Current Product-v1 completion overlay
+
+The detailed executable completion authority is now
+`config/proofscript-product-v1-completion.json`. The historical PS/KA ordering
+below remains architectural history and rationale; it is no longer the day-to-day
+task queue for `product/v1-completion`.
+
+Current bounded Product-v1 work has implemented the planned software profile,
+verification IR/Lean lanes, runtime representation contract, certificate claim
+separation, trusted-external JS/npm FFI, bounded stdlib/source packages, and
+compiler-backed VS Code tooling. Representative application and packed-release
+gates are also present.
+
+The release is **not declared complete from implementation alone**. Closure is
+one executable gate:
+
+```bash
+npm run assurance:product-v1:endtest -- \
+  --toolchains 4.33.1,4.34.0,4.35.0-rc2 \
+  --out .proofscript-product-v1-endtest/summary.json
+```
+
+That gate combines the non-Lean Product-v1 profile/runtime/FFI/package/editor/
+representative-release gates with the proof-required Lean verification end-test.
+
+Formal Core→TypeScript refinement, arbitrary stateful exceptional/branching
+control flow, full Lean equivalence, and full Lean tactic/kernel parity remain
+separate explicit nonclaims rather than hidden release assumptions.
+
 ---
 
 ## PS1 — Architecture stabilization and closure
