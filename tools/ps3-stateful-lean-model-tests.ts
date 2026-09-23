@@ -136,6 +136,8 @@ assert.equal(adequacy.semantics.adequacyTheorem, "runBankState_adequate");
 assert.equal(adequacy.semantics.monadTypeConstructor, "StateM Bank");
 assert.equal(adequacy.checkedInLean, false);
 assert.equal(adequacy.stateModelAdequacyChecked, false);
+assert.equal(lowering.summary.statefulAdequacyCheckReady, true);
+assert.equal(lowering.trustBoundary.statefulAdequacyCheckReady, true);
 assert.match(adequacy.check.source, /theorem __ps_state_model_adequacy_check/u);
 assert.match(adequacy.check.source, /\{program : StateM Bank α\}/u);
 assert.match(adequacy.check.source, /hRun : runBankState program initial = result/u);

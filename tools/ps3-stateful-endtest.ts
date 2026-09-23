@@ -166,6 +166,7 @@ const report = {
     failedSteps: results.filter(step => step.status === "failed").length,
     skippedSteps: results.filter(step => step.status === "skipped").length,
     allStaticGatesPassed: buildPassed && staticPassed,
+    allStateModelsAdequate: matrixReport?.summary?.allStateModelsAdequate === true,
     allLeanProofsDischarged: matrixReport?.summary?.allProofsDischarged === true,
   },
 };

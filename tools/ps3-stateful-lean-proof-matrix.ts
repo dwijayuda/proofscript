@@ -174,6 +174,9 @@ const report = {
     proved: results.filter(item => item.status === "proved").length,
     failed: results.filter(item => item.status !== "proved").length,
     allProofsDischarged: results.every(item => item.status === "proved"),
+    allStateModelsAdequate: results.every(
+      item => item.claims?.stateModelAdequacyChecked === true,
+    ),
     provenanceConsistent: provenanceValidation.valid,
   },
 };
