@@ -121,6 +121,19 @@ const vcRunAgain = analyze({
 });
 assert.equal(vcRunAgain.goalArtifact.goals[0].id, vcRun.goalArtifact.goals[0].id);
 
+const zeroExitResidual = analyze({
+  modelBuild: result(0),
+  programCheck: result(0),
+  tripleCheck: result(0),
+  requestRun: result(0, residualText),
+});
+assert.equal(zeroExitResidual.status, "vcs-generated");
+assert.equal(zeroExitResidual.failedStage, "vc-residual-goals");
+assert.equal(zeroExitResidual.claims.tacticExecuted, true);
+assert.equal(zeroExitResidual.claims.realVerificationConditionsGenerated, true);
+assert.equal(zeroExitResidual.claims.semanticProofDischarge, false);
+assert.equal(zeroExitResidual.goalArtifact.summary.goalCount, 1);
+
 const proved = analyze({
   modelBuild: result(0),
   programCheck: result(0),
