@@ -281,6 +281,24 @@ function registerLanguageProviders(context) {
       return edit;
     },
   }));
+  const semanticLegend = new vscode.SemanticTokensLegend(
+    ["function", "enum", "struct", "class", "variable"],
+    ["declaration", "definition", "readonly"],
+  );
+  context.subscriptions.push(vscode.languages.registerDocumentSemanticTokensProvider(selector, {
+    provideDocumentSemanticTokens: async (document, token) => {
+      if (!client?.ready || !client.capabilities?.semanticTokensProvider) {
+        return new vscode.SemanticTokens(new Uint32Array());
+      }
+      const result = await client.request("textDocument/semanticTokens/full", {
+        textDocument: { uri: document.uri.toString() },
+      }, token);
+      return new vscode.SemanticTokens(
+        Uint32Array.from(result?.data ?? []),
+        result?.resultId,
+      );
+    },
+  }, semanticLegend));
 }
 
 function registerCommands(context) {
