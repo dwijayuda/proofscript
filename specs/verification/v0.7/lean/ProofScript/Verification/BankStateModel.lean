@@ -64,6 +64,29 @@ theorem balanceOf_creditState_other
       balanceOf other state := by
   simp [balanceOf, creditState, h]
 
+
+/--
+Symmetric orientation of the cross-account debit preservation fact.
+This lets automation use a source-level distinctness hypothesis `account ≠ other`
+without requiring an extra manual symmetry step.
+-/
+@[simp]
+theorem balanceOf_debitState_other_of_account_ne
+    (state : Bank) (account other : AccountId) (amount : Nat)
+    (h : account ≠ other) :
+    balanceOf other (debitState account amount state) =
+      balanceOf other state := by
+  exact balanceOf_debitState_other state account other amount (Ne.symm h)
+
+/-- Symmetric orientation of the corresponding credit preservation fact. -/
+@[simp]
+theorem balanceOf_creditState_other_of_account_ne
+    (state : Bank) (account other : AccountId) (amount : Nat)
+    (h : account ≠ other) :
+    balanceOf other (creditState account amount state) =
+      balanceOf other state := by
+  exact balanceOf_creditState_other state account other amount (Ne.symm h)
+
 /--
 A precise schematic specification for debit. Keeping the postcondition abstract lets
 `vcgen` instantiate it with the precondition required by the following statement.
