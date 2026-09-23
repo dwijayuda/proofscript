@@ -842,7 +842,9 @@
     "assurance:ps3:stateful-lean-invoice-vc:proof": "npm run assurance:ps3:stateful-lean-invoice-vc -- --require-proof",
     "test:product-v1:fresh-release": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-fresh-release-tests.ts",
     "test:product-v1:endtest": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-endtest-tests.ts",
-    "assurance:product-v1:endtest": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-endtest.ts"
+    "assurance:product-v1:endtest": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-endtest.ts",
+    "test:native-tactics": "npm run test:parser:proof && npm run test:elaborator:proof-extraction",
+    "assurance:native-tactics": "npm run build && npm run test:native-tactics && npm run test:standalone-small && npm run test:reference-governance"
   },
   "engines": {
     "node": ">=20"
