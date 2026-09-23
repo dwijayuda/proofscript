@@ -1154,17 +1154,25 @@ function packageDistStatus() {
   return { required: packages, ok: packages.every(p => p.exists) };
 }
 function pscCheckCanRun() {
-  const tmp = fs.mkdtempSync(path.join(process.env.TMPDIR || '/tmp', 'proofscript-doctor-check-'));
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'proofscript-doctor-check-'));
   const sample = path.join(tmp, 'DoctorSmoke.ps');
   try {
     fs.writeFileSync(sample, 'def doctorSmoke: Nat := { 1 }\n');
-    const result = runPslive(['check', sample, '--json'], { capture: true, timeout: 30_000 });
-    return {
-      ok: result.status === 0,
-      status: result.status ?? (result.signal ? `signal:${result.signal}` : 1),
-      sample: 'temporary-smoke',
-      stderr: result.status === 0 ? undefined : (result.stderr || result.stdout || '').trim().slice(0, 500),
-    };
+    try {
+      const checked = checkDirect(sample);
+      return {
+        ok: checked.status === 'accepted',
+        status: checked.status === 'accepted' ? 0 : 1,
+        sample: 'temporary-smoke',
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        status: 1,
+        sample: 'temporary-smoke',
+        stderr: (error instanceof Error ? error.message : String(error)).slice(0, 500),
+      };
+    }
   } finally {
     fs.rmSync(tmp, { recursive: true, force: true });
   }
