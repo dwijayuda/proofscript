@@ -84,6 +84,7 @@ try {
     "build",
     "lean-version-compatibility",
     "stateful-frame",
+    "stateful-logical-predicate",
     "stateful-model",
     "runner-selection",
     "proof-matrix-plan",
