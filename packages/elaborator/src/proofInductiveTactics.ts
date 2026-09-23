@@ -108,14 +108,7 @@ function recursorDataForScrutinee(
   localTypes: Term[],
   kernelEnv: Environment,
   tactic: string,
-): {
-  scrutineeType: Term;
-  typeHead: Extract<Term, { tag: "const" }>;
-  typeArgs: Term[];
-  typeEntry: NonNullable<ReturnType<Environment["get"]>>;
-  recEntry: NonNullable<ReturnType<Environment["get"]>>;
-  metadata: RecursorMetadata;
-} {
+) {
   const scrutineeType = inferWhnf(scrutinee, localTypes, kernelEnv);
   const { head, args } = flattenCoreApps(scrutineeType);
   if (head.tag !== "const") {
@@ -145,7 +138,6 @@ function recursorDataForScrutinee(
     scrutineeType,
     typeHead: head,
     typeArgs: args,
-    typeEntry,
     recEntry,
     metadata,
   };
