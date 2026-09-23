@@ -31,6 +31,14 @@
       "verification": {
         "tripleTheorem": "BankStateModel.credit_triple"
       }
+    },
+    {
+      "name": "audit",
+      "type": "Nat -> State Bank Unit",
+      "spec": "records an audit code without changing the bank state",
+      "verification": {
+        "tripleTheorem": "BankStateModel.audit_triple"
+      }
     }
   ],
   "laws": [

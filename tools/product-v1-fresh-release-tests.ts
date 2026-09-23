@@ -5,6 +5,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { resolveNpmInvocation } from "./ps3-npm-invocation.mjs";
+import { parseNpmPackJson } from "./npm-pack-json.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "proofscript-product-v1-release-"));
@@ -72,7 +73,7 @@ try {
   }
 
   const dry = npm(["pack", "--dry-run", "--json"], root);
-  const dryInfo = JSON.parse(dry.stdout)[0];
+  const dryInfo = parseNpmPackJson(dry.stdout);
   const packedPaths = new Set((dryInfo.files ?? []).map((item: any) => String(item.path).replace(/\\/gu, "/")));
   for (const file of requiredDist) {
     assert.ok(packedPaths.has(file), `release tarball is missing prebuilt workspace output ${file}`);
@@ -93,7 +94,7 @@ try {
   }
 
   const packed = npm(["pack", "--json", "--pack-destination", packDir], root);
-  const packInfo = JSON.parse(packed.stdout)[0];
+  const packInfo = parseNpmPackJson(packed.stdout);
   const tarball = path.join(packDir, packInfo.filename);
   assert.ok(fs.existsSync(tarball));
 

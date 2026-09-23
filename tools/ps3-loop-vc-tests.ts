@@ -106,9 +106,10 @@ assert.equal(
 assert.equal(historicalBuilt.artifact.trustBoundary.loopInvariantChecking, "structural-obligations-only");
 
 const missingDecrease = sourceText.replace(
-  "    decreases remaining: n - i\n",
+  /^[ \\t]*decreases remaining: n - i\\r?\\n/mu,
   "",
 );
+assert.notEqual(missingDecrease, sourceText, "missing-decreases fixture must remove the decreases clause");
 const missingContract = parsePureContractSource(missingDecrease, "<missing-decrease>");
 const missingArtifact = createLoopVerificationArtifact(missingContract);
 assert.equal(missingArtifact.ready, false);

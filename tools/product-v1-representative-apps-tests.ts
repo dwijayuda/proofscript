@@ -7,6 +7,7 @@ import http from "node:http";
 import os from "node:os";
 import path from "node:path";
 import { resolveNpmInvocation } from "./ps3-npm-invocation.mjs";
+import { parseNpmPackJson } from "./npm-pack-json.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
 const psc = path.join(root, "bin", "psc.mjs");
@@ -78,7 +79,7 @@ async function main() {
 
     const packInvocation = resolveNpmInvocation(["pack", "--dry-run", "--json"]);
     const packed = run(packInvocation.command, packInvocation.args, runtimeLibrary);
-    const packedInfo = JSON.parse(packed.stdout)[0];
+    const packedInfo = parseNpmPackJson(packed.stdout);
     const packedPaths = new Set((packedInfo.files ?? []).map((item: any) => item.path));
     assert.ok(packedPaths.has("dist/index.js"));
     assert.ok(packedPaths.has("dist/index.ts"));

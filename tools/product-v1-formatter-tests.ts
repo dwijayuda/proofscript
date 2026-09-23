@@ -34,7 +34,7 @@ const commented = formatSource("-- keep me\ndef   x : Nat:={1+2}; -- tail\n/- ou
 assert.equal(commented.commentsPreserved, true);
 assert.match(commented.formatted, /-- keep me/u);
 assert.match(commented.formatted, /-- tail/u);
-assert.match(commented.formatted, /\/\- outer \/\- inner -\/ done -\//u);
+assert.ok(commented.formatted.includes("/- outer /- inner -/ done -/"));
 assert.equal(formatSource(commented.formatted).formatted, commented.formatted);
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "proofscript-fmt-"));

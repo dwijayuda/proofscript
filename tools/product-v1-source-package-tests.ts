@@ -7,6 +7,7 @@ import os from "node:os";
 import path from "node:path";
 import { buildModuleGraph } from "../packages/project/src/index.ts";
 import { resolveNpmInvocation } from "./ps3-npm-invocation.mjs";
+import { parseNpmPackJson } from "./npm-pack-json.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
 const psc = path.join(root, "bin", "psc.mjs");
@@ -55,7 +56,7 @@ try {
     0,
     `npm pack --dry-run failed\nstdout:\n${packed.stdout}\nstderr:\n${packed.stderr}`,
   );
-  const packInfo = JSON.parse(packed.stdout)[0];
+  const packInfo = parseNpmPackJson(packed.stdout);
   const packedPaths = new Set((packInfo.files ?? []).map((item: any) => item.path));
   assert.ok(packedPaths.has("package.json"));
   assert.ok(packedPaths.has("proofscript/Example/Math.ps"));

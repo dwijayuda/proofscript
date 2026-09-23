@@ -486,6 +486,7 @@
     "Option.getD",
     "Option.orElse",
     "Option.fold",
+    "Option.any",
     "List",
     "List.map",
     "List.foldl",
@@ -812,5 +813,5 @@
       "lean": "<PSC-1 bounded Array.countP primitive>"
     }
   ],
-  "declarationCount": 97
+  "declarationCount": 98
 }
