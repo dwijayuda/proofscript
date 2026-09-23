@@ -82,7 +82,27 @@ const repairedCompletion = service.completion(uri, { line: 0, character: 7 });
 assert.ok(repairedCompletion.some((item) => item.label === "repaired"));
 assert.ok(repairedCompletion.every((item) => item.qualifiedName && item.detail));
 
-const explicitParams = repaired.surfaceFeatures.find((feature) => feature.feature === "D-EXPLICIT-PARAMS");
+const navigationSource = "def navBase: Nat := 1;\ndef navUse: Nat := navBase;\n";
+service.replaceDocument(uri, 4, navigationSource);
+const navigation = service.analyze(uri);
+assert.equal(navigation.status, "accepted");
+assert.ok(navigation.sourceReferences.some((reference) => reference.resolvedName === "navBase"));
+const navDefinition = service.definition(uri, { line: 1, character: 21 });
+assert.ok(navDefinition);
+assert.equal(navDefinition.uri, uri);
+assert.deepEqual(navDefinition.range.start, { line: 0, character: 4 });
+assert.deepEqual(navDefinition.range.end, { line: 0, character: 11 });
+const navReferences = service.references(uri, { line: 1, character: 21 }, true);
+assert.equal(navReferences.length, 2);
+const navRename = service.rename(uri, { line: 1, character: 21 }, "renamedBase");
+assert.equal(navRename.changes[uri]?.length, 2);
+assert.ok(navRename.changes[uri]?.every((edit) => edit.newText === "renamedBase"));
+assert.throws(
+  () => service.rename(uri, { line: 1, character: 21 }, "123bad"),
+  /invalid ProofScript identifier/u,
+);
+
+const explicitParams = navigation.surfaceFeatures.find((feature) => feature.feature === "D-EXPLICIT-PARAMS");
 assert.ok(explicitParams, "language service must expose compiler-owned surface features");
 assert.equal(explicitParams.startOffset, 0);
 assert.ok(explicitParams.endOffset > explicitParams.startOffset);
@@ -103,9 +123,9 @@ assert.throws(
 );
 
 const diagnosticBundle = service.diagnostics(uri);
-assert.equal(diagnosticBundle.version, 3);
+assert.equal(diagnosticBundle.version, 4);
 assert.equal(diagnosticBundle.generation, service.getDocument(uri)!.generation);
-assert.equal(diagnosticBundle.resultId, repaired.resultId);
+assert.equal(diagnosticBundle.resultId, navigation.resultId);
 
 service.closeDocument(uri);
 assert.equal(service.getDocument(uri), undefined);
