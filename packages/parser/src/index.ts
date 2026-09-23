@@ -16,7 +16,16 @@ type SectionVariablePolicy="default"|"include"|"omit";
 interface SectionVariableEntry{binder:SurfaceBinder;dependencies:string[];policy:SectionVariablePolicy;}
 export interface ParserState{commandIndex:number;grammarRevision:number;universeParams:string[];}
 export interface ParseOptions{knownGlobalNames?:readonly string[];validateOpenNamespaces?:boolean;}
-export interface ParseResult{imports:string[];declarations:SurfaceDeclaration[];finalState:ParserState;ownedFeatures:SurfaceFeatureUse[];}
+export interface DeclarationSourceLocation{
+  readonly name:string;
+  readonly qualifiedName:string;
+  readonly kind:SurfaceDeclaration["kind"];
+  readonly startOffset:number;
+  readonly endOffset:number;
+  readonly nameStartOffset:number;
+  readonly nameEndOffset:number;
+}
+export interface ParseResult{imports:string[];declarations:SurfaceDeclaration[];finalState:ParserState;ownedFeatures:SurfaceFeatureUse[];declarationLocations:DeclarationSourceLocation[];}
 export function parseSource(source:string,initial:ParserState={commandIndex:0,grammarRevision:0,universeParams:[]},options:ParseOptions={}):ParseResult{return new Parser(tokenize(source),initial,options).parseFile();}
 
 export {tokenize} from "./tokenize";
@@ -28,7 +37,7 @@ import {tokenize} from "./tokenize";
 function countLeadingSurfacePis(term:SurfaceTerm):number{let n=0,cur=term;while(cur.tag==="pi"){n++;cur=cur.body;}return n;}
 
 class Parser extends TokenCursor{
-  private state:ParserState;private namespaceStack:string[]=[];private openedNamespaces:string[]=[];private knownNamespaces=new Set<string>();private sectionVariables:SectionVariableEntry[]=[];private ownedFeatures:SurfaceFeatureUse[]=[];private readonly validateOpenNamespaces:boolean;
+  private state:ParserState;private namespaceStack:string[]=[];private openedNamespaces:string[]=[];private knownNamespaces=new Set<string>();private sectionVariables:SectionVariableEntry[]=[];private ownedFeatures:SurfaceFeatureUse[]=[];private declarationLocations:DeclarationSourceLocation[]=[];private readonly validateOpenNamespaces:boolean;
   constructor(tokens:Token[],initial:ParserState,options:ParseOptions){
     super(tokens);
     this.state={...initial,universeParams:[...initial.universeParams]};
@@ -48,7 +57,7 @@ class Parser extends TokenCursor{
         bodyStarted=true;this.parseNonImportCommand(declarations);
       }
     }
-    return{imports,declarations,finalState:this.state,ownedFeatures:[...this.ownedFeatures]};
+    return{imports,declarations,finalState:this.state,ownedFeatures:[...this.ownedFeatures],declarationLocations:this.declarationLocations.map(item=>({...item}))};
   }
   private parseNonImportCommand(declarations:SurfaceDeclaration[]):void{
     if(this.atId("import"))throw new ParseError(`import declarations must appear before all non-import commands (offset ${this.peek().offset})`);
@@ -59,7 +68,15 @@ class Parser extends TokenCursor{
     else if(this.atId("variable"))this.parseVariableCommand();
     else if(this.atId("include"))this.parseSectionPolicyCommand("include");
     else if(this.atId("omit"))this.parseSectionPolicyCommand("omit");
-    else {const decl=this.applySectionVariables(this.withNamespace(this.parseAnyDeclaration()));declarations.push(decl);this.registerDeclarationNamespaces(decl);}
+    else {
+      const startIndex=this.i;
+      const startOffset=this.peek().offset;
+      const decl=this.applySectionVariables(this.withNamespace(this.parseAnyDeclaration()));
+      const endOffset=Math.max(startOffset,this.peek().offset);
+      declarations.push(decl);
+      this.registerDeclarationNamespaces(decl);
+      this.declarationLocations.push(this.declarationLocationFor(decl,startIndex,this.i,startOffset,endOffset));
+    }
     this.bumpCommand();
   }
   private cloneSectionVariables():SectionVariableEntry[]{return this.sectionVariables.map(v=>({binder:{...v.binder},dependencies:[...v.dependencies],policy:v.policy}));}
@@ -162,6 +179,28 @@ class Parser extends TokenCursor{
       case "do":{const s=new Set(scope);for(const b of t.binds){visit(b.value,s);s.add(b.name);}visit(t.body,s);break;}
       case "structUpdate":visit(t.base,scope);for(const f of t.fields)visit(f.value,scope);break;
     }};visit(term,new Set(bound));return out;
+  }
+
+  private declarationLocationFor(decl:SurfaceDeclaration,startIndex:number,endIndex:number,startOffset:number,endOffset:number):DeclarationSourceLocation{
+    const sourceName=decl.name;
+    const lastNamePart=sourceName.startsWith("_root_.")?sourceName.slice(7).split(".").at(-1)??sourceName:sourceName.split(".").at(-1)??sourceName;
+    const nameToken=this.tokens.slice(startIndex,endIndex).find(token=>
+      token.kind==="id"&&(token.text===sourceName||token.text===lastNamePart)
+    );
+    const nameStartOffset=nameToken?.offset??startOffset;
+    const nameEndOffset=nameToken?nameToken.offset+nameToken.text.length:Math.min(endOffset,startOffset+Math.max(1,lastNamePart.length));
+    const qualifiedName=sourceName.startsWith("_root_.")
+      ? sourceName.slice(7)
+      : (decl.namespacePath?.length?[...decl.namespacePath,sourceName].join("."):sourceName);
+    return{
+      name:sourceName,
+      qualifiedName,
+      kind:decl.kind,
+      startOffset,
+      endOffset,
+      nameStartOffset,
+      nameEndOffset,
+    };
   }
 
   private registerNameNamespaces(name:string):void{const parts=name.startsWith("_root_.")?name.slice(7).split("."):name.split(".");for(let i=1;i<parts.length;i++)this.knownNamespaces.add(parts.slice(0,i).join("."));}
