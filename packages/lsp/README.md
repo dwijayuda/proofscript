@@ -15,11 +15,13 @@ tokens, the server exposes ProofScript-specific compiler-backed requests:
 - `proofscript/goals`
 
 `proofscript/goals` carries declaration/verification goals plus an optional
-cursor-local tactic state. `proofStateAvailable: true` means the server
+cursor-local proof state. `proofStateAvailable: true` means the server
 supports this metadata. `tacticState.sourceStatus` distinguishes `checked`,
-`rejected-prefix`, and the bounded canonical `syntax-incomplete` prefix
-case. A `tacticState: null` result means no canonical observed state covers the
-cursor; the LSP does not parse, repair, or synthesize fallback goals.
+`rejected-prefix`, and bounded canonical `syntax-incomplete` states.
+`tacticState.kind: "goal"` identifies the proof-free initial context for an
+empty `by {` block. A `tacticState: null` result means no canonical observed
+state covers the cursor; the LSP does not parse, repair, or synthesize fallback
+goals.
 
 ## Architecture
 
