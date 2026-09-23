@@ -1,7 +1,7 @@
 import path from "node:path";
 import crypto from "node:crypto";
 import { parseSource } from "@proofscript/parser";
-import { collectResolvedGlobalReferences, elaborateProgram, type ResolvedGlobalReference } from "@proofscript/elaborator";
+import { collectResolvedGlobalReferences, elaborateProgram, type ProofStateSnapshot, type ResolvedGlobalReference } from "@proofscript/elaborator";
 import {
   checkCoreDeclarations,
   CheckSummary,
@@ -9,11 +9,26 @@ import {
   CoreDeclaration,
   TypeclassEnvironmentMetadata,
   emptyTypeclassEnvironment,
+  pretty,
 } from "@proofscript/kernel";
 import { CoreModulesBuildMetadata, makeArtifact } from "@proofscript/kernel-codec";
 import { prepareCoreEnvironment } from "@proofscript/environment";
 import { buildModuleGraph, buildWorkspaceGraph, findProjectRoot, ProjectModuleGraph, ProjectModuleSource, ProjectWorkspaceGraph, type ProjectSourceProvider } from "@proofscript/project";
 import { UnsupportedFeature, type SurfaceFeatureUse } from "@proofscript/syntax";
+
+export interface FrontendProofStateLocal {
+  readonly name:string;
+  readonly type:string;
+}
+export interface FrontendProofState {
+  readonly kind:"tactic"|"branch";
+  readonly tactic:string;
+  readonly startOffset:number;
+  readonly endOffset:number;
+  readonly goal:string;
+  readonly locals:readonly FrontendProofStateLocal[];
+  readonly branch?:string;
+}
 
 export interface FrontendModuleCacheEntry {
   readonly sourceSha256:string;
@@ -23,6 +38,7 @@ export interface FrontendModuleCacheEntry {
   readonly ownedFeatures:SurfaceFeatureUse[];
   readonly declarationLocations:ReturnType<typeof parseSource>["declarationLocations"];
   readonly globalReferences:ResolvedGlobalReference[];
+  readonly proofStates:FrontendProofState[];
 }
 export interface FrontendModuleCache {
   get(moduleName:string):FrontendModuleCacheEntry|undefined;
@@ -51,6 +67,8 @@ export interface FrontendResult {
   declarationLocations: ReturnType<typeof parseSource>["declarationLocations"];
   /** Direct global references resolved with canonical namespace/open-namespace rules. */
   globalReferences: ResolvedGlobalReference[];
+  /** Observational states emitted by the ordinary checked proof elaboration path. */
+  proofStates: FrontendProofState[];
 }
 
 export interface CheckedProjectModule {
@@ -60,6 +78,7 @@ export interface CheckedProjectModule {
   ownedFeatures:SurfaceFeatureUse[];
   declarationLocations:ReturnType<typeof parseSource>["declarationLocations"];
   globalReferences:ResolvedGlobalReference[];
+  proofStates:FrontendProofState[];
 }
 export interface FrontendProjectResult {
   artifact:ReturnType<typeof makeArtifact>;
@@ -79,7 +98,14 @@ export function checkSource(source:string,options:FrontendOptions={}):FrontendRe
   const prepared=options.prelude?prepareCoreEnvironment(options.prelude):undefined;
   const parsed=parseSource(source,undefined,{knownGlobalNames:prepared?.globals.map(g=>g.name)??[],validateOpenNamespaces:true});
   if(parsed.imports.length&&!options.allowResolvedImports)throw new UnsupportedFeature("K3c-section-vars0 source imports require project/module resolution; use the project frontend");
-  const elaborated=elaborateProgram(parsed.declarations,prepared?.globals??[],prepared?.artifact.declarations??[],prepared?.typeclasses);
+  const rawProofStates:ProofStateSnapshot[]=[];
+  const elaborated=elaborateProgram(
+    parsed.declarations,
+    prepared?.globals??[],
+    prepared?.artifact.declarations??[],
+    prepared?.typeclasses,
+    {recordProofState:(state)=>rawProofStates.push(state)},
+  );
   const initial=prepared?.artifact.declarations??[];
   const all=[...initial,...elaborated.declarations];
   const summary=checkCoreDeclarations(all, 'KERNEL-level-instantiation-conformance1');
@@ -87,7 +113,8 @@ export function checkSource(source:string,options:FrontendOptions={}):FrontendRe
   // The project driver supplies the complete graph after every dependency has been checked.
   // Intermediate per-module artifacts intentionally carry no partial module metadata.
   const globalReferences=[...collectResolvedGlobalReferences(parsed.declarations,all.map(declaration=>declaration.name))];
-  return{artifact:makeArtifact(all,elaborated.typeclasses,options.allowResolvedImports?undefined:modules),summary,parserState:parsed.finalState,ownedFeatures:[...parsed.ownedFeatures],declarationLocations:parsed.declarationLocations.map(item=>({...item})),globalReferences};
+  const proofStates=rawProofStates.map(displayProofState);
+  return{artifact:makeArtifact(all,elaborated.typeclasses,options.allowResolvedImports?undefined:modules),summary,parserState:parsed.finalState,ownedFeatures:[...parsed.ownedFeatures],declarationLocations:parsed.declarationLocations.map(item=>({...item})),globalReferences,proofStates};
 }
 
 /**
@@ -162,6 +189,7 @@ function compileResolvedModules(
         ownedFeatures:cached.ownedFeatures.map(item=>({...item})),
         declarationLocations:cached.declarationLocations.map(item=>({...item})),
         globalReferences:cached.globalReferences.map(item=>({...item})),
+        proofStates:cloneProofStates(cached.proofStates),
       });
       reused.push(sourceModule.name);
       continue;
@@ -182,6 +210,7 @@ function compileResolvedModules(
       ownedFeatures:[...checked.ownedFeatures],
       declarationLocations:checked.declarationLocations.map(item=>({...item})),
       globalReferences:checked.globalReferences.map(item=>({...item})),
+      proofStates:cloneProofStates(checked.proofStates),
     };
     compiled.set(sourceModule.name,moduleResult);
     options.moduleCache?.set(sourceModule.name,{
@@ -192,11 +221,30 @@ function compileResolvedModules(
       ownedFeatures:checked.ownedFeatures.map(item=>({...item})),
       declarationLocations:checked.declarationLocations.map(item=>({...item})),
       globalReferences:checked.globalReferences.map(item=>({...item})),
+      proofStates:cloneProofStates(checked.proofStates),
     });
     rebuilt.push(sourceModule.name);
   }
 
   return{modules:sourceModules.map(module=>compiled.get(module.name)!),reused,rebuilt};
+}
+
+function displayProofState(state:ProofStateSnapshot):FrontendProofState{
+  return{
+    kind:state.kind,
+    tactic:state.tactic,
+    startOffset:state.startOffset,
+    endOffset:state.endOffset,
+    goal:pretty(state.goal),
+    locals:state.locals.map(local=>({name:local.name,type:pretty(local.type)})),
+    ...(state.branch?{branch:state.branch}:{}),
+  };
+}
+function cloneProofStates(states:readonly FrontendProofState[]):FrontendProofState[]{
+  return states.map(state=>({
+    ...state,
+    locals:state.locals.map(local=>({...local})),
+  }));
 }
 
 function dependencyClosure(module:ProjectModuleSource,all:Map<string,ProjectModuleSource>):Set<string>{
