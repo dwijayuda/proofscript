@@ -77,11 +77,24 @@ inductive BothP: Prop where {
   | intro (left: P) (right: Q)
 }
 
+inductive HolderP: Prop where {
+  | intro (value: P)
+}
+
+inductive ChainP: Prop where {
+  | base (value: P)
+  | step (tail: ChainP)
+}
+
 theorem constructor_both(hp: P, hq: Q): BothP := by { constructor; assumption }
 
 theorem cases_bool(b: Bool): 1 = 1 := by { cases b; rfl }
 
+theorem cases_holder(h: HolderP): P := by { cases h; assumption }
+
 theorem induction_nat_reflexive(n: Nat): n = n := by { induction n; rfl }
+
+theorem induction_chain(h: ChainP): P := by { induction h; assumption }
 
 theorem simp_reflexive(n: Nat): n = n := by { simp }
 
@@ -94,7 +107,7 @@ def executable: Nat := { idNat 9 }
 });
 const checked = runPsliveJson(['check', fixture.source, '--json']);
 assert.equal(checked.status, 'accepted');
-for (const name of ['idNat_rfl', 'exact_rfl', 'intro_assumption', 'apply_exact', 'apply_subgoal', 'show_exact', 'have_exact', 'have_inferred', 'have_nested', 'have_dependent_target', 'rw_forward', 'rw_reverse', 'subst_forward', 'constructor_both', 'cases_bool', 'induction_nat_reflexive', 'simp_reflexive', 'simp_assumption', 'simp_rewrite']) {
+for (const name of ['idNat_rfl', 'exact_rfl', 'intro_assumption', 'apply_exact', 'apply_subgoal', 'show_exact', 'have_exact', 'have_inferred', 'have_nested', 'have_dependent_target', 'rw_forward', 'rw_reverse', 'subst_forward', 'constructor_both', 'cases_bool', 'cases_holder', 'induction_nat_reflexive', 'induction_chain', 'simp_reflexive', 'simp_assumption', 'simp_rewrite']) {
   assert.ok(checked.userDeclarations.some(d => d.name === name && d.kind === 'theorem'), `expected theorem ${name}`);
 }
 const built = buildJsFixture(fixture, 'proof-elab.js');
@@ -139,5 +152,29 @@ theorem bad_subst(a: Nat): a = a := by { subst a; rfl }
 const rejectedSubst = runPsliveJson(['check', badSubst, '--json'], 1);
 assert.equal(rejectedSubst.status, 'rejected');
 assert.match(rejectedSubst.message, /subst failed|no local equality/i);
+
+const badConstructor = fixture.write('BadConstructor.ps', `
+inductive ChoiceP: Prop where { | left | right }
+theorem bad_constructor: ChoiceP := by { constructor }
+`);
+const rejectedConstructor = runPsliveJson(['check', badConstructor, '--json'], 1);
+assert.equal(rejectedConstructor.status, 'rejected');
+assert.match(rejectedConstructor.message, /constructor currently requires exactly one constructor/i);
+
+const badCasesRecursive = fixture.write('BadCasesRecursive.ps', `
+inductive ChainP: Prop where { | base | step (tail: ChainP) }
+theorem bad_cases(h: ChainP): 1 = 1 := by { cases h; rfl }
+`);
+const rejectedCases = runPsliveJson(['check', badCasesRecursive, '--json'], 1);
+assert.equal(rejectedCases.status, 'rejected');
+assert.match(rejectedCases.message, /cases currently handles nonrecursive inductives/i);
+
+const badSimp = fixture.write('BadSimp.ps', `
+axiom P: Prop;
+theorem bad_simp: P := by { simp }
+`);
+const rejectedSimp = runPsliveJson(['check', badSimp, '--json'], 1);
+assert.equal(rejectedSimp.status, 'rejected');
+assert.match(rejectedSimp.message, /simp failed|bounded simp-lite/i);
 
 console.log('ELABORATOR_PROOF_EXTRACTION=PASS');
