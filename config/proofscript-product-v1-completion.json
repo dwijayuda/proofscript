@@ -1,0 +1,189 @@
+{
+  "schema": "proofscript.product-v1-completion/v1",
+  "branch": "product/v1-completion",
+  "baseCommit": "a7d223c421653e2a74753fbfe108c605d393465c",
+  "productVision": "Small Go-like general-purpose ProofScript for the JS ecosystem with dependent types, theorem proving, and formal verification.",
+  "finishRule": "Complete only when every required pillar has executable green exit gates; no subjective percentages.",
+  "canonicalArchitecture": {
+    "sourceSemantics": "@proofscript/compiler -> canonical frontend -> checked Core -> PSKernel",
+    "verification": "contracts/verification IR -> Lean assurance where required",
+    "runtime": "checked semantic snapshot -> versioned execution IR/backend",
+    "editor": "@proofscript/compiler -> @proofscript/language-service -> @proofscript/language-worker -> @proofscript/lsp"
+  },
+  "antiDrift": {
+    "excludedUnlessBlocking": [
+      "full Lean 4 feature parity",
+      "full Lean 4 kernel equivalence",
+      "new Rust/Go/Java/PHP/Python/WASM backends",
+      "arbitrary macro systems",
+      "full Lean tactic-engine parity",
+      "unrelated historical KA assurance expansion",
+      "syntax additions without a completion-pillar requirement"
+    ]
+  },
+  "baselineEvidence": {
+    "date": "2026-09-23",
+    "statefulMatrixCommit": "a7d223c421653e2a74753fbfe108c605d393465c",
+    "leanToolchains": [
+      "4.33.1",
+      "4.34.0",
+      "4.35.0-rc2"
+    ],
+    "cases": 6,
+    "proved": 6,
+    "failed": 0,
+    "allProofsDischarged": true,
+    "allStateModelsAdequate": true,
+    "provenanceConsistent": true,
+    "endtestStepsPassed": 8,
+    "endtestStepsFailed": 0,
+    "generatedAdequacyCheckSha256": "af7ea2a9baf08dd35400cd40a47e72e22b33082362d0e79d2d427cc13d86901c",
+    "source": "local Windows end-test result supplied for this branch baseline"
+  },
+  "reusePolicy": {
+    "lsp": {
+      "disposition": "reuse-and-extend",
+      "canonicalPackages": [
+        "packages/language-service",
+        "packages/language-worker",
+        "packages/lsp"
+      ],
+      "rule": "No parser/elaborator semantics in the LSP; editor features go through compiler-backed language-service queries."
+    },
+    "frontendNext": {
+      "disposition": "donor-only",
+      "rule": "Port useful capabilities behind the canonical compiler path with replacement gates."
+    },
+    "unifiedBridge": {
+      "disposition": "migration-only",
+      "rule": "Not a canonical product path."
+    }
+  },
+  "pillars": [
+    {
+      "id": "V1-P0",
+      "name": "completion contract and no-drift gate",
+      "status": "complete",
+      "exitGates": [
+        "test:product-v1:contract"
+      ]
+    },
+    {
+      "id": "V1-P1",
+      "name": "small general-purpose software profile",
+      "status": "in_progress",
+      "exitGates": [
+        "authoritative v1 feature manifest matches production acceptance",
+        "representative pure/data/module programs check and execute",
+        "no frontend-next-only product semantics",
+        "unsupported neighboring syntax fails closed"
+      ]
+    },
+    {
+      "id": "V1-P2",
+      "name": "verification completion",
+      "status": "in_progress",
+      "done": [
+        "requires",
+        "ensures",
+        "result",
+        "assert",
+        "ghost",
+        "old",
+        "bounded monadic contracts",
+        "Lean proof discharge",
+        "state-model adequacy"
+      ],
+      "remaining": [
+        "V-FRAME",
+        "loop invariant obligations",
+        "loop progress measures",
+        "exceptional/control-flow paths",
+        "broader typed specification expressions"
+      ],
+      "exitGates": [
+        "frames green",
+        "loops green",
+        "exceptional paths modeled or explicitly excluded",
+        "stateful matrix remains proof-required"
+      ]
+    },
+    {
+      "id": "V1-P3",
+      "name": "JS runtime semantics and correspondence",
+      "status": "planned",
+      "exitGates": [
+        "runtime profile specified",
+        "core type representations gated",
+        "runtime differential corpus green",
+        "certificate correspondence levels explicit"
+      ]
+    },
+    {
+      "id": "V1-P4",
+      "name": "safe JS/npm interoperability",
+      "status": "planned",
+      "exitGates": [
+        "FFI trust model specified",
+        "typed extern/import surface implemented",
+        "unsafe interop fails closed",
+        "npm consumption example green"
+      ]
+    },
+    {
+      "id": "V1-P5",
+      "name": "packages and practical standard library",
+      "status": "planned",
+      "exitGates": [
+        "Option/Result/List/Array/String stable",
+        "JSON/validation package",
+        "package resolution/publishing contract",
+        "dependency certificate identity"
+      ]
+    },
+    {
+      "id": "V1-P6",
+      "name": "theorem-prover and LSP/DX",
+      "status": "in_progress",
+      "done": [
+        "diagnostics",
+        "document overlays",
+        "incremental compiler reuse",
+        "worker isolation",
+        "cancellation",
+        "stdio LSP diagnostics",
+        "surface-feature query"
+      ],
+      "remaining": [
+        "hover",
+        "completion",
+        "definition",
+        "references",
+        "rename",
+        "semantic tokens",
+        "code actions",
+        "proof/VC goal presentation",
+        "formatter"
+      ],
+      "exitGates": [
+        "editor protocol tests green",
+        "no duplicate parser",
+        "proof goals visible through compiler-backed service",
+        "psc fmt stable"
+      ]
+    },
+    {
+      "id": "V1-P7",
+      "name": "representative applications and release gate",
+      "status": "planned",
+      "exitGates": [
+        "CLI app",
+        "npm library consumed from TypeScript",
+        "JSON/validation example",
+        "HTTP/API example",
+        "stateful business-domain app",
+        "fresh-machine install/release gate"
+      ]
+    }
+  ]
+}
