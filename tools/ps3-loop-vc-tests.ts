@@ -99,6 +99,10 @@ assert.equal(historicalBuilt.artifact.loopVerification.ready, false);
 assert.ok(
   historicalBuilt.artifact.loopVerification.reasons.includes("loop-vc-nonlinear-or-unsupported-arithmetic"),
 );
+assert.equal(
+  historicalBuilt.artifact.loopVerification.diagnostic,
+  "operator '*' is outside loop-vc0 linear Nat arithmetic",
+);
 assert.equal(historicalBuilt.artifact.trustBoundary.loopInvariantChecking, "structural-obligations-only");
 
 const missingDecrease = sourceText.replace(
