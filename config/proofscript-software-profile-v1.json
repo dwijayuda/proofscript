@@ -1,0 +1,263 @@
+{
+  "schema": "proofscript.software-profile/v1",
+  "profileId": "proofscript-software-v1",
+  "reference": "v0.6.1 + v0.7 verification extensions",
+  "productBranch": "product/v1-completion",
+  "goal": "Small general-purpose ProofScript for JS/TS software with dependent types, theorem proving, and explicit formal-verification extensions.",
+  "smallnessBudget": {
+    "minCoreConstructs": 20,
+    "maxCoreConstructs": 35,
+    "countingRule": "required everyday core plus required verification constructs",
+    "requiredConstructCount": 31
+  },
+  "canonicalPath": "source -> @proofscript/compiler -> @proofscript/frontend -> checked Core -> PSKernel -> TypeScript/JavaScript backend",
+  "categories": {
+    "everyday": "Ordinary source constructs expected in normal application/library code.",
+    "verification": "Proof/contract constructs; erased or assurance-only unless otherwise specified.",
+    "advanced": "Available bounded Lean-semantic constructs not required for ordinary Product-v1 adoption."
+  },
+  "requiredConstructs": [
+    {
+      "id": "P1-DEF",
+      "name": "def",
+      "category": "everyday",
+      "status": "current"
+    },
+    {
+      "id": "P1-ALIASES",
+      "name": "function / const aliases",
+      "category": "everyday",
+      "status": "current"
+    },
+    {
+      "id": "P1-THEOREM",
+      "name": "theorem / example",
+      "category": "verification",
+      "status": "current"
+    },
+    {
+      "id": "P1-STRUCTURE",
+      "name": "structure",
+      "category": "everyday",
+      "status": "current"
+    },
+    {
+      "id": "P1-INDUCTIVE",
+      "name": "inductive",
+      "category": "everyday",
+      "status": "current"
+    },
+    {
+      "id": "P1-LET",
+      "name": "let",
+      "category": "everyday",
+      "status": "current"
+    },
+    {
+      "id": "P1-HAVE",
+      "name": "have",
+      "category": "verification",
+      "status": "current"
+    },
+    {
+      "id": "P1-IF",
+      "name": "if / bif",
+      "category": "everyday",
+      "status": "current"
+    },
+    {
+      "id": "P1-MATCH",
+      "name": "match",
+      "category": "everyday",
+      "status": "current"
+    },
+    {
+      "id": "P1-FUN",
+      "name": "fun",
+      "category": "everyday",
+      "status": "current"
+    },
+    {
+      "id": "P1-APP",
+      "name": "application",
+      "category": "everyday",
+      "status": "current"
+    },
+    {
+      "id": "P1-PI",
+      "name": "dependent function / forall",
+      "category": "everyday",
+      "status": "current"
+    },
+    {
+      "id": "P1-BINDERS",
+      "name": "explicit / implicit / instance binders",
+      "category": "everyday",
+      "status": "current-bounded"
+    },
+    {
+      "id": "P1-PROJECTION",
+      "name": "field projection",
+      "category": "everyday",
+      "status": "current"
+    },
+    {
+      "id": "P1-STRUCTVALUE",
+      "name": "structure value / update",
+      "category": "everyday",
+      "status": "current"
+    },
+    {
+      "id": "P1-RECURSION",
+      "name": "structural recursion / equation definitions",
+      "category": "everyday",
+      "status": "current-bounded"
+    },
+    {
+      "id": "P1-NAMESPACE",
+      "name": "namespace / open",
+      "category": "everyday",
+      "status": "current-bounded"
+    },
+    {
+      "id": "P1-SECTION",
+      "name": "section / variables / include / omit",
+      "category": "everyday",
+      "status": "current-bounded"
+    },
+    {
+      "id": "P1-IMPORT",
+      "name": "imports / modules",
+      "category": "everyday",
+      "status": "current-bounded"
+    },
+    {
+      "id": "P1-TYPES",
+      "name": "Nat / Int / Bool / String / Unit / Option / Except / List / Array",
+      "category": "everyday",
+      "status": "current-bounded-runtime"
+    },
+    {
+      "id": "P1-LOGIC",
+      "name": "Prop / equality / basic logical propositions",
+      "category": "verification",
+      "status": "current"
+    },
+    {
+      "id": "P1-COLLECTIONS",
+      "name": "finite Option/Except/List/Array operations",
+      "category": "everyday",
+      "status": "current-bounded-runtime"
+    },
+    {
+      "id": "P1-REQUIRES",
+      "name": "requires",
+      "category": "verification",
+      "status": "current-extension"
+    },
+    {
+      "id": "P1-ENSURES",
+      "name": "ensures / result",
+      "category": "verification",
+      "status": "current-extension"
+    },
+    {
+      "id": "P1-ASSERT",
+      "name": "assert",
+      "category": "verification",
+      "status": "current-extension"
+    },
+    {
+      "id": "P1-GHOST",
+      "name": "ghost / old",
+      "category": "verification",
+      "status": "current-extension"
+    },
+    {
+      "id": "P1-FRAME",
+      "name": "frame",
+      "category": "verification",
+      "status": "implemented-proof-pending"
+    },
+    {
+      "id": "P1-LOOP",
+      "name": "invariant / decreases",
+      "category": "verification",
+      "status": "implemented-proof-pending-bounded"
+    },
+    {
+      "id": "P1-STATE",
+      "name": "state-model / monadic contracts",
+      "category": "verification",
+      "status": "current-bounded"
+    },
+    {
+      "id": "P1-TS",
+      "name": "TypeScript/JavaScript emission",
+      "category": "everyday",
+      "status": "current-bounded-runtime"
+    },
+    {
+      "id": "P1-PACKAGE",
+      "name": "multi-file module graph",
+      "category": "everyday",
+      "status": "current-bounded"
+    }
+  ],
+  "advancedAvailable": [
+    {
+      "name": "class / instance",
+      "status": "bounded-partial",
+      "releaseRequired": false
+    },
+    {
+      "name": "axiom / opaque",
+      "status": "explicit-trust-only",
+      "releaseRequired": false
+    },
+    {
+      "name": "restricted do syntax",
+      "status": "checked-bounded; general effect runtime deferred",
+      "releaseRequired": false
+    },
+    {
+      "name": "small proof command subset",
+      "status": "current",
+      "releaseRequired": false
+    }
+  ],
+  "deferredFromV1": [
+    "arbitrary macros/custom elaborators",
+    "full Lean tactic engine",
+    "full Lean typeclass/coercion behavior",
+    "unrestricted local mutation/statement language",
+    "general IO/effects/concurrency runtime",
+    "arbitrary exceptional-path stateful verification",
+    "unrestricted JavaScript FFI",
+    "full Lean/Mathlib source compatibility",
+    "full Lean kernel equivalence",
+    "general backend execution-correspondence proof"
+  ],
+  "failClosed": [
+    "TypeScript any",
+    "unchecked casts in verified profile",
+    "silent axiom insertion",
+    "unsupported backend terms",
+    "unmodeled stateful control flow",
+    "unsupported loop forms"
+  ],
+  "acceptanceGates": [
+    "test:product-v1:canonical-cli",
+    "test:product-v1:software-profile",
+    "test:profile:software",
+    "test:profile:software:examples",
+    "test:production-p4:modules",
+    "assurance:product-v1:verification-endtest"
+  ],
+  "claimBoundary": {
+    "fullLean4Equivalence": false,
+    "fullTypeScriptFeatureCompatibility": false,
+    "generalExecutionCorrespondenceProof": false,
+    "unsupportedFeaturesMustFailClosed": true
+  }
+}
