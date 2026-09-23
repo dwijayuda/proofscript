@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { resolveNpmInvocation } from "./ps3-npm-invocation.mjs";
 import { formatProcessProgress, runStreamingProcess } from "./ps3-process-runner.mjs";
+import { productV1ClosureSatisfied } from "./product-v1-endtest-status.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
 const args = process.argv.slice(2);
@@ -140,6 +141,8 @@ const passed = results.length === steps.length
   && results.every((step) => step.status === "passed")
   && (skipLean || verification?.status === "passed");
 
+const closureSatisfied = productV1ClosureSatisfied({ executionPassed: passed, skipLean });
+
 const report = {
   schema: "proofscript.product-v1-endtest/v1",
   status: passed ? "passed" : "failed",
@@ -166,7 +169,7 @@ const report = {
       .filter((step) => step.name !== "proof-required-verification")
       .every((step) => step.status === "passed"),
     verificationPassed: skipLean ? null : verification?.status === "passed",
-    allProductV1GatesPassed: passed,
+    allProductV1GatesPassed: closureSatisfied,
   },
 };
 
