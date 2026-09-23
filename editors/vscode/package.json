@@ -1,0 +1,147 @@
+{
+  "name": "proofscript-vscode",
+  "displayName": "ProofScript",
+  "description": "ProofScript language support backed by the canonical compiler, language worker, and protocol-v1 LSP.",
+  "version": "0.1.0-dev.0",
+  "publisher": "proofscript",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.106.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "ProofScript",
+    "Lean",
+    "theorem prover",
+    "formal verification",
+    "LSP"
+  ],
+  "main": "./src/extension.js",
+  "extensionKind": [
+    "workspace"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "proofscript",
+        "aliases": [
+          "ProofScript",
+          "proofscript"
+        ],
+        "extensions": [
+          ".ps"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "proofscript",
+        "scopeName": "source.proofscript",
+        "path": "./syntaxes/proofscript.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "proofscript.restartServer",
+        "title": "ProofScript: Restart Language Server",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "proofscript.showInfoview",
+        "title": "ProofScript: Show Infoview",
+        "icon": "$(layout-sidebar-right)"
+      },
+      {
+        "command": "proofscript.serverInfo",
+        "title": "ProofScript: Show Server Information"
+      },
+      {
+        "command": "proofscript.showDocumentStatus",
+        "title": "ProofScript: Show Document Status",
+        "icon": "$(pulse)"
+      },
+      {
+        "command": "proofscript.showOutput",
+        "title": "ProofScript: Show Output",
+        "icon": "$(output)"
+      }
+    ],
+    "configuration": {
+      "title": "ProofScript",
+      "properties": {
+        "proofscript.lsp.path": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "Optional path to the current ProofScript LSP JavaScript entry or executable."
+        },
+        "proofscript.trace.server": {
+          "type": "string",
+          "enum": [
+            "off",
+            "messages"
+          ],
+          "default": "off",
+          "description": "Trace ProofScript LSP messages to the output channel."
+        },
+        "proofscript.infoview.debounceTime": {
+          "type": "number",
+          "default": 60,
+          "minimum": 0,
+          "maximum": 1000,
+          "description": "Delay before the compiler-backed Infoview follows the cursor."
+        }
+      }
+    },
+    "viewsContainers": {
+      "secondarySidebar": [
+        {
+          "id": "proofscript",
+          "title": "ProofScript",
+          "icon": "./media/proofscript-view.svg"
+        }
+      ]
+    },
+    "views": {
+      "proofscript": [
+        {
+          "id": "proofscript.infoview",
+          "name": "Infoview",
+          "type": "webview",
+          "icon": "./media/proofscript-view.svg",
+          "contextualTitle": "ProofScript Infoview"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "proofscript.restartServer",
+          "when": "view == proofscript.infoview",
+          "group": "navigation@1"
+        },
+        {
+          "command": "proofscript.showOutput",
+          "when": "view == proofscript.infoview",
+          "group": "navigation@2"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "proofscript.showInfoview",
+        "key": "ctrl+shift+enter",
+        "mac": "cmd+shift+enter",
+        "when": "editorLangId == proofscript"
+      }
+    ]
+  },
+  "scripts": {
+    "test": "node test/smoke.mjs"
+  }
+}
