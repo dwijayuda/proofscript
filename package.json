@@ -828,7 +828,8 @@
     "test:product-v1:vscode": "node editors/vscode/test/smoke.mjs",
     "test:product-v1:editor-adapter": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-editor-adapter-tests.ts",
     "test:product-v1:runtime-profile": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-runtime-profile-tests.ts",
-    "test:product-v1:certificate-correspondence": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-certificate-correspondence-tests.ts"
+    "test:product-v1:certificate-correspondence": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-certificate-correspondence-tests.ts",
+    "test:product-v1:runtime-differential": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-runtime-differential-tests.ts"
   },
   "engines": {
     "node": ">=20"
