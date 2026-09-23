@@ -157,9 +157,9 @@ class RpcClient {
 }
 
 class InfoviewProvider {
-  constructor() { this.view = null; this.status = null; this.semantic = null; this.meta = { serverReady: false }; }
+  constructor() { this.view = null; this.status = null; this.semantic = null; this.goals = null; this.meta = { serverReady: false }; }
   resolveWebviewView(view) { this.view = view; view.webview.options = { enableScripts: false }; this.render(); }
-  update(status, semantic, meta = {}) { this.status = status; this.semantic = semantic; this.meta = { ...this.meta, ...meta }; this.render(); }
+  update(status, semantic, goals, meta = {}) { this.status = status; this.semantic = semantic; this.goals = goals; this.meta = { ...this.meta, ...meta }; this.render(); }
   setServerReady(ready, message) { this.meta = { ...this.meta, serverReady: ready, serverMessage: message ?? null }; this.render(); }
   render() {
     if (!this.view) return;
@@ -168,12 +168,23 @@ class InfoviewProvider {
     const allDiagnostics = semantic?.allDiagnostics ?? [];
     const features = semantic?.surfaceFeatures ?? [];
     const symbol = semantic?.symbol;
+    const goals = this.goals;
     const state = status?.status ?? (this.meta.serverReady ? "ready" : "starting");
     const symbolHtml = symbol ? "<h3>Symbol</h3><pre>" + escapeHtml((symbol.qualifiedName || symbol.name) + " : " + symbol.type) + "</pre><div>" + escapeHtml(symbol.kind) + "</div>" : "<p>No declaration symbol at the cursor.</p>";
     const assumptions = status?.assumptions?.length ? "<details><summary>Assumptions (" + status.assumptions.length + ")</summary><pre>" + escapeHtml(status.assumptions.join("\n")) + "</pre></details>" : "";
     const featureHtml = features.length ? "<h3>Surface features</h3><ul>" + features.map((item) => "<li><code>" + escapeHtml(item.feature) + "</code></li>").join("") + "</ul>" : "";
     const diagnosticHtml = allDiagnostics.length ? allDiagnostics.map((item) => "<div class=\"diagnostic\">" + escapeHtml(item.message) + "</div>").join("") : "<p>None.</p>";
-    this.view.webview.html = "<!doctype html><html><head><style>body{font-family:var(--vscode-font-family);color:var(--vscode-foreground);padding:10px;line-height:1.45}h2,h3{margin:10px 0 6px}pre,code{font-family:var(--vscode-editor-font-family)}pre{white-space:pre-wrap;background:var(--vscode-textCodeBlock-background);padding:8px;border-radius:4px}.diagnostic{padding:6px 0;border-bottom:1px solid var(--vscode-panel-border)}</style></head><body><h2>ProofScript</h2><strong>" + escapeHtml(state) + "</strong>" + symbolHtml + "<h3>Document</h3><div>" + (status?.declarations ?? 0) + " declaration(s), " + (status?.diagnostics ?? allDiagnostics.length) + " diagnostic(s)</div>" + assumptions + featureHtml + "<h3>Diagnostics</h3>" + diagnosticHtml + "<details><summary>Trust boundary</summary><p>Compiler-backed document semantics. Protocol v1 does not expose tactic-state snapshots, so the editor does not fabricate proof goals.</p></details></body></html>";
+    const compilerGoalHtml = goals?.declarationGoal
+      ? "<div class=\"goal\"><div><strong>" + escapeHtml(goals.declarationGoal.name) + "</strong> <code>" + escapeHtml(goals.declarationGoal.status) + "</code></div><pre>" + escapeHtml(goals.declarationGoal.statement) + "</pre></div>"
+      : "<p>No checked theorem/example goal at the cursor.</p>";
+    const verificationGoals = goals?.verification?.goals ?? [];
+    const verificationGoalHtml = verificationGoals.length
+      ? verificationGoals.map((goal) => "<div class=\"goal\"><div><strong>" + escapeHtml(goal.name) + "</strong> <code>" + escapeHtml(goal.kind) + "</code> <code>" + escapeHtml(goal.status) + "</code></div><pre>" + escapeHtml(goal.statement) + "</pre>" + (goal.exactTheoremStatement ? "<details><summary>Exact theorem</summary><pre>" + escapeHtml(goal.exactTheoremStatement) + "</pre></details>" : "") + "</div>").join("")
+      : "<p>" + escapeHtml(goals?.verification?.message ?? ("Verification artifact: " + (goals?.verification?.status ?? "unavailable"))) + "</p>";
+    const goalHtml = goals
+      ? "<h3>Goals</h3><div class=\"goal-source\">Compiler theorem</div>" + compilerGoalHtml + "<div class=\"goal-source\">Verification obligations — " + escapeHtml(goals.verification?.status ?? "unavailable") + "</div>" + verificationGoalHtml
+      : "<h3>Goals</h3><p>Goal service unavailable.</p>";
+    this.view.webview.html = "<!doctype html><html><head><style>body{font-family:var(--vscode-font-family);color:var(--vscode-foreground);padding:10px;line-height:1.45}h2,h3{margin:10px 0 6px}pre,code{font-family:var(--vscode-editor-font-family)}pre{white-space:pre-wrap;background:var(--vscode-textCodeBlock-background);padding:8px;border-radius:4px}.diagnostic,.goal{padding:6px 0;border-bottom:1px solid var(--vscode-panel-border)}.goal-source{margin-top:8px;font-size:.9em;color:var(--vscode-descriptionForeground)}</style></head><body><h2>ProofScript</h2><strong>" + escapeHtml(state) + "</strong>" + symbolHtml + goalHtml + "<h3>Document</h3><div>" + (status?.declarations ?? 0) + " declaration(s), " + (status?.diagnostics ?? allDiagnostics.length) + " diagnostic(s)</div>" + assumptions + featureHtml + "<h3>Diagnostics</h3>" + diagnosticHtml + "<details><summary>Trust boundary</summary><p>Goals are compiler-declaration or verification-artifact backed. tacticStateAvailable=false: protocol v1 does not expose live tactic states, and the editor does not fabricate them.</p></details></body></html>";
   }
 }
 
@@ -347,23 +358,27 @@ function scheduleInfoviewUpdate() {
 async function updateInfoview() {
   const generation = ++infoviewGeneration;
   const editor = activeEditor();
-  if (!editor) { infoview.update(null, null, { serverReady: !!client?.ready }); updateStatusBarVisibility(); return; }
-  if (!client?.ready) { infoview.update(null, null, { serverReady: false }); return; }
+  if (!editor) { infoview.update(null, null, null, { serverReady: !!client?.ready }); updateStatusBarVisibility(); return; }
+  if (!client?.ready) { infoview.update(null, null, null, { serverReady: false }); return; }
   const uri = editor.document.uri.toString();
   const version = editor.document.version;
   const position = toPos(editor.selection.active);
   try {
+    const goalRequest = client.experimental?.goalPresentationAvailable === true
+      ? client.request("proofscript/goals", { textDocument: { uri }, position })
+      : Promise.resolve(null);
     const values = await Promise.all([
       client.request("proofscript/documentStatus", { textDocument: { uri } }),
       client.request("proofscript/semanticInfo", { textDocument: { uri }, position }),
+      goalRequest,
     ]);
-    const status = values[0], semantic = values[1], current = activeEditor();
+    const status = values[0], semantic = values[1], goals = values[2], current = activeEditor();
     if (generation !== infoviewGeneration || !current || current.document.uri.toString() !== uri || current.document.version !== version) return;
     lastStatusByUri.set(uri, status);
-    infoview.update(status, semantic, { serverReady: true });
+    infoview.update(status, semantic, goals, { serverReady: true });
     updateStatusBar(status);
   } catch (error) {
-    if (generation === infoviewGeneration) infoview.update(lastStatusByUri.get(uri) ?? null, { allDiagnostics: [{ message: messageOf(error) }] }, { serverReady: true });
+    if (generation === infoviewGeneration) infoview.update(lastStatusByUri.get(uri) ?? null, { allDiagnostics: [{ message: messageOf(error) }] }, null, { serverReady: true });
   }
 }
 
