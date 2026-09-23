@@ -37,7 +37,7 @@ function tokenize(sourceText) {
     if (ch === "*" || ch === "/" || ch === "%") {
       throw new LoopVcError(
         "loop-vc-nonlinear-or-unsupported-arithmetic",
-        \`operator '\${ch}' is outside loop-vc0 linear Nat arithmetic\`,
+        `operator '${ch}' is outside loop-vc0 linear Nat arithmetic`,
       );
     }
     if (/[0-9]/u.test(ch)) {
@@ -56,7 +56,7 @@ function tokenize(sourceText) {
     }
     throw new LoopVcError(
       "loop-vc-unsupported-token",
-      \`unsupported token '\${ch}' in loop-vc0 expression\`,
+      `unsupported token '${ch}' in loop-vc0 expression`,
     );
   }
   tokens.push({ kind: "eof", text: "" });
@@ -85,7 +85,7 @@ class Parser {
     if (!this.consume(text)) {
       throw new LoopVcError(
         "loop-vc-syntax-error",
-        \`expected '\${text}' but found '\${this.current()?.text ?? "<eof>"}'\`,
+        `expected '${text}' but found '${this.current()?.text ?? "<eof>"}'`,
       );
     }
   }
@@ -112,7 +112,7 @@ class Parser {
       if (!this.identifiers.has(token.text)) {
         throw new LoopVcError(
           "loop-vc-unknown-identifier",
-          \`unknown identifier '\${token.text}' in loop-vc0 expression\`,
+          `unknown identifier '${token.text}' in loop-vc0 expression`,
         );
       }
       return { kind: "identifier", name: token.text, type: "Nat" };
@@ -124,7 +124,7 @@ class Parser {
     }
     throw new LoopVcError(
       "loop-vc-syntax-error",
-      \`expected Nat expression but found '\${token?.text ?? "<eof>"}'\`,
+      `expected Nat expression but found '${token?.text ?? "<eof>"}'`,
     );
   }
 
@@ -133,7 +133,7 @@ class Parser {
     if (this.current()?.kind !== "eof") {
       throw new LoopVcError(
         "loop-vc-unsupported-expression",
-        \`unsupported trailing syntax '\${this.current()?.text}' in loop-vc0 expression\`,
+        `unsupported trailing syntax '${this.current()?.text}' in loop-vc0 expression`,
       );
     }
     return result;
@@ -153,7 +153,7 @@ class Parser {
     if (this.current()?.kind !== "eof") {
       throw new LoopVcError(
         "loop-vc-unsupported-predicate",
-        \`unsupported trailing syntax '\${this.current()?.text}' in loop-vc0 predicate\`,
+        `unsupported trailing syntax '${this.current()?.text}' in loop-vc0 predicate`,
       );
     }
     return { kind: "relation", operator, left, right, type: "Prop" };
@@ -200,13 +200,13 @@ function precedence(ast) {
 function renderExpression(ast, parentPrecedence = 0) {
   if (ast.kind === "literal") return ast.value;
   if (ast.kind === "identifier") return ast.name;
-  if (ast.kind === "group") return \`(\${renderExpression(ast.expression)})\`;
+  if (ast.kind === "group") return `(${renderExpression(ast.expression)})`;
   if (ast.kind === "binary") {
     const p = precedence(ast);
-    const body = \`\${renderExpression(ast.left, p)} \${ast.operator} \${renderExpression(ast.right, p + (ast.operator === "-" ? 1 : 0))}\`;
-    return p < parentPrecedence ? \`(\${body})\` : body;
+    const body = `${renderExpression(ast.left, p)} ${ast.operator} ${renderExpression(ast.right, p + (ast.operator === "-" ? 1 : 0))}`;
+    return p < parentPrecedence ? `(${body})` : body;
   }
-  throw new LoopVcError("loop-vc-render-expression", \`cannot render AST kind '\${ast.kind}' as Nat expression\`);
+  throw new LoopVcError("loop-vc-render-expression", `cannot render AST kind '${ast.kind}' as Nat expression`);
 }
 
 function renderPredicate(ast) {
@@ -214,7 +214,7 @@ function renderPredicate(ast) {
     throw new LoopVcError("loop-vc-render-predicate", "expected relation predicate");
   }
   const operator = ast.operator === "==" ? "=" : ast.operator === "!=" ? "≠" : ast.operator;
-  return \`\${renderExpression(ast.left)} \${operator} \${renderExpression(ast.right)}\`;
+  return `${renderExpression(ast.left)} ${operator} ${renderExpression(ast.right)}`;
 }
 
 function parameterEnvironment(contract) {
@@ -223,7 +223,7 @@ function parameterEnvironment(contract) {
     if (normalize(parameter.type) !== "Nat") {
       throw new LoopVcError(
         "loop-vc-non-nat-parameter",
-        \`loop-vc0 requires Nat parameters; '\${parameter.name}' has type \${parameter.type}\`,
+        `loop-vc0 requires Nat parameters; '${parameter.name}' has type ${parameter.type}`,
       );
     }
     ids.add(parameter.name);
@@ -231,7 +231,7 @@ function parameterEnvironment(contract) {
   if (normalize(contract.returnType) !== "Nat") {
     throw new LoopVcError(
       "loop-vc-non-nat-return",
-      \`loop-vc0 requires Nat return type; found \${contract.returnType}\`,
+      `loop-vc0 requires Nat return type; found ${contract.returnType}`,
     );
   }
   return ids;
@@ -252,7 +252,7 @@ function parseRuntimeShell(contract, parameterIds) {
     }
     const name = match[1];
     if (parameterIds.has(name) || initEnvironment.has(name)) {
-      throw new LoopVcError("loop-vc-duplicate-local", \`duplicate or shadowing mutable local '\${name}'\`);
+      throw new LoopVcError("loop-vc-duplicate-local", `duplicate or shadowing mutable local '${name}'`);
     }
     const identifiers = new Set([...parameterIds, ...initEnvironment.keys()]);
     const parsedInit = parseExpression(match[2], identifiers);
@@ -294,14 +294,14 @@ function parseAssignments(loopBody, allIds, mutableNames) {
     if (!match) {
       throw new LoopVcError(
         "loop-vc-assignment-shape",
-        \`loop-vc0 admits only sequential assignments; found '\${statement}'\`,
+        `loop-vc0 admits only sequential assignments; found '${statement}'`,
       );
     }
     const target = match[1];
     if (!mutableNames.has(target)) {
       throw new LoopVcError(
         "loop-vc-assignment-target",
-        \`loop-vc0 assignment target '\${target}' is not a declared mutable local\`,
+        `loop-vc0 assignment target '${target}' is not a declared mutable local`,
       );
     }
     const parsed = parseExpression(match[2], allIds);
@@ -322,20 +322,20 @@ function requirementHypotheses(contract, parameterIds) {
 }
 
 function binders(items) {
-  return items.map((item) => \`(\${item.name} : \${item.type})\`).join(" ");
+  return items.map((item) => `(${item.name} : ${item.type})`).join(" ");
 }
 
 function theorem(name, binderText, hypothesisText, target, tactic = "omega") {
   const allBinders = [binderText, hypothesisText].filter(Boolean).join(" ");
   return {
     theoremName: name,
-    theoremStatement: \`theorem \${name}\${allBinders ? \` \${allBinders}\` : ""} : \${target}\`,
-    source: \`theorem \${name}\${allBinders ? \` \${allBinders}\` : ""} : \${target} := by\n  \${tactic}\`,
+    theoremStatement: `theorem ${name}${allBinders ? ` ${allBinders}` : ""} : ${target}`,
+    source: `theorem ${name}${allBinders ? ` ${allBinders}` : ""} : ${target} := by\n  ${tactic}`,
   };
 }
 
 function hypothesisBinder(name, proposition) {
-  return \`(\${name} : \${proposition})\`;
+  return `(${name} : ${proposition})`;
 }
 
 function buildLoopVc(contract) {
@@ -378,26 +378,26 @@ function buildLoopVc(contract) {
     hypothesisBinder(item.name, renderPredicate(item.ast))
   );
   const invariantBinders = invariants.map((item) =>
-    hypothesisBinder(\`hinv_\${item.name}\`, renderPredicate(item.ast))
+    hypothesisBinder(`hinv_${item.name}`, renderPredicate(item.ast))
   );
   const conditionSource = renderPredicate(conditionAst);
   const conditionBinder = hypothesisBinder("hloop_cond", conditionSource);
-  const notConditionBinder = hypothesisBinder("hloop_exit", \`¬ (\${conditionSource})\`);
+  const notConditionBinder = hypothesisBinder("hloop_exit", `¬ (${conditionSource})`);
 
   const vcs = [];
 
   for (const invariant of invariants) {
     const initTarget = renderPredicate(substitute(invariant.ast, shell.initEnvironment));
     const built = theorem(
-      \`\${contract.name}_loop0_\${invariant.name}_init\`,
+      `${contract.name}_loop0_${invariant.name}_init`,
       parameterBinders,
       requirementBinders.join(" "),
       initTarget,
     );
     vcs.push({
-      id: \`\${contract.name}.loop.invariant.init.0.\${invariant.name}\`,
+      id: `${contract.name}.loop.invariant.init.0.${invariant.name}`,
       kind: "loop.invariant.init",
-      label: \`0.invariant.\${invariant.name}.init\`,
+      label: `0.invariant.${invariant.name}.init`,
       invariant: invariant.name,
       target: initTarget,
       ...built,
@@ -405,15 +405,15 @@ function buildLoopVc(contract) {
 
     const preserveTarget = renderPredicate(substitute(invariant.ast, body.postState));
     const builtPreserve = theorem(
-      \`\${contract.name}_loop0_\${invariant.name}_preserve\`,
+      `${contract.name}_loop0_${invariant.name}_preserve`,
       [parameterBinders, localBinders].filter(Boolean).join(" "),
       [...requirementBinders, ...invariantBinders, conditionBinder].join(" "),
       preserveTarget,
     );
     vcs.push({
-      id: \`\${contract.name}.loop.invariant.preserve.0.\${invariant.name}\`,
+      id: `${contract.name}.loop.invariant.preserve.0.${invariant.name}`,
       kind: "loop.invariant.preserve",
-      label: \`0.invariant.\${invariant.name}.preserve\`,
+      label: `0.invariant.${invariant.name}.preserve`,
       invariant: invariant.name,
       target: preserveTarget,
       ...builtPreserve,
@@ -422,17 +422,17 @@ function buildLoopVc(contract) {
 
   const beforeMeasure = renderExpression(measure.ast);
   const afterMeasure = renderExpression(substitute(measure.ast, body.postState));
-  const decreaseTarget = \`\${afterMeasure} < \${beforeMeasure}\`;
+  const decreaseTarget = `${afterMeasure} < ${beforeMeasure}`;
   const decreaseTheorem = theorem(
-    \`\${contract.name}_loop0_\${measure.name}_decreases\`,
+    `${contract.name}_loop0_${measure.name}_decreases`,
     [parameterBinders, localBinders].filter(Boolean).join(" "),
     [...requirementBinders, ...invariantBinders, conditionBinder].join(" "),
     decreaseTarget,
   );
   vcs.push({
-    id: \`\${contract.name}.loop.decreases.0.\${measure.name}\`,
+    id: `${contract.name}.loop.decreases.0.${measure.name}`,
     kind: "loop.decreases",
-    label: \`0.decreases.\${measure.name}\`,
+    label: `0.decreases.${measure.name}`,
     decreases: measure.name,
     target: decreaseTarget,
     beforeMeasure,
@@ -447,15 +447,15 @@ function buildLoopVc(contract) {
     const ensureAst = parsePredicate(raw, ensureIds);
     const exitTarget = renderPredicate(substitute(ensureAst, resultReplacements));
     const exitTheorem = theorem(
-      \`\${contract.name}_loop0_\${ensure.name}_exit\`,
+      `${contract.name}_loop0_${ensure.name}_exit`,
       [parameterBinders, localBinders].filter(Boolean).join(" "),
       [...requirementBinders, ...invariantBinders, notConditionBinder].join(" "),
       exitTarget,
     );
     vcs.push({
-      id: \`\${contract.name}.loop.exit.0.\${ensure.name}\`,
+      id: `${contract.name}.loop.exit.0.${ensure.name}`,
       kind: "loop.exit",
-      label: \`0.exit.\${ensure.name}\`,
+      label: `0.exit.${ensure.name}`,
       ensures: ensure.name,
       target: exitTarget,
       ...exitTheorem,
