@@ -195,7 +195,7 @@
         "test:product-v1:stdlib-profile",
         "test:product-v1:json-validation",
         "package resolution/publishing contract",
-        "dependency certificate identity for package dependencies"
+        "test:product-v1:ffi-npm + test:product-v1:json-validation package tamper rejection"
       ],
       "done": [
         "versioned proofscript-stdlib-v1 profile",
@@ -210,12 +210,14 @@
         "implicit @proofscript/std manifest/hash identity bound into new certificates",
         "bounded @proofscript/json-validation trusted-host package",
         "JSON validation ProofScript consumer + offline npm FFI example",
-        "JSON FFI/certificate trust boundary remains explicit (parserVerified=false)"
+        "JSON FFI/certificate trust boundary remains explicit (parserVerified=false)",
+        "npm FFI dependency package identity schema",
+        "certificate binds npm package name/version/package.json hash/content-tree hash",
+        "certificate verification rejects installed npm package tampering"
       ],
       "remaining": [
         "broader String utilities needed by JSON/application code",
         "ProofScript source-level package resolution beyond project modules",
-        "published-package dependency certificate identities beyond the implicit stdlib",
         "HTTP/database higher-level packages are post-core-stdlib"
       ]
     },
