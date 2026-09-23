@@ -187,6 +187,33 @@ editor-only parser/elaborator was added.
 
 See `docs/TACTIC_ERGONOMICS.md`.
 
+## Tactic ergonomics Phase 5
+
+Status: **IMPLEMENTED; ACCEPTANCE PENDING**.
+
+Phase 5 adds a proof-free initial goal for an empty `by {` block at EOF. The
+canonical parser emits only the already-parsed theorem/example header and
+complete declaration prefix, then still rejects the source.
+
+The canonical elaborator now has a dedicated initial-goal path that:
+
+- elaborates the preceding declarations normally;
+- rebuilds the checked environment plus same-file structure/class metadata;
+- rejects duplicate declaration headers;
+- kernel-checks binder domains and the result type;
+- returns only the real local context and goal.
+
+It does **not** synthesize a theorem, axiom, metavariable, hole, dummy tactic, or
+placeholder proof term. Editor state uses `kind: "goal"` and
+`sourceStatus: "syntax-incomplete"`, and remains selectable at the exact EOF
+cursor position.
+
+Closure requires a green
+`proofscript.tactic-ergonomics-endtest/v5` run on the committed Phase 5
+candidate.
+
+See `docs/TACTIC_ERGONOMICS.md`.
+
 ## Baseline behavior
 
 Observed before cleanup and now represented by the product regression workflow:
