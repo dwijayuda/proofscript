@@ -12,6 +12,7 @@ import {
   createStatefulVcGoalArtifact,
   firstStatefulVcFailedStage,
   validateStatefulVcRunEvidence,
+  validateStatefulProofMatrixProvenance,
   assertStatefulVcRunEvidence,
 } from './stateful-vc-execution.mjs';
 import {
@@ -38,6 +39,7 @@ export {
   createStatefulVcGoalArtifact,
   firstStatefulVcFailedStage,
   validateStatefulVcRunEvidence,
+  validateStatefulProofMatrixProvenance,
   assertStatefulVcRunEvidence,
   MINIMUM_STATEFUL_LEAN_VERSION,
   classifyLeanCompatibilityOutput,

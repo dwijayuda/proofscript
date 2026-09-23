@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import {
   normalizeLeanToolchainSelector,
+  validateStatefulProofMatrixProvenance,
   validateStatefulVcRunEvidence,
 } from "../packages/monadic-lowering/src/index.mjs";
 
@@ -144,24 +145,29 @@ for (const toolchain of toolchains) {
       observedLeanVersion: evidence?.lean?.version ?? null,
       observedProjectToolchain: evidence?.lean?.projectToolchain ?? null,
       validation,
+      provenance: evidence?.provenance ?? null,
       claims: evidence?.claims ?? null,
       status: (run.status ?? 1) === 0 && validation.valid ? "proved" : "failed",
     });
   }
 }
 
-const passed = results.every(item => item.status === "proved");
+const provenanceValidation = validateStatefulProofMatrixProvenance(results);
+const passed = results.every(item => item.status === "proved")
+  && provenanceValidation.valid;
 const report = {
   schema: "proofscript.stateful-proof-matrix/v1",
   status: passed ? "passed" : "failed",
   executionAttempted: true,
   toolchains,
   cases: results,
+  provenanceValidation,
   summary: {
     total: results.length,
     proved: results.filter(item => item.status === "proved").length,
     failed: results.filter(item => item.status !== "proved").length,
-    allProofsDischarged: passed,
+    allProofsDischarged: results.every(item => item.status === "proved"),
+    provenanceConsistent: provenanceValidation.valid,
   },
 };
 writeJson(outPath, report);

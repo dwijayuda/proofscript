@@ -218,3 +218,50 @@ export function assertStatefulVcRunEvidence(report, options) {
   }
   return report;
 }
+
+
+export function validateStatefulProofMatrixProvenance(cases) {
+  const errors = [];
+  const fields = [
+    'sourceSha256',
+    'stateModelDescriptorSha256',
+    'leanModelSha256',
+    'generatedProgramSha256',
+    'generatedTripleTargetSha256',
+    'generatedRequestSha256',
+  ];
+  const baselines = new Map();
+
+  for (const item of cases ?? []) {
+    const name = item?.name;
+    if (typeof name !== 'string' || name.length === 0) {
+      errors.push('provenance-case-name-missing');
+      continue;
+    }
+    const provenance = item?.provenance;
+    if (!provenance || typeof provenance !== 'object') {
+      errors.push(`provenance-missing:${name}`);
+      continue;
+    }
+
+    for (const field of fields) {
+      if (typeof provenance[field] !== 'string' || provenance[field].length === 0) {
+        errors.push(`provenance-missing:${name}:${field}`);
+      }
+    }
+
+    const baseline = baselines.get(name);
+    if (!baseline) {
+      baselines.set(name, provenance);
+      continue;
+    }
+
+    for (const field of fields) {
+      if (baseline[field] !== provenance[field]) {
+        errors.push(`provenance-mismatch:${name}:${field}`);
+      }
+    }
+  }
+
+  return { valid: errors.length === 0, errors: [...new Set(errors)] };
+}
