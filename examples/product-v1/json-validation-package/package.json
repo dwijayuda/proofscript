@@ -2,7 +2,13 @@
   "name": "@proofscript/json-validation",
   "version": "0.1.0",
   "description": "Bounded trusted-host JSON text validation for ProofScript Product v1",
-  "private": true,
   "main": "index.cjs",
-  "license": "MIT"
+  "license": "MIT",
+  "files": [
+    "index.cjs",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
 }
