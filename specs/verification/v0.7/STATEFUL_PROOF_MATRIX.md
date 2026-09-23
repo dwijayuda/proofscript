@@ -64,6 +64,7 @@ For each case name, these hashes must be identical across toolchains:
 sourceSha256
 stateModelDescriptorSha256
 leanModelSha256
+generatedAdequacyCheckSha256
 generatedProgramSha256
 generatedTripleTargetSha256
 generatedRequestSha256
@@ -132,3 +133,20 @@ allLeanProofsDischarged = true
 This checkpoint promotes debit+transfer proof discharge to a concrete
 multi-version compatibility result. It does not change the explicit non-claims
 below.
+
+
+## Adequacy provenance extension
+
+After the 2026-09-23 checkpoint, the matrix provenance contract gained:
+
+```text
+generatedAdequacyCheckSha256
+```
+
+This makes state-model adequacy identity part of cross-version comparison. The
+matrix cannot pass if one Lean lane checks a different generated adequacy
+wrapper from another.
+
+The recorded 2026-09-23 checkpoint above predates this extension and must not be
+interpreted as having `stateModelAdequacyChecked = true`. The next matrix run
+is the first candidate for that stronger claim.

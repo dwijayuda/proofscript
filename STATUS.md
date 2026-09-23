@@ -228,6 +228,10 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - proof-required debit+transfer multi-version matrix — **PASS on local machine, 6/6 proved** across Lean 4.33.1 / 4.34.0 / 4.35.0-rc2
 - cross-version provenance consistency — implemented; the same proof case must retain identical source/model/generated theorem hashes across lanes
 - consolidated `proofscript.stateful-endtest/v1` local gate — implemented; combines build/static regressions with the proof matrix
+- first-class state-model adequacy artifact (`proofscript.stateful-adequacy-check/v1`) — implemented for the current `StateM` alpha; deterministically checks the descriptor-bound runner + adequacy theorem against the expected WP-to-run-result bridge shape
+- adequacy is now an ordered execution stage between model loading and program typechecking; `proved` / `vcs-generated` evidence cannot be promoted without it
+- proof-matrix provenance now requires `generatedAdequacyCheckSha256`; cross-version compatibility must therefore check the same adequacy wrapper as well as the same program/Triple/request
+- **adequacy execution evidence pending the next local matrix run**; the recorded 2026-09-23 6/6 matrix predates this stage and correctly retains `stateModelAdequacyChecked = false`
 - Triple skeleton pre/post functions sourced from the WP binding artifact — implemented
 - state observation descriptor state-input type validation — PASS
 - definite state-observation argument type mismatches downgrade to prototype/fail closed — PASS
@@ -257,8 +261,8 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 
 ## Next engineering target
 
-1. Preserve the new proof-required compatibility matrix as a regression gate; hosted CI must reject any debit/transfer lane that leaves residual goals.
-2. Preserve `stateModelAdequacyChecked = false`, `sourceToLeanProgramEquivalenceChecked = false`, and `exceptionalPathsCovered = false` until those are separately checked.
-3. Begin the next bounded stateful-verification increment: explicit frame conditions first, then loop invariant/progress obligations, rather than broadening the profile all at once.
+1. Re-run the consolidated proof-required compatibility matrix with the new state-model adequacy stage; promote `stateModelAdequacyChecked` only if all six child runs Lean-check the same adequacy wrapper.
+2. Preserve `sourceToLeanProgramEquivalenceChecked = false` and `exceptionalPathsCovered = false` until those are separately checked.
+3. After adequacy is green, begin the next bounded stateful-verification increment: explicit frame conditions first, then loop invariant/progress obligations, rather than broadening the profile all at once.
 4. Keep recursive termination (`termination_by` / `decreasing_by`) separate from loop-progress verification.
 5. Continue CLI/frontend/LSP convergence only behind canonical compiler APIs and existing regression gates.

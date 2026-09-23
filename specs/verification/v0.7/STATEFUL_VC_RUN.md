@@ -27,21 +27,24 @@ Both surfaces use the same `analyzeStatefulVcExecution` claim-promotion logic fr
 
 ## Ordered execution stages
 
-The runner separates the Lean boundary into four stages:
+The runner separates the Lean boundary into five ordered stages:
 
 1. `lean-model-build`
-   - build `ProofScript.Verification.BankStateModel` in the pinned Lean project;
-2. `lean-program-typecheck`
+   - build/check the descriptor-bound Lean model environment;
+2. `state-model-adequacy-check`
+   - typecheck the generated `proofscript.stateful-adequacy-check/v1` wrapper, which applies the descriptor-bound adequacy theorem at the expected current `StateM` WP-to-run-result bridge type;
+3. `lean-program-typecheck`
    - typecheck the generated `StateM` program declaration;
-3. `lean-triple-target-typecheck`
+4. `lean-triple-target-typecheck`
    - typecheck the concrete generated `Std.Do.Triple` target;
-4. VC request execution
+5. VC request execution
    - execute the generated `vcgen`/ `mvcgen` request.
 
 The first failed stage is recorded as one of:
 
 ```text
 lean-model-build
+state-model-adequacy-check
 lean-program-typecheck
 lean-triple-target-typecheck
 vc-residual-goals
@@ -94,6 +97,7 @@ Claims are promoted only by execution evidence:
 ```text
 leanEnvironmentResolved
 leanModelTypechecked
+stateModelAdequacyChecked
 leanProgramTypechecked
 tripleTargetTypechecked
 tacticExecuted
@@ -102,7 +106,7 @@ realVerificationConditionsGenerated
 semanticProofDischarge
 ```
 
-`stateModelAdequacyChecked`, `sourceToLeanProgramEquivalenceChecked`, and `exceptionalPathsCovered` remain independent claims and stay false until separately checked.
+`stateModelAdequacyChecked` is now promoted only when the generated adequacy wrapper typechecks in Lean. `sourceToLeanProgramEquivalenceChecked` and `exceptionalPathsCovered` remain independent claims and stay false until separately checked.
 
 The stateful verification compatibility floor is Lean **4.33.1**. Lean 4.33.1 and any later stable, RC, or development build are admissible inputs. The evidence must record the exact observed Lean version used for the run.
 
@@ -178,6 +182,7 @@ toolchains:
 sourceSha256
 stateModelDescriptorSha256
 leanModelSha256
+generatedAdequacyCheckSha256
 generatedProgramSha256
 generatedTripleTargetSha256
 generatedRequestSha256
@@ -251,3 +256,42 @@ These results leave the independent claims
 `stateModelAdequacyChecked`,
 `sourceToLeanProgramEquivalenceChecked`, and
 `exceptionalPathsCovered` false.
+
+
+## Stateful adequacy check artifact
+
+Schema:
+
+```text
+proofscript.stateful-adequacy-check/v1
+```
+
+The artifact is generated from the state-model binding, not from an individual
+debit/transfer proof. For the current bounded profile it supports exactly the
+descriptor shape:
+
+```text
+lean.monadTypeConstructor = StateM <stateType>
+```
+
+and fails closed for other monad shapes until their adequacy contract is
+specified.
+
+Its Lean wrapper proves a fresh generated theorem by applying the
+descriptor-bound adequacy theorem to:
+
+- the descriptor-bound runner result equality;
+- an arbitrary result predicate;
+- the corresponding `Std.Do` weakest-precondition fact.
+
+Successful compilation establishes that the named runner and adequacy theorem
+fit this expected bridge shape in the selected Lean environment. It does not
+prove that ProofScript's source-to-Lean program lowering is correct, and it does
+not cover exceptional paths.
+
+### Evidence transition
+
+The 2026-09-23 six-case debit+transfer matrix documented below predates this
+stage and therefore keeps `stateModelAdequacyChecked = false`. That historical
+evidence remains valid for the theorem families it checked. A later matrix run
+must pass the new adequacy stage before adequacy may be promoted.

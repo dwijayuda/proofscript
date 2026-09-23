@@ -228,7 +228,9 @@ On 2026-09-23, repository commit `94696c4eb41798583e47b708fa445eb9f84c0d16` pass
 
 This is concrete proof evidence for the two generated theorem families and their recorded model/program/request provenance. It does **not** establish exceptional/abrupt path coverage, state-model adequacy use, source-to-Lean program equivalence, profile-wide proof discharge, or full Lean equivalence.
 
-The next bounded verification increment is explicit frame conditions, followed by loop invariant/progress obligations. Recursive function termination remains a separate Lean-compatible concern.
+Before adding the next source-level verification feature, the state-model trust boundary is being tightened. A deterministic `proofscript.stateful-adequacy-check/v1` artifact now instantiates the descriptor-bound runner and adequacy theorem at the current `StateM` WP-to-run-result bridge type. Both stateful execution surfaces run this check before program/Triple/proof checking, and proof-matrix provenance includes its hash. The previously recorded 6/6 matrix predates this new stage, so adequacy remains unpromoted until the next real Lean matrix run.
+
+After that adequacy checkpoint is green, the next bounded verification increment is explicit frame conditions, followed by loop invariant/progress obligations. Recursive function termination remains a separate Lean-compatible concern.
 
 ---
 

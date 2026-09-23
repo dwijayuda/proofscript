@@ -226,3 +226,45 @@ all_goals simp_all
 The model now contains symmetric cross-account preservation lemmas so a source
 hypothesis `from ≠ to` is sufficient for automation to simplify both debit and
 credit preservation obligations without transfer-specific proof scripting.
+
+
+## State-model adequacy stage
+
+The current stateful runner now inserts this stage after the model module is
+loaded and before the generated program is typechecked:
+
+```text
+model-build
+state-model-adequacy-check
+program-typecheck
+triple-typecheck
+proof-request
+```
+
+The lowering artifact contains a deterministic:
+
+```text
+proofscript.stateful-adequacy-check/v1
+```
+
+For the current `StateM` alpha, its generated Lean theorem instantiates the
+descriptor's:
+
+```text
+semantics.runner
+semantics.adequacyTheorem
+lean.monadTypeConstructor
+stateType
+```
+
+at the expected WP-to-run-result bridge shape. The check is stronger than merely
+`#check`ing that the adequacy theorem name exists: Lean must accept its use at
+the expected type.
+
+The proof matrix now includes `generatedAdequacyCheckSha256` in its
+cross-version provenance contract. The same state model must therefore generate
+the same adequacy check in every selected Lean lane.
+
+The earlier 2026-09-23 6/6 proof matrix was executed before this new stage and
+must not be relabeled as adequacy evidence. Run the consolidated end-test again
+to establish the new claim.
