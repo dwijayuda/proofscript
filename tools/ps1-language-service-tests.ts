@@ -28,6 +28,24 @@ assert.equal(first.status, "accepted");
 assert.ok(first.declarations.some((declaration) => declaration.name === "overlay"));
 assert.ok(!first.declarations.some((declaration) => declaration.name === "disk"));
 assert.equal(first.diagnostics.length, 0);
+assert.equal(first.sourceDeclarations.length, 1);
+assert.equal(first.sourceDeclarations[0].name, "overlay");
+assert.equal(first.sourceDeclarations[0].qualifiedName, "overlay");
+assert.deepEqual(first.sourceDeclarations[0].selectionRange.start, { line: 0, character: 8 });
+assert.deepEqual(first.sourceDeclarations[0].selectionRange.end, { line: 0, character: 15 });
+
+const overlaySymbols = service.documentSymbols(uri);
+assert.equal(overlaySymbols.length, 1);
+assert.equal(overlaySymbols[0].name, "overlay");
+assert.equal(overlaySymbols[0].kind, "theorem");
+assert.match(overlaySymbols[0].detail, /Prop/u);
+
+const overlayHover = service.hover(uri, { line: 0, character: 10 });
+assert.ok(overlayHover);
+assert.equal(overlayHover.name, "overlay");
+assert.equal(overlayHover.kind, "theorem");
+assert.match(overlayHover.type, /Prop/u);
+assert.equal(service.hover(uri, { line: 0, character: 0 }), null);
 
 const cached = service.analyze(uri);
 assert.equal(cached, first, "same document generation should reuse the cached analysis object");
@@ -54,6 +72,12 @@ const repaired = service.analyze(uri);
 assert.equal(repaired.status, "accepted");
 assert.ok(repaired.declarations.some((declaration) => declaration.name === "repaired"));
 assert.equal(repaired.diagnostics.length, 0);
+assert.equal(repaired.sourceDeclarations.length, 1);
+assert.equal(repaired.sourceDeclarations[0].name, "repaired");
+assert.deepEqual(repaired.sourceDeclarations[0].selectionRange.start, { line: 0, character: 4 });
+assert.deepEqual(repaired.sourceDeclarations[0].selectionRange.end, { line: 0, character: 12 });
+assert.equal(service.documentSymbols(uri)[0].name, "repaired");
+assert.equal(service.hover(uri, { line: 0, character: 6 })?.name, "repaired");
 const explicitParams = repaired.surfaceFeatures.find((feature) => feature.feature === "D-EXPLICIT-PARAMS");
 assert.ok(explicitParams, "language service must expose compiler-owned surface features");
 assert.equal(explicitParams.startOffset, 0);
@@ -109,6 +133,9 @@ assert.equal(mainOnlyChanged.status, "accepted");
 assert.deepEqual(mainOnlyChanged.moduleReuse?.reused, ["Lib"]);
 assert.deepEqual(mainOnlyChanged.moduleReuse?.rebuilt, ["Main"]);
 assert.ok(mainOnlyChanged.declarations.some((declaration) => declaration.name === "mainChanged"));
+assert.deepEqual(mainOnlyChanged.sourceDeclarations.map((declaration) => declaration.name), ["mainChanged"]);
+assert.deepEqual(projectService.documentSymbols(mainUri).map((symbol) => symbol.name), ["mainChanged"]);
+assert.equal(projectService.hover(mainUri, { line: 1, character: 10 })?.name, "mainChanged");
 
 projectService.replaceDocument(
   libUri,
@@ -125,6 +152,11 @@ assert.deepEqual(
 );
 assert.ok(dependencyChanged.declarations.some((declaration) => declaration.name === "libChanged"));
 assert.ok(!dependencyChanged.declarations.some((declaration) => declaration.name === "libIdentity"));
+assert.deepEqual(
+  dependencyChanged.sourceDeclarations.map((declaration) => declaration.name),
+  ["mainChanged"],
+  "editor source index for an importer must contain only declarations from that document",
+);
 
 const stableProject = projectService.analyze(mainUri, true);
 assert.equal(stableProject.status, "accepted");
