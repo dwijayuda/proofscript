@@ -145,7 +145,7 @@ assert.throws(
   /invalid ProofScript identifier/u,
 );
 
-const explicitParams = navigation.surfaceFeatures.find((feature) => feature.feature === "D-EXPLICIT-PARAMS");
+const explicitParams = repaired.surfaceFeatures.find((feature) => feature.feature === "D-EXPLICIT-PARAMS");
 assert.ok(explicitParams, "language service must expose compiler-owned surface features");
 assert.equal(explicitParams.startOffset, 0);
 assert.ok(explicitParams.endOffset > explicitParams.startOffset);
