@@ -51,12 +51,14 @@ theorem have_inferred(h: P): P := by { have hp := h; exact hp }
 
 theorem have_nested(h: P): P := by { have hp : P := by { exact h }; show P; exact hp }
 
+theorem have_dependent_target(n: Nat, h: n = n): n = n := by { have hn : n = n := h; exact h }
+
 def executable: Nat := { idNat 9 }
 `,
 });
 const checked = runPsliveJson(['check', fixture.source, '--json']);
 assert.equal(checked.status, 'accepted');
-for (const name of ['idNat_rfl', 'exact_rfl', 'intro_assumption', 'apply_exact', 'apply_subgoal', 'show_exact', 'have_exact', 'have_inferred', 'have_nested']) {
+for (const name of ['idNat_rfl', 'exact_rfl', 'intro_assumption', 'apply_exact', 'apply_subgoal', 'show_exact', 'have_exact', 'have_inferred', 'have_nested', 'have_dependent_target']) {
   assert.ok(checked.userDeclarations.some(d => d.name === name && d.kind === 'theorem'), `expected theorem ${name}`);
 }
 const built = buildJsFixture(fixture, 'proof-elab.js');
