@@ -1606,6 +1606,10 @@ function createStructuralCertificate(source, core, out, runtimeArtifact) {
     } : {}),
     correspondence: {
       ...runtimeCertificateMetadata(ROOT).correspondence,
+      ...(runtimeArtifact ? {
+        level: 'artifact-bound-structural',
+        meaning: 'runtime profile and emitted backend artifact hash are bound; execution correspondence is not proved',
+      } : {}),
       backendArtifactBound: Boolean(runtimeArtifact),
     },
     source: { path: path.relative(path.dirname(resolvedOut), resolvedSource).replace(/\\/g, '/'), sha256: sha256File(resolvedSource) },
