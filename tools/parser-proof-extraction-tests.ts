@@ -14,7 +14,7 @@ const proof = fs.readFileSync(proofSrc, 'utf8');
 assert.match(proof, /export interface ProofParserHost\b/, 'proofParser.ts must define the narrow host interface');
 assert.match(proof, /export function parseProofTerm\b/, 'proofParser.ts must export parseProofTerm');
 assert.match(proof, /function parseProofStep\b/, 'proofParser.ts must own parseProofStep implementation');
-for (const form of ['rfl', 'exact', 'assumption', 'apply', 'intro']) {
+for (const form of ['rfl', 'exact', 'assumption', 'apply', 'intro', 'show', 'have']) {
   assert.match(proof, new RegExp(`atId\\("${form}"\\)`), `proofParser.ts must handle ${form}`);
 }
 
@@ -30,10 +30,17 @@ def x: Nat := { 1 };
 theorem x_eq: x = 1 := by rfl
 example: x = 1 := by { exact rfl }
 theorem x_eq_intro: (x = 1) -> x = 1 := by { intro h; exact h }
+axiom P: Prop;
+theorem show_p(h: P): P := by { show P; exact h }
+theorem have_p(h: P): P := by { have hp : P := h; exact hp }
+theorem have_inferred(h: P): P := by { have hp := h; exact hp }
 `);
-assert.equal(parsed.declarations.length, 4);
+assert.equal(parsed.declarations.length, 8);
 assert.equal(parsed.declarations[1].value.tag, 'rflProof');
 assert.equal(parsed.declarations[2].value.tag, 'rflProof');
 assert.equal(parsed.declarations[3].value.tag, 'introProof');
+assert.equal(parsed.declarations[5].value.tag, 'showProof');
+assert.equal(parsed.declarations[6].value.tag, 'haveProof');
+assert.equal(parsed.declarations[7].value.tag, 'haveProof');
 
 console.log('parser proof extraction tests: PASS');
