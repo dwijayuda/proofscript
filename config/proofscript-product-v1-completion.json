@@ -159,7 +159,7 @@
       "status": "in_progress",
       "exitGates": [
         "test:product-v1:ffi",
-        "npm consumption example green",
+        "test:product-v1:ffi-npm",
         "unsafe interop fails closed",
         "FFI certificate trust metadata verified"
       ],
@@ -172,11 +172,11 @@
         "unbound executable axioms fail closed",
         "unsupported FFI boundary types fail closed",
         "FFI manifest identity/hash and exact bindings recorded in certificates",
-        "certificate verification rejects FFI manifest tampering"
+        "certificate verification rejects FFI manifest tampering",
+        "offline local npm package consumption example and gate"
       ],
       "remaining": [
         "execute Product-v1 FFI gate on supported host platforms",
-        "add package-oriented npm consumer example",
         "decide whether a future source-level extern sugar is justified; it is not required for v1",
         "async/IO/callback/object interop remains outside ffi-v1"
       ]
