@@ -14,8 +14,9 @@ try {
   pk=await import('lean-ts-kernel');
 } catch (error) {
   console.error('FAIL: external lean-ts-kernel package is not installed.');
-  console.error('Install the exact feasibility commit without saving it:');
-  console.error('  npm install --no-save git+https://github.com/dwijayuda/pskernel.git#393919ca34eab3a42ae83dc8c296e120b4503d6f');
+  console.error('Install a packed PSKernel feasibility build without saving it:');
+  console.error('  # in the pskernel feasibility checkout: npm pack');
+  console.error('  # in this ProofScript checkout: npm install --no-save ../pskernel/lean-ts-kernel-0.1.0.tgz');
   throw error;
 }
 
