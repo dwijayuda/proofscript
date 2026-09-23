@@ -17,12 +17,14 @@ assert.match(lsp,/documentStatusFromAnalysis/u);
 assert.ok(lsp.includes("proofscript/documentProcessing"));
 assert.ok(lsp.includes("proofscript/documentStatusChanged"));
 
-for (const supported of ["textDocument/hover","textDocument/documentSymbol","proofscript/documentStatus","proofscript/semanticInfo"]) {
+for (const supported of ["textDocument/hover","textDocument/documentSymbol","textDocument/completion","proofscript/documentStatus","proofscript/semanticInfo"]) {
   assert.ok(extension.includes(supported), "missing active editor method " + supported);
 }
-for (const unsupported of ["textDocument/completion","textDocument/definition","textDocument/references","textDocument/rename","proofscript/proofState"]) {
+for (const unsupported of ["textDocument/definition","textDocument/references","textDocument/rename","proofscript/proofState"]) {
   assert.equal(extension.includes(unsupported), false, "unsupported method leaked into active editor: " + unsupported);
 }
+assert.match(lsp,/completionProvider/u);
+assert.match(lsp,/this\.worker\.completion/u);
 assert.equal(extension.includes("EXPECTED_LSP_PROTOCOL_VERSION = 1"), true);
 assert.match(JSON.stringify(grammar),/frame/u);
 assert.match(JSON.stringify(grammar),/decreases/u);
