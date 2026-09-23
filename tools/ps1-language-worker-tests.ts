@@ -55,6 +55,9 @@ const workerReferences = await worker.references(uri, { line: 1, character: 25 }
 assert.equal(workerReferences.length, 2);
 const workerRename = await worker.rename(uri, { line: 1, character: 25 }, "workerRenamed");
 assert.equal(workerRename.changes[uri]?.length, 2);
+const workerTokens = await worker.semanticTokens(uri);
+assert.equal(workerTokens.length, 3);
+assert.equal(workerTokens.filter((token) => token.modifiers.includes("declaration")).length, 2);
 
 
 await worker.restart("test state replay");
