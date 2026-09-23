@@ -101,7 +101,7 @@ async function main() {
       "  twice: twice(21n),",
       "  answer,",
       "};",
-      "process.stdout.write(JSON.stringify({",
+      "console.log(JSON.stringify({",
       "  inc: values.inc.toString(),",
       "  twice: values.twice.toString(),",
       "  answer: values.answer.toString(),",
