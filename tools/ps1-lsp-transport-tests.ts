@@ -281,7 +281,7 @@ assert.equal(pushedNavigation.params.diagnostics.length, 0);
 
 send({
   jsonrpc: "2.0",
-  id: 11,
+  id: 12,
   method: "textDocument/definition",
   params: { textDocument: { uri }, position: { line: 1, character: 21 } },
 });
@@ -292,7 +292,7 @@ assert.deepEqual(definition.result.range.end, { line: 0, character: 11 });
 
 send({
   jsonrpc: "2.0",
-  id: 12,
+  id: 13,
   method: "textDocument/references",
   params: {
     textDocument: { uri },
@@ -305,7 +305,7 @@ assert.equal(references.result.length, 2);
 
 send({
   jsonrpc: "2.0",
-  id: 13,
+  id: 14,
   method: "textDocument/rename",
   params: {
     textDocument: { uri },
@@ -319,7 +319,7 @@ assert.ok(rename.result.changes[uri].every((edit) => edit.newText === "renamedBa
 
 send({
   jsonrpc: "2.0",
-  id: 14,
+  id: 15,
   method: "textDocument/semanticTokens/full",
   params: { textDocument: { uri } },
 });
@@ -347,7 +347,7 @@ assert.equal(pushedFormatting.params.diagnostics.length, 0);
 
 send({
   jsonrpc: "2.0",
-  id: 15,
+  id: 17,
   method: "textDocument/formatting",
   params: {
     textDocument: { uri },
