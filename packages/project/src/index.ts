@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import { createRequire } from "node:module";
-import { parseSource } from "@proofscript/parser";
+import { parseLeadingImports } from "@proofscript/parser";
 
 export interface PluginConfigEntry { use:string; options?:unknown; }
 export interface ProjectConfig {
@@ -195,8 +195,8 @@ export function buildModuleGraph(entryFile:string,projectRoot?:string,sourceProv
 
     state.set(name,"visiting");stack.push(name);
     const source=readSource(fileAbs,sourceProvider);
-    const parsed=parseSource(source);
-    const node:ProjectModuleSource={name,filePath:fileAbs,source,sourceSha256:sha256Text(source),imports:[...parsed.imports]};
+    const imports=parseLeadingImports(source);
+    const node:ProjectModuleSource={name,filePath:fileAbs,source,sourceSha256:sha256Text(source),imports:[...imports]};
     nodes.set(name,node);
     for(const imported of node.imports){
       const importedPath=resolveModuleFileWithProvider(imported,sourceRoots,sourceProvider);
@@ -243,8 +243,8 @@ export function buildWorkspaceGraph(projectRoot:string,options:WorkspaceGraphOpt
   const raw=new Map<string,ProjectModuleSource>();
   for(const [name,filePath] of [...files.entries()].sort(([a],[b])=>a.localeCompare(b))){
     const source=readSource(filePath,options.sourceProvider);
-    const parsed=parseSource(source);
-    raw.set(name,{name,filePath,source,sourceSha256:sha256Text(source),imports:[...parsed.imports]});
+    const imports=parseLeadingImports(source);
+    raw.set(name,{name,filePath,source,sourceSha256:sha256Text(source),imports:[...imports]});
   }
 
   for(const module of [...raw.values()]){
@@ -253,8 +253,8 @@ export function buildWorkspaceGraph(projectRoot:string,options:WorkspaceGraphOpt
       const importedName=moduleNameForEntry(importedPath,sourceRoots);
       if(!raw.has(importedName)){
         const source=readSource(importedPath,options.sourceProvider);
-        const parsed=parseSource(source);
-        raw.set(importedName,{name:importedName,filePath:importedPath,source,sourceSha256:sha256Text(source),imports:[...parsed.imports]});
+        const imports=parseLeadingImports(source);
+        raw.set(importedName,{name:importedName,filePath:importedPath,source,sourceSha256:sha256Text(source),imports:[...imports]});
       }
     }
   }
