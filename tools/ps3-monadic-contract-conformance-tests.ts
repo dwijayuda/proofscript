@@ -20,7 +20,7 @@ const negative = readJsonl(path.join(specDir, "cases", "negative.jsonl"));
 
 assert.equal(registry.profile, "ps3-monadic-contracts0");
 assert.equal(registry.claim_ceiling, "specified-structural-alpha");
-assert.deepEqual(registry.features.map((feature: any) => feature.id).sort(), ["V-MONADIC-CONTRACT", "V-OLD", "V-RESULT"].sort());
+assert.deepEqual(registry.features.map((feature: any) => feature.id).sort(), ["V-MONADIC-CONTRACT", "V-OLD", "V-RESULT", "V-FRAME"].sort());
 
 for (const item of positive) {
   const stateModel = binding(item.state_model, item.id);
