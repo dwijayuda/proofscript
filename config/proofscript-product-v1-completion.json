@@ -242,11 +242,11 @@
         "formatter idempotence and canonical-token equivalence",
         "VS Code Format Document reuses @proofscript/formatter",
         "LSP textDocument/formatting with stale-document and cancellation boundaries",
-        "formatter preserves Lean-compatible line and nested block comments"
+        "formatter preserves Lean-compatible line and nested block comments",
+        "compiler theorem and verification-artifact goal presentation"
       ],
       "remaining": [
-        "code actions",
-        "proof/VC goal presentation"
+        "code actions"
       ],
       "exitGates": [
         "editor protocol tests green",
@@ -259,7 +259,8 @@
         "Active editors/vscode registers only capabilities implemented by the current compiler-backed language service.",
         "Definition/references/rename use canonical parser source spans plus elaborator global-name resolution; no editor-side text parser.",
         "Tactic proof-state snapshots remain unavailable and are not fabricated.",
-        "CLI and editor formatting share @proofscript/formatter; canonical tokenizer spans preserve comments without a duplicate grammar."
+        "CLI and editor formatting share @proofscript/formatter; canonical tokenizer spans preserve comments without a duplicate grammar.",
+        "Goal presentation is compiler-theorem / verification-artifact backed; tacticStateAvailable remains false and live tactic states are not fabricated."
       ]
     },
     {
