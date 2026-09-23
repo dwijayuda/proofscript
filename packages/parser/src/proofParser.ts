@@ -16,6 +16,10 @@ export interface ProofParserHost{
   peek():Token;
 }
 
+function withProofSpan(host:ProofParserHost,startOffset:number,term:SurfaceTerm):SurfaceTerm{
+  return{...term,sourceStartOffset:startOffset,sourceEndOffset:host.peek().offset} as SurfaceTerm;
+}
+
 /** Parse a theorem/example proof term after `:=`. */
 export function parseProofTerm(host:ProofParserHost):SurfaceTerm{
   if(!host.atId("by"))return host.parseTerm();
@@ -44,6 +48,7 @@ function parseProofBranchConstructor(host:ProofParserHost):string{
 function parseProofBranches(host:ProofParserHost):SurfaceProofBranch[]{
   const branches:SurfaceProofBranch[]=[];
   while(host.at("|")){
+    const sourceStartOffset=host.peek().offset;
     host.next();
     const constructor=parseProofBranchConstructor(host);
     const binders:string[]=[];
@@ -54,36 +59,37 @@ function parseProofBranches(host:ProofParserHost):SurfaceProofBranch[]{
     }
     host.expect("=>");
     const body=host.atId("by")?parseProofTerm(host):parseProofStep(host);
-    branches.push({constructor,binders,body});
+    branches.push({constructor,binders,body,sourceStartOffset,sourceEndOffset:host.peek().offset});
   }
   if(branches.length===0)throw new ParseError("branch-aware proof requires at least one `| constructor => ...` branch");
   return branches;
 }
 function parseProofStep(host:ProofParserHost):SurfaceTerm{
+  const sourceStartOffset=host.peek().offset;
   if(host.atId("rfl")){
     host.next();
-    return{tag:"rflProof"};
+    return withProofSpan(host,sourceStartOffset,{tag:"rflProof"});
   }
   if(host.atId("exact")){
     host.next();
     if(host.atId("rfl")){
       host.next();
-      return{tag:"rflProof"};
+      return withProofSpan(host,sourceStartOffset,{tag:"rflProof"});
     }
-    return{tag:"exactProof",term:host.parseTerm()};
+    return withProofSpan(host,sourceStartOffset,{tag:"exactProof",term:host.parseTerm()});
   }
   if(host.atId("assumption")){
     host.next();
-    return{tag:"assumptionProof"};
+    return withProofSpan(host,sourceStartOffset,{tag:"assumptionProof"});
   }
   if(host.atId("apply")){
     host.next();
     const term=host.parseTerm();
     if(host.at(";")){
       host.next();
-      return{tag:"applyProof",term,body:parseProofStep(host)};
+      return withProofSpan(host,sourceStartOffset,{tag:"applyProof",term,body:parseProofStep(host)});
     }
-    return{tag:"applyProof",term};
+    return withProofSpan(host,sourceStartOffset,{tag:"applyProof",term});
   }
   if(host.atId("intro")){
     host.next();
@@ -105,13 +111,13 @@ function parseProofStep(host:ProofParserHost):SurfaceTerm{
     )names.push(host.next().text);
     if(names.length===0)throw new ParseError("PSC-1 intro requires at least one introduced name");
     host.expect(";");
-    return{tag:"introProof",names,body:parseProofStep(host)};
+    return withProofSpan(host,sourceStartOffset,{tag:"introProof",names,body:parseProofStep(host)});
   }
   if(host.atId("show")){
     host.next();
     const type=host.parseTerm();
     host.expect(";");
-    return{tag:"showProof",type,body:parseProofStep(host)};
+    return withProofSpan(host,sourceStartOffset,{tag:"showProof",type,body:parseProofStep(host)});
   }
   if(host.atId("have")){
     host.next();
@@ -125,7 +131,7 @@ function parseProofStep(host:ProofParserHost):SurfaceTerm{
     host.expect(":=");
     const value=host.atId("by")?parseProofTerm(host):host.parseTerm();
     host.expect(";");
-    return{tag:"haveProof",name:nameToken.text,type,value,body:parseProofStep(host)};
+    return withProofSpan(host,sourceStartOffset,{tag:"haveProof",name:nameToken.text,type,value,body:parseProofStep(host)});
   }
   if(host.atId("rw")){
     host.next();
@@ -136,40 +142,40 @@ function parseProofStep(host:ProofParserHost):SurfaceTerm{
     }
     const equality=host.parseTerm();
     host.expect(";");
-    return{tag:"rwProof",equality,reverse,body:parseProofStep(host)};
+    return withProofSpan(host,sourceStartOffset,{tag:"rwProof",equality,reverse,body:parseProofStep(host)});
   }
   if(host.atId("subst")){
     host.next();
     const nameToken=host.next();
     if(nameToken.kind!=="id")throw new ParseError("PSC-1 subst requires a local variable name");
     host.expect(";");
-    return{tag:"substProof",name:nameToken.text,body:parseProofStep(host)};
+    return withProofSpan(host,sourceStartOffset,{tag:"substProof",name:nameToken.text,body:parseProofStep(host)});
   }
   if(host.atId("constructor")){
     host.next();
     if(host.at(";")){
       host.next();
-      return{tag:"constructorProof",body:parseProofStep(host)};
+      return withProofSpan(host,sourceStartOffset,{tag:"constructorProof",body:parseProofStep(host)});
     }
-    return{tag:"constructorProof"};
+    return withProofSpan(host,sourceStartOffset,{tag:"constructorProof"});
   }
   if(host.atId("cases")){
     host.next();
     const term=host.parseTerm();
-    if(host.at("|"))return{tag:"casesProof",term,branches:parseProofBranches(host)};
+    if(host.at("|"))return withProofSpan(host,sourceStartOffset,{tag:"casesProof",term,branches:parseProofBranches(host)});
     host.expect(";");
-    return{tag:"casesProof",term,body:parseProofStep(host)};
+    return withProofSpan(host,sourceStartOffset,{tag:"casesProof",term,body:parseProofStep(host)});
   }
   if(host.atId("induction")){
     host.next();
     const term=host.parseTerm();
-    if(host.at("|"))return{tag:"inductionProof",term,branches:parseProofBranches(host)};
+    if(host.at("|"))return withProofSpan(host,sourceStartOffset,{tag:"inductionProof",term,branches:parseProofBranches(host)});
     host.expect(";");
-    return{tag:"inductionProof",term,body:parseProofStep(host)};
+    return withProofSpan(host,sourceStartOffset,{tag:"inductionProof",term,body:parseProofStep(host)});
   }
   if(host.atId("simp")){
     host.next();
-    return{tag:"simpProof"};
+    return withProofSpan(host,sourceStartOffset,{tag:"simpProof"});
   }
   throw new UnsupportedFeature("PSC-1 standalone proof block supports bounded `rfl`, `exact`, `assumption`, `apply`, `intro`, `show`, `have`, `rw`, `subst`, `constructor`, `cases`, `induction`, and `simp`");
 }
