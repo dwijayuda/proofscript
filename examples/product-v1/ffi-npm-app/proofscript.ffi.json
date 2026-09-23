@@ -1,0 +1,11 @@
+{
+  "schema": "proofscript.ffi/v1",
+  "bindings": [
+    {
+      "name": "hostUpper",
+      "module": "@proofscript-example/host-tools",
+      "exportName": "upper",
+      "trust": "trusted-external"
+    }
+  ]
+}
