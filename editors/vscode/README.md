@@ -19,3 +19,14 @@ The 0.46 donor still contains signature help, code actions, and richer proof-sta
 Protocol v1 exposes checked theorem goals and source-hash-bound verification obligations, but not live tactic-state snapshots. The active Infoview reports tacticStateAvailable=false and never fabricates tactic states.
 
 Run npm run build at the repository root before launching the extension from source. Release packaging will later vendor the matching @proofscript/lsp package into the VSIX.
+
+
+## Code actions
+
+Product-v1 code actions are deliberately bounded:
+
+- **Format ProofScript document** reuses the canonical formatter.
+- **Insert missing ';'** is offered only when the canonical parser emits
+  `PSLS1001` with the exact `expected ';' at offset N` diagnostic.
+
+The editor does not derive refactors or repairs from textual heuristics.
