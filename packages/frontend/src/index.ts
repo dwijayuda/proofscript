@@ -109,20 +109,43 @@ export interface FrontendWorkspaceResult {
 /** Check one already-loaded source unit. Filesystem imports require checkProjectFile. */
 export function checkSource(source:string,options:FrontendOptions={}):FrontendResult{
   const prepared=options.prelude?prepareCoreEnvironment(options.prelude):undefined;
-  const parsed=parseSource(source,undefined,{knownGlobalNames:prepared?.globals.map(g=>g.name)??[],validateOpenNamespaces:true});
-  if(parsed.imports.length&&!options.allowResolvedImports)throw new UnsupportedFeature("K3c-section-vars0 source imports require project/module resolution; use the project frontend");
   const proofStates:FrontendProofState[]=[];
+  const recordProofState=(state:ProofStateSnapshot):void=>{
+    const displayed=safeDisplayProofState(state);
+    if(!displayed)return;
+    proofStates.push(displayed);
+    safeEmitProofState(options.proofStateSink,{state:cloneProofState(displayed)});
+  };
+  const parsed=parseSource(source,undefined,{
+    knownGlobalNames:prepared?.globals.map(g=>g.name)??[],
+    validateOpenNamespaces:true,
+    ...(options.proofStateSink?{
+      incompleteProofSink:(observation)=>{
+        try{
+          // The source remains rejected by the parser. We only elaborate the
+          // canonical prefix AST the parser actually reached so editor tooling
+          // can display already-determined goals/locals.
+          elaborateProgram(
+            observation.declarations,
+            prepared?.globals??[],
+            prepared?.artifact.declarations??[],
+            prepared?.typeclasses,
+            {recordProofState},
+          );
+        }catch{
+          // Partial-state recovery is observational and never replaces the
+          // original parse failure or fabricates continuation after it.
+        }
+      },
+    }:{}),
+  });
+  if(parsed.imports.length&&!options.allowResolvedImports)throw new UnsupportedFeature("K3c-section-vars0 source imports require project/module resolution; use the project frontend");
   const elaborated=elaborateProgram(
     parsed.declarations,
     prepared?.globals??[],
     prepared?.artifact.declarations??[],
     prepared?.typeclasses,
-    {recordProofState:(state)=>{
-      const displayed=safeDisplayProofState(state);
-      if(!displayed)return;
-      proofStates.push(displayed);
-      safeEmitProofState(options.proofStateSink,{state:cloneProofState(displayed)});
-    }},
+    {recordProofState},
   );
   const initial=prepared?.artifact.declarations??[];
   const all=[...initial,...elaborated.declarations];
