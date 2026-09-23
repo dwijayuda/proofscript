@@ -483,7 +483,7 @@ export function createStatefulPredicateAstForContract(contract, predicateElabora
   );
   const clauses = (predicateElaboration.clauses ?? []).map(clause =>
     parsePredicateRecord({
-      kind: 'ensures',
+      kind: clause.kind ?? 'ensures',
       name: clause.name,
       source: clause.source,
       normalizedPredicate: clause.normalizedPredicate,
