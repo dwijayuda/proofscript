@@ -1,0 +1,56 @@
+{
+  "schema": "proofscript.ffi-profile/v1",
+  "profileId": "proofscript-js-ffi-v1",
+  "status": "specified-bounded",
+  "logicalBoundary": {
+    "sourceForm": "axiom <name>(<typed params>): <result>;",
+    "meaning": "the function type is an explicit logical assumption in checked Core",
+    "hiddenAssumptionsAllowed": false
+  },
+  "executionBoundary": {
+    "manifestSchema": "proofscript.ffi/v1",
+    "trustClassification": "trusted-external",
+    "bindingMode": "named-import-only",
+    "allowedParameterTypes": [
+      "Nat",
+      "Int",
+      "Bool",
+      "String",
+      "Unit"
+    ],
+    "allowedResultTypes": [
+      "Nat",
+      "Int",
+      "Bool",
+      "String",
+      "Unit"
+    ],
+    "monomorphicOnly": true,
+    "firstOrderOnly": true
+  },
+  "unsupported": [
+    "default imports",
+    "namespace imports",
+    "callbacks",
+    "Promise/async",
+    "IO",
+    "exceptions as a modeled effect",
+    "objects/structures across the FFI boundary",
+    "Option/List/Array/Except across the FFI boundary",
+    "mutable host references",
+    "generic or dependent host functions",
+    "automatic discovery of host implementations"
+  ],
+  "certificate": {
+    "manifestHashBound": true,
+    "exactBindingsBound": true,
+    "externalImplementationVerified": false,
+    "externalImplementationCorrespondenceProved": false
+  },
+  "trustBoundary": [
+    "binding a Core axiom to JavaScript supplies execution only; it does not prove the axiom",
+    "host code is trusted external code and remains outside PSKernel",
+    "unbound axioms used by executable code fail closed",
+    "unsupported boundary types fail closed"
+  ]
+}
