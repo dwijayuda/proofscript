@@ -912,8 +912,11 @@ function prebuiltWorkspaceDistStatus() {
 
 function setupCommand(args) {
   console.log('ProofScript setup');
-  runProcess(process.execPath, [...NODE_TS_FLAGS, path.join(ROOT, 'tools', 'setup-local-workspaces.cts')], 'workspace link/copy setup');
   const forcePrebuilt = has(args, '--prebuilt');
+  const installedPackage = ROOT.split(path.sep).some(segment => segment.toLowerCase() === 'node_modules');
+  const pureJsWorkspaceSetup = forcePrebuilt || installedPackage;
+  if (pureJsWorkspaceSetup) ensureLocalWorkspacePackageLinks();
+  else runProcess(process.execPath, [...NODE_TS_FLAGS, path.join(ROOT, 'tools', 'setup-local-workspaces.cts')], 'workspace link/copy setup');
   const tscBin = path.join(ROOT, 'node_modules', 'typescript', 'bin', 'tsc');
   const globalTsc = forcePrebuilt
     ? { status: 1, stdout: '' }
@@ -944,12 +947,15 @@ function setupCommand(args) {
   }
   if (setupMode === 'compiled') {
     runProcess(process.execPath, [...NODE_TS_FLAGS, path.join(ROOT, 'tools', 'copy-static-assets.ts')], 'static asset copy');
+    // Refresh after compilation AND static-asset materialization so locked-down
+    // Windows copy fallback receives the complete built package contents.
+    runProcess(process.execPath, [...NODE_TS_FLAGS, path.join(ROOT, 'tools', 'setup-local-workspaces.cts')], 'post-build workspace link/copy refresh');
   } else {
     console.log('ProofScript setup using packaged static assets');
+    // Installed/prebuilt packages must stay on plain JavaScript: Node 26 refuses
+    // TypeScript stripping for .cts/.ts files under node_modules.
+    ensureLocalWorkspacePackageLinks();
   }
-  // Refresh after compilation AND static-asset materialization so locked-down
-  // Windows copy fallback receives the complete prebuilt package contents.
-  runProcess(process.execPath, [...NODE_TS_FLAGS, path.join(ROOT, 'tools', 'setup-local-workspaces.cts')], 'post-build workspace link/copy refresh');
   console.log(`PROOFSCRIPT_SETUP=PASS mode=${setupMode}`);
 }
 function checkCommand(args) {
