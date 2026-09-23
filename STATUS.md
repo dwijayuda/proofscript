@@ -156,6 +156,33 @@ speculative continuation was added.
 
 See `docs/TACTIC_ERGONOMICS.md`.
 
+## Tactic ergonomics Phase 4
+
+Status: **IMPLEMENTED; ACCEPTANCE PENDING**.
+
+Phase 4 adds one narrow canonical parser-failure UX path: if a `by { ...`
+proof step parses completely and EOF is reached where only the closing `}` is
+missing, the parser emits the actual proof/header prefix it reached. The
+frontend may elaborate that observed prefix through the ordinary elaborator
+solely to publish read-only proof states; the original `ParseError` still
+rejects the source.
+
+Proof states now expose `sourceStatus`:
+
+- `checked`;
+- `rejected-prefix`;
+- `syntax-incomplete`.
+
+No synthetic brace is inserted, parsing does not continue past the failure,
+unrelated parser failures still expose no proof state, and no metavariable,
+hole, stale-state substitution, or editor-only parser/elaborator is introduced.
+
+Closure requires a green
+`proofscript.tactic-ergonomics-endtest/v4` run on the committed Phase 4
+candidate.
+
+See `docs/TACTIC_ERGONOMICS.md`.
+
 ## Baseline behavior
 
 Observed before cleanup and now represented by the product regression workflow:
