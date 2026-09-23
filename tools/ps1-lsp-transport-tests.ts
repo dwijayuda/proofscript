@@ -381,6 +381,64 @@ const incompleteClosed = await waitFor(
 assert.deepEqual(incompleteClosed.params.diagnostics, []);
 fs.unlinkSync(incompleteFile);
 
+const emptyGoalFile = path.join(srcDir, "EmptyGoal.ps");
+const emptyGoalUri = pathToFileURL(emptyGoalFile).href;
+const emptyGoalSource = "axiom P: Prop; theorem emptyGoal(h: P): P := by {";
+fs.writeFileSync(emptyGoalFile, emptyGoalSource);
+send({
+  jsonrpc: "2.0",
+  method: "textDocument/didOpen",
+  params: {
+    textDocument: {
+      uri: emptyGoalUri,
+      languageId: "proofscript",
+      version: 1,
+      text: emptyGoalSource,
+    },
+  },
+});
+const pushedEmptyGoal = await waitFor(
+  (message) => message.method === "textDocument/publishDiagnostics"
+    && message.params?.uri === emptyGoalUri
+    && message.params?.version === 1,
+  "empty proof goal diagnostics",
+);
+assert.equal(pushedEmptyGoal.params.diagnostics.length, 1);
+assert.equal(pushedEmptyGoal.params.diagnostics[0].code, "PSLS1001");
+
+send({
+  jsonrpc: "2.0",
+  id: 103,
+  method: "proofscript/goals",
+  params: {
+    textDocument: { uri: emptyGoalUri },
+    position: { line: 0, character: emptyGoalSource.length },
+  },
+});
+const emptyGoalResponse = await waitFor((message) => message.id === 103, "empty proof initial goal response");
+assert.equal(emptyGoalResponse.result.tacticStateAvailable, true);
+assert.equal(emptyGoalResponse.result.tacticState.kind, "goal");
+assert.equal(emptyGoalResponse.result.tacticState.tactic, "by");
+assert.equal(emptyGoalResponse.result.tacticState.goal, "P");
+assert.equal(emptyGoalResponse.result.tacticState.sourceStatus, "syntax-incomplete");
+assert.deepEqual(emptyGoalResponse.result.tacticState.locals.map((local) => local.name), ["h"]);
+assert.equal(emptyGoalResponse.result.tacticState.locals[0].type, "P");
+assert.equal(emptyGoalResponse.result.declarationGoal, null);
+
+send({
+  jsonrpc: "2.0",
+  method: "textDocument/didClose",
+  params: { textDocument: { uri: emptyGoalUri } },
+});
+const emptyGoalClosed = await waitFor(
+  (message) => message.method === "textDocument/publishDiagnostics"
+    && message.params?.uri === emptyGoalUri
+    && message.params?.version === undefined,
+  "empty proof close diagnostics clear",
+);
+assert.deepEqual(emptyGoalClosed.params.diagnostics, []);
+fs.unlinkSync(emptyGoalFile);
+
 const navigationSource = "def navBase: Nat := 1;\ndef navUse: Nat := navBase;\n";
 send({
   jsonrpc: "2.0",
