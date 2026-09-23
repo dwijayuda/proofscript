@@ -74,6 +74,8 @@ try {
   assert.equal(artifact.runtimeArtifact.sha256, sha256File(ts));
 
   assert.deepEqual(artifact.correspondence, {
+    level: "artifact-bound-structural",
+    meaning: "runtime profile and emitted backend artifact hash are bound; execution correspondence is not proved",
     runtimeRepresentationProfileBound: true,
     runtimeImplementationGated: true,
     backendArtifactBound: true,
@@ -90,6 +92,11 @@ try {
   assert.equal(verified.runtimeProfile.profileId, "proofscript-js-runtime-v1");
   assert.equal(verified.runtimeArtifact.target, "ts");
   assert.equal(verified.runtimeArtifact.sha256, sha256File(ts));
+  assert.equal(verified.correspondence.level, "artifact-bound-structural");
+  assert.equal(
+    verified.correspondence.meaning,
+    "runtime profile and emitted backend artifact hash are bound; execution correspondence is not proved",
+  );
   assert.equal(verified.correspondence.endToEndVerifiedJavaScript, false);
 
   const originalTs = fs.readFileSync(ts, "utf8");
@@ -117,10 +124,20 @@ try {
   const structuralArtifact = JSON.parse(fs.readFileSync(structuralCert, "utf8"));
   assert.equal(structuralArtifact.runtimeProfile.profileId, "proofscript-js-runtime-v1");
   assert.equal(structuralArtifact.runtimeArtifact, undefined);
+  assert.equal(structuralArtifact.correspondence.level, "profile-bound");
+  assert.equal(
+    structuralArtifact.correspondence.meaning,
+    "runtime representation profile identity is bound; no emitted backend artifact is bound",
+  );
   assert.equal(structuralArtifact.correspondence.backendArtifactBound, false);
   assert.equal(structuralArtifact.correspondence.endToEndVerifiedJavaScript, false);
   const structuralVerified = json(["verify", structuralCert]);
   assert.equal(structuralVerified.status, "accepted");
+  assert.equal(structuralVerified.correspondence.level, "profile-bound");
+  assert.equal(
+    structuralVerified.correspondence.meaning,
+    "runtime representation profile identity is bound; no emitted backend artifact is bound",
+  );
 
   console.log("PRODUCT_V1_CERTIFICATE_CORRESPONDENCE_TESTS=PASS");
 } finally {
