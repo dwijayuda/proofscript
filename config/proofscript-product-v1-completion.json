@@ -94,21 +94,23 @@
         "Lean proof discharge",
         "state-model adequacy"
       ],
-      "remaining": [
-        "exceptional/control-flow paths"
-      ],
+      "remaining": [],
       "exitGates": [
         "V-FRAME proof-required matrix evidence recorded",
         "loop-vc0 static gates green and proof-required loop matrix evidence recorded",
         "compound stateful predicate proof-required matrix evidence recorded",
-        "exceptional/control-flow paths modeled or explicitly excluded",
+        "stateful control-flow exclusion gate green",
         "stateful matrix remains proof-required"
       ],
       "implementedProofPending": [
         "V-FRAME",
         "V-INVARIANT (loop-vc0)",
         "V-DECREASES (loop-vc0)",
-        "stateful Prop connectives (¬, ∧, ∨)"
+        "stateful Prop connectives (¬, ∧, ∨)",
+        "stateful control-flow fail-closed boundary"
+      ],
+      "explicitlyExcluded": [
+        "arbitrary exceptional/branching control flow in ps3-monadic-contracts0; strict profile is linear modeled operations only"
       ]
     },
     {
