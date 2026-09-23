@@ -12,12 +12,14 @@ on:
       - "examples/software/06-bank-state.model.json"
       - "examples/software/06-bank-transfer-monadic-contract.ps"
       - "examples/software/07-bank-debit-stateful-vc.ps"
+      - "examples/software/08-bank-debit-frame-stateful-vc.ps"
       - "tools/ps3-stateful-lean-*.ts"
       - ".github/workflows/stateful-lean-ci.yml"
   push:
     branches:
       - main
       - cleanup/ps1-architecture
+      - product/v1-completion
     paths:
       - "packages/contracts/**"
       - "packages/state-models/**"
@@ -121,6 +123,9 @@ jobs:
       - name: Execute generated transfer stateful VC request
         run: npm run assurance:ps3:stateful-lean-transfer-vc -- --require-proof --out stateful-transfer-vc-run-${{ matrix.lean }}.json
 
+      - name: Execute generated frame stateful VC request
+        run: npm run assurance:ps3:stateful-lean-frame-vc -- --require-proof --out stateful-frame-vc-run-${{ matrix.lean }}.json
+
       - name: Upload stateful VC evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -135,4 +140,12 @@ jobs:
         with:
           name: stateful-transfer-vc-run-${{ matrix.lean }}
           path: stateful-transfer-vc-run-${{ matrix.lean }}.json
+          if-no-files-found: warn
+
+      - name: Upload frame stateful VC evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stateful-frame-vc-run-${{ matrix.lean }}
+          path: stateful-frame-vc-run-${{ matrix.lean }}.json
           if-no-files-found: warn
