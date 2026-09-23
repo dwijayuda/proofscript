@@ -67,6 +67,22 @@ assert.ok(
   "compiler observer must expose a proof-free initial goal using the checked prefix environment",
 );
 
+const duplicateEmptyGoalStates: FrontendProofState[] = [];
+assert.throws(
+  () => checkCompilerSource(
+    "axiom duplicateGoal: Prop; theorem duplicateGoal: Prop := by {",
+    withStandardPrelude({
+      proofStateSink: (event) => duplicateEmptyGoalStates.push(event.state),
+    }),
+  ),
+  /expected proof tactic at offset \d+, found '<eof>'/u,
+);
+assert.equal(
+  duplicateEmptyGoalStates.length,
+  0,
+  "semantically invalid duplicate headers must not publish an initial goal",
+);
+
 const acceptedWithThrowingObserver = checkCompilerSource(
   "theorem observerFailOpen(P: Prop, h: P): P := by { assumption }\n",
   withStandardPrelude({
