@@ -80,6 +80,11 @@ assert.match(
   leanModel,
   /@\[simp\][\s\S]*theorem balanceOf_creditState_other_of_account_ne[\s\S]*\(h : account ≠ other\)/u,
 );
+assert.match(
+  leanModel,
+  /balanceOf_debitState_other state account other amount \(Ne\.symm h\)/u,
+  "symmetric debit preservation must derive other ≠ account from account ≠ other",
+);
 assert.match(leanModel, /def runBankState .*:=\s*\n\s*StateT\.run program initial/u);
 assert.match(leanModel, /Std\.Do\.StateM\.of_wp_run_eq/u);
 assert.match(leanModel, /theorem runBankState_adequate/u);
