@@ -39,6 +39,7 @@ jobs:
       - run: npm run test:ps3:stateful-lean-model
       - run: npm run test:ps3:stateful-lean-runner-selection
       - run: npm run test:ps3:stateful-lean-proof-matrix
+      - run: npm run test:ps3:stateful-endtest
       - run: npm run test:ps3:lean-version-compatibility
       - run: npm run test:ps3:stateful-vc-evidence
       - run: npm run test:ps3:stateful-vc-run-cli
