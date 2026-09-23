@@ -122,11 +122,14 @@ Run one consolidated command:
 npm run assurance:tactic-ergonomics
 ```
 
-It covers build, parser proof regressions, elaborator/kernel-check proof
-regressions, compiler-backed language service, LSP transport,
-`standalone-small`, and reference governance.
+For the current Phase 2 source it uses schema
+`proofscript.tactic-ergonomics-endtest/v2` and covers nine steps: build,
+parser proof regressions, elaborator/kernel-check proof regressions,
+compiler-backed language service, the language-worker boundary, LSP transport,
+the active VS Code smoke test, `standalone-small`, and reference governance.
 
-No green execution evidence is claimed until that command is run on the
+The earlier Phase 1 evidence remains the recorded 7/7 v1 result. No green
+Phase 2 execution evidence is claimed until the v2 command is run on the
 committed source and its machine result is recorded.
 
 ## Nonclaims
