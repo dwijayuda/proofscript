@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { IncrementalCompilerSession, checkSource } from "@proofscript/compiler";
+import { IncrementalCompilerSession, checkSource, withStandardPrelude } from "@proofscript/compiler";
 import { formatSource } from "@proofscript/formatter";
 
 export interface Position {
@@ -328,15 +328,15 @@ export class ProofScriptLanguageService {
       if (document.filePath) {
         const session = this.incrementalSession(document.filePath);
         const sourceProvider = this.sourceProvider();
-        const checked = session.checkProjectFile(document.filePath, {
+        const checked = session.checkProjectFile(document.filePath, withStandardPrelude({
           sourceProvider,
-        });
-        const workspace = session.checkWorkspaceForFile(document.filePath, {
+        }));
+        const workspace = session.checkWorkspaceForFile(document.filePath, withStandardPrelude({
           sourceProvider,
           workspaceAdditionalFiles: [...this.documents.values()]
             .map((item) => item.filePath)
             .filter((item): item is string => Boolean(item)),
-        });
+        }));
         rawProjectModules = workspace.modules;
         summary = checked.summary;
         moduleReuse = {
@@ -350,7 +350,7 @@ export class ProofScriptLanguageService {
         rawGlobalReferences = currentModule?.globalReferences ?? [];
         localDeclarationNames = new Set(currentModule?.declarations.map((declaration) => declaration.name) ?? []);
       } else {
-        const checked = checkSource(document.text);
+        const checked = checkSource(document.text, withStandardPrelude());
         summary = checked.summary;
         rawFeatures = checked.ownedFeatures;
         rawDeclarationLocations = checked.declarationLocations;

@@ -256,10 +256,10 @@ class Parser extends TokenCursor{
     parseTheoremOrAxiomDeclaration:(kind)=>this.parseTheoremOrAxiomDeclaration(kind)
   });}
   private parseTheoremOrAxiomDeclaration(kind:"theorem"|"axiom"):SurfaceDeclaration{
-    this.expectId(kind);const name=this.expectKind("id","declaration name").text;const binders:SurfaceBinder[]=[];while(this.canStartValueBinder())binders.push(...this.parseValueBinderGroup());
+    const featureStart=this.peek().offset;this.expectId(kind);const name=this.expectKind("id","declaration name").text;const binders:SurfaceBinder[]=[];while(this.canStartValueBinder())binders.push(...this.parseValueBinderGroup());
     this.expect(":");const type=this.parseTerm();const availableLevels=[...this.state.universeParams];
-    if(kind==="axiom"){this.expect(";");return{kind:"axiom",name,binders,type,availableLevels};}
-    this.expect(":=");const byBlock=this.atId("by");const value=this.parseProofExpression();this.closeProofDeclaration(byBlock);return{kind:"theorem",name,binders,type,value,availableLevels};
+    if(kind==="axiom"){this.expect(";");if(binders.length)this.markOwnedFeature("D-EXPLICIT-PARAMS",featureStart,this.peek().offset);return{kind:"axiom",name,binders,type,availableLevels};}
+    this.expect(":=");const byBlock=this.atId("by");const value=this.parseProofExpression();this.closeProofDeclaration(byBlock);if(binders.length)this.markOwnedFeature("D-EXPLICIT-PARAMS",featureStart,this.peek().offset);return{kind:"theorem",name,binders,type,value,availableLevels};
   }
   private parseTransparentLikeDeclaration(kind:"opaque"|"abbrev"):SurfaceDeclaration{
     this.expectId(kind);const name=this.expectKind("id",`${kind} name`).text;const binders:SurfaceBinder[]=[];while(this.canStartValueBinder())binders.push(...this.parseValueBinderGroup());

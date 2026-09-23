@@ -99,4 +99,10 @@ assert.match(
   "packaged psc check/build path must consume the compiler facade",
 );
 
+
+assert.match(
+  fs.readFileSync(path.join(root, "packages", "compiler", "src", "index.ts"), "utf8"),
+  /withStandardPrelude/u,
+  "compiler facade must own the standard-prelude option used by editor consumers",
+);
 console.log("PS1_COMPILER_FACADE_TESTS=PASS");

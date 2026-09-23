@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import { loadStandardBootstrap } from "@proofscript/environment";
 import { type CheckSummary } from "@proofscript/kernel";
 import { type BackendPlugin, type BackendResult } from "@proofscript/plugin-api";
 import { toCheckedModuleSnapshot } from "@proofscript/semantic-ir";
@@ -21,6 +22,19 @@ import {
  * such as the CLI and future language service should depend on @proofscript/compiler
  * rather than wiring parser/elaborator/kernel packages themselves.
  */
+let cachedStandardPrelude: FrontendOptions["prelude"] | undefined;
+
+/**
+ * Add the checked standard bootstrap to a compiler request unless the caller
+ * supplied an explicit prelude. Editor and product surfaces use this helper so
+ * Nat/Bool/String/etc. resolve through the same canonical frontend as the CLI.
+ */
+export function withStandardPrelude(options: FrontendOptions = {}): FrontendOptions {
+  if (options.prelude) return options;
+  cachedStandardPrelude ??= loadStandardBootstrap().artifact;
+  return { ...options, prelude: cachedStandardPrelude };
+}
+
 export function checkSource(source: string, options: FrontendOptions = {}): FrontendResult {
   return checkSourceFrontend(source, options);
 }
