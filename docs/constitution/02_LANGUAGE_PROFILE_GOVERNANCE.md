@@ -137,15 +137,31 @@ PSC-1 includes a tiny proof language:
 ```text
 rfl
 exact
+assumption
 intro
 apply
+show
 have
 rw, limited
+subst, limited
+constructor, limited
 cases, limited
 induction, limited
+simp, limited
 ```
 
-If tactic elaboration is not implemented, proof terms may be accepted directly in PSC-0/PSC-1 internal form.
+The bounded native tactic layer is elaboration only: every successful tactic must construct an ordinary Core proof term that PSKernel independently checks. It is not part of the trusted kernel.
+
+Current bounded meanings:
+
+- `rw` rewrites the target through checked `Eq.rec`; reverse rewrite is supported;
+- `subst` rewrites the target from a direct local equality but does not physically delete locals;
+- `constructor` handles one-constructor, non-indexed goals and repeats one continuation across generated explicit fields;
+- `cases` handles nonrecursive, non-indexed inductives;
+- `induction` uses checked recursor metadata for non-indexed inductives and exposes generated recursive IH binders to the repeated continuation;
+- `simp` is simp-lite only: definitional reflexivity, assumption, or one local equality rewrite followed by either.
+
+Full Lean tactic state, metavariable search, named branch scripts, rewriting in arbitrary hypotheses, and full Lean `simp` semantics remain outside PSC-1.
 
 ## 4. PSC-1 excluded features
 
