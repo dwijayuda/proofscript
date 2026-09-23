@@ -291,7 +291,8 @@
         "test:product-v1:source-package",
         "test:product-v1:fresh-release",
         "invoice case proved in assurance:ps3:stateful-lean-proof-matrix",
-        "consolidated Product-v1 end-test green"
+        "consolidated Product-v1 end-test green",
+        "assurance:product-v1:endtest"
       ],
       "implementedPendingExecution": [
         "JSON/validation example"
@@ -313,5 +314,10 @@
         "record full Product-v1 fresh-machine/release evidence"
       ]
     }
-  ]
+  ],
+  "finalGate": {
+    "command": "npm run assurance:product-v1:endtest -- --toolchains 4.33.1,4.34.0,4.35.0-rc2 --out .proofscript-product-v1-endtest/summary.json",
+    "schema": "proofscript.product-v1-endtest/v1",
+    "rule": "Product v1 is not closed until this full gate is green on a supported fresh machine and all proof-required Lean lanes discharge."
+  }
 }
