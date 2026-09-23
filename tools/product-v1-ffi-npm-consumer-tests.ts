@@ -104,6 +104,22 @@ try {
   assert.equal(verified.ffi.bindings[0].module, "@proofscript-example/host-tools");
   assert.equal(verified.correspondence.endToEndVerifiedJavaScript, false);
 
+  assert.equal(verified.ffi.dependencies.length, 1);
+  assert.equal(verified.ffi.dependencies[0].schema, "proofscript.npm-dependency-identity/v1");
+  assert.equal(verified.ffi.dependencies[0].package, "@proofscript-example/host-tools");
+  assert.equal(verified.ffi.dependencies[0].version, "1.0.0");
+  assert.match(verified.ffi.dependencies[0].contentSha256, /^[0-9a-f]{64}$/u);
+  assert.ok(verified.ffi.dependencies[0].fileCount >= 2);
+
+  const installedEntry = path.join(installedPackage, "index.cjs");
+  const originalInstalledEntry = fs.readFileSync(installedEntry, "utf8");
+  fs.writeFileSync(installedEntry, originalInstalledEntry + "\n// tampered after certification\n");
+  const tamperedPackage = pscJson(["verify", cert], 1);
+  assert.equal(tamperedPackage.status, "rejected");
+  assert.match(tamperedPackage.message, /npm FFI dependency identity mismatch/u);
+  fs.writeFileSync(installedEntry, originalInstalledEntry);
+  assert.equal(pscJson(["verify", cert]).status, "accepted");
+
   console.log("PRODUCT_V1_FFI_NPM_CONSUMER_TESTS=PASS");
 } finally {
   fs.rmSync(tmp, { recursive: true, force: true });
