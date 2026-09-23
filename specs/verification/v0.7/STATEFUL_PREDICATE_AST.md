@@ -27,7 +27,10 @@ The bounded profile currently covers the forms needed by the promoted monadic co
 - arithmetic `+`, `-`, `*` over matching supported numeric types;
 - proposition equality `=` and `==`;
 - proposition inequality `!=`;
-- ordering `>`, `>=`, `<`, `<=` over matching supported numeric types.
+- ordering `>`, `>=`, `<`, `<=` over matching supported numeric types;
+- Lean proposition negation `¬`;
+- Lean proposition conjunction `∧`;
+- Lean proposition disjunction `∨`, with precedence `¬` > relation > `∧` > `∨`.
 
 Unsupported tokens or forms fail closed for the strict structural profile instead of falling through to an untyped string.
 
@@ -42,7 +45,7 @@ descriptor: balanceOf : AccountId -> Bank -> Nat
 normalized call: balanceOf(from, __ps_final)
 ```
 
-The AST checks arity and argument types. Equality/inequality operands must have matching types. Ordering and arithmetic require compatible numeric operands. Lean emission normalizes `==` to `=` and `!=` to `≠`. A successfully checked postcondition root must have type `Prop`.
+The AST checks arity and argument types. Equality/inequality operands must have matching types. Ordering and arithmetic require compatible numeric operands. `¬` requires one `Prop` operand; `∧` and `∨` require two `Prop` operands. Lean emission normalizes `==` to `=` and `!=` to `≠`, while proposition connectives retain their Lean meanings. A successfully checked requirement/postcondition/frame root must have type `Prop`.
 
 ## Profile boundary
 
@@ -65,6 +68,7 @@ typeCheckingComplete = true
 for `stateful-predicate-expressions0`, the project still does **not** claim:
 
 - arbitrary ProofScript/Lean expression elaboration;
+- JavaScript/TypeScript truthiness or `&&`/`||` proposition semantics;
 - definitional equality beyond the bounded syntactic type rules;
 - WP/Triple semantic binding;
 - state-model runner adequacy;
@@ -82,4 +86,4 @@ verificationConditionsGenerated = false
 semanticProofDischarge = false
 ```
 
-The next stateful verification milestone is to bind this typed AST explicitly to the selected state-model WP/Triple semantics and adequacy identity before generating verification conditions.
+The typed AST is now consumed by the state-model WP/Triple and generated Lean VC pipeline for the bounded stateful profile. Concrete proof discharge remains evidence-based per generated theorem and Lean lane. The next expression work should expand only when required by Product v1 examples, rather than turning this artifact into a second general-purpose ProofScript frontend.
