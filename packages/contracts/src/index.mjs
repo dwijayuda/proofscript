@@ -231,8 +231,11 @@ export function statefulPostconditionIRForContract(contract, stateModel = contra
       type: observation.type,
       stateArgument: observation.stateArgument ?? 'last',
     })),
-    clauses: (contract.ensures ?? []).map(ensure => {
-      const source = ensure.rawProposition ?? ensure.proposition ?? '';
+    clauses: [
+      ...(contract.ensures ?? []).map(clause => ({ ...clause, clauseKind: 'ensures' })),
+      ...(contract.frames ?? []).map(clause => ({ ...clause, clauseKind: 'frame' })),
+    ].map(clause => {
+      const source = clause.rawProposition ?? clause.proposition ?? '';
       const observationNames = new Set(observations.map(observation => observation.name));
       const oldReferences = scanOldReferences(source).map(oldReference => {
         const callHeads = scanCallHeads(oldReference.expression);
@@ -255,7 +258,8 @@ export function statefulPostconditionIRForContract(contract, stateModel = contra
         observationReference => !oldReferences.some(oldReference => rangeIsInside(observationReference, oldReference)),
       );
       return {
-        name: ensure.name,
+        name: clause.name,
+        kind: clause.clauseKind,
         source,
         normalizedPredicate: normalizeStatefulPostcondition(source, observations),
         oldReferences,
@@ -434,7 +438,7 @@ export function stableObligationId(sourceFunction, kind, label) {
   return `${sourceFunction}.${kind}.${label}`;
 }
 
-export function assertUniqueContractNames(params, requirements, ensures) {
+export function assertUniqueContractNames(params, requirements, ensures, frames = []) {
   const parameterNames = new Set();
   for (const param of params) {
     if (parameterNames.has(param.name)) throw new Error(`duplicate contract parameter name '${param.name}'`);
@@ -452,10 +456,14 @@ export function assertUniqueContractNames(params, requirements, ensures) {
     requirementNames.add(requirement.name);
   }
 
-  const ensureNames = new Set();
+  const postconditionNames = new Set();
   for (const ensure of ensures) {
-    if (ensureNames.has(ensure.name)) throw new Error(`duplicate ensures name '${ensure.name}'`);
-    ensureNames.add(ensure.name);
+    if (postconditionNames.has(ensure.name)) throw new Error(`duplicate ensures name '${ensure.name}'`);
+    postconditionNames.add(ensure.name);
+  }
+  for (const frame of frames) {
+    if (postconditionNames.has(frame.name)) throw new Error(`duplicate postcondition/frame name '${frame.name}'`);
+    postconditionNames.add(frame.name);
   }
 }
 
@@ -511,7 +519,7 @@ export function parsePureContractSource(text, sourcePath = '<memory>') {
     if (m) { ghosts.push({ name: m[1], type: normalizeSpaces(m[2]), expression: normalizeSpaces(m[3]), erasedFromRuntime: true }); continue; }
     throw new Error(`unsupported contract clause: ${line}`);
   }
-  assertUniqueContractNames(params, requirements, ensures);
+  assertUniqueContractNames(params, requirements, ensures, frames);
   assertValidGhostDefinitions(params, requirements, ghosts);
   if (/\bresult\b/.test(body)) throw new Error("'result' is only valid in ensures clauses");
   if (/\bold\s*\(/.test(body)) throw new Error("'old' is only valid in pure ensures clauses");
@@ -661,6 +669,7 @@ export function parseMonadicContractSource(text, sourcePath = '<memory>', stateM
   const body = normalizeSpaces(match[5]);
   const requirements = [];
   const ensures = [];
+  const frames = [];
   const oldSnapshots = [];
   for (const line of spec.split(/\r?\n/).map(x => x.trim()).filter(Boolean)) {
     let m = line.match(/^requires\s+([A-Za-z_][A-Za-z0-9_]*)\s*:\s*(.+)$/);
@@ -669,6 +678,8 @@ export function parseMonadicContractSource(text, sourcePath = '<memory>', stateM
     if (m) { ensures.push({ name: m[1], proposition: rewriteOldSnapshots(normalizeSpaces(m[2]), oldSnapshots), rawProposition: normalizeSpaces(m[2]), kind: 'ensures' }); continue; }
     m = line.match(/^ensures\s+(.+)$/);
     if (m) { const idx = ensures.length; ensures.push({ name: `ensures${idx}`, proposition: rewriteOldSnapshots(normalizeSpaces(m[1]), oldSnapshots), rawProposition: normalizeSpaces(m[1]), kind: 'ensures' }); continue; }
+    m = line.match(/^frame\s+([A-Za-z_][A-Za-z0-9_]*)\s*:\s*(.+)$/);
+    if (m) { frames.push({ name: m[1], proposition: rewriteOldSnapshots(normalizeSpaces(m[2]), oldSnapshots), rawProposition: normalizeSpaces(m[2]), kind: 'frame' }); continue; }
     throw new Error(`unsupported monadic contract clause: ${line}`);
   }
   assertUniqueContractNames(params, requirements, ensures);
@@ -711,7 +722,24 @@ export function parseMonadicContractSource(text, sourcePath = '<memory>', stateM
       stateModel: stateModelName,
     }, params, allRequirements));
   }
-  return { name, contractKind: 'monadic-stateful', params, returnType, requirements, modelRequirements, ensures, ghosts: [], assertions: [], oldSnapshots, loops: [], operations, obligations, body, sourcePath, stateModel: stateModelBinding };
+  for (const frame of frames) {
+    const statement = `monadic frame condition ${frame.proposition} under state model ${stateModelName}`;
+    obligations.push(enrichContractObligation({
+      name: `${name}_monadic_frame_${frame.name}`,
+      kind: 'monadic.frame',
+      label: frame.name,
+      sourceFunction: name,
+      proposition: statement,
+      rawProposition: frame.rawProposition,
+      statement,
+      exactTheoremStatement: exactTheoremStatement(name, `${name}_monadic_frame_${frame.name}`, params, allRequirements, statement),
+      proofPoint: `frame ${frame.name}`,
+      vcgenLoweringStatus: 'not-implemented',
+      leanCheckable: false,
+      stateModel: stateModelName,
+    }, params, allRequirements));
+  }
+  return { name, contractKind: 'monadic-stateful', params, returnType, requirements, modelRequirements, ensures, frames, ghosts: [], assertions: [], oldSnapshots, loops: [], operations, obligations, body, sourcePath, stateModel: stateModelBinding };
 }
 export function leanForMonadicContract(contract) {
   const params = contract.params.map(p => `(${p.name} : ${p.type})`).join(' ');
@@ -771,6 +799,7 @@ export function monadicVerificationProfile(
     const features = ['V-MONADIC-CONTRACT'];
     if (oldReferences.length > 0) features.push('V-OLD');
     if (resultReferences.length > 0) features.push('V-RESULT');
+    if ((contract.frames ?? []).length > 0) features.push('V-FRAME');
     return {
       schema: 'proofscript.verification-profile/v1',
       reference: MONADIC_VERIFICATION_REFERENCE,
@@ -836,8 +865,9 @@ export function makeMonadicContractsArtifact({ sourceText, sourcePath, sourceSha
       statefulPredicateAST,
       statefulOperationElaboration,
       stateModel: { name: stateModel.name, path: stateModel.path, sha256: stateModel.sha256, stateType: stateModel.stateType, monad: stateModel.monad, wp: stateModel.wp, semantics: stateModel.semantics, lean: stateModel.lean, operations: stateModel.operations, observations: stateModel.observations ?? [], laws: stateModel.laws, vcgen: stateModel.vcgen },
-      functions: [{ name: contract.name, contractKind: contract.contractKind, params: contract.params, returnType: contract.returnType, requirements: contract.requirements, modelRequirements: contract.modelRequirements, ensures: contract.ensures, oldSnapshots: contract.oldSnapshots, operations: contract.operations, body: contract.body, stateModel: { name: stateModel.name, stateType: stateModel.stateType, monad: stateModel.monad } }],
+      functions: [{ name: contract.name, contractKind: contract.contractKind, params: contract.params, returnType: contract.returnType, requirements: contract.requirements, modelRequirements: contract.modelRequirements, ensures: contract.ensures, frames: contract.frames, oldSnapshots: contract.oldSnapshots, operations: contract.operations, body: contract.body, stateModel: { name: stateModel.name, stateType: stateModel.stateType, monad: stateModel.monad } }],
       operations: contract.operations,
+      frames: contract.frames,
       oldSnapshots: contract.oldSnapshots,
       obligations: contract.obligations,
       trustBoundary: { semanticProofChecking: false, hiddenAxioms: false, monadicContracts: 'state-model-descriptor-bound', verificationProfile: verification.profile, specifiedStructuralProfile: verification.profile === MONADIC_VERIFICATION_PROFILE, stateModelDescriptorValidated: true, statefulReferenceTypingComplete: statefulPredicateElaboration.referenceTypingComplete, normalizedPredicateAstTypeCheckingComplete: statefulPredicateAST.typeCheckingComplete, stateOperationTypingComplete: statefulOperationElaboration.typingComplete, wholePredicateTypeCheckingComplete: false, stateModelAdequacyChecked: false, vcgenConnected: false, monadicProofDischarge: false, fullLean4Equivalence: false },
