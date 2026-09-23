@@ -2,6 +2,24 @@ import type { Term } from "@proofscript/kernel";
 
 export type RuntimeMode = "bundled" | "local" | "package";
 
+export interface FfiBinding {
+  /** Checked user axiom name to bind at the execution boundary. */
+  name: string;
+  /** JavaScript/TypeScript module specifier, e.g. "node:path" or an npm package name. */
+  module: string;
+  /** Named module export. ffi-v1 deliberately excludes default/namespace imports. */
+  exportName: string;
+  /** Explicit trust classification; never inferred. */
+  trust: "trusted-external";
+}
+
+export interface ResolvedFfiBinding extends FfiBinding {
+  jsName: string;
+  arity: number;
+  parameters: readonly string[];
+  result: string;
+}
+
 export interface EmitJavaScriptOptions {
   sourceFile?: string;
   sourceText?: string;
@@ -10,6 +28,8 @@ export interface EmitJavaScriptOptions {
   runtimeMode?: RuntimeMode;
   /** Import path for local runtime mode, defaulting to ./proofscript-runtime.js for NodeNext/ESM-compatible local output. */
   runtimeImportPath?: string;
+  /** Execution-only bindings for explicitly declared user axioms. */
+  ffiBindings?: readonly FfiBinding[];
 }
 
 export interface EmittedJavaScriptDeclaration {
@@ -30,12 +50,14 @@ export interface EmitJavaScriptResult {
   js: string;
   emitted: EmittedJavaScriptDeclaration[];
   skipped: SkippedJavaScriptDeclaration[];
+  ffiBindings: ResolvedFfiBinding[];
 }
 
 export interface EmitTypeScriptResult {
   ts: string;
   emitted: EmittedJavaScriptDeclaration[];
   skipped: SkippedJavaScriptDeclaration[];
+  ffiBindings: ResolvedFfiBinding[];
   runtimeMode: RuntimeMode;
   runtimeTs?: string;
   runtimeImport?: string;
