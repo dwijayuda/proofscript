@@ -93,6 +93,7 @@ function productV1PublicType(term: Term, depth = 0): string | undefined {
     }
   }
   if (term.tag === "pi") {
+    if ((term.binderInfo ?? "explicit") !== "explicit") return undefined;
     const domain = productV1PublicType(term.domain, depth + 1);
     const codomain = productV1PublicType(term.body, depth + 1);
     if (!domain || !codomain) return undefined;
