@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = path.resolve(import.meta.dirname, "..");
+const languageService = fs.readFileSync(path.join(root,"packages/language-service/src/index.ts"),"utf8");
 const lsp = fs.readFileSync(path.join(root,"packages/lsp/src/index.ts"),"utf8");
 const extension = fs.readFileSync(path.join(root,"editors/vscode/src/extension.js"),"utf8");
 const grammar = JSON.parse(fs.readFileSync(path.join(root,"editors/vscode/syntaxes/proofscript.tmLanguage.json"),"utf8"));
@@ -43,7 +44,8 @@ assert.match(extension,/registerDocumentFormattingEditProvider/u);
 assert.match(lsp,/codeActionProvider/u);
 assert.match(lsp,/this\.worker\.codeActions/u);
 assert.match(extension,/registerCodeActionsProvider/u);
-assert.match(extension,/Insert missing ';'/u);
+assert.match(languageService,/Insert missing ';'/u);
+assert.match(languageService,/expected ';' at offset/u);
 assert.equal(extension.includes("EXPECTED_LSP_PROTOCOL_VERSION = 1"), true);
 assert.match(JSON.stringify(grammar),/frame/u);
 assert.match(JSON.stringify(grammar),/decreases/u);
