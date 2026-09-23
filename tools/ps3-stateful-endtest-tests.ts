@@ -5,6 +5,20 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { resolveNpmInvocation } from "./ps3-npm-invocation.mjs";
+import { formatProcessProgress } from "./ps3-process-runner.mjs";
+
+assert.equal(
+  formatProcessProgress("start", "build"),
+  "[proofscript] START build",
+);
+assert.equal(
+  formatProcessProgress("pass", "build"),
+  "[proofscript] PASS  build",
+);
+assert.equal(
+  formatProcessProgress("fail", "proof-matrix", 1),
+  "[proofscript] FAIL  proof-matrix (exit 1)",
+);
 
 const windowsInvocation = resolveNpmInvocation(
   ["run", "build"],
