@@ -193,6 +193,7 @@ function buildTsDirect(file, out, args) {
   const { checked, prelude } = checkedProgram(file);
   const { backendTypescript } = compilerLibs();
   const mode = runtimeMode(args);
+  const ffi = readFfiManifest(args);
   const runtimeFile = runtimeFileName();
   const runtimeImportPath = mode === 'local' ? `./${path.basename(runtimeFile, '.ts')}.js` : undefined;
   const emitted = backendTypescript.emitTypeScriptModule(checked.artifact, {
@@ -201,6 +202,7 @@ function buildTsDirect(file, out, args) {
     userDeclarationOffset: prelude.declarations.length,
     runtimeMode: mode,
     runtimeImportPath,
+    ffiBindings: ffi?.bindings,
   });
   const resolvedOut = path.resolve(out);
   fs.mkdirSync(path.dirname(resolvedOut), { recursive: true });
@@ -212,20 +214,22 @@ function buildTsDirect(file, out, args) {
     fs.writeFileSync(runtimePath, emitted.runtimeTs);
     runtimeSha256 = sha256File(runtimePath);
   }
-  return { status: 'accepted', target: 'ts', outPath: resolvedOut, outputSha256: sha256File(resolvedOut), runtime: { mode: emitted.runtimeMode, import: emitted.runtimeImport, path: runtimePath, sha256: runtimeSha256 }, emitted: emitted.emitted?.map(x => ({ name: x.name, jsName: x.jsName, arity: x.arity })) ?? [], skipped: emitted.skipped ?? [], semanticSha256: checked.summary.semanticSha256, trustBoundary: { fullLean4Equivalence: false, executionCorrespondenceProof: false } };
+  return { status: 'accepted', target: 'ts', outPath: resolvedOut, outputSha256: sha256File(resolvedOut), runtime: { mode: emitted.runtimeMode, import: emitted.runtimeImport, path: runtimePath, sha256: runtimeSha256 }, ffi: ffiBuildMetadata(ffi, path.dirname(resolvedOut)), emitted: emitted.emitted?.map(x => ({ name: x.name, jsName: x.jsName, arity: x.arity })) ?? [], skipped: emitted.skipped ?? [], semanticSha256: checked.summary.semanticSha256, trustBoundary: { fullLean4Equivalence: false, executionCorrespondenceProof: false, trustedExternalCode: Boolean(ffi) } };
 }
-function buildJsDirect(file, out) {
+function buildJsDirect(file, out, args = []) {
   const { checked, prelude } = checkedProgram(file);
   const { backendTypescript } = compilerLibs();
+  const ffi = readFfiManifest(args);
   const emitted = backendTypescript.emitJavaScriptModule(checked.artifact, {
     sourceFile: file,
     sourceText: fs.readFileSync(file, 'utf8'),
     userDeclarationOffset: prelude.declarations.length,
+    ffiBindings: ffi?.bindings,
   });
   const resolvedOut = path.resolve(out);
   fs.mkdirSync(path.dirname(resolvedOut), { recursive: true });
   fs.writeFileSync(resolvedOut, emitted.js);
-  return { status: 'accepted', target: 'js', outPath: resolvedOut, outputSha256: sha256File(resolvedOut), emitted: emitted.emitted?.map(x => ({ name: x.name, jsName: x.jsName, arity: x.arity })) ?? [], skipped: emitted.skipped ?? [], semanticSha256: checked.summary.semanticSha256, trustBoundary: { fullLean4Equivalence: false, executionCorrespondenceProof: false } };
+  return { status: 'accepted', target: 'js', outPath: resolvedOut, outputSha256: sha256File(resolvedOut), ffi: ffiBuildMetadata(ffi, path.dirname(resolvedOut)), emitted: emitted.emitted?.map(x => ({ name: x.name, jsName: x.jsName, arity: x.arity })) ?? [], skipped: emitted.skipped ?? [], semanticSha256: checked.summary.semanticSha256, trustBoundary: { fullLean4Equivalence: false, executionCorrespondenceProof: false, trustedExternalCode: Boolean(ffi) } };
 }
 function parseRunArg(raw) {
   const text = String(raw).trim();
@@ -239,16 +243,16 @@ function printableRunValue(value) {
   if (typeof value === 'boolean') return value ? 'true' : 'false';
   return String(value);
 }
-async function runDirect(file, call, rawArgs) {
+async function runDirect(file, call, rawArgs, cliArgs = []) {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'proofscript-cli-run-'));
   const out = path.join(tmp, 'out.js');
-  buildJsDirect(file, out);
+  const built = buildJsDirect(file, out, cliArgs);
   const mod = await import(pathToFileURL(out).href);
   let value = mod.default?.[call] ?? mod[call];
   if (value === undefined) throw new Error(`export '${call}' not found in small-subset JS output`);
   const callArgs = rawArgs.map(parseRunArg);
   for (const arg of callArgs) value = value(arg);
-  return { status: 'accepted', call, args: callArgs.map(printableRunValue), result: printableRunValue(value), trustBoundary: { fullLean4Equivalence: false, executionCorrespondenceProof: false } };
+  return { status: 'accepted', call, args: callArgs.map(printableRunValue), result: printableRunValue(value), ffi: built.ffi, trustBoundary: { fullLean4Equivalence: false, executionCorrespondenceProof: false, trustedExternalCode: Boolean(built.ffi) } };
 }
 function findProjectRoot(start = process.cwd()) {
   let dir = path.resolve(start);
@@ -951,7 +955,7 @@ function buildJsCommand(args) {
   const pos = positional(args);
   const file = pos[0] ? path.resolve(process.cwd(), pos[0]) : defaultEntry();
   const out = opt(args, '--out') ?? defaultOutFor(file, 'js');
-  const result = buildJsDirect(file, out);
+  const result = buildJsDirect(file, out, args);
   jsonOut(result, has(args, '--json'));
 }
 function buildCommand(args) {
@@ -963,7 +967,7 @@ function buildCommand(args) {
   }
   const file = pos[0] ? path.resolve(process.cwd(), pos[0]) : defaultEntry();
   const out = opt(args, '--out') || defaultOutFor(file, target === 'js' ? 'js' : 'ts');
-  const result = target === 'js' ? buildJsDirect(file, out) : buildTsDirect(file, out, args);
+  const result = target === 'js' ? buildJsDirect(file, out, args) : buildTsDirect(file, out, args);
   jsonOut(result, has(args, '--json'));
 }
 
@@ -1000,7 +1004,7 @@ async function runCommand(args) {
   if (!call) usage(2);
   const callArgs = opt(args, '--args')?.split(',').filter(x => x.length > 0) ?? [];
   try {
-    const result = await runDirect(file, call, callArgs);
+    const result = await runDirect(file, call, callArgs, args);
     jsonOut(result, has(args, '--json'));
   } catch (error) {
     const result = { status: 'rejected', command: 'run', message: error instanceof Error ? error.message : String(error) };
