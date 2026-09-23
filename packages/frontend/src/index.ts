@@ -141,6 +141,8 @@ export function checkSource(source:string,options:FrontendOptions={}):FrontendRe
         try{
           const initialGoal=elaborateInitialProofGoal(
             [...observation.declarations],
+            observation.header.name,
+            observation.header.namespacePath,
             [...observation.header.binders],
             observation.header.type,
             [...observation.header.availableLevels],
