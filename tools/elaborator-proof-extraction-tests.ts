@@ -8,6 +8,8 @@ const root = process.cwd();
 const proofSrc = path.join(root, 'packages/elaborator/src/proofElaborator.ts');
 const elaboratorSrc = path.join(root, 'packages/elaborator/src/index.ts');
 const termElaborationSrc = path.join(root, 'packages/elaborator/src/termElaboration.ts');
+const equalityTacticsSrc = path.join(root, 'packages/elaborator/src/proofEqualityTactics.ts');
+const inductiveTacticsSrc = path.join(root, 'packages/elaborator/src/proofInductiveTactics.ts');
 
 assert.ok(fs.existsSync(proofSrc), 'proof elaboration must be extracted to packages/elaborator/src/proofElaborator.ts');
 const proof = fs.readFileSync(proofSrc, 'utf8');
@@ -19,6 +21,18 @@ for (const helper of ['elabRflProof', 'elabExactProof', 'elabAssumptionProof', '
 }
 assert.match(proof, /Eq\.refl/, 'proofElaborator.ts must own rfl Eq.refl construction');
 assert.match(proof, /apply failed: supplied term/, 'proofElaborator.ts must preserve apply rejection wording');
+
+const equalityTactics = fs.readFileSync(equalityTacticsSrc, 'utf8');
+for (const name of ['elabRwProof', 'elabSubstProof', 'elabSimpProof']) {
+  assert.match(equalityTactics, new RegExp(`export function ${name}\\\\b`), `proofEqualityTactics.ts must export ${name}`);
+}
+assert.match(equalityTactics, /Eq\.rec/, 'rw must construct checked Eq.rec transport');
+
+const inductiveTactics = fs.readFileSync(inductiveTacticsSrc, 'utf8');
+for (const name of ['elabConstructorProof', 'elabCasesProof', 'elabInductionProof']) {
+  assert.match(inductiveTactics, new RegExp(`export function ${name}\\\\b`), `proofInductiveTactics.ts must export ${name}`);
+}
+assert.match(inductiveTactics, /recursor/, 'cases/induction must use checked recursor metadata');
 
 const index = fs.readFileSync(elaboratorSrc, 'utf8') + '\n' + fs.readFileSync(termElaborationSrc, 'utf8');
 assert.match(index, /from "\.\/proofElaborator"/, 'term dispatcher must import the extracted proof elaborator');
@@ -53,12 +67,34 @@ theorem have_nested(h: P): P := by { have hp : P := by { exact h }; show P; exac
 
 theorem have_dependent_target(n: Nat, h: n = n): n = n := by { have hn : n = n := h; exact h }
 
+theorem rw_forward(a: Nat, b: Nat, h: a = b): a = b := by { rw h; rfl }
+
+theorem rw_reverse(a: Nat, b: Nat, h: a = b): b = a := by { rw ← h; rfl }
+
+theorem subst_forward(a: Nat, b: Nat, h: a = b): a = b := by { subst a; rfl }
+
+inductive BothP: Prop where {
+  | intro (left: P) (right: Q)
+}
+
+theorem constructor_both(hp: P, hq: Q): BothP := by { constructor; assumption }
+
+theorem cases_bool(b: Bool): 1 = 1 := by { cases b; rfl }
+
+theorem induction_nat_reflexive(n: Nat): n = n := by { induction n; rfl }
+
+theorem simp_reflexive(n: Nat): n = n := by { simp }
+
+theorem simp_assumption(h: P): P := by { simp }
+
+theorem simp_rewrite(a: Nat, b: Nat, h: a = b): Nat.succ(a) = Nat.succ(b) := by { simp }
+
 def executable: Nat := { idNat 9 }
 `,
 });
 const checked = runPsliveJson(['check', fixture.source, '--json']);
 assert.equal(checked.status, 'accepted');
-for (const name of ['idNat_rfl', 'exact_rfl', 'intro_assumption', 'apply_exact', 'apply_subgoal', 'show_exact', 'have_exact', 'have_inferred', 'have_nested', 'have_dependent_target']) {
+for (const name of ['idNat_rfl', 'exact_rfl', 'intro_assumption', 'apply_exact', 'apply_subgoal', 'show_exact', 'have_exact', 'have_inferred', 'have_nested', 'have_dependent_target', 'rw_forward', 'rw_reverse', 'subst_forward', 'constructor_both', 'cases_bool', 'induction_nat_reflexive', 'simp_reflexive', 'simp_assumption', 'simp_rewrite']) {
   assert.ok(checked.userDeclarations.some(d => d.name === name && d.kind === 'theorem'), `expected theorem ${name}`);
 }
 const built = buildJsFixture(fixture, 'proof-elab.js');
@@ -88,5 +124,20 @@ theorem bad_have(h: P): P := by { have hq : Q := h; exact h }
 const rejectedHave = runPsliveJson(['check', badHave, '--json'], 1);
 assert.equal(rejectedHave.status, 'rejected');
 assert.match(rejectedHave.message, /have failed|declared hypothesis type|expected/i);
+
+const badRw = fixture.write('BadRw.ps', `
+axiom impossible: 1 = 2;
+theorem bad_rw: 3 = 3 := by { rw impossible; rfl }
+`);
+const rejectedRw = runPsliveJson(['check', badRw, '--json'], 1);
+assert.equal(rejectedRw.status, 'rejected');
+assert.match(rejectedRw.message, /rw failed|does not occur/i);
+
+const badSubst = fixture.write('BadSubst.ps', `
+theorem bad_subst(a: Nat): a = a := by { subst a; rfl }
+`);
+const rejectedSubst = runPsliveJson(['check', badSubst, '--json'], 1);
+assert.equal(rejectedSubst.status, 'rejected');
+assert.match(rejectedSubst.message, /subst failed|no local equality/i);
 
 console.log('ELABORATOR_PROOF_EXTRACTION=PASS');
