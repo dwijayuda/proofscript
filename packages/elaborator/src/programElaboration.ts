@@ -9,6 +9,7 @@ import {
 } from "@proofscript/kernel";
 import {
   ElaborationError,
+  SurfaceBinder,
   SurfaceDeclaration,
   SurfaceTerm,
 } from "@proofscript/syntax";
@@ -160,7 +161,7 @@ export interface ElaboratedInitialProofGoal {
  */
 export function elaborateInitialProofGoalCore(
   prefixDecls: SurfaceDeclaration[],
-  binders: SurfaceDeclaration extends never ? never : import("@proofscript/syntax").SurfaceBinder[],
+  binders: SurfaceBinder[],
   resultTerm: SurfaceTerm,
   availableLevels: readonly string[],
   initialGlobals: readonly InitialGlobalInfo[] = [],
