@@ -22,7 +22,7 @@ export interface FrontendProofStateLocal {
   readonly type:string;
 }
 export interface FrontendProofState {
-  readonly kind:"tactic"|"branch";
+  readonly kind:"goal"|"tactic"|"branch";
   readonly tactic:string;
   readonly startOffset:number;
   readonly endOffset:number;
