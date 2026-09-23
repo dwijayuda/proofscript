@@ -180,9 +180,10 @@ class InfoviewProvider {
     const tacticSourceHtml = tacticSourceStatus === "checked"
       ? ""
       : " <code>" + escapeHtml(tacticSourceStatus) + "</code>";
+    const tacticLabel = tacticState?.kind === "goal" ? "Initial goal" : tacticState?.tactic;
     const tacticStateHtml = goals?.tacticStateAvailable === true
       ? tacticState
-        ? "<div class=\"goal tactic-state\"><div><strong>" + escapeHtml(tacticState.tactic) + "</strong>" + (tacticState.branch ? " <code>" + escapeHtml(tacticState.branch) + "</code>" : "") + tacticSourceHtml + "</div>" + (tacticLocals.length ? "<pre>" + escapeHtml(tacticLocals.map((local) => local.name + " : " + local.type).join("\n")) + "</pre>" : "") + "<pre>⊢ " + escapeHtml(tacticState.goal) + "</pre></div>"
+        ? "<div class=\"goal tactic-state\"><div><strong>" + escapeHtml(tacticLabel || "Proof state") + "</strong>" + (tacticState.branch ? " <code>" + escapeHtml(tacticState.branch) + "</code>" : "") + tacticSourceHtml + "</div>" + (tacticLocals.length ? "<pre>" + escapeHtml(tacticLocals.map((local) => local.name + " : " + local.type).join("\n")) + "</pre>" : "") + "<pre>⊢ " + escapeHtml(tacticState.goal) + "</pre></div>"
         : "<p>No tactic state at the cursor.</p>"
       : "<p>Compiler-backed tactic states are unavailable.</p>";
     const compilerGoalHtml = goals?.declarationGoal
