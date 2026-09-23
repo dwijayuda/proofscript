@@ -1,0 +1,59 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "ProofScript",
+  "scopeName": "source.proofscript",
+  "patterns": [
+    {"include":"#comments"},
+    {"include":"#strings"},
+    {"include":"#declarations"},
+    {"include":"#keywords"},
+    {"include":"#tactics"},
+    {"include":"#types"},
+    {"include":"#constants"},
+    {"include":"#numbers"},
+    {"include":"#operators"}
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {"name":"comment.block.documentation.proofscript","begin":"/--|/-!","end":"-/"},
+        {"name":"comment.block.proofscript","begin":"/-","end":"-/"},
+        {"name":"comment.line.double-dash.proofscript","begin":"--","end":"$"}
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {"name":"string.quoted.double.proofscript","begin":"\"","end":"\"","patterns":[{"name":"constant.character.escape.proofscript","match":"\\\\."}]},
+        {"name":"string.quoted.single.proofscript","begin":"'","end":"'","patterns":[{"name":"constant.character.escape.proofscript","match":"\\\\."}]}
+      ]
+    },
+    "declarations": {
+      "patterns": [
+        {"match":"\\b(theorem)\\s+([A-Za-z_][A-Za-z0-9_']*)","captures":{"1":{"name":"storage.type.theorem.proofscript"},"2":{"name":"entity.name.function.theorem.proofscript"}}},
+        {"match":"\\b(def|opaque|abbrev|example)\\s+([A-Za-z_][A-Za-z0-9_']*)","captures":{"1":{"name":"storage.type.function.proofscript"},"2":{"name":"entity.name.function.proofscript"}}},
+        {"match":"\\b(inductive|structure|class)\\s+([A-Za-z_][A-Za-z0-9_']*)","captures":{"1":{"name":"storage.type.type.proofscript"},"2":{"name":"entity.name.type.proofscript"}}},
+        {"match":"\\b(namespace|section)\\s+([A-Za-z_][A-Za-z0-9_'.]*)","captures":{"1":{"name":"storage.type.namespace.proofscript"},"2":{"name":"entity.name.namespace.proofscript"}}}
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {"name":"keyword.declaration.proofscript","match":"\\b(import|universe|namespace|section|open|export|variable|include|omit|inductive|structure|class|instance|def|opaque|abbrev|example|theorem|axiom|partial|mutual|where|deriving|termination_by|decreasing_by)\\b"},
+        {"name":"keyword.control.proofscript","match":"\\b(fun|let|have|match|if|then|else|do|return|for|while|repeat|break|continue|unless)\\b"},
+        {"name":"keyword.other.proofscript","match":"\\b(requires|ensures|assert|invariant|ghost|old|unsafe|extern|trusted)\\b"}
+      ]
+    },
+    "tactics": {
+      "patterns": [
+        {"name":"keyword.control.tactic.proofscript","match":"\\b(by|exact|apply|intro|intros|assumption|constructor|cases|induction|rfl|rw|simp|simp_all|grind|omega|decide|native_decide|have|show|calc)\\b"}
+      ]
+    },
+    "types": {
+      "patterns": [
+        {"name":"support.type.proofscript","match":"\\b(Prop|Type|Sort|Nat|Int|UInt8|UInt16|UInt32|UInt64|USize|Float|Bool|Char|String|Unit|Empty|Option|List|Array|ByteArray|Prod|Sum|Fin|Subtype|Sigma|Decidable|Except|IO|Task)\\b"}
+      ]
+    },
+    "constants": {"patterns":[{"name":"constant.language.proofscript","match":"\\b(true|false)\\b"}]},
+    "numbers": {"patterns":[{"name":"constant.numeric.proofscript","match":"\\b[0-9]+(?:\\.[0-9]+)?\\b"}]},
+    "operators": {"patterns":[{"name":"keyword.operator.proofscript","match":":=|=>|→|->|∀|∃|=|==|≠|!=|←|<-|&&|\\|\\||∧|∨|¬|↔|\\+|\\-|\\*|/|<|>|<=|>=|@"}]}
+  }
+}

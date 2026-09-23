@@ -1,0 +1,143 @@
+{
+  "schema": "proofscript.stateful-vc-run/v1",
+  "status": "vcs-generated",
+  "scope": "examples/software/06-bank-transfer-monadic-contract.ps",
+  "failedStage": "vc-residual-goals",
+  "lean": {
+    "requestedLeanBinary": "lean",
+    "lakeCommand": "lake",
+    "run": {
+      "command": "lake",
+      "args": [
+        "env",
+        "lean",
+        "--version"
+      ],
+      "exitCode": 0,
+      "stdout": "Lean (version 4.34.0, x86_64-w64-windows-gnu, commit 293d5d0c0c3f3dded4688b3ccd6a33939ac5102b, Release)\n",
+      "stderr": "info: proofscriptVerification: no previous manifest, creating one from scratch\ninfo: toolchain not updated; already up-to-date\n",
+      "error": null
+    },
+    "status": "accepted",
+    "version": "4.34.0",
+    "minimumVersion": "4.33.1",
+    "compatibilityPolicy": ">=4.33.1",
+    "releaseChannel": "stable-or-development",
+    "exactVersionRequired": false,
+    "output": "Lean (version 4.34.0, x86_64-w64-windows-gnu, commit 293d5d0c0c3f3dded4688b3ccd6a33939ac5102b, Release)\n\ninfo: proofscriptVerification: no previous manifest, creating one from scratch\ninfo: toolchain not updated; already up-to-date\n"
+  },
+  "provenance": {
+    "sourceSha256": "1a47a3c448e5e8a20affea22bc98f565531eb78572f83b80c28ead646951edde",
+    "stateModelDescriptorSha256": "3d749687aee201ff2e3f4d312c939ab49ab8a6584d51d6355d1d7500c371ff1f",
+    "leanModelModule": "ProofScript.Verification.BankStateModel",
+    "leanModelSha256": "c709cf2389689c84cd4fecf53f98335c595b37f4a07324e9755cad13da7ee385",
+    "generatedProgramSha256": "e7f178be5aec53dd60cfe1ca5656a1ded1eb42032ca60ac8453138f7e71c2c09",
+    "generatedTripleTargetSha256": "3991596316b5b7f87efb6376cdf1e094f49a0625d183061c5cfabdcc152c3b5b",
+    "generatedRequestSha256": "f2856fbeb19882429b6693a0013c37c711c839abe2f9ade5f7b3a567814a7e63"
+  },
+  "checks": {
+    "modelBuild": {
+      "command": "lake",
+      "args": [
+        "build",
+        "ProofScript.Verification.BankStateModel"
+      ],
+      "exitCode": 0,
+      "stdout": "✔ [2/2] Built ProofScript.Verification.BankStateModel (3.1s)\nBuild completed successfully (2 jobs).\n",
+      "stderr": "",
+      "error": null
+    },
+    "programCheck": {
+      "command": "lake",
+      "args": [
+        "env",
+        "lean",
+        "ProofScript\\Verification\\Generated_transfer_ProgramCheck.lean"
+      ],
+      "exitCode": 0,
+      "stdout": "ProofScript.Generated.ProgramCheck.transfer («from» to : AccountId) (amount : Nat) : StateM Bank Unit\n",
+      "stderr": "",
+      "error": null
+    },
+    "tripleCheck": {
+      "command": "lake",
+      "args": [
+        "env",
+        "lean",
+        "ProofScript\\Verification\\Generated_transfer_TripleCheck.lean"
+      ],
+      "exitCode": 0,
+      "stdout": "⦃fun __ps_initial => ⌜__ps_initial = __ps_entry ∧ amount > 0 ∧ «from» ≠ to⌝⦄\n  transfer «from» to\n    amount ⦃PostCond.noThrow fun __ps_result __ps_final =>\n    ⌜balanceOf «from» __ps_final = balanceOf «from» __ps_entry - amount ∧\n        balanceOf to __ps_final = balanceOf to __ps_entry + amount⌝⦄ : Prop\n",
+      "stderr": "",
+      "error": null
+    },
+    "requestRun": {
+      "command": "lake",
+      "args": [
+        "env",
+        "lean",
+        "ProofScript\\Verification\\Generated_transfer_Request.lean"
+      ],
+      "exitCode": 1,
+      "stdout": "ProofScript\\Verification\\Generated_transfer_Request.lean:19:2: warning: The `mvcgen` tactic is experimental and still under development. Avoid using it in production projects.\nProofScript\\Verification\\Generated_transfer_Request.lean:18:426: error: unsolved goals\ncase vc1\nfrom to : AccountId\namount : Nat\n__ps_entry s✝ : Bank\nh✝ : s✝ = __ps_entry ∧ 0 < amount ∧ ¬«from» = to\n⊢ balanceOf to (debitState «from» amount __ps_entry) = balanceOf to __ps_entry\ncase vc1\nfrom to : AccountId\namount : Nat\n__ps_entry s✝ : Bank\nh✝ : s✝ = __ps_entry ∧ 0 < amount ∧ ¬«from» = to\n⊢ balanceOf to (debitState «from» amount __ps_entry) = balanceOf to __ps_entry\n",
+      "stderr": "",
+      "error": null
+    }
+  },
+  "generated": {
+    "programLeanDefinition": "def transfer («from» : AccountId) (to : AccountId) (amount : Nat) : StateM Bank Unit := do\n  debit «from» amount\n  credit to amount",
+    "tripleTarget": "Std.Do.Triple (transfer «from» to amount) (fun __ps_initial : Bank => ⌜__ps_initial = __ps_entry ∧ ((amount > 0) ∧ («from» ≠ to))⌝) (⇓ __ps_result __ps_final => ⌜(balanceOf («from») (__ps_final) = ((balanceOf («from») (__ps_entry)) - amount)) ∧ (balanceOf (to) (__ps_final) = ((balanceOf (to) (__ps_entry)) + amount))⌝)",
+    "requestTheoremName": "transfer_vc_request",
+    "requestTarget": "Std.Do.Triple (transfer «from» to amount) (fun __ps_initial : Bank => ⌜__ps_initial = __ps_entry ∧ ((amount > 0) ∧ («from» ≠ to))⌝) (⇓ __ps_result __ps_final => ⌜(balanceOf («from») (__ps_final) = ((balanceOf («from») (__ps_entry)) - amount)) ∧ (balanceOf (to) (__ps_final) = ((balanceOf (to) (__ps_entry)) + amount))⌝)"
+  },
+  "residualGoals": {
+    "detected": true,
+    "unsolvedMarker": true,
+    "goalLines": [
+      "⊢ balanceOf to (debitState «from» amount __ps_entry) = balanceOf to __ps_entry",
+      "⊢ balanceOf to (debitState «from» amount __ps_entry) = balanceOf to __ps_entry"
+    ],
+    "traceBlocks": [
+      "case vc1\nfrom to : AccountId\namount : Nat\n__ps_entry s✝ : Bank\nh✝ : s✝ = __ps_entry ∧ 0 < amount ∧ ¬«from» = to\n⊢ balanceOf to (debitState «from» amount __ps_entry) = balanceOf to __ps_entry\ncase vc1\nfrom to : AccountId\namount : Nat\n__ps_entry s✝ : Bank\nh✝ : s✝ = __ps_entry ∧ 0 < amount ∧ ¬«from» = to\n⊢ balanceOf to (debitState «from» amount __ps_entry) = balanceOf to __ps_entry"
+    ],
+    "rawOutputSha256": "0522070b34fb512404e6429eeac56f5a4af972256b85a1549c2837ad6ea32c94"
+  },
+  "goalArtifact": {
+    "schema": "proofscript.stateful-vc-goals/v1",
+    "function": "transfer",
+    "requestTheoremName": "transfer_vc_request",
+    "requestTarget": "Std.Do.Triple (transfer «from» to amount) (fun __ps_initial : Bank => ⌜__ps_initial = __ps_entry ∧ ((amount > 0) ∧ («from» ≠ to))⌝) (⇓ __ps_result __ps_final => ⌜(balanceOf («from») (__ps_final) = ((balanceOf («from») (__ps_entry)) - amount)) ∧ (balanceOf (to) (__ps_final) = ((balanceOf (to) (__ps_entry)) + amount))⌝)",
+    "tactic": "mvcgen",
+    "tacticReached": true,
+    "sourceOutputSha256": "0522070b34fb512404e6429eeac56f5a4af972256b85a1549c2837ad6ea32c94",
+    "goals": [
+      {
+        "id": "transfer.stateful.vc.001.51e01b96c4a3",
+        "index": 0,
+        "trace": "case vc1\nfrom to : AccountId\namount : Nat\n__ps_entry s✝ : Bank\nh✝ : s✝ = __ps_entry ∧ 0 < amount ∧ ¬«from» = to\n⊢ balanceOf to (debitState «from» amount __ps_entry) = balanceOf to __ps_entry\ncase vc1\nfrom to : AccountId\namount : Nat\n__ps_entry s✝ : Bank\nh✝ : s✝ = __ps_entry ∧ 0 < amount ∧ ¬«from» = to\n⊢ balanceOf to (debitState «from» amount __ps_entry) = balanceOf to __ps_entry",
+        "traceSha256": "51e01b96c4a35851d64a1d3b095014c20f6d16dc7c97e97bb2c1aa422e8f5f31",
+        "discharged": false
+      }
+    ],
+    "summary": {
+      "goalCount": 1,
+      "residualGoalsPresent": true,
+      "semanticProofDischarge": false
+    },
+    "generatedFromLeanExecution": true,
+    "semanticProofDischarge": false
+  },
+  "claims": {
+    "leanEnvironmentResolved": true,
+    "leanModelTypechecked": true,
+    "leanProgramTypechecked": true,
+    "tripleTargetTypechecked": true,
+    "tacticExecuted": true,
+    "semanticVcDerivationComplete": true,
+    "realVerificationConditionsGenerated": true,
+    "stateModelAdequacyChecked": false,
+    "sourceToLeanProgramEquivalenceChecked": false,
+    "exceptionalPathsCovered": false,
+    "semanticProofDischarge": false
+  }
+}

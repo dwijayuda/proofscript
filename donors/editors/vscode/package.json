@@ -1,0 +1,197 @@
+{
+  "name": "proofscript-vscode",
+  "displayName": "ProofScript",
+  "description": "ProofScript language support with Lean-like Infoview, priority semantic worker lanes, cooperative compiler cancellation checkpoints, crash recovery, project semantics, safe imports, precise diagnostics, and kernel-backed theorem verification.",
+  "version": "0.46.0",
+  "publisher": "proofscript",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.106.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "ProofScript",
+    "Lean",
+    "theorem prover",
+    "formal verification",
+    "LSP"
+  ],
+  "main": "./src/extension.js",
+  "extensionKind": [
+    "workspace"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "proofscript",
+        "aliases": [
+          "ProofScript",
+          "proofscript"
+        ],
+        "extensions": [
+          ".ps"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "proofscript",
+        "scopeName": "source.proofscript",
+        "path": "./syntaxes/proofscript.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "proofscript.restartServer",
+        "title": "ProofScript: Restart Language Server",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "proofscript.showInfoview",
+        "title": "ProofScript: Show Infoview",
+        "icon": "$(layout-sidebar-right)"
+      },
+      {
+        "command": "proofscript.serverInfo",
+        "title": "ProofScript: Show Server Information"
+      },
+      {
+        "command": "proofscript.doctor",
+        "title": "ProofScript: Run Doctor",
+        "icon": "$(wrench)"
+      },
+      {
+        "command": "proofscript.showDocumentStatus",
+        "title": "ProofScript: Show Document Status",
+        "icon": "$(pulse)"
+      },
+      {
+        "command": "proofscript.copyExpectedType",
+        "title": "ProofScript: Copy Expected Type",
+        "icon": "$(copy)"
+      },
+      {
+        "command": "proofscript.copyCurrentGoal",
+        "title": "ProofScript: Copy Current Goal",
+        "icon": "$(copy)"
+      },
+      {
+        "command": "proofscript.copyProofState",
+        "title": "ProofScript: Copy Proof State",
+        "icon": "$(copy)"
+      },
+      {
+        "command": "proofscript.showOutput",
+        "title": "ProofScript: Show Output",
+        "icon": "$(output)"
+      },
+      {
+        "command": "proofscript.explainDiagnostic",
+        "title": "ProofScript: Explain Diagnostic",
+        "icon": "$(lightbulb)"
+      },
+      {
+        "command": "proofscript.lintFile",
+        "title": "ProofScript: Lint Current File",
+        "icon": "$(checklist)"
+      }
+    ],
+    "configuration": {
+      "title": "ProofScript",
+      "properties": {
+        "proofscript.lsp.path": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "Optional explicit path to a ProofScript LSP JavaScript entry or executable. When unset, the protocol-matched bundled ProofScript LSP is used."
+        },
+        "proofscript.integration.coverageWarnings": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show diagnostics for the experimental frontend-next/UI1 migration bridge when it is narrower than the current production compiler. Disabled by default."
+        },
+        "proofscript.trace.server": {
+          "type": "string",
+          "enum": [
+            "off",
+            "messages"
+          ],
+          "default": "off",
+          "description": "Trace ProofScript LSP messages to the ProofScript output channel."
+        },
+        "proofscript.infoview.debounceTime": {
+          "type": "number",
+          "default": 60,
+          "minimum": 0,
+          "maximum": 1000,
+          "description": "Delay in milliseconds before the ProofScript Infoview follows cursor movement. Lower values feel more immediate; higher values reduce churn on slower machines."
+        },
+        "proofscript.infoview.showCompilerDetail": {
+          "type": "boolean",
+          "default": false,
+          "description": "Reserved for future default expansion of raw compiler details. Raw details are currently available in collapsed diagnostic sections."
+        },
+        "proofscript.lint.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Run advisory ProofScript lint rules while editing. Lint findings never affect PSKernel verification."
+        }
+      }
+    },
+    "viewsContainers": {
+      "secondarySidebar": [
+        {
+          "id": "proofscript",
+          "title": "ProofScript",
+          "icon": "./media/proofscript-view.svg"
+        }
+      ]
+    },
+    "views": {
+      "proofscript": [
+        {
+          "id": "proofscript.infoview",
+          "name": "Infoview",
+          "type": "webview",
+          "icon": "./media/proofscript-view.svg",
+          "contextualTitle": "ProofScript Infoview"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "proofscript.restartServer",
+          "when": "view == proofscript.infoview",
+          "group": "navigation@1"
+        },
+        {
+          "command": "proofscript.showOutput",
+          "when": "view == proofscript.infoview",
+          "group": "navigation@2"
+        },
+        {
+          "command": "proofscript.lintFile",
+          "when": "view == proofscript.infoview",
+          "group": "navigation@3"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "proofscript.showInfoview",
+        "key": "ctrl+shift+enter",
+        "mac": "cmd+shift+enter",
+        "when": "editorLangId == proofscript"
+      }
+    ]
+  },
+  "scripts": {
+    "test": "node test/smoke.mjs"
+  }
+}

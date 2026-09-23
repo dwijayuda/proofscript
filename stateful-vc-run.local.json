@@ -1,0 +1,129 @@
+{
+  "schema": "proofscript.stateful-vc-run/v1",
+  "status": "proved",
+  "scope": "examples/software/07-bank-debit-stateful-vc.ps",
+  "failedStage": null,
+  "lean": {
+    "requestedLeanBinary": "lean",
+    "lakeCommand": "lake",
+    "run": {
+      "command": "lake",
+      "args": [
+        "env",
+        "lean",
+        "--version"
+      ],
+      "exitCode": 0,
+      "stdout": "Lean (version 4.34.0, x86_64-w64-windows-gnu, commit 293d5d0c0c3f3dded4688b3ccd6a33939ac5102b, Release)\n",
+      "stderr": "info: proofscriptVerification: no previous manifest, creating one from scratch\ninfo: toolchain not updated; already up-to-date\n",
+      "error": null
+    },
+    "status": "accepted",
+    "version": "4.34.0",
+    "minimumVersion": "4.33.1",
+    "compatibilityPolicy": ">=4.33.1",
+    "releaseChannel": "stable-or-development",
+    "exactVersionRequired": false,
+    "output": "Lean (version 4.34.0, x86_64-w64-windows-gnu, commit 293d5d0c0c3f3dded4688b3ccd6a33939ac5102b, Release)\n\ninfo: proofscriptVerification: no previous manifest, creating one from scratch\ninfo: toolchain not updated; already up-to-date\n"
+  },
+  "provenance": {
+    "sourceSha256": "6e5d389bb89b5f52501166db0acfd1f9dc0cfa84d918ea8713c0ef74888f0c55",
+    "stateModelDescriptorSha256": "3d749687aee201ff2e3f4d312c939ab49ab8a6584d51d6355d1d7500c371ff1f",
+    "leanModelSha256": "c32fefd2127376f563219e0f1e328a02fa6e368cb1527ae12ec23b389d06ff8e",
+    "generatedProgramSha256": "337b7fe5c3c9bc53833ed121fd15b378fdc449feba27abac0ddb81bff885e51e",
+    "generatedTripleTargetSha256": "9f9e271a41257b76953228549439282c17635a90ca70c13526fe6d0757eeca2c",
+    "generatedRequestSha256": "314212ca04378fc2d281cd3b6a2a77c0ede8a078757a95a412b386b88ac79ed3"
+  },
+  "checks": {
+    "modelBuild": {
+      "command": "lake",
+      "args": [
+        "build",
+        "ProofScript.Verification.BankStateModel"
+      ],
+      "exitCode": 0,
+      "stdout": "✔ [2/2] Built ProofScript.Verification.BankStateModel (2.6s)\nBuild completed successfully (2 jobs).\n",
+      "stderr": "",
+      "error": null
+    },
+    "programCheck": {
+      "command": "lake",
+      "args": [
+        "env",
+        "lean",
+        "ProofScript\\Verification\\GeneratedBankDebitProgramCheck.lean"
+      ],
+      "exitCode": 0,
+      "stdout": "ProofScript.Generated.ProgramCheck.withdraw («from» : AccountId) (amount : Nat) : StateM Bank Unit\n",
+      "stderr": "",
+      "error": null
+    },
+    "tripleCheck": {
+      "command": "lake",
+      "args": [
+        "env",
+        "lean",
+        "ProofScript\\Verification\\GeneratedBankDebitTripleCheck.lean"
+      ],
+      "exitCode": 0,
+      "stdout": "⦃fun __ps_initial => ⌜__ps_initial = __ps_entry⌝⦄\n  withdraw «from»\n    amount ⦃PostCond.noThrow fun __ps_result __ps_final =>\n    ⌜balanceOf «from» __ps_final = balanceOf «from» __ps_entry - amount⌝⦄ : Prop\n",
+      "stderr": "",
+      "error": null
+    },
+    "requestRun": {
+      "command": "lake",
+      "args": [
+        "env",
+        "lean",
+        "ProofScript\\Verification\\GeneratedBankDebitRequest.lean"
+      ],
+      "exitCode": 0,
+      "stdout": "ProofScript\\Verification\\GeneratedBankDebitRequest.lean:18:2: warning: The `mvcgen` tactic is experimental and still under development. Avoid using it in production projects.\n",
+      "stderr": "",
+      "error": null
+    }
+  },
+  "generated": {
+    "programLeanDefinition": "def withdraw («from» : AccountId) (amount : Nat) : StateM Bank Unit := do\n  debit «from» amount",
+    "tripleTarget": "Std.Do.Triple (withdraw «from» amount) (fun __ps_initial : Bank => ⌜__ps_initial = __ps_entry⌝) (⇓ __ps_result __ps_final => ⌜(balanceOf («from») (__ps_final) = ((balanceOf («from») (__ps_entry)) - amount))⌝)",
+    "requestTheoremName": "withdraw_vc_request",
+    "requestTarget": "Std.Do.Triple (withdraw «from» amount) (fun __ps_initial : Bank => ⌜__ps_initial = __ps_entry⌝) (⇓ __ps_result __ps_final => ⌜(balanceOf («from») (__ps_final) = ((balanceOf («from») (__ps_entry)) - amount))⌝)"
+  },
+  "residualGoals": {
+    "detected": false,
+    "unsolvedMarker": false,
+    "goalLines": [],
+    "traceBlocks": [],
+    "rawOutputSha256": "4c5b1747a91d755fe808135cb724f3385d2f120333643d52418f49c3b2becd15"
+  },
+  "goalArtifact": {
+    "schema": "proofscript.stateful-vc-goals/v1",
+    "function": "withdraw",
+    "requestTheoremName": "withdraw_vc_request",
+    "requestTarget": "Std.Do.Triple (withdraw «from» amount) (fun __ps_initial : Bank => ⌜__ps_initial = __ps_entry⌝) (⇓ __ps_result __ps_final => ⌜(balanceOf («from») (__ps_final) = ((balanceOf («from») (__ps_entry)) - amount))⌝)",
+    "tactic": "mvcgen",
+    "tacticReached": true,
+    "sourceOutputSha256": "4c5b1747a91d755fe808135cb724f3385d2f120333643d52418f49c3b2becd15",
+    "goals": [],
+    "summary": {
+      "goalCount": 0,
+      "residualGoalsPresent": false,
+      "semanticProofDischarge": true
+    },
+    "generatedFromLeanExecution": true,
+    "semanticProofDischarge": true
+  },
+  "claims": {
+    "leanEnvironmentResolved": true,
+    "leanModelTypechecked": true,
+    "leanProgramTypechecked": true,
+    "tripleTargetTypechecked": true,
+    "tacticExecuted": true,
+    "semanticVcDerivationComplete": true,
+    "realVerificationConditionsGenerated": true,
+    "stateModelAdequacyChecked": false,
+    "sourceToLeanProgramEquivalenceChecked": false,
+    "exceptionalPathsCovered": false,
+    "semanticProofDischarge": true
+  }
+}
