@@ -4,6 +4,7 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { productV1ClosureSatisfied } from "./product-v1-endtest-status.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
 const runner = path.join(root, "tools", "product-v1-endtest.ts");
@@ -32,6 +33,22 @@ function runPlan(extra: string[], file: string) {
 }
 
 try {
+  assert.equal(
+    productV1ClosureSatisfied({ executionPassed: true, skipLean: false }),
+    true,
+    "a green full run is eligible to close Product v1",
+  );
+  assert.equal(
+    productV1ClosureSatisfied({ executionPassed: true, skipLean: true }),
+    false,
+    "a green --skip-lean diagnostic run must not close Product v1",
+  );
+  assert.equal(
+    productV1ClosureSatisfied({ executionPassed: false, skipLean: false }),
+    false,
+    "a failed full run must not close Product v1",
+  );
+
   const full = runPlan(
     ["--toolchains", "4.33.1,4.34.0,4.35.0-rc2"],
     path.join(tmp, "full.json"),
