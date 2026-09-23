@@ -63,6 +63,11 @@ const proofCases = [
     source: "examples/software/10-bank-audit-logical-stateful-vc.ps",
     model: "examples/software/06-bank-state.model.json",
   },
+  {
+    name: "invoice",
+    source: "examples/product-v1/stateful-invoice/Invoice.ps",
+    model: "examples/software/06-bank-state.model.json",
+  },
 ];
 
 function slug(toolchain: string) {
