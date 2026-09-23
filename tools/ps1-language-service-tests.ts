@@ -30,6 +30,22 @@ assert.ok(
   "compiler observer must retain the failing tactic entry state before rejection",
 );
 
+const compilerIncompleteStates: FrontendProofState[] = [];
+assert.throws(
+  () => checkCompilerSource(
+    "theorem incompleteCompiler(P: Prop, h: P): P := by { assumption\n",
+    withStandardPrelude({
+      proofStateSink: (event) => compilerIncompleteStates.push(event.state),
+    }),
+  ),
+  /expected '\}' at offset \d+, found '<eof>'/u,
+  "canonical compiler must preserve the parser rejection for an incomplete by-block",
+);
+assert.ok(
+  compilerIncompleteStates.some((state) => state.tactic === "assumption" && state.goal === "P"),
+  "compiler observer must expose only the canonical proof prefix reached before EOF",
+);
+
 const acceptedWithThrowingObserver = checkCompilerSource(
   "theorem observerFailOpen(P: Prop, h: P): P := by { assumption }\n",
   withStandardPrelude({
@@ -229,10 +245,39 @@ assert.equal(partialGoals.tacticStateAvailable, true);
 assert.equal(partialGoals.tacticState?.kind, "tactic");
 assert.equal(partialGoals.tacticState?.tactic, "exact");
 assert.equal(partialGoals.tacticState?.goal, "P");
+assert.equal(partialGoals.tacticState?.sourceStatus, "rejected-prefix");
 assert.deepEqual(partialGoals.tacticState?.locals.map((local) => local.name), ["P", "h"]);
 assert.equal(partialGoals.declarationGoal, null, "rejected declarations must not be reported as checked goals");
 partialService.closeDocument(partialUri);
 fs.unlinkSync(partialFile);
+
+// A complete canonical proof prefix remains observable when EOF only omitted
+// the closing by-block brace. The source itself must still be rejected.
+const incompleteFile = path.join(srcDir, "Incomplete.ps");
+const incompleteUri = "proofscript-test://Incomplete.ps";
+const incompleteSource = "theorem incomplete(P: Prop, h: P): P := by { assumption\n";
+fs.writeFileSync(incompleteFile, incompleteSource);
+const incompleteService = new ProofScriptLanguageService();
+incompleteService.openDocument(incompleteUri, 1, incompleteSource, incompleteFile);
+const incompleteAnalysis = incompleteService.analyze(incompleteUri);
+assert.equal(incompleteAnalysis.status, "rejected");
+assert.equal(incompleteAnalysis.diagnostics.length, 1);
+assert.equal(incompleteAnalysis.diagnostics[0]?.code, "PSLS1001");
+assert.ok(incompleteAnalysis.proofStates.some((state) =>
+  state.tactic === "assumption" && state.sourceStatus === "syntax-incomplete"
+));
+const incompleteGoals = incompleteService.goals(
+  incompleteUri,
+  { line: 0, character: incompleteSource.indexOf("assumption") + 1 },
+);
+assert.equal(incompleteGoals.tacticStateAvailable, true);
+assert.equal(incompleteGoals.tacticState?.tactic, "assumption");
+assert.equal(incompleteGoals.tacticState?.goal, "P");
+assert.equal(incompleteGoals.tacticState?.sourceStatus, "syntax-incomplete");
+assert.deepEqual(incompleteGoals.tacticState?.locals.map((local) => local.name), ["P", "h"]);
+assert.equal(incompleteGoals.declarationGoal, null);
+incompleteService.closeDocument(incompleteUri);
+fs.unlinkSync(incompleteFile);
 
 // Branch-aware tactics must flow through the existing compiler-backed editor path.
 const branchService = new ProofScriptLanguageService();
@@ -259,6 +304,7 @@ assert.equal(branchGoals.tacticStateAvailable, true);
 assert.equal(branchGoals.tacticState?.kind, "tactic");
 assert.equal(branchGoals.tacticState?.tactic, "induction");
 assert.equal(branchGoals.tacticState?.goal, "P");
+assert.equal(branchGoals.tacticState?.sourceStatus, "checked");
 assert.deepEqual(branchGoals.tacticState?.locals.map((local) => local.name), ["h"]);
 
 const stepBranchGoals = branchService.goals(branchUri, { line: 7, character: 5 });
