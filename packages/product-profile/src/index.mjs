@@ -106,6 +106,29 @@ export function validateCliProjectProfile(root, config) {
   return product;
 }
 
+export function readCurrentStandardLibrary(root) {
+  const packageFile = path.join(root, "packages", "std", "package.json");
+  const manifestFile = path.join(root, "packages", "std", "bootstrap-manifest.json");
+  const packageJson = JSON.parse(fs.readFileSync(packageFile, "utf8"));
+  const manifestBytes = fs.readFileSync(manifestFile);
+  const manifest = JSON.parse(manifestBytes.toString("utf8"));
+  if (packageJson?.name !== "@proofscript/std" || !Array.isArray(manifest?.declarations)) {
+    throw new Error("invalid current ProofScript standard-library metadata");
+  }
+  return {
+    package: packageJson.name,
+    version: packageJson.version ?? null,
+    profileId: "proofscript-stdlib-v1",
+    manifestPath: "packages/std/bootstrap-manifest.json",
+    manifestSha256: createHash("sha256").update(manifestBytes).digest("hex"),
+    bootstrapCoreSha256: manifest.coreSha256 ?? null,
+    bootstrapSourceSha256: manifest.sourceSha256 ?? null,
+    declarationCount: manifest.declarations.length,
+    proofscriptReference: manifest.proofscriptReference ?? null,
+    implementationProfile: manifest.implementationProfile ?? null,
+  };
+}
+
 export function certificateMetadataForCore(root, artifact) {
   const product = readCurrentProductProfile(root);
   return {
@@ -113,6 +136,7 @@ export function certificateMetadataForCore(root, artifact) {
     productProfile: product.productProfile,
     referenceConformance: product.conformance,
     coreCompatibility: coreCompatibilityForArtifact(artifact),
+    standardLibrary: readCurrentStandardLibrary(root),
   };
 }
 
@@ -140,6 +164,12 @@ export function verifyCertificateMetadataAgainstCore(root, certificate, coreArti
     || JSON.stringify(certificate.coreCompatibility) !== JSON.stringify(expected)
   ) {
     throw new Error("certificate Core compatibility metadata does not match the bound Core artifact");
+  }
+  if (certificate.standardLibrary) {
+    const standardLibrary = readCurrentStandardLibrary(root);
+    if (JSON.stringify(certificate.standardLibrary) !== JSON.stringify(standardLibrary)) {
+      throw new Error("certificate standard-library identity does not match the current checked bootstrap");
+    }
   }
 }
 
