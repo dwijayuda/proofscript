@@ -9,6 +9,8 @@ import { elaborateProgramCore } from "./programElaboration";
 import { elabTerm } from "./termElaboration";
 export type { GlobalInfo, InitialGlobalInfo } from "./globalEnvironment";
 export { elabTerm } from "./termElaboration";
+export { collectResolvedGlobalReferences } from "./sourceReferences";
+export type { ResolvedGlobalReference } from "./sourceReferences";
 
 /**
  * Elaborate the current K2c/PSC-1 source slice into explicit kernel declarations.
