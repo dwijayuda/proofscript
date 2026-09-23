@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { IncrementalCompilerSession, checkSource } from "@proofscript/compiler";
@@ -139,6 +140,36 @@ export interface TextEditInfo {
 
 export interface WorkspaceEditInfo {
   readonly changes: Readonly<Record<string, readonly TextEditInfo[]>>;
+}
+
+export interface ProofGoalInfo {
+  readonly id: string;
+  readonly origin: "compiler-theorem" | "verification-artifact";
+  readonly name: string;
+  readonly kind: string;
+  readonly statement: string;
+  readonly exactTheoremStatement?: string;
+  readonly status: string;
+  readonly proofRequired: boolean;
+  readonly range?: Range;
+}
+
+export interface ProofGoalBundle {
+  readonly uri: string;
+  readonly version: number;
+  readonly generation: number;
+  readonly sourceSha256: string;
+  readonly compilerBacked: true;
+  readonly tacticStateAvailable: false;
+  readonly declarationGoal: ProofGoalInfo | null;
+  readonly verification: {
+    readonly status: "unavailable" | "current" | "stale" | "invalid";
+    readonly artifactPath?: string;
+    readonly artifactSourceSha256?: string;
+    readonly message?: string;
+    readonly goals: readonly ProofGoalInfo[];
+    readonly semanticProofChecking: boolean;
+  };
 }
 
 export interface Analysis {
@@ -550,6 +581,50 @@ export class ProofScriptLanguageService {
     );
   }
 
+  goals(uri: string, position?: Position, cancellation?: CancellationToken): ProofGoalBundle {
+    cancellation?.throwIfCancellationRequested();
+    const document = this.requireDocument(uri);
+    const sourceSha256 = sha256(document.text);
+    let declarationGoal: ProofGoalInfo | null = null;
+
+    try {
+      const analysis = this.analyze(uri, false, cancellation);
+      if (analysis.status === "accepted" && position) {
+        const offset = offsetAt(analysis.text, position);
+        const declaration = analysis.sourceDeclarations.find((item) =>
+          offset >= item.startOffset && offset < item.endOffset
+        );
+        if (declaration && (declaration.kind === "theorem" || declaration.kind === "example")) {
+          declarationGoal = {
+            id: `compiler:${declaration.qualifiedName}`,
+            origin: "compiler-theorem",
+            name: declaration.qualifiedName,
+            kind: declaration.kind,
+            statement: declaration.type,
+            status: "checked",
+            proofRequired: true,
+            range: declaration.range,
+          };
+        }
+      }
+    } catch {
+      // Verification-extension sources may intentionally be outside the ordinary
+      // source compiler profile. Artifact-backed goals below remain available.
+    }
+
+    const verification = this.verificationGoalsForDocument(document, sourceSha256, cancellation);
+    return {
+      uri,
+      version: document.version,
+      generation: document.generation,
+      sourceSha256,
+      compilerBacked: true,
+      tacticStateAvailable: false,
+      declarationGoal,
+      verification,
+    };
+  }
+
   formatDocument(uri: string, cancellation?: CancellationToken): readonly TextEditInfo[] {
     cancellation?.throwIfCancellationRequested();
     const document = this.requireDocument(uri);
@@ -644,6 +719,86 @@ export class ProofScriptLanguageService {
       );
     }
     return { changes: out };
+  }
+
+  private verificationGoalsForDocument(
+    document: TextDocumentSnapshot,
+    sourceSha256: string,
+    cancellation?: CancellationToken,
+  ): ProofGoalBundle["verification"] {
+    cancellation?.throwIfCancellationRequested();
+    if (!document.filePath || !document.filePath.endsWith(".ps")) {
+      return { status: "unavailable", goals: [], semanticProofChecking: false };
+    }
+
+    const artifactPath = document.filePath.replace(/\.ps$/u, ".obligations.json");
+    if (!fs.existsSync(artifactPath)) {
+      return {
+        status: "unavailable",
+        artifactPath,
+        message: "Generate VC evidence with: psc obligations <source.ps>",
+        goals: [],
+        semanticProofChecking: false,
+      };
+    }
+
+    try {
+      const raw = JSON.parse(fs.readFileSync(artifactPath, "utf8"));
+      if (raw?.schema !== "proofscript.obligations.v1" || !Array.isArray(raw.obligations)) {
+        return {
+          status: "invalid",
+          artifactPath,
+          message: "adjacent verification artifact is not proofscript.obligations.v1",
+          goals: [],
+          semanticProofChecking: false,
+        };
+      }
+      const artifactSourceSha256 = raw?.source?.sha256;
+      if (typeof artifactSourceSha256 !== "string" || artifactSourceSha256 !== sourceSha256) {
+        return {
+          status: "stale",
+          artifactPath,
+          ...(typeof artifactSourceSha256 === "string" ? { artifactSourceSha256 } : {}),
+          message: "verification evidence does not match the current document source SHA-256",
+          goals: [],
+          semanticProofChecking: false,
+        };
+      }
+
+      const goals: ProofGoalInfo[] = [];
+      for (const obligation of raw.obligations) {
+        cancellation?.throwIfCancellationRequested();
+        const statement = String(obligation?.statement ?? obligation?.proposition ?? "").trim();
+        if (!statement) continue;
+        goals.push({
+          id: String(obligation?.id ?? obligation?.name ?? `obligation-${goals.length}`),
+          origin: "verification-artifact",
+          name: String(obligation?.name ?? obligation?.id ?? `obligation-${goals.length}`),
+          kind: String(obligation?.kind ?? "verification"),
+          statement,
+          ...(typeof obligation?.exactTheoremStatement === "string"
+            ? { exactTheoremStatement: obligation.exactTheoremStatement }
+            : {}),
+          status: String(obligation?.status ?? "unproved"),
+          proofRequired: obligation?.proofRequired !== false,
+        });
+      }
+      return {
+        status: "current",
+        artifactPath,
+        artifactSourceSha256,
+        goals,
+        semanticProofChecking: raw?.trustBoundary?.semanticProofChecking === true,
+      };
+    } catch (error) {
+      return {
+        status: "invalid",
+        artifactPath,
+        message: error instanceof Error ? error.message : String(error),
+        goals: [],
+        semanticProofChecking: false,
+      };
+    }
   }
 
   private requireDocument(uri: string): TextDocumentSnapshot {
