@@ -9,6 +9,7 @@ import {
   classifyLeanCompatibilityOutput,
   createMonadicLoweringBundle,
   createMonadicLeanPreflightBundle,
+  normalizeLeanToolchainSelector,
   readMonadicLoweringArtifact,
 } from '../packages/monadic-lowering/src/index.mjs';
 
@@ -22,7 +23,7 @@ function opt(args, name) {
   return index >= 0 ? args[index + 1] : undefined;
 }
 function positional(args) {
-  const optionsWithValues = new Set(['--out', '--emit-lean', '--lean-cmd', '--lean-project', '--lake-cmd']);
+  const optionsWithValues = new Set(['--out', '--emit-lean', '--lean-cmd', '--lean-project', '--lean-toolchain', '--lake-cmd']);
   const out = [];
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i];
@@ -202,11 +203,14 @@ export function monadicVcRunCommand(args, { cwd = process.cwd() } = {}) {
   const input = pos[0] ? path.resolve(cwd, pos[0]) : undefined;
   const out = opt(args, '--out');
   const leanProject = opt(args, '--lean-project');
+  const leanToolchainArg = opt(args, '--lean-toolchain');
   const lakeCmd = opt(args, '--lake-cmd') ?? 'lake';
+  let selectedLeanToolchain = null;
+  let projectToolchain = null;
   if (!input || !out || !leanProject) {
     rejectUsage(
       'monadic-vc-run',
-      'psc monadic-vc-run <monadic-lowering.json> --lean-project <dir> --out <run.json> [--lake-cmd <lake>]',
+      'psc monadic-vc-run <monadic-lowering.json> --lean-project <dir> --out <run.json> [--lean-toolchain <version>] [--lake-cmd <lake>]',
       json,
     );
   }
@@ -215,6 +219,9 @@ export function monadicVcRunCommand(args, { cwd = process.cwd() } = {}) {
   const resolvedOut = path.resolve(cwd, out);
 
   try {
+    selectedLeanToolchain = leanToolchainArg
+      ? normalizeLeanToolchainSelector(leanToolchainArg)
+      : null;
     if (!fs.existsSync(resolvedProject) || !fs.statSync(resolvedProject).isDirectory()) {
       throw new Error(`Lean project directory does not exist: ${resolvedProject}`);
     }
@@ -239,6 +246,15 @@ export function monadicVcRunCommand(args, { cwd = process.cwd() } = {}) {
     }
 
     const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'proofscript-vc-run-'));
+    fs.cpSync(resolvedProject, tmp, { recursive: true });
+    const tempToolchainPath = path.join(tmp, 'lean-toolchain');
+    if (selectedLeanToolchain) {
+      fs.writeFileSync(tempToolchainPath, selectedLeanToolchain + '\n');
+    }
+    projectToolchain = fs.existsSync(tempToolchainPath)
+      ? fs.readFileSync(tempToolchainPath, 'utf8').trim()
+      : null;
+
     const modelCheckPath = path.join(tmp, 'ModelCheck.lean');
     const programCheckPath = path.join(tmp, 'ProgramCheck.lean');
     const tripleCheckPath = path.join(tmp, 'TripleCheck.lean');
@@ -279,7 +295,7 @@ end ProofScript.Generated.VCRun.Triple
 `);
     fs.writeFileSync(requestPath, request.request.source);
 
-    const leanProbe = runProcess(lakeCmd, ['env', 'lean', '--version'], resolvedProject);
+    const leanProbe = runProcess(lakeCmd, ['env', 'lean', '--version'], tmp);
     const leanCompatibility = leanProbe.exitCode === 0
       ? classifyLeanCompatibilityOutput(`${leanProbe.stdout}\n${leanProbe.stderr}`)
       : {
@@ -291,15 +307,15 @@ end ProofScript.Generated.VCRun.Triple
       throw new Error(leanCompatibility.message ?? 'unsupported Lean version');
     }
 
-    const modelBuild = runProcess(lakeCmd, ['env', 'lean', modelCheckPath], resolvedProject);
+    const modelBuild = runProcess(lakeCmd, ['env', 'lean', modelCheckPath], tmp);
     const programCheck = modelBuild.exitCode === 0
-      ? runProcess(lakeCmd, ['env', 'lean', programCheckPath], resolvedProject)
+      ? runProcess(lakeCmd, ['env', 'lean', programCheckPath], tmp)
       : skippedProcess(lakeCmd, ['env', 'lean', programCheckPath], 'model/import check failed');
     const tripleCheck = programCheck.exitCode === 0
-      ? runProcess(lakeCmd, ['env', 'lean', tripleCheckPath], resolvedProject)
+      ? runProcess(lakeCmd, ['env', 'lean', tripleCheckPath], tmp)
       : skippedProcess(lakeCmd, ['env', 'lean', tripleCheckPath], 'program typecheck failed');
     const requestRun = tripleCheck.exitCode === 0
-      ? runProcess(lakeCmd, ['env', 'lean', requestPath], resolvedProject)
+      ? runProcess(lakeCmd, ['env', 'lean', requestPath], tmp)
       : skippedProcess(lakeCmd, ['env', 'lean', requestPath], 'Triple target typecheck failed');
 
     const checks = { modelBuild, programCheck, tripleCheck, requestRun };
@@ -320,6 +336,8 @@ end ProofScript.Generated.VCRun.Triple
       },
       lean: {
         command: lakeCmd,
+        requestedToolchain: selectedLeanToolchain,
+        projectToolchain,
         probe: leanProbe,
         compatibility: leanCompatibility,
       },
@@ -366,6 +384,11 @@ end ProofScript.Generated.VCRun.Triple
       input: {
         loweringArtifactPath: input ? path.relative(cwd, input).replace(/\\/g, '/') : null,
         leanProject: path.relative(cwd, resolvedProject).replace(/\\/g, '/') || '.',
+      },
+      lean: {
+        command: lakeCmd,
+        requestedToolchain: selectedLeanToolchain ?? leanToolchainArg ?? null,
+        projectToolchain,
       },
       claims: {
         leanEnvironmentResolved: false,
