@@ -127,7 +127,7 @@
       "status": "in_progress",
       "exitGates": [
         "test:product-v1:runtime-profile",
-        "runtime differential corpus green",
+        "test:product-v1:runtime-differential",
         "certificate correspondence levels explicit and emitted",
         "runtime artifact hashes bound to certificate",
         "test:product-v1:certificate-correspondence"
@@ -146,10 +146,10 @@
         "runtime profile identity/hash bound into new certificates",
         "optional emitted TS/JS artifact hash bound into certificates",
         "certificate verification rejects runtime-profile and backend-artifact tampering",
-        "explicit correspondence claims emitted with end-to-end JavaScript verification false"
+        "explicit correspondence claims emitted with end-to-end JavaScript verification false",
+        "Product-v1 runtime differential corpus defined across all implemented representation families"
       ],
       "remaining": [
-        "expand differential runtime corpus into one Product-v1 gate",
         "formal Core-to-TypeScript refinement remains separate and unproved"
       ]
     },
