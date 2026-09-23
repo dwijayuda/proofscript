@@ -891,6 +891,17 @@ function prebuiltWorkspaceDistStatus() {
     required.push(path.relative(ROOT, output).split(path.sep).join('/'));
     if (!fs.existsSync(output)) missing.push(path.relative(ROOT, output).split(path.sep).join('/'));
   }
+  const releaseManifestPath = path.join(ROOT, 'config', 'proofscript-prebuilt-release-v1.json');
+  if (fs.existsSync(releaseManifestPath)) {
+    const releaseManifest = JSON.parse(fs.readFileSync(releaseManifestPath, 'utf8'));
+    for (const relative of releaseManifest.requiredStaticAssets ?? []) {
+      if (typeof relative !== 'string' || !relative) continue;
+      required.push(relative);
+      if (!fs.existsSync(path.join(ROOT, relative))) missing.push(relative);
+    }
+  } else {
+    missing.push('config/proofscript-prebuilt-release-v1.json');
+  }
   return { ok: required.length > 0 && missing.length === 0, required, missing };
 }
 
@@ -926,11 +937,14 @@ function setupCommand(args) {
     setupMode = 'prebuilt';
     console.log(`ProofScript setup using packaged prebuilt workspace outputs (${prebuilt.required.length} package entries)`);
   }
-  // If a locked-down Windows machine used copy fallback before the build, the
-  // copied node_modules/@proofscript/* packages must be refreshed after dist/
-  // exists. Junction/symlink setups are idempotent here.
+  if (setupMode === 'compiled') {
+    runProcess(process.execPath, [...NODE_TS_FLAGS, path.join(ROOT, 'tools', 'copy-static-assets.ts')], 'static asset copy');
+  } else {
+    console.log('ProofScript setup using packaged static assets');
+  }
+  // Refresh after compilation AND static-asset materialization so locked-down
+  // Windows copy fallback receives the complete prebuilt package contents.
   runProcess(process.execPath, [...NODE_TS_FLAGS, path.join(ROOT, 'tools', 'setup-local-workspaces.cts')], 'post-build workspace link/copy refresh');
-  runProcess(process.execPath, [...NODE_TS_FLAGS, path.join(ROOT, 'tools', 'copy-static-assets.ts')], 'static asset copy');
   console.log(`PROOFSCRIPT_SETUP=PASS mode=${setupMode}`);
 }
 function checkCommand(args) {
