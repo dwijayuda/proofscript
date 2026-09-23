@@ -17,10 +17,10 @@ assert.match(lsp,/documentStatusFromAnalysis/u);
 assert.ok(lsp.includes("proofscript/documentProcessing"));
 assert.ok(lsp.includes("proofscript/documentStatusChanged"));
 
-for (const supported of ["textDocument/hover","textDocument/documentSymbol","textDocument/completion","textDocument/definition","textDocument/references","textDocument/rename","textDocument/semanticTokens/full","textDocument/formatting","proofscript/documentStatus","proofscript/semanticInfo","proofscript/goals"]) {
+for (const supported of ["textDocument/hover","textDocument/documentSymbol","textDocument/completion","textDocument/definition","textDocument/references","textDocument/rename","textDocument/semanticTokens/full","textDocument/formatting","textDocument/codeAction","proofscript/documentStatus","proofscript/semanticInfo","proofscript/goals"]) {
   assert.ok(extension.includes(supported), "missing active editor method " + supported);
 }
-for (const unsupported of ["textDocument/signatureHelp","textDocument/codeAction","proofscript/proofState"]) {
+for (const unsupported of ["textDocument/signatureHelp","proofscript/proofState"]) {
   assert.equal(extension.includes(unsupported), false, "unsupported method leaked into active editor: " + unsupported);
 }
 assert.match(lsp,/completionProvider/u);
@@ -40,6 +40,10 @@ assert.match(lsp,/this\.worker\.goals/u);
 assert.match(extension,/client\.request\("proofscript\/goals"/u);
 assert.match(extension,/tacticStateAvailable=false/u);
 assert.match(extension,/registerDocumentFormattingEditProvider/u);
+assert.match(lsp,/codeActionProvider/u);
+assert.match(lsp,/this\.worker\.codeActions/u);
+assert.match(extension,/registerCodeActionsProvider/u);
+assert.match(extension,/Insert missing ';'/u);
 assert.equal(extension.includes("EXPECTED_LSP_PROTOCOL_VERSION = 1"), true);
 assert.match(JSON.stringify(grammar),/frame/u);
 assert.match(JSON.stringify(grammar),/decreases/u);
