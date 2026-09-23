@@ -129,6 +129,7 @@ assert.equal(invalid.version, 2);
 const broken = service.analyze(uri);
 assert.notEqual(broken.status, "accepted");
 assert.equal(broken.diagnostics.length, 1);
+assert.equal(broken.proofStates.length, 0, "parser failures must not fabricate partial proof states");
 assert.match(broken.diagnostics[0]!.code, /^PSLS/);
 assert.equal(broken.diagnostics[0]!.data.identity.schemaVersion, 1);
 assert.ok(broken.diagnostics[0]!.data.identity.fingerprint.length >= 16);
