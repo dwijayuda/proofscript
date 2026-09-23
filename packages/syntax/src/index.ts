@@ -39,7 +39,8 @@ export type SurfacePattern=
 export interface SurfaceMatchCase{pattern:SurfacePattern;body:SurfaceTerm;}
 export interface SurfaceEquationClause{pattern:SurfacePattern;body:SurfaceTerm;}
 export interface SurfaceDoBind{name:string;value:SurfaceTerm;}
-export interface SurfaceProofBranch{constructor:string;binders:string[];body:SurfaceTerm;}
+export interface SurfaceProofSpan{sourceStartOffset?:number;sourceEndOffset?:number;}
+export interface SurfaceProofBranch extends SurfaceProofSpan{constructor:string;binders:string[];body:SurfaceTerm;}
 
 export type SurfaceTerm=
   |{tag:"name";name:string;levels?:SurfaceLevel[];namespacePath?:string[];openNamespaces?:string[];sourceStartOffset?:number;sourceEndOffset?:number}
@@ -52,19 +53,19 @@ export type SurfaceTerm=
   |{tag:"do";binds:SurfaceDoBind[];body:SurfaceTerm}
   |{tag:"boolLit";value:boolean}
   |{tag:"bif";condition:SurfaceTerm;thenBranch:SurfaceTerm;elseBranch:SurfaceTerm}
-  |{tag:"rflProof"}
-  |{tag:"exactProof";term:SurfaceTerm}
-  |{tag:"assumptionProof"}
-  |{tag:"applyProof";term:SurfaceTerm;body?:SurfaceTerm}
-  |{tag:"introProof";names:string[];body:SurfaceTerm}
-  |{tag:"showProof";type:SurfaceTerm;body:SurfaceTerm}
-  |{tag:"haveProof";name:string;type?:SurfaceTerm;value:SurfaceTerm;body:SurfaceTerm}
-  |{tag:"rwProof";equality:SurfaceTerm;reverse:boolean;body:SurfaceTerm}
-  |{tag:"substProof";name:string;body:SurfaceTerm}
-  |{tag:"constructorProof";body?:SurfaceTerm}
-  |{tag:"casesProof";term:SurfaceTerm;body?:SurfaceTerm;branches?:SurfaceProofBranch[]}
-  |{tag:"inductionProof";term:SurfaceTerm;body?:SurfaceTerm;branches?:SurfaceProofBranch[]}
-  |{tag:"simpProof"}
+  |(SurfaceProofSpan&{tag:"rflProof"})
+  |(SurfaceProofSpan&{tag:"exactProof";term:SurfaceTerm})
+  |(SurfaceProofSpan&{tag:"assumptionProof"})
+  |(SurfaceProofSpan&{tag:"applyProof";term:SurfaceTerm;body?:SurfaceTerm})
+  |(SurfaceProofSpan&{tag:"introProof";names:string[];body:SurfaceTerm})
+  |(SurfaceProofSpan&{tag:"showProof";type:SurfaceTerm;body:SurfaceTerm})
+  |(SurfaceProofSpan&{tag:"haveProof";name:string;type?:SurfaceTerm;value:SurfaceTerm;body:SurfaceTerm})
+  |(SurfaceProofSpan&{tag:"rwProof";equality:SurfaceTerm;reverse:boolean;body:SurfaceTerm})
+  |(SurfaceProofSpan&{tag:"substProof";name:string;body:SurfaceTerm})
+  |(SurfaceProofSpan&{tag:"constructorProof";body?:SurfaceTerm})
+  |(SurfaceProofSpan&{tag:"casesProof";term:SurfaceTerm;body?:SurfaceTerm;branches?:SurfaceProofBranch[]})
+  |(SurfaceProofSpan&{tag:"inductionProof";term:SurfaceTerm;body?:SurfaceTerm;branches?:SurfaceProofBranch[]})
+  |(SurfaceProofSpan&{tag:"simpProof"})
   |{tag:"eq";left:SurfaceTerm;right:SurfaceTerm}
   |{tag:"binaryOp";op:"add"|"sub"|"mul"|"beq"|"lt"|"le"|"gt"|"ge";left:SurfaceTerm;right:SurfaceTerm}
   |{tag:"app";fn:SurfaceTerm;args:SurfaceTerm[];explicit?:boolean}
