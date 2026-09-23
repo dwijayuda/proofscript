@@ -45,8 +45,8 @@ export function firstStatefulVcFailedStage(checks, residual) {
   if (checks.modelBuild.exitCode !== 0) return 'lean-model-build';
   if (checks.programCheck.exitCode !== 0) return 'lean-program-typecheck';
   if (checks.tripleCheck.exitCode !== 0) return 'lean-triple-target-typecheck';
-  if (checks.requestRun.exitCode === 0) return null;
   if (residual.detected) return 'vc-residual-goals';
+  if (checks.requestRun.exitCode === 0) return null;
   return 'vc-request-execution';
 }
 
@@ -106,6 +106,7 @@ export function analyzeStatefulVcExecution({
   const semanticVcDerivationComplete = tacticReached;
   const realVerificationConditionsGenerated = tacticReached;
   const semanticProofDischarge = checks.requestRun.exitCode === 0
+    && !residual.detected
     && checks.modelBuild.exitCode === 0
     && checks.programCheck.exitCode === 0
     && checks.tripleCheck.exitCode === 0;
