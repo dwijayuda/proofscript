@@ -41,7 +41,7 @@ export interface SurfaceEquationClause{pattern:SurfacePattern;body:SurfaceTerm;}
 export interface SurfaceDoBind{name:string;value:SurfaceTerm;}
 
 export type SurfaceTerm=
-  |{tag:"name";name:string;levels?:SurfaceLevel[];namespacePath?:string[];openNamespaces?:string[]}
+  |{tag:"name";name:string;levels?:SurfaceLevel[];namespacePath?:string[];openNamespaces?:string[];sourceStartOffset?:number;sourceEndOffset?:number}
   |{tag:"sort";level:SurfaceLevel}
   |{tag:"natLit";value:number}
   |{tag:"intLit";value:number}
