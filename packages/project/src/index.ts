@@ -17,6 +17,14 @@ export interface ProjectConfig {
   sourceRoots?:string[];
 }
 
+export interface ProjectPackageSource {
+  name:string;
+  version:string|null;
+  packageRoot:string;
+  sourceRoot:string;
+  packageJsonSha256:string;
+}
+
 export interface ProjectModuleSource {
   name:string;
   filePath:string;
@@ -29,6 +37,7 @@ export interface ProjectModuleGraph {
   root:string;
   entry:string;
   sourceRoots:string[];
+  packages:ProjectPackageSource[];
   /** Deterministic dependency-first topological order; the entry is last. */
   modules:ProjectModuleSource[];
 }
@@ -41,6 +50,7 @@ export type ProjectSourceProvider=(filePath:string)=>string|undefined;
 export interface ProjectWorkspaceGraph {
   root:string;
   sourceRoots:string[];
+  packages:ProjectPackageSource[];
   /** All discovered project modules in deterministic dependency-first order. */
   modules:ProjectModuleSource[];
 }
@@ -91,13 +101,74 @@ export function resolveSourceRoots(root:string,cfg:ProjectConfig=loadProjectConf
   return resolved;
 }
 
+export function discoverProofScriptPackages(root:string):ProjectPackageSource[]{
+  const projectRoot=path.resolve(root);
+  const projectPackageFile=path.join(projectRoot,"package.json");
+  if(!fs.existsSync(projectPackageFile))return[];
+  let projectPackage:any;
+  try{projectPackage=JSON.parse(fs.readFileSync(projectPackageFile,"utf8"));}catch{return[];}
+  const dependencyNames=[...new Set([
+    ...Object.keys(projectPackage.dependencies??{}),
+    ...Object.keys(projectPackage.optionalDependencies??{}),
+    ...Object.keys(projectPackage.devDependencies??{}),
+  ])].sort();
+  const packages:ProjectPackageSource[]=[];
+  for(const name of dependencyNames){
+    if(!/^(?:@[A-Za-z0-9._-]+\/[A-Za-z0-9._-]+|[A-Za-z0-9._-]+)$/.test(name))continue;
+    const packageFile=path.join(projectRoot,"node_modules",...name.split("/"),"package.json");
+    if(!fs.existsSync(packageFile))continue;
+    const bytes=fs.readFileSync(packageFile);
+    let packageJson:any;
+    try{packageJson=JSON.parse(bytes.toString("utf8"));}catch{throw new ProjectError(`invalid package.json for dependency '${name}'`);}
+    const sourceRootValue=packageJson?.proofscript?.sourceRoot;
+    if(sourceRootValue===undefined)continue;
+    if(typeof sourceRootValue!=="string"||sourceRootValue.length===0||path.isAbsolute(sourceRootValue)){
+      throw new ProjectError(`dependency '${name}' has invalid proofscript.sourceRoot`);
+    }
+    const packageRoot=path.dirname(packageFile);
+    const sourceRoot=path.resolve(packageRoot,sourceRootValue);
+    if(!isInsideOrEqual(packageRoot,sourceRoot)){
+      throw new ProjectError(`dependency '${name}' proofscript.sourceRoot escapes its package root`);
+    }
+    if(!fs.existsSync(sourceRoot)||!fs.statSync(sourceRoot).isDirectory()){
+      throw new ProjectError(`dependency '${name}' ProofScript source root not found: ${sourceRootValue}`);
+    }
+    packages.push({
+      name,
+      version:typeof packageJson.version==="string"?packageJson.version:null,
+      packageRoot,
+      sourceRoot,
+      packageJsonSha256:crypto.createHash("sha256").update(bytes).digest("hex"),
+    });
+  }
+  return packages;
+}
+
+function resolveProjectSourceEnvironment(root:string,cfg:ProjectConfig=loadProjectConfig(root)):{
+  sourceRoots:string[];
+  packages:ProjectPackageSource[];
+}{
+  const localRoots=resolveSourceRoots(root,cfg);
+  const packages=discoverProofScriptPackages(root);
+  const sourceRoots=[...localRoots,...packages.map(pkg=>pkg.sourceRoot)];
+  const seen=new Map<string,string>();
+  for(const sourceRoot of sourceRoots){
+    const key=realPathKey(sourceRoot);
+    const prior=seen.get(key);
+    if(prior)throw new ProjectError(`duplicate project/package source root: ${prior} and ${sourceRoot}`);
+    seen.set(key,sourceRoot);
+  }
+  return{sourceRoots,packages};
+}
+
 export function buildModuleGraph(entryFile:string,projectRoot?:string,sourceProvider?:ProjectSourceProvider):ProjectModuleGraph{
   const entryPath=path.resolve(entryFile);
   if(!sourceExists(entryPath,sourceProvider))throw new ProjectError(`entry source file not found: ${entryPath}`);
   if(path.extname(entryPath)!==".ps")throw new ProjectError("ProofScript source files must use the .ps extension");
   const root=path.resolve(projectRoot??findProjectRoot(path.dirname(entryPath)));
   const cfg=loadProjectConfig(root);
-  const sourceRoots=resolveSourceRoots(root,cfg);
+  const sourceEnvironment=resolveProjectSourceEnvironment(root,cfg);
+  const sourceRoots=sourceEnvironment.sourceRoots;
   const entry=moduleNameForEntry(entryPath,sourceRoots);
 
   const nodes=new Map<string,ProjectModuleSource>();
@@ -135,7 +206,7 @@ export function buildModuleGraph(entryFile:string,projectRoot?:string,sourceProv
   };
 
   visit(entry,entryPath);
-  return{root,entry,sourceRoots:[...sourceRoots],modules:order};
+  return{root,entry,sourceRoots:[...sourceRoots],packages:sourceEnvironment.packages.map(pkg=>({...pkg})),modules:order};
 }
 
 
@@ -144,7 +215,8 @@ export function buildModuleGraph(entryFile:string,projectRoot?:string,sourceProv
 export function buildWorkspaceGraph(projectRoot:string,options:WorkspaceGraphOptions={}):ProjectWorkspaceGraph{
   const root=path.resolve(projectRoot);
   const cfg=loadProjectConfig(root);
-  const sourceRoots=resolveSourceRoots(root,cfg);
+  const sourceEnvironment=resolveProjectSourceEnvironment(root,cfg);
+  const sourceRoots=sourceEnvironment.sourceRoots;
   const files=new Map<string,string>();
 
   for(const sourceRoot of sourceRoots){
@@ -199,7 +271,7 @@ export function buildWorkspaceGraph(projectRoot:string,options:WorkspaceGraphOpt
     stack.pop();state.set(name,"done");order.push(module);
   };
   for(const name of [...raw.keys()].sort())visit(name);
-  return{root,sourceRoots:[...sourceRoots],modules:order};
+  return{root,sourceRoots:[...sourceRoots],packages:sourceEnvironment.packages.map(pkg=>({...pkg})),modules:order};
 }
 
 export function resolveModuleFile(moduleName:string,sourceRoots:string[]):string{
