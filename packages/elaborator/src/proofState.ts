@@ -44,7 +44,7 @@ export function proofStateLocals(
  * elaboration fail.
  */
 export function observeProofState(
-  observer: ProofElaborationObserver | undefined,
+  observer: { readonly recordProofState?: (state: ProofStateSnapshot) => void } | undefined,
   state: ProofStateSnapshot,
 ): void {
   try {
