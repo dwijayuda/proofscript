@@ -1,0 +1,14 @@
+{
+  "name": "@proofscript/validation",
+  "version": "0.1.0-dev.0",
+  "private": false,
+  "description": "Bounded checked validation combinators for ProofScript",
+  "license": "MIT",
+  "files": [
+    "README.md",
+    "src"
+  ],
+  "proofscript": {
+    "sourceRoot": "src"
+  }
+}
