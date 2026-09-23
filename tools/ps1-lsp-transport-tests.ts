@@ -103,6 +103,8 @@ assert.equal(initialized.result.experimental.proofscript.duplicateParser, false)
 assert.equal(initialized.result.experimental.proofscript.surfaceFeatureRequest, "proofscript/surfaceFeatures");
 assert.equal(initialized.result.experimental.proofscript.documentStatusRequest, "proofscript/documentStatus");
 assert.equal(initialized.result.experimental.proofscript.semanticInfoRequest, "proofscript/semanticInfo");
+assert.equal(initialized.result.experimental.proofscript.goalsRequest, "proofscript/goals");
+assert.equal(initialized.result.experimental.proofscript.goalPresentationAvailable, true);
 assert.equal(initialized.result.experimental.proofscript.proofStateAvailable, false);
 
 send({ jsonrpc: "2.0", method: "initialized", params: {} });
@@ -140,7 +142,7 @@ assert.equal(pulledBroken.result.kind, "full");
 assert.equal(pulledBroken.result.items.length, 1);
 assert.ok(typeof pulledBroken.result.resultId === "string");
 
-const fixed = "def fixed(P: Prop): Prop := P;\n";
+const fixed = "theorem fixed(P: Prop, h: P): P := h;\n";
 send({
   jsonrpc: "2.0",
   method: "textDocument/didChange",
@@ -207,7 +209,7 @@ send({
   jsonrpc: "2.0",
   id: 7,
   method: "proofscript/semanticInfo",
-  params: { textDocument: { uri }, position: { line: 0, character: 6 } },
+  params: { textDocument: { uri }, position: { line: 0, character: 10 } },
 });
 const semanticInfo = await waitFor((message) => message.id === 7, "semantic info response");
 assert.equal(semanticInfo.result.status, "accepted");
@@ -228,7 +230,7 @@ send({
   jsonrpc: "2.0",
   id: 9,
   method: "textDocument/hover",
-  params: { textDocument: { uri }, position: { line: 0, character: 6 } },
+  params: { textDocument: { uri }, position: { line: 0, character: 10 } },
 });
 const hover = await waitFor((message) => message.id === 9, "hover response");
 assert.match(hover.result.contents.value, /fixed/u);
@@ -237,11 +239,24 @@ send({
   jsonrpc: "2.0",
   id: 10,
   method: "textDocument/completion",
-  params: { textDocument: { uri }, position: { line: 0, character: 7 } },
+  params: { textDocument: { uri }, position: { line: 0, character: 13 } },
 });
 const completion = await waitFor((message) => message.id === 10, "completion response");
 assert.equal(completion.result.isIncomplete, false);
 assert.ok(completion.result.items.some((item) => item.label === "fixed"));
+
+send({
+  jsonrpc: "2.0",
+  id: 11,
+  method: "proofscript/goals",
+  params: { textDocument: { uri }, position: { line: 0, character: 10 } },
+});
+const goals = await waitFor((message) => message.id === 11, "proof goals response");
+assert.equal(goals.result.tacticStateAvailable, false);
+assert.equal(goals.result.declarationGoal.origin, "compiler-theorem");
+assert.equal(goals.result.declarationGoal.name, "fixed");
+assert.equal(goals.result.declarationGoal.status, "checked");
+assert.equal(goals.result.verification.status, "unavailable");
 
 const navigationSource = "def navBase: Nat := 1;\ndef navUse: Nat := navBase;\n";
 send({
@@ -266,7 +281,7 @@ send({
   method: "textDocument/definition",
   params: { textDocument: { uri }, position: { line: 1, character: 21 } },
 });
-const definition = await waitFor((message) => message.id === 11, "definition response");
+const definition = await waitFor((message) => message.id === 12, "definition response");
 assert.equal(definition.result.uri, uri);
 assert.deepEqual(definition.result.range.start, { line: 0, character: 4 });
 assert.deepEqual(definition.result.range.end, { line: 0, character: 11 });
@@ -281,7 +296,7 @@ send({
     context: { includeDeclaration: true },
   },
 });
-const references = await waitFor((message) => message.id === 12, "references response");
+const references = await waitFor((message) => message.id === 13, "references response");
 assert.equal(references.result.length, 2);
 
 send({
@@ -294,7 +309,7 @@ send({
     newName: "renamedBase",
   },
 });
-const rename = await waitFor((message) => message.id === 13, "rename response");
+const rename = await waitFor((message) => message.id === 14, "rename response");
 assert.equal(rename.result.changes[uri].length, 2);
 assert.ok(rename.result.changes[uri].every((edit) => edit.newText === "renamedBase"));
 
@@ -304,7 +319,7 @@ send({
   method: "textDocument/semanticTokens/full",
   params: { textDocument: { uri } },
 });
-const semanticTokens = await waitFor((message) => message.id === 14, "semantic tokens response");
+const semanticTokens = await waitFor((message) => message.id === 15, "semantic tokens response");
 assert.ok(typeof semanticTokens.result.resultId === "string");
 assert.equal(semanticTokens.result.data.length, 15);
 assert.deepEqual(semanticTokens.result.data.slice(0, 5), [0, 4, 7, 0, 3]);
@@ -335,7 +350,7 @@ send({
     options: { tabSize: 2, insertSpaces: true },
   },
 });
-const formatting = await waitFor((message) => message.id === 15, "formatting response");
+const formatting = await waitFor((message) => message.id === 16, "formatting response");
 assert.equal(formatting.result.length, 1);
 assert.match(formatting.result[0].newText, /def formatted: Nat := \{1 \+ 2\};/u);
 
@@ -365,7 +380,7 @@ send({
     options: { tabSize: 2, insertSpaces: true },
   },
 });
-const commentedFormatting = await waitFor((message) => message.id === 16, "comment formatting response");
+const commentedFormatting = await waitFor((message) => message.id === 17, "comment formatting response");
 assert.equal(commentedFormatting.result.length, 1);
 assert.match(commentedFormatting.result[0].newText, /-- keep/u);
 assert.match(commentedFormatting.result[0].newText, /def x: Nat := \{1 \+ 2\};/u);
@@ -383,8 +398,8 @@ const closed = await waitFor(
 );
 assert.deepEqual(closed.params.diagnostics, []);
 
-send({ jsonrpc: "2.0", id: 17, method: "shutdown", params: null });
-const shutdown = await waitFor((message) => message.id === 17, "shutdown response");
+send({ jsonrpc: "2.0", id: 18, method: "shutdown", params: null });
+const shutdown = await waitFor((message) => message.id === 18, "shutdown response");
 assert.equal(shutdown.result, null);
 send({ jsonrpc: "2.0", method: "exit", params: null });
 
