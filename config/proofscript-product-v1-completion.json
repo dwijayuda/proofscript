@@ -240,7 +240,9 @@
         "canonical token-preserving formatter",
         "psc fmt write/check/stdout modes",
         "formatter idempotence and canonical-token equivalence",
-        "formatter fails closed on comments until trivia preservation exists"
+        "formatter fails closed on comments until trivia preservation exists",
+        "VS Code Format Document reuses @proofscript/formatter",
+        "LSP textDocument/formatting with stale-document and cancellation boundaries"
       ],
       "remaining": [
         "code actions",
@@ -256,7 +258,8 @@
         "VS Code 0.46.0 is retained under donors/editors/vscode and reused selectively.",
         "Active editors/vscode registers only capabilities implemented by the current compiler-backed language service.",
         "Definition/references/rename use canonical parser source spans plus elaborator global-name resolution; no editor-side text parser.",
-        "Tactic proof-state snapshots remain unavailable and are not fabricated."
+        "Tactic proof-state snapshots remain unavailable and are not fabricated.",
+        "CLI and editor formatting share @proofscript/formatter; no duplicate formatting grammar."
       ]
     },
     {
