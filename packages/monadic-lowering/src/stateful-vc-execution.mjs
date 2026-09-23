@@ -102,7 +102,11 @@ export function analyzeStatefulVcExecution({
 
   const requestOutput = `${checks.requestRun.stdout ?? ''}\n${checks.requestRun.stderr ?? ''}`;
   const residual = classifyLeanResidualGoals(requestOutput);
-  const tacticReached = checks.tripleCheck.exitCode === 0
+  const preRequestStagesPassed = checks.modelBuild.exitCode === 0
+    && checks.adequacyCheck.exitCode === 0
+    && checks.programCheck.exitCode === 0
+    && checks.tripleCheck.exitCode === 0;
+  const tacticReached = preRequestStagesPassed
     && (checks.requestRun.exitCode === 0 || residual.detected);
   const semanticVcDerivationComplete = tacticReached;
   const realVerificationConditionsGenerated = tacticReached;
@@ -138,6 +142,7 @@ export function analyzeStatefulVcExecution({
         && checks.adequacyCheck.exitCode === 0
         && checks.programCheck.exitCode === 0,
       tripleTargetTypechecked: checks.modelBuild.exitCode === 0
+        && checks.adequacyCheck.exitCode === 0
         && checks.programCheck.exitCode === 0
         && checks.tripleCheck.exitCode === 0,
       tacticExecuted: tacticReached,
