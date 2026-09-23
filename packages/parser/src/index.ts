@@ -170,6 +170,8 @@ class Parser extends TokenCursor{
       case "exactProof":visit(t.term,scope);break;
       case "applyProof":visit(t.term,scope);if(t.body)visit(t.body,scope);break;
       case "introProof":{const s=new Set(scope);for(const name of t.names)s.add(name);visit(t.body,s);break;}
+      case "showProof":visit(t.type,scope);visit(t.body,scope);break;
+      case "haveProof":if(t.type)visit(t.type,scope);visit(t.value,scope);{const s=new Set(scope);s.add(t.name);visit(t.body,s);}break;
       case "eq":visit(t.left,scope);visit(t.right,scope);break;
       case "app":visit(t.fn,scope);for(const a of t.args)visit(a,scope);break;
       case "lam":{const s=new Set(scope);for(const b of t.binders){if(b.type)visit(b.type,s);s.add(b.name);}visit(t.body,s);break;}
