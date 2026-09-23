@@ -194,7 +194,7 @@
       "exitGates": [
         "test:product-v1:stdlib-profile",
         "test:product-v1:json-validation",
-        "package resolution/publishing contract",
+        "test:product-v1:source-package",
         "test:product-v1:ffi-npm + test:product-v1:json-validation package tamper rejection"
       ],
       "done": [
@@ -213,12 +213,21 @@
         "JSON FFI/certificate trust boundary remains explicit (parserVerified=false)",
         "npm FFI dependency package identity schema",
         "certificate binds npm package name/version/package.json hash/content-tree hash",
-        "certificate verification rejects installed npm package tampering"
+        "certificate verification rejects installed npm package tampering",
+        "npm ProofScript source-package discovery via package.json.proofscript.sourceRoot",
+        "ordinary module-name imports across deterministic local/package source roots",
+        "source-package package name/version/package.json hash captured in project graph",
+        "source-package module exact source hashes bound into checked Core module metadata",
+        "publishable local source-package fixture + offline npm consumer gate",
+        "package source-root escape and cross-root ambiguity fail closed"
       ],
       "remaining": [
         "broader String utilities needed by JSON/application code",
-        "ProofScript source-level package resolution beyond project modules",
         "HTTP/database higher-level packages are post-core-stdlib"
+      ],
+      "implementationNotes": [
+        "Source packages reuse ordinary ProofScript module semantics; npm only contributes explicit source roots.",
+        "Checked Core already commits exact imported package module bytes. Public certificate verification does not yet re-read installed source-package bytes; this is hardening, not semantic resolution."
       ]
     },
     {
