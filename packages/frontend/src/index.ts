@@ -114,7 +114,7 @@ export function checkSource(source:string,options:FrontendOptions={}):FrontendRe
   // The project driver supplies the complete graph after every dependency has been checked.
   // Intermediate per-module artifacts intentionally carry no partial module metadata.
   const globalReferences=[...collectResolvedGlobalReferences(parsed.declarations,all.map(declaration=>declaration.name))];
-  const proofStates=rawProofStates.map(displayProofState);
+  const proofStates=safeDisplayProofStates(rawProofStates);
   return{artifact:makeArtifact(all,elaborated.typeclasses,options.allowResolvedImports?undefined:modules),summary,parserState:parsed.finalState,ownedFeatures:[...parsed.ownedFeatures],declarationLocations:parsed.declarationLocations.map(item=>({...item})),globalReferences,proofStates};
 }
 
@@ -230,6 +230,17 @@ function compileResolvedModules(
   return{modules:sourceModules.map(module=>compiled.get(module.name)!),reused,rebuilt};
 }
 
+function safeDisplayProofStates(states:readonly ProofStateSnapshot[]):FrontendProofState[]{
+  const out:FrontendProofState[]=[];
+  for(const state of states){
+    try{out.push(displayProofState(state));}
+    catch{
+      // Display metadata is observational only. A formatter bug must not turn a
+      // successfully checked Core program into a frontend rejection.
+    }
+  }
+  return out;
+}
 function displayProofState(state:ProofStateSnapshot):FrontendProofState{
   const localNames=state.locals.map(local=>local.name);
   return{
