@@ -43,6 +43,14 @@ export interface DeclarationSourceLocation{
 }
 export interface ParseResult{imports:string[];declarations:SurfaceDeclaration[];finalState:ParserState;ownedFeatures:SurfaceFeatureUse[];declarationLocations:DeclarationSourceLocation[];}
 export function parseSource(source:string,initial:ParserState={commandIndex:0,grammarRevision:0,universeParams:[]},options:ParseOptions={}):ParseResult{return new Parser(tokenize(source),initial,options).parseFile();}
+/**
+ * Canonical import discovery for project graph construction.
+ *
+ * ProofScript requires imports to precede all non-import commands, so project
+ * discovery only needs to parse that leading import prefix. Full syntax and
+ * semantic validation remain the responsibility of parseSource/frontend.
+ */
+export function parseLeadingImports(source:string):string[]{return new Parser(tokenize(source),{commandIndex:0,grammarRevision:0,universeParams:[]},{}).parseLeadingImports();}
 
 export {tokenize,tokenizeWithSpans} from "./tokenize";
 export type {SpannedToken} from "./tokenize";
@@ -61,6 +69,16 @@ class Parser extends TokenCursor{
     this.validateOpenNamespaces=options.validateOpenNamespaces??false;
     this.incompleteProofSink=options.incompleteProofSink;
     for(const name of options.knownGlobalNames??[])this.registerNameNamespaces(name);
+  }
+  parseLeadingImports():string[]{
+    const imports:string[]=[];
+    while(this.atId("import")){
+      const name=parseImportCommand(this.makeScopeCommandHost());
+      if(imports.includes(name))throw new ParseError(`duplicate import '${name}'`);
+      imports.push(name);
+      this.bumpCommand();
+    }
+    return imports;
   }
   parseFile():ParseResult{
     const imports:string[]=[];const declarations:SurfaceDeclaration[]=[];this.parsedDeclarations=declarations;let bodyStarted=false;
