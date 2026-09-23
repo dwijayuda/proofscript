@@ -834,6 +834,11 @@ if (writeDocs) {
   writeFileSync(out, JSON.stringify(withHash, null, 2) + '\n');
 }
 if (json) console.log(JSON.stringify(withHash, null, 2));
-else if (failures.length) console.error(`REFERENCE_LANGUAGE_GOVERNANCE=FAIL failures=${failures.length}`);
-else console.log(`REFERENCE_LANGUAGE_GOVERNANCE=PASS checks=${checks.length} sha256=${withHash.referenceGovernanceSha256}`);
+else if (failures.length) {
+  console.error(`REFERENCE_LANGUAGE_GOVERNANCE=FAIL failures=${failures.length}`);
+  for (const failure of failures) {
+    console.error(`  - ${failure.id}: ${failure.message}`);
+    if (failure.details) console.error(`    details=${JSON.stringify(failure.details)}`);
+  }
+} else console.log(`REFERENCE_LANGUAGE_GOVERNANCE=PASS checks=${checks.length} sha256=${withHash.referenceGovernanceSha256}`);
 process.exit(failures.length ? 1 : 0);
