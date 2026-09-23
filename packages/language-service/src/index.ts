@@ -654,13 +654,15 @@ export class ProofScriptLanguageService {
     const analysis = this.analyze(uri, false, cancellation);
     const actions: CodeActionInfo[] = [];
 
-    const formatEdits = this.formatDocument(uri, cancellation);
-    if (formatEdits.length > 0) {
-      actions.push({
-        title: "Format ProofScript document",
-        kind: "source.format.proofscript",
-        edit: { changes: { [uri]: formatEdits } },
-      });
+    if (analysis.status === "accepted") {
+      const formatEdits = this.formatDocument(uri, cancellation);
+      if (formatEdits.length > 0) {
+        actions.push({
+          title: "Format ProofScript document",
+          kind: "source.format.proofscript",
+          edit: { changes: { [uri]: formatEdits } },
+        });
+      }
     }
 
     for (const diagnostic of analysis.diagnostics) {
