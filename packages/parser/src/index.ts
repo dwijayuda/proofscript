@@ -18,6 +18,8 @@ export interface ParserState{commandIndex:number;grammarRevision:number;universe
 export interface IncompleteProofParseObservation{
   readonly declarations:readonly SurfaceDeclaration[];
   readonly partialDeclaration:Extract<SurfaceDeclaration,{kind:"theorem"|"example"}>;
+  readonly sourceStartOffset:number;
+  readonly sourceEndOffset:number;
   readonly failureOffset:number;
   readonly message:string;
 }
@@ -334,6 +336,8 @@ class Parser extends TokenCursor{
       this.incompleteProofSink({
         declarations:[...this.parsedDeclarations,partial],
         partialDeclaration:partial,
+        sourceStartOffset:startOffset,
+        sourceEndOffset:failure.offset,
         failureOffset:failure.offset,
         message:`expected '}' at offset ${failure.offset}, found '${failure.text}'`,
       });
