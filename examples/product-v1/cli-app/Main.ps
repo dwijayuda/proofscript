@@ -1,0 +1,7 @@
+function loyaltyPrice(total: Nat, loyal: Bool): Nat := {
+  if loyal then total - 5 else total
+}
+
+def sample: Nat := {
+  loyaltyPrice(100, true)
+}
