@@ -140,7 +140,7 @@ try {
   assert.equal(executed.status, "accepted");
   assert.equal(String(executed.result), "95");
 
-  const formatCheck = jsonStdout(psc(installedPsc, ["fmt", "--check", "--json"], app), 0);
+  const formatCheck = jsonStdout(psc(installedPsc, ["fmt", "--check", "--json"], app));
   assert.equal(formatCheck.status, "accepted");
 
   console.log("PRODUCT_V1_FRESH_RELEASE_TESTS=PASS");
