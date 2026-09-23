@@ -33,7 +33,7 @@ function tokenize(sourceText) {
       continue;
     }
 
-    if (['=', '>', '<', '+', '-', '*', '(', ')', ','].includes(ch)) {
+    if (['=', '>', '<', '+', '-', '*', '∧', '∨', '¬', '(', ')', ','].includes(ch)) {
       const kind = ['(', ')', ','].includes(ch) ? 'punctuation' : 'operator';
       tokens.push({ kind, text: ch, start: i, end: i + 1 });
       i += 1;
@@ -163,7 +163,7 @@ class Parser {
   }
 
   parse() {
-    const root = this.parseComparison();
+    const root = this.parseDisjunction();
     const token = this.current();
     if (token.kind !== 'eof') {
       throw new PredicateAstError(
@@ -181,6 +181,82 @@ class Parser {
       ));
     }
     return root;
+  }
+
+  parseDisjunction() {
+    let left = this.parseConjunction();
+    while (this.consume('∨')) {
+      const right = this.parseConjunction();
+      const node = {
+        kind: 'logical-binary',
+        operator: '∨',
+        left,
+        right,
+        type: 'Prop',
+        start: left.start,
+        end: right.end,
+      };
+      this.checkPropositionOperands(node);
+      left = node;
+    }
+    return left;
+  }
+
+  parseConjunction() {
+    let left = this.parseLogicalUnary();
+    while (this.consume('∧')) {
+      const right = this.parseLogicalUnary();
+      const node = {
+        kind: 'logical-binary',
+        operator: '∧',
+        left,
+        right,
+        type: 'Prop',
+        start: left.start,
+        end: right.end,
+      };
+      this.checkPropositionOperands(node);
+      left = node;
+    }
+    return left;
+  }
+
+  parseLogicalUnary() {
+    const token = this.current();
+    if (this.consume('¬')) {
+      const operand = this.parseLogicalUnary();
+      const node = {
+        kind: 'logical-not',
+        operator: '¬',
+        operand,
+        type: 'Prop',
+        start: token.start,
+        end: operand.end,
+      };
+      if (operand.type !== 'Prop') {
+        this.diagnostics.push(diagnostic(
+          'stateful-predicate-logical-type-mismatch',
+          `logical negation requires Prop, found ${operand.type ?? 'unknown'}`,
+          node,
+          { operandType: operand.type ?? null },
+        ));
+      }
+      return node;
+    }
+    return this.parseComparison();
+  }
+
+  checkPropositionOperands(node) {
+    const leftType = node.left.type;
+    const rightType = node.right.type;
+    if (leftType !== 'Prop' || rightType !== 'Prop') {
+      this.diagnostics.push(diagnostic(
+        'stateful-predicate-logical-type-mismatch',
+        `logical operator '${node.operator}' requires Prop operands, found ${leftType ?? 'unknown'} and ${rightType ?? 'unknown'}`,
+        node,
+        { leftType: leftType ?? null, rightType: rightType ?? null },
+      ));
+    }
   }
 
   parseComparison() {
@@ -351,7 +427,7 @@ class Parser {
 
     if (this.consume('(')) {
       const start = token.start;
-      const inner = this.parseComparison();
+      const inner = this.parseDisjunction();
       const close = this.expect(')');
       return { kind: 'group', expression: inner, type: inner.type, start, end: close.end };
     }
