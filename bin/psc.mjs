@@ -22,8 +22,10 @@ import {
   CURRENT_PROOFSCRIPT_REFERENCE,
   certificateMetadataForCore,
   readCurrentProductProfile,
+  runtimeCertificateMetadata,
   validateCliProjectProfile,
   verifyCertificateMetadataAgainstCore,
+  verifyRuntimeCertificateMetadata,
 } from '../packages/product-profile/src/index.mjs';
 const require = createRequire(import.meta.url);
 
@@ -35,7 +37,7 @@ const NODE_TS_FLAGS = [
 ];
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OPTIONS_WITH_VALUES = new Set([
-  '--args', '--call', '--core', '--emit-core', '--emit-lean', '--emit-lean-check', '--lean-cmd', '--lean-project', '--lake-cmd', '--name', '--out', '--out-dir', '--proofs', '--runtime', '--state-model', '--suffix', '--target', '--template', '--verification-profile',
+  '--args', '--call', '--core', '--emit-core', '--emit-lean', '--emit-lean-check', '--lean-cmd', '--lean-project', '--lake-cmd', '--name', '--out', '--out-dir', '--proofs', '--runtime', '--runtime-artifact', '--state-model', '--suffix', '--target', '--template', '--verification-profile',
 ]);
 
 function has(args, name) { return args.includes(name); }
@@ -59,7 +61,7 @@ function positional(args) {
   return out;
 }
 function usage(code = 0) {
-  const text = `ProofScript ${VERSION}\n\nSimple project workflow:\n  psc init my-app\n  cd my-app\n  psc check\n  psc build\n  psc run sample\n\nCompiler setup workflow from the ProofScript source ZIP:\n  npm install --offline --no-audit --no-fund\n  npm run setup\n  npm link\n  psc doctor\n  psc clean [--json]\n\nCommands:\n  psc setup\n  psc init [dir] [--name <name>] [--template software|crud] [--force] [--json]\n  psc status [--json]\n  psc check [file.ps] [--json] [--emit-core <out.json>]\n  psc emit-core [file.ps] --out <out.pscore.json> [--json]\n  psc emit-lean <file.ps|core.json|contracts.json> --out <out.lean> [--json]\n  psc certify [file.ps] --core <core.json> --out <cert.json> [--json]\n  psc build-ts [file.ps] [--out <out.ts>] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc build-js [file.ps] [--out <out.js>] [--json]\n  psc build [file.ps] [--target ts|js] [--out <file>] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc compile [file.ps|dir] [--out-dir <dir>] [--suffix .generated] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc run [file.ps] [--call <name>] [--args a,b] [--json]\n  psc run <name> [--args a,b] [--json]\n  psc target list\n  psc language status [--json]
+  const text = `ProofScript ${VERSION}\n\nSimple project workflow:\n  psc init my-app\n  cd my-app\n  psc check\n  psc build\n  psc run sample\n\nCompiler setup workflow from the ProofScript source ZIP:\n  npm install --offline --no-audit --no-fund\n  npm run setup\n  npm link\n  psc doctor\n  psc clean [--json]\n\nCommands:\n  psc setup\n  psc init [dir] [--name <name>] [--template software|crud] [--force] [--json]\n  psc status [--json]\n  psc check [file.ps] [--json] [--emit-core <out.json>]\n  psc emit-core [file.ps] --out <out.pscore.json> [--json]\n  psc emit-lean <file.ps|core.json|contracts.json> --out <out.lean> [--json]\n  psc certify [file.ps] --core <core.json> --out <cert.json> [--runtime-artifact <out.ts|out.js>] [--json]\n  psc build-ts [file.ps] [--out <out.ts>] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc build-js [file.ps] [--out <out.js>] [--json]\n  psc build [file.ps] [--target ts|js] [--out <file>] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc compile [file.ps|dir] [--out-dir <dir>] [--suffix .generated] [--runtime local|package|bundled] [--bundle-runtime] [--json]\n  psc run [file.ps] [--call <name>] [--args a,b] [--json]\n  psc run <name> [--args a,b] [--json]\n  psc target list\n  psc language status [--json]
   psc state-model validate <model.json> [--out <validation.json>] [--json]\n  psc monadic-lowering <contracts.json> --out <lowering.json> [--emit-lean <out.lean>] [--json]\n  psc monadic-vc-request <monadic-lowering.json> --out <request.json> [--emit-lean <request.lean>] [--json]\n  psc monadic-vc-run <monadic-lowering.json> --lean-project <dir> --out <run.json> [--lake-cmd <lake>] [--json]\n  psc monadic-preflight <monadic-lowering.json> --out <preflight.json> --emit-lean <preflight.lean> [--lean-cmd <lean>] [--json]\n  psc doctor\n  psc clean [--json]\n\nDefaults inside a psc init project:\n  input file: src/Main.ps\n  source dir: src\n  output dir: dist\n\nTrust boundary:\n  This CLI is a wrapper over the PSC-1 software-profile path. It does not claim full Lean 4 equivalence or full backend execution-correspondence proof.\n`;
   (code === 0 ? console.log : console.error)(text);
   process.exit(code);
@@ -1283,6 +1285,33 @@ function emitLeanCommand(args) {
   fs.writeFileSync(resolvedOut, leanText);
   jsonOut({ status: 'accepted', command: 'emit-lean', input, source, out: resolvedOut, inputSha256: coreSha256, outputSha256: sha256File(resolvedOut), trustBoundary: { oracleArtifact: true, fullLean4Equivalence: false } }, json);
 }
+function runtimeArtifactBinding(file, certificateOut) {
+  if (!file) return undefined;
+  const resolved = path.resolve(process.cwd(), file);
+  if (!fs.existsSync(resolved)) throw new Error(`runtime artifact is missing or unreadable: ${resolved}`);
+  const ext = path.extname(resolved).toLowerCase();
+  const target = ext === '.ts' ? 'ts' : ext === '.js' ? 'js' : null;
+  if (!target) throw new Error(`runtime artifact must be .ts or .js, got '${ext || '<none>'}'`);
+  return {
+    target,
+    path: path.relative(path.dirname(certificateOut), resolved).replace(/\\/g, '/'),
+    sha256: sha256File(resolved),
+  };
+}
+
+function certificateRuntimeMetadata(args, certificateOut) {
+  const base = runtimeCertificateMetadata(ROOT);
+  const runtimeArtifact = runtimeArtifactBinding(opt(args, '--runtime-artifact'), certificateOut);
+  return {
+    ...base,
+    ...(runtimeArtifact ? { runtimeArtifact } : {}),
+    correspondence: {
+      ...base.correspondence,
+      backendArtifactBound: Boolean(runtimeArtifact),
+    },
+  };
+}
+
 function certifyCommand(args) {
   const json = has(args, '--json');
   const pos = positional(args);
@@ -1304,6 +1333,7 @@ function certifyCommand(args) {
     checkpoint: 'KA-146 Lean-checkable monadic skeleton preflight',
     packageVersion: VERSION,
     ...certificateMetadataForCore(ROOT, artifact),
+    ...certificateRuntimeMetadata(args, resolvedOut),
     source: { path: path.relative(path.dirname(resolvedOut), source).replace(/\\/g, '/'), sha256: sha256File(source) },
     core: { path: path.relative(path.dirname(resolvedOut), resolvedCore).replace(/\\/g, '/'), sha256: sha256File(resolvedCore), declarations },
     checker: { command: 'psc certify', structuralOnly: true, semanticPSKernelReplay: true },
@@ -1527,10 +1557,37 @@ function verifyCommand(args) {
     }
     try {
       verifyCertificateMetadataAgainstCore(ROOT, artifact, readJsonPath(corePath));
+      verifyRuntimeCertificateMetadata(ROOT, artifact);
     } catch (error) {
       jsonOut({ status: 'rejected', command: 'verify', artifactKind: 'certificate', message: error instanceof Error ? error.message : String(error) }, json);
       process.exit(1);
     }
+    if (artifact.runtimeArtifact) {
+      const runtimePath = path.resolve(path.dirname(resolved), artifact.runtimeArtifact.path ?? '');
+      if (!artifact.runtimeArtifact.sha256 || !fs.existsSync(runtimePath)) {
+        jsonOut({ status: 'rejected', command: 'verify', artifactKind: 'certificate', message: 'certificate runtime artifact binding is missing or unreadable' }, json);
+        process.exit(1);
+      }
+      const runtimeSha256 = sha256File(runtimePath);
+      if (runtimeSha256 !== artifact.runtimeArtifact.sha256) {
+        jsonOut({ status: 'rejected', command: 'verify', artifactKind: 'certificate', message: 'certificate runtime artifact hash mismatch', expected: artifact.runtimeArtifact.sha256, actual: runtimeSha256 }, json);
+        process.exit(1);
+      }
+      if (!['ts', 'js'].includes(artifact.runtimeArtifact.target)) {
+        jsonOut({ status: 'rejected', command: 'verify', artifactKind: 'certificate', message: 'certificate runtime artifact target must be ts or js' }, json);
+        process.exit(1);
+      }
+      if (artifact.correspondence?.backendArtifactBound !== true) {
+        jsonOut({ status: 'rejected', command: 'verify', artifactKind: 'certificate', message: 'certificate runtime artifact exists but backendArtifactBound is not true' }, json);
+        process.exit(1);
+      }
+      result.runtimeArtifact = { path: runtimePath, target: artifact.runtimeArtifact.target, sha256: runtimeSha256 };
+    } else if (artifact.correspondence?.backendArtifactBound === true) {
+      jsonOut({ status: 'rejected', command: 'verify', artifactKind: 'certificate', message: 'certificate claims backendArtifactBound without a runtime artifact' }, json);
+      process.exit(1);
+    }
+    if (artifact.runtimeProfile) result.runtimeProfile = artifact.runtimeProfile;
+    if (artifact.correspondence) result.correspondence = artifact.correspondence;
     result.boundCore = corePath;
     result.boundCoreSha256 = actual;
     result.trustBoundary.semanticPSKernelReplay = true;
@@ -1538,7 +1595,7 @@ function verifyCommand(args) {
   jsonOut(result, json);
 }
 
-function createStructuralCertificate(source, core, out) {
+function createStructuralCertificate(source, core, out, runtimeArtifact) {
   const resolvedSource = path.resolve(source);
   const resolvedCore = path.resolve(core);
   const resolvedOut = path.resolve(out);
@@ -1550,6 +1607,18 @@ function createStructuralCertificate(source, core, out) {
     checkpoint: 'KA-146 Lean-checkable monadic skeleton preflight',
     packageVersion: VERSION,
     ...certificateMetadataForCore(ROOT, artifact),
+    ...runtimeCertificateMetadata(ROOT),
+    ...(runtimeArtifact ? {
+      runtimeArtifact: {
+        target: runtimeArtifact.target,
+        path: path.relative(path.dirname(resolvedOut), path.resolve(runtimeArtifact.path)).replace(/\\/g, '/'),
+        sha256: sha256File(path.resolve(runtimeArtifact.path)),
+      },
+    } : {}),
+    correspondence: {
+      ...runtimeCertificateMetadata(ROOT).correspondence,
+      backendArtifactBound: Boolean(runtimeArtifact),
+    },
     source: { path: path.relative(path.dirname(resolvedOut), resolvedSource).replace(/\\/g, '/'), sha256: sha256File(resolvedSource) },
     core: { path: path.relative(path.dirname(resolvedOut), resolvedCore).replace(/\\/g, '/'), sha256: sha256File(resolvedCore), declarations },
     checker: { command: 'psc certify', structuralOnly: true, semanticPSKernelReplay: true },
@@ -1583,7 +1652,7 @@ function softwareAlphaCommand(args) {
     const checked = checkDirect(source, core);
     fs.writeFileSync(lean, emitLeanFromCoreArtifact(readJsonPath(core)));
     const built = buildTsDirect(source, ts, ['--runtime', 'local']);
-    const certificate = createStructuralCertificate(source, core, cert);
+    const certificate = createStructuralCertificate(source, core, cert, { target: 'ts', path: ts });
     workflows.push({
       kind: 'executable',
       source: { path: path.relative(process.cwd(), source).replace(/\\/g, '/'), sha256: sha256File(source) },
