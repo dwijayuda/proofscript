@@ -131,6 +131,13 @@ export class ProofScriptLanguageServer {
               definitionProvider: true,
               referencesProvider: true,
               renameProvider: true,
+              semanticTokensProvider: {
+                legend: {
+                  tokenTypes: ["function", "enum", "struct", "class", "variable"],
+                  tokenModifiers: ["declaration", "definition", "readonly"],
+                },
+                full: true,
+              },
             },
             serverInfo: {
               name: "ProofScript LSP",
@@ -420,6 +427,28 @@ export class ProofScriptLanguageServer {
           }
         }
 
+        case "textDocument/semanticTokens/full": {
+          const uri = message.params?.textDocument?.uri;
+          if (typeof uri !== "string") return this.error(message.id, -32602, "missing textDocument.uri");
+          const before = this.documents.get(uri);
+          if (!before) return this.error(message.id, -32602, `document is not open: ${uri}`);
+          const ownerId = requestId(message.id);
+          try {
+            const tokens = await this.worker.semanticTokens(uri, ownerId);
+            const latest = this.documents.get(uri);
+            if (!latest || latest.version !== before.version) {
+              return this.error(message.id, -32801, "document changed while semantic tokens were running");
+            }
+            return this.reply(message.id, {
+              resultId: `${uri}@${latest.version}`,
+              data: encodeSemanticTokens(tokens),
+            });
+          } catch (error) {
+            if (error instanceof LanguageWorkerCancelledError) return this.error(message.id, -32800, "request cancelled");
+            throw error;
+          }
+        }
+
         case "textDocument/definition": {
           const uri = message.params?.textDocument?.uri;
           const position = message.params?.position;
@@ -638,6 +667,43 @@ function positionInRange(position: Position, range: Range): boolean {
   const beforeEnd = position.line < range.end.line
     || (position.line === range.end.line && position.character <= range.end.character);
   return afterStart && beforeEnd;
+}
+
+const SEMANTIC_TOKEN_TYPES = ["function", "enum", "struct", "class", "variable"] as const;
+const SEMANTIC_TOKEN_MODIFIERS = ["declaration", "definition", "readonly"] as const;
+
+function encodeSemanticTokens(tokens: readonly any[]): number[] {
+  const sorted = [...tokens].filter((token) =>
+    token?.range?.start?.line === token?.range?.end?.line
+    && token.range.end.character >= token.range.start.character
+  ).sort((left, right) =>
+    left.range.start.line - right.range.start.line
+    || left.range.start.character - right.range.start.character
+    || left.range.end.character - right.range.end.character
+  );
+
+  const data: number[] = [];
+  let previousLine = 0;
+  let previousCharacter = 0;
+  for (const token of sorted) {
+    const line = token.range.start.line;
+    const character = token.range.start.character;
+    const length = token.range.end.character - character;
+    if (length <= 0) continue;
+    const tokenType = SEMANTIC_TOKEN_TYPES.indexOf(token.kind);
+    if (tokenType < 0) continue;
+    let modifiers = 0;
+    for (const modifier of token.modifiers ?? []) {
+      const index = SEMANTIC_TOKEN_MODIFIERS.indexOf(modifier);
+      if (index >= 0) modifiers |= (1 << index);
+    }
+    const deltaLine = line - previousLine;
+    const deltaStart = deltaLine === 0 ? character - previousCharacter : character;
+    data.push(deltaLine, deltaStart, length, tokenType, modifiers);
+    previousLine = line;
+    previousCharacter = character;
+  }
+  return data;
 }
 
 function lspCompletionKind(kind: string): number {
