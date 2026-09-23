@@ -37,6 +37,8 @@ jobs:
       - run: npm run test:reference:v061:production-reference-parity
       - run: npm run test:ps3:pure-contracts
       - run: npm run test:ps3:loop-vc
+      - run: npm run test:ps3:loop-lean-proof-matrix
+      - run: npm run test:ps3:loop-lean-runner-selection
       - run: npm run test:ps3:monadic-contracts
       - run: npm run test:ps3:verification-profile-cli
       - run: npm run test:ps3:stateful-frame
