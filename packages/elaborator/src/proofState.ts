@@ -48,7 +48,7 @@ export function observeProofState(
   state: ProofStateSnapshot,
 ): void {
   try {
-    observer?.recordProofState(state);
+    observer?.recordProofState?.(state);
   } catch {
     // Observational tooling is deliberately fail-open with respect to proof
     // checking. The checked Core term remains the only acceptance path.
