@@ -804,6 +804,8 @@ function lspCompletionKind(kind: string): number {
       return 7; // Class
     case "instance":
       return 6; // Variable
+    case "tactic":
+      return 14; // Keyword
     default:
       return 6; // Variable
   }
