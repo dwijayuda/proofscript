@@ -94,6 +94,10 @@ assert.equal(initialized.result.capabilities.definitionProvider, true);
 assert.equal(initialized.result.capabilities.referencesProvider, true);
 assert.equal(initialized.result.capabilities.renameProvider, true);
 assert.equal(initialized.result.capabilities.documentFormattingProvider, true);
+assert.deepEqual(
+  initialized.result.capabilities.codeActionProvider.codeActionKinds,
+  ["quickfix", "source.format.proofscript"],
+);
 assert.equal(initialized.result.capabilities.semanticTokensProvider.full, true);
 assert.deepEqual(
   initialized.result.capabilities.semanticTokensProvider.legend.tokenTypes,
@@ -385,6 +389,44 @@ assert.equal(commentedFormatting.result.length, 1);
 assert.match(commentedFormatting.result[0].newText, /-- keep/u);
 assert.match(commentedFormatting.result[0].newText, /def x: Nat := \{1 \+ 2\};/u);
 
+const missingSemicolonSource = "def missing: Nat := 1\n";
+send({
+  jsonrpc: "2.0",
+  method: "textDocument/didChange",
+  params: {
+    textDocument: { uri, version: 6 },
+    contentChanges: [{ text: missingSemicolonSource }],
+  },
+});
+const pushedMissingSemicolon = await waitFor(
+  (message) => message.method === "textDocument/publishDiagnostics"
+    && message.params?.uri === uri
+    && message.params?.version === 6,
+  "version 6 missing-semicolon diagnostics",
+);
+assert.equal(pushedMissingSemicolon.params.diagnostics.length, 1);
+assert.equal(pushedMissingSemicolon.params.diagnostics[0].code, "PSLS1001");
+assert.match(pushedMissingSemicolon.params.diagnostics[0].data.rawMessage, /^expected ';' at offset \d+, found '/u);
+
+send({
+  jsonrpc: "2.0",
+  id: 18,
+  method: "textDocument/codeAction",
+  params: {
+    textDocument: { uri },
+    range: pushedMissingSemicolon.params.diagnostics[0].range,
+    context: {
+      diagnostics: pushedMissingSemicolon.params.diagnostics,
+    },
+  },
+});
+const codeActions = await waitFor((message) => message.id === 18, "code action response");
+assert.equal(codeActions.result.length, 1);
+assert.equal(codeActions.result[0].title, "Insert missing ';'");
+assert.equal(codeActions.result[0].kind, "quickfix");
+assert.equal(codeActions.result[0].isPreferred, true);
+assert.equal(codeActions.result[0].edit.changes[uri][0].newText, ";");
+
 send({
   jsonrpc: "2.0",
   method: "textDocument/didClose",
@@ -398,8 +440,8 @@ const closed = await waitFor(
 );
 assert.deepEqual(closed.params.diagnostics, []);
 
-send({ jsonrpc: "2.0", id: 18, method: "shutdown", params: null });
-const shutdown = await waitFor((message) => message.id === 18, "shutdown response");
+send({ jsonrpc: "2.0", id: 19, method: "shutdown", params: null });
+const shutdown = await waitFor((message) => message.id === 19, "shutdown response");
 assert.equal(shutdown.result, null);
 send({ jsonrpc: "2.0", method: "exit", params: null });
 
