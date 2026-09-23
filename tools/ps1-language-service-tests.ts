@@ -219,6 +219,10 @@ assert.equal(service.hover(uri, { line: 0, character: 6 })?.name, "repaired");
 const repairedCompletion = service.completion(uri, { line: 0, character: 7 });
 assert.ok(repairedCompletion.some((item) => item.label === "repaired"));
 assert.ok(repairedCompletion.every((item) => item.qualifiedName && item.detail));
+assert.ok(
+  repairedCompletion.every((item) => item.kind !== "tactic"),
+  "ordinary source completion must not inject proof tactics outside a canonical proof state",
+);
 
 const navigationSource = "def navBase: Nat := 1;\ndef navUse: Nat := navBase;\n";
 service.replaceDocument(uri, 4, navigationSource);
@@ -361,6 +365,32 @@ assert.equal(emptyGoals.tacticState?.sourceStatus, "syntax-incomplete");
 assert.deepEqual(emptyGoals.tacticState?.locals.map((local) => local.name), ["h"]);
 assert.equal(emptyGoals.tacticState?.locals[0]?.type, "P");
 assert.equal(emptyGoals.declarationGoal, null);
+const emptyGoalCompletion = emptyGoalService.completion(
+  emptyGoalUri,
+  { line: 0, character: emptyGoalSource.length },
+);
+const tacticCompletionLabels = emptyGoalCompletion
+  .filter((item) => item.kind === "tactic")
+  .map((item) => item.label)
+  .sort();
+assert.deepEqual(tacticCompletionLabels, [
+  "apply",
+  "assumption",
+  "cases",
+  "constructor",
+  "exact",
+  "have",
+  "induction",
+  "intro",
+  "rfl",
+  "rw",
+  "show",
+  "simp",
+  "subst",
+]);
+assert.ok(emptyGoalCompletion
+  .filter((item) => item.kind === "tactic")
+  .every((item) => /checked by canonical elaboration/u.test(item.detail)));
 emptyGoalService.closeDocument(emptyGoalUri);
 fs.unlinkSync(emptyGoalFile);
 
