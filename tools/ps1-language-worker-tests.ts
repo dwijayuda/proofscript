@@ -35,6 +35,7 @@ const firstGoals = await worker.goals(uri, { line: 0, character: 47 });
 assert.equal(firstGoals.tacticStateAvailable, true);
 assert.equal(firstGoals.tacticState?.tactic, "assumption");
 assert.equal(firstGoals.tacticState?.goal, "P");
+assert.equal(firstGoals.tacticState?.sourceStatus, "checked");
 assert.deepEqual(firstGoals.tacticState?.locals.map((local) => local.name), ["P", "h"]);
 assert.equal(firstGoals.declarationGoal?.origin, "compiler-theorem");
 assert.equal(firstGoals.declarationGoal?.name, "overlay");
@@ -52,10 +53,34 @@ const partialGoals = await worker.goals(partialUri, { line: 0, character: partia
 assert.equal(partialGoals.tacticStateAvailable, true);
 assert.equal(partialGoals.tacticState?.tactic, "exact");
 assert.equal(partialGoals.tacticState?.goal, "P");
+assert.equal(partialGoals.tacticState?.sourceStatus, "rejected-prefix");
 assert.deepEqual(partialGoals.tacticState?.locals.map((local) => local.name), ["P", "h"]);
 assert.equal(partialGoals.declarationGoal, null);
 worker.closeDocument(partialUri);
 fs.unlinkSync(partialFile);
+
+const incompleteFile = path.join(srcDir, "Incomplete.ps");
+const incompleteUri = "proofscript-worker-test://Incomplete.ps";
+const incompleteSource = "theorem incomplete(P: Prop, h: P): P := by { assumption\n";
+fs.writeFileSync(incompleteFile, incompleteSource);
+worker.openDocument(incompleteUri, 1, incompleteSource, incompleteFile);
+const incompleteAnalysis = await worker.analyze(incompleteUri);
+assert.equal(incompleteAnalysis.status, "rejected");
+assert.ok(incompleteAnalysis.proofStates.some((state) =>
+  state.tactic === "assumption" && state.sourceStatus === "syntax-incomplete"
+));
+const incompleteGoals = await worker.goals(
+  incompleteUri,
+  { line: 0, character: incompleteSource.indexOf("assumption") + 1 },
+);
+assert.equal(incompleteGoals.tacticStateAvailable, true);
+assert.equal(incompleteGoals.tacticState?.tactic, "assumption");
+assert.equal(incompleteGoals.tacticState?.goal, "P");
+assert.equal(incompleteGoals.tacticState?.sourceStatus, "syntax-incomplete");
+assert.deepEqual(incompleteGoals.tacticState?.locals.map((local) => local.name), ["P", "h"]);
+assert.equal(incompleteGoals.declarationGoal, null);
+worker.closeDocument(incompleteUri);
+fs.unlinkSync(incompleteFile);
 
 worker.replaceDocument(uri, 2, "theorem broken");
 const broken = await worker.diagnostics(uri);
