@@ -11,6 +11,7 @@
     "README.md"
   ],
   "dependencies": {
-    "@proofscript/compiler": "0.1.0-dev.0"
+    "@proofscript/compiler": "0.1.0-dev.0",
+    "@proofscript/formatter": "0.1.0-dev.0"
   }
 }
