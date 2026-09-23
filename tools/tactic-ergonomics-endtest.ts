@@ -34,14 +34,16 @@ const steps = [
   { name: "parser-proof", args: npmArgs("test:parser:proof") },
   { name: "elaborator-proof", args: npmArgs("test:elaborator:proof-extraction") },
   { name: "language-service", args: npmArgs("test:ps1:language-service") },
+  { name: "language-worker", args: npmArgs("test:ps1:language-worker") },
   { name: "lsp-transport", args: npmArgs("test:ps1:lsp") },
+  { name: "vscode-smoke", args: npmArgs("test:product-v1:vscode") },
   { name: "standalone-small", args: npmArgs("test:standalone-small") },
   { name: "reference-governance", args: npmArgs("test:reference-governance") },
 ];
 
 if (planOnly) {
   const report = {
-    schema: "proofscript.tactic-ergonomics-endtest/v1",
+    schema: "proofscript.tactic-ergonomics-endtest/v2",
     status: "planned",
     executionAttempted: false,
     steps: steps.map((step) => ({ ...step, status: "planned" })),
@@ -93,7 +95,7 @@ const skippedSteps = results.filter((step) => step.status === "skipped").length;
 const passed = failedSteps === 0 && skippedSteps === 0 && passedSteps === steps.length;
 
 const report = {
-  schema: "proofscript.tactic-ergonomics-endtest/v1",
+  schema: "proofscript.tactic-ergonomics-endtest/v2",
   status: passed ? "passed" : "failed",
   executionAttempted: true,
   summary: {
