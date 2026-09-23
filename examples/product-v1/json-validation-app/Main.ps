@@ -1,0 +1,18 @@
+axiom jsonIsValid(text: String): Bool;
+axiom jsonIsObject(text: String): Bool;
+axiom jsonIsArray(text: String): Bool;
+axiom jsonHasStringField(text: String, key: String): Bool;
+axiom jsonHasBooleanField(text: String, key: String): Bool;
+axiom jsonHasSafeIntegerField(text: String, key: String): Bool;
+axiom jsonCanonicalizeOr(text: String, fallback: String): String;
+
+def validProfile: Bool := { jsonIsValid("{\"name\":\"ProofScript\",\"active\":true,\"count\":3}") }
+def invalidProfile: Bool := { jsonIsValid("{bad}") }
+def objectProfile: Bool := { jsonIsObject("{\"name\":\"ProofScript\"}") }
+def arrayProfile: Bool := { jsonIsArray("[1,2,3]") }
+def hasName: Bool := { jsonHasStringField("{\"name\":\"ProofScript\"}", "name") }
+def hasActive: Bool := { jsonHasBooleanField("{\"active\":true}", "active") }
+def hasCount: Bool := { jsonHasSafeIntegerField("{\"count\":3}", "count") }
+def rejectsDecimalAsInteger: Bool := { jsonHasSafeIntegerField("{\"count\":3.5}", "count") }
+def canonicalProfile: String := { jsonCanonicalizeOr("{ \"name\" : \"ProofScript\", \"active\" : true }", "fallback") }
+def invalidFallback: String := { jsonCanonicalizeOr("{bad}", "fallback") }
