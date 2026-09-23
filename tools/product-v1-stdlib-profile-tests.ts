@@ -102,8 +102,11 @@ assert.ok(fs.existsSync(path.join(root, profile.packageLayer.jsonValidation.exam
 assert.equal(profile.packageLayer.packageSourceResolution.status, "project-modules-only");
 assert.equal(
   profile.packageLayer.dependencyCertificateIdentity.status,
-  "implemented-for-implicit-stdlib-after-product-v1-binding",
+  "implemented-for-implicit-stdlib-and-npm-ffi",
 );
+assert.equal(profile.packageLayer.dependencyCertificateIdentity.identitySchema, "proofscript.npm-dependency-identity/v1");
+assert.equal(profile.packageLayer.dependencyCertificateIdentity.tamperRejection, true);
+assert.equal(profile.packageLayer.dependencyCertificateIdentity.sourcePackageImports, "not yet implemented");
 
 const stdlib = readCurrentStandardLibrary(root);
 assert.equal(stdlib.package, "@proofscript/std");
