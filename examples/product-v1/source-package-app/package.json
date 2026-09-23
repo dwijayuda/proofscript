@@ -1,0 +1,8 @@
+{
+  "name": "proofscript-source-package-app",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@proofscript-example/source-math": "file:../source-package-math"
+  }
+}
