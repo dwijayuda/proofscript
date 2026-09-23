@@ -16,6 +16,9 @@ The branch already inherits these useful implementations from the current produc
 
 ## LSP decision
 
+Primary tooling donor for Product v1 is the preserved **ProofScript LSP 0.46.0
+P5.101 adapter source release**. See `docs/PRODUCT_V1_LSP_DONOR.md`.
+
 Do **not** restore the historical KA146 LSP scaffold over the current code.
 
 The current branch already has the newer architecture:
