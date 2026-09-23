@@ -108,6 +108,22 @@ export interface CompletionInfo {
   readonly sortText: string;
 }
 
+const NATIVE_PROOF_TACTIC_COMPLETIONS = [
+  "rfl",
+  "exact",
+  "intro",
+  "assumption",
+  "apply",
+  "show",
+  "have",
+  "rw",
+  "subst",
+  "constructor",
+  "cases",
+  "induction",
+  "simp",
+] as const;
+
 export type SemanticTokenKind = "function" | "enum" | "struct" | "class" | "variable";
 
 export interface SemanticTokenInfo {
@@ -592,6 +608,24 @@ export class ProofScriptLanguageService {
     const prefix = prefixMatch?.[1] ?? "";
     const seen = new Set<string>();
     const items: CompletionInfo[] = [];
+    const proofState = proofStateAtOffset(analysis.proofStates, offset);
+
+    if (proofState) {
+      for (const tactic of NATIVE_PROOF_TACTIC_COMPLETIONS) {
+        cancellation?.throwIfCancellationRequested();
+        if (prefix && !tactic.startsWith(prefix)) continue;
+        const key = `${tactic}\u0000tactic`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        items.push({
+          label: tactic,
+          qualifiedName: tactic,
+          kind: "tactic",
+          detail: "ProofScript tactic — checked by canonical elaboration after insertion",
+          sortText: `0:tactic:${tactic}`,
+        });
+      }
+    }
 
     for (const declaration of analysis.declarations) {
       cancellation?.throwIfCancellationRequested();
@@ -606,7 +640,7 @@ export class ProofScriptLanguageService {
         qualifiedName,
         kind: declaration.kind,
         detail: declaration.type,
-        sortText: `${label === prefix ? "0" : "1"}:${label}:${qualifiedName}`,
+        sortText: `${label === prefix ? "1" : "2"}:${label}:${qualifiedName}`,
       });
     }
 
