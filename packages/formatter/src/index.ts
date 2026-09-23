@@ -1,10 +1,21 @@
-import { parseSource, tokenize } from "@proofscript/parser";
+import { parseSource, tokenize, tokenizeWithSpans } from "@proofscript/parser";
 
 export interface FormatResult {
   readonly formatted: string;
   readonly changed: boolean;
   readonly tokenCount: number;
-  readonly commentsPreserved: false;
+  readonly commentsPreserved: true;
+}
+
+interface CommentTrivia {
+  readonly text: string;
+  readonly lineComment: boolean;
+  readonly lineBreakBefore: boolean;
+}
+
+interface GapTrivia {
+  readonly comments: readonly CommentTrivia[];
+  readonly trailingLineBreak: boolean;
 }
 
 const TOP_LEVEL_STARTERS = new Set([
@@ -19,12 +30,12 @@ const BINARY_OPERATORS = new Set([
 ]);
 
 export function formatSource(source: string): FormatResult {
-  assertTriviaSupported(source);
   parseSource(source);
 
-  const tokens = tokenize(source).filter((token) => token.kind !== "eof");
+  const tokens = tokenizeWithSpans(source).filter((token) => token.kind !== "eof");
   let out = "";
   let previous: typeof tokens[number] | undefined;
+  let previousEnd = 0;
   let braceDepth = 0;
   let lineStart = true;
 
@@ -40,12 +51,26 @@ export function formatSource(source: string): FormatResult {
     if (!out.endsWith("\n")) out += "\n";
     lineStart = true;
   };
+  const emitTrivia = (gap: string): void => {
+    const trivia = parseGapTrivia(gap);
+    for (const comment of trivia.comments) {
+      if (comment.lineBreakBefore || lineStart || out.length === 0) {
+        if (out.length > 0) newline();
+      } else {
+        space();
+      }
+      append(comment.text);
+      if (comment.lineComment) newline();
+    }
+    if (trivia.trailingLineBreak && trivia.comments.length > 0) newline();
+  };
 
   for (let index = 0; index < tokens.length; index++) {
     const token = tokens[index]!;
     const next = tokens[index + 1];
-    const text = renderToken(token.kind, token.text);
+    emitTrivia(source.slice(previousEnd, token.offset));
 
+    const text = renderToken(token.kind, token.text);
     if (previous && needsSpace(previous.text, token.text)) space();
     append(text);
 
@@ -62,19 +87,21 @@ export function formatSource(source: string): FormatResult {
     }
 
     previous = token;
+    previousEnd = token.endOffset;
   }
 
+  emitTrivia(source.slice(previousEnd));
   const formatted = out.trimEnd() + "\n";
   parseSource(formatted);
   assertSameTokenStream(source, formatted);
+  assertSameComments(source, formatted);
   return {
     formatted,
     changed: formatted !== source,
     tokenCount: tokens.length,
-    commentsPreserved: false,
+    commentsPreserved: true,
   };
 }
-
 
 function needsSpace(previous: string, current: string): boolean {
   if ([")", "]", "}", ",", ";", ":", "."].includes(current)) return false;
@@ -110,32 +137,61 @@ function renderToken(kind: string, text: string): string {
   return out + '"';
 }
 
-function assertTriviaSupported(source: string): void {
+function parseGapTrivia(gap: string): GapTrivia {
+  const comments: CommentTrivia[] = [];
   let index = 0;
-  let inString = false;
-  while (index < source.length) {
-    const ch = source[index]!;
-    if (inString) {
-      if (ch === "\\") {
-        index += 2;
-        continue;
+  let lineBreakBefore = false;
+
+  while (index < gap.length) {
+    const ch = gap[index]!;
+    if (/\s/u.test(ch)) {
+      if (ch === "\n" || ch === "\r") lineBreakBefore = true;
+      index++;
+      continue;
+    }
+
+    if (gap.startsWith("--", index)) {
+      const start = index;
+      index += 2;
+      while (index < gap.length && gap[index] !== "\n" && gap[index] !== "\r") index++;
+      comments.push({
+        text: gap.slice(start, index),
+        lineComment: true,
+        lineBreakBefore,
+      });
+      lineBreakBefore = false;
+      continue;
+    }
+
+    if (gap.startsWith("/-", index)) {
+      const start = index;
+      index += 2;
+      let depth = 1;
+      while (index < gap.length && depth > 0) {
+        if (gap.startsWith("/-", index)) {
+          depth++;
+          index += 2;
+        } else if (gap.startsWith("-/", index)) {
+          depth--;
+          index += 2;
+        } else {
+          index++;
+        }
       }
-      if (ch === '"') inString = false;
-      index++;
+      if (depth !== 0) throw new Error("formatter encountered unterminated block comment trivia");
+      comments.push({
+        text: gap.slice(start, index),
+        lineComment: false,
+        lineBreakBefore,
+      });
+      lineBreakBefore = false;
       continue;
     }
-    if (ch === '"') {
-      inString = true;
-      index++;
-      continue;
-    }
-    if (source.startsWith("--", index) || source.startsWith("/-", index)) {
-      throw new Error(
-        "ProofScript formatter v1 refuses sources containing comments until trivia-preserving formatting is implemented",
-      );
-    }
-    index++;
+
+    throw new Error(`formatter encountered non-trivia source gap content ${JSON.stringify(ch)}`);
   }
+
+  return { comments, trailingLineBreak: lineBreakBefore };
 }
 
 function assertSameTokenStream(before: string, after: string): void {
@@ -146,5 +202,22 @@ function assertSameTokenStream(before: string, after: string): void {
   const right = normalize(after);
   if (JSON.stringify(left) !== JSON.stringify(right)) {
     throw new Error("formatter changed the canonical ProofScript token stream");
+  }
+}
+
+function assertSameComments(before: string, after: string): void {
+  const comments = (source: string): string[] => {
+    const tokens = tokenizeWithSpans(source);
+    const out: string[] = [];
+    let previousEnd = 0;
+    for (const token of tokens) {
+      const gap = source.slice(previousEnd, token.offset);
+      out.push(...parseGapTrivia(gap).comments.map((comment) => comment.text));
+      previousEnd = token.endOffset;
+    }
+    return out;
+  };
+  if (JSON.stringify(comments(before)) !== JSON.stringify(comments(after))) {
+    throw new Error("formatter changed or reordered ProofScript comments");
   }
 }
