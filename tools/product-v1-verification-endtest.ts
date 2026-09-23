@@ -7,6 +7,7 @@ import { formatProcessProgress, runStreamingProcess } from "./ps3-process-runner
 const root = path.resolve(import.meta.dirname, "..");
 const args = process.argv.slice(2);
 const planOnly = args.includes("--plan-only");
+const diagnoseAll = args.includes("--diagnose-all");
 
 function option(name: string) {
   const eq = args.find((arg) => arg.startsWith(`${name}=`));
@@ -64,6 +65,7 @@ const steps = [
     args: npmArgs("assurance:ps3:stateful-endtest", [
       "--toolchains", toolchainInput,
       "--out", statefulSummaryPath,
+      ...(diagnoseAll ? ["--diagnose-all"] : []),
       ...forwarded,
     ]),
   },
@@ -74,6 +76,7 @@ if (planOnly) {
     schema: "proofscript.product-v1-verification-endtest/v1",
     status: "planned",
     executionAttempted: false,
+    diagnoseAll,
     toolchains,
     output: {
       summary: path.relative(root, outPath).replace(/\\/gu, "/"),
@@ -123,7 +126,7 @@ for (const step of steps) {
     stdout: run.stdout ?? "",
     stderr: run.stderr ?? "",
   });
-  previousPassed = passed;
+  if (!passed && (step.name === "build" || !diagnoseAll)) previousPassed = false;
 }
 
 const loopMatrix = fs.existsSync(loopMatrixPath)
@@ -142,6 +145,7 @@ const report = {
   schema: "proofscript.product-v1-verification-endtest/v1",
   status: passed ? "passed" : "failed",
   executionAttempted: true,
+  diagnoseAll,
   toolchains,
   output: {
     summary: path.relative(root, outPath).replace(/\\/gu, "/"),
@@ -171,6 +175,7 @@ const report = {
     loopProofsDischarged: loopMatrix?.summary?.allProofsDischarged === true,
     statefulProofsDischarged: stateful?.summary?.allLeanProofsDischarged === true,
     allStateModelsAdequate: stateful?.summary?.allStateModelsAdequate === true,
+    diagnosticMode: diagnoseAll,
     allVerificationProofsDischarged:
       loopMatrix?.summary?.allProofsDischarged === true
       && stateful?.summary?.allLeanProofsDischarged === true,

@@ -72,6 +72,7 @@ const verificationStep = {
   args: npmArgs("assurance:product-v1:verification-endtest", [
     "--toolchains", toolchainInput,
     "--out", verificationOut,
+    ...(diagnoseAll ? ["--diagnose-all"] : []),
     ...forwardedLean,
   ]),
 };

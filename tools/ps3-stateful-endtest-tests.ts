@@ -79,6 +79,7 @@ try {
   assert.equal(report.schema, "proofscript.stateful-endtest/v1");
   assert.equal(report.status, "planned");
   assert.equal(report.executionAttempted, false);
+  assert.equal(report.diagnoseAll, false);
   assert.deepEqual(report.toolchains, ["4.33.1", "4.34.0", "4.35.0-rc2"]);
   assert.deepEqual(report.steps.map((step: any) => step.name), [
     "build",
@@ -96,6 +97,29 @@ try {
   const matrix = report.steps.at(-1);
   assert.ok(matrix.args.includes("--toolchains"));
   assert.ok(matrix.args.includes("4.33.1,4.34.0,4.35.0-rc2"));
+
+  const diagnosticOut = path.join(tmp, "diagnostic.json");
+  const diagnosticResult = spawnSync(process.execPath, [
+    "--experimental-strip-types",
+    "--disable-warning=ExperimentalWarning",
+    "--disable-warning=MODULE_TYPELESS_PACKAGE_JSON",
+    endtest,
+    "--plan-only",
+    "--diagnose-all",
+    "--toolchains", "4.33.1,4.34.0,4.35.0-rc2",
+    "--out", diagnosticOut,
+  ], {
+    cwd: root,
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+  assert.equal(
+    diagnosticResult.status,
+    0,
+    `diagnostic end-test plan failed\nstdout=${diagnosticResult.stdout}\nstderr=${diagnosticResult.stderr}`,
+  );
+  const diagnostic = JSON.parse(fs.readFileSync(diagnosticOut, "utf8"));
+  assert.equal(diagnostic.diagnoseAll, true);
 
   console.log("PS3_STATEFUL_ENDTEST_TESTS=PASS");
 } finally {

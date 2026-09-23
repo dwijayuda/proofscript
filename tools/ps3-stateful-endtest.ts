@@ -7,6 +7,7 @@ import { formatProcessProgress, runStreamingProcess } from "./ps3-process-runner
 const root = path.resolve(import.meta.dirname, "..");
 const args = process.argv.slice(2);
 const planOnly = args.includes("--plan-only");
+const diagnoseAll = args.includes("--diagnose-all");
 
 function option(name: string) {
   const eq = args.find(arg => arg.startsWith(`${name}=`));
@@ -63,6 +64,7 @@ if (planOnly) {
     schema: "proofscript.stateful-endtest/v1",
     status: "planned",
     executionAttempted: false,
+    diagnoseAll,
     toolchains,
     command: npmPlanInvocation.command,
     commandMode: npmPlanInvocation.mode,
@@ -84,7 +86,7 @@ let buildPassed = false;
 let staticPassed = true;
 
 for (const step of steps) {
-  if (step.name === "proof-matrix" && (!buildPassed || !staticPassed)) {
+  if (step.name === "proof-matrix" && (!buildPassed || (!staticPassed && !diagnoseAll))) {
     results.push({
       ...step,
       status: "skipped",
@@ -149,6 +151,7 @@ const report = {
   schema: "proofscript.stateful-endtest/v1",
   status: passed ? "passed" : "failed",
   executionAttempted: true,
+  diagnoseAll,
   toolchains,
   output: {
     summary: path.relative(root, outPath).replace(/\\/gu, "/"),
@@ -170,6 +173,7 @@ const report = {
     skippedSteps: results.filter(step => step.status === "skipped").length,
     allStaticGatesPassed: buildPassed && staticPassed,
     allStateModelsAdequate: matrixReport?.summary?.allStateModelsAdequate === true,
+    diagnosticMode: diagnoseAll,
     allLeanProofsDischarged: matrixReport?.summary?.allProofsDischarged === true,
   },
 };

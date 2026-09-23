@@ -89,6 +89,10 @@ try {
   assert.equal(diagnostic.diagnoseAll, true);
   assert.equal(diagnostic.skipLean, false);
   assert.equal(diagnostic.steps.at(-1).name, "proof-required-verification");
+  assert.ok(
+    diagnostic.steps.at(-1).args.includes("--diagnose-all"),
+    "diagnostic mode must propagate into the proof-required verification end-test",
+  );
 
   console.log("PRODUCT_V1_ENDTEST_TESTS=PASS");
 } finally {
