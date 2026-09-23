@@ -46,6 +46,27 @@ assert.ok(
   "compiler observer must expose only the canonical proof prefix reached before EOF",
 );
 
+const compilerEmptyGoalStates: FrontendProofState[] = [];
+assert.throws(
+  () => checkCompilerSource(
+    "axiom P: Prop; theorem emptyCompiler(h: P): P := by {",
+    withStandardPrelude({
+      proofStateSink: (event) => compilerEmptyGoalStates.push(event.state),
+    }),
+  ),
+  /expected proof tactic at offset \d+, found '<eof>'/u,
+  "empty by-block must remain a parser rejection",
+);
+assert.ok(
+  compilerEmptyGoalStates.some((state) =>
+    state.kind === "goal"
+    && state.tactic === "by"
+    && state.goal === "P"
+    && state.locals.map((local) => local.name).join(",") === "h"
+  ),
+  "compiler observer must expose a proof-free initial goal using the checked prefix environment",
+);
+
 const acceptedWithThrowingObserver = checkCompilerSource(
   "theorem observerFailOpen(P: Prop, h: P): P := by { assumption }\n",
   withStandardPrelude({
@@ -278,6 +299,38 @@ assert.deepEqual(incompleteGoals.tacticState?.locals.map((local) => local.name),
 assert.equal(incompleteGoals.declarationGoal, null);
 incompleteService.closeDocument(incompleteUri);
 fs.unlinkSync(incompleteFile);
+
+// Empty by-blocks expose the real initial theorem goal at EOF without a
+// synthetic proof term.
+const emptyGoalFile = path.join(srcDir, "EmptyGoal.ps");
+const emptyGoalUri = "proofscript-test://EmptyGoal.ps";
+const emptyGoalSource = "axiom P: Prop; theorem emptyGoal(h: P): P := by {";
+fs.writeFileSync(emptyGoalFile, emptyGoalSource);
+const emptyGoalService = new ProofScriptLanguageService();
+emptyGoalService.openDocument(emptyGoalUri, 1, emptyGoalSource, emptyGoalFile);
+const emptyGoalAnalysis = emptyGoalService.analyze(emptyGoalUri);
+assert.equal(emptyGoalAnalysis.status, "rejected");
+assert.equal(emptyGoalAnalysis.diagnostics.length, 1);
+assert.equal(emptyGoalAnalysis.diagnostics[0]?.code, "PSLS1001");
+assert.ok(emptyGoalAnalysis.proofStates.some((state) =>
+  state.kind === "goal"
+  && state.sourceStatus === "syntax-incomplete"
+  && state.goal === "P"
+));
+const emptyGoals = emptyGoalService.goals(
+  emptyGoalUri,
+  { line: 0, character: emptyGoalSource.length },
+);
+assert.equal(emptyGoals.tacticStateAvailable, true);
+assert.equal(emptyGoals.tacticState?.kind, "goal");
+assert.equal(emptyGoals.tacticState?.tactic, "by");
+assert.equal(emptyGoals.tacticState?.goal, "P");
+assert.equal(emptyGoals.tacticState?.sourceStatus, "syntax-incomplete");
+assert.deepEqual(emptyGoals.tacticState?.locals.map((local) => local.name), ["h"]);
+assert.equal(emptyGoals.tacticState?.locals[0]?.type, "P");
+assert.equal(emptyGoals.declarationGoal, null);
+emptyGoalService.closeDocument(emptyGoalUri);
+fs.unlinkSync(emptyGoalFile);
 
 // Branch-aware tactics must flow through the existing compiler-backed editor path.
 const branchService = new ProofScriptLanguageService();
