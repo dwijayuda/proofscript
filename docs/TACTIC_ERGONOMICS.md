@@ -1,6 +1,6 @@
 # Tactic Ergonomics
 
-Status: **PHASE 5 COMPLETE; PHASE 6 PENDING**
+Status: **PHASE 5 COMPLETE; PHASE 6 IMPLEMENTED, ACCEPTANCE PENDING**
 
 Branch: `feature/tactic-ergonomics`
 
@@ -235,6 +235,52 @@ Fail-closed boundaries remain:
 - the feature does not introduce general parser recovery or metavariable
   interaction.
 
+## Phase 6: proof-state-aware tactic keyword completion
+
+Phase 6 reuses the existing compiler-backed proof-state selection to improve
+completion without introducing tactic search.
+
+When a canonical proof state covers the cursor, completion adds the currently
+supported native tactic keywords:
+
+```text
+rfl
+exact
+intro
+assumption
+apply
+show
+have
+rw
+subst
+constructor
+cases
+induction
+simp
+```
+
+These items are ordinary editor completion candidates only. The language
+service does not decide that a tactic is applicable, does not run a tactic to
+preview success, and does not rank tactics by an independent semantic model.
+After insertion the unchanged canonical parser/elaborator/PSKernel path accepts
+or rejects the resulting proof.
+
+Outside a canonical proof state, tactic keywords are not injected into normal
+source completion.
+
+Transport/UI behavior:
+
+- worker transport reuses the existing completion request;
+- LSP emits tactic items as standard `CompletionItemKind.Keyword`;
+- no ProofScript-specific completion protocol is added;
+- LSP and VS Code register `{` as a completion trigger so typing `by {`
+  immediately requests the compiler-backed list;
+- existing declaration completion remains available and separate.
+
+This phase deliberately does **not** implement tactic applicability prediction,
+proof search, tactic execution during completion, local-hypothesis synthesis,
+metavariables, or proof-term generation.
+
 ## Acceptance
 
 Run one consolidated command:
@@ -243,8 +289,8 @@ Run one consolidated command:
 npm run assurance:tactic-ergonomics
 ```
 
-For the current Phase 5 source it uses schema
-`proofscript.tactic-ergonomics-endtest/v5` and covers nine steps: build,
+For the current Phase 6 source it uses schema
+`proofscript.tactic-ergonomics-endtest/v6` and covers nine steps: build,
 parser proof regressions, elaborator/kernel-check proof regressions,
 compiler-backed language service, the language-worker boundary, LSP transport,
 the active VS Code smoke test, `standalone-small`, and reference governance.
@@ -354,7 +400,8 @@ second editor parser, or any new trusted kernel primitive.
 
 Phase 3 retains already-observed tactic states after later elaboration failure.
 Phase 4 additionally handles only the canonical missing-final-brace case.
-Phase 5 adds the proof-free initial goal for an empty `by {` block. These
-features still do **not** provide general parser recovery, invent
-metavariables/holes, continue parsing/elaboration speculatively after a failure,
-or claim general incomplete-proof recovery.
+Phase 5 adds the proof-free initial goal for an empty `by {` block. Phase 6
+adds proof-state-scoped tactic keyword completion only. These features still do
+**not** provide general parser recovery, invent metavariables/holes, perform
+tactic search or applicability prediction, continue parsing/elaboration
+speculatively after a failure, or claim general incomplete-proof recovery.
