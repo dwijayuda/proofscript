@@ -47,6 +47,7 @@ for (const flag of ["--lean-project", "--lean-cmd", "--lake-cmd"]) {
 const steps = [
   { name: "build", args: ["run", "build"] },
   { name: "lean-version-compatibility", args: ["run", "test:ps3:lean-version-compatibility"] },
+  { name: "stateful-frame", args: ["run", "test:ps3:stateful-frame"] },
   { name: "stateful-model", args: ["run", "test:ps3:stateful-lean-model"] },
   { name: "runner-selection", args: ["run", "test:ps3:stateful-lean-runner-selection"] },
   { name: "proof-matrix-plan", args: ["run", "test:ps3:stateful-lean-proof-matrix"] },
