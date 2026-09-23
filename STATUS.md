@@ -231,7 +231,7 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - first-class state-model adequacy artifact (`proofscript.stateful-adequacy-check/v1`) — implemented for the current `StateM` alpha; deterministically checks the descriptor-bound runner + adequacy theorem against the expected WP-to-run-result bridge shape
 - adequacy is now an ordered execution stage between model loading and program typechecking; `proved` / `vcs-generated` evidence cannot be promoted without it
 - proof-matrix provenance now requires `generatedAdequacyCheckSha256`; cross-version compatibility must therefore check the same adequacy wrapper as well as the same program/Triple/request
-- **adequacy execution evidence pending the next local matrix run**; the recorded 2026-09-23 6/6 matrix predates this stage and correctly retains `stateModelAdequacyChecked = false`
+- adequacy-enabled proof-required matrix rerun on 2026-09-23 — **6/6 PROVED** across Lean 4.33.1 / 4.34.0 / 4.35.0-rc2 with `allStateModelsAdequate = true`, `allProofsDischarged = true`, and provenance consistency; generated adequacy-check identity `af7ea2a9...`
 - Triple skeleton pre/post functions sourced from the WP binding artifact — implemented
 - state observation descriptor state-input type validation — PASS
 - definite state-observation argument type mismatches downgrade to prototype/fail closed — PASS
@@ -261,8 +261,8 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 
 ## Next engineering target
 
-1. Re-run the consolidated proof-required compatibility matrix with the new state-model adequacy stage; promote `stateModelAdequacyChecked` only if all six child runs Lean-check the same adequacy wrapper.
-2. Preserve `sourceToLeanProgramEquivalenceChecked = false` and `exceptionalPathsCovered = false` until those are separately checked.
-3. After adequacy is green, begin the next bounded stateful-verification increment: explicit frame conditions first, then loop invariant/progress obligations, rather than broadening the profile all at once.
+1. Product completion work continues on `product/v1-completion` under `config/proofscript-product-v1-completion.json`.
+2. Begin the next bounded verification increment: explicit frame conditions first, then loop invariant/progress obligations and exceptional/control-flow paths.
+3. Preserve `sourceToLeanProgramEquivalenceChecked = false` and `exceptionalPathsCovered = false` until separately checked.
 4. Keep recursive termination (`termination_by` / `decreasing_by`) separate from loop-progress verification.
 5. Continue CLI/frontend/LSP convergence only behind canonical compiler APIs and existing regression gates.
