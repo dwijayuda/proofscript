@@ -10,9 +10,9 @@ Canonical path:
       -> @proofscript/lsp
       -> editors/vscode
 
-Current promoted features: diagnostics with stale-version rejection, cancellation-aware RPC, hover, document outline, completion, go-to-definition, project references, safe global rename, compiler-backed semantic highlighting, compiler-backed document status, cursor semantic information, Infoview, and server lifecycle/status commands.
+Current promoted features: diagnostics with stale-version rejection, cancellation-aware RPC, hover, document outline, completion, go-to-definition, project references, safe global rename, compiler-backed semantic highlighting, canonical Format Document support, compiler-backed document status, cursor semantic information, Infoview, and server lifecycle/status commands.
 
-Definition/references/rename are backed by canonical parser source spans plus the same namespace/open-namespace resolver used by elaboration. They do not use editor-side textual symbol guessing.
+Definition/references/rename are backed by canonical parser source spans plus the same namespace/open-namespace resolver used by elaboration. They do not use editor-side textual symbol guessing.\n\nFormat Document reuses the same `@proofscript/formatter` implementation as `psc fmt`; the editor does not maintain a second formatting grammar. Formatter v1 fails closed on commented files until trivia preservation is implemented.
 
 The 0.46 donor still contains signature help, code actions, and richer proof-state UI. Those providers remain disabled until the current compiler-backed service exposes the required semantic APIs.
 
