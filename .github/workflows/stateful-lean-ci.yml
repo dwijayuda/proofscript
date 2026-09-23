@@ -30,6 +30,9 @@ on:
       - "examples/software/06-bank-state.model.json"
       - "examples/software/06-bank-transfer-monadic-contract.ps"
       - "examples/software/07-bank-debit-stateful-vc.ps"
+      - "examples/software/08-bank-debit-frame-stateful-vc.ps"
+      - "examples/software/10-bank-audit-logical-stateful-vc.ps"
+      - "examples/product-v1/stateful-invoice/Invoice.ps"
       - "tools/ps3-stateful-lean-*.ts"
       - ".github/workflows/stateful-lean-ci.yml"
 
