@@ -97,6 +97,38 @@
         "result is rejected inside old",
         "nested-parenthesis old expressions are deferred in this alpha"
       ]
+    },
+    {
+      "id": "V-INVARIANT",
+      "class": "V",
+      "status": "specified-alpha",
+      "surface": "invariant <name>: <predicate>",
+      "scope": "single while loop in loop-vc0 pure contracts",
+      "semantics": "Generates semantic initialization and preservation VCs over explicit Nat mutable locals. The loop body is lowered as a sequential substitution of admitted Nat assignments.",
+      "obligations": "One init and one preserve obligation per invariant.",
+      "runtime": "verification metadata; does not alter loop runtime semantics",
+      "diagnostics": [
+        "loop-vc0 requires exactly one while loop",
+        "loop-vc0 requires at least one invariant",
+        "only Nat parameters/return/mutable locals are admitted",
+        "only linear Nat + and - expressions are admitted in the promoted profile",
+        "unsupported loops remain ka142-loop-prototype rather than being silently promoted"
+      ]
+    },
+    {
+      "id": "V-DECREASES",
+      "class": "V",
+      "status": "specified-alpha",
+      "surface": "decreases <name>: <Nat expression>",
+      "scope": "single while loop in loop-vc0 pure contracts",
+      "semantics": "Generates a strict progress VC proving the post-body measure is less than the pre-body measure under requires, invariants, and the loop condition.",
+      "obligations": "Exactly one strict-decrease obligation in loop-vc0.",
+      "runtime": "verification metadata; no runtime counter is inserted",
+      "diagnostics": [
+        "loop-vc0 requires exactly one decreases measure",
+        "the measure must be a linear Nat expression in admitted identifiers",
+        "proof discharge is not claimed until generated Lean checks successfully"
+      ]
     }
   ]
 }
