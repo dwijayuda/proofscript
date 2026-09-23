@@ -186,7 +186,7 @@ function elaborateRecursorProof(
   scrutinee: Term,
   body: SurfaceTerm | undefined,
   branches: readonly SurfaceProofBranch[] | undefined,
-  locals: string[]
+  locals: string[],
   localTypes: Term[],
   kernelEnv: Environment,
   expectedType: Term | undefined,
@@ -382,7 +382,7 @@ export function elabCasesProof(
   source: SurfaceTerm,
   body: SurfaceTerm | undefined,
   branches: readonly SurfaceProofBranch[] | undefined,
-  locals: string[]
+  locals: string[],
   localTypes: Term[],
   kernelEnv: Environment,
   expectedType: Term | undefined,
@@ -406,7 +406,7 @@ export function elabInductionProof(
   source: SurfaceTerm,
   body: SurfaceTerm | undefined,
   branches: readonly SurfaceProofBranch[] | undefined,
-  locals: string[]
+  locals: string[],
   localTypes: Term[],
   kernelEnv: Environment,
   expectedType: Term | undefined,
