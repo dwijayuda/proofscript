@@ -10,6 +10,8 @@ import {
   checkWorkspaceForFile as checkWorkspaceForFileFrontend,
   type FrontendModuleCacheEntry,
   type FrontendOptions,
+  type FrontendProofState,
+  type FrontendProofStateLocal,
   type FrontendProjectResult,
   type FrontendResult,
   type FrontendWorkspaceResult,
@@ -196,6 +198,8 @@ export async function runBackend(
 export type {
   FrontendModuleCacheEntry,
   FrontendOptions,
+  FrontendProofState,
+  FrontendProofStateLocal,
   FrontendProjectResult,
   FrontendResult,
   FrontendWorkspaceResult,
