@@ -132,6 +132,9 @@ export class ProofScriptLanguageServer {
               referencesProvider: true,
               renameProvider: true,
               documentFormattingProvider: true,
+              codeActionProvider: {
+                codeActionKinds: ["quickfix", "source.format.proofscript"],
+              },
               semanticTokensProvider: {
                 legend: {
                   tokenTypes: ["function", "enum", "struct", "class", "variable"],
@@ -453,6 +456,35 @@ export class ProofScriptLanguageServer {
           } catch (error) {
             if (error instanceof LanguageWorkerCancelledError) return this.error(message.id, -32800, "request cancelled");
             throw error;
+          }
+        }
+
+        case "textDocument/codeAction": {
+          const uri = message.params?.textDocument?.uri;
+          const range = message.params?.range;
+          if (typeof uri !== "string") return this.error(message.id, -32602, "missing textDocument.uri");
+          if (
+            !range
+            || typeof range.start?.line !== "number"
+            || typeof range.start?.character !== "number"
+            || typeof range.end?.line !== "number"
+            || typeof range.end?.character !== "number"
+          ) {
+            return this.error(message.id, -32602, "missing or invalid range");
+          }
+          const before = this.documents.get(uri);
+          if (!before) return this.error(message.id, -32602, `document is not open: ${uri}`);
+          const ownerId = requestId(message.id);
+          try {
+            const actions = await this.worker.codeActions(uri, range, ownerId);
+            const latest = this.documents.get(uri);
+            if (!latest || latest.version !== before.version) {
+              return this.error(message.id, -32801, "document changed while code actions were running");
+            }
+            return this.reply(message.id, actions);
+          } catch (error) {
+            if (error instanceof LanguageWorkerCancelledError) return this.error(message.id, -32800, "request cancelled");
+            return this.error(message.id, -32602, messageOf(error));
           }
         }
 
