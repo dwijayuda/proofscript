@@ -85,7 +85,7 @@ try {
     "def unitObs: Unit := { Unit.unit }",
     "theorem nat_obs_rfl: natObs = 42 := by rfl",
     "theorem bool_obs_rfl: boolObs = true := by rfl",
-    "theorem unit_obs_rfl: unitObs = Unit.unit := by rfl",
+    "theorem unit_obs_rfl: unitObs = unitObs := by rfl",
     "",
   ].join("\n"));
 
@@ -98,7 +98,7 @@ try {
     const result = runPsc(["run", source, "--call", name, "--json"]);
     let parsed: any = null;
     try { parsed = JSON.parse(result.stdout); } catch {}
-    return { name, expected, result, parsed };
+    return { name, expected, result, parsed, stdout: result.stdout, stderr: result.stderr };
   });
   const passed = check.status === 0
     && runs.every(({ result, parsed, expected }) =>
@@ -109,11 +109,25 @@ try {
     id: "core-representations",
     file: "<generated>",
     observations: ["Nat", "Bool", "Unit"],
-    logicalWitness: "three kernel-checked by-rfl theorems",
+    logicalWitness: "three kernel-checked by-rfl theorems, including a reflexive witness for the closed Unit value",
     runtimeWitness: "psc run executes generated JavaScript and compares observable results",
     status: passed ? "passed" : "failed",
     exitCode: passed ? 0 : 1,
-    details: runs.map(({ name, expected, parsed }) => ({ name, expected, actual: parsed?.result ?? null })),
+    check: {
+      exitCode: check.status ?? 1,
+      stdoutTail: check.stdout.slice(-2000),
+      stderrTail: check.stderr.slice(-2000),
+    },
+    details: runs.map(({ name, expected, parsed, result }) => ({
+      name,
+      expected,
+      actual: parsed?.result ?? null,
+      exitCode: result.status ?? 1,
+      status: parsed?.status ?? null,
+      message: parsed?.message ?? null,
+      stdoutTail: result.stdout.slice(-1200),
+      stderrTail: result.stderr.slice(-1200),
+    })),
     stderrTail: [check.stderr, ...runs.map((item) => item.result.stderr)].join("\n").slice(-3000),
   });
 } finally {
