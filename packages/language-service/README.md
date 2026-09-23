@@ -12,10 +12,12 @@ code actions, declaration/verification goals, and compiler-backed tactic states.
 
 Tactic states are read-only observations returned by the canonical compiler.
 The language service does not parse proof syntax or reconstruct goals itself.
-For currently accepted proofs it can select the smallest canonical proof span at
-the cursor and return its goal, named local context, tactic, and optional
-constructor branch. Partial states for rejected/incomplete proofs are not
-implemented yet.
+For accepted proofs it selects the smallest canonical proof span at the cursor
+and returns its goal, named local context, tactic, and optional constructor
+branch. When canonical parsing succeeds but later elaboration fails, the service
+can also retain states the compiler had already emitted before that failure.
+It does not recover states across parser failures and does not fabricate holes,
+metavariables, or speculative proof states.
 
 ## Dependency rule
 
