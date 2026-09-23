@@ -267,6 +267,61 @@ assert.equal(goals.result.declarationGoal.name, "fixed");
 assert.equal(goals.result.declarationGoal.status, "checked");
 assert.equal(goals.result.verification.status, "unavailable");
 
+const partialFile = path.join(srcDir, "Partial.ps");
+const partialUri = pathToFileURL(partialFile).href;
+const partialSource = "theorem partial(P: Prop, h: P): P := by { exact missing }\n";
+fs.writeFileSync(partialFile, partialSource);
+send({
+  jsonrpc: "2.0",
+  method: "textDocument/didOpen",
+  params: {
+    textDocument: {
+      uri: partialUri,
+      languageId: "proofscript",
+      version: 1,
+      text: partialSource,
+    },
+  },
+});
+const pushedPartial = await waitFor(
+  (message) => message.method === "textDocument/publishDiagnostics"
+    && message.params?.uri === partialUri
+    && message.params?.version === 1,
+  "partial proof diagnostics",
+);
+assert.equal(pushedPartial.params.diagnostics.length, 1);
+
+send({
+  jsonrpc: "2.0",
+  id: 101,
+  method: "proofscript/goals",
+  params: {
+    textDocument: { uri: partialUri },
+    position: { line: 0, character: partialSource.indexOf("exact") + 1 },
+  },
+});
+const partialGoals = await waitFor((message) => message.id === 101, "partial proof goals response");
+assert.equal(partialGoals.result.tacticStateAvailable, true);
+assert.equal(partialGoals.result.tacticState.kind, "tactic");
+assert.equal(partialGoals.result.tacticState.tactic, "exact");
+assert.equal(partialGoals.result.tacticState.goal, "P");
+assert.deepEqual(partialGoals.result.tacticState.locals.map((local) => local.name), ["P", "h"]);
+assert.equal(partialGoals.result.declarationGoal, null);
+
+send({
+  jsonrpc: "2.0",
+  method: "textDocument/didClose",
+  params: { textDocument: { uri: partialUri } },
+});
+const partialClosed = await waitFor(
+  (message) => message.method === "textDocument/publishDiagnostics"
+    && message.params?.uri === partialUri
+    && message.params?.version === undefined,
+  "partial close diagnostics clear",
+);
+assert.deepEqual(partialClosed.params.diagnostics, []);
+fs.unlinkSync(partialFile);
+
 const navigationSource = "def navBase: Nat := 1;\ndef navUse: Nat := navBase;\n";
 send({
   jsonrpc: "2.0",
