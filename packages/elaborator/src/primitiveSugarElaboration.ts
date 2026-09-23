@@ -187,7 +187,9 @@ function surfaceMentionsInt(term: SurfaceTerm): boolean {
       return term.body ? surfaceMentionsInt(term.body) : false;
     case "casesProof":
     case "inductionProof":
-      return surfaceMentionsInt(term.term) || surfaceMentionsInt(term.body);
+      return surfaceMentionsInt(term.term)
+        || (term.body ? surfaceMentionsInt(term.body) : false)
+        || (term.branches ?? []).some(branch => surfaceMentionsInt(branch.body));
     case "simpProof":
       return false;
   }
