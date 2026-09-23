@@ -1,6 +1,6 @@
 # Tactic Ergonomics
 
-Status: **IN PROGRESS**
+Status: **PHASE 2 COMPLETE; PHASE 3 PENDING**
 
 Branch: `feature/tactic-ergonomics`
 
@@ -128,9 +128,37 @@ parser proof regressions, elaborator/kernel-check proof regressions,
 compiler-backed language service, the language-worker boundary, LSP transport,
 the active VS Code smoke test, `standalone-small`, and reference governance.
 
-The earlier Phase 1 evidence remains the recorded 7/7 v1 result. No green
-Phase 2 execution evidence is claimed until the v2 command is run on the
-committed source and its machine result is recorded.
+The earlier Phase 1 evidence remains the recorded 7/7 v1 result.
+
+### Phase 2 machine acceptance
+
+Phase 2 was executed on committed source
+`8315cf3e3e1ef467bbdb3f569ebd063895c3cf0f` with
+`npm run assurance:tactic-ergonomics`.
+
+Machine result:
+
+- schema: `proofscript.tactic-ergonomics-endtest/v2`
+- total steps: 9
+- passed: 9
+- failed: 0
+- skipped: 0
+- `allTacticErgonomicsGatesPassed: true`
+
+The nine passing steps were build, parser proof regressions,
+elaborator/kernel-check proof regressions, compiler-backed language service,
+language worker, LSP transport, active VS Code smoke, standalone-small, and
+reference governance.
+
+The acceptance run also exercises the dependent-local regression
+`theorem dependent_assumption(P0: Prop, h: P0): P0 := by { assumption }`,
+so `assumption` now obtains a local's type through kernel inference in the
+current context rather than comparing the stored pre-local declaration type
+directly.
+
+Observed tactic/branch goals and local types are normalized to kernel WHNF for
+display only. Elaboration and kernel checking continue to use the original
+terms, so proof-state presentation remains outside proof acceptance.
 
 ## Nonclaims
 
