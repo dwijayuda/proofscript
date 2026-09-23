@@ -1,3 +1,4 @@
+import path from "node:path";
 import crypto from "node:crypto";
 import { parseSource } from "@proofscript/parser";
 import { collectResolvedGlobalReferences, elaborateProgram, type ResolvedGlobalReference } from "@proofscript/elaborator";
@@ -11,7 +12,7 @@ import {
 } from "@proofscript/kernel";
 import { CoreModulesBuildMetadata, makeArtifact } from "@proofscript/kernel-codec";
 import { prepareCoreEnvironment } from "@proofscript/environment";
-import { buildModuleGraph, buildWorkspaceGraph, ProjectModuleGraph, ProjectModuleSource, ProjectWorkspaceGraph, type ProjectSourceProvider } from "@proofscript/project";
+import { buildModuleGraph, buildWorkspaceGraph, findProjectRoot, ProjectModuleGraph, ProjectModuleSource, ProjectWorkspaceGraph, type ProjectSourceProvider } from "@proofscript/project";
 import { UnsupportedFeature, type SurfaceFeatureUse } from "@proofscript/syntax";
 
 export interface FrontendModuleCacheEntry {
@@ -129,6 +130,10 @@ export function checkWorkspace(projectRoot:string,options:FrontendOptions={}):Fr
   });
   const compiled=compileResolvedModules(graph.modules,options);
   return{graph,modules:compiled.modules,moduleReuse:{reused:compiled.reused,rebuilt:compiled.rebuilt}};
+}
+
+export function checkWorkspaceForFile(filePath:string,options:FrontendOptions={}):FrontendWorkspaceResult{
+  return checkWorkspace(findProjectRoot(path.dirname(path.resolve(filePath))),options);
 }
 
 function compileResolvedModules(
