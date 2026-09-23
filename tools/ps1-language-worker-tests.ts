@@ -106,6 +106,12 @@ assert.equal(emptyGoalState.tacticState?.sourceStatus, "syntax-incomplete");
 assert.deepEqual(emptyGoalState.tacticState?.locals.map((local) => local.name), ["h"]);
 assert.equal(emptyGoalState.tacticState?.locals[0]?.type, "P");
 assert.equal(emptyGoalState.declarationGoal, null);
+const emptyGoalCompletion = await worker.completion(
+  emptyGoalUri,
+  { line: 0, character: emptyGoalSource.length },
+);
+assert.ok(emptyGoalCompletion.some((item) => item.kind === "tactic" && item.label === "assumption"));
+assert.ok(emptyGoalCompletion.some((item) => item.kind === "tactic" && item.label === "induction"));
 worker.closeDocument(emptyGoalUri);
 fs.unlinkSync(emptyGoalFile);
 
