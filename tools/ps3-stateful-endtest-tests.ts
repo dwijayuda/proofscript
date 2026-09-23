@@ -83,6 +83,7 @@ try {
   assert.deepEqual(report.steps.map((step: any) => step.name), [
     "build",
     "lean-version-compatibility",
+    "stateful-frame",
     "stateful-model",
     "runner-selection",
     "proof-matrix-plan",
