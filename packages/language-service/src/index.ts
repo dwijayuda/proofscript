@@ -996,7 +996,13 @@ function proofStateInfos(
 }
 
 function proofStateAtOffset(states: readonly ProofStateInfo[], offset: number): ProofStateInfo | null {
-  const matches = states.filter((state) => offset >= state.startOffset && offset < state.endOffset);
+  const matches = states.filter((state) => {
+    if (offset < state.startOffset) return false;
+    if (offset < state.endOffset) return true;
+    return state.kind === "goal"
+      && state.sourceStatus === "syntax-incomplete"
+      && offset === state.endOffset;
+  });
   if (matches.length === 0) return null;
   return [...matches].sort((left, right) => {
     const leftWidth = left.endOffset - left.startOffset;
