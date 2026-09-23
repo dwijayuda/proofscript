@@ -9,9 +9,11 @@ import {
 } from "@proofscript/kernel";
 import { ElaborationError, SurfaceProofBranch, SurfaceTerm, UnsupportedFeature } from "@proofscript/syntax";
 import { contextFromTypes, flattenCoreApps, replaceCoreScoped } from "./coreUtils";
+import { ProofStateSnapshot, proofStateLocals } from "./proofState";
 
 export interface InductiveTacticHost {
   elaborateTerm(term: SurfaceTerm, locals: string[], localTypes: Term[], expectedType?: Term): Term;
+  recordProofState?(state: ProofStateSnapshot): void;
 }
 
 function mkApp(fn: Term, arg: Term): Term {
@@ -83,8 +85,9 @@ function elaborateRepeatedMinor(
   binderCount: number,
   body: SurfaceTerm,
   branchIndex: number,
-  binderNames: readonly string[] | undefined,
-  branchLabel: string | undefined,
+  namedBranch: SurfaceProofBranch | undefined,
+  tactic: "cases" | "induction",
+  canonicalBranch: string,
   locals: string[],
   localTypes: Term[],
   kernelEnv: Environment,
@@ -96,6 +99,8 @@ function elaborateRepeatedMinor(
   let namesNow = [...locals];
   let typesNow = [...localTypes];
 
+  const binderNames = namedBranch?.binders;
+  const branchLabel = namedBranch?.constructor;
   if (binderNames) {
     if (binderNames.length !== binderCount) {
       throw new ElaborationError(`proof branch \'${branchLabel ?? branchIndex + 1}\' expects ${binderCount} binder(s), got ${binderNames.length}`);
@@ -118,6 +123,22 @@ function elaborateRepeatedMinor(
     namesNow.push(name);
     typesNow.push(pi.domain);
     cursor = pi.body;
+  }
+
+  if (
+    namedBranch
+    && typeof namedBranch.sourceStartOffset === "number"
+    && typeof namedBranch.sourceEndOffset === "number"
+  ) {
+    host.recordProofState?.({
+      kind: "branch",
+      tactic,
+      branch: canonicalBranch,
+      startOffset: namedBranch.sourceStartOffset,
+      endOffset: namedBranch.sourceEndOffset,
+      goal: cursor,
+      locals: proofStateLocals(namesNow, typesNow),
+    });
   }
 
   const proofBody = host.elaborateTerm(body, namesNow, typesNow, cursor);
@@ -271,8 +292,9 @@ function elaborateRecursorProof(
       binderCount,
       minorBody,
       i,
-      namedBranch?.binders,
-      namedBranch?.constructor,
+      namedBranch,
+      mode,
+      rule.ctor,
       locals,
       localTypes,
       kernelEnv,
