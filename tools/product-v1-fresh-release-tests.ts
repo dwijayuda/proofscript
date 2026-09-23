@@ -59,6 +59,18 @@ try {
   }
   assert.ok(requiredDist.length >= 10, "expected a substantial prebuilt workspace package set");
 
+  const prebuiltManifest = JSON.parse(fs.readFileSync(
+    path.join(root, "config", "proofscript-prebuilt-release-v1.json"),
+    "utf8",
+  ));
+  assert.equal(prebuiltManifest.schema, "proofscript.prebuilt-release/v1");
+  assert.equal(prebuiltManifest.claims.requiresTypeScriptCompiler, false);
+  assert.equal(prebuiltManifest.claims.requiresLean4, false);
+  assert.equal(prebuiltManifest.claims.usesPrebuiltDist, true);
+  for (const asset of prebuiltManifest.requiredStaticAssets) {
+    assert.ok(fs.existsSync(path.join(root, asset)), `repository build is missing prebuilt static asset ${asset}`);
+  }
+
   const dry = npm(["pack", "--dry-run", "--json"], root);
   const dryInfo = JSON.parse(dry.stdout)[0];
   const packedPaths = new Set((dryInfo.files ?? []).map((item: any) => String(item.path).replace(/\\/gu, "/")));
@@ -75,6 +87,9 @@ try {
     "examples/product-v1/cli-app/Main.ps",
   ]) {
     assert.ok(packedPaths.has(required), `release tarball is missing ${required}`);
+  }
+  for (const asset of prebuiltManifest.requiredStaticAssets) {
+    assert.ok(packedPaths.has(asset), `release tarball is missing prebuilt static asset ${asset}`);
   }
 
   const packed = npm(["pack", "--json", "--pack-destination", packDir], root);
@@ -107,6 +122,9 @@ try {
   );
   for (const file of requiredDist) {
     assert.ok(fs.existsSync(path.join(installedRoot, file)), `installed release is missing ${file}`);
+  }
+  for (const asset of prebuiltManifest.requiredStaticAssets) {
+    assert.ok(fs.existsSync(path.join(installedRoot, asset)), `installed release is missing prebuilt asset ${asset}`);
   }
 
   const setup = psc(installedPsc, ["setup", "--prebuilt"], host);
