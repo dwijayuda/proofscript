@@ -2,8 +2,9 @@ import { createHash } from 'node:crypto';
 import { statefulPredicateElaborationForContract } from './stateful-predicate-elaboration.mjs';
 import { createStatefulPredicateAstForContract } from './stateful-predicate-ast.mjs';
 import { statefulOperationElaborationForContract } from './stateful-operation-elaboration.mjs';
+import { createLoopVerificationArtifact } from './loop-vc.mjs';
 
-export { statefulPredicateElaborationForContract, createStatefulPredicateAstForContract, statefulOperationElaborationForContract };
+export { statefulPredicateElaborationForContract, createStatefulPredicateAstForContract, statefulOperationElaborationForContract, createLoopVerificationArtifact };
 
 export const PURE_VERIFICATION_REFERENCE = '0.7.0-alpha.2-draft';
 export const PURE_VERIFICATION_PROFILE = 'ps3-pure-contracts0';
@@ -16,6 +17,8 @@ export const PURE_VERIFICATION_FEATURE_ORDER = Object.freeze([
   'V-ASSERT',
   'V-GHOST',
   'V-OLD',
+  'V-INVARIANT',
+  'V-DECREASES',
 ]);
 
 export function sha256Text(text) {
@@ -588,7 +591,7 @@ export function leanForContract(contract) {
   }).join('\n\n');
   return `${defLine}\n\n${ghosts ? ghosts + '\n' : ''}${oldSnapshots ? oldSnapshots + '\n' : ''}${loopNotes ? loopNotes + '\n' : ''}${obligations}\n`;
 }
-export function verificationFeaturesForContract(contract) {
+export function verificationFeaturesForContract(contract, loopVerification = null) {
   const used = new Set();
   if ((contract.requirements ?? []).length) used.add('V-REQUIRES');
   if ((contract.ensures ?? []).length) used.add('V-ENSURES');
@@ -596,12 +599,16 @@ export function verificationFeaturesForContract(contract) {
   if ((contract.assertions ?? []).length) used.add('V-ASSERT');
   if ((contract.ghosts ?? []).length) used.add('V-GHOST');
   if ((contract.oldSnapshots ?? []).length) used.add('V-OLD');
+  if (loopVerification?.ready === true) {
+    used.add('V-INVARIANT');
+    used.add('V-DECREASES');
+  }
   return PURE_VERIFICATION_FEATURE_ORDER.filter(feature => used.has(feature));
 }
 
-export function verificationProfileForContract(contract) {
-  const features = verificationFeaturesForContract(contract);
-  if ((contract.loops ?? []).length > 0) {
+export function verificationProfileForContract(contract, loopVerification = null) {
+  const features = verificationFeaturesForContract(contract, loopVerification);
+  if ((contract.loops ?? []).length > 0 && loopVerification?.ready !== true) {
     const prototypeFeatures = ['KA142-INVARIANT'];
     if ((contract.loops ?? []).some(loop => (loop.decreases ?? []).length > 0)) prototypeFeatures.push('KA142-DECREASES');
     return {
@@ -611,6 +618,7 @@ export function verificationProfileForContract(contract) {
       features,
       prototypeFeatures,
       claim: 'prototype-only',
+      loopVcReasons: loopVerification?.reasons ?? ['loop-vc-not-ready'],
     };
   }
   return {
@@ -625,7 +633,17 @@ export function verificationProfileForContract(contract) {
 
 export function makeContractsArtifact({ sourceText, sourcePath, sourceSha256, packageVersion, checkpoint = 'KA-143 verification package extraction' }) {
   const contract = parsePureContractSource(sourceText, sourcePath);
+  const loopVerification = createLoopVerificationArtifact(contract);
+  if (loopVerification.ready === true) {
+    const nonLoopObligations = (contract.obligations ?? []).filter(obligation => !String(obligation.kind ?? '').startsWith('loop.'));
+    const semanticLoopObligations = (loopVerification.obligations ?? []).map(obligation =>
+      enrichContractObligation(obligation, contract.params, contract.requirements)
+    );
+    contract.obligations = [...nonLoopObligations, ...semanticLoopObligations];
+    assertUniqueObligationIds(contract.obligations);
+  }
   const obligations = contract.obligations ?? [];
+  const verification = verificationProfileForContract(contract, loopVerification);
   return {
     artifact: {
       schema: 'proofscript.contracts.v1',
@@ -633,14 +651,32 @@ export function makeContractsArtifact({ sourceText, sourcePath, sourceSha256, pa
       packageVersion,
       source: sourcePath,
       sourceSha256,
-      verification: verificationProfileForContract(contract),
+      verification,
       functions: [{ name: contract.name, params: contract.params, returnType: contract.returnType, requirements: contract.requirements, ghosts: contract.ghosts, ensures: contract.ensures, assertions: contract.assertions, oldSnapshots: contract.oldSnapshots, loops: contract.loops, body: contract.body }],
       loops: contract.loops,
+      loopVerification,
       ghosts: contract.ghosts,
       assertions: contract.assertions,
       oldSnapshots: contract.oldSnapshots,
       obligations,
-      trustBoundary: { semanticProofChecking: false, hiddenAxioms: false, ghostErasureChecked: true, ghostNonInterference: 'syntactic-no-runtime-reference', ghostErasureVerified: false, oldIsLogicalSnapshot: true, runtimeAssertionTrust: false, loopInvariantChecking: obligations.some(o => String(o.kind).startsWith('loop.')) ? 'structural-obligations-only' : undefined, vcgenConnected: false, fullLean4Equivalence: false },
+      trustBoundary: {
+        semanticProofChecking: false,
+        hiddenAxioms: false,
+        ghostErasureChecked: true,
+        ghostNonInterference: 'syntactic-no-runtime-reference',
+        ghostErasureVerified: false,
+        oldIsLogicalSnapshot: true,
+        runtimeAssertionTrust: false,
+        loopInvariantChecking: loopVerification.ready === true
+          ? 'semantic-vc-generated-proof-pending'
+          : (obligations.some(o => String(o.kind).startsWith('loop.')) ? 'structural-obligations-only' : undefined),
+        loopVcProfile: loopVerification.ready === true ? loopVerification.profile : null,
+        loopSemanticVcGenerationComplete: loopVerification.claims?.semanticLoopVcGenerationComplete === true,
+        loopLeanProofDischarge: false,
+        loopSourceRuntimeCorrespondenceChecked: false,
+        vcgenConnected: loopVerification.ready === true,
+        fullLean4Equivalence: false,
+      },
     },
     contract,
     leanText: leanForContract(contract),
