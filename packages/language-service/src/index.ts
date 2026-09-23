@@ -150,6 +150,23 @@ export interface CodeActionInfo {
   readonly edit: WorkspaceEditInfo;
 }
 
+export interface ProofStateLocalInfo {
+  readonly name: string;
+  readonly type: string;
+}
+
+export interface ProofStateInfo {
+  readonly id: string;
+  readonly kind: "tactic" | "branch";
+  readonly tactic: string;
+  readonly goal: string;
+  readonly locals: readonly ProofStateLocalInfo[];
+  readonly branch?: string;
+  readonly startOffset: number;
+  readonly endOffset: number;
+  readonly range: Range;
+}
+
 export interface ProofGoalInfo {
   readonly id: string;
   readonly origin: "compiler-theorem" | "verification-artifact";
@@ -168,7 +185,8 @@ export interface ProofGoalBundle {
   readonly generation: number;
   readonly sourceSha256: string;
   readonly compilerBacked: true;
-  readonly tacticStateAvailable: false;
+  readonly tacticStateAvailable: true;
+  readonly tacticState: ProofStateInfo | null;
   readonly declarationGoal: ProofGoalInfo | null;
   readonly verification: {
     readonly status: "unavailable" | "current" | "stale" | "invalid";
@@ -194,6 +212,7 @@ export interface Analysis {
   }[];
   readonly assumptions: readonly string[];
   readonly surfaceFeatures: readonly SurfaceFeatureOccurrence[];
+  readonly proofStates: readonly ProofStateInfo[];
   readonly sourceDeclarations: readonly SourceDeclarationOccurrence[];
   readonly sourceReferences: readonly SourceReferenceOccurrence[];
   readonly projectDeclarations: readonly ProjectDeclarationOccurrence[];
@@ -298,6 +317,8 @@ export class ProofScriptLanguageService {
     let declarations: Analysis["declarations"] = [];
     let assumptions: readonly string[] = [];
     let surfaceFeatures: readonly SurfaceFeatureOccurrence[] = [];
+    let proofStates: readonly ProofStateInfo[] = [];
+    let rawProofStates: readonly { readonly kind: "tactic" | "branch"; readonly tactic: string; readonly startOffset: number; readonly endOffset: number; readonly goal: string; readonly locals: readonly { readonly name: string; readonly type: string }[]; readonly branch?: string }[] = [];
     let sourceDeclarations: readonly SourceDeclarationOccurrence[] = [];
     let sourceReferences: readonly SourceReferenceOccurrence[] = [];
     let projectDeclarations: readonly ProjectDeclarationOccurrence[] = [];
@@ -348,6 +369,7 @@ export class ProofScriptLanguageService {
         rawFeatures = currentModule?.ownedFeatures ?? [];
         rawDeclarationLocations = currentModule?.declarationLocations ?? [];
         rawGlobalReferences = currentModule?.globalReferences ?? [];
+        rawProofStates = currentModule?.proofStates ?? [];
         localDeclarationNames = new Set(currentModule?.declarations.map((declaration) => declaration.name) ?? []);
       } else {
         const checked = checkSource(document.text, withStandardPrelude());
@@ -355,6 +377,7 @@ export class ProofScriptLanguageService {
         rawFeatures = checked.ownedFeatures;
         rawDeclarationLocations = checked.declarationLocations;
         rawGlobalReferences = checked.globalReferences;
+        rawProofStates = checked.proofStates;
       }
       cancellation?.throwIfCancellationRequested();
 
@@ -370,6 +393,17 @@ export class ProofScriptLanguageService {
         startOffset: use.startOffset,
         endOffset: use.endOffset,
         range: rangeFromOffsets(document.text, use.startOffset, use.endOffset),
+      }));
+      proofStates = rawProofStates.map((state, index) => ({
+        id: `proof-state:${state.kind}:${state.startOffset}:${state.endOffset}:${index}`,
+        kind: state.kind,
+        tactic: state.tactic,
+        goal: state.goal,
+        locals: state.locals.map((local) => ({ ...local })),
+        ...(state.branch ? { branch: state.branch } : {}),
+        startOffset: state.startOffset,
+        endOffset: state.endOffset,
+        range: rangeFromOffsets(document.text, state.startOffset, state.endOffset),
       }));
 
       const semanticDeclarations = localDeclarationNames
@@ -466,7 +500,7 @@ export class ProofScriptLanguageService {
       diagnostics = [diagnosticFromError(error, document.text, status)];
     }
 
-    const resultId = analysisResultId(document.version, diagnostics, status, declarations, surfaceFeatures, sourceDeclarations, sourceReferences);
+    const resultId = analysisResultId(document.version, diagnostics, status, declarations, surfaceFeatures, proofStates, sourceDeclarations, sourceReferences);
     const analysis: Analysis = {
       uri: document.uri,
       version: document.version,
@@ -477,6 +511,7 @@ export class ProofScriptLanguageService {
       declarations,
       assumptions,
       surfaceFeatures,
+      proofStates,
       sourceDeclarations,
       sourceReferences,
       projectDeclarations,
@@ -600,6 +635,7 @@ export class ProofScriptLanguageService {
     const document = this.requireDocument(uri);
     const sourceSha256 = sha256(document.text);
     let declarationGoal: ProofGoalInfo | null = null;
+    let tacticState: ProofStateInfo | null = null;
 
     try {
       const analysis = this.analyze(uri, false, cancellation);
@@ -620,6 +656,7 @@ export class ProofScriptLanguageService {
             range: declaration.range,
           };
         }
+        tacticState = proofStateAtOffset(analysis.proofStates, offset);
       }
     } catch {
       // Verification-extension sources may intentionally be outside the ordinary
@@ -633,7 +670,8 @@ export class ProofScriptLanguageService {
       generation: document.generation,
       sourceSha256,
       compilerBacked: true,
-      tacticStateAvailable: false,
+      tacticStateAvailable: true,
+      tacticState,
       declarationGoal,
       verification,
     };
@@ -918,6 +956,18 @@ function symbolAtPosition(analysis: Analysis, position: Position): string | null
   return reference?.resolvedName ?? null;
 }
 
+function proofStateAtOffset(states: readonly ProofStateInfo[], offset: number): ProofStateInfo | null {
+  const matches = states.filter((state) => offset >= state.startOffset && offset < state.endOffset);
+  if (matches.length === 0) return null;
+  return [...matches].sort((left, right) => {
+    const leftWidth = left.endOffset - left.startOffset;
+    const rightWidth = right.endOffset - right.startOffset;
+    return leftWidth - rightWidth
+      || (left.kind === right.kind ? 0 : left.kind === "tactic" ? -1 : 1)
+      || right.startOffset - left.startOffset;
+  })[0] ?? null;
+}
+
 function rangesOverlapOrTouch(left: Range, right: Range): boolean {
   return comparePosition(left.end, right.start) >= 0
     && comparePosition(right.end, left.start) >= 0;
@@ -1052,6 +1102,7 @@ function analysisResultId(
   status: AnalysisStatus,
   declarations: Analysis["declarations"],
   surfaceFeatures: readonly SurfaceFeatureOccurrence[],
+  proofStates: readonly ProofStateInfo[],
   sourceDeclarations: readonly SourceDeclarationOccurrence[],
   sourceReferences: readonly SourceReferenceOccurrence[],
 ): string {
@@ -1061,6 +1112,7 @@ function analysisResultId(
     diagnostics: diagnostics.map((diagnostic) => diagnostic.data.identity.fingerprint),
     declarations: declarations.map((declaration) => [declaration.name, declaration.kind, declaration.type]),
     surfaceFeatures: surfaceFeatures.map((feature) => [feature.feature, feature.startOffset, feature.endOffset]),
+    proofStates: proofStates.map((state) => [state.kind, state.tactic, state.branch ?? null, state.goal, state.startOffset, state.endOffset, state.locals.map((local) => [local.name, local.type])]),
     sourceDeclarations: sourceDeclarations.map((declaration) => [
       declaration.qualifiedName,
       declaration.kind,
