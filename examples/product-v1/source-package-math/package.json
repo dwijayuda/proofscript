@@ -1,0 +1,13 @@
+{
+  "name": "@proofscript-example/source-math",
+  "version": "1.0.0",
+  "description": "Product-v1 ProofScript source package fixture",
+  "license": "MIT",
+  "files": [
+    "proofscript",
+    "README.md"
+  ],
+  "proofscript": {
+    "sourceRoot": "proofscript"
+  }
+}
