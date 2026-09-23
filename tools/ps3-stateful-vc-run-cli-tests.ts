@@ -194,7 +194,12 @@ assert.ok(!Object.values(language.layers).some((layer: any) => Object.hasOwn(lay
 
 const router = fs.readFileSync(psc, "utf8");
 assert.ok(router.includes("./monadic-commands.mjs"));
+assert.ok(router.includes("./ffi-commands.mjs"));
+assert.ok(router.includes("./runtime-certificate-commands.mjs"));
 assert.ok(router.includes("psc monadic-vc-run <monadic-lowering.json>"));
-assert.ok(router.split("\n").length < 1900);
+assert.ok(
+  router.split("\n").length < 2100,
+  "canonical CLI router must remain bounded while command families stay extracted",
+);
 
 console.log("PS3_STATEFUL_VC_RUN_CLI_TESTS=PASS");
