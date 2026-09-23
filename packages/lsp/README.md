@@ -23,6 +23,12 @@ empty `by {` block. A `tacticState: null` result means no canonical observed
 state covers the cursor; the LSP does not parse, repair, or synthesize fallback
 goals.
 
+Standard `textDocument/completion` also transports proof-state-scoped native
+tactic keyword candidates as LSP Keyword items. The server advertises `{` as
+a trigger so an empty `by {` block can request them immediately. This remains
+ordinary completion transport; the LSP performs no tactic applicability check,
+proof search, or tactic execution.
+
 ## Architecture
 
 ```text
