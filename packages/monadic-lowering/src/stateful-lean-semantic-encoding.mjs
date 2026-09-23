@@ -35,6 +35,10 @@ function renderLeanPredicateNode(node) {
     }
     case 'binary':
       return `(${renderLeanPredicateNode(node.left)} ${node.operator} ${renderLeanPredicateNode(node.right)})`;
+    case 'logical-binary':
+      return `(${renderLeanPredicateNode(node.left)} ${node.operator} ${renderLeanPredicateNode(node.right)})`;
+    case 'logical-not':
+      return `(¬ ${renderLeanPredicateNode(node.operand)})`;
     case 'relation':
       return `(${renderLeanPredicateNode(node.left)} ${renderLeanRelationOperator(node.operator)} ${renderLeanPredicateNode(node.right)})`;
     default:
