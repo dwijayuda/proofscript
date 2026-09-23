@@ -91,7 +91,14 @@ for (const family of ["Option", "Except", "List", "Array", "String"]) {
   );
 }
 
-assert.equal(profile.packageLayer.jsonValidation.status, "missing");
+assert.equal(profile.packageLayer.jsonValidation.status, "implemented-trusted-host-bounded");
+assert.equal(profile.packageLayer.jsonValidation.package, "@proofscript/json-validation");
+assert.equal(profile.packageLayer.jsonValidation.trust, "trusted-external");
+assert.equal(profile.packageLayer.jsonValidation.parserVerified, false);
+assert.equal(profile.packageLayer.jsonValidation.structuredJsonValueModel, false);
+assert.equal(profile.packageLayer.jsonValidation.gate, "test:product-v1:json-validation");
+assert.ok(fs.existsSync(path.join(root, profile.packageLayer.jsonValidation.profile)));
+assert.ok(fs.existsSync(path.join(root, profile.packageLayer.jsonValidation.example, "Main.ps")));
 assert.equal(profile.packageLayer.packageSourceResolution.status, "project-modules-only");
 assert.equal(
   profile.packageLayer.dependencyCertificateIdentity.status,
