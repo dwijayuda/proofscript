@@ -112,15 +112,15 @@ function ensureLocalWorkspacePackageLinks() {
 function compilerLibs() {
   ensureLocalWorkspacePackageLinks();
   return {
-    frontend: require('@proofscript/frontend'),
+    compiler: require('@proofscript/compiler'),
     environment: require('@proofscript/environment'),
     backendTypescript: require('@proofscript/backend-typescript'),
   };
 }
 function checkedProgram(file) {
-  const { frontend, environment } = compilerLibs();
+  const { compiler, environment } = compilerLibs();
   const prelude = environment.loadStandardBootstrap().artifact;
-  const checked = frontend.checkProjectFile(file, { prelude });
+  const checked = compiler.checkProjectFile(file, { prelude });
   return { checked, prelude, environment };
 }
 function userDeclarations(checked, prelude) {
