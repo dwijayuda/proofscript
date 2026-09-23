@@ -215,7 +215,12 @@
       "note": "ProofScript source imports resolve deterministic project modules; npm package names are currently execution/host interop, not ProofScript source modules."
     },
     "dependencyCertificateIdentity": {
-      "status": "implemented-for-implicit-stdlib-after-product-v1-binding"
+      "status": "implemented-for-implicit-stdlib-and-npm-ffi",
+      "stdlib": "implicit @proofscript/std manifest/hash identity is certificate-bound",
+      "npmFfi": "bare npm FFI dependencies are resolved relative to the FFI manifest and bound by package name/version/package.json SHA-256/content-tree SHA-256",
+      "identitySchema": "proofscript.npm-dependency-identity/v1",
+      "tamperRejection": true,
+      "sourcePackageImports": "not yet implemented"
     }
   },
   "trustBoundary": [
