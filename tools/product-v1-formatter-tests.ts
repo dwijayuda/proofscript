@@ -18,7 +18,7 @@ const messy = [
 const first = formatSource(messy);
 assert.equal(first.changed, true);
 assert.ok(first.tokenCount > 0);
-assert.equal(first.commentsPreserved, false);
+assert.equal(first.commentsPreserved, true);
 assert.match(first.formatted, /def answer: Nat := \{20 \+ 22\};/u);
 assert.match(first.formatted, /theorem answer_ok: answer = 42 := by \{rfl\}/u);
 
@@ -30,10 +30,12 @@ const escaped = formatSource('def text: String := "a\\n\\x01";\n');
 assert.match(escaped.formatted, /"a\\n\\x01"/u);
 assert.equal(formatSource(escaped.formatted).formatted, escaped.formatted);
 
-assert.throws(
-  () => formatSource("-- keep me\ndef x: Nat := 1;\n"),
-  /refuses sources containing comments/u,
-);
+const commented = formatSource("-- keep me\ndef   x : Nat:={1+2}; -- tail\n/- outer /- inner -/ done -/\n");
+assert.equal(commented.commentsPreserved, true);
+assert.match(commented.formatted, /-- keep me/u);
+assert.match(commented.formatted, /-- tail/u);
+assert.match(commented.formatted, /\/\- outer \/\- inner -\/ done -\//u);
+assert.equal(formatSource(commented.formatted).formatted, commented.formatted);
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "proofscript-fmt-"));
 const file = path.join(tmp, "Main.ps");
@@ -41,7 +43,7 @@ const stdoutFile = path.join(tmp, "Stdout.ps");
 const commentFile = path.join(tmp, "Comment.ps");
 fs.writeFileSync(file, messy);
 fs.writeFileSync(stdoutFile, messy);
-fs.writeFileSync(commentFile, "-- comment\ndef x: Nat := 1;\n");
+fs.writeFileSync(commentFile, "-- comment\ndef   x : Nat:={1+2}; -- tail\n");
 
 function run(args, expected = 0) {
   const result = spawnSync(process.execPath, [psc, ...args], {
@@ -78,9 +80,13 @@ const stdout = run(["fmt", stdoutFile, "--stdout"]);
 assert.equal(stdout.stdout, first.formatted);
 assert.equal(fs.readFileSync(stdoutFile, "utf8"), messy, "--stdout must not write");
 
-const unsupported = json(["fmt", commentFile], 2);
-assert.equal(unsupported.status, "unsupported");
-assert.match(unsupported.message, /trivia-preserving formatting/u);
-assert.equal(fs.readFileSync(commentFile, "utf8"), "-- comment\ndef x: Nat := 1;\n");
+const commentWrite = json(["fmt", commentFile]);
+assert.equal(commentWrite.status, "accepted");
+assert.equal(commentWrite.changed, 1);
+const formattedCommentFile = fs.readFileSync(commentFile, "utf8");
+assert.match(formattedCommentFile, /-- comment/u);
+assert.match(formattedCommentFile, /-- tail/u);
+assert.match(formattedCommentFile, /def x: Nat := \{1 \+ 2\};/u);
+assert.equal(json(["fmt", commentFile, "--check"]).status, "accepted");
 
 console.log("PRODUCT_V1_FORMATTER_TESTS=PASS");
