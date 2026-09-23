@@ -1,6 +1,6 @@
 # Tactic Ergonomics
 
-Status: **PHASE 2 COMPLETE; PHASE 3 PENDING**
+Status: **PHASE 2 COMPLETE; PHASE 3 IMPLEMENTED, ACCEPTANCE PENDING**
 
 Branch: `feature/tactic-ergonomics`
 
@@ -114,6 +114,39 @@ This first proof-state slice is for successfully checked documents. Recovering
 useful partial tactic states from a proof that currently fails elaboration is a
 separate later phase and must not introduce an editor-only elaborator.
 
+## Phase 3: retained proof states after elaboration failure
+
+Phase 3 keeps already-observed compiler proof states available when canonical
+parsing succeeds but a later proof elaboration step fails.
+
+The implementation adds a read-only `proofStateSink` to frontend/compiler
+options. The ordinary elaborator emits each display-safe state to that sink as
+soon as the state is observed. Project compilation tags streamed events with
+their canonical module/file identity. The language service retains only events
+for the document being analyzed and exposes them through the existing
+`proofscript/goals` request even when analysis later becomes `rejected`.
+
+Trust and scope rules:
+
+- the normal compiler still throws/rejects exactly as before;
+- sink failures are swallowed and cannot alter compilation or proof acceptance;
+- no proof term, goal, or local is fabricated by the language service;
+- rejected declarations are not reported as checked declaration goals;
+- only states actually reached by canonical elaboration are returned;
+- parser failures still produce no partial proof states in this phase;
+- no metavariable recovery, speculative continuation, syntax repair, or
+  editor-only elaborator is introduced.
+
+A representative covered case is:
+
+```proofscript
+theorem partial(P: Prop, h: P): P := by { exact missing }
+```
+
+The theorem remains rejected because `missing` is unknown, while the cursor on
+`exact` can still show the compiler-observed state `P, h : P ⊢ P` that was
+emitted before the identifier failure.
+
 ## Acceptance
 
 Run one consolidated command:
@@ -122,8 +155,8 @@ Run one consolidated command:
 npm run assurance:tactic-ergonomics
 ```
 
-For the current Phase 2 source it uses schema
-`proofscript.tactic-ergonomics-endtest/v2` and covers nine steps: build,
+For the current Phase 3 source it uses schema
+`proofscript.tactic-ergonomics-endtest/v3` and covers nine steps: build,
 parser proof regressions, elaborator/kernel-check proof regressions,
 compiler-backed language service, the language-worker boundary, LSP transport,
 the active VS Code smoke test, `standalone-small`, and reference governance.
@@ -166,6 +199,7 @@ This work does not add general metavariable proof search, indexed/dependent
 cases or induction, arbitrary goal focusing, Lean tactic metaprogramming, a
 second editor parser, or any new trusted kernel primitive.
 
-Phase 2 does add read-only interactive tactic-state snapshots for successfully
-checked proofs. It does **not** yet recover partial states from rejected or
-incomplete proof scripts.
+Phase 3 also retains already-observed tactic states after a later elaboration
+failure when parsing succeeded. It does **not** recover states across parser
+failures, invent metavariables/holes, continue elaboration speculatively after a
+failure, or claim general incomplete-proof recovery.
