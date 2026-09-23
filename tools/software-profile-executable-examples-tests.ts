@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   buildJsFixture,
   buildTsFixture,
@@ -13,7 +14,7 @@ import {
   runPsliveJson,
 } from './pslive-test-harness.ts';
 
-const repoRoot = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const examplesRoot = path.join(repoRoot, 'examples', 'software-profile');
 const srcRoot = path.join(examplesRoot, 'src');
 const docsPath = path.join(examplesRoot, 'README.md');
