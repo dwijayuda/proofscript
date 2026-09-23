@@ -109,7 +109,7 @@ assert.equal(initialized.result.experimental.proofscript.documentStatusRequest, 
 assert.equal(initialized.result.experimental.proofscript.semanticInfoRequest, "proofscript/semanticInfo");
 assert.equal(initialized.result.experimental.proofscript.goalsRequest, "proofscript/goals");
 assert.equal(initialized.result.experimental.proofscript.goalPresentationAvailable, true);
-assert.equal(initialized.result.experimental.proofscript.proofStateAvailable, false);
+assert.equal(initialized.result.experimental.proofscript.proofStateAvailable, true);
 
 send({ jsonrpc: "2.0", method: "initialized", params: {} });
 
@@ -146,7 +146,7 @@ assert.equal(pulledBroken.result.kind, "full");
 assert.equal(pulledBroken.result.items.length, 1);
 assert.ok(typeof pulledBroken.result.resultId === "string");
 
-const fixed = "theorem fixed(P: Prop, h: P): P := h;\n";
+const fixed = "theorem fixed(P: Prop, h: P): P := by { assumption }\n";
 send({
   jsonrpc: "2.0",
   method: "textDocument/didChange",
@@ -196,7 +196,7 @@ const serverInfo = await waitFor((message) => message.id === 5, "server info res
 assert.equal(serverInfo.result.protocolVersion, 1);
 assert.equal(serverInfo.result.compilerBacked, true);
 assert.equal(serverInfo.result.duplicateParser, false);
-assert.equal(serverInfo.result.proofStateAvailable, false);
+assert.equal(serverInfo.result.proofStateAvailable, true);
 
 send({
   jsonrpc: "2.0",
@@ -207,7 +207,7 @@ send({
 const documentStatus = await waitFor((message) => message.id === 6, "document status response");
 assert.equal(documentStatus.result.status, "accepted");
 assert.equal(documentStatus.result.compilerBacked, true);
-assert.equal(documentStatus.result.proofStateAvailable, false);
+assert.equal(documentStatus.result.proofStateAvailable, true);
 
 send({
   jsonrpc: "2.0",
@@ -218,7 +218,7 @@ send({
 const semanticInfo = await waitFor((message) => message.id === 7, "semantic info response");
 assert.equal(semanticInfo.result.status, "accepted");
 assert.equal(semanticInfo.result.symbol.name, "fixed");
-assert.equal(semanticInfo.result.proofStateAvailable, false);
+assert.equal(semanticInfo.result.proofStateAvailable, true);
 
 send({
   jsonrpc: "2.0",
@@ -253,10 +253,15 @@ send({
   jsonrpc: "2.0",
   id: 11,
   method: "proofscript/goals",
-  params: { textDocument: { uri }, position: { line: 0, character: 10 } },
+  params: { textDocument: { uri }, position: { line: 0, character: 45 } },
 });
 const goals = await waitFor((message) => message.id === 11, "proof goals response");
-assert.equal(goals.result.tacticStateAvailable, false);
+assert.equal(goals.result.tacticStateAvailable, true);
+assert.equal(goals.result.tacticState.kind, "tactic");
+assert.equal(goals.result.tacticState.tactic, "assumption");
+assert.equal(goals.result.tacticState.goal, "P");
+assert.deepEqual(goals.result.tacticState.locals.map((local) => local.name), ["P", "h"]);
+assert.equal(goals.result.tacticState.locals.find((local) => local.name === "h")?.type, "P");
 assert.equal(goals.result.declarationGoal.origin, "compiler-theorem");
 assert.equal(goals.result.declarationGoal.name, "fixed");
 assert.equal(goals.result.declarationGoal.status, "checked");
