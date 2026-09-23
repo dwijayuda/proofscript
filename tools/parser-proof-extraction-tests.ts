@@ -63,6 +63,18 @@ assert.equal(parsed.declarations[15].value.tag, 'casesProof');
 assert.deepEqual(parsed.declarations[15].value.branches?.map(branch => [branch.constructor, branch.binders]), [['intro', ['value']]]);
 assert.equal(parsed.declarations[16].value.tag, 'inductionProof');
 assert.deepEqual(parsed.declarations[16].value.branches?.map(branch => [branch.constructor, branch.binders]), [['Nat.zero', []], ['Nat.succ', ['k', 'ih']]]);
+assert.equal(typeof parsed.declarations[16].value.sourceStartOffset, 'number');
+assert.equal(typeof parsed.declarations[16].value.sourceEndOffset, 'number');
+assert.ok(parsed.declarations[16].value.sourceEndOffset > parsed.declarations[16].value.sourceStartOffset);
+for (const branch of parsed.declarations[16].value.branches ?? []) {
+  assert.equal(typeof branch.sourceStartOffset, 'number');
+  assert.equal(typeof branch.sourceEndOffset, 'number');
+  assert.ok(branch.sourceEndOffset > branch.sourceStartOffset);
+  assert.ok(branch.sourceStartOffset >= parsed.declarations[16].value.sourceStartOffset);
+  assert.ok(branch.sourceEndOffset <= parsed.declarations[16].value.sourceEndOffset);
+  assert.equal(typeof branch.body.sourceStartOffset, 'number');
+  assert.equal(typeof branch.body.sourceEndOffset, 'number');
+}
 assert.equal(parsed.declarations[17].value.tag, 'simpProof');
 
 console.log('parser proof extraction tests: PASS');
