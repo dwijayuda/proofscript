@@ -1,0 +1,12 @@
+{
+  "name": "@proofscript-example/runtime-math",
+  "version": "1.0.0",
+  "description": "Product-v1 generated ProofScript runtime library consumed from TypeScript",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}
