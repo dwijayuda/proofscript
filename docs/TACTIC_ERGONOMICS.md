@@ -1,6 +1,6 @@
 # Tactic Ergonomics
 
-Status: **PHASE 4 COMPLETE; PHASE 5 PENDING**
+Status: **PHASE 4 COMPLETE; PHASE 5 IMPLEMENTED, ACCEPTANCE PENDING**
 
 Branch: `feature/tactic-ergonomics`
 
@@ -188,6 +188,53 @@ recover a missing tactic body/term, create metavariables, or reuse stale editor
 state as if it were current. Unrelated parser failures still expose zero proof
 states. Parser/frontend observers remain fail-open and have no proof authority.
 
+## Phase 5: proof-free initial goal for empty by-blocks
+
+Phase 5 handles the next common editing state:
+
+```proofscript
+axiom P: Prop;
+theorem emptyGoal(h: P): P := by {
+```
+
+When the canonical parser reaches EOF immediately after `by {`, it emits the
+already-parsed theorem/example header plus the complete declaration prefix. It
+then throws a normal parser error; the source remains rejected.
+
+The frontend asks `@proofscript/elaborator` to:
+
+1. elaborate the preceding declarations normally;
+2. rebuild the same checked environment and same-file structure/class metadata;
+3. reject a duplicate theorem/example header just as ordinary elaboration would;
+4. elaborate only the binder telescope and result type.
+
+No proof term, axiom, theorem declaration, metavariable, hole, or placeholder
+tactic is created. The resulting observational state is explicitly
+`kind: "goal"` with `sourceStatus: "syntax-incomplete"`.
+
+At EOF, editor tooling can therefore display:
+
+```text
+h : P
+⊢ P
+```
+
+while diagnostics still report that the proof tactic/body is missing and
+`declarationGoal` remains absent.
+
+The goal state is selectable at the exact EOF offset, which is where the cursor
+normally sits while the user has only typed `by {`.
+
+Fail-closed boundaries remain:
+
+- unrelated parser errors produce no initial goal;
+- a header that fails semantic elaboration (for example a duplicate declaration)
+  produces no initial goal;
+- parser/frontend observers remain fail-open with respect to acceptance;
+- the editor does not repair source or reuse stale proof state;
+- the feature does not introduce general parser recovery or metavariable
+  interaction.
+
 ## Acceptance
 
 Run one consolidated command:
@@ -196,8 +243,8 @@ Run one consolidated command:
 npm run assurance:tactic-ergonomics
 ```
 
-For the current Phase 4 source it uses schema
-`proofscript.tactic-ergonomics-endtest/v4` and covers nine steps: build,
+For the current Phase 5 source it uses schema
+`proofscript.tactic-ergonomics-endtest/v5` and covers nine steps: build,
 parser proof regressions, elaborator/kernel-check proof regressions,
 compiler-backed language service, the language-worker boundary, LSP transport,
 the active VS Code smoke test, `standalone-small`, and reference governance.
@@ -286,7 +333,8 @@ cases or induction, arbitrary goal focusing, Lean tactic metaprogramming, a
 second editor parser, or any new trusted kernel primitive.
 
 Phase 3 retains already-observed tactic states after later elaboration failure.
-Phase 4 additionally handles only the canonical missing-final-brace case above.
-It does **not** provide general parser recovery, invent metavariables/holes,
-continue parsing/elaboration speculatively after a failure, or claim general
-incomplete-proof recovery.
+Phase 4 additionally handles only the canonical missing-final-brace case.
+Phase 5 adds the proof-free initial goal for an empty `by {` block. These
+features still do **not** provide general parser recovery, invent
+metavariables/holes, continue parsing/elaboration speculatively after a failure,
+or claim general incomplete-proof recovery.
