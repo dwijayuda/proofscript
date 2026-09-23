@@ -211,11 +211,12 @@
   "correspondence": {
     "runtimeRepresentationSpecified": true,
     "runtimeImplementationGated": true,
-    "differentialRuntimeCorpus": "partial-existing",
+    "differentialRuntimeCorpus": "product-v1-runtime-differential/v1",
     "sourceToCoreConformance": "bounded-v0.6.1-corpus",
     "coreToTypeScriptFormalCorrespondence": false,
     "typeScriptToJavaScriptFormalCorrespondence": false,
-    "endToEndVerifiedJavaScriptClaim": false
+    "endToEndVerifiedJavaScriptClaim": false,
+    "differentialRuntimeCorpusGate": "test:product-v1:runtime-differential"
   },
   "trustBoundary": [
     "@proofscript/runtime executes already-checked terms and does not validate proofs",
