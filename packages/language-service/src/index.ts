@@ -100,6 +100,14 @@ export interface CompletionInfo {
   readonly sortText: string;
 }
 
+export type SemanticTokenKind = "function" | "enum" | "struct" | "class" | "variable";
+
+export interface SemanticTokenInfo {
+  readonly range: Range;
+  readonly kind: SemanticTokenKind;
+  readonly modifiers: readonly ("declaration" | "definition" | "readonly")[];
+}
+
 export interface SourceReferenceOccurrence {
   readonly rawName: string;
   readonly resolvedName: string;
@@ -506,6 +514,41 @@ export class ProofScriptLanguageService {
     return items.sort((left, right) => left.sortText.localeCompare(right.sortText));
   }
 
+  semanticTokens(uri: string, cancellation?: CancellationToken): readonly SemanticTokenInfo[] {
+    const analysis = this.analyze(uri, false, cancellation);
+    const tokens: SemanticTokenInfo[] = [];
+    const kindByName = new Map(analysis.projectDeclarations.map((item) => [
+      item.qualifiedName,
+      semanticTokenKind(item.kind),
+    ] as const));
+
+    for (const declaration of analysis.sourceDeclarations) {
+      cancellation?.throwIfCancellationRequested();
+      tokens.push({
+        range: declaration.selectionRange,
+        kind: semanticTokenKind(declaration.kind),
+        modifiers: ["declaration", "definition"],
+      });
+    }
+
+    for (const reference of analysis.sourceReferences) {
+      cancellation?.throwIfCancellationRequested();
+      const kind = kindByName.get(reference.resolvedName);
+      if (!kind) continue;
+      tokens.push({
+        range: reference.range,
+        kind,
+        modifiers: [],
+      });
+    }
+
+    return dedupeSemanticTokens(tokens).sort((left, right) =>
+      comparePosition(left.range.start, right.range.start)
+      || comparePosition(left.range.end, right.range.end)
+      || left.kind.localeCompare(right.kind)
+    );
+  }
+
   definition(uri: string, position: Position, cancellation?: CancellationToken): LocationInfo | null {
     const analysis = this.analyze(uri, false, cancellation);
     const symbol = symbolAtPosition(analysis, position);
@@ -643,6 +686,41 @@ function symbolAtPosition(analysis: Analysis, position: Position): string | null
     offset >= item.startOffset && offset < item.endOffset
   );
   return reference?.resolvedName ?? null;
+}
+
+function semanticTokenKind(kind: string): SemanticTokenKind {
+  switch (kind) {
+    case "inductive":
+      return "enum";
+    case "structure":
+      return "struct";
+    case "class":
+      return "class";
+    case "axiom":
+    case "instance":
+      return "variable";
+    default:
+      return "function";
+  }
+}
+
+function dedupeSemanticTokens(tokens: readonly SemanticTokenInfo[]): SemanticTokenInfo[] {
+  const seen = new Set<string>();
+  const out: SemanticTokenInfo[] = [];
+  for (const token of tokens) {
+    const key = [
+      token.range.start.line,
+      token.range.start.character,
+      token.range.end.line,
+      token.range.end.character,
+      token.kind,
+      token.modifiers.join(","),
+    ].join(":");
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(token);
+  }
+  return out;
 }
 
 function dedupeLocations(locations: readonly LocationInfo[]): LocationInfo[] {
