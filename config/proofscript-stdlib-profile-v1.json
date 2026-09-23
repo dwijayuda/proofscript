@@ -1,0 +1,189 @@
+{
+  "schema": "proofscript.stdlib-profile/v1",
+  "profileId": "proofscript-stdlib-v1",
+  "status": "specified-bounded",
+  "package": {
+    "name": "@proofscript/std",
+    "role": "implicit checked bootstrap",
+    "sourceImportRequired": false
+  },
+  "resultLikeType": {
+    "name": "Except",
+    "shape": "Except(E, A)",
+    "policy": "Product-v1 uses Except as the Result-like type; no duplicate Result alias is required."
+  },
+  "families": {
+    "Eq": {
+      "status": "supported-bounded",
+      "required": [
+        "Eq",
+        "Eq.refl",
+        "Eq.rec"
+      ]
+    },
+    "Nat": {
+      "status": "supported-bounded",
+      "required": [
+        "Nat",
+        "Nat.add",
+        "Nat.pred",
+        "Nat.sub",
+        "Nat.mul",
+        "Nat.leb",
+        "Nat.beq",
+        "Nat.ltb"
+      ]
+    },
+    "Bool": {
+      "status": "supported-bounded",
+      "required": [
+        "Bool",
+        "Bool.not",
+        "Bool.xor"
+      ]
+    },
+    "Int": {
+      "status": "supported-bounded",
+      "required": [
+        "Int",
+        "Int.neg",
+        "Int.add",
+        "Int.sub",
+        "Int.beq"
+      ]
+    },
+    "String": {
+      "status": "supported-bounded",
+      "required": [
+        "String"
+      ],
+      "limitations": [
+        "type/literals are live; a broad String utility API is not yet Product-v1"
+      ]
+    },
+    "Option": {
+      "status": "supported-bounded",
+      "required": [
+        "Option",
+        "Option.isSome",
+        "Option.isNone",
+        "Option.getD",
+        "Option.orElse",
+        "Option.fold",
+        "Option.any",
+        "Option.toList",
+        "Option.toArray",
+        "Option.filter",
+        "Option.flatten",
+        "Option.map",
+        "Option.bind",
+        "Option.toExcept"
+      ]
+    },
+    "Except": {
+      "status": "supported-bounded",
+      "required": [
+        "Except",
+        "Except.isOk",
+        "Except.isError",
+        "Except.getD",
+        "Except.orElse",
+        "Except.toOption",
+        "Except.toError",
+        "Except.getErrorD",
+        "Except.swap",
+        "Except.fold",
+        "Except.bimap",
+        "Except.toList",
+        "Except.toArray",
+        "Except.mapError",
+        "Except.flatten",
+        "Except.map",
+        "Except.bind"
+      ]
+    },
+    "List": {
+      "status": "supported-bounded",
+      "required": [
+        "List",
+        "List.map",
+        "List.foldl",
+        "List.filter",
+        "List.append",
+        "List.length",
+        "List.range",
+        "List.replicate",
+        "List.singleton",
+        "List.toArray",
+        "List.isEmpty",
+        "List.head?",
+        "List.get?",
+        "List.last?",
+        "List.tail?",
+        "List.take",
+        "List.takeWhile",
+        "List.dropWhile",
+        "List.drop",
+        "List.reverse",
+        "List.any",
+        "List.all",
+        "List.find?",
+        "List.countP"
+      ]
+    },
+    "Array": {
+      "status": "supported-bounded",
+      "required": [
+        "Array",
+        "Array.size",
+        "Array.range",
+        "Array.replicate",
+        "Array.singleton",
+        "Array.toList",
+        "Array.get?",
+        "Array.head?",
+        "Array.last?",
+        "Array.tail?",
+        "Array.map",
+        "Array.foldl",
+        "Array.filter",
+        "Array.append",
+        "Array.isEmpty",
+        "Array.take",
+        "Array.takeWhile",
+        "Array.dropWhile",
+        "Array.drop",
+        "Array.reverse",
+        "Array.any",
+        "Array.all",
+        "Array.find?",
+        "Array.countP"
+      ]
+    }
+  },
+  "packageLayer": {
+    "jsonValidation": {
+      "status": "missing",
+      "reason": "No canonical checked JSON parser/validator package exists yet."
+    },
+    "http": {
+      "status": "missing"
+    },
+    "database": {
+      "status": "missing"
+    },
+    "packageSourceResolution": {
+      "status": "project-modules-only",
+      "note": "ProofScript source imports resolve deterministic project modules; npm package names are currently execution/host interop, not ProofScript source modules."
+    },
+    "dependencyCertificateIdentity": {
+      "status": "implemented-for-implicit-stdlib-after-product-v1-binding"
+    }
+  },
+  "trustBoundary": [
+    "checked bootstrap declarations are replayed by PSKernel when loaded",
+    "some bounded collection/Int computations are runtime/kernel primitives with explicit assumption status",
+    "bootstrap presence does not imply full Lean standard-library equivalence",
+    "runtime representation remains governed separately by proofscript-js-runtime-v1"
+  ]
+}
