@@ -35,6 +35,11 @@ export function certificateRuntimeMetadata(args, certificateOut, root, cwd = pro
       path: path.relative(path.dirname(certificateOut), resolved).replace(/\\/g, "/"),
       sha256: sha256File(resolved),
     },
-    correspondence: { ...base.correspondence, backendArtifactBound: true },
+    correspondence: {
+      ...base.correspondence,
+      level: "artifact-bound-structural",
+      meaning: "runtime profile and emitted backend artifact hash are bound; execution correspondence is not proved",
+      backendArtifactBound: true,
+    },
   };
 }
