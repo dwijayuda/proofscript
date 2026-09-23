@@ -55,8 +55,13 @@ export function elabProofTerm(
       tactic: proofTacticName(term.tag),
       startOffset: term.sourceStartOffset,
       endOffset: term.sourceEndOffset,
-      goal: expectedType,
-      locals: proofStateLocals(locals, localTypes),
+      // Normalize observational display terms only. The original expectedType
+      // and localTypes continue to drive elaboration and kernel checking.
+      goal: kernelWhnf(kernelEnv, expectedType),
+      locals: proofStateLocals(
+        locals,
+        localTypes.map((type) => kernelWhnf(kernelEnv, type)),
+      ),
     });
   }
   switch (term.tag) {
