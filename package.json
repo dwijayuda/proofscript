@@ -806,7 +806,8 @@
     "assurance:ps3:stateful-lean-transfer-vc": "npm run assurance:ps3:stateful-lean-vc -- --source examples/software/06-bank-transfer-monadic-contract.ps --model examples/software/06-bank-state.model.json",
     "assurance:ps3:stateful-lean-transfer-vc:strict": "npm run assurance:ps3:stateful-lean-transfer-vc -- --strict",
     "assurance:ps3:stateful-lean-vc:proof": "npm run assurance:ps3:stateful-lean-vc -- --require-proof",
-    "assurance:ps3:stateful-lean-transfer-vc:proof": "npm run assurance:ps3:stateful-lean-transfer-vc -- --require-proof"
+    "assurance:ps3:stateful-lean-transfer-vc:proof": "npm run assurance:ps3:stateful-lean-transfer-vc -- --require-proof",
+    "test:product-v1:contract": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-completion-tests.ts"
   },
   "engines": {
     "node": ">=20"
