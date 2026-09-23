@@ -1,6 +1,6 @@
 # Tactic Ergonomics
 
-Status: **PHASE 2 COMPLETE; PHASE 3 IMPLEMENTED, ACCEPTANCE PENDING**
+Status: **PHASE 3 COMPLETE; PHASE 4 PENDING**
 
 Branch: `feature/tactic-ergonomics`
 
@@ -162,6 +162,27 @@ compiler-backed language service, the language-worker boundary, LSP transport,
 the active VS Code smoke test, `standalone-small`, and reference governance.
 
 The earlier Phase 1 evidence remains the recorded 7/7 v1 result.
+
+### Phase 3 machine acceptance
+
+Phase 3 was executed on committed source
+`10836538e37f547596cbbbb556bc643d93d17461` with
+`npm run assurance:tactic-ergonomics`.
+
+Machine result:
+
+- schema: `proofscript.tactic-ergonomics-endtest/v3`
+- total steps: 9
+- passed: 9
+- failed: 0
+- skipped: 0
+- `allTacticErgonomicsGatesPassed: true`
+
+The v3 run covers the retained-state path through the canonical compiler,
+language service, worker, and LSP, while keeping parser failures outside this
+recovery slice. The source remains fail-closed: rejected proofs stay rejected,
+and the observation sink has no influence over proof construction or kernel
+acceptance.
 
 ### Phase 2 machine acceptance
 
