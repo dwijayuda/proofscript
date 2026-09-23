@@ -50,9 +50,28 @@ export interface CoreReplaceResult {
   changed: boolean;
 }
 
+function isClosedCanonicalNatNumeral(term: Term): boolean {
+  if (
+    term.tag === "const"
+    && term.name === "Nat.zero"
+    && term.levels.length === 0
+  ) return true;
+  return (
+    term.tag === "app"
+    && term.fn.tag === "const"
+    && term.fn.name === "Nat.succ"
+    && term.fn.levels.length === 0
+    && isClosedCanonicalNatNumeral(term.arg)
+  );
+}
+
 /**
  * Replace occurrences of a term originating in the current outer context while
  * respecting de Bruijn shifts under binders.
+ *
+ * Closed constructor-normalized Nat numerals are source-level atoms. Without
+ * this guard, a proof of `1 = 2` would spuriously match the internal
+ * `Nat.succ Nat.zero` suffix of the Core encoding of `3`.
  */
 export function replaceCoreScoped(
   term: Term,
@@ -62,6 +81,9 @@ export function replaceCoreScoped(
 ): CoreReplaceResult {
   if (sameTerm(term, shift(needle, depth))) {
     return { term: shift(replacement, depth), changed: true };
+  }
+  if (isClosedCanonicalNatNumeral(term)) {
+    return { term, changed: false };
   }
   switch (term.tag) {
     case "sort":
