@@ -12,6 +12,7 @@ import { ElaborationError, SurfaceTerm, UnsupportedFeature } from "@proofscript/
 import { contextFromTypes, flattenCoreApps } from "./coreUtils";
 import { elabRwProof, elabSimpProof, elabSubstProof } from "./proofEqualityTactics";
 import { elabCasesProof, elabConstructorProof, elabInductionProof } from "./proofInductiveTactics";
+import { ProofStateSnapshot, proofStateLocals } from "./proofState";
 
 type ProofSurfaceTerm = Extract<
   SurfaceTerm,
@@ -33,6 +34,7 @@ type ProofSurfaceTerm = Extract<
 export interface ProofElaborationHost {
   elaborateTerm(term: SurfaceTerm, locals: string[], localTypes: Term[], expectedType?: Term): Term;
   inferHeadType(head: Term, ctx: Term[]): Term;
+  recordProofState?(state: ProofStateSnapshot): void;
 }
 
 export function elabProofTerm(
@@ -43,6 +45,20 @@ export function elabProofTerm(
   expectedType: Term | undefined,
   host: ProofElaborationHost,
 ): Term {
+  if (
+    expectedType
+    && typeof term.sourceStartOffset === "number"
+    && typeof term.sourceEndOffset === "number"
+  ) {
+    host.recordProofState?.({
+      kind: "tactic",
+      tactic: proofTacticName(term.tag),
+      startOffset: term.sourceStartOffset,
+      endOffset: term.sourceEndOffset,
+      goal: expectedType,
+      locals: proofStateLocals(locals, localTypes),
+    });
+  }
   switch (term.tag) {
     case "rflProof": return elabRflProof(expectedType, localTypes, kernelEnv);
     case "exactProof": return elabExactProof(term.term, locals, localTypes, kernelEnv, expectedType, host);
@@ -57,6 +73,24 @@ export function elabProofTerm(
     case "casesProof": return elabCasesProof(term.term, term.body, term.branches, locals, localTypes, kernelEnv, expectedType, host);
     case "inductionProof": return elabInductionProof(term.term, term.body, term.branches, locals, localTypes, kernelEnv, expectedType, host);
     case "simpProof": return elabSimpProof(locals, localTypes, kernelEnv, expectedType, host);
+  }
+}
+
+function proofTacticName(tag: ProofSurfaceTerm["tag"]): string {
+  switch (tag) {
+    case "rflProof": return "rfl";
+    case "exactProof": return "exact";
+    case "assumptionProof": return "assumption";
+    case "applyProof": return "apply";
+    case "introProof": return "intro";
+    case "showProof": return "show";
+    case "haveProof": return "have";
+    case "rwProof": return "rw";
+    case "substProof": return "subst";
+    case "constructorProof": return "constructor";
+    case "casesProof": return "cases";
+    case "inductionProof": return "induction";
+    case "simpProof": return "simp";
   }
 }
 
