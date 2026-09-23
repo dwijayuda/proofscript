@@ -23,6 +23,7 @@ import {
   readFfiManifest,
   verifyCertificateFfiMetadata,
 } from './ffi-commands.mjs';
+import { certificateRuntimeMetadata } from './runtime-certificate-commands.mjs';
 import {
   CURRENT_PRODUCT_PROFILE,
   CURRENT_PROOFSCRIPT_REFERENCE,
@@ -1295,33 +1296,6 @@ function emitLeanCommand(args) {
   fs.writeFileSync(resolvedOut, leanText);
   jsonOut({ status: 'accepted', command: 'emit-lean', input, source, out: resolvedOut, inputSha256: coreSha256, outputSha256: sha256File(resolvedOut), trustBoundary: { oracleArtifact: true, fullLean4Equivalence: false } }, json);
 }
-function runtimeArtifactBinding(file, certificateOut) {
-  if (!file) return undefined;
-  const resolved = path.resolve(process.cwd(), file);
-  if (!fs.existsSync(resolved)) throw new Error(`runtime artifact is missing or unreadable: ${resolved}`);
-  const ext = path.extname(resolved).toLowerCase();
-  const target = ext === '.ts' ? 'ts' : ext === '.js' ? 'js' : null;
-  if (!target) throw new Error(`runtime artifact must be .ts or .js, got '${ext || '<none>'}'`);
-  return {
-    target,
-    path: path.relative(path.dirname(certificateOut), resolved).replace(/\\/g, '/'),
-    sha256: sha256File(resolved),
-  };
-}
-
-function certificateRuntimeMetadata(args, certificateOut) {
-  const base = runtimeCertificateMetadata(ROOT);
-  const runtimeArtifact = runtimeArtifactBinding(opt(args, '--runtime-artifact'), certificateOut);
-  return {
-    ...base,
-    ...(runtimeArtifact ? { runtimeArtifact } : {}),
-    correspondence: {
-      ...base.correspondence,
-      backendArtifactBound: Boolean(runtimeArtifact),
-    },
-  };
-}
-
 function certifyCommand(args) {
   const json = has(args, '--json');
   const pos = positional(args);
@@ -1343,7 +1317,7 @@ function certifyCommand(args) {
     checkpoint: 'KA-146 Lean-checkable monadic skeleton preflight',
     packageVersion: VERSION,
     ...certificateMetadataForCore(ROOT, artifact),
-    ...certificateRuntimeMetadata(args, resolvedOut),
+    ...certificateRuntimeMetadata(args, resolvedOut, ROOT),
     ...certificateFfiMetadata(args, resolvedOut, artifact),
     source: { path: path.relative(path.dirname(resolvedOut), source).replace(/\\/g, '/'), sha256: sha256File(source) },
     core: { path: path.relative(path.dirname(resolvedOut), resolvedCore).replace(/\\/g, '/'), sha256: sha256File(resolvedCore), declarations },
