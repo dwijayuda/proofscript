@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   analyzeStatefulVcExecution,
   classifyLeanResidualGoals,
+  validateStatefulVcRunEvidence,
 } from "../packages/monadic-lowering/src/index.mjs";
 
 const request = {
@@ -155,5 +156,39 @@ assert.equal(proved.claims.sourceToLeanProgramEquivalenceChecked, false);
 assert.equal(proved.claims.exceptionalPathsCovered, false);
 assert.equal(proved.goalArtifact.summary.goalCount, 0);
 assert.equal(proved.goalArtifact.semanticProofDischarge, true);
+
+const provedReport = {
+  schema: "proofscript.stateful-vc-run/v1",
+  status: proved.status,
+  failedStage: proved.failedStage,
+  residualGoals: proved.residualGoals,
+  goalArtifact: proved.goalArtifact,
+  claims: proved.claims,
+};
+assert.deepEqual(validateStatefulVcRunEvidence(provedReport), { valid: true, errors: [] });
+assert.deepEqual(
+  validateStatefulVcRunEvidence(provedReport, { requireProof: true }),
+  { valid: true, errors: [] },
+);
+
+const contradictoryReport = structuredClone(provedReport);
+contradictoryReport.residualGoals = residual;
+contradictoryReport.goalArtifact = vcRun.goalArtifact;
+const contradictoryValidation = validateStatefulVcRunEvidence(contradictoryReport);
+assert.equal(contradictoryValidation.valid, false);
+assert.ok(contradictoryValidation.errors.includes("proved-run-has-residual-goals"));
+
+const generatedReport = {
+  schema: "proofscript.stateful-vc-run/v1",
+  status: vcRun.status,
+  failedStage: vcRun.failedStage,
+  residualGoals: vcRun.residualGoals,
+  goalArtifact: vcRun.goalArtifact,
+  claims: vcRun.claims,
+};
+assert.equal(validateStatefulVcRunEvidence(generatedReport).valid, true);
+const proofRequiredGenerated = validateStatefulVcRunEvidence(generatedReport, { requireProof: true });
+assert.equal(proofRequiredGenerated.valid, false);
+assert.ok(proofRequiredGenerated.errors.includes("proof-required-but-not-discharged"));
 
 console.log("PS3_STATEFUL_VC_EVIDENCE_TESTS=PASS");
