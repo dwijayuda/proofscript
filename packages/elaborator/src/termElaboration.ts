@@ -8,7 +8,7 @@ import { GlobalInfo, inferElaborationHeadType } from "./globalEnvironment";
 import { elaborateStructureInstanceCore, elaborateStructureUpdateCore } from "./structureSugarElaboration";
 import { elabBif, elabBinaryOp, elabLevel, elabPrimitiveLiteral } from "./primitiveSugarElaboration";
 import { elabAppTerm, elabEqTerm, elabLambdaTerm, elabLetTerm, elabNameTerm, elabPiTerm } from "./coreTermElaboration";
-import { ProofElaborationObserver } from "./proofState";
+import { ProofElaborationObserver, ProofStateSnapshot } from "./proofState";
 
 /**
  * Recursive SurfaceTerm -> Core Term dispatcher.
@@ -62,7 +62,7 @@ export function elabTerm(
         elaborateTerm: (source, nextLocals, nextLocalTypes, nextExpectedType) =>
           elabTerm(source, nextLocals, nextLocalTypes, globals, available, kernelEnv, nextExpectedType, observer),
         inferHeadType: (head, ctx) => inferElaborationHeadType(head, ctx, globals, kernelEnv),
-        ...(observer ? { recordProofState: (state) => observer.recordProofState(state) } : {}),
+        ...(observer ? { recordProofState: (state: ProofStateSnapshot) => observer.recordProofState(state) } : {}),
       });
     case "eq":
       return elabEqTerm(term, locals, localTypes, globals, available, kernelEnv, elabTerm);
