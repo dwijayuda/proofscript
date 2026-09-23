@@ -172,10 +172,10 @@
         "references",
         "rename",
         "document outline",
-        "compiler-backed Infoview"
+        "compiler-backed Infoview",
+        "semantic tokens"
       ],
       "remaining": [
-        "semantic tokens",
         "code actions",
         "proof/VC goal presentation",
         "formatter"
