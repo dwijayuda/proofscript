@@ -97,6 +97,15 @@ assert.equal(navReferences.length, 2);
 const navRename = service.rename(uri, { line: 1, character: 21 }, "renamedBase");
 assert.equal(navRename.changes[uri]?.length, 2);
 assert.ok(navRename.changes[uri]?.every((edit) => edit.newText === "renamedBase"));
+const navTokens = service.semanticTokens(uri);
+assert.equal(navTokens.length, 3);
+assert.equal(navTokens.filter((token) => token.modifiers.includes("declaration")).length, 2);
+assert.ok(navTokens.some((token) =>
+  token.range.start.line === 1
+  && token.range.start.character === 19
+  && token.kind === "function"
+  && token.modifiers.length === 0
+));
 assert.throws(
   () => service.rename(uri, { line: 1, character: 21 }, "123bad"),
   /invalid ProofScript identifier/u,
