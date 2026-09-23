@@ -161,6 +161,8 @@ export interface ProofStateLocalInfo {
   readonly type: string;
 }
 
+export type ProofStateSourceStatus = "checked" | "rejected-prefix" | "syntax-incomplete";
+
 export interface ProofStateInfo {
   readonly id: string;
   readonly kind: "tactic" | "branch";
@@ -168,6 +170,11 @@ export interface ProofStateInfo {
   readonly goal: string;
   readonly locals: readonly ProofStateLocalInfo[];
   readonly branch?: string;
+  /**
+   * Provenance of this read-only state relative to the current source text.
+   * It never changes compiler acceptance.
+   */
+  readonly sourceStatus: ProofStateSourceStatus;
   readonly startOffset: number;
   readonly endOffset: number;
   readonly range: Range;
@@ -410,7 +417,7 @@ export class ProofScriptLanguageService {
         endOffset: use.endOffset,
         range: rangeFromOffsets(document.text, use.startOffset, use.endOffset),
       }));
-      proofStates = proofStateInfos(rawProofStates, document.text);
+      proofStates = proofStateInfos(rawProofStates, document.text, "checked");
 
       const semanticDeclarations = localDeclarationNames
         ? declarations.filter((declaration) => localDeclarationNames!.has(declaration.name))
@@ -503,7 +510,11 @@ export class ProofScriptLanguageService {
     } catch (error) {
       cancellation?.throwIfCancellationRequested();
       status = statusFromError(error);
-      proofStates = proofStateInfos(partialProofStates, document.text);
+      proofStates = proofStateInfos(
+        partialProofStates,
+        document.text,
+        isParseErrorLike(error) ? "syntax-incomplete" : "rejected-prefix",
+      );
       diagnostics = [diagnosticFromError(error, document.text, status)];
     }
 
@@ -965,7 +976,11 @@ function symbolAtPosition(analysis: Analysis, position: Position): string | null
   return reference?.resolvedName ?? null;
 }
 
-function proofStateInfos(states: readonly FrontendProofState[], text: string): ProofStateInfo[] {
+function proofStateInfos(
+  states: readonly FrontendProofState[],
+  text: string,
+  sourceStatus: ProofStateSourceStatus,
+): ProofStateInfo[] {
   return states.map((state, index) => ({
     id: `proof-state:${state.kind}:${state.startOffset}:${state.endOffset}:${index}`,
     kind: state.kind,
@@ -973,6 +988,7 @@ function proofStateInfos(states: readonly FrontendProofState[], text: string): P
     goal: state.goal,
     locals: state.locals.map((local) => ({ ...local })),
     ...(state.branch ? { branch: state.branch } : {}),
+    sourceStatus,
     startOffset: state.startOffset,
     endOffset: state.endOffset,
     range: rangeFromOffsets(text, state.startOffset, state.endOffset),
@@ -1109,6 +1125,11 @@ function makeDiagnostic(code: string, message: string, sourceText: string, sever
       phase: "compiler",
     },
   };
+}
+
+function isParseErrorLike(error: unknown): boolean {
+  const name = error instanceof Error ? error.constructor?.name ?? error.name : "";
+  return name === "ParseError" || /ParseError$/u.test(name);
 }
 
 function statusFromError(error: unknown): AnalysisStatus {
