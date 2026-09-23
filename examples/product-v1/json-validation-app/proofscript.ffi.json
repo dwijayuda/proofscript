@@ -1,0 +1,47 @@
+{
+  "schema": "proofscript.ffi/v1",
+  "bindings": [
+    {
+      "name": "jsonIsValid",
+      "module": "@proofscript/json-validation",
+      "exportName": "isValid",
+      "trust": "trusted-external"
+    },
+    {
+      "name": "jsonIsObject",
+      "module": "@proofscript/json-validation",
+      "exportName": "isObject",
+      "trust": "trusted-external"
+    },
+    {
+      "name": "jsonIsArray",
+      "module": "@proofscript/json-validation",
+      "exportName": "isArray",
+      "trust": "trusted-external"
+    },
+    {
+      "name": "jsonHasStringField",
+      "module": "@proofscript/json-validation",
+      "exportName": "hasStringField",
+      "trust": "trusted-external"
+    },
+    {
+      "name": "jsonHasBooleanField",
+      "module": "@proofscript/json-validation",
+      "exportName": "hasBooleanField",
+      "trust": "trusted-external"
+    },
+    {
+      "name": "jsonHasSafeIntegerField",
+      "module": "@proofscript/json-validation",
+      "exportName": "hasSafeIntegerField",
+      "trust": "trusted-external"
+    },
+    {
+      "name": "jsonCanonicalizeOr",
+      "module": "@proofscript/json-validation",
+      "exportName": "canonicalizeOr",
+      "trust": "trusted-external"
+    }
+  ]
+}
