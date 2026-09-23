@@ -92,6 +92,14 @@ export interface HoverInfo {
   readonly range: Range;
 }
 
+export interface CompletionInfo {
+  readonly label: string;
+  readonly qualifiedName: string;
+  readonly kind: string;
+  readonly detail: string;
+  readonly sortText: string;
+}
+
 export interface Analysis {
   readonly uri: string;
   readonly version: number;
@@ -351,6 +359,35 @@ export class ProofScriptLanguageService {
       type: declaration.type,
       range: declaration.selectionRange,
     };
+  }
+
+  completion(uri: string, position: Position, cancellation?: CancellationToken): readonly CompletionInfo[] {
+    const analysis = this.analyze(uri, false, cancellation);
+    const offset = offsetAt(analysis.text, position);
+    const before = analysis.text.slice(0, offset);
+    const prefixMatch = before.match(/(?:^|[^A-Za-z0-9_'])(([A-Za-z_][A-Za-z0-9_']*)?)$/u);
+    const prefix = prefixMatch?.[1] ?? "";
+    const seen = new Set<string>();
+    const items: CompletionInfo[] = [];
+
+    for (const declaration of analysis.declarations) {
+      cancellation?.throwIfCancellationRequested();
+      const qualifiedName = declaration.name;
+      const label = qualifiedName.split(".").at(-1) ?? qualifiedName;
+      if (prefix && !label.startsWith(prefix) && !qualifiedName.startsWith(prefix)) continue;
+      const key = `${qualifiedName}\u0000${declaration.kind}\u0000${declaration.type}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      items.push({
+        label,
+        qualifiedName,
+        kind: declaration.kind,
+        detail: declaration.type,
+        sortText: `${label === prefix ? "0" : "1"}:${label}:${qualifiedName}`,
+      });
+    }
+
+    return items.sort((left, right) => left.sortText.localeCompare(right.sortText));
   }
 
   private requireDocument(uri: string): TextDocumentSnapshot {
