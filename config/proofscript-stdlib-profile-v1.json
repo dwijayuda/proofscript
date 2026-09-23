@@ -16,7 +16,9 @@
     "Eq": {
       "status": "supported-bounded",
       "required": [
-        "Eq",
+        "Eq"
+      ],
+      "generated": [
         "Eq.refl",
         "Eq.rec"
       ]
@@ -32,6 +34,11 @@
         "Nat.leb",
         "Nat.beq",
         "Nat.ltb"
+      ],
+      "generated": [
+        "Nat.zero",
+        "Nat.succ",
+        "Nat.rec"
       ]
     },
     "Bool": {
@@ -40,6 +47,11 @@
         "Bool",
         "Bool.not",
         "Bool.xor"
+      ],
+      "generated": [
+        "Bool.false",
+        "Bool.true",
+        "Bool.rec"
       ]
     },
     "Int": {
@@ -78,6 +90,11 @@
         "Option.map",
         "Option.bind",
         "Option.toExcept"
+      ],
+      "generated": [
+        "Option.none",
+        "Option.some",
+        "Option.rec"
       ]
     },
     "Except": {
@@ -100,6 +117,11 @@
         "Except.flatten",
         "Except.map",
         "Except.bind"
+      ],
+      "generated": [
+        "Except.error",
+        "Except.ok",
+        "Except.rec"
       ]
     },
     "List": {
@@ -129,6 +151,11 @@
         "List.all",
         "List.find?",
         "List.countP"
+      ],
+      "generated": [
+        "List.nil",
+        "List.cons",
+        "List.rec"
       ]
     },
     "Array": {
@@ -158,6 +185,10 @@
         "Array.all",
         "Array.find?",
         "Array.countP"
+      ],
+      "generated": [
+        "Array.mk",
+        "Array.rec"
       ]
     }
   },
