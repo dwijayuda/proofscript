@@ -6,6 +6,24 @@ import os from "node:os";
 import path from "node:path";
 
 const root = path.resolve(import.meta.dirname, "..");
+const statefulWorkflowPath = path.join(root, ".github", "workflows", "stateful-lean-ci.yml");
+const statefulWorkflow = fs.readFileSync(statefulWorkflowPath, "utf8");
+
+assert.match(
+  statefulWorkflow,
+  /assurance:ps3:stateful-lean-vc -- --require-proof/u,
+  "debit CI lane must require full proof discharge",
+);
+assert.match(
+  statefulWorkflow,
+  /assurance:ps3:stateful-lean-transfer-vc -- --require-proof/u,
+  "transfer CI lane must require full proof discharge",
+);
+assert.doesNotMatch(
+  statefulWorkflow,
+  /assurance:ps3:stateful-lean-(?:transfer-)?vc -- --strict/u,
+  "stateful CI must not accept residual-VC-only runs after matrix promotion",
+);
 const matrix = path.join(root, "tools", "ps3-stateful-lean-proof-matrix.ts");
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "proofscript-stateful-matrix-"));
 const out = path.join(tmp, "matrix.json");
