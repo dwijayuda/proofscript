@@ -519,7 +519,7 @@ export function parsePureContractSource(text, sourcePath = '<memory>') {
     if (m) { ghosts.push({ name: m[1], type: normalizeSpaces(m[2]), expression: normalizeSpaces(m[3]), erasedFromRuntime: true }); continue; }
     throw new Error(`unsupported contract clause: ${line}`);
   }
-  assertUniqueContractNames(params, requirements, ensures, frames);
+  assertUniqueContractNames(params, requirements, ensures);
   assertValidGhostDefinitions(params, requirements, ghosts);
   if (/\bresult\b/.test(body)) throw new Error("'result' is only valid in ensures clauses");
   if (/\bold\s*\(/.test(body)) throw new Error("'old' is only valid in pure ensures clauses");
@@ -682,7 +682,7 @@ export function parseMonadicContractSource(text, sourcePath = '<memory>', stateM
     if (m) { frames.push({ name: m[1], proposition: rewriteOldSnapshots(normalizeSpaces(m[2]), oldSnapshots), rawProposition: normalizeSpaces(m[2]), kind: 'frame' }); continue; }
     throw new Error(`unsupported monadic contract clause: ${line}`);
   }
-  assertUniqueContractNames(params, requirements, ensures);
+  assertUniqueContractNames(params, requirements, ensures, frames);
   const operations = parseMonadicOperations(body);
   const stateModelName = stateModelBinding.name;
   const modelRequirements = [{ name: `h${stateModelName}_adequate`, proposition: stateModelBinding.semantics?.adequacyTheorem ?? `${stateModelName}.adequate`, kind: 'state-model-adequacy' }];
