@@ -5,6 +5,7 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
   analyzeStatefulVcExecution,
+  assertStatefulVcRunEvidence,
   classifyLeanCompatibilityOutput,
   createMonadicLoweringBundle,
   createMonadicLeanPreflightBundle,
@@ -338,6 +339,7 @@ end ProofScript.Generated.VCRun.Triple
       goalArtifact: execution.goalArtifact,
       claims: execution.claims,
     };
+    assertStatefulVcRunEvidence(report);
     writeJsonFile(resolvedOut, report);
 
     const accepted = execution.status !== 'failed';
@@ -380,6 +382,7 @@ end ProofScript.Generated.VCRun.Triple
       },
       message,
     };
+    assertStatefulVcRunEvidence(report);
     writeJsonFile(resolvedOut, report);
     jsonOut({
       status: 'rejected',

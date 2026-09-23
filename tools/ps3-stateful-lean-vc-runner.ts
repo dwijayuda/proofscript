@@ -8,6 +8,7 @@ import path from "node:path";
 import { makeMonadicContractsArtifact } from "../packages/contracts/src/index.mjs";
 import {
   analyzeStatefulVcExecution,
+  assertStatefulVcRunEvidence,
   classifyLeanCompatibilityOutput,
   createMonadicLoweringArtifact,
 } from "../packages/monadic-lowering/src/index.mjs";
@@ -184,6 +185,7 @@ if (leanCompatibility.status !== "accepted") {
       semanticProofDischarge: false,
     },
   };
+  assertStatefulVcRunEvidence(report);
   writeReport(report);
   if (strict || requireProof) process.exit(2);
   process.exit(0);
@@ -239,6 +241,7 @@ const report = {
   claims: execution.claims,
 };
 
+assertStatefulVcRunEvidence(report);
 writeReport(report);
 
 if (requireProof && !execution.claims.semanticProofDischarge) process.exit(1);

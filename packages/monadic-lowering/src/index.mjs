@@ -11,6 +11,8 @@ import {
   classifyLeanResidualGoals,
   createStatefulVcGoalArtifact,
   firstStatefulVcFailedStage,
+  validateStatefulVcRunEvidence,
+  assertStatefulVcRunEvidence,
 } from './stateful-vc-execution.mjs';
 import {
   MINIMUM_STATEFUL_LEAN_VERSION,
@@ -34,6 +36,8 @@ export {
   classifyLeanResidualGoals,
   createStatefulVcGoalArtifact,
   firstStatefulVcFailedStage,
+  validateStatefulVcRunEvidence,
+  assertStatefulVcRunEvidence,
   MINIMUM_STATEFUL_LEAN_VERSION,
   classifyLeanCompatibilityOutput,
   compareLeanCompatibilityVersions,

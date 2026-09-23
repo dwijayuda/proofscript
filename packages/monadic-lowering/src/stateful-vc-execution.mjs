@@ -144,3 +144,77 @@ export function analyzeStatefulVcExecution({
     },
   };
 }
+
+
+export function validateStatefulVcRunEvidence(report, { requireProof = false } = {}) {
+  const errors = [];
+  const claims = report?.claims ?? {};
+  const goalSummary = report?.goalArtifact?.summary ?? {};
+  const goalCount = Number.isInteger(goalSummary.goalCount) ? goalSummary.goalCount : 0;
+  const residualDetected = report?.residualGoals?.detected === true
+    || goalSummary.residualGoalsPresent === true
+    || goalCount > 0;
+
+  if (report?.schema !== 'proofscript.stateful-vc-run/v1') {
+    errors.push('invalid-stateful-vc-run-schema');
+  }
+
+  const allowedStatuses = new Set(['proved', 'vcs-generated', 'failed', 'unsupported']);
+  if (!allowedStatuses.has(report?.status)) {
+    errors.push('invalid-stateful-vc-run-status');
+  }
+
+  if (claims.semanticProofDischarge === true) {
+    if (report?.status !== 'proved') errors.push('proof-discharge-status-mismatch');
+    if (report?.failedStage !== null) errors.push('proof-discharge-has-failed-stage');
+    if (residualDetected) errors.push('proof-discharge-has-residual-goals');
+  }
+
+  if (report?.status === 'proved') {
+    if (report?.failedStage !== null) errors.push('proved-run-has-failed-stage');
+    if (residualDetected) errors.push('proved-run-has-residual-goals');
+    if (claims.semanticProofDischarge !== true) errors.push('proved-run-without-proof-discharge');
+    for (const claim of [
+      'leanEnvironmentResolved',
+      'leanModelTypechecked',
+      'leanProgramTypechecked',
+      'tripleTargetTypechecked',
+      'tacticExecuted',
+      'semanticVcDerivationComplete',
+      'realVerificationConditionsGenerated',
+    ]) {
+      if (claims[claim] !== true) errors.push(`proved-run-missing-${claim}`);
+    }
+  }
+
+  if (report?.status === 'vcs-generated') {
+    if (report?.failedStage !== 'vc-residual-goals') errors.push('vcs-generated-stage-mismatch');
+    if (!residualDetected) errors.push('vcs-generated-without-residual-goals');
+    if (claims.tacticExecuted !== true) errors.push('vcs-generated-without-tactic');
+    if (claims.realVerificationConditionsGenerated !== true) errors.push('vcs-generated-without-real-vcs');
+    if (claims.semanticProofDischarge === true) errors.push('vcs-generated-with-proof-discharge');
+  }
+
+  if (goalSummary.semanticProofDischarge !== undefined
+      && goalSummary.semanticProofDischarge !== claims.semanticProofDischarge) {
+    errors.push('goal-summary-proof-discharge-mismatch');
+  }
+  if (report?.goalArtifact?.semanticProofDischarge !== undefined
+      && report.goalArtifact.semanticProofDischarge !== claims.semanticProofDischarge) {
+    errors.push('goal-artifact-proof-discharge-mismatch');
+  }
+
+  if (requireProof && claims.semanticProofDischarge !== true) {
+    errors.push('proof-required-but-not-discharged');
+  }
+
+  return { valid: errors.length === 0, errors };
+}
+
+export function assertStatefulVcRunEvidence(report, options) {
+  const validation = validateStatefulVcRunEvidence(report, options);
+  if (!validation.valid) {
+    throw new Error(`invalid stateful VC run evidence: ${validation.errors.join(', ')}`);
+  }
+  return report;
+}
