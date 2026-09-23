@@ -824,7 +824,9 @@
     "assurance:ps3:stateful-lean-logical-vc:proof": "npm run assurance:ps3:stateful-lean-logical-vc -- --require-proof",
     "test:ps3:stateful-control-flow-boundary": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/ps3-stateful-control-flow-boundary-tests.ts",
     "test:product-v1:canonical-cli": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-canonical-cli-tests.ts",
-    "test:product-v1:software-profile": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-software-profile-tests.ts"
+    "test:product-v1:software-profile": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-software-profile-tests.ts",
+    "test:product-v1:vscode": "node editors/vscode/test/smoke.mjs",
+    "test:product-v1:editor-adapter": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-editor-adapter-tests.ts"
   },
   "engines": {
     "node": ">=20"
@@ -854,6 +856,7 @@
     "versions.json",
     "integration-status.json",
     "tsconfig.base.json",
-    "package.json"
+    "package.json",
+    "editors"
   ]
 }
