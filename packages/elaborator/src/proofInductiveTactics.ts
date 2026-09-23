@@ -1,6 +1,5 @@
 import {
   Environment,
-  RecursorMetadata,
   Term,
   defEq,
   infer,
@@ -130,8 +129,8 @@ function recursorDataForScrutinee(
   if (!recEntry || recEntry.declaration.kind !== "recursor") {
     throw new UnsupportedFeature(`${tactic} requires the checked recursor for '${head.name}'`);
   }
-  const metadata = recEntry.declaration.metadata as RecursorMetadata;
-  if (!metadata || metadata.rules.length === 0) {
+  const metadata = recEntry.declaration.metadata;
+  if (metadata.rules.length === 0) {
     throw new UnsupportedFeature(`${tactic} currently requires an inductive with at least one recursor rule`);
   }
   return {
