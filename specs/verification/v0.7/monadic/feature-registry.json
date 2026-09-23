@@ -8,12 +8,13 @@
       "id": "V-MONADIC-CONTRACT",
       "class": "V",
       "status": "specified-structural-alpha",
-      "surface": "function f(params): State ... with requires/ensures clauses and := do { declaredStateOperation(...); ... }",
+      "surface": "function f(params): State ... with requires/ensures/frame clauses and := do { declaredStateOperation(...); ... }",
       "scope": "descriptor-bound stateful/monadic contract",
       "semantic_target": "proofscript.monadic-lowering.v1 Std.Do.Triple-style structural skeleton: program parameters remain theorem binders, requires clauses form the Hoare precondition, and state-model adequacy identity is bound separately",
       "obligations": [
         "one structural operation-spec obligation per body operation",
-        "one structural postcondition obligation per ensures clause"
+        "one structural postcondition obligation per ensures clause",
+        "one structural frame obligation per frame clause"
       ],
       "state_model_requirements": [
         "schema proofscript.state-model.v1",
@@ -28,25 +29,23 @@
       "runtime": "contract metadata is non-runtime; the source program body remains the executable program. No backend execution-correspondence proof is implied.",
       "trust_boundary": {
         "descriptor_validation": "structural",
-        "state_model_adequacy_checked": false,
+        "state_model_adequacy_checked": "per-run Lean evidence through proofscript.stateful-adequacy-check/v1",
         "vcgen_connected": false,
-        "semantic_proof_discharge": "per-run evidence only; first debit theorem proved on Lean 4.34.0; no profile-wide guarantee",
+        "semantic_proof_discharge": "per-run evidence only; canonical debit/transfer matrix is proved across Lean 4.33.1, 4.34.0, and 4.35.0-rc2; no profile-wide guarantee",
         "lean_preflight": "shape/plumbing only; explicit stubs are not semantic proof",
-        "model_adequacy_checked": false,
+        "model_adequacy_checked": "per-run Lean evidence through proofscript.stateful-adequacy-check/v1",
         "requires_lowering": "Hoare precondition, not theorem proof parameters",
         "lean_vc_execution": "available per proofscript.stateful-vc-run/v1 execution",
         "source_to_lean_program_equivalence_checked": false
       },
       "deferred_from_this_profile": [
+        "loop invariants and loop progress measures",
         "undeclared state operations",
-        "loop invariants/frame conditions",
         "full ProofScript/Lean expression elaboration beyond the bounded stateful-predicate-expressions0 AST",
         "semantic equivalence of generated pre/post predicates to the selected WP/Triple implementation",
-        "checking the state-model adequacy theorem rather than binding its identity",
         "resolution/checking of operation Triple theorem identities in a real Lean environment",
         "type-checked model-specific observation semantics beyond structural entry/final-state binder insertion",
         "profile-wide guarantee that every admitted stateful contract discharges",
-        "state-model adequacy theorem checking/use rather than identity binding",
         "source-to-Lean program semantic equivalence",
         "exceptional/abrupt-path coverage"
       ],
@@ -66,26 +65,28 @@
         "proofscript.stateful-vc-run/v1 records staged Lean model/program/Triple/tactic execution evidence and promotes semantic claims only from actual command results",
         "proofscript.stateful-vc-goals/v1 gives Lean-derived residual goals stable IDs and trace hashes when the tactic is actually reached",
         "stateful postcondition IR is propagated contracts -> monadic-lowering -> monadic-preflight",
-        "proofscript.stateful-vc-run/v1 may record proved per-run semantic discharge only after actual compatible Lean execution closes the generated theorem"
+        "proofscript.stateful-vc-run/v1 may record proved per-run semantic discharge only after actual compatible Lean execution closes the generated theorem",
+        "V-FRAME clauses remain distinct monadic.frame source obligations and typed-frame-goal VC-plan entries while being conjoined into the generated Triple postcondition"
       ],
       "diagnostics": [
         "state model descriptor is mandatory",
         "return type must use State in this alpha",
         "duplicate contract labels are rejected",
-        "unmodeled stateful old/result, definite state-observation/predicate/operation-call type mismatches, operation arity errors, unsupported normalized predicate AST syntax, invalid stateful preconditions, undeclared operations, or missing used-operation Triple theorem identities cannot receive the specified profile"
+        "unmodeled stateful old/result, definite state-observation/predicate/operation-call type mismatches, operation arity errors, unsupported normalized predicate AST syntax, invalid stateful preconditions, undeclared operations, or missing used-operation Triple theorem identities cannot receive the specified profile",
+        "frame labels share the postcondition-label namespace with ensures clauses; duplicate labels fail closed"
       ]
     },
     {
       "id": "V-OLD",
       "class": "V",
       "status": "specified-structural-alpha",
-      "surface": "old(<expression>) in monadic ensures clauses",
-      "scope": "ps3-monadic-contracts0 postconditions",
+      "surface": "old(<expression>) in monadic ensures/frame clauses",
+      "scope": "ps3-monadic-contracts0 postconditions and frame conditions",
       "semantic_target": "normalized entry-state expression captured by the Triple theorem's __ps_entry binder",
       "obligations": "participates in the enclosing monadic postcondition/Triple skeleton",
       "runtime": "no runtime binding",
       "admission_rule": "calls inside old(...) must be declared state observations in this alpha; call-free expressions are allowed",
-      "trust_boundary": "structurally normalized only; state-model adequacy and semantic proof discharge remain unchecked"
+      "trust_boundary": "typed and normalized into entry-state observations; proof discharge and adequacy are promoted only from concrete Lean-run evidence"
     },
     {
       "id": "V-RESULT",
@@ -97,7 +98,33 @@
       "obligations": "participates in the enclosing monadic postcondition/Triple skeleton",
       "runtime": "no separate runtime binding",
       "admission_rule": "postcondition-only; result in requires or inside old(...) is not admitted",
-      "trust_boundary": "structurally normalized only; semantic proof discharge remains unchecked"
+      "trust_boundary": "typed and normalized into the result binder; proof discharge is promoted only from concrete Lean-run evidence"
+    },
+    {
+      "id": "V-FRAME",
+      "class": "V",
+      "status": "specified-structural-alpha",
+      "surface": "frame <name>: <stateful proposition>",
+      "scope": "ps3-monadic-contracts0 postcondition section",
+      "semantic_target": "an explicit entry-to-final-state predicate conjoined into the generated Std.Do.Triple postcondition; old(...) observations bind to __ps_entry and ordinary observations bind to __ps_final",
+      "obligations": "one stable monadic.frame obligation and one typed-frame-goal VC-plan entry per frame clause",
+      "runtime": "erased verification metadata; it does not change executable function arity or body",
+      "admission_rule": "named frame clauses only; labels must be unique across ensures and frame clauses; expressions must fit stateful-predicate-expressions0 and descriptor-bound observations",
+      "non_goal": "V-FRAME v0 is not a general heap footprint or modifies-set calculus",
+      "trust_boundary": "frame predicates use the same typed AST, Lean semantic encoding, Triple target, real-VC execution, adequacy gate, and proof-discharge evidence as promoted monadic ensures clauses; no profile-wide discharge claim",
+      "artifact_representation": [
+        "proofscript.contracts.v1 functions[].frames and top-level frames",
+        "proofscript.stateful-postcondition-ir/v1 clause kind=frame",
+        "proofscript.stateful-predicate-elaboration/v1 clause kind=frame",
+        "proofscript.stateful-predicate-ast/v1 clause kind=frame",
+        "proofscript.stateful-wp-binding/v1 postcondition clause kind=frame",
+        "proofscript.stateful-vc-plan/v1 typed-frame-goal bound to a monadic.frame source obligation"
+      ],
+      "diagnostics": [
+        "frame clauses must be named",
+        "frame labels must not collide with ensures/frame labels",
+        "unsupported frame predicates fail closed through the normal stateful predicate AST diagnostics"
+      ]
     }
   ]
 }
