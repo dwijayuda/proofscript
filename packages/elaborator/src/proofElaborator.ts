@@ -12,7 +12,7 @@ import { ElaborationError, SurfaceTerm, UnsupportedFeature } from "@proofscript/
 import { contextFromTypes, flattenCoreApps } from "./coreUtils";
 import { elabRwProof, elabSimpProof, elabSubstProof } from "./proofEqualityTactics";
 import { elabCasesProof, elabConstructorProof, elabInductionProof } from "./proofInductiveTactics";
-import { ProofStateSnapshot, proofStateLocals } from "./proofState";
+import { ProofStateSnapshot, observeProofState, proofStateLocals } from "./proofState";
 
 type ProofSurfaceTerm = Extract<
   SurfaceTerm,
@@ -50,7 +50,7 @@ export function elabProofTerm(
     && typeof term.sourceStartOffset === "number"
     && typeof term.sourceEndOffset === "number"
   ) {
-    host.recordProofState?.({
+    observeProofState(host, {
       kind: "tactic",
       tactic: proofTacticName(term.tag),
       startOffset: term.sourceStartOffset,
