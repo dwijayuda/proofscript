@@ -32,6 +32,7 @@ jobs:
       - run: npm run test:product-v1:stdlib-profile
       - run: npm run test:product-v1:json-validation
       - run: npm run test:product-v1:representative-apps
+      - run: npm run test:product-v1:fresh-release
       - run: npm run test:product-v1:source-package
       - run: npm run test:product-v1:canonical-cli
       - run: npm run test:product-v1:verification-endtest
