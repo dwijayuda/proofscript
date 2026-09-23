@@ -2,6 +2,7 @@ import crypto from "node:crypto";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { IncrementalCompilerSession, checkSource } from "@proofscript/compiler";
+import { formatSource } from "@proofscript/formatter";
 
 export interface Position {
   readonly line: number;
@@ -547,6 +548,21 @@ export class ProofScriptLanguageService {
       || comparePosition(left.range.end, right.range.end)
       || left.kind.localeCompare(right.kind)
     );
+  }
+
+  formatDocument(uri: string, cancellation?: CancellationToken): readonly TextEditInfo[] {
+    cancellation?.throwIfCancellationRequested();
+    const document = this.requireDocument(uri);
+    const formatted = formatSource(document.text);
+    cancellation?.throwIfCancellationRequested();
+    if (!formatted.changed) return [];
+    return [{
+      range: {
+        start: { line: 0, character: 0 },
+        end: positionAt(document.text, document.text.length),
+      },
+      newText: formatted.formatted,
+    }];
   }
 
   definition(uri: string, position: Position, cancellation?: CancellationToken): LocationInfo | null {
