@@ -95,6 +95,10 @@ function dispatch(operation: string, args: any, cancellation?: CancellationToken
       return service.analyze(args.uri, false, cancellation);
     case "diagnostics":
       return service.diagnostics(args.uri, cancellation);
+    case "documentSymbols":
+      return service.documentSymbols(args.uri, cancellation);
+    case "hover":
+      return service.hover(args.uri, args.position, cancellation);
     case "__debugBlock":
       return debugBlock(args?.ms, cancellation);
     default:
