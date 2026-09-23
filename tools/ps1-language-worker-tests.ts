@@ -86,6 +86,13 @@ assert.equal(workerCommentFormat.length, 1);
 assert.match(workerCommentFormat[0].newText, /-- keep/u);
 assert.match(workerCommentFormat[0].newText, /def x: Nat := \{1 \+ 2\};/u);
 
+worker.replaceDocument(uri, 8, "def missing: Nat := 1\n");
+const workerMissing = await worker.diagnostics(uri);
+assert.equal(workerMissing.diagnostics[0]?.code, "PSLS1001");
+const workerActions = await worker.codeActions(uri, workerMissing.diagnostics[0]?.range);
+assert.equal(workerActions.length, 1);
+assert.equal(workerActions[0].kind, "quickfix");
+assert.equal(workerActions[0].edit.changes[uri]?.[0]?.newText, ";");
 
 const owner = "cancel-me";
 const blocked = worker.request("__debugBlock", { ms: 500 }, owner);
