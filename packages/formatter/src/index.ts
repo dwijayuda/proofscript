@@ -69,15 +69,12 @@ export function formatSource(source: string): FormatResult {
   assertSameTokenStream(source, formatted);
   return {
     formatted,
-    changed: formatted !== normalizeTerminalNewline(source),
+    changed: formatted !== source,
     tokenCount: tokens.length,
     commentsPreserved: false,
   };
 }
 
-function normalizeTerminalNewline(source: string): string {
-  return source.replace(/[ \t\r\n]+$/u, "") + "\n";
-}
 
 function needsSpace(previous: string, current: string): boolean {
   if ([")", "]", "}", ",", ";", ":", "."].includes(current)) return false;
