@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import path from "node:path";
-import type { CoreArtifact, CoreDeclaration, Term } from "@proofscript/kernel";
+import type { CoreArtifact, CoreDeclaration } from "@proofscript/kernel";
 import {
   PSC1_FAIL_CLOSED_FEATURES,
   PSC1_IMPLEMENTATION_PROFILE,
@@ -22,7 +22,7 @@ import {
   resolveFfiBindings,
 } from "./ffi";
 import { buildSanitizedNameMap } from "./names";
-import { emitTerm, flattenPi } from "./termEmitter";
+import { emitTerm, flattenPi, productV1PublicType } from "./termEmitter";
 import type {
   EmitContext,
   EmitJavaScriptOptions,
@@ -74,32 +74,6 @@ function collectExecutableDeclarations(
     });
   }
   return { emitted, skipped };
-}
-
-function productV1PublicType(term: Term, depth = 0): string | undefined {
-  if (term.tag === "const") {
-    switch (term.name) {
-      case "Nat":
-      case "Int":
-        return "bigint";
-      case "Bool":
-        return "boolean";
-      case "String":
-        return "string";
-      case "Unit":
-        return "null";
-      default:
-        return undefined;
-    }
-  }
-  if (term.tag === "pi") {
-    if ((term.binderInfo ?? "explicit") !== "explicit") return undefined;
-    const domain = productV1PublicType(term.domain, depth + 1);
-    const codomain = productV1PublicType(term.body, depth + 1);
-    if (!domain || !codomain) return undefined;
-    return `(arg${depth}: ${domain}) => ${codomain}`;
-  }
-  return undefined;
 }
 
 function executableExpression(decl: CoreDeclaration, ctx: EmitContext, target: "js" | "ts"): string {
