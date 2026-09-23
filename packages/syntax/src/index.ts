@@ -58,6 +58,12 @@ export type SurfaceTerm=
   |{tag:"introProof";names:string[];body:SurfaceTerm}
   |{tag:"showProof";type:SurfaceTerm;body:SurfaceTerm}
   |{tag:"haveProof";name:string;type?:SurfaceTerm;value:SurfaceTerm;body:SurfaceTerm}
+  |{tag:"rwProof";equality:SurfaceTerm;reverse:boolean;body:SurfaceTerm}
+  |{tag:"substProof";name:string;body:SurfaceTerm}
+  |{tag:"constructorProof";body?:SurfaceTerm}
+  |{tag:"casesProof";term:SurfaceTerm;body:SurfaceTerm}
+  |{tag:"inductionProof";term:SurfaceTerm;body:SurfaceTerm}
+  |{tag:"simpProof"}
   |{tag:"eq";left:SurfaceTerm;right:SurfaceTerm}
   |{tag:"binaryOp";op:"add"|"sub"|"mul"|"beq"|"lt"|"le"|"gt"|"ge";left:SurfaceTerm;right:SurfaceTerm}
   |{tag:"app";fn:SurfaceTerm;args:SurfaceTerm[];explicit?:boolean}
