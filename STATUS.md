@@ -238,7 +238,7 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - unsupported bounded predicate AST syntax and definite AST type mismatches downgrade to prototype/fail closed — implemented with executable gates
 - arbitrary ProofScript/Lean predicate elaboration outside the bounded AST — **not claimed**
 - WP/Triple semantic equivalence checking — **false by design**
-- state-model adequacy theorem checking — **false by design**
+- state-model adequacy theorem checking/use — **available per executed Lean run through `proofscript.stateful-adequacy-check/v1`; proved for the recorded debit+transfer three-lane matrix, not profile-wide**
 - semantic VC derivation / real verification-condition generation — **available per executed Lean run; not a profile-wide guarantee**
 - operation Triple theorem identity resolution as an independent named check — **not yet separately claimed**
 - emitted `StateM` program typechecking — **available per executed Lean run**
@@ -254,7 +254,8 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 - verification profile propagation contracts → lowering → preflight — PASS
 - fail-closed `psc contracts --verification-profile ...` public CLI gate — PASS
 - stateful postcondition semantic encoding into concrete Lean `Std.Do` terms — **implemented for the bounded profile**
-- state-model adequacy theorem checking/use — **false**
+- bounded V-FRAME — **implemented structurally** as named entry→final-state predicates with distinct `monadic.frame` obligations and `typed-frame-goal` VC-plan provenance; proof-required frame evidence is pending execution
+- state-model adequacy theorem checking/use — **true only for recorded executed runs; no profile-wide claim**
 - semantic proof discharge — **true for the recorded debit+transfer matrix cases; not claimed profile-wide**
 - `mvcgen` connection for public `Std.Do.Triple` — **working for the recorded debit+transfer matrix cases**
 - public CLI router — 1,835 lines after public VC execution routing (below the 1,900-line KA145 architecture guard and 1,950-line KA146 ceiling)
@@ -262,7 +263,8 @@ Current structural monadic profile: `ps3-monadic-contracts0`.
 ## Next engineering target
 
 1. Product completion work continues on `product/v1-completion` under `config/proofscript-product-v1-completion.json`.
-2. Begin the next bounded verification increment: explicit frame conditions first, then loop invariant/progress obligations and exceptional/control-flow paths.
-3. Preserve `sourceToLeanProgramEquivalenceChecked = false` and `exceptionalPathsCovered = false` until separately checked.
-4. Keep recursive termination (`termination_by` / `decreasing_by`) separate from loop-progress verification.
-5. Continue CLI/frontend/LSP convergence only behind canonical compiler APIs and existing regression gates.
+2. Finish V-FRAME promotion by executing the new debit+frame theorem across the proof-required Lean matrix; do not promote it to proved until real Lean evidence is green.
+3. After V-FRAME evidence is green, implement loop invariant/progress obligations, then exceptional/control-flow paths.
+4. Preserve `sourceToLeanProgramEquivalenceChecked = false` and `exceptionalPathsCovered = false` until separately checked.
+5. Keep recursive termination (`termination_by` / `decreasing_by`) separate from loop-progress verification.
+6. Reuse ProofScript LSP 0.46.0 as the primary tooling donor, but port features only through current compiler-backed language-service APIs; no duplicate frontend/parser.
