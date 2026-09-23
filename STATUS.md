@@ -187,30 +187,32 @@ editor-only parser/elaborator was added.
 
 See `docs/TACTIC_ERGONOMICS.md`.
 
-## Tactic ergonomics Phase 5
+## Tactic ergonomics Phase 5 closure
 
-Status: **IMPLEMENTED; ACCEPTANCE PENDING**.
+Status: **CLOSED** on tested source commit `42d35f1bd3ea5fcc1b70aa4087fa8b30d4b4807d`.
+
+Closeout evidence on 2026-09-24:
+
+- consolidated gate: `npm run assurance:tactic-ergonomics`;
+- schema: `proofscript.tactic-ergonomics-endtest/v5`;
+- **9/9 PASS**, 0 failed, 0 skipped;
+- build — PASS;
+- parser proof extraction — PASS;
+- elaborator/kernel-check proof regression — PASS;
+- compiler-backed language service — PASS;
+- language worker — PASS;
+- LSP transport — PASS;
+- active VS Code smoke — PASS;
+- standalone-small — PASS;
+- reference governance — PASS;
+- `allTacticErgonomicsGatesPassed = true`.
 
 Phase 5 adds a proof-free initial goal for an empty `by {` block at EOF. The
-canonical parser emits only the already-parsed theorem/example header and
-complete declaration prefix, then still rejects the source.
+canonical parser still rejects the incomplete source; the canonical elaborator
+checks only the already-parsed declaration prefix plus theorem/example header.
 
-The canonical elaborator now has a dedicated initial-goal path that:
-
-- elaborates the preceding declarations normally;
-- rebuilds the checked environment plus same-file structure/class metadata;
-- rejects duplicate declaration headers;
-- kernel-checks binder domains and the result type;
-- returns only the real local context and goal.
-
-It does **not** synthesize a theorem, axiom, metavariable, hole, dummy tactic, or
-placeholder proof term. Editor state uses `kind: "goal"` and
-`sourceStatus: "syntax-incomplete"`, and remains selectable at the exact EOF
-cursor position.
-
-Closure requires a green
-`proofscript.tactic-ergonomics-endtest/v5` run on the committed Phase 5
-candidate.
+No theorem/axiom placeholder, metavariable, hole, dummy tactic, synthetic proof
+term, source repair, or editor-only elaborator was added.
 
 See `docs/TACTIC_ERGONOMICS.md`.
 
