@@ -236,18 +236,21 @@
         "rename",
         "document outline",
         "compiler-backed Infoview",
-        "semantic tokens"
+        "semantic tokens",
+        "canonical token-preserving formatter",
+        "psc fmt write/check/stdout modes",
+        "formatter idempotence and canonical-token equivalence",
+        "formatter fails closed on comments until trivia preservation exists"
       ],
       "remaining": [
         "code actions",
-        "proof/VC goal presentation",
-        "formatter"
+        "proof/VC goal presentation"
       ],
       "exitGates": [
         "editor protocol tests green",
         "no duplicate parser",
         "proof goals visible through compiler-backed service",
-        "psc fmt stable"
+        "test:product-v1:formatter"
       ],
       "implementationNotes": [
         "VS Code 0.46.0 is retained under donors/editors/vscode and reused selectively.",
