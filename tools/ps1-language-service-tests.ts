@@ -140,6 +140,24 @@ service.closeDocument(uri);
 assert.equal(service.getDocument(uri), undefined);
 assert.throws(() => service.analyze(uri), /document is not open/);
 
+// Canonical formatter reuse: one implementation for CLI and editor.
+const formatService = new ProofScriptLanguageService();
+const formatUri = "proofscript-test://Format.ps";
+formatService.openDocument(formatUri, 1, "def   formatted : Nat:={1+2};\n");
+const formatEdits = formatService.formatDocument(formatUri);
+assert.equal(formatEdits.length, 1);
+assert.deepEqual(formatEdits[0].range.start, { line: 0, character: 0 });
+assert.match(formatEdits[0].newText, /def formatted: Nat := \{1 \+ 2\};/u);
+formatService.replaceDocument(formatUri, 2, formatEdits[0].newText);
+assert.deepEqual(formatService.formatDocument(formatUri), [], "canonical formatting must be idempotent");
+formatService.replaceDocument(formatUri, 3, "-- keep\ndef x: Nat := 1;\n");
+assert.throws(
+  () => formatService.formatDocument(formatUri),
+  /refuses sources containing comments/u,
+  "editor formatting must fail closed until comment trivia is preserved",
+);
+formatService.closeDocument(formatUri);
+
 // Project-level incremental reuse + importer invalidation.
 const projectRoot = fs.mkdtempSync(path.join(os.tmpdir(), "proofscript-language-service-project-"));
 fs.writeFileSync(path.join(projectRoot, "package.json"), JSON.stringify({ private: true }, null, 2) + "\n");
