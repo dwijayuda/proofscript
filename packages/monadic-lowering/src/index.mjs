@@ -225,6 +225,8 @@ export function createMonadicLoweringArtifact({ contractArtifact, contractArtifa
       stateOperationTypingComplete: contractArtifact.statefulOperationElaboration?.typingComplete === true,
       statefulProgramLoweringReady: statefulProgramLowering.programLoweringReady === true,
       sourceToLeanProgramEquivalenceChecked: false,
+      controlFlowPolicy: 'linear-modeled-operation-sequence-only',
+      exceptionalPathsCovered: false,
       leanProgramTypechecked: false,
       wpTripleIdentityBindingComplete: statefulWpBinding.wpTripleIdentityBindingComplete === true,
       statefulVcPlanningReady: statefulVcPlan.planningReady === true,
