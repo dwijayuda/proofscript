@@ -34,8 +34,8 @@ assert.equal(jsModule.helloAgain, 'hello');
 
 const { outPath: tsOut } = buildTsFixture(fixture, 'string.ts');
 const tsSource = fs.readFileSync(tsOut, 'utf8');
-assert.match(tsSource, /export const hello: PsValue = "hello";/, 'String literal must emit as a JS/TS string literal');
-assert.match(tsSource, /export const escaped: PsValue = "A\\nB";/, 'escaped String literal must preserve escaping in emitted TypeScript');
+assert.match(tsSource, /export const hello: string = "hello";/, 'String literal must emit with the Product-v1 public string type');
+assert.match(tsSource, /export const escaped: string = "A\\nB";/, 'escaped String literal must preserve escaping in emitted TypeScript');
 const compiledJs = compileTypeScriptFixture(tsOut, fixture.path('compiled'));
 const compiled = requireFixtureModule(compiledJs);
 assert.equal(compiled.helloAgain, 'hello');
