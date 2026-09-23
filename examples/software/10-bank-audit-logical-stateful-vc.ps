@@ -1,0 +1,6 @@
+function auditPair(left: AccountId, right: AccountId, code: Nat): State Bank Unit
+  requires valid: (code > 0 ∨ code = 0) ∧ ¬ (left = right)
+  ensures stable: balanceOf(left) = old(balanceOf(left)) ∧ balanceOf(right) = old(balanceOf(right))
+:= do {
+  audit(code);
+}
