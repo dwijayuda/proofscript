@@ -1,0 +1,8 @@
+{
+  "name": "proofscript-json-validation-app",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@proofscript/json-validation": "file:../json-validation-package"
+  }
+}
