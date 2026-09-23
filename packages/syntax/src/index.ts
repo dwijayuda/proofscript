@@ -56,6 +56,8 @@ export type SurfaceTerm=
   |{tag:"assumptionProof"}
   |{tag:"applyProof";term:SurfaceTerm;body?:SurfaceTerm}
   |{tag:"introProof";names:string[];body:SurfaceTerm}
+  |{tag:"showProof";type:SurfaceTerm;body:SurfaceTerm}
+  |{tag:"haveProof";name:string;type?:SurfaceTerm;value:SurfaceTerm;body:SurfaceTerm}
   |{tag:"eq";left:SurfaceTerm;right:SurfaceTerm}
   |{tag:"binaryOp";op:"add"|"sub"|"mul"|"beq"|"lt"|"le"|"gt"|"ge";left:SurfaceTerm;right:SurfaceTerm}
   |{tag:"app";fn:SurfaceTerm;args:SurfaceTerm[];explicit?:boolean}
