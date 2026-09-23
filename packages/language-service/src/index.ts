@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { IncrementalCompilerSession, checkSource } from "@proofscript/compiler";
 
 export interface Position {
@@ -100,6 +100,38 @@ export interface CompletionInfo {
   readonly sortText: string;
 }
 
+export interface SourceReferenceOccurrence {
+  readonly rawName: string;
+  readonly resolvedName: string;
+  readonly startOffset: number;
+  readonly endOffset: number;
+  readonly range: Range;
+}
+
+export interface ProjectDeclarationOccurrence extends SourceDeclarationOccurrence {
+  readonly uri: string;
+  readonly filePath?: string;
+}
+
+export interface ProjectReferenceOccurrence extends SourceReferenceOccurrence {
+  readonly uri: string;
+  readonly filePath?: string;
+}
+
+export interface LocationInfo {
+  readonly uri: string;
+  readonly range: Range;
+}
+
+export interface TextEditInfo {
+  readonly range: Range;
+  readonly newText: string;
+}
+
+export interface WorkspaceEditInfo {
+  readonly changes: Readonly<Record<string, readonly TextEditInfo[]>>;
+}
+
 export interface Analysis {
   readonly uri: string;
   readonly version: number;
@@ -115,6 +147,9 @@ export interface Analysis {
   readonly assumptions: readonly string[];
   readonly surfaceFeatures: readonly SurfaceFeatureOccurrence[];
   readonly sourceDeclarations: readonly SourceDeclarationOccurrence[];
+  readonly sourceReferences: readonly SourceReferenceOccurrence[];
+  readonly projectDeclarations: readonly ProjectDeclarationOccurrence[];
+  readonly projectReferences: readonly ProjectReferenceOccurrence[];
   readonly moduleReuse?: {
     readonly reused: readonly string[];
     readonly rebuilt: readonly string[];
@@ -216,6 +251,16 @@ export class ProofScriptLanguageService {
     let assumptions: readonly string[] = [];
     let surfaceFeatures: readonly SurfaceFeatureOccurrence[] = [];
     let sourceDeclarations: readonly SourceDeclarationOccurrence[] = [];
+    let sourceReferences: readonly SourceReferenceOccurrence[] = [];
+    let projectDeclarations: readonly ProjectDeclarationOccurrence[] = [];
+    let projectReferences: readonly ProjectReferenceOccurrence[] = [];
+    let rawProjectModules: readonly any[] = [];
+    let rawGlobalReferences: readonly {
+      readonly rawName: string;
+      readonly resolvedName: string;
+      readonly startOffset: number;
+      readonly endOffset: number;
+    }[] = [];
     let rawDeclarationLocations: readonly {
       readonly name: string;
       readonly qualifiedName: string;
@@ -233,9 +278,18 @@ export class ProofScriptLanguageService {
       let summary;
       let rawFeatures: readonly { readonly feature: string; readonly startOffset: number; readonly endOffset: number }[] = [];
       if (document.filePath) {
-        const checked = this.incrementalSession(document.filePath).checkProjectFile(document.filePath, {
-          sourceProvider: this.sourceProvider(),
+        const session = this.incrementalSession(document.filePath);
+        const sourceProvider = this.sourceProvider();
+        const checked = session.checkProjectFile(document.filePath, {
+          sourceProvider,
         });
+        const workspace = session.checkWorkspaceForFile(document.filePath, {
+          sourceProvider,
+          workspaceAdditionalFiles: [...this.documents.values()]
+            .map((item) => item.filePath)
+            .filter((item): item is string => Boolean(item)),
+        });
+        rawProjectModules = workspace.modules;
         summary = checked.summary;
         moduleReuse = {
           reused: [...checked.moduleReuse.reused],
@@ -245,12 +299,14 @@ export class ProofScriptLanguageService {
           normalizePath(module.source.filePath) === normalizePath(document.filePath!));
         rawFeatures = currentModule?.ownedFeatures ?? [];
         rawDeclarationLocations = currentModule?.declarationLocations ?? [];
+        rawGlobalReferences = currentModule?.globalReferences ?? [];
         localDeclarationNames = new Set(currentModule?.declarations.map((declaration) => declaration.name) ?? []);
       } else {
         const checked = checkSource(document.text);
         summary = checked.summary;
         rawFeatures = checked.ownedFeatures;
         rawDeclarationLocations = checked.declarationLocations;
+        rawGlobalReferences = checked.globalReferences;
       }
       cancellation?.throwIfCancellationRequested();
 
@@ -289,6 +345,63 @@ export class ProofScriptLanguageService {
         };
       });
 
+      sourceReferences = rawGlobalReferences.map((reference) => ({
+        rawName: reference.rawName,
+        resolvedName: reference.resolvedName,
+        startOffset: reference.startOffset,
+        endOffset: reference.endOffset,
+        range: rangeFromOffsets(document.text, reference.startOffset, reference.endOffset),
+      }));
+
+      if (rawProjectModules.length > 0) {
+        projectDeclarations = rawProjectModules.flatMap((module: any) => {
+          const moduleUri = pathToFileURL(module.source.filePath).toString();
+          const semantic = module.declarations ?? [];
+          return (module.declarationLocations ?? []).map((location: any) => {
+            const declaration = semantic.find((item: any) =>
+              item.name === location.qualifiedName || item.name === location.name
+            );
+            return {
+              uri: moduleUri,
+              filePath: module.source.filePath,
+              name: location.name,
+              qualifiedName: location.qualifiedName,
+              kind: declaration?.kind ?? location.kind,
+              type: declaration ? prettyDeclarationType(declaration) : "<type unavailable>",
+              startOffset: location.startOffset,
+              endOffset: location.endOffset,
+              nameStartOffset: location.nameStartOffset,
+              nameEndOffset: location.nameEndOffset,
+              range: rangeFromOffsets(module.source.source, location.startOffset, location.endOffset),
+              selectionRange: rangeFromOffsets(module.source.source, location.nameStartOffset, location.nameEndOffset),
+            };
+          });
+        });
+        projectReferences = rawProjectModules.flatMap((module: any) => {
+          const moduleUri = pathToFileURL(module.source.filePath).toString();
+          return (module.globalReferences ?? []).map((reference: any) => ({
+            uri: moduleUri,
+            filePath: module.source.filePath,
+            rawName: reference.rawName,
+            resolvedName: reference.resolvedName,
+            startOffset: reference.startOffset,
+            endOffset: reference.endOffset,
+            range: rangeFromOffsets(module.source.source, reference.startOffset, reference.endOffset),
+          }));
+        });
+      } else {
+        projectDeclarations = sourceDeclarations.map((declaration) => ({
+          ...declaration,
+          uri: document.uri,
+          ...(document.filePath ? { filePath: document.filePath } : {}),
+        }));
+        projectReferences = sourceReferences.map((reference) => ({
+          ...reference,
+          uri: document.uri,
+          ...(document.filePath ? { filePath: document.filePath } : {}),
+        }));
+      }
+
       if (status !== "accepted") {
         const message = summary.message ?? `compiler status: ${status}`;
         diagnostics = [diagnosticFromFailure(message, document.text, status)];
@@ -299,7 +412,7 @@ export class ProofScriptLanguageService {
       diagnostics = [diagnosticFromError(error, document.text, status)];
     }
 
-    const resultId = analysisResultId(document.version, diagnostics, status, declarations, surfaceFeatures, sourceDeclarations);
+    const resultId = analysisResultId(document.version, diagnostics, status, declarations, surfaceFeatures, sourceDeclarations, sourceReferences);
     const analysis: Analysis = {
       uri: document.uri,
       version: document.version,
@@ -311,6 +424,9 @@ export class ProofScriptLanguageService {
       assumptions,
       surfaceFeatures,
       sourceDeclarations,
+      sourceReferences,
+      projectDeclarations,
+      projectReferences,
       ...(moduleReuse ? { moduleReuse } : {}),
       diagnostics,
       resultId,
@@ -390,6 +506,87 @@ export class ProofScriptLanguageService {
     return items.sort((left, right) => left.sortText.localeCompare(right.sortText));
   }
 
+  definition(uri: string, position: Position, cancellation?: CancellationToken): LocationInfo | null {
+    const analysis = this.analyze(uri, false, cancellation);
+    const symbol = symbolAtPosition(analysis, position);
+    if (!symbol) return null;
+    const declaration = analysis.projectDeclarations.find((item) => item.qualifiedName === symbol);
+    return declaration ? { uri: declaration.uri, range: declaration.selectionRange } : null;
+  }
+
+  references(
+    uri: string,
+    position: Position,
+    includeDeclaration = true,
+    cancellation?: CancellationToken,
+  ): readonly LocationInfo[] {
+    const analysis = this.analyze(uri, false, cancellation);
+    const symbol = symbolAtPosition(analysis, position);
+    if (!symbol) return [];
+    const locations: LocationInfo[] = [];
+    if (includeDeclaration) {
+      for (const declaration of analysis.projectDeclarations) {
+        cancellation?.throwIfCancellationRequested();
+        if (declaration.qualifiedName === symbol) {
+          locations.push({ uri: declaration.uri, range: declaration.selectionRange });
+        }
+      }
+    }
+    for (const reference of analysis.projectReferences) {
+      cancellation?.throwIfCancellationRequested();
+      if (reference.resolvedName === symbol) {
+        locations.push({ uri: reference.uri, range: reference.range });
+      }
+    }
+    return dedupeLocations(locations);
+  }
+
+  rename(
+    uri: string,
+    position: Position,
+    newName: string,
+    cancellation?: CancellationToken,
+  ): WorkspaceEditInfo {
+    if (!/^[A-Za-z_][A-Za-z0-9_']*$/u.test(newName)) {
+      throw new Error(`invalid ProofScript identifier for rename: ${newName}`);
+    }
+    const analysis = this.analyze(uri, false, cancellation);
+    const symbol = symbolAtPosition(analysis, position);
+    if (!symbol) throw new Error("no resolved global symbol at rename position");
+    const declaration = analysis.projectDeclarations.find((item) => item.qualifiedName === symbol);
+    if (!declaration) throw new Error(`source declaration is unavailable for global symbol '${symbol}'`);
+
+    const dot = symbol.lastIndexOf(".");
+    const namespacePrefix = dot >= 0 ? symbol.slice(0, dot + 1) : "";
+    const replacementSymbol = namespacePrefix + newName;
+    if (
+      replacementSymbol !== symbol
+      && analysis.projectDeclarations.some((item) => item.qualifiedName === replacementSymbol)
+    ) {
+      throw new Error(`rename would collide with existing declaration '${replacementSymbol}'`);
+    }
+
+    const changes = new Map<string, TextEditInfo[]>();
+    const add = (locationUri: string, range: Range): void => {
+      const edits = changes.get(locationUri) ?? [];
+      edits.push({ range, newText: newName });
+      changes.set(locationUri, edits);
+    };
+    add(declaration.uri, declaration.selectionRange);
+    for (const reference of analysis.projectReferences) {
+      cancellation?.throwIfCancellationRequested();
+      if (reference.resolvedName === symbol) add(reference.uri, reference.range);
+    }
+
+    const out: Record<string, readonly TextEditInfo[]> = {};
+    for (const [locationUri, edits] of changes) {
+      out[locationUri] = dedupeEdits(edits).sort((left, right) =>
+        comparePosition(right.range.start, left.range.start)
+      );
+    }
+    return { changes: out };
+  }
+
   private requireDocument(uri: string): TextDocumentSnapshot {
     const document = this.documents.get(uri);
     if (!document) throw new Error(`document is not open: ${uri}`);
@@ -433,6 +630,55 @@ export class ProofScriptLanguageService {
       if (document.filePath) overlays.set(normalizePath(document.filePath), document.text);
     }
     return (filePath) => overlays.get(normalizePath(filePath));
+  }
+}
+
+function symbolAtPosition(analysis: Analysis, position: Position): string | null {
+  const offset = offsetAt(analysis.text, position);
+  const declaration = analysis.sourceDeclarations.find((item) =>
+    offset >= item.nameStartOffset && offset < item.nameEndOffset
+  );
+  if (declaration) return declaration.qualifiedName;
+  const reference = analysis.sourceReferences.find((item) =>
+    offset >= item.startOffset && offset < item.endOffset
+  );
+  return reference?.resolvedName ?? null;
+}
+
+function dedupeLocations(locations: readonly LocationInfo[]): LocationInfo[] {
+  const seen = new Set<string>();
+  const out: LocationInfo[] = [];
+  for (const location of locations) {
+    const key = `${location.uri}:${location.range.start.line}:${location.range.start.character}:${location.range.end.line}:${location.range.end.character}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(location);
+  }
+  return out;
+}
+
+function dedupeEdits(edits: readonly TextEditInfo[]): TextEditInfo[] {
+  const seen = new Set<string>();
+  const out: TextEditInfo[] = [];
+  for (const edit of edits) {
+    const key = `${edit.range.start.line}:${edit.range.start.character}:${edit.range.end.line}:${edit.range.end.character}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(edit);
+  }
+  return out;
+}
+
+function comparePosition(left: Position, right: Position): number {
+  return left.line - right.line || left.character - right.character;
+}
+
+function prettyDeclarationType(declaration: any): string {
+  if (typeof declaration?.type === "string") return declaration.type;
+  try {
+    return JSON.stringify(declaration?.type ?? null);
+  } catch {
+    return "<type unavailable>";
   }
 }
 
@@ -494,6 +740,7 @@ function analysisResultId(
   declarations: Analysis["declarations"],
   surfaceFeatures: readonly SurfaceFeatureOccurrence[],
   sourceDeclarations: readonly SourceDeclarationOccurrence[],
+  sourceReferences: readonly SourceReferenceOccurrence[],
 ): string {
   return sha256(JSON.stringify({
     version,
@@ -509,6 +756,12 @@ function analysisResultId(
       declaration.endOffset,
       declaration.nameStartOffset,
       declaration.nameEndOffset,
+    ]),
+    sourceReferences: sourceReferences.map((reference) => [
+      reference.rawName,
+      reference.resolvedName,
+      reference.startOffset,
+      reference.endOffset,
     ]),
   })).slice(0, 24);
 }
