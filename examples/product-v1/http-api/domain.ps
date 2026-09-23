@@ -1,0 +1,7 @@
+function apiStatus(ok: Bool): Nat := {
+  if ok then 200 else 404
+}
+
+function apiBody(ok: Bool): String := {
+  if ok then "{\"status\":\"ok\",\"service\":\"proofscript\"}" else "{\"error\":\"not_found\"}"
+}
