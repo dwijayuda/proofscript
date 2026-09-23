@@ -16,6 +16,6 @@ Definition/references/rename are backed by canonical parser source spans plus th
 
 The 0.46 donor still contains signature help, code actions, and richer proof-state UI. Those providers remain disabled until the current compiler-backed service exposes the required semantic APIs.
 
-Protocol v1 does not expose tactic-state snapshots. The active Infoview never fabricates proof goals.
+Protocol v1 exposes checked theorem goals and source-hash-bound verification obligations, but not live tactic-state snapshots. The active Infoview reports tacticStateAvailable=false and never fabricates tactic states.
 
 Run npm run build at the repository root before launching the extension from source. Release packaging will later vendor the matching @proofscript/lsp package into the VSIX.
