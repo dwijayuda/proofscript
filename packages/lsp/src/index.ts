@@ -161,7 +161,7 @@ export class ProofScriptLanguageServer {
                 serverInfoRequest: "proofscript/serverInfo",
                 goalsRequest: "proofscript/goals",
                 goalPresentationAvailable: true,
-                proofStateAvailable: false,
+                proofStateAvailable: true,
                 editorFeatureLevel: "document-semantic0",
                 declarationSourceIndex: true,
               },
@@ -238,7 +238,7 @@ export class ProofScriptLanguageServer {
             architecture: "compiler -> language-service -> language-worker -> lsp",
             compilerBacked: true,
             duplicateParser: false,
-            proofStateAvailable: false,
+            proofStateAvailable: true,
             editorFeatureLevel: "document-semantic0",
             worker: this.worker.stats(),
           });
@@ -315,7 +315,7 @@ export class ProofScriptLanguageServer {
               diagnostics,
               allDiagnostics: analysis.diagnostics,
               assumptions: analysis.assumptions,
-              proofStateAvailable: false,
+              proofStateAvailable: true,
             });
           } catch (error) {
             if (error instanceof LanguageWorkerCancelledError) return this.error(message.id, -32800, "request cancelled");
@@ -737,7 +737,7 @@ function documentStatusFromAnalysis(analysis: any): any {
     message: analysis.diagnostics?.[0]?.message ?? null,
     compilerBacked: true,
     kernelStatus: analysis.status === "accepted" ? "checked-document" : "not-checked",
-    proofStateAvailable: false,
+    proofStateAvailable: true,
   };
 }
 
