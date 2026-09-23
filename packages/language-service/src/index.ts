@@ -165,7 +165,7 @@ export type ProofStateSourceStatus = "checked" | "rejected-prefix" | "syntax-inc
 
 export interface ProofStateInfo {
   readonly id: string;
-  readonly kind: "tactic" | "branch";
+  readonly kind: "goal" | "tactic" | "branch";
   readonly tactic: string;
   readonly goal: string;
   readonly locals: readonly ProofStateLocalInfo[];
@@ -1001,8 +1001,10 @@ function proofStateAtOffset(states: readonly ProofStateInfo[], offset: number): 
   return [...matches].sort((left, right) => {
     const leftWidth = left.endOffset - left.startOffset;
     const rightWidth = right.endOffset - right.startOffset;
+    const rank = (kind: ProofStateInfo["kind"]): number =>
+      kind === "tactic" ? 0 : kind === "branch" ? 1 : 2;
     return leftWidth - rightWidth
-      || (left.kind === right.kind ? 0 : left.kind === "tactic" ? -1 : 1)
+      || rank(left.kind) - rank(right.kind)
       || right.startOffset - left.startOffset;
   })[0] ?? null;
 }
