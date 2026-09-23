@@ -18,7 +18,7 @@ import { elaborateInductiveDeclaration, elaborateStructureDeclaration } from "./
 import { generateStructuralEquationTheorems } from "./matchElaborator";
 import { GlobalInfo, InitialGlobalInfo, qualifyDeclarationName, syncGlobals } from "./globalEnvironment";
 import { elaborateClassDeclaration, elaborateInstanceDeclaration } from "./classElaborator";
-import { countCorePis, elabConstructorType, elabTelescopeType, elabTelescopeValue } from "./telescopeElaboration";
+import { countCorePis, elabConstructorType, elabTelescopeGoal, elabTelescopeType, elabTelescopeValue } from "./telescopeElaboration";
 
 export type ElaborateTermFn = (
   term: SurfaceTerm,
@@ -145,4 +145,83 @@ export function elaborateProgramCore(
     }
   }
   return {declarations:result,typeclasses:typeclasses.snapshot()};
+}
+
+export interface ElaboratedInitialProofGoal {
+  readonly locals: string[];
+  readonly localTypes: Term[];
+  readonly goal: Term;
+}
+
+/**
+ * Elaborate a checked declaration prefix and then only the next theorem/example
+ * header. No proof/value term is synthesized and the header is not added to the
+ * kernel environment as an axiom or theorem.
+ */
+export function elaborateInitialProofGoalCore(
+  prefixDecls: SurfaceDeclaration[],
+  binders: SurfaceDeclaration extends never ? never : import("@proofscript/syntax").SurfaceBinder[],
+  resultTerm: SurfaceTerm,
+  availableLevels: readonly string[],
+  initialGlobals: readonly InitialGlobalInfo[] = [],
+  initialDeclarations: readonly CoreDeclaration[] = [],
+  initialTypeclasses: TypeclassEnvironmentMetadata = emptyTypeclassEnvironment(),
+  elaborateTerm: ElaborateTermFn,
+): ElaboratedInitialProofGoal {
+  const prefix = elaborateProgramCore(
+    prefixDecls,
+    initialGlobals,
+    initialDeclarations,
+    initialTypeclasses,
+    elaborateTerm,
+  );
+
+  const kernelEnv = new Environment({ implementationProfile: 'KERNEL-level-instantiation-conformance1' });
+  for (const decl of initialDeclarations) checkAndAddDeclaration(kernelEnv, decl);
+  for (const decl of prefix.declarations) checkAndAddDeclaration(kernelEnv, decl);
+
+  const globals = new Map<string, GlobalInfo>(
+    initialGlobals.map(g => [g.name, { levelParams: [...g.levelParams] }]),
+  );
+  syncGlobals(globals, kernelEnv);
+
+  for (const c of prefix.typeclasses.classes) {
+    const previous = globals.get(c.name) ?? { levelParams: [] };
+    globals.set(c.name, {
+      ...previous,
+      isClass: true,
+      classMeta: { ...c, params: c.params.map(p => ({ ...p })), fields: c.fields.map(field => ({ ...field })) },
+      structureFields: c.fields.map(field => field.name),
+    });
+  }
+  for (const i of prefix.typeclasses.instances) {
+    const previous = globals.get(i.name) ?? { levelParams: [] };
+    globals.set(i.name, { ...previous, instanceMeta: { ...i } });
+  }
+
+  // Core artifacts intentionally do not preserve the source-only field-name
+  // hints used by dotted structure sugar. Reattach those hints from the actual
+  // parsed prefix declarations so header elaboration sees the same metadata as
+  // ordinary same-file elaboration.
+  for (const sourceDecl of prefixDecls) {
+    if (sourceDecl.kind !== "structure" && sourceDecl.kind !== "class") continue;
+    const name = qualifyDeclarationName(sourceDecl.name, sourceDecl.namespacePath);
+    const previous = globals.get(name) ?? { levelParams: [] };
+    globals.set(name, {
+      ...previous,
+      structureFields: sourceDecl.fields.map(field => field.name),
+    });
+  }
+
+  const available = new Set(availableLevels);
+  return elabTelescopeGoal(
+    binders,
+    resultTerm,
+    [],
+    [],
+    globals,
+    available,
+    kernelEnv,
+    elaborateTerm,
+  );
 }
