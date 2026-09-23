@@ -131,6 +131,7 @@ export class ProofScriptLanguageServer {
               definitionProvider: true,
               referencesProvider: true,
               renameProvider: true,
+              documentFormattingProvider: true,
               semanticTokensProvider: {
                 legend: {
                   tokenTypes: ["function", "enum", "struct", "class", "variable"],
@@ -424,6 +425,25 @@ export class ProofScriptLanguageServer {
           } catch (error) {
             if (error instanceof LanguageWorkerCancelledError) return this.error(message.id, -32800, "request cancelled");
             throw error;
+          }
+        }
+
+        case "textDocument/formatting": {
+          const uri = message.params?.textDocument?.uri;
+          if (typeof uri !== "string") return this.error(message.id, -32602, "missing textDocument.uri");
+          const before = this.documents.get(uri);
+          if (!before) return this.error(message.id, -32602, `document is not open: ${uri}`);
+          const ownerId = requestId(message.id);
+          try {
+            const edits = await this.worker.formatDocument(uri, ownerId);
+            const latest = this.documents.get(uri);
+            if (!latest || latest.version !== before.version) {
+              return this.error(message.id, -32801, "document changed while formatting was running");
+            }
+            return this.reply(message.id, edits);
+          } catch (error) {
+            if (error instanceof LanguageWorkerCancelledError) return this.error(message.id, -32800, "request cancelled");
+            return this.error(message.id, -32602, messageOf(error));
           }
         }
 
