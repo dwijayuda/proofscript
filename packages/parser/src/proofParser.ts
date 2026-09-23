@@ -65,6 +65,12 @@ function parseProofStep(host:ProofParserHost):SurfaceTerm{
       &&!host.atId("apply")
       &&!host.atId("show")
       &&!host.atId("have")
+      &&!host.atId("rw")
+      &&!host.atId("subst")
+      &&!host.atId("constructor")
+      &&!host.atId("cases")
+      &&!host.atId("induction")
+      &&!host.atId("simp")
     )names.push(host.next().text);
     if(names.length===0)throw new ParseError("PSC-1 intro requires at least one introduced name");
     host.expect(";");
@@ -90,5 +96,51 @@ function parseProofStep(host:ProofParserHost):SurfaceTerm{
     host.expect(";");
     return{tag:"haveProof",name:nameToken.text,type,value,body:parseProofStep(host)};
   }
-  throw new UnsupportedFeature("PSC-1 standalone proof block currently supports `rfl`, `exact`, `assumption`, `apply`, `intro`, `show`, and proof-local `have`");
+  if(host.atId("rw")){
+    host.next();
+    let reverse=false;
+    if(host.at("←")){
+      host.next();
+      reverse=true;
+    }else if(host.at("<")){
+      host.next();
+      host.expect("-");
+      reverse=true;
+    }
+    const equality=host.parseTerm();
+    host.expect(";");
+    return{tag:"rwProof",equality,reverse,body:parseProofStep(host)};
+  }
+  if(host.atId("subst")){
+    host.next();
+    const nameToken=host.next();
+    if(nameToken.kind!=="id")throw new ParseError("PSC-1 subst requires a local variable name");
+    host.expect(";");
+    return{tag:"substProof",name:nameToken.text,body:parseProofStep(host)};
+  }
+  if(host.atId("constructor")){
+    host.next();
+    if(host.at(";")){
+      host.next();
+      return{tag:"constructorProof",body:parseProofStep(host)};
+    }
+    return{tag:"constructorProof"};
+  }
+  if(host.atId("cases")){
+    host.next();
+    const term=host.parseTerm();
+    host.expect(";");
+    return{tag:"casesProof",term,body:parseProofStep(host)};
+  }
+  if(host.atId("induction")){
+    host.next();
+    const term=host.parseTerm();
+    host.expect(";");
+    return{tag:"inductionProof",term,body:parseProofStep(host)};
+  }
+  if(host.atId("simp")){
+    host.next();
+    return{tag:"simpProof"};
+  }
+  throw new UnsupportedFeature("PSC-1 standalone proof block supports bounded `rfl`, `exact`, `assumption`, `apply`, `intro`, `show`, `have`, `rw`, `subst`, `constructor`, `cases`, `induction`, and `simp`");
 }
