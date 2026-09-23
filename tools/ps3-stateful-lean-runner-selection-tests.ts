@@ -37,6 +37,7 @@ function invoke(extraArgs: string[], reportPath: string) {
   assert.equal(report.status, "unsupported");
   assert.equal(report.failedStage, "setup");
   assert.equal(report.claims.leanEnvironmentResolved, false);
+  assert.equal(report.claims.stateModelAdequacyChecked, false);
   assert.equal(report.claims.realVerificationConditionsGenerated, false);
   assert.equal(report.claims.semanticProofDischarge, false);
   return report;

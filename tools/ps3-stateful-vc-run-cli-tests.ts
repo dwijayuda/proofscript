@@ -138,6 +138,10 @@ assert.doesNotMatch(
 assert.equal(loweringArtifact.statefulVcRequest.leanEnvironmentResolved, false);
 assert.equal(loweringArtifact.statefulVcRequest.tacticExecuted, false);
 assert.equal(loweringArtifact.statefulVcRequest.realVerificationConditionsGenerated, false);
+assert.equal(loweringArtifact.statefulAdequacyCheck.schema, "proofscript.stateful-adequacy-check/v1");
+assert.equal(loweringArtifact.statefulAdequacyCheck.ready, true);
+assert.equal(loweringArtifact.statefulAdequacyCheck.checkedInLean, false);
+assert.equal(loweringArtifact.statefulAdequacyCheck.stateModelAdequacyChecked, false);
 
 const missingLake = `proofscript-definitely-missing-lake-${process.pid}`;
 const execution = run([
@@ -157,6 +161,7 @@ assert.equal(executionJson.verificationStatus, "failed");
 assert.equal(executionJson.failedStage, "setup");
 assert.equal(executionJson.claims.leanEnvironmentResolved, false);
 assert.equal(executionJson.claims.leanModelTypechecked, false);
+assert.equal(executionJson.claims.stateModelAdequacyChecked, false);
 assert.equal(executionJson.claims.leanProgramTypechecked, false);
 assert.equal(executionJson.claims.tripleTargetTypechecked, false);
 assert.equal(executionJson.claims.tacticExecuted, false);
@@ -172,6 +177,7 @@ assert.equal(report.failedStage, "setup");
 assert.equal(report.lean.requestedToolchain, "leanprover/lean4:v4.33.1");
 assert.match(report.message, /unable to execute Lean|ENOENT|not found|unsupported Lean version/iu);
 assert.equal(report.claims.leanEnvironmentResolved, false);
+assert.equal(report.claims.stateModelAdequacyChecked, false);
 assert.equal(report.claims.realVerificationConditionsGenerated, false);
 assert.equal(report.claims.semanticProofDischarge, false);
 

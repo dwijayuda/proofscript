@@ -226,6 +226,18 @@ assert.deepEqual(
   ]),
   { valid: true, errors: [] },
 );
+const missingAdequacyProvenance = { ...stableProvenance };
+delete missingAdequacyProvenance.generatedAdequacyCheckSha256;
+const missingAdequacyValidation = validateStatefulProofMatrixProvenance([
+  { name: "debit", toolchain: "leanprover/lean4:v4.33.1", provenance: missingAdequacyProvenance },
+]);
+assert.equal(missingAdequacyValidation.valid, false);
+assert.ok(
+  missingAdequacyValidation.errors.includes(
+    "provenance-missing:debit:generatedAdequacyCheckSha256",
+  ),
+);
+
 const mismatchedProvenance = validateStatefulProofMatrixProvenance([
   { name: "transfer", toolchain: "leanprover/lean4:v4.33.1", provenance: stableProvenance },
   {
