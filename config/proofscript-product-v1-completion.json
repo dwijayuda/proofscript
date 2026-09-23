@@ -129,7 +129,8 @@
         "test:product-v1:runtime-profile",
         "runtime differential corpus green",
         "certificate correspondence levels explicit and emitted",
-        "runtime artifact hashes bound to certificate"
+        "runtime artifact hashes bound to certificate",
+        "test:product-v1:certificate-correspondence"
       ],
       "done": [
         "versioned JS runtime representation profile",
@@ -141,13 +142,14 @@
         "frozen tagged structure/inductive values",
         "tagged Option/Except/List/Array representations",
         "general runtime equality explicitly not claimed",
-        "unsupported IO/UInt/Float/Char fail-closed profile entries"
+        "unsupported IO/UInt/Float/Char fail-closed profile entries",
+        "runtime profile identity/hash bound into new certificates",
+        "optional emitted TS/JS artifact hash bound into certificates",
+        "certificate verification rejects runtime-profile and backend-artifact tampering",
+        "explicit correspondence claims emitted with end-to-end JavaScript verification false"
       ],
       "remaining": [
         "expand differential runtime corpus into one Product-v1 gate",
-        "bind runtime profile identity into certificates",
-        "bind emitted TypeScript/JavaScript hashes into certificates",
-        "define and test correspondence levels",
         "formal Core-to-TypeScript refinement remains separate and unproved"
       ]
     },
