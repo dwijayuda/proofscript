@@ -840,7 +840,9 @@
     "test:product-v1:representative-apps": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-representative-apps-tests.ts",
     "assurance:ps3:stateful-lean-invoice-vc": "npm run assurance:ps3:stateful-lean-vc -- --source examples/product-v1/stateful-invoice/Invoice.ps --model examples/software/06-bank-state.model.json",
     "assurance:ps3:stateful-lean-invoice-vc:proof": "npm run assurance:ps3:stateful-lean-invoice-vc -- --require-proof",
-    "test:product-v1:fresh-release": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-fresh-release-tests.ts"
+    "test:product-v1:fresh-release": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-fresh-release-tests.ts",
+    "test:product-v1:endtest": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-endtest-tests.ts",
+    "assurance:product-v1:endtest": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-endtest.ts"
   },
   "engines": {
     "node": ">=20"
