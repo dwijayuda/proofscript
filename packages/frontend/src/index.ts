@@ -11,7 +11,7 @@ import {
 } from "@proofscript/kernel";
 import { CoreModulesBuildMetadata, makeArtifact } from "@proofscript/kernel-codec";
 import { prepareCoreEnvironment } from "@proofscript/environment";
-import { buildModuleGraph, ProjectModuleGraph, ProjectModuleSource, type ProjectSourceProvider } from "@proofscript/project";
+import { buildModuleGraph, buildWorkspaceGraph, ProjectModuleGraph, ProjectModuleSource, ProjectWorkspaceGraph, type ProjectSourceProvider } from "@proofscript/project";
 import { UnsupportedFeature, type SurfaceFeatureUse } from "@proofscript/syntax";
 
 export interface FrontendModuleCacheEntry {
@@ -37,6 +37,8 @@ export interface FrontendOptions {
   sourceProvider?:ProjectSourceProvider;
   /** Optional in-process cache of previously checked modules. Entries are revalidated before reuse. */
   moduleCache?:FrontendModuleCache;
+  /** Unsaved/new workspace files not yet present on disk. Used only by workspace indexing. */
+  workspaceAdditionalFiles?:readonly string[];
 }
 export interface FrontendResult {
   artifact: ReturnType<typeof makeArtifact>;
@@ -65,6 +67,11 @@ export interface FrontendProjectResult {
   modules:CheckedProjectModule[];
   moduleReuse:{reused:string[];rebuilt:string[]};
 }
+export interface FrontendWorkspaceResult {
+  graph:ProjectWorkspaceGraph;
+  modules:CheckedProjectModule[];
+  moduleReuse:{reused:string[];rebuilt:string[]};
+}
 
 /** Check one already-loaded source unit. Filesystem imports require checkProjectFile. */
 export function checkSource(source:string,options:FrontendOptions={}):FrontendResult{
@@ -89,16 +96,55 @@ export function checkSource(source:string,options:FrontendOptions={}):FrontendRe
  */
 export function checkProjectFile(entryFile:string,options:FrontendOptions={}):FrontendProjectResult{
   const graph=buildModuleGraph(entryFile,undefined,options.sourceProvider);
+  const compiled=compileResolvedModules(graph.modules,options);
+  const checkedModules=compiled.modules;
+  const baseDecls=[...(options.prelude?.declarations??[])];
+  const baseTypeclasses=cloneTypeclasses(options.prelude?.typeclasses??emptyTypeclassEnvironment());
+  const declarations=[...baseDecls,...checkedModules.flatMap(m=>m.declarations)];
+  const typeclasses=normalizeTypeclassOrder(declarations,mergeTypeclasses(baseTypeclasses,...checkedModules.map(m=>m.typeclasses)));
+  const summary=checkCoreDeclarations(declarations, 'KERNEL-level-instantiation-conformance1');
+  const modules:CoreModulesBuildMetadata={
+    entry:graph.entry,
+    modules:checkedModules.map(m=>({
+      name:m.source.name,
+      sourceSha256:m.source.sourceSha256,
+      imports:[...m.source.imports],
+      declarations:m.declarations.map(d=>d.name),
+    })),
+  };
+  return{artifact:makeArtifact(declarations,typeclasses,modules),summary,graph,modules:checkedModules,moduleReuse:{reused:compiled.reused,rebuilt:compiled.rebuilt}};
+}
+
+/**
+ * Check every module discoverable under the configured source roots for editor/workspace indexing.
+ *
+ * Each module is elaborated only against its transitive imports, exactly like the normal
+ * project checker. Disconnected modules are aggregated for navigation metadata only; this
+ * function does not invent a synthetic semantic import relation between them.
+ */
+export function checkWorkspace(projectRoot:string,options:FrontendOptions={}):FrontendWorkspaceResult{
+  const graph=buildWorkspaceGraph(projectRoot,{
+    sourceProvider:options.sourceProvider,
+    additionalFiles:options.workspaceAdditionalFiles,
+  });
+  const compiled=compileResolvedModules(graph.modules,options);
+  return{graph,modules:compiled.modules,moduleReuse:{reused:compiled.reused,rebuilt:compiled.rebuilt}};
+}
+
+function compileResolvedModules(
+  sourceModules:readonly ProjectModuleSource[],
+  options:FrontendOptions,
+):{modules:CheckedProjectModule[];reused:string[];rebuilt:string[]}{
   const baseDecls=[...(options.prelude?.declarations??[])];
   const baseTypeclasses=cloneTypeclasses(options.prelude?.typeclasses??emptyTypeclassEnvironment());
   const compiled=new Map<string,CheckedProjectModule>();
-  const graphByName=new Map(graph.modules.map(m=>[m.name,m] as const));
+  const graphByName=new Map(sourceModules.map(m=>[m.name,m] as const));
   const reused:string[]=[];
   const rebuilt:string[]=[];
 
-  for(const sourceModule of graph.modules){
+  for(const sourceModule of sourceModules){
     const visible=dependencyClosure(sourceModule,graphByName);
-    const visibleModules=graph.modules.filter(m=>visible.has(m.name)).map(m=>compiled.get(m.name)!).filter(Boolean);
+    const visibleModules=sourceModules.filter(m=>visible.has(m.name)).map(m=>compiled.get(m.name)!).filter(Boolean);
     const visibleDecls=[...baseDecls,...visibleModules.flatMap(m=>m.declarations)];
     const visibleTypeclasses=normalizeTypeclassOrder(visibleDecls,mergeTypeclasses(baseTypeclasses,...visibleModules.map(m=>m.typeclasses)));
     const visibleEnvironmentSha256=checkedEnvironmentSha256(visibleDecls,visibleTypeclasses);
@@ -124,7 +170,14 @@ export function checkProjectFile(entryFile:string,options:FrontendOptions={}):Fr
       classes:checked.artifact.typeclasses.classes.filter(c=>owned.has(c.name)).map(cloneClass),
       instances:checked.artifact.typeclasses.instances.filter(i=>owned.has(i.name)).map(i=>({...i})),
     };
-    const moduleResult:CheckedProjectModule={source:sourceModule,declarations,typeclasses,ownedFeatures:[...checked.ownedFeatures],declarationLocations:checked.declarationLocations.map(item=>({...item})),globalReferences:checked.globalReferences.map(item=>({...item}))};
+    const moduleResult:CheckedProjectModule={
+      source:sourceModule,
+      declarations,
+      typeclasses,
+      ownedFeatures:[...checked.ownedFeatures],
+      declarationLocations:checked.declarationLocations.map(item=>({...item})),
+      globalReferences:checked.globalReferences.map(item=>({...item})),
+    };
     compiled.set(sourceModule.name,moduleResult);
     options.moduleCache?.set(sourceModule.name,{
       sourceSha256:sourceModule.sourceSha256,
@@ -138,20 +191,7 @@ export function checkProjectFile(entryFile:string,options:FrontendOptions={}):Fr
     rebuilt.push(sourceModule.name);
   }
 
-  const checkedModules=graph.modules.map(m=>compiled.get(m.name)!);
-  const declarations=[...baseDecls,...checkedModules.flatMap(m=>m.declarations)];
-  const typeclasses=normalizeTypeclassOrder(declarations,mergeTypeclasses(baseTypeclasses,...checkedModules.map(m=>m.typeclasses)));
-  const summary=checkCoreDeclarations(declarations, 'KERNEL-level-instantiation-conformance1');
-  const modules:CoreModulesBuildMetadata={
-    entry:graph.entry,
-    modules:checkedModules.map(m=>({
-      name:m.source.name,
-      sourceSha256:m.source.sourceSha256,
-      imports:[...m.source.imports],
-      declarations:m.declarations.map(d=>d.name),
-    })),
-  };
-  return{artifact:makeArtifact(declarations,typeclasses,modules),summary,graph,modules:checkedModules,moduleReuse:{reused,rebuilt}};
+  return{modules:sourceModules.map(module=>compiled.get(module.name)!),reused,rebuilt};
 }
 
 function dependencyClosure(module:ProjectModuleSource,all:Map<string,ProjectModuleSource>):Set<string>{
