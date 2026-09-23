@@ -243,16 +243,16 @@
         "VS Code Format Document reuses @proofscript/formatter",
         "LSP textDocument/formatting with stale-document and cancellation boundaries",
         "formatter preserves Lean-compatible line and nested block comments",
-        "compiler theorem and verification-artifact goal presentation"
+        "compiler theorem and verification-artifact goal presentation",
+        "bounded compiler-backed code actions"
       ],
-      "remaining": [
-        "code actions"
-      ],
+      "remaining": [],
       "exitGates": [
         "editor protocol tests green",
         "no duplicate parser",
         "proof goals visible through compiler-backed service",
-        "test:product-v1:formatter"
+        "test:product-v1:formatter",
+        "bounded code actions exercised through service, worker, stdio LSP, and VS Code adapter"
       ],
       "implementationNotes": [
         "VS Code 0.46.0 is retained under donors/editors/vscode and reused selectively.",
@@ -261,6 +261,11 @@
         "Tactic proof-state snapshots remain unavailable and are not fabricated.",
         "CLI and editor formatting share @proofscript/formatter; canonical tokenizer spans preserve comments without a duplicate grammar.",
         "Goal presentation is compiler-theorem / verification-artifact backed; tacticStateAvailable remains false and live tactic states are not fabricated."
+      ],
+      "implementedPendingExecution": [
+        "all planned Product-v1 editor/DX features are implemented behind compiler-backed services",
+        "quick fix: exact canonical parser missing-semicolon diagnostic only",
+        "source action: canonical ProofScript document formatting"
       ]
     },
     {
