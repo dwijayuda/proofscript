@@ -7,6 +7,7 @@ Current bootstrap (`K3c-section-vars0`):
 - `Eq`, generated `Eq.refl` and `Eq.rec`;
 - `Nat`, generated constructors and `Nat.rec`;
 - `Bool`, generated constructors and `Bool.rec`;
+- `Unit`, generated `Unit.unit` and `Unit.rec`;
 - `Int`, `String`, `Option(A)`, `List(A)` plus bounded `List.map` / `List.foldl` / `List.length` / `List.range` / `List.replicate` / `List.toArray` / `List.isEmpty` / `List.head?` / `List.get?` / `List.take` / `List.takeWhile` / `List.dropWhile` / `List.drop` / `List.tail?` / `List.reverse` / `List.any` / `List.all` / `List.find?`, `Array(A)`, bounded `Array.size` / `Array.range` / `Array.replicate` / `Array.toList` / `Array.get?` / `Array.take` / `Array.takeWhile` / `Array.dropWhile` / `Array.drop` / `Array.head?` / `Array.tail?` / `Array.map` / `Array.foldl` / `Array.reverse` / `Array.any` / `Array.all` / `Array.find?`, `Option.map`, `Except.map`, `Option.bind`, `Except.bind`, and `Except(E, A)` bounded PSC-1 bootstrap declarations;
 - transparent `Nat.add`, `Nat.pred`, `Nat.sub`, `Nat.mul`, `Nat.leb`, `Nat.beq`, `Nat.ltb`, `Bool.not`, and `Bool.xor` defined through `Nat.rec` / checked Boolean composition.
 

@@ -180,6 +180,32 @@
     },
     {
       "kind": "inductive",
+      "name": "Unit",
+      "levelParams": [],
+      "type": {
+        "tag": "sort",
+        "level": {
+          "tag": "succ",
+          "of": {
+            "tag": "zero"
+          }
+        }
+      },
+      "numParams": 0,
+      "numIndices": 0,
+      "constructors": [
+        {
+          "name": "Unit.unit",
+          "type": {
+            "tag": "const",
+            "name": "Unit",
+            "levels": []
+          }
+        }
+      ]
+    },
+    {
+      "kind": "inductive",
       "name": "Int",
       "levelParams": [],
       "type": {
@@ -10434,12 +10460,13 @@
     "modules": [
       {
         "name": "__single__",
-        "sourceSha256": "4789ec8889d647e86ecf62d42b3ab25226f25f5f997f29befb1f485a465b7965",
+        "sourceSha256": "393ea715918e3763313a5938132f59c0e58f900383c249add21e32d1762d0548",
         "imports": [],
         "declarations": [
           "Eq",
           "Nat",
           "Bool",
+          "Unit",
           "Int",
           "Int.neg",
           "Int.add",
@@ -10539,6 +10566,7 @@
           "Eq",
           "Nat",
           "Bool",
+          "Unit",
           "Int",
           "Int.neg",
           "Int.add",
@@ -10634,8 +10662,8 @@
           "Bool.not",
           "Bool.xor"
         ],
-        "interfaceSha256": "88da41969badf63845b4a10b97e7d724c7b87b52c2ea7a4a5e645e7fbcc5d8a7",
-        "cacheKeySha256": "cd7c3dcfa42f2ebf93f075ae0fcd4aeed042f1623667c847b497ad6795c0e642"
+        "interfaceSha256": "ddde2281523d35b18d8b00c3b4d6781fadaf82a52a5c23e81d377a6730aa012b",
+        "cacheKeySha256": "23dc56a3660e1360425662a037e15faae1e8fdc51c89b2d69860b135c7e53983"
       }
     ]
   }

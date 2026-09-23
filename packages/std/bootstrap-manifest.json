@@ -4,7 +4,7 @@
   "semanticBaseline": "lean-4.33.1",
   "implementationProfile": "p5.60-reference-v061",
   "coreFormat": 12,
-  "coreSha256": "74069b62423d7df94e5ce9ef6f216fe9a77b96bad2cedf59d22bc4f2c7ec0a58",
+  "coreSha256": "a2d1d39f4649e9858c53b8fe665827fa372a849ccf961af2fc150054b15a1fa0",
   "source": "src/Bootstrap/Foundation.ps",
   "core": "core/bootstrap.pscore.json",
   "leanBuiltinCorrespondence": {
@@ -53,6 +53,18 @@
       {
         "proofscript": "Bool.rec",
         "lean": "Bool.rec"
+      },
+      {
+        "proofscript": "Unit",
+        "lean": "Unit"
+      },
+      {
+        "proofscript": "Unit.unit",
+        "lean": "Unit.unit"
+      },
+      {
+        "proofscript": "Unit.rec",
+        "lean": "Unit.rec"
       },
       {
         "proofscript": "Int.rec",
@@ -456,11 +468,12 @@
   },
   "release": "P5.61",
   "feature": "P5.60 reference v0.6.1 adoption; std unchanged from P5.59",
-  "sourceSha256": "12036b58c0d5aa2f46d1eab4b27c46a4a63fb20eca290f51b0f7003433b91687",
+  "sourceSha256": "393ea715918e3763313a5938132f59c0e58f900383c249add21e32d1762d0548",
   "declarations": [
     "Eq",
     "Nat",
     "Bool",
+    "Unit",
     "Int",
     "Int.neg",
     "Int.add",
@@ -799,5 +812,5 @@
       "lean": "<PSC-1 bounded Array.countP primitive>"
     }
   ],
-  "declarationCount": 97
+  "declarationCount": 98
 }
