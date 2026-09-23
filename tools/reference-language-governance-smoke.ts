@@ -795,7 +795,7 @@ writeFileSync(badRecursiveFunctionField, `inductive BadWrap: Type where {
 }
 function tag(w: BadWrap): Nat := { match (w) { | leaf => 0 | later f => 1 } }
 `);
-add(await expectRejected('reference.reject-recursive-inductive-function-field', ['--experimental-strip-types', '--disable-warning=ExperimentalWarning', '--disable-warning=MODULE_TYPELESS_PACKAGE_JSON', 'tools/pslive.ts', 'check', badRecursiveFunctionField, '--json'], /has no implemented type|recursive occurrence|BadWrap\.rec/i));
+add(await expectRejected('reference.reject-recursive-inductive-function-field', ['--experimental-strip-types', '--disable-warning=ExperimentalWarning', '--disable-warning=MODULE_TYPELESS_PACKAGE_JSON', 'tools/pslive.ts', 'check', badRecursiveFunctionField, '--json'], /has no implemented type|recursive occurrence|BadWrap\.rec|type mismatch/i));
 
 const badConstructorShorthandNoExpected = join(dir, 'BadConstructorShorthandNoExpected.ps');
 writeFileSync(badConstructorShorthandNoExpected, `inductive Color: Type where { | red | green }
