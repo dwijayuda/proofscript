@@ -449,7 +449,13 @@ function toPos(position) { return { line: position.line, character: position.cha
 function toPlainRange(range) { return { start: toPos(range.start), end: toPos(range.end) }; }
 function toRange(range) { return new vscode.Range(range.start.line, range.start.character, range.end.line, range.end.character); }
 function toSeverity(severity) { return severity === 2 ? vscode.DiagnosticSeverity.Warning : severity === 3 ? vscode.DiagnosticSeverity.Information : severity === 4 ? vscode.DiagnosticSeverity.Hint : vscode.DiagnosticSeverity.Error; }
-function mapCompletionKind(kind) { return Number.isInteger(kind) ? kind : vscode.CompletionItemKind.Text; }
+function mapCompletionKind(kind) {
+  // LSP CompletionItemKind is 1-based; VS Code's CompletionItemKind enum is
+  // zero-based for the shared standard range.
+  return Number.isInteger(kind) && kind >= 1 && kind <= 25
+    ? kind - 1
+    : vscode.CompletionItemKind.Text;
+}
 function mapSymbolKind(kind) { return Number.isInteger(kind) ? kind : vscode.SymbolKind.Variable; }
 function escapeHtml(value) { return String(value ?? "").replace(/[&<>"\']/g, (char) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "\"":"&quot;", "\'":"&#39;" }[char])); }
 function messageOf(error) { return error instanceof Error ? error.message : String(error); }
