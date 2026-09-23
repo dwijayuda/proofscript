@@ -91,6 +91,8 @@ assert.equal(incompleteObservations[0].partialDeclaration.name, 'incomplete');
 assert.equal(incompleteObservations[0].partialDeclaration.value.tag, 'assumptionProof');
 assert.equal(incompleteObservations[0].declarations.length, 1);
 assert.equal(incompleteObservations[0].declarations[0].name, 'incomplete');
+assert.equal(incompleteObservations[0].sourceStartOffset, 0);
+assert.equal(incompleteObservations[0].sourceEndOffset, incompleteSource.length);
 assert.equal(incompleteObservations[0].failureOffset, incompleteSource.length);
 
 const unrelatedParseObservations = [];
