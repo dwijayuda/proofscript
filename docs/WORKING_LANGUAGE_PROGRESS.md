@@ -178,6 +178,14 @@ theorem direct_apply(h: P): P := by { apply h }
 | Theorem/example `by { assumption }` | Working for local hypotheses with definitionally equal goal type |
 | Theorem/example `by { apply h; assumption }` | Working for one explicit generated premise |
 | Theorem/example `by { apply h; exact hp }` | Working for one explicit generated premise |
+| Bounded `show` | Working when displayed goal is definitionally equal to the current goal |
+| Proof-local `have` | Working with typed/inferred intermediate facts lowered to checked Core have/let |
+| Bounded `rw` / reverse `rw ← h` | Working on the target through checked `Eq.rec` transport |
+| Bounded `subst x` | Working from a direct local equality as target rewriting; locals are not deleted |
+| Bounded `constructor` | Working for one-constructor non-indexed goals; one continuation is repeated across explicit field goals |
+| Bounded `cases` | Working for nonrecursive non-indexed inductives through checked recursors |
+| Bounded `induction` | Working for non-indexed inductives through checked recursors with generated IH binders |
+| Bounded `simp` | Working as simp-lite: rfl, assumption, or one local equality rewrite followed by either |
 | Canonical self-delimited `by { ... }` theorem/example without final command `;` | Working and enforced in PSC-1 standard mode |
 | Executable JS emission for definitions | Working |
 | Skipping non-executable theorem/example/axiom/inductive declarations in JS | Working |
@@ -197,22 +205,27 @@ theorem direct_apply(h: P): P := by { apply h }
 - `intro` currently introduces explicit binders only.
 - `assumption` currently searches ordinary local hypotheses only; no broader tactic search or typeclass/instance reasoning.
 - `apply` currently supports exact proof terms or one explicit generated premise only; no metavariable-driven full Lean apply.
+- `rw` rewrites the target only; arbitrary hypothesis/location rewriting is deferred.
+- `subst` is target substitution and intentionally keeps the original locals in scope.
+- `constructor` requires exactly one constructor and explicit generated field goals.
+- `cases` currently rejects recursive inductives rather than silently granting induction hypotheses.
+- `induction` repeats one continuation over generated branches; named branch scripts and general dependent/indexed induction are deferred.
+- `simp` is bounded simp-lite, not Lean's simplifier.
 - `bif` currently requires an expected result type and direct Bool condition.
 
 ## Recommended Next Milestones
 
-1. Add proof-local `have` in tactic blocks for small derived proofs.
-2. Add Option values and first match/elimination smoke.
-3. Add List values and simple pattern-match JS emission.
-4. Add structural recursion over Nat/List with equation theorem smoke.
-5. Add small `rw` for equality rewriting.
-6. Add module polish for PSC-1 package-level development.
+1. Execute the consolidated native-tactic parser/elaborator regression suite on the supported Windows environment.
+2. Add named branch syntax/proof-state ergonomics only after the bounded generated-goal core is green.
+3. Extend `rw` locations and simplifier theorem sets without weakening the current Eq.rec/kernel-check boundary.
+4. Consider indexed/dependent cases and induction as a separate profile expansion.
+5. Keep full Lean tactics/metaprogramming outside PSC-1.
 
 ## Current Best Next Step
 
-The next best theorem-prover step is **proof-local `have`**, because `rfl`, `exact`, `intro`, `assumption`, and `apply` now cover the smallest implication proof loop and need intermediate local facts next.
+The native tactic surface is implemented as a bounded source/elaboration layer. The next theorem-prover step is execution hardening and then branch ergonomics, not adding trusted tactic semantics.
 
-The next best programming-language step is **Option values plus Option match**, because PSC-1 now has Nat, Bool, local bindings, functions, Boolean conditionals, and simple Bool match.
+The programming-language track remains independent: broader libraries/effects/runtime features should continue without changing the proof-kernel trust boundary.
 
 
 ## P5.52 Except.flatten
