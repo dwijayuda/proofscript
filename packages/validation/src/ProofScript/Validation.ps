@@ -1,0 +1,22 @@
+namespace Validation {
+  def accept(A: Type, value: A): Except(String, A) := {
+    Except.ok(String, A, value)
+  }
+
+  def reject(A: Type, message: String): Except(String, A) := {
+    Except.error(String, A, message)
+  }
+
+  def require(A: Type, condition: Bool, value: A, message: String): Except(String, A) := {
+    if condition then Except.ok(String, A, value)
+    else Except.error(String, A, message)
+  }
+
+  def map(A: Type, B: Type, f: A -> B, value: Except(String, A)): Except(String, B) := {
+    Except.map(String, A, B, f, value)
+  }
+
+  def bind(A: Type, B: Type, value: Except(String, A), f: A -> Except(String, B)): Except(String, B) := {
+    Except.bind(String, A, B, value, f)
+  }
+}
