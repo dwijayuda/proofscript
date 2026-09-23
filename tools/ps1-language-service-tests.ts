@@ -231,6 +231,7 @@ assert.equal(partialGoals.tacticState?.goal, "P");
 assert.deepEqual(partialGoals.tacticState?.locals.map((local) => local.name), ["P", "h"]);
 assert.equal(partialGoals.declarationGoal, null, "rejected declarations must not be reported as checked goals");
 partialService.closeDocument(partialUri);
+fs.unlinkSync(partialFile);
 
 // Branch-aware tactics must flow through the existing compiler-backed editor path.
 const branchService = new ProofScriptLanguageService();
