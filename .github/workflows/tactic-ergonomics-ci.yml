@@ -1,0 +1,96 @@
+name: tactic-ergonomics-ci
+
+on:
+  push:
+    branches:
+      - feature/tactic-ergonomics
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tactic-ergonomics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install workspace
+        run: npm ci --ignore-scripts
+
+      - name: Run tactic ergonomics assurance
+        run: npm run assurance:tactic-ergonomics
+
+      - name: Vendor ProofScript LSP runtime into VS Code extension
+        shell: bash
+        run: |
+          set -euo pipefail
+          target="editors/vscode/server/node_modules/@proofscript"
+          rm -rf "editors/vscode/server/node_modules"
+          mkdir -p "$target"
+          packages=(
+            lsp
+            language-worker
+            language-service
+            compiler
+            formatter
+            frontend
+            plugin-api
+            semantic-ir
+            kernel
+            environment
+            parser
+            elaborator
+            kernel-codec
+            project
+            syntax
+            std
+            recursion
+            typeclass
+          )
+          for pkg in "${packages[@]}"; do
+            mkdir -p "$target/$pkg"
+            cp "packages/$pkg/package.json" "$target/$pkg/package.json"
+            if [ -d "packages/$pkg/dist" ]; then
+              cp -R "packages/$pkg/dist" "$target/$pkg/dist"
+            else
+              echo "missing built dist for $pkg" >&2
+              exit 1
+            fi
+            if [ -f "packages/$pkg/README.md" ]; then
+              cp "packages/$pkg/README.md" "$target/$pkg/README.md"
+            fi
+          done
+
+      - name: Verify vendored LSP starts
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f editors/vscode/server/node_modules/@proofscript/lsp/dist/bin.js
+          node --check editors/vscode/server/run-lsp.mjs
+          node --check editors/vscode/src/extension.js
+
+      - name: Package VS Code extension
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts
+          cd editors/vscode
+          npx --yes @vscode/vsce@3.6.0 package \
+            --allow-missing-repository \
+            --no-dependencies \
+            --out ../../artifacts/proofscript-vscode-0.1.0-dev.0.vsix
+          cd ../..
+          test -s artifacts/proofscript-vscode-0.1.0-dev.0.vsix
+
+      - name: Upload VS Code extension
+        uses: actions/upload-artifact@v4
+        with:
+          name: proofscript-vscode-v6
+          path: artifacts/proofscript-vscode-0.1.0-dev.0.vsix
+          if-no-files-found: error
