@@ -54,18 +54,12 @@ jobs:
             typeclass
           )
           for pkg in "${packages[@]}"; do
-            mkdir -p "$target/$pkg"
-            cp "packages/$pkg/package.json" "$target/$pkg/package.json"
-            if [ -d "packages/$pkg/dist" ]; then
-              cp -R "packages/$pkg/dist" "$target/$pkg/dist"
-            else
-              echo "missing built dist for $pkg" >&2
-              exit 1
-            fi
-            if [ -f "packages/$pkg/README.md" ]; then
-              cp "packages/$pkg/README.md" "$target/$pkg/README.md"
-            fi
+            cp -R "packages/$pkg" "$target/$pkg"
+            rm -rf "$target/$pkg/node_modules"
+            find "$target/$pkg" -name '*.tsbuildinfo' -delete
           done
+          test -f "$target/lsp/dist/bin.js"
+          test -f "$target/std/bootstrap-manifest.json"
 
       - name: Verify vendored LSP starts
         shell: bash
