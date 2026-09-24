@@ -216,33 +216,34 @@ term, source repair, or editor-only elaborator was added.
 
 See `docs/TACTIC_ERGONOMICS.md`.
 
-## Tactic ergonomics Phase 6
+## Tactic ergonomics Phase 6 closure
 
-Status: **IMPLEMENTED; ACCEPTANCE PENDING**.
+Status: **CLOSED** on GitHub-hosted tested source commit
+`b3d4c349ff6802083d7582a28ee8633e4b0c1a56`.
 
-Phase 6 adds proof-state-aware native tactic keyword completion. The language
-service only injects tactic keywords when a canonical compiler/parser-derived
-proof state covers the cursor. Outside a proof state, normal source completion
-is unchanged.
+Closeout evidence on 2026-09-25:
 
-The completion list contains the bounded native tactics already supported by
-the compiler: `rfl`, `exact`, `intro`, `assumption`, `apply`,
-`show`, `have`, `rw`, `subst`, `constructor`, `cases`,
-`induction`, and `simp`.
+- consolidated gate: `npm run assurance:tactic-ergonomics`;
+- schema: `proofscript.tactic-ergonomics-endtest/v6`;
+- **9/9 PASS**, 0 failed, 0 skipped;
+- build — PASS;
+- parser proof extraction — PASS;
+- elaborator/kernel-check proof regression — PASS;
+- compiler-backed language service — PASS;
+- language worker — PASS;
+- LSP transport — PASS;
+- active VS Code smoke — PASS;
+- standalone-small — PASS;
+- reference governance — PASS;
+- `allTacticErgonomicsGatesPassed = true`.
 
-This is completion only. It does not predict tactic applicability, run tactics
-speculatively, search for proofs, create metavariables, or construct proof
-terms. After insertion, the canonical parser/elaborator/PSKernel path remains
-the sole authority.
+Phase 6 adds proof-state-scoped native tactic keyword completion. It does not
+perform tactic applicability prediction, speculative tactic execution, proof
+search, metavariable creation, or proof construction. Canonical
+parser/elaborator/PSKernel checking remains authoritative after insertion.
 
-LSP transports these items as standard Keyword completions and advertises
-`{` as a trigger so `by {` can request them immediately. The VS Code
-adapter now also correctly converts 1-based LSP completion kinds to VS Code's
-0-based enum.
-
-Closure requires a green
-`proofscript.tactic-ergonomics-endtest/v6` run on the committed Phase 6
-candidate.
+The hosted packaging workflow also produces a standalone VSIX with the built
+ProofScript LSP runtime vendored into the extension.
 
 See `docs/TACTIC_ERGONOMICS.md`.
 

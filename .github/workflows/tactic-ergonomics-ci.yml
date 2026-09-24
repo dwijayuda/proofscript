@@ -68,6 +68,7 @@ jobs:
           test -f editors/vscode/server/node_modules/@proofscript/lsp/dist/bin.js
           node --check editors/vscode/server/run-lsp.mjs
           node --check editors/vscode/src/extension.js
+          node tools/vscode-bundled-lsp-smoke.mjs editors/vscode
 
       - name: Package VS Code extension
         shell: bash

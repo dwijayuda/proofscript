@@ -1,6 +1,6 @@
 # Tactic Ergonomics
 
-Status: **PHASE 5 COMPLETE; PHASE 6 IMPLEMENTED, ACCEPTANCE PENDING**
+Status: **PHASE 6 COMPLETE**
 
 Branch: `feature/tactic-ergonomics`
 
@@ -296,6 +296,32 @@ compiler-backed language service, the language-worker boundary, LSP transport,
 the active VS Code smoke test, `standalone-small`, and reference governance.
 
 The earlier Phase 1 evidence remains the recorded 7/7 v1 result.
+
+### Phase 6 machine acceptance
+
+Phase 6 was executed on GitHub-hosted Ubuntu/Node 22 at committed source
+`b3d4c349ff6802083d7582a28ee8633e4b0c1a56` with
+`npm run assurance:tactic-ergonomics`.
+
+Machine result:
+
+- schema: `proofscript.tactic-ergonomics-endtest/v6`
+- total steps: 9
+- passed: 9
+- failed: 0
+- skipped: 0
+- `allTacticErgonomicsGatesPassed: true`
+
+All named gates passed: build, parser proof extraction,
+elaborator/kernel-check proof regression, compiler-backed language service,
+language worker, LSP transport, VS Code smoke, standalone-small, and reference
+governance.
+
+The same hosted workflow then vendored the built ProofScript LSP dependency
+closure into the VS Code extension and packaged a standalone VSIX. The packaged
+artifact is separately smoke-tested by starting its bundled LSP, completing an
+LSP initialize handshake, checking protocol v1 and completion triggers, and
+shutting it down.
 
 ### Phase 5 machine acceptance
 

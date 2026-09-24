@@ -1,32 +1,62 @@
 # ProofScript for Visual Studio Code
 
-Active Product-v1 editor integration adapted from the preserved ProofScript 0.46.0 donor.
+ProofScript language support backed by the canonical compiler and PSKernel trust
+path.
 
-Canonical path:
+## Architecture
 
-    @proofscript/compiler
-      -> @proofscript/language-service
-      -> @proofscript/language-worker
-      -> @proofscript/lsp
-      -> editors/vscode
+```text
+@proofscript/compiler
+  -> @proofscript/language-service
+  -> @proofscript/language-worker
+  -> @proofscript/lsp
+  -> VS Code
+```
 
-Current promoted features: diagnostics with stale-version rejection, cancellation-aware RPC, hover, document outline, completion, go-to-definition, project references, safe global rename, compiler-backed semantic highlighting, canonical Format Document support, compiler-backed document status, cursor semantic information, Infoview, and server lifecycle/status commands.
+The editor does not contain a second ProofScript parser, elaborator, tactic
+engine, or checker.
 
-Definition/references/rename are backed by canonical parser source spans plus the same namespace/open-namespace resolver used by elaboration. They do not use editor-side textual symbol guessing.\n\nFormat Document reuses the same `@proofscript/formatter` implementation as `psc fmt`; the editor does not maintain a second formatting grammar. Formatter v1 preserves Lean-compatible line and nested block comments using canonical tokenizer spans.
+## Current features
 
-The 0.46 donor still contains signature help, code actions, and richer proof-state UI. Those providers remain disabled until the current compiler-backed service exposes the required semantic APIs.
+- compiler-backed diagnostics and document status;
+- hover, document outline, semantic tokens, definition, references, and rename;
+- canonical formatting and bounded parser-derived quick fixes;
+- compiler-backed theorem/verification goal presentation;
+- live read-only tactic/branch proof states for checked proofs;
+- retained proof-prefix states after later elaboration rejection;
+- bounded syntax-incomplete states for a missing final `}`;
+- proof-free initial theorem/example goal at an empty `by {` block;
+- proof-state-scoped native tactic keyword completion;
+- automatic completion request when `{` opens a proof block;
+- worker isolation, cancellation, stale-version rejection, and server lifecycle
+  commands.
 
-Protocol v1 exposes checked theorem goals and source-hash-bound verification obligations, but not live tactic-state snapshots. The active Infoview reports tacticStateAvailable=false and never fabricates tactic states.
+Proof states carry explicit provenance (`checked`, `rejected-prefix`, or
+`syntax-incomplete`). They are observations only and never participate in
+proof acceptance.
 
-Run npm run build at the repository root before launching the extension from source. Release packaging will later vendor the matching @proofscript/lsp package into the VSIX.
+Tactic completions are keyword suggestions, not proof search. Choosing a
+completion still routes the resulting source through the canonical
+parser/elaborator and PSKernel.
 
+## Infoview
 
-## Code actions
+Use **ProofScript: Show Infoview** or `Ctrl+Shift+Enter`
+(`Cmd+Shift+Enter` on macOS). The Infoview follows the cursor and shows the
+current proof context when the canonical compiler can provide one.
 
-Product-v1 code actions are deliberately bounded:
+## Standalone VSIX
 
-- **Format ProofScript document** reuses the canonical formatter.
-- **Insert missing ';'** is offered only when the canonical parser emits
-  `PSLS1001` with the exact `expected ';' at offset N` diagnostic.
+The branch-specific `tactic-ergonomics-ci` workflow runs the consolidated
+tactic ergonomics assurance, vendors the built ProofScript LSP dependency
+closure into `server/node_modules/@proofscript`, performs a real bundled-LSP
+initialize/shutdown smoke test, packages the extension, and uploads the VSIX as
+the `proofscript-vscode-v6` artifact.
 
-The editor does not derive refactors or repairs from textual heuristics.
+The packaged extension therefore does not require a ProofScript repository
+checkout merely to start its bundled language server.
+
+## From source
+
+Run `npm ci` and `npm run build` at the repository root, then launch
+`editors/vscode` with VS Code's Extension Development Host.
