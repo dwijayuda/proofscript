@@ -1,0 +1,15 @@
+-- Pure verification-extension example.
+-- Process with: psc contracts / psc obligations.
+
+structure Counter {
+  value: Nat;
+}
+
+function incrementCounter(counter: Counter, amount: Nat): Counter
+  requires nonzero: amount >= 1
+  ghost before: Nat := counter.value
+  ensures increases: result.value = old(counter.value) + amount
+:= {
+  assert hAmount: amount >= 1;
+  { counter with value := counter.value + amount }
+}

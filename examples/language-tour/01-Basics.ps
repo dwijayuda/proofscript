@@ -1,0 +1,43 @@
+-- ProofScript language tour: declarations, functions, control flow, local helpers,
+-- primitive values, and definitional equality.
+
+const answer : Nat := 42;
+const increment : Nat -> Nat := fun (x : Nat) => x + 1;
+
+function add(x : Nat, y : Nat) : Nat := x + y;
+def mul(x : Nat, y : Nat) : Nat := x * y;
+
+function max2(x : Nat, y : Nat) : Nat :=
+  if (x > y) { x } else { y };
+
+function addViaWhere(x : Nat, y : Nat) : Nat := helper(x, y) where {
+  helper(a : Nat, b : Nat) : Nat := a + b;
+};
+
+function chainedWhere(x : Nat) : Nat := plusTwo(x) where {
+  plusOne(a : Nat) : Nat := a + 1;
+  plusTwo(a : Nat) : Nat := plusOne(a) + 1;
+};
+
+def fortyFour : Nat := add(answer, 2);
+def incremented : Nat := increment(4);
+def product : Nat := mul(6, 7);
+def maxValue : Nat := max2(9, 4);
+def chained : Nat := chainedWhere(40);
+
+def localBlock : Nat := {
+  let x : Nat := 20;
+  have y : Nat := 22;
+  x + y
+}
+
+const greeting : String := "hello ProofScript";
+const signed : Int := -3;
+
+theorem fortyFour_rfl : fortyFour = 44 := by rfl
+theorem incremented_rfl : incremented = 5 := by rfl
+theorem product_rfl : product = 42 := by rfl
+theorem maxValue_rfl : maxValue = 9 := by rfl
+theorem chained_rfl : chained = 42 := by rfl
+theorem localBlock_rfl : localBlock = 42 := by rfl
+theorem signed_rfl : signed = -3 := by rfl

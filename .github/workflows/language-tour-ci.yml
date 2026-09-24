@@ -1,0 +1,26 @@
+name: language-tour-ci
+
+on:
+  push:
+    branches:
+      - example/full-language-tour
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  language-tour:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install workspace
+        run: npm ci --ignore-scripts
+      - name: Build
+        run: npm run build
+      - name: Run full language tour
+        run: npm run test:language-tour

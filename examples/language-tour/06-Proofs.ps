@@ -1,0 +1,111 @@
+-- Native theorem-proving tour.
+-- Tactics construct ordinary Core proof terms; PSKernel still checks them.
+
+function idNat(x: Nat): Nat := { x }
+theorem idNat_rfl: idNat 3 = 3 := by rfl
+theorem exact_rfl: 4 = 4 := by exact rfl
+
+axiom P: Prop;
+axiom Q: Prop;
+
+theorem intro_assumption: P -> P := by {
+  intro h;
+  assumption
+}
+
+theorem dependent_assumption(P0: Prop, h: P0): P0 := by {
+  assumption
+}
+
+theorem apply_exact(h: P): P := by {
+  apply h
+}
+
+theorem apply_subgoal(h: P -> Q, hp: P): Q := by {
+  apply h;
+  assumption
+}
+
+theorem show_exact(h: P): P := by {
+  show P;
+  exact h
+}
+
+theorem have_exact(h: P): P := by {
+  have hp : P := h;
+  exact hp
+}
+
+theorem have_inferred(h: P): P := by {
+  have hp := h;
+  exact hp
+}
+
+theorem have_nested(h: P): P := by {
+  have hp : P := by { exact h };
+  show P;
+  exact hp
+}
+
+theorem rw_forward(a: Nat, b: Nat, h: a = b): a = b := by {
+  rw h;
+  rfl
+}
+
+theorem rw_reverse(a: Nat, b: Nat, h: a = b): b = a := by {
+  rw ← h;
+  rfl
+}
+
+theorem subst_forward(a: Nat, b: Nat, h: a = b): a = b := by {
+  subst a;
+  rfl
+}
+
+inductive BothP: Prop where {
+  | intro (left: P) (right: Q)
+}
+
+inductive HolderP: Prop where {
+  | intro (value: P)
+}
+
+inductive ChainP: Prop where {
+  | base (value: P)
+  | step (tail: ChainP)
+}
+
+theorem constructor_both(hp: P, hq: Q): BothP := by {
+  constructor;
+  assumption
+}
+
+theorem cases_bool(b: Bool): 1 = 1 := by {
+  cases b;
+  rfl
+}
+
+theorem cases_holder(h: HolderP): P := by {
+  cases h | intro value => exact value
+}
+
+theorem induction_nat_reflexive(n: Nat): n = n := by {
+  induction n
+  | Nat.zero => rfl
+  | Nat.succ k ih => rfl
+}
+
+theorem induction_chain(h: ChainP): P := by {
+  induction h
+  | ChainP.step tail ih => exact ih
+  | base value => exact value
+}
+
+theorem simp_reflexive(n: Nat): n = n := by { simp }
+theorem simp_assumption(h: P): P := by { simp }
+
+theorem simp_rewrite(a: Nat, b: Nat, h: a = b):
+  Nat.succ(a) = Nat.succ(b)
+:= by { simp }
+
+def executable: Nat := { idNat 9 }

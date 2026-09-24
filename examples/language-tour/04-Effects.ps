@@ -1,0 +1,87 @@
+-- Checked Option/Except helpers plus bounded do-notation.
+
+function someSucc(x: Nat): Option(Nat) := {
+  Option.some(Nat, x + 1)
+}
+
+function okSucc(x: Nat): Except(String, Nat) := {
+  Except.ok(String, Nat, x + 1)
+}
+
+function failWithBad(x: Nat): Except(String, Nat) := {
+  Except.error(String, Nat, "bad")
+}
+
+function inc(x: Nat): Nat := { x + 1 }
+
+def mappedValue: Option(Nat) := {
+  Option.map(Nat, Nat, inc, Option.some(Nat, 2))
+}
+
+def optionDoSome: Option(Nat) := {
+  do {
+    x <- Option.some(Nat, 2);
+    y <- someSucc(x);
+    Option.some(Nat, y + 1)
+  }
+}
+
+def optionDoNone: Option(Nat) := {
+  do {
+    x <- Option.none(Nat);
+    Option.some(Nat, x + 1)
+  }
+}
+
+def exceptDoOk: Except(String, Nat) := {
+  do {
+    x <- Except.ok(String, Nat, 4);
+    y <- okSucc(x);
+    Except.ok(String, Nat, y + 1)
+  }
+}
+
+def exceptDoError: Except(String, Nat) := {
+  do {
+    x <- Except.error(String, Nat, "bad");
+    Except.ok(String, Nat, x + 1)
+  }
+}
+
+def exceptDoOkToError: Except(String, Nat) := {
+  do {
+    x <- Except.ok(String, Nat, 4);
+    failWithBad(x)
+  }
+}
+
+def optionValue: Nat := {
+  Option.getD(Nat, optionDoSome, 0)
+}
+
+def exceptValue: Nat := {
+  Except.getD(String, Nat, exceptDoOk, 0)
+}
+
+theorem mapped_value_rfl:
+  mappedValue = Option.some(Nat, 3)
+:= by rfl
+
+theorem option_do_some_rfl:
+  optionDoSome = Option.some(Nat, 4)
+:= by rfl
+
+theorem option_do_none_rfl:
+  optionDoNone = Option.none(Nat)
+:= by rfl
+
+theorem except_do_ok_rfl:
+  exceptDoOk = Except.ok(String, Nat, 6)
+:= by rfl
+
+theorem except_do_error_rfl:
+  exceptDoError = Except.error(String, Nat, "bad")
+:= by rfl
+
+theorem option_value_rfl : optionValue = 4 := by rfl
+theorem except_value_rfl : exceptValue = 6 := by rfl

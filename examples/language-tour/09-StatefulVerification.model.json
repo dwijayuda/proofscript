@@ -1,0 +1,61 @@
+{
+  "schema": "proofscript.state-model.v1",
+  "name": "BankStateModel",
+  "stateType": "Bank",
+  "monad": {
+    "name": "State Bank",
+    "typeConstructor": "State Bank α"
+  },
+  "wp": {
+    "triple": "Std.Do.Triple",
+    "precondition": "Bank -> Prop",
+    "postcondition": "α -> Bank -> Prop"
+  },
+  "semantics": {
+    "runner": "runBankState",
+    "adequacyTheorem": "runBankState_adequate"
+  },
+  "operations": [
+    {
+      "name": "debit",
+      "type": "AccountId -> Nat -> State Bank Unit",
+      "spec": "sets the source account balance to its previous balance minus amount using Nat subtraction (saturating at zero)",
+      "verification": { "tripleTheorem": "BankStateModel.debit_triple" }
+    },
+    {
+      "name": "credit",
+      "type": "AccountId -> Nat -> State Bank Unit",
+      "spec": "increases the destination account balance by amount",
+      "verification": { "tripleTheorem": "BankStateModel.credit_triple" }
+    },
+    {
+      "name": "audit",
+      "type": "Nat -> State Bank Unit",
+      "spec": "records an audit code without changing the bank state",
+      "verification": { "tripleTheorem": "BankStateModel.audit_triple" }
+    }
+  ],
+  "laws": [
+    {
+      "name": "transfer_preserves_total",
+      "statement": "debit followed by credit preserves total bank balance"
+    }
+  ],
+  "vcgen": {
+    "status": "planned",
+    "tactic": "mvcgen"
+  },
+  "observations": [
+    {
+      "name": "balanceOf",
+      "type": "AccountId -> Bank -> Nat",
+      "stateArgument": "last",
+      "spec": "reads an account balance from the selected Bank state"
+    }
+  ],
+  "lean": {
+    "imports": ["ProofScript.Verification.BankStateModel"],
+    "openNamespaces": ["BankStateModel"],
+    "monadTypeConstructor": "StateM Bank"
+  }
+}

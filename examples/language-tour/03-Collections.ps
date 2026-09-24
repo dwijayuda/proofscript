@@ -1,0 +1,48 @@
+-- Finite checked List/Array values and higher-order collection helpers.
+
+function inc(x: Nat): Nat := { x + 1 }
+function isZero(x: Nat): Bool := { x == 0 }
+
+def numbers: List(Nat) := {
+  List.cons(Nat, 1, List.cons(Nat, 2, List.cons(Nat, 3, List.nil(Nat))))
+}
+
+def mappedNumbers: List(Nat) := {
+  List.map(Nat, Nat, inc, numbers)
+}
+
+def zeroFlags: List(Bool) := {
+  List.map(
+    Nat,
+    Bool,
+    isZero,
+    List.cons(Nat, 0, List.cons(Nat, 1, List.nil(Nat)))
+  )
+}
+
+def mappedLength: Nat := {
+  List.length(Nat, mappedNumbers)
+}
+
+def arrayNumbers: Array(Nat) := { [1, 2, 3] }
+
+def mappedArray: Array(Nat) := {
+  Array.map(Nat, Nat, inc, arrayNumbers)
+}
+
+def mappedArraySize: Nat := {
+  Array.size(Nat, mappedArray)
+}
+
+theorem mapped_numbers_rfl:
+  mappedNumbers =
+    List.cons(Nat, 2, List.cons(Nat, 3, List.cons(Nat, 4, List.nil(Nat))))
+:= by rfl
+
+theorem zero_flags_rfl:
+  zeroFlags = List.cons(Bool, true, List.cons(Bool, false, List.nil(Bool)))
+:= by rfl
+
+theorem mapped_length_rfl : mappedLength = 3 := by rfl
+theorem mapped_array_rfl : mappedArray = [2, 3, 4] := by rfl
+theorem mapped_array_size_rfl : mappedArraySize = 3 := by rfl

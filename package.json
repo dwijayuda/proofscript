@@ -845,7 +845,8 @@
     "assurance:product-v1:endtest": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/product-v1-endtest.ts",
     "test:native-tactics": "npm run test:parser:proof && npm run test:elaborator:proof-extraction",
     "assurance:native-tactics": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/native-tactics-endtest.ts",
-    "assurance:tactic-ergonomics": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/tactic-ergonomics-endtest.ts"
+    "assurance:tactic-ergonomics": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/tactic-ergonomics-endtest.ts",
+    "test:language-tour": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/language-tour-tests.ts"
   },
   "engines": {
     "node": ">=20"

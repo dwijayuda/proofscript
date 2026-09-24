@@ -1,0 +1,24 @@
+-- Bounded classes/instances and explicit checked class projection calls.
+
+class Sized(A : Type) where {
+  size : A -> Nat;
+}
+
+structure Box where {
+  value : Nat;
+}
+
+instance sizedNat : Sized(Nat) := {
+  size := fun (n : Nat) => n + 1
+};
+
+instance sizedBox : Sized(Box) := {
+  size := fun (b : Box) => b.value + 2
+};
+
+const natResult : Nat := Sized.size(Nat, sizedNat, 6);
+const boxed : Box := { value := 40 };
+const boxResult : Nat := Sized.size(Box, sizedBox, boxed);
+
+theorem natResult_rfl : natResult = 7 := by rfl
+theorem boxResult_rfl : boxResult = 42 := by rfl
